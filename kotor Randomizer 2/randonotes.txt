@@ -1,0 +1,31 @@
+﻿TO DO:
+	- Add Unrandomize button on Start Form
+	- devise a better preset saving system
+	- In item rando have a polymorph option (all equipable of some type are disguises)
+	- Add functionality to ModuleForm Checkboxes
+	- Actually Make it randomize things
+	- Adjust sub-form formats (Window titles, resizing rules)
+	- add fixed dream sequence script
+	- look into crafting a fixed mission script
+	- look into making a script that allows full ebon hawk use
+	- Prevent multiple instances of a form from being opened
+
+
+Categories:
+	Modules ‎✔
+	Items ‎✔
+	Sounds ‎✔
+	Models ‎✔
+	Textures ‎✔
+	Text
+	Character Location
+	Placable location
+	2das
+	Name Generation
+	doors
+	Area Files?
+
+Colors:
+	Background: 0, 0, 22
+	Foreground: 0, 175, 255
+	Slected: 211, 216, 8
