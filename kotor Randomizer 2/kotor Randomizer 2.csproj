@@ -194,6 +194,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Krandom.ico" />
     <None Include="BoxActive.png" />
     <None Include="BoxActUnselected.png" />
     <None Include="BoxSlected.png" />
