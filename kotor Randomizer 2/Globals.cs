@@ -48,7 +48,7 @@ namespace kotor_Randomizer_2
             /// <summary> No randomization. </summary>
             None = 0,
             /// <summary> Randomize similar types within the same category. </summary>
-            Actions = 1,
+            Subtype = 1,
             /// <summary> Randomize within the same category. </summary>
             Type = 2,
             /// <summary> Randomize with everything else set to Max. </summary>

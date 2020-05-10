@@ -12,11 +12,11 @@
 
 
 Categories:
-	Modules ‎✔
-	Items ‎✔
-	Sounds ‎✔
-	Models ‎✔
-	Textures ‎✔
+	Modules
+	Items
+	Sounds 
+	Models 
+	Textures 
 	Text
 	Character Location
 	Placable location

@@ -68,7 +68,7 @@ namespace kotor_Randomizer_2
                     case Globals.RandomizationLevel.Type:
                         rbAreaMusicType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Actions:
+                    case Globals.RandomizationLevel.Subtype:
                     case Globals.RandomizationLevel.None:
                     default:
                         cbAreaMusic.Checked = false;
@@ -107,7 +107,7 @@ namespace kotor_Randomizer_2
                     case Globals.RandomizationLevel.Type:
                         rbBattleMusicType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Actions:
+                    case Globals.RandomizationLevel.Subtype:
                     case Globals.RandomizationLevel.None:
                     default:
                         cbBattleMusic.Checked = false;
@@ -146,7 +146,7 @@ namespace kotor_Randomizer_2
                     case Globals.RandomizationLevel.Type:
                         rbAmbientNoiseType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Actions:
+                    case Globals.RandomizationLevel.Subtype:
                     case Globals.RandomizationLevel.None:
                     default:
                         cbAmbientNoise.Checked = false;
@@ -185,7 +185,7 @@ namespace kotor_Randomizer_2
                     case Globals.RandomizationLevel.Type:
                         rbCutsceneNoiseType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Actions:
+                    case Globals.RandomizationLevel.Subtype:
                     case Globals.RandomizationLevel.None:
                     default:
                         cbCutsceneNoise.Checked = false;
@@ -202,7 +202,7 @@ namespace kotor_Randomizer_2
                 {
                     if (rbNpcSoundsActions.Checked)
                     {
-                        return Globals.RandomizationLevel.Actions;
+                        return Globals.RandomizationLevel.Subtype;
                     }
                     else if (rbNpcSoundsType.Checked)
                     {
@@ -228,7 +228,7 @@ namespace kotor_Randomizer_2
                     case Globals.RandomizationLevel.Type:
                         rbNpcSoundsType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Actions:
+                    case Globals.RandomizationLevel.Subtype:
                         rbNpcSoundsActions.Checked = true;
                         break;
                     case Globals.RandomizationLevel.None:
@@ -247,7 +247,7 @@ namespace kotor_Randomizer_2
                 {
                     if (rbPartySoundsActions.Checked)
                     {
-                        return Globals.RandomizationLevel.Actions;
+                        return Globals.RandomizationLevel.Subtype;
                     }
                     else if (rbPartySoundsType.Checked)
                     {
@@ -273,7 +273,7 @@ namespace kotor_Randomizer_2
                     case Globals.RandomizationLevel.Type:
                         rbPartySoundsType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Actions:
+                    case Globals.RandomizationLevel.Subtype:
                         rbPartySoundsActions.Checked = true;
                         break;
                     case Globals.RandomizationLevel.None:
