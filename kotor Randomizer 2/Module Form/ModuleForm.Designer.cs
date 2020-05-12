@@ -35,6 +35,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.allSave_checkbox = new System.Windows.Forms.CheckBox();
             this.mgSave_checkbox = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // OmittedListBox
@@ -43,7 +45,7 @@
             this.OmittedListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.OmittedListBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.OmittedListBox.FormattingEnabled = true;
-            this.OmittedListBox.Location = new System.Drawing.Point(280, 20);
+            this.OmittedListBox.Location = new System.Drawing.Point(280, 50);
             this.OmittedListBox.Name = "OmittedListBox";
             this.OmittedListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.OmittedListBox.Size = new System.Drawing.Size(240, 379);
@@ -57,7 +59,7 @@
             this.RandomizedListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RandomizedListBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.RandomizedListBox.FormattingEnabled = true;
-            this.RandomizedListBox.Location = new System.Drawing.Point(20, 20);
+            this.RandomizedListBox.Location = new System.Drawing.Point(20, 50);
             this.RandomizedListBox.Name = "RandomizedListBox";
             this.RandomizedListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.RandomizedListBox.Size = new System.Drawing.Size(240, 379);
@@ -72,7 +74,7 @@
             this.PresetComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PresetComboBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.PresetComboBox.FormattingEnabled = true;
-            this.PresetComboBox.Location = new System.Drawing.Point(20, 430);
+            this.PresetComboBox.Location = new System.Drawing.Point(20, 460);
             this.PresetComboBox.Name = "PresetComboBox";
             this.PresetComboBox.Size = new System.Drawing.Size(500, 21);
             this.PresetComboBox.TabIndex = 18;
@@ -85,7 +87,7 @@
             this.modDelete_checkbox.Checked = true;
             this.modDelete_checkbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.modDelete_checkbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.modDelete_checkbox.Location = new System.Drawing.Point(20, 460);
+            this.modDelete_checkbox.Location = new System.Drawing.Point(20, 490);
             this.modDelete_checkbox.Name = "modDelete_checkbox";
             this.modDelete_checkbox.Size = new System.Drawing.Size(159, 17);
             this.modDelete_checkbox.TabIndex = 19;
@@ -97,7 +99,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Unispace", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.label1.Location = new System.Drawing.Point(20, 410);
+            this.label1.Location = new System.Drawing.Point(20, 440);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 14);
             this.label1.TabIndex = 20;
@@ -107,7 +109,7 @@
             // 
             this.allSave_checkbox.AutoSize = true;
             this.allSave_checkbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.allSave_checkbox.Location = new System.Drawing.Point(340, 460);
+            this.allSave_checkbox.Location = new System.Drawing.Point(340, 490);
             this.allSave_checkbox.Name = "allSave_checkbox";
             this.allSave_checkbox.Size = new System.Drawing.Size(157, 17);
             this.allSave_checkbox.TabIndex = 21;
@@ -118,19 +120,45 @@
             // 
             this.mgSave_checkbox.AutoSize = true;
             this.mgSave_checkbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.mgSave_checkbox.Location = new System.Drawing.Point(180, 460);
+            this.mgSave_checkbox.Location = new System.Drawing.Point(180, 490);
             this.mgSave_checkbox.Name = "mgSave_checkbox";
             this.mgSave_checkbox.Size = new System.Drawing.Size(153, 17);
             this.mgSave_checkbox.TabIndex = 22;
             this.mgSave_checkbox.Text = "Include Minigames in Save";
             this.mgSave_checkbox.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.label2.Location = new System.Drawing.Point(20, 20);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(95, 16);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "Randomized";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.label3.Location = new System.Drawing.Point(460, 20);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(61, 16);
+            this.label3.TabIndex = 24;
+            this.label3.Text = "Omitted";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // ModuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(541, 490);
+            this.ClientSize = new System.Drawing.Size(541, 531);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.mgSave_checkbox);
             this.Controls.Add(this.allSave_checkbox);
             this.Controls.Add(this.label1);
@@ -158,5 +186,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox allSave_checkbox;
         private System.Windows.Forms.CheckBox mgSave_checkbox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
