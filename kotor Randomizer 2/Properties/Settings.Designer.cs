@@ -526,5 +526,41 @@ namespace kotor_Randomizer_2.Properties {
                 this["RandomizeMelee"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int RandomizeDoorModels {
+            get {
+                return ((int)(this["RandomizeDoorModels"]));
+            }
+            set {
+                this["RandomizeDoorModels"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int RandomizeCharModels {
+            get {
+                return ((int)(this["RandomizeCharModels"]));
+            }
+            set {
+                this["RandomizeCharModels"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int RandomizePlaceModels {
+            get {
+                return ((int)(this["RandomizePlaceModels"]));
+            }
+            set {
+                this["RandomizePlaceModels"] = value;
+            }
+        }
     }
 }

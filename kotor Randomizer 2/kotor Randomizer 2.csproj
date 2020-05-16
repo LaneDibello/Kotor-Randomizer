@@ -93,6 +93,7 @@
     <Compile Include="Randomization\RandoForm.Designer.cs">
       <DependentUpon>RandoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Randomization\Randomize.cs" />
     <Compile Include="Seed Form\SeedForm.cs">
       <SubType>Form</SubType>
     </Compile>
