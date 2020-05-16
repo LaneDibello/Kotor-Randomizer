@@ -1,0 +1,43 @@
+﻿Texture Naming Scheme:
+CM - Cube Maps (appears in reflections)
+comm - Commoner Head
+C - Creature 
+fx - Effects
+i - Item textures (many of which seem to not be used in game i.e. belts/implants)
+AVOID BUMPMAPS:
+LDA - Dantooine Textures (Some unstable)
+LEH - Ebon Hawk Textures
+LHR - Hrakert?
+LKA - Kashyyyk (Some Broken)
+LKO - Korriban
+LMA - Manaan (Some Broken)
+LMG - Minigame
+LMI - mission??
+LQA - ??? (has a gizka texture)
+LRK - Rakata Stuff?
+LSF - Star Forge
+LSI - Leviathan Stuff?
+LSL - Sleyheyron?
+LSP - Space
+LTA - Tatooine
+LTE - ???
+LTS - Taris
+LUN - Unknown World
+LUZ - More unknown world stuff?
+LYV - Yavin
+LZA - Czerka
+LZZ - More sithy stuff
+M## - Module Specific Texture
+MGF - Mini-Game Fighter Encounter
+N - NPC
+old - Old man and Woman
+PFB - Player Female Body
+PFH - Player Female Head
+PLC - Placeable Texture
+PMB - Player Male Body
+PMH - Player Male Head
+P - Party Members (also a trandoshan and the scuba suit for some reason)
+Stunt - Stunt Textures (Like the clapping crowd)
+twilek - Take a wild guess
+V - Vehicles it would appear
+W - Weapons

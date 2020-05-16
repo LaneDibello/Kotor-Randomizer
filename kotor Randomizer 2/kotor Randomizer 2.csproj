@@ -195,6 +195,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Texture Name Scheme.txt" />
     <None Include="Resources\Krandom.ico" />
     <None Include="BoxActive.png" />
     <None Include="BoxActUnselected.png" />
