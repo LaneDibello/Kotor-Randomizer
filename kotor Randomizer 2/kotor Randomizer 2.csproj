@@ -186,6 +186,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Resources\ALLINCLUDED_modulesave.2da" />
+    <None Include="Resources\k_pebn_galaxy.ncs" />
+    <None Include="Resources\k_ren_visionland.ncs" />
     <None Include="Resources\MGINCLUDED_modulesave.2da" />
     <None Include="Resources\NODELETE_ALLINCLUDED_modulesave.2da" />
     <None Include="Resources\NODELETE_MGINCLUDED_modulesave.2da" />

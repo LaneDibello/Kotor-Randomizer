@@ -111,6 +111,26 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] k_pebn_galaxy {
+            get {
+                object obj = ResourceManager.GetObject("k_pebn_galaxy", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] k_ren_visionland {
+            get {
+                object obj = ResourceManager.GetObject("k_ren_visionland", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon Krandom {

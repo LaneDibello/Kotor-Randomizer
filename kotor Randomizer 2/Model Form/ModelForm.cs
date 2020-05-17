@@ -17,7 +17,6 @@ namespace kotor_Randomizer_2
         public ModelForm()
         {
             InitializeComponent();
-
             /*
              * These randomize settings use simple bitwise flags to store their settings
              * The right-most bit signalling if the category is active or not

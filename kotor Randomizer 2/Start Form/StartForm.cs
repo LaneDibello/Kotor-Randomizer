@@ -35,20 +35,45 @@ namespace kotor_Randomizer_2
 
         private void module_button_Click(object sender, EventArgs e)
         {
-            ModuleForm MF = new ModuleForm();
-            MF.Show();
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is ModuleForm)
+                {
+                    f.Focus();
+                    return;
+                }
+            }
+
+            new ModuleForm().Show();
             if (!Properties.Settings.Default.module_rando_active) { module_radio_Click(sender, e); module_radio_MouseLeave(sender, e); }
         }
 
         private void sound_button_Click(object sender, EventArgs e)
         {
-            SoundForm SF = new SoundForm();
-            SF.Show();
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is SoundForm)
+                {
+                    f.Focus();
+                    return;
+                }
+            }
+
+            new SoundForm().Show();
             if (!Properties.Settings.Default.sound_rando_active) { sound_radio_Click(sender, e); sound_radio_MouseLeave(sender, e); }
         }
 
         private void path_button_Click(object sender, EventArgs e)
         {
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is PathForm)
+                {
+                    f.Focus();
+                    return;
+                }
+            }
+
             PathForm PF = new PathForm();
             PF.Show();
             PF.BringToFront();
@@ -56,49 +81,105 @@ namespace kotor_Randomizer_2
 
         private void model_button_Click(object sender, EventArgs e)
         {
-            ModelForm MF = new ModelForm();
-            MF.Show();
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is ModelForm)
+                {
+                    f.Focus();
+                    return;
+                }
+            }
+
+            new ModelForm().Show();
             if (!Properties.Settings.Default.model_rando_active) { model_radio_Click(sender, e); model_radio_MouseLeave(sender, e); }
         }
 
         private void item_button_Click(object sender, EventArgs e)
         {
-            ItemForm IF = new ItemForm();
-            IF.Show();
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is ItemForm)
+                {
+                    f.Focus();
+                    return;
+                }
+            }
+
+            new ItemForm().Show();
             if (!Properties.Settings.Default.item_rando_active) { item_radio_Click(sender, e); item_radio_MouseLeave(sender, e); }
         }
 
         private void seed_button_Click(object sender, EventArgs e)
         {
-            SeedForm SF = new SeedForm();
-            SF.Show();
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is SeedForm)
+                {
+                    f.Focus();
+                    return;
+                }
+            }
+
+            new SeedForm().Show();
         }
 
         private void texture_button_Click(object sender, EventArgs e)
         {
-            TextureForm TF = new TextureForm();
-            TF.Show();
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is TextureForm)
+                {
+                    f.Focus();
+                    return;
+                }
+            }
+
+            new TextureForm().Show();
             if (!Properties.Settings.Default.texture_rando_active) { texture_radio_Click(sender, e); texture_radio_MouseLeave(sender, e); }
         }
 
         private void twoda_button_Click(object sender, EventArgs e)
         {
-            TwodaForm TF = new TwodaForm();
-            TF.Show();
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is TwodaForm)
+                {
+                    f.Focus();
+                    return;
+                }
+            }
+
+            new TwodaForm().Show();
             if (!Properties.Settings.Default.twoda_rando_active) { twoda_radio_Click(sender, e); twoda_radio_MouseLeave(sender, e); }
         }
 
         private void text_button_Click(object sender, EventArgs e)
         {
-            TextF TF = new TextF();
-            TF.Show();
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is TextF)
+                {
+                    f.Focus();
+                    return;
+                }
+            }
+
+            new TextF().Show();
             if (!Properties.Settings.Default.text_rando_active) { text_radio_Click(sender, e); text_radio_MouseLeave(sender, e); }
         }
 
         private void other_button_Click(object sender, EventArgs e)
         {
-            OtherForm OF = new OtherForm();
-            OF.Show();
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is OtherForm)
+                {
+                    f.Focus();
+                    return;
+                }
+            }
+
+            new OtherForm().Show();
             if (!Properties.Settings.Default.other_rando_active) { other_radio_Click(sender, e); other_radio_MouseLeave(sender, e); }
         }
     }

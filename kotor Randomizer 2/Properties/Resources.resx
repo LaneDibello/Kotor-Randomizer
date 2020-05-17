@@ -148,4 +148,10 @@
   <data name="Krandom" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Krandom.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="k_pebn_galaxy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k_pebn_galaxy.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="k_ren_visionland" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k_ren_visionland.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

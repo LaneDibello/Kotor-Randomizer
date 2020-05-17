@@ -37,6 +37,9 @@
             this.mgSave_checkbox = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.FixedDream_checkBox = new System.Windows.Forms.CheckBox();
+            this.galmap_checkbox = new System.Windows.Forms.CheckBox();
+            this.missionSpawn_checkbox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // OmittedListBox
@@ -93,6 +96,7 @@
             this.modDelete_checkbox.TabIndex = 19;
             this.modDelete_checkbox.Text = "Delete Milestone Save Data";
             this.modDelete_checkbox.UseVisualStyleBackColor = true;
+            this.modDelete_checkbox.CheckedChanged += new System.EventHandler(this.modDelete_checkbox_CheckedChanged);
             // 
             // label1
             // 
@@ -115,6 +119,7 @@
             this.allSave_checkbox.TabIndex = 21;
             this.allSave_checkbox.Text = "Include All Modules in Save";
             this.allSave_checkbox.UseVisualStyleBackColor = true;
+            this.allSave_checkbox.CheckedChanged += new System.EventHandler(this.allSave_checkbox_CheckedChanged);
             // 
             // mgSave_checkbox
             // 
@@ -126,6 +131,7 @@
             this.mgSave_checkbox.TabIndex = 22;
             this.mgSave_checkbox.Text = "Include Minigames in Save";
             this.mgSave_checkbox.UseVisualStyleBackColor = true;
+            this.mgSave_checkbox.CheckedChanged += new System.EventHandler(this.mgSave_checkbox_CheckedChanged);
             // 
             // label2
             // 
@@ -151,12 +157,52 @@
             this.label3.Text = "Omitted";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // FixedDream_checkBox
+            // 
+            this.FixedDream_checkBox.AutoSize = true;
+            this.FixedDream_checkBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.FixedDream_checkBox.Location = new System.Drawing.Point(20, 510);
+            this.FixedDream_checkBox.Name = "FixedDream_checkBox";
+            this.FixedDream_checkBox.Size = new System.Drawing.Size(137, 17);
+            this.FixedDream_checkBox.TabIndex = 25;
+            this.FixedDream_checkBox.Text = "Fixed Dream Sequence";
+            this.FixedDream_checkBox.UseVisualStyleBackColor = true;
+            this.FixedDream_checkBox.CheckedChanged += new System.EventHandler(this.FixedDream_checkBox_CheckedChanged);
+            // 
+            // galmap_checkbox
+            // 
+            this.galmap_checkbox.AutoSize = true;
+            this.galmap_checkbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.galmap_checkbox.Location = new System.Drawing.Point(180, 510);
+            this.galmap_checkbox.Name = "galmap_checkbox";
+            this.galmap_checkbox.Size = new System.Drawing.Size(131, 17);
+            this.galmap_checkbox.TabIndex = 26;
+            this.galmap_checkbox.Text = "Unlocked Galaxy Map";
+            this.galmap_checkbox.UseVisualStyleBackColor = true;
+            this.galmap_checkbox.CheckedChanged += new System.EventHandler(this.galmap_checkbox_CheckedChanged);
+            // 
+            // missionSpawn_checkbox
+            // 
+            this.missionSpawn_checkbox.AutoSize = true;
+            this.missionSpawn_checkbox.Enabled = false;
+            this.missionSpawn_checkbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.missionSpawn_checkbox.Location = new System.Drawing.Point(340, 510);
+            this.missionSpawn_checkbox.Name = "missionSpawn_checkbox";
+            this.missionSpawn_checkbox.Size = new System.Drawing.Size(125, 17);
+            this.missionSpawn_checkbox.TabIndex = 27;
+            this.missionSpawn_checkbox.Text = "Fixed Mission Spawn";
+            this.missionSpawn_checkbox.UseVisualStyleBackColor = true;
+            this.missionSpawn_checkbox.CheckedChanged += new System.EventHandler(this.missionSpawn_checkbox_CheckedChanged);
+            // 
             // ModuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(541, 531);
+            this.ClientSize = new System.Drawing.Size(541, 551);
+            this.Controls.Add(this.missionSpawn_checkbox);
+            this.Controls.Add(this.galmap_checkbox);
+            this.Controls.Add(this.FixedDream_checkBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.mgSave_checkbox);
@@ -188,5 +234,8 @@
         private System.Windows.Forms.CheckBox mgSave_checkbox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox FixedDream_checkBox;
+        private System.Windows.Forms.CheckBox galmap_checkbox;
+        private System.Windows.Forms.CheckBox missionSpawn_checkbox;
     }
 }

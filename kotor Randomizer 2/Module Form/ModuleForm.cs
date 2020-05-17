@@ -34,10 +34,22 @@ namespace kotor_Randomizer_2
             
             PresetComboBox.DataSource = Globals.PRESETS.Keys.ToList();
             PresetComboBox.SelectedIndex = Properties.Settings.Default.LastPresetComboIndex;
+
+            modDelete_checkbox.Checked = (Properties.Settings.Default.ModuleSaveStatus & 1) > 0;
+            mgSave_checkbox.Checked = (Properties.Settings.Default.ModuleSaveStatus & 2) > 0;
+            allSave_checkbox.Checked = (Properties.Settings.Default.ModuleSaveStatus & 4) > 0;
+
+            FixedDream_checkBox.Checked = Properties.Settings.Default.AddOverideFiles.Contains("k_ren_visionland.ncs");
+            galmap_checkbox.Checked = Properties.Settings.Default.AddOverideFiles.Contains("k_pebn_galaxy.ncs");
+            missionSpawn_checkbox.Checked = Properties.Settings.Default.AddOverideFiles.Contains("MISSIONFILENAME");
+
+            constructed = true;
         }
 
         #endregion
         #region Private Members
+
+        private bool constructed = false;
 
         private void updateListBoxes()
         {
@@ -142,6 +154,67 @@ namespace kotor_Randomizer_2
         private void ModuleForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.LastPresetComboIndex = PresetComboBox.SelectedIndex;
+
+            if (Properties.Settings.Default.ModuleSaveStatus != 1) { Properties.Settings.Default.AddOverideFiles.Add("modulesave.2da"); }
+            else if (Properties.Settings.Default.AddOverideFiles.Contains("modulesave.2da")) { Properties.Settings.Default.AddOverideFiles.Remove("modulesave.2da"); }
+        }
+
+        private void modDelete_checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!constructed) { return; }
+            Properties.Settings.Default.ModuleSaveStatus ^= 1;
+        }
+
+        private void mgSave_checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!constructed) { return; }
+            Properties.Settings.Default.ModuleSaveStatus ^= 1 << 1;
+        }
+
+        private void allSave_checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!constructed) { return; }
+            Properties.Settings.Default.ModuleSaveStatus ^= 1 << 2;
+            mgSave_checkbox.Checked = true;
+        }
+
+        private void FixedDream_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!constructed) { return; }
+            if (FixedDream_checkBox.Checked)
+            {
+                Properties.Settings.Default.AddOverideFiles.Add("k_ren_visionland.ncs");
+            }
+            else if (Properties.Settings.Default.AddOverideFiles.Contains("k_ren_visionland.ncs"))
+            {
+                Properties.Settings.Default.AddOverideFiles.Remove("k_ren_visionland.ncs");
+            }
+        }
+
+        private void galmap_checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!constructed) { return; }
+            if (galmap_checkbox.Checked)
+            {
+                Properties.Settings.Default.AddOverideFiles.Add("k_pebn_galaxy.ncs");
+            }
+            else if (Properties.Settings.Default.AddOverideFiles.Contains("k_pebn_galaxy.ncs"))
+            {
+                Properties.Settings.Default.AddOverideFiles.Remove("k_pebn_galaxy.ncs");
+            }
+        }
+
+        private void missionSpawn_checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!constructed) { return; }
+            if (missionSpawn_checkbox.Checked)
+            {
+                Properties.Settings.Default.AddOverideFiles.Add("MISSIONFILENAME");
+            }
+            else if (Properties.Settings.Default.AddOverideFiles.Contains("MISSIONFILENAME"))
+            {
+                Properties.Settings.Default.AddOverideFiles.Remove("MISSIONFILENAME");
+            }
         }
 
         #endregion
