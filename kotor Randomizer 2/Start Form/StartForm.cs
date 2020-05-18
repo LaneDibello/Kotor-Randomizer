@@ -29,6 +29,10 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.sound_rando_active = false;
             Properties.Settings.Default.model_rando_active = false;
             Properties.Settings.Default.item_rando_active = false;
+            Properties.Settings.Default.texture_rando_active = false;
+            Properties.Settings.Default.twoda_rando_active = false;
+            Properties.Settings.Default.text_rando_active = false;
+            Properties.Settings.Default.other_rando_active = false;
         }
 
         //Events
@@ -181,6 +185,12 @@ namespace kotor_Randomizer_2
 
             new OtherForm().Show();
             if (!Properties.Settings.Default.other_rando_active) { other_radio_Click(sender, e); other_radio_MouseLeave(sender, e); }
+        }
+
+        private void StartForm_Load(object sender, EventArgs e)
+        {
+            Randomize.GenerateSeed();
+            Properties.Settings.Default.Seed = Randomize.Rng.Next();
         }
     }
 }

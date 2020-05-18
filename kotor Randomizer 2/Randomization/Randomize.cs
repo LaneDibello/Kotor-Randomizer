@@ -23,7 +23,7 @@ namespace kotor_Randomizer_2
 
         public static int GenerateSeed()
         {
-            Seed = Rng.Next();
+            Seed = DateTime.Now.Millisecond;
             return Seed;
         }
 
