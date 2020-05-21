@@ -4,6 +4,7 @@
 	- In item rando have a polymorph option (all equipable of some type are disguises)
 	- Actually Make it randomize things
 	- look into crafting a fixed mission undercity script
+	- Rename all the texture controls, and add properties and settings to bind them, as well as save on form close.
 
 
 Categories:

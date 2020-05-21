@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace kotor_Randomizer_2
@@ -40,9 +33,6 @@ namespace kotor_Randomizer_2
 
 
         }
-
-        #region private Properties
-        #endregion
 
         #region Public Properties
 
@@ -940,8 +930,8 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.RandomizeLightsabers = (int)RandomizeLightsabers;
             Properties.Settings.Default.RandomizeGrenades = (int)RandomizeGrenades;
             Properties.Settings.Default.RandomizeMelee = (int)RandomizeMelee;
-            Properties.Settings.Default.Save();
 
+            Properties.Settings.Default.Save();
         }
 
         private void ItemForm_Load(object sender, EventArgs e)

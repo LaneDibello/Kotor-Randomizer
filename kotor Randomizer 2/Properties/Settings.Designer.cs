@@ -587,5 +587,173 @@ namespace kotor_Randomizer_2.Properties {
                 this["AddOverideFiles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TextureRandomizeCubeMaps {
+            get {
+                return ((int)(this["TextureRandomizeCubeMaps"]));
+            }
+            set {
+                this["TextureRandomizeCubeMaps"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TextureRandomizeCreatures {
+            get {
+                return ((int)(this["TextureRandomizeCreatures"]));
+            }
+            set {
+                this["TextureRandomizeCreatures"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TextureRandomizeEffects {
+            get {
+                return ((int)(this["TextureRandomizeEffects"]));
+            }
+            set {
+                this["TextureRandomizeEffects"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TextureRandomizeItems {
+            get {
+                return ((int)(this["TextureRandomizeItems"]));
+            }
+            set {
+                this["TextureRandomizeItems"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TextureRandomizePlanetary {
+            get {
+                return ((int)(this["TextureRandomizePlanetary"]));
+            }
+            set {
+                this["TextureRandomizePlanetary"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TextureRandomizeNPC {
+            get {
+                return ((int)(this["TextureRandomizeNPC"]));
+            }
+            set {
+                this["TextureRandomizeNPC"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TextureRandomizePlayHeads {
+            get {
+                return ((int)(this["TextureRandomizePlayHeads"]));
+            }
+            set {
+                this["TextureRandomizePlayHeads"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TextureRandomizePlayBodies {
+            get {
+                return ((int)(this["TextureRandomizePlayBodies"]));
+            }
+            set {
+                this["TextureRandomizePlayBodies"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TextureRandomizePlaceables {
+            get {
+                return ((int)(this["TextureRandomizePlaceables"]));
+            }
+            set {
+                this["TextureRandomizePlaceables"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TextureRandomizeParty {
+            get {
+                return ((int)(this["TextureRandomizeParty"]));
+            }
+            set {
+                this["TextureRandomizeParty"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TextureRandomizeStunt {
+            get {
+                return ((int)(this["TextureRandomizeStunt"]));
+            }
+            set {
+                this["TextureRandomizeStunt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TextureRandomizeVehicles {
+            get {
+                return ((int)(this["TextureRandomizeVehicles"]));
+            }
+            set {
+                this["TextureRandomizeVehicles"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TextureRandomizeWeapons {
+            get {
+                return ((int)(this["TextureRandomizeWeapons"]));
+            }
+            set {
+                this["TextureRandomizeWeapons"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TextureRandomizeOther {
+            get {
+                return ((int)(this["TextureRandomizeOther"]));
+            }
+            set {
+                this["TextureRandomizeOther"] = value;
+            }
+        }
     }
 }
