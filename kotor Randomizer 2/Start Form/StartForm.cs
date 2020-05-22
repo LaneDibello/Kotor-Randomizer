@@ -192,5 +192,19 @@ namespace kotor_Randomizer_2
             Randomize.GenerateSeed();
             Properties.Settings.Default.Seed = Randomize.Rng.Next();
         }
+
+        private void randomize_button_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is RandoForm)
+                {
+                    f.Focus();
+                    return;
+                }
+            }
+
+            new RandoForm().Show();
+        }
     }
 }

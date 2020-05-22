@@ -1,4 +1,4 @@
-﻿namespace kotor_Randomizer_2.Randomization
+﻿namespace kotor_Randomizer_2
 {
     partial class RandoForm
     {
@@ -28,19 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.RandomizationProgress = new System.Windows.Forms.ProgressBar();
             this.currentRandoTask_label = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // progressBar1
+            // RandomizationProgress
             // 
-            this.progressBar1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.progressBar1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.progressBar1.Location = new System.Drawing.Point(20, 50);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(480, 30);
-            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar1.TabIndex = 0;
+            this.RandomizationProgress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
+            this.RandomizationProgress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.RandomizationProgress.Location = new System.Drawing.Point(20, 50);
+            this.RandomizationProgress.Name = "RandomizationProgress";
+            this.RandomizationProgress.Size = new System.Drawing.Size(480, 30);
+            this.RandomizationProgress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.RandomizationProgress.TabIndex = 0;
+            this.RandomizationProgress.Click += new System.EventHandler(this.RandomizationProgress_Click);
             // 
             // currentRandoTask_label
             // 
@@ -59,7 +60,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.ClientSize = new System.Drawing.Size(521, 101);
             this.Controls.Add(this.currentRandoTask_label);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.RandomizationProgress);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.Name = "RandoForm";
             this.Text = "RandoForm";
@@ -69,7 +70,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar RandomizationProgress;
         private System.Windows.Forms.Label currentRandoTask_label;
     }
 }

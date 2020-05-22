@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModelForm));
             this.cbCharRando = new System.Windows.Forms.CheckBox();
             this.cbDoorRando = new System.Windows.Forms.CheckBox();
             this.cbPlaceRando = new System.Windows.Forms.CheckBox();
@@ -40,6 +41,7 @@
             this.pDoorRando = new System.Windows.Forms.Panel();
             this.cbBrokenDoor = new System.Windows.Forms.CheckBox();
             this.cbLargeDoor = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.pCharRando.SuspendLayout();
             this.pPlaceRando.SuspendLayout();
             this.pDoorRando.SuspendLayout();
@@ -168,12 +170,21 @@
             this.cbLargeDoor.UseVisualStyleBackColor = true;
             this.cbLargeDoor.CheckedChanged += new System.EventHandler(this.cbLargeDoor_CheckedChanged);
             // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(20, 170);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(390, 70);
+            this.label1.TabIndex = 6;
+            this.label1.Text = resources.GetString("label1.Text");
+            // 
             // ModelForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(432, 201);
+            this.ClientSize = new System.Drawing.Size(432, 261);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.pDoorRando);
             this.Controls.Add(this.pPlaceRando);
             this.Controls.Add(this.pCharRando);
@@ -208,5 +219,6 @@
         private System.Windows.Forms.CheckBox cbLargePlace;
         private System.Windows.Forms.CheckBox cbBrokenDoor;
         private System.Windows.Forms.CheckBox cbLargeDoor;
+        private System.Windows.Forms.Label label1;
     }
 }

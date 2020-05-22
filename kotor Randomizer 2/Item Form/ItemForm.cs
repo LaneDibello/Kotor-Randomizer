@@ -973,5 +973,51 @@ namespace kotor_Randomizer_2
         }
 
         #endregion
+
+        private void bAllOff_Click(object sender, EventArgs e)
+        {
+            foreach (Control c in ActiveForm.Controls)
+            {
+                if (c is CheckBox)
+                {
+                    if ((c as CheckBox).Checked)
+                    {
+                        (c as CheckBox).Checked = false;
+                    }
+                }
+            }
+        }
+
+        private void bAllMax_Click(object sender, EventArgs e)
+        {
+            foreach (Control c in ActiveForm.Controls)
+            {
+                if (c is CheckBox)
+                {
+                    if (!(c as CheckBox).Checked)
+                    {
+                        (c as CheckBox).Checked = true;
+                    }
+                }
+            }
+
+            foreach (Control c in ActiveForm.Controls)
+            {
+                if (c is FlowLayoutPanel)
+                {
+                    foreach (Control o in (c as FlowLayoutPanel).Controls)
+                    {
+                        if (o is RadioButton)
+                        {
+                            if ((o as RadioButton).Text == "Max")
+                            {
+                                (o as RadioButton).Checked = true;
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
     }
 }

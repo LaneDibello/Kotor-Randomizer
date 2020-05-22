@@ -156,6 +156,7 @@
             this.rbCubeMapsMax.Name = "rbCubeMapsMax";
             this.rbCubeMapsMax.Size = new System.Drawing.Size(45, 17);
             this.rbCubeMapsMax.TabIndex = 1;
+            this.rbCubeMapsMax.Tag = "";
             this.rbCubeMapsMax.Text = "Max";
             this.rbCubeMapsMax.UseVisualStyleBackColor = true;
             // 

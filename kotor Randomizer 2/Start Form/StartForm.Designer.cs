@@ -257,6 +257,7 @@
             this.randomize_button.TabIndex = 1;
             this.randomize_button.Text = "Randomize!";
             this.randomize_button.UseVisualStyleBackColor = false;
+            this.randomize_button.Click += new System.EventHandler(this.randomize_button_Click);
             this.randomize_button.MouseEnter += new System.EventHandler(this.randomize_button_MouseEnter);
             this.randomize_button.MouseLeave += new System.EventHandler(this.randomize_button_MouseLeave);
             // 

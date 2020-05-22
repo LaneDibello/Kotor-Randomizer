@@ -701,20 +701,21 @@ namespace kotor_Randomizer_2
                 }
             }
 
-            rbCubeMapsMax.Checked = true;
-            rbCreaturesMax.Checked = true;
-            rbEffectsMax.Checked = true;
-            rbItemsMax.Checked = true;
-            rbNPCMax.Checked = true;
-            rbOtherMax.Checked = true;
-            rbPartyMax.Checked = true;
-            rbPlaceablesMax.Checked = true;
-            rbPlanetaryMax.Checked = true;
-            rbPlayBodiesMax.Checked = true;
-            rbPlayHeadsMax.Checked = true;
-            rbStuntMax.Checked = true;
-            rbVehiclesMax.Checked = true;
-            rbWeaponsMax.Checked = true;
+            foreach (Control c in ActiveForm.Controls)
+            {
+                if (c is FlowLayoutPanel)
+                {
+                    foreach (Control o in (c as FlowLayoutPanel).Controls)
+                    {
+                        if ((o as RadioButton).Text == "Max")
+                        {
+                            (o as RadioButton).Checked = true;
+                        }
+                    }
+                }
+            }
         }
+
+
     }
 }

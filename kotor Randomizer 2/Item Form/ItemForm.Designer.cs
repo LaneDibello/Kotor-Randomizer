@@ -122,6 +122,8 @@
             this.lbOmitItems = new System.Windows.Forms.ListBox();
             this.tbItemOmitAdd = new System.Windows.Forms.TextBox();
             this.bAddOmitItem = new System.Windows.Forms.Button();
+            this.bAllOff = new System.Windows.Forms.Button();
+            this.bAllMax = new System.Windows.Forms.Button();
             this.flpArmor.SuspendLayout();
             this.flpStims.SuspendLayout();
             this.flpBelts.SuspendLayout();
@@ -392,22 +394,22 @@
             // rbArmorType
             // 
             this.rbArmorType.AutoSize = true;
-            this.rbArmorType.Checked = true;
             this.rbArmorType.Location = new System.Drawing.Point(71, 3);
             this.rbArmorType.Name = "rbArmorType";
             this.rbArmorType.Size = new System.Drawing.Size(49, 17);
             this.rbArmorType.TabIndex = 0;
-            this.rbArmorType.TabStop = true;
             this.rbArmorType.Text = "Type";
             this.rbArmorType.UseVisualStyleBackColor = true;
             // 
             // rbArmorMax
             // 
             this.rbArmorMax.AutoSize = true;
+            this.rbArmorMax.Checked = true;
             this.rbArmorMax.Location = new System.Drawing.Point(126, 3);
             this.rbArmorMax.Name = "rbArmorMax";
             this.rbArmorMax.Size = new System.Drawing.Size(45, 17);
             this.rbArmorMax.TabIndex = 1;
+            this.rbArmorMax.TabStop = true;
             this.rbArmorMax.Text = "Max";
             this.rbArmorMax.UseVisualStyleBackColor = true;
             // 
@@ -440,22 +442,22 @@
             // rbStimsType
             // 
             this.rbStimsType.AutoSize = true;
-            this.rbStimsType.Checked = true;
             this.rbStimsType.Location = new System.Drawing.Point(71, 3);
             this.rbStimsType.Name = "rbStimsType";
             this.rbStimsType.Size = new System.Drawing.Size(49, 17);
             this.rbStimsType.TabIndex = 0;
-            this.rbStimsType.TabStop = true;
             this.rbStimsType.Text = "Type";
             this.rbStimsType.UseVisualStyleBackColor = true;
             // 
             // rbStimsMax
             // 
             this.rbStimsMax.AutoSize = true;
+            this.rbStimsMax.Checked = true;
             this.rbStimsMax.Location = new System.Drawing.Point(126, 3);
             this.rbStimsMax.Name = "rbStimsMax";
             this.rbStimsMax.Size = new System.Drawing.Size(45, 17);
             this.rbStimsMax.TabIndex = 1;
+            this.rbStimsMax.TabStop = true;
             this.rbStimsMax.Text = "Max";
             this.rbStimsMax.UseVisualStyleBackColor = true;
             // 
@@ -487,22 +489,22 @@
             // rbBeltsType
             // 
             this.rbBeltsType.AutoSize = true;
-            this.rbBeltsType.Checked = true;
             this.rbBeltsType.Location = new System.Drawing.Point(71, 3);
             this.rbBeltsType.Name = "rbBeltsType";
             this.rbBeltsType.Size = new System.Drawing.Size(49, 17);
             this.rbBeltsType.TabIndex = 0;
-            this.rbBeltsType.TabStop = true;
             this.rbBeltsType.Text = "Type";
             this.rbBeltsType.UseVisualStyleBackColor = true;
             // 
             // rbBeltsMax
             // 
             this.rbBeltsMax.AutoSize = true;
+            this.rbBeltsMax.Checked = true;
             this.rbBeltsMax.Location = new System.Drawing.Point(126, 3);
             this.rbBeltsMax.Name = "rbBeltsMax";
             this.rbBeltsMax.Size = new System.Drawing.Size(45, 17);
             this.rbBeltsMax.TabIndex = 1;
+            this.rbBeltsMax.TabStop = true;
             this.rbBeltsMax.Text = "Max";
             this.rbBeltsMax.UseVisualStyleBackColor = true;
             // 
@@ -535,22 +537,22 @@
             // rbVariousType
             // 
             this.rbVariousType.AutoSize = true;
-            this.rbVariousType.Checked = true;
             this.rbVariousType.Location = new System.Drawing.Point(71, 3);
             this.rbVariousType.Name = "rbVariousType";
             this.rbVariousType.Size = new System.Drawing.Size(49, 17);
             this.rbVariousType.TabIndex = 0;
-            this.rbVariousType.TabStop = true;
             this.rbVariousType.Text = "Type";
             this.rbVariousType.UseVisualStyleBackColor = true;
             // 
             // rbVariousMax
             // 
             this.rbVariousMax.AutoSize = true;
+            this.rbVariousMax.Checked = true;
             this.rbVariousMax.Location = new System.Drawing.Point(126, 3);
             this.rbVariousMax.Name = "rbVariousMax";
             this.rbVariousMax.Size = new System.Drawing.Size(45, 17);
             this.rbVariousMax.TabIndex = 1;
+            this.rbVariousMax.TabStop = true;
             this.rbVariousMax.Text = "Max";
             this.rbVariousMax.UseVisualStyleBackColor = true;
             // 
@@ -583,22 +585,22 @@
             // rbDroidType
             // 
             this.rbDroidType.AutoSize = true;
-            this.rbDroidType.Checked = true;
             this.rbDroidType.Location = new System.Drawing.Point(71, 3);
             this.rbDroidType.Name = "rbDroidType";
             this.rbDroidType.Size = new System.Drawing.Size(49, 17);
             this.rbDroidType.TabIndex = 0;
-            this.rbDroidType.TabStop = true;
             this.rbDroidType.Text = "Type";
             this.rbDroidType.UseVisualStyleBackColor = true;
             // 
             // rbDroidMax
             // 
             this.rbDroidMax.AutoSize = true;
+            this.rbDroidMax.Checked = true;
             this.rbDroidMax.Location = new System.Drawing.Point(126, 3);
             this.rbDroidMax.Name = "rbDroidMax";
             this.rbDroidMax.Size = new System.Drawing.Size(45, 17);
             this.rbDroidMax.TabIndex = 1;
+            this.rbDroidMax.TabStop = true;
             this.rbDroidMax.Text = "Max";
             this.rbDroidMax.UseVisualStyleBackColor = true;
             // 
@@ -678,22 +680,22 @@
             // rbGlovesType
             // 
             this.rbGlovesType.AutoSize = true;
-            this.rbGlovesType.Checked = true;
             this.rbGlovesType.Location = new System.Drawing.Point(71, 3);
             this.rbGlovesType.Name = "rbGlovesType";
             this.rbGlovesType.Size = new System.Drawing.Size(49, 17);
             this.rbGlovesType.TabIndex = 0;
-            this.rbGlovesType.TabStop = true;
             this.rbGlovesType.Text = "Type";
             this.rbGlovesType.UseVisualStyleBackColor = true;
             // 
             // rbGlovesMax
             // 
             this.rbGlovesMax.AutoSize = true;
+            this.rbGlovesMax.Checked = true;
             this.rbGlovesMax.Location = new System.Drawing.Point(126, 3);
             this.rbGlovesMax.Name = "rbGlovesMax";
             this.rbGlovesMax.Size = new System.Drawing.Size(45, 17);
             this.rbGlovesMax.TabIndex = 1;
+            this.rbGlovesMax.TabStop = true;
             this.rbGlovesMax.Text = "Max";
             this.rbGlovesMax.UseVisualStyleBackColor = true;
             // 
@@ -726,22 +728,22 @@
             // rbImplantsType
             // 
             this.rbImplantsType.AutoSize = true;
-            this.rbImplantsType.Checked = true;
             this.rbImplantsType.Location = new System.Drawing.Point(71, 3);
             this.rbImplantsType.Name = "rbImplantsType";
             this.rbImplantsType.Size = new System.Drawing.Size(49, 17);
             this.rbImplantsType.TabIndex = 0;
-            this.rbImplantsType.TabStop = true;
             this.rbImplantsType.Text = "Type";
             this.rbImplantsType.UseVisualStyleBackColor = true;
             // 
             // rbImplantsMax
             // 
             this.rbImplantsMax.AutoSize = true;
+            this.rbImplantsMax.Checked = true;
             this.rbImplantsMax.Location = new System.Drawing.Point(126, 3);
             this.rbImplantsMax.Name = "rbImplantsMax";
             this.rbImplantsMax.Size = new System.Drawing.Size(45, 17);
             this.rbImplantsMax.TabIndex = 1;
+            this.rbImplantsMax.TabStop = true;
             this.rbImplantsMax.Text = "Max";
             this.rbImplantsMax.UseVisualStyleBackColor = true;
             // 
@@ -774,22 +776,22 @@
             // rbMasksType
             // 
             this.rbMasksType.AutoSize = true;
-            this.rbMasksType.Checked = true;
             this.rbMasksType.Location = new System.Drawing.Point(71, 3);
             this.rbMasksType.Name = "rbMasksType";
             this.rbMasksType.Size = new System.Drawing.Size(49, 17);
             this.rbMasksType.TabIndex = 0;
-            this.rbMasksType.TabStop = true;
             this.rbMasksType.Text = "Type";
             this.rbMasksType.UseVisualStyleBackColor = true;
             // 
             // rbMasksMax
             // 
             this.rbMasksMax.AutoSize = true;
+            this.rbMasksMax.Checked = true;
             this.rbMasksMax.Location = new System.Drawing.Point(126, 3);
             this.rbMasksMax.Name = "rbMasksMax";
             this.rbMasksMax.Size = new System.Drawing.Size(45, 17);
             this.rbMasksMax.TabIndex = 1;
+            this.rbMasksMax.TabStop = true;
             this.rbMasksMax.Text = "Max";
             this.rbMasksMax.UseVisualStyleBackColor = true;
             // 
@@ -821,22 +823,22 @@
             // rbPazType
             // 
             this.rbPazType.AutoSize = true;
-            this.rbPazType.Checked = true;
             this.rbPazType.Location = new System.Drawing.Point(71, 3);
             this.rbPazType.Name = "rbPazType";
             this.rbPazType.Size = new System.Drawing.Size(49, 17);
             this.rbPazType.TabIndex = 0;
-            this.rbPazType.TabStop = true;
             this.rbPazType.Text = "Type";
             this.rbPazType.UseVisualStyleBackColor = true;
             // 
             // rbPazMax
             // 
             this.rbPazMax.AutoSize = true;
+            this.rbPazMax.Checked = true;
             this.rbPazMax.Location = new System.Drawing.Point(126, 3);
             this.rbPazMax.Name = "rbPazMax";
             this.rbPazMax.Size = new System.Drawing.Size(45, 17);
             this.rbPazMax.TabIndex = 1;
+            this.rbPazMax.TabStop = true;
             this.rbPazMax.Text = "Max";
             this.rbPazMax.UseVisualStyleBackColor = true;
             // 
@@ -869,22 +871,22 @@
             // rbMinesType
             // 
             this.rbMinesType.AutoSize = true;
-            this.rbMinesType.Checked = true;
             this.rbMinesType.Location = new System.Drawing.Point(71, 3);
             this.rbMinesType.Name = "rbMinesType";
             this.rbMinesType.Size = new System.Drawing.Size(49, 17);
             this.rbMinesType.TabIndex = 0;
-            this.rbMinesType.TabStop = true;
             this.rbMinesType.Text = "Type";
             this.rbMinesType.UseVisualStyleBackColor = true;
             // 
             // rbMinesMax
             // 
             this.rbMinesMax.AutoSize = true;
+            this.rbMinesMax.Checked = true;
             this.rbMinesMax.Location = new System.Drawing.Point(126, 3);
             this.rbMinesMax.Name = "rbMinesMax";
             this.rbMinesMax.Size = new System.Drawing.Size(45, 17);
             this.rbMinesMax.TabIndex = 1;
+            this.rbMinesMax.TabStop = true;
             this.rbMinesMax.Text = "Max";
             this.rbMinesMax.UseVisualStyleBackColor = true;
             // 
@@ -917,22 +919,22 @@
             // rbUpgradesType
             // 
             this.rbUpgradesType.AutoSize = true;
-            this.rbUpgradesType.Checked = true;
             this.rbUpgradesType.Location = new System.Drawing.Point(71, 3);
             this.rbUpgradesType.Name = "rbUpgradesType";
             this.rbUpgradesType.Size = new System.Drawing.Size(49, 17);
             this.rbUpgradesType.TabIndex = 0;
-            this.rbUpgradesType.TabStop = true;
             this.rbUpgradesType.Text = "Type";
             this.rbUpgradesType.UseVisualStyleBackColor = true;
             // 
             // rbUpgradesMax
             // 
             this.rbUpgradesMax.AutoSize = true;
+            this.rbUpgradesMax.Checked = true;
             this.rbUpgradesMax.Location = new System.Drawing.Point(126, 3);
             this.rbUpgradesMax.Name = "rbUpgradesMax";
             this.rbUpgradesMax.Size = new System.Drawing.Size(45, 17);
             this.rbUpgradesMax.TabIndex = 1;
+            this.rbUpgradesMax.TabStop = true;
             this.rbUpgradesMax.Text = "Max";
             this.rbUpgradesMax.UseVisualStyleBackColor = true;
             // 
@@ -965,22 +967,22 @@
             // rbBlastersType
             // 
             this.rbBlastersType.AutoSize = true;
-            this.rbBlastersType.Checked = true;
             this.rbBlastersType.Location = new System.Drawing.Point(71, 3);
             this.rbBlastersType.Name = "rbBlastersType";
             this.rbBlastersType.Size = new System.Drawing.Size(49, 17);
             this.rbBlastersType.TabIndex = 0;
-            this.rbBlastersType.TabStop = true;
             this.rbBlastersType.Text = "Type";
             this.rbBlastersType.UseVisualStyleBackColor = true;
             // 
             // rbBlastersMax
             // 
             this.rbBlastersMax.AutoSize = true;
+            this.rbBlastersMax.Checked = true;
             this.rbBlastersMax.Location = new System.Drawing.Point(126, 3);
             this.rbBlastersMax.Name = "rbBlastersMax";
             this.rbBlastersMax.Size = new System.Drawing.Size(45, 17);
             this.rbBlastersMax.TabIndex = 1;
+            this.rbBlastersMax.TabStop = true;
             this.rbBlastersMax.Text = "Max";
             this.rbBlastersMax.UseVisualStyleBackColor = true;
             // 
@@ -1013,22 +1015,22 @@
             // rbCreatureType
             // 
             this.rbCreatureType.AutoSize = true;
-            this.rbCreatureType.Checked = true;
             this.rbCreatureType.Location = new System.Drawing.Point(71, 3);
             this.rbCreatureType.Name = "rbCreatureType";
             this.rbCreatureType.Size = new System.Drawing.Size(49, 17);
             this.rbCreatureType.TabIndex = 0;
-            this.rbCreatureType.TabStop = true;
             this.rbCreatureType.Text = "Type";
             this.rbCreatureType.UseVisualStyleBackColor = true;
             // 
             // rbCreatureMax
             // 
             this.rbCreatureMax.AutoSize = true;
+            this.rbCreatureMax.Checked = true;
             this.rbCreatureMax.Location = new System.Drawing.Point(126, 3);
             this.rbCreatureMax.Name = "rbCreatureMax";
             this.rbCreatureMax.Size = new System.Drawing.Size(45, 17);
             this.rbCreatureMax.TabIndex = 1;
+            this.rbCreatureMax.TabStop = true;
             this.rbCreatureMax.Text = "Max";
             this.rbCreatureMax.UseVisualStyleBackColor = true;
             // 
@@ -1061,22 +1063,22 @@
             // rbLightsabersType
             // 
             this.rbLightsabersType.AutoSize = true;
-            this.rbLightsabersType.Checked = true;
             this.rbLightsabersType.Location = new System.Drawing.Point(71, 3);
             this.rbLightsabersType.Name = "rbLightsabersType";
             this.rbLightsabersType.Size = new System.Drawing.Size(49, 17);
             this.rbLightsabersType.TabIndex = 0;
-            this.rbLightsabersType.TabStop = true;
             this.rbLightsabersType.Text = "Type";
             this.rbLightsabersType.UseVisualStyleBackColor = true;
             // 
             // rbLightsabersMax
             // 
             this.rbLightsabersMax.AutoSize = true;
+            this.rbLightsabersMax.Checked = true;
             this.rbLightsabersMax.Location = new System.Drawing.Point(126, 3);
             this.rbLightsabersMax.Name = "rbLightsabersMax";
             this.rbLightsabersMax.Size = new System.Drawing.Size(45, 17);
             this.rbLightsabersMax.TabIndex = 1;
+            this.rbLightsabersMax.TabStop = true;
             this.rbLightsabersMax.Text = "Max";
             this.rbLightsabersMax.UseVisualStyleBackColor = true;
             // 
@@ -1108,22 +1110,22 @@
             // rbGrenadesType
             // 
             this.rbGrenadesType.AutoSize = true;
-            this.rbGrenadesType.Checked = true;
             this.rbGrenadesType.Location = new System.Drawing.Point(71, 3);
             this.rbGrenadesType.Name = "rbGrenadesType";
             this.rbGrenadesType.Size = new System.Drawing.Size(49, 17);
             this.rbGrenadesType.TabIndex = 0;
-            this.rbGrenadesType.TabStop = true;
             this.rbGrenadesType.Text = "Type";
             this.rbGrenadesType.UseVisualStyleBackColor = true;
             // 
             // rbGrenadesMax
             // 
             this.rbGrenadesMax.AutoSize = true;
+            this.rbGrenadesMax.Checked = true;
             this.rbGrenadesMax.Location = new System.Drawing.Point(126, 3);
             this.rbGrenadesMax.Name = "rbGrenadesMax";
             this.rbGrenadesMax.Size = new System.Drawing.Size(45, 17);
             this.rbGrenadesMax.TabIndex = 1;
+            this.rbGrenadesMax.TabStop = true;
             this.rbGrenadesMax.Text = "Max";
             this.rbGrenadesMax.UseVisualStyleBackColor = true;
             // 
@@ -1156,22 +1158,22 @@
             // rbMeleeType
             // 
             this.rbMeleeType.AutoSize = true;
-            this.rbMeleeType.Checked = true;
             this.rbMeleeType.Location = new System.Drawing.Point(71, 3);
             this.rbMeleeType.Name = "rbMeleeType";
             this.rbMeleeType.Size = new System.Drawing.Size(49, 17);
             this.rbMeleeType.TabIndex = 0;
-            this.rbMeleeType.TabStop = true;
             this.rbMeleeType.Text = "Type";
             this.rbMeleeType.UseVisualStyleBackColor = true;
             // 
             // rbMeleeMax
             // 
             this.rbMeleeMax.AutoSize = true;
+            this.rbMeleeMax.Checked = true;
             this.rbMeleeMax.Location = new System.Drawing.Point(126, 3);
             this.rbMeleeMax.Name = "rbMeleeMax";
             this.rbMeleeMax.Size = new System.Drawing.Size(45, 17);
             this.rbMeleeMax.TabIndex = 1;
+            this.rbMeleeMax.TabStop = true;
             this.rbMeleeMax.Text = "Max";
             this.rbMeleeMax.UseVisualStyleBackColor = true;
             // 
@@ -1216,22 +1218,22 @@
             // rbHidesType
             // 
             this.rbHidesType.AutoSize = true;
-            this.rbHidesType.Checked = true;
             this.rbHidesType.Location = new System.Drawing.Point(71, 3);
             this.rbHidesType.Name = "rbHidesType";
             this.rbHidesType.Size = new System.Drawing.Size(49, 17);
             this.rbHidesType.TabIndex = 0;
-            this.rbHidesType.TabStop = true;
             this.rbHidesType.Text = "Type";
             this.rbHidesType.UseVisualStyleBackColor = true;
             // 
             // rbHidesMax
             // 
             this.rbHidesMax.AutoSize = true;
+            this.rbHidesMax.Checked = true;
             this.rbHidesMax.Location = new System.Drawing.Point(126, 3);
             this.rbHidesMax.Name = "rbHidesMax";
             this.rbHidesMax.Size = new System.Drawing.Size(45, 17);
             this.rbHidesMax.TabIndex = 1;
+            this.rbHidesMax.TabStop = true;
             this.rbHidesMax.Text = "Max";
             this.rbHidesMax.UseVisualStyleBackColor = true;
             // 
@@ -1290,12 +1292,48 @@
             this.bAddOmitItem.UseVisualStyleBackColor = false;
             this.bAddOmitItem.Click += new System.EventHandler(this.bAddOmitItem_Click);
             // 
+            // bAllOff
+            // 
+            this.bAllOff.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.bAllOff.FlatAppearance.BorderSize = 2;
+            this.bAllOff.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.bAllOff.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
+            this.bAllOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bAllOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bAllOff.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.bAllOff.Location = new System.Drawing.Point(340, 420);
+            this.bAllOff.Name = "bAllOff";
+            this.bAllOff.Size = new System.Drawing.Size(200, 60);
+            this.bAllOff.TabIndex = 28;
+            this.bAllOff.Text = "Disable All";
+            this.bAllOff.UseVisualStyleBackColor = false;
+            this.bAllOff.Click += new System.EventHandler(this.bAllOff_Click);
+            // 
+            // bAllMax
+            // 
+            this.bAllMax.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.bAllMax.FlatAppearance.BorderSize = 2;
+            this.bAllMax.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.bAllMax.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
+            this.bAllMax.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bAllMax.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bAllMax.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.bAllMax.Location = new System.Drawing.Point(340, 490);
+            this.bAllMax.Name = "bAllMax";
+            this.bAllMax.Size = new System.Drawing.Size(200, 60);
+            this.bAllMax.TabIndex = 29;
+            this.bAllMax.Text = "All Max";
+            this.bAllMax.UseVisualStyleBackColor = false;
+            this.bAllMax.Click += new System.EventHandler(this.bAllMax_Click);
+            // 
             // ItemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.ClientSize = new System.Drawing.Size(561, 572);
+            this.Controls.Add(this.bAllMax);
+            this.Controls.Add(this.bAllOff);
             this.Controls.Add(this.bAddOmitItem);
             this.Controls.Add(this.tbItemOmitAdd);
             this.Controls.Add(this.lbOmitItems);
@@ -1482,5 +1520,7 @@
         private System.Windows.Forms.ListBox lbOmitItems;
         private System.Windows.Forms.TextBox tbItemOmitAdd;
         private System.Windows.Forms.Button bAddOmitItem;
+        private System.Windows.Forms.Button bAllOff;
+        private System.Windows.Forms.Button bAllMax;
     }
 }
