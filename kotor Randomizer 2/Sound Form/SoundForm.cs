@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace kotor_Randomizer_2
@@ -338,28 +331,6 @@ namespace kotor_Randomizer_2
             flpPartySounds.Visible = !isChecked;
         }
 
-        private void bOK_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.OK;
-
-            Properties.Settings.Default.RandomizeAreaMusic = (int)RandomizeAreaMusic;
-            Properties.Settings.Default.RandomizeAmbientNoise = (int)RandomizeAmbientNoise;
-            Properties.Settings.Default.RandomizeBattleMusic = (int)RandomizeBattleMusic;
-            Properties.Settings.Default.RandomizeCutsceneNoise = (int)RandomizeCutsceneNoise;
-            Properties.Settings.Default.RandomizeNpcSounds = (int)RandomizeNpcSounds;
-            Properties.Settings.Default.RandomizePartySounds = (int)RandomizePartySounds;
-            Properties.Settings.Default.MixNpcAndPartySounds = MixNpcAndParty;
-            Properties.Settings.Default.Save();
-
-            this.Close();
-        }
-
-        private void bCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
         //I dont think these do anything, but glasnonck had them so i'm leaving em in
         private void rbNpcSoundsActions_CheckedChanged(object sender, EventArgs e)
         {
@@ -385,7 +356,17 @@ namespace kotor_Randomizer_2
             }
         }
 
-        
+        private void SoundForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.RandomizeAreaMusic = (int)RandomizeAreaMusic;
+            Properties.Settings.Default.RandomizeAmbientNoise = (int)RandomizeAmbientNoise;
+            Properties.Settings.Default.RandomizeBattleMusic = (int)RandomizeBattleMusic;
+            Properties.Settings.Default.RandomizeCutsceneNoise = (int)RandomizeCutsceneNoise;
+            Properties.Settings.Default.RandomizeNpcSounds = (int)RandomizeNpcSounds;
+            Properties.Settings.Default.RandomizePartySounds = (int)RandomizePartySounds;
+            Properties.Settings.Default.MixNpcAndPartySounds = MixNpcAndParty;
+            Properties.Settings.Default.Save();
+        }
 
         #endregion
     }

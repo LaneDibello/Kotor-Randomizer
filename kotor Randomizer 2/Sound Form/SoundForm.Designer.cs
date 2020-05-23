@@ -61,8 +61,6 @@
             this.rbNpcSoundsActions = new System.Windows.Forms.RadioButton();
             this.rbNpcSoundsType = new System.Windows.Forms.RadioButton();
             this.rbNpcSoundsMax = new System.Windows.Forms.RadioButton();
-            this.bOK = new System.Windows.Forms.Button();
-            this.bCancel = new System.Windows.Forms.Button();
             this.flpAreaMusic.SuspendLayout();
             this.flpCutsceneNoise.SuspendLayout();
             this.flpAmbientNoise.SuspendLayout();
@@ -448,48 +446,12 @@
             this.rbNpcSoundsMax.Text = "Max";
             this.rbNpcSoundsMax.UseVisualStyleBackColor = true;
             // 
-            // bOK
-            // 
-            this.bOK.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.bOK.FlatAppearance.BorderSize = 2;
-            this.bOK.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.bOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(216)))), ((int)(((byte)(8)))));
-            this.bOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bOK.Font = new System.Drawing.Font("Unispace", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bOK.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.bOK.Location = new System.Drawing.Point(20, 190);
-            this.bOK.Name = "bOK";
-            this.bOK.Size = new System.Drawing.Size(140, 30);
-            this.bOK.TabIndex = 19;
-            this.bOK.Text = "OK";
-            this.bOK.UseVisualStyleBackColor = false;
-            this.bOK.Click += new System.EventHandler(this.bOK_Click);
-            // 
-            // bCancel
-            // 
-            this.bCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.bCancel.FlatAppearance.BorderSize = 2;
-            this.bCancel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.bCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(216)))), ((int)(((byte)(8)))));
-            this.bCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bCancel.Font = new System.Drawing.Font("Unispace", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.bCancel.Location = new System.Drawing.Point(170, 190);
-            this.bCancel.Name = "bCancel";
-            this.bCancel.Size = new System.Drawing.Size(140, 30);
-            this.bCancel.TabIndex = 20;
-            this.bCancel.Text = "Cancel";
-            this.bCancel.UseVisualStyleBackColor = false;
-            this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
-            // 
             // SoundForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(331, 242);
-            this.Controls.Add(this.bCancel);
-            this.Controls.Add(this.bOK);
+            this.ClientSize = new System.Drawing.Size(331, 202);
             this.Controls.Add(this.labelUnavailable2);
             this.Controls.Add(this.flpAreaMusic);
             this.Controls.Add(this.flpCutsceneNoise);
@@ -512,6 +474,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sounds and Music";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SoundForm_FormClosing);
             this.flpAreaMusic.ResumeLayout(false);
             this.flpAreaMusic.PerformLayout();
             this.flpCutsceneNoise.ResumeLayout(false);
@@ -562,7 +525,5 @@
         private System.Windows.Forms.RadioButton rbNpcSoundsActions;
         private System.Windows.Forms.RadioButton rbNpcSoundsType;
         private System.Windows.Forms.RadioButton rbNpcSoundsMax;
-        private System.Windows.Forms.Button bOK;
-        private System.Windows.Forms.Button bCancel;
     }
 }

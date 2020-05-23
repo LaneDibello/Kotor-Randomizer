@@ -1,10 +1,10 @@
 ﻿TO DO:
 	- Add Unrandomize button on Start Form
 	- devise a better preset saving system
-	- In item rando have a polymorph option (all equipable of some type are disguises)
 	- Actually Make it randomize things
 	- look into crafting a fixed mission undercity script
-
+	- make name rando a check mark, or maybe just check if blank?
+	- save toher properties on form close
 
 Categories:
 	Modules
@@ -18,7 +18,6 @@ Categories:
 	2das
 	Name Generation
 	doors
-	Area Files?
 
 Colors:
 	Background: 0, 0, 22

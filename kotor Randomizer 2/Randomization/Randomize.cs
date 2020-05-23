@@ -8,6 +8,7 @@ namespace kotor_Randomizer_2
 {
     public static class Randomize
     {
+
         [ThreadStatic]
         private static Random Local;
 
