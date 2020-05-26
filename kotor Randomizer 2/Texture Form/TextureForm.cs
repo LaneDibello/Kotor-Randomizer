@@ -31,6 +31,20 @@ namespace kotor_Randomizer_2
             RandomizeVehicles = (Globals.RandomizationLevel)Properties.Settings.Default.TextureRandomizeVehicles;
             RandomizeWeapons = (Globals.RandomizationLevel)Properties.Settings.Default.TextureRandomizeWeapons;
             RandomizeOther = (Globals.RandomizationLevel)Properties.Settings.Default.TextureRandomizeOther;
+
+            switch (Properties.Settings.Default.TexturePack)
+            {
+                case 1:
+                    rbTextMed.Checked = true;
+                    break;
+                case 2:
+                    rbTextLow.Checked = true;
+                    break;
+                default:
+                case 0:
+                    rbTextHigh.Checked = true;
+                    break;
+            }
         }
 
         #region Public Properties
@@ -652,7 +666,6 @@ namespace kotor_Randomizer_2
         {
             flpOther.Enabled = cbOther.Checked;
         }
-        #endregion
 
         private void TextureForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -670,6 +683,10 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.TextureRandomizeVehicles = (int)RandomizeVehicles;
             Properties.Settings.Default.TextureRandomizeWeapons = (int)RandomizeWeapons;
             Properties.Settings.Default.TextureRandomizeOther = (int)RandomizeOther;
+
+            if (rbTextHigh.Checked) { Properties.Settings.Default.TexturePack = 0; }
+            if (rbTextMed.Checked) { Properties.Settings.Default.TexturePack = 1; }
+            if (rbTextLow.Checked) { Properties.Settings.Default.TexturePack = 2; }
 
             Properties.Settings.Default.Save();
         }
@@ -715,6 +732,7 @@ namespace kotor_Randomizer_2
                 }
             }
         }
+        #endregion
 
 
     }

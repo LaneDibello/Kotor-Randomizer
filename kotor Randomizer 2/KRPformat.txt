@@ -1,0 +1,33 @@
+KRP File Format:
+
+#If the version info doesn't exist then it is the old format KRP, and needs to be converted.
+
+Version Info : 8 chars : "KRP V2.0"
+
+Active Cats  : 8 bytes : Boolean Category Flags
+
+*Categories* - Each section will only exist if it was flagged as active
+	Modules : 4 chars : "MODU"
+		Omitted Modules : sting list
+		Modules Settings : byte array : Boolean Module Setting Flags
+	Items : 4 chars : "ITEM"
+		Randomization Levels : 18 bytes : int rando level for each category
+		Omitted Items : string list
+	Sounds : 4 chars : "SOUN"
+		Randomization Levels : 6 bytes : int rando level for each category
+		Sound Settings : 1 byte : Boolean Sound Setting Flags
+	Models : 4 chars : "MODE"
+		Randomization Levels : 3 bytes : int rando level for each category
+	Textures : 4 chars : "TEXU"
+		Randomization Levels : 14 bytes : int rando level for each category
+		Texture Pack : 1 byte : int texture pack index
+	2das : 4 chars : "TWDA"
+		//TBD
+	Text : 4 chars : "TEXT"
+		//TBD
+	Other : 4 chars : "OTHR"
+		Name Gen Bool : 1 byte : Boolean for if Name Gen is active (Following only exist if true)
+			Male Firstnames : string list : list of supplied Male First names
+			Female Firstnames : string list : list of supplied Female First names
+			Lastnames : string list : list of supplied lastnames
+		Other Settings : byte array : Boolean Other Settings Flags

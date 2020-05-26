@@ -65,6 +65,8 @@ namespace kotor_Randomizer_2
         #endregion
 
         #region Constants
+        public static readonly string NAMEGEN_CHARS = "qwertyuiopasdfghjklzxcvbnm-'";
+
         public static readonly List<string> ITEMS = new List<string>() {
             "g1_a_class5001", "g1_a_class5002", "g1_a_class6001", "g1_a_class8001",
             "g1_i_belt001", "g1_i_drdcomspk01", "g1_i_drdhvplat01", "g1_i_drdshld001",

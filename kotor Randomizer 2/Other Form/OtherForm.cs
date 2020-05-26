@@ -18,6 +18,9 @@ namespace kotor_Randomizer_2
             InitializeComponent();
 
             cbNameList.SelectedIndex = 0;
+
+            cbNameGen.Checked = Properties.Settings.Default.NameGenRando;
+            cbPolymorph.Checked = Properties.Settings.Default.PolymorphMode;
         }
 
         #region private properties
@@ -36,7 +39,7 @@ namespace kotor_Randomizer_2
 
             foreach (string s in sc)
             {
-                tbNameData.Text += s + "\n";
+                tbNameData.Text += s + "\r\n";
             }
             ignoretextchange = false;
         }
@@ -47,7 +50,7 @@ namespace kotor_Randomizer_2
 
             foreach (string s in tbNameData.Text.Split('\n'))
             {
-                sc.Add(s);
+                sc.Add(s.TrimEnd('\r').ToLower());
             }
         }
 
@@ -97,6 +100,26 @@ namespace kotor_Randomizer_2
         private void cbPolymorph_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.PolymorphMode = cbPolymorph.Checked;
+        }
+
+        private void cbNameGen_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.NameGenRando = cbNameGen.Checked;
+            tbNameData.Enabled = cbNameGen.Checked;
+            cbNameList.Enabled = cbNameGen.Checked;
+        }
+
+        private void OtherForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Save();
+        }
+
+        private void tbNameData_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!Globals.NAMEGEN_CHARS.Contains(char.ToLower(e.KeyChar)) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
 
         #endregion

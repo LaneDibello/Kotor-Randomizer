@@ -16,6 +16,7 @@ namespace kotor_Randomizer_2
         {
             InitializeComponent();
             seed_text.Text = Convert.ToString(Properties.Settings.Default.Seed);
+            seed_text.Enabled = !Properties.Settings.Default.KotorIsRandomized;
         }
 
         private void seed_text_KeyPress(object sender, KeyPressEventArgs e)

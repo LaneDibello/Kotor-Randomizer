@@ -818,5 +818,29 @@ namespace kotor_Randomizer_2.Properties {
                 this["PolymorphMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool NameGenRando {
+            get {
+                return ((bool)(this["NameGenRando"]));
+            }
+            set {
+                this["NameGenRando"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TexturePack {
+            get {
+                return ((int)(this["TexturePack"]));
+            }
+            set {
+                this["TexturePack"] = value;
+            }
+        }
     }
 }
