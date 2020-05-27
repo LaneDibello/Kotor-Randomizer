@@ -1,4 +1,4 @@
-﻿namespace kotor_Randomizer_2.User_Presets
+﻿namespace kotor_Randomizer_2
 {
     partial class PresetForm
     {

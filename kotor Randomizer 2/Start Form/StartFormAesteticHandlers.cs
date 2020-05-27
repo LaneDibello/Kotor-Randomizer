@@ -5,6 +5,8 @@ namespace kotor_Randomizer_2
 {
     public partial class StartForm
     {
+
+        //Makes the buttons change colors as you hover over. (After coding this it occured to me I could of just created my own derived control, but what's done is done)
         #region button colors
         private void module_button_MouseEnter(object sender, EventArgs e)
         {
@@ -137,8 +139,20 @@ namespace kotor_Randomizer_2
             randomize_button.ForeColor = Color.FromArgb(0, 175, 255);
             randomize_button.FlatAppearance.BorderColor = Color.FromArgb(0, 175, 255);
         }
-        #endregion
 
+        private void bPresets_button_MouseEnter(object sender, EventArgs e)
+        {
+            bPresets.ForeColor = Color.FromArgb(211, 216, 8);
+            bPresets.FlatAppearance.BorderColor = Color.FromArgb(211, 216, 8);
+        }
+
+        private void bPresets_button_MouseLeave(object sender, EventArgs e)
+        {
+            bPresets.ForeColor = Color.FromArgb(0, 175, 255);
+            bPresets.FlatAppearance.BorderColor = Color.FromArgb(0, 175, 255);
+        }
+        #endregion
+        //Fancy radio buttons that mimic the kotor style. similair story to the buttons above.
         #region custom radio buttons
         //Modules
         private void module_radio_MouseEnter(object sender, EventArgs e)

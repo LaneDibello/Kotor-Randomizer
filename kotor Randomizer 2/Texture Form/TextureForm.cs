@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace kotor_Randomizer_2
@@ -32,6 +25,10 @@ namespace kotor_Randomizer_2
             RandomizeWeapons = (Globals.RandomizationLevel)Properties.Settings.Default.TextureRandomizeWeapons;
             RandomizeOther = (Globals.RandomizationLevel)Properties.Settings.Default.TextureRandomizeOther;
 
+            //Radio switch for which texture pack is to be randomized.
+            //Right now its set up to only allow the user to randomize one of the 3 texture packs in the game. Primariliy because most
+            //people only use the high quality pack, and also if there are stability issues this allows them to switch to a stable pack
+            //in-game, without opening this program up.
             switch (Properties.Settings.Default.TexturePack)
             {
                 case 1:

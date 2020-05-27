@@ -12,6 +12,7 @@ namespace kotor_Randomizer_2
     {
         
         #region Types
+        //Struct used in Collections for module randomization denoting omission.
         public struct Mod_Entry
         {
             private string _name;
@@ -42,6 +43,8 @@ namespace kotor_Randomizer_2
                 _ommitted = ommited;
             }
         }
+
+        //Don't rememebr why I made this Serializable but I'm too afraid to remove it lmao
         [Serializable]
         public enum RandomizationLevel //Thank you Glasnonck
         {
@@ -57,7 +60,9 @@ namespace kotor_Randomizer_2
         #endregion
 
         #region Variables
+        //Bound list of modules where the mod entries with selected omissions will be stored.
         public static BindingList<Mod_Entry> BoundModules = new BindingList<Mod_Entry>();
+        //Bound list of items to be omitted from randomization. This is necessary because certain items can result in soft locks if randomized.
         public static BindingList<string> OmitItems = new BindingList<string>()
         {
             "g_i_collarlgt001", "g_i_glowrod01", "g_i_torch01", "ptar_sitharmor", "tat17_sandperdis", "g_i_progspike02"
@@ -65,8 +70,9 @@ namespace kotor_Randomizer_2
         #endregion
 
         #region Constants
+        //Characters that the letter-combo probability files can handle.
         public static readonly string NAMEGEN_CHARS = "qwertyuiopasdfghjklzxcvbnm-'";
-
+        //All items in the game
         public static readonly List<string> ITEMS = new List<string>() {
             "g1_a_class5001", "g1_a_class5002", "g1_a_class6001", "g1_a_class8001",
             "g1_i_belt001", "g1_i_drdcomspk01", "g1_i_drdhvplat01", "g1_i_drdshld001",
@@ -206,7 +212,7 @@ namespace kotor_Randomizer_2
             "geno_stealth", "geno_visor", "kas25_wookcrysta", "ptar_rakghoulser",
             "ptar_sbpasscrd", "ptar_sitharmor", "tat17_sandperdis", "tat18_dragonprl",
             "w_blhvy001", "w_bstrcrbn", "w_lghtsbr001", "w_null" };
-
+        //All modules in the game
         public static readonly List<string> MODULES = new List<string>() {
             "danm13","danm14aa","danm14ab","danm14ac","danm14ad","danm14ae",
             "danm15","danm16","ebo_m12aa","ebo_m40aa","ebo_m40ad","ebo_m41aa",
@@ -228,8 +234,8 @@ namespace kotor_Randomizer_2
             "tat_m17ae","tat_m17af","tat_m17ag","tat_m17mg","tat_m18aa","tat_m18ab",
             "tat_m18ac","tat_m20aa","unk_m41aa","unk_m41ab","unk_m41ac","unk_m41ad",
             "unk_m42aa","unk_m43aa","unk_m44aa","unk_m44ab","unk_m44ac" };
-
-        public static readonly Dictionary<string, List<string>> PRESETS = new Dictionary<string, List<string>>()
+        //Built-in module omission presets. The key being the preset name, and the valuebeing a string list of modules to omit. Not to be confused with user-defined presets.
+        public static readonly Dictionary<string, List<string>> OMIT_PRESETS = new Dictionary<string, List<string>>()
         {
             {"Default", new List<string>()
                 {

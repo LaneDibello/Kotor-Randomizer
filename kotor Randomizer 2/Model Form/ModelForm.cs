@@ -22,6 +22,8 @@ namespace kotor_Randomizer_2
              * The right-most bit signalling if the category is active or not
              * The second bit denoting omission of large models
              * And the third for the omission of broken mdoels
+             * 
+             * I know its kinda unecessary, but this project was getting alittle dull so I decided to make it interesting
              */ 
 
             cbCharRando.Checked = (Properties.Settings.Default.RandomizeCharModels & 1) > 0;

@@ -49,6 +49,7 @@
             this.text_radio = new System.Windows.Forms.PictureBox();
             this.other_radio = new System.Windows.Forms.PictureBox();
             this.seed_button = new System.Windows.Forms.Button();
+            this.bPresets = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.module_radio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.item_radio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sound_radio)).BeginInit();
@@ -62,11 +63,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Unispace", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.label1.Location = new System.Drawing.Point(89, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(146, 18);
+            this.label1.Size = new System.Drawing.Size(152, 18);
             this.label1.TabIndex = 0;
             this.label1.Text = "Kotor Randomizer";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -78,7 +79,7 @@
             this.module_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.module_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.module_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.module_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.module_button.Font = new System.Drawing.Font("Unispace", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.module_button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.module_button.Location = new System.Drawing.Point(60, 50);
             this.module_button.Name = "module_button";
@@ -97,7 +98,7 @@
             this.item_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.item_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.item_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.item_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.item_button.Font = new System.Drawing.Font("Unispace", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.item_button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.item_button.Location = new System.Drawing.Point(60, 90);
             this.item_button.Name = "item_button";
@@ -116,7 +117,7 @@
             this.sound_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.sound_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.sound_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.sound_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sound_button.Font = new System.Drawing.Font("Unispace", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sound_button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.sound_button.Location = new System.Drawing.Point(60, 130);
             this.sound_button.Name = "sound_button";
@@ -135,7 +136,7 @@
             this.model_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.model_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.model_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.model_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.model_button.Font = new System.Drawing.Font("Unispace", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.model_button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.model_button.Location = new System.Drawing.Point(60, 170);
             this.model_button.Name = "model_button";
@@ -154,7 +155,7 @@
             this.texture_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.texture_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.texture_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.texture_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.texture_button.Font = new System.Drawing.Font("Unispace", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.texture_button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.texture_button.Location = new System.Drawing.Point(60, 210);
             this.texture_button.Name = "texture_button";
@@ -173,7 +174,7 @@
             this.twoda_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.twoda_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.twoda_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.twoda_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.twoda_button.Font = new System.Drawing.Font("Unispace", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.twoda_button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.twoda_button.Location = new System.Drawing.Point(60, 250);
             this.twoda_button.Name = "twoda_button";
@@ -192,7 +193,7 @@
             this.text_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.text_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.text_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.text_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.text_button.Font = new System.Drawing.Font("Unispace", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.text_button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.text_button.Location = new System.Drawing.Point(60, 290);
             this.text_button.Name = "text_button";
@@ -211,7 +212,7 @@
             this.other_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.other_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.other_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.other_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.other_button.Font = new System.Drawing.Font("Unispace", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.other_button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.other_button.Location = new System.Drawing.Point(60, 330);
             this.other_button.Name = "other_button";
@@ -230,7 +231,7 @@
             this.path_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.path_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.path_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.path_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.path_button.Font = new System.Drawing.Font("Unispace", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.path_button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.path_button.Location = new System.Drawing.Point(20, 370);
             this.path_button.Name = "path_button";
@@ -249,7 +250,7 @@
             this.randomize_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.randomize_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.randomize_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.randomize_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.randomize_button.Font = new System.Drawing.Font("Unispace", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.randomize_button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.randomize_button.Location = new System.Drawing.Point(20, 410);
             this.randomize_button.Name = "randomize_button";
@@ -380,7 +381,7 @@
             this.seed_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.seed_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.seed_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.seed_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.seed_button.Font = new System.Drawing.Font("Unispace", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.seed_button.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.seed_button.Location = new System.Drawing.Point(170, 370);
             this.seed_button.Name = "seed_button";
@@ -392,12 +393,32 @@
             this.seed_button.MouseEnter += new System.EventHandler(this.button1_MouseEnter);
             this.seed_button.MouseLeave += new System.EventHandler(this.button1_MouseLeave);
             // 
+            // bPresets
+            // 
+            this.bPresets.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.bPresets.FlatAppearance.BorderSize = 2;
+            this.bPresets.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.bPresets.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
+            this.bPresets.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bPresets.Font = new System.Drawing.Font("Unispace", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bPresets.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.bPresets.Location = new System.Drawing.Point(20, 470);
+            this.bPresets.Name = "bPresets";
+            this.bPresets.Size = new System.Drawing.Size(290, 30);
+            this.bPresets.TabIndex = 19;
+            this.bPresets.Text = "Presets";
+            this.bPresets.UseVisualStyleBackColor = false;
+            this.bPresets.Click += new System.EventHandler(this.bPresets_Click);
+            this.bPresets.MouseEnter += new System.EventHandler(this.bPresets_button_MouseEnter);
+            this.bPresets.MouseLeave += new System.EventHandler(this.bPresets_button_MouseLeave);
+            // 
             // StartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(332, 481);
+            this.ClientSize = new System.Drawing.Size(332, 521);
+            this.Controls.Add(this.bPresets);
             this.Controls.Add(this.seed_button);
             this.Controls.Add(this.other_radio);
             this.Controls.Add(this.text_radio);
@@ -459,6 +480,7 @@
         private System.Windows.Forms.PictureBox text_radio;
         private System.Windows.Forms.PictureBox other_radio;
         private System.Windows.Forms.Button seed_button;
+        private System.Windows.Forms.Button bPresets;
     }
 }
 

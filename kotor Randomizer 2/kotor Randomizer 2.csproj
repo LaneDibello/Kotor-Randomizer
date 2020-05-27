@@ -130,6 +130,7 @@
     <Compile Include="Texture Form\TextureForm.Designer.cs">
       <DependentUpon>TextureForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="User Presets\KRP.cs" />
     <Compile Include="User Presets\PresetForm.cs">
       <SubType>Form</SubType>
     </Compile>

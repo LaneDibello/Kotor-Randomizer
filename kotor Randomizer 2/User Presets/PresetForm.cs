@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace kotor_Randomizer_2.User_Presets
+namespace kotor_Randomizer_2
 {
     public partial class PresetForm : Form
     {

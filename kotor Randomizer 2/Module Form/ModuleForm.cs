@@ -19,6 +19,7 @@ namespace kotor_Randomizer_2
         {
             InitializeComponent();
 
+            //Set up the bound module collection if it hasn't been already
             if (!Properties.Settings.Default.ModulesInitialized)
             {
                 foreach (string s in Globals.MODULES)
@@ -28,11 +29,12 @@ namespace kotor_Randomizer_2
                 Properties.Settings.Default.ModulesInitialized = true;
             }
 
+            //Set up the controls
             updateListBoxes();
             RandomizedListBox.DisplayMember = "name";
             OmittedListBox.DisplayMember = "name";
             
-            PresetComboBox.DataSource = Globals.PRESETS.Keys.ToList();
+            PresetComboBox.DataSource = Globals.OMIT_PRESETS.Keys.ToList();
             PresetComboBox.SelectedIndex = Properties.Settings.Default.LastPresetComboIndex;
 
             modDelete_checkbox.Checked = (Properties.Settings.Default.ModuleSaveStatus & 1) > 0;
@@ -49,8 +51,10 @@ namespace kotor_Randomizer_2
         #endregion
         #region Private Members
 
+        //Prevents Construction from triggering certain events
         private bool constructed = false;
 
+        //Makes list work
         private void updateListBoxes()
         {
             RandomizedListBox.DataSource = Globals.BoundModules.Where(x => !x.ommitted).ToList();
@@ -59,6 +63,7 @@ namespace kotor_Randomizer_2
             OmittedListBox.Update();
         }
 
+        //How we load the built in presets. (May be subject to change if I change my mind about how I want User-presets to work.)
         private void loadPreset(string preset)
         {
             if(PresetComboBox.SelectedIndex == -1 || !Properties.Settings.Default.ModulePresetSelected) { return; }
@@ -67,7 +72,7 @@ namespace kotor_Randomizer_2
             {
                 Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].name, false);
 
-                if (Globals.PRESETS[preset].Contains(Globals.BoundModules[i].name))
+                if (Globals.OMIT_PRESETS[preset].Contains(Globals.BoundModules[i].name))
                 {
                     Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].name, true);
                 }
@@ -77,7 +82,7 @@ namespace kotor_Randomizer_2
 
         #endregion
         #region Events
-
+        //ListBox Functions
         private void RandomizedListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Properties.Settings.Default.ModulePresetSelected = false;
@@ -140,6 +145,7 @@ namespace kotor_Randomizer_2
             }
         }
 
+        //Built-in Preset control functions
         private void PresetComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             loadPreset(PresetComboBox.Text);
@@ -151,6 +157,7 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.ModulePresetSelected = true;
         }
 
+        //Check box functions
         private void ModuleForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.LastPresetComboIndex = PresetComboBox.SelectedIndex;

@@ -8,11 +8,11 @@ Active Cats  : 8 bytes : Boolean Category Flags
 
 *Categories* - Each section will only exist if it was flagged as active
 	Modules : 4 chars : "MODU"
-		Omitted Modules : sting list
+		Omitted Modules : sting list (null-terminated)
 		Modules Settings : byte array : Boolean Module Setting Flags
 	Items : 4 chars : "ITEM"
 		Randomization Levels : 18 bytes : int rando level for each category
-		Omitted Items : string list
+		Omitted Items : string list (null-terminated)
 	Sounds : 4 chars : "SOUN"
 		Randomization Levels : 6 bytes : int rando level for each category
 		Sound Settings : 1 byte : Boolean Sound Setting Flags

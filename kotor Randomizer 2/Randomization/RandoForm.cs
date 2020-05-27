@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace kotor_Randomizer_2
 {
+    //This is no where near finished, and partially temporary
     public partial class RandoForm : Form
     {
         public RandoForm()

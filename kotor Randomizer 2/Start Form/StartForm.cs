@@ -16,7 +16,7 @@ namespace kotor_Randomizer_2
         {
             InitializeComponent();
 
-            Properties.Settings.Default.ModulesInitialized = false;
+            Properties.Settings.Default.ModulesInitialized = false;//Might need to change this
 
             //Checks if a path is saved
             if (Properties.Settings.Default.Kotor1Path == "")
@@ -35,10 +35,11 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.other_rando_active = false;
         }
 
-        //Events
+        #region  Events
 
         private void module_button_Click(object sender, EventArgs e)
         {
+            //This foreach seen in the different buttons events keeps multiple instances of a form from loading, and prevents everything breaking :D
             foreach (Form f in Application.OpenForms)
             {
                 if (f is ModuleForm)
@@ -187,6 +188,7 @@ namespace kotor_Randomizer_2
             if (!Properties.Settings.Default.other_rando_active) { other_radio_Click(sender, e); other_radio_MouseLeave(sender, e); }
         }
 
+        //This sets up the seeding at program start.
         private void StartForm_Load(object sender, EventArgs e)
         {
             Randomize.GenerateSeed();
@@ -206,5 +208,20 @@ namespace kotor_Randomizer_2
 
             new RandoForm().Show();
         }
+
+        private void bPresets_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is PresetForm)
+                {
+                    f.Focus();
+                    return;
+                }
+            }
+
+            new PresetForm().Show();
+        }
+        #endregion
     }
 }

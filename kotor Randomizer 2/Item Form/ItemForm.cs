@@ -9,7 +9,7 @@ namespace kotor_Randomizer_2
         {
             InitializeComponent();
 
-            lbOmitItems.DataSource = Globals.OmitItems;
+            lbOmitItems.DataSource = Globals.OmitItems; 
 
             //Set Intiial Values
             RandomizeArmor = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeArmor;
@@ -33,7 +33,7 @@ namespace kotor_Randomizer_2
 
 
         }
-
+        //Rando level for each item. Either max, type, or subtype
         #region Public Properties
 
         public Globals.RandomizationLevel RandomizeArmor
@@ -819,7 +819,7 @@ namespace kotor_Randomizer_2
         #endregion
 
         #region Private Methods
-
+        //Check boxes Mostly
         private void cbArmor_CheckedChanged(object sender, EventArgs e)
         {
             flpArmor.Enabled = cbArmor.Checked;
@@ -910,6 +910,7 @@ namespace kotor_Randomizer_2
             flpMelee.Enabled = cbMelee.Checked;
         }
 
+        //Save appdata on form close. (Now that I think about it, we only really need to save this once when the program closes.... oh well)
         private void ItemForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.RandomizeArmor = (int)RandomizeArmor;
@@ -936,6 +937,7 @@ namespace kotor_Randomizer_2
 
         private void ItemForm_Load(object sender, EventArgs e)
         {
+            //Auto-complete is cool
             tbItemOmitAdd.AutoCompleteCustomSource.AddRange(Globals.ITEMS.ToArray());
         }
 
@@ -953,6 +955,7 @@ namespace kotor_Randomizer_2
             }
         }
 
+        //Remove items from omit list. (Consider adding a restore default button in case they remove items that they didn't intend to.)
         private void lbOmitItems_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             string[] to_remove = new string[lbOmitItems.SelectedItems.Count];
@@ -972,8 +975,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        #endregion
-
+        //Some quick selection buttons
         private void bAllOff_Click(object sender, EventArgs e)
         {
             foreach (Control c in ActiveForm.Controls)
@@ -1019,5 +1021,7 @@ namespace kotor_Randomizer_2
                 }
             }
         }
+
+        #endregion
     }
 }

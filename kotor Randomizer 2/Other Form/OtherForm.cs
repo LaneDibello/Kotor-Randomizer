@@ -32,6 +32,7 @@ namespace kotor_Randomizer_2
 
         #region private methods
 
+        //Loading and saving string data to a setting using StringCollections
         private void load_name_List(StringCollection sc)
         {
             ignoretextchange = true;
@@ -54,6 +55,7 @@ namespace kotor_Randomizer_2
             }
         }
 
+        //Name Gen functionality
         private void tbNameData_TextChanged(object sender, EventArgs e)
         {
             if (!ignoretextchange)

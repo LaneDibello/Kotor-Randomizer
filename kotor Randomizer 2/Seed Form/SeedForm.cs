@@ -15,10 +15,13 @@ namespace kotor_Randomizer_2
         public SeedForm()
         {
             InitializeComponent();
+            //Pull the seed that was generated at start-time from settings
             seed_text.Text = Convert.ToString(Properties.Settings.Default.Seed);
+            //You cannot edit the seed while the game is currently randomized.
             seed_text.Enabled = !Properties.Settings.Default.KotorIsRandomized;
         }
 
+        //Prevents non-numeric characters from being input
         private void seed_text_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
@@ -27,6 +30,7 @@ namespace kotor_Randomizer_2
             }
         }
 
+        //Parses the user-defined seed 
         private void seed_text_TextChanged(object sender, EventArgs e)
         {
             int o;

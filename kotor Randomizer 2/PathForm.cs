@@ -27,6 +27,7 @@ namespace kotor_Randomizer_2
             set { tbKotor1Path.Text = value; }
         }
 
+        //I have my doubts that I will expand this to kotor II, but just in case.
         public string Kotor2Path
         {
             get { return tbKotor2Path.Text; }
@@ -44,6 +45,7 @@ namespace kotor_Randomizer_2
             }
         }
 
+        //Glasnonck's swkotor finder.
         private void bAutoFind_Click(object sender, EventArgs e)
         {
             bool K1PathFound = false;
