@@ -14,6 +14,9 @@
 	- For text look into switch to just dialogue rand as might be easier \/(=.=)\/
 	- Besure to have the rando feature save the Settings before starting in case the user hasn't closed all the forms.
 	- Have option to return all settings to default.
+	- Finsh back up scripts
+	- Finish randomizer scripts
+
 
 Categories:
 	Modules

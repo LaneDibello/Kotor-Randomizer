@@ -176,6 +176,11 @@ namespace kotor_Randomizer_2
         {
             if (!constructed) { return; }
             Properties.Settings.Default.ModuleSaveStatus ^= 1 << 1;
+
+            if (allSave_checkbox.Checked && !mgSave_checkbox.Checked)
+            {
+                mgSave_checkbox.Checked = true;
+            }
         }
 
         private void allSave_checkbox_CheckedChanged(object sender, EventArgs e)
@@ -225,5 +230,10 @@ namespace kotor_Randomizer_2
         }
 
         #endregion
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(Convert.ToString(Properties.Settings.Default.ModuleSaveStatus));
+        }
     }
 }

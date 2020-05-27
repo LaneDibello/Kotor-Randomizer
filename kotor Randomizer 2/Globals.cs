@@ -57,6 +57,48 @@ namespace kotor_Randomizer_2
             /// <summary> Randomize with everything else set to Max. </summary>
             Max = 3,
         }
+
+        public class KPaths
+        {
+            public KPaths(string swkotor_path)
+            {
+                swkotor = swkotor_path;
+                modules = swkotor_path + "modules\\";
+                lips = swkotor_path + "lips\\";
+                music = swkotor_path + "streammusic\\";
+                sounds = swkotor_path + "streamsounds\\";
+                TexturePacks = swkotor_path + "TexturePacks\\";
+                rims = swkotor_path + "rims\\";
+                Override = swkotor_path + "Override\\";
+                chitin = swkotor_path + "chitin.key";
+                data = swkotor_path + "data\\";
+            }
+
+            public readonly string swkotor;
+            public readonly string modules;
+            public readonly string lips;
+            public readonly string music;
+            public readonly string sounds;
+            public readonly string TexturePacks;
+            public readonly string rims;
+            public readonly string Override;
+            public readonly string chitin;
+            public readonly string data;
+
+            public string get_backup(string path)
+            {
+                if (path.Last() == '\\')
+                {
+                    return path.TrimEnd('\\') + "_bak\\";
+                }
+                else
+                {
+                    return path + ".bak";
+                }
+            }
+
+
+        }
         #endregion
 
         #region Variables
@@ -70,6 +112,8 @@ namespace kotor_Randomizer_2
         #endregion
 
         #region Constants
+        //Extra Files found in the 'lips' directory
+        public static readonly List<string> lipXtras = new List<string>() { "global.mod", "legal.mod", "localization.mod", "mainmenu.mod", "miniglobal.mod", "subglobal.mod", };
         //Characters that the letter-combo probability files can handle.
         public static readonly string NAMEGEN_CHARS = "qwertyuiopasdfghjklzxcvbnm-'";
         //All items in the game

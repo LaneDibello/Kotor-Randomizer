@@ -75,6 +75,9 @@
     <Compile Include="Module Form\ModuleForm.Designer.cs">
       <DependentUpon>ModuleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Module Form\ModuleRando.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Other Form\OtherForm.cs">
       <SubType>Form</SubType>
     </Compile>
