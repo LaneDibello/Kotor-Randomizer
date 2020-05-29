@@ -29,13 +29,22 @@ namespace kotor_Randomizer_2
         //Creates the back-ups for teh passed category
         private void CreateBackUps(string category)
         {
+            DirectoryInfo modules_dir = new DirectoryInfo(paths.modules);
+            FileInfo[] modules_files = modules_dir.GetFiles();
+            DirectoryInfo lips_dir = new DirectoryInfo(paths.lips);
+            FileInfo[] lips_files = lips_dir.GetFiles();
+            DirectoryInfo music_dir = new DirectoryInfo(paths.music);
+            FileInfo[] music_files = music_dir.GetFiles();
+            DirectoryInfo sounds_dir = new DirectoryInfo(paths.sounds);
+            FileInfo[] sounds_files = sounds_dir.GetFiles();
+            DirectoryInfo override_dir = new DirectoryInfo(paths.Override);
+            FileInfo[] override_files = override_dir.GetFiles();
+            DirectoryInfo Texture_dir = new DirectoryInfo(paths.TexturePacks);
+            FileInfo[] Texture_files = Texture_dir.GetFiles();
+
             switch (category)
             {
                 case "module":
-                    DirectoryInfo modules_dir = new DirectoryInfo(paths.modules);
-                    FileInfo[] modules_files = modules_dir.GetFiles();
-                    DirectoryInfo lips_dir = new DirectoryInfo(paths.lips);
-                    FileInfo[] lips_files = lips_dir.GetFiles();
 
                     if (!Directory.Exists(paths.get_backup(paths.modules)))
                     {
@@ -58,6 +67,17 @@ namespace kotor_Randomizer_2
                             file.CopyTo(temppath, true);
                         }
                     }
+
+                    if (!Directory.Exists(paths.get_backup(paths.Override)))
+                    {
+                        Directory.CreateDirectory(paths.get_backup(paths.Override));
+
+                        foreach (FileInfo file in override_files)
+                        {
+                            string temppath = paths.get_backup(paths.Override) + file.Name;
+                            file.CopyTo(temppath, true);
+                        }
+                    }
                     break;
                 case "item":
                     if (!File.Exists(paths.get_backup(paths.chitin)))
@@ -66,10 +86,6 @@ namespace kotor_Randomizer_2
                     }
                     break;
                 case "sound":
-                    DirectoryInfo music_dir = new DirectoryInfo(paths.music);
-                    FileInfo[] music_files = music_dir.GetFiles();
-                    DirectoryInfo sounds_dir = new DirectoryInfo(paths.sounds);
-                    FileInfo[] sounds_files = sounds_dir.GetFiles();
 
                     if (!Directory.Exists(paths.get_backup(paths.music)))
                     {
@@ -94,14 +110,58 @@ namespace kotor_Randomizer_2
                     }
                     break;
                 case "model":
+                    if (!Directory.Exists(paths.get_backup(paths.modules)))
+                    {
+                        Directory.CreateDirectory(paths.get_backup(paths.modules));
+
+                        foreach (FileInfo file in modules_files)
+                        {
+                            string temppath = paths.get_backup(paths.modules) + file.Name;
+                            file.CopyTo(temppath, true);
+                        }
+                    }
                     break;
                 case "texture":
+                    if (!Directory.Exists(paths.get_backup(paths.TexturePacks)))
+                    {
+                        Directory.CreateDirectory(paths.get_backup(paths.TexturePacks));
+
+                        foreach (FileInfo file in Texture_files)
+                        {
+                            string temppath = paths.get_backup(paths.TexturePacks) + file.Name;
+                            file.CopyTo(temppath, true);
+                        }
+                    }
                     break;
                 case "twoda":
+                    if (!File.Exists(paths.get_backup(paths.chitin)))
+                    {
+                        File.Copy(paths.chitin, paths.get_backup(paths.chitin));
+                    }
+                    if (!Directory.Exists(paths.get_backup(paths.Override)))
+                    {
+                        Directory.CreateDirectory(paths.get_backup(paths.Override));
+
+                        foreach (FileInfo file in override_files)
+                        {
+                            string temppath = paths.get_backup(paths.Override) + file.Name;
+                            file.CopyTo(temppath, true);
+                        }
+                    }
                     break;
                 case "text":
                     break;
                 case "other":
+                    if (!Directory.Exists(paths.get_backup(paths.Override)))
+                    {
+                        Directory.CreateDirectory(paths.get_backup(paths.Override));
+
+                        foreach (FileInfo file in override_files)
+                        {
+                            string temppath = paths.get_backup(paths.Override) + file.Name;
+                            file.CopyTo(temppath, true);
+                        }
+                    }
                     break;
             }
         }
@@ -148,10 +208,10 @@ namespace kotor_Randomizer_2
                             File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.MGINCLUDED_modulesave);
                             break;
                         case 6:
-                            File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.ALLINCLUDED_modulesave);
+                            File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.NODELETE_ALLINCLUDED_modulesave);
                             break;
                         case 7:
-                            File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.NODELETE_ALLINCLUDED_modulesave);
+                            File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.ALLINCLUDED_modulesave);
                             break;
                     }
 
@@ -160,7 +220,7 @@ namespace kotor_Randomizer_2
                         File.WriteAllBytes(paths.Override + "k_ren_visionland.ncs", Properties.Resources.k_ren_visionland);
                     }
 
-                    if (Properties.Settings.Default.AddOverideFiles.Contains("k_ren_visionland.ncs"))
+                    if (Properties.Settings.Default.AddOverideFiles.Contains("k_pebn_galaxy.ncs"))
                     {
                         File.WriteAllBytes(paths.Override + "k_pebn_galaxy.ncs", Properties.Resources.k_pebn_galaxy);
                     }
@@ -222,7 +282,7 @@ namespace kotor_Randomizer_2
             {
                 currentRandoTask_label.Text = "Randomizing 2-D Arrays";
                 CreateBackUps("twoda");
-                //run appropriate rando script
+                TwodaRandom.Twoda_rando(paths);
                 RandomizationProgress.PerformStep();
             }
             if (Properties.Settings.Default.text_rando_active)

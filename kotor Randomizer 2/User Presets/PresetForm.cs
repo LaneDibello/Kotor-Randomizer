@@ -15,6 +15,8 @@ namespace kotor_Randomizer_2
         public PresetForm()
         {
             InitializeComponent();
+
+            Properties.Settings.Default.twoda_rando_active = false; //2DA rando inactive until I work out the issues with the file format
         }
     }
 }

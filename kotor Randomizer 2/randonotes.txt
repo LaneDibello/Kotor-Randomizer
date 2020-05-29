@@ -4,18 +4,18 @@
 	- devise a better preset saving system
 	- Actually Make it randomize things
 	- look into crafting a fixed mission undercity script
-	- Consider Switching Name Gen to space breaks
 	- consider name gen presets
 	- Deal with empty BoundModules possibility
 	- Finish KRP Write
 	- Add KRP Read
 	- Update KRP stuff when TwoDA and TExt Are done
-	- Do 2da and Text
+	- Do Text
 	- For text look into switch to just dialogue rand as might be easier \/(=.=)\/
-	- Besure to have the rando feature save the Settings before starting in case the user hasn't closed all the forms.
+	- Besure to have the rando feature save the Settings before starting in case the user hasn't closed all the forms. May not matter?
 	- Have option to return all settings to default.
 	- Finsh back up scripts
 	- Finish randomizer scripts
+	- Add pazaak deck rando to other
 
 
 Categories:

@@ -62,16 +62,16 @@ namespace kotor_Randomizer_2
         {
             public KPaths(string swkotor_path)
             {
-                swkotor = swkotor_path;
-                modules = swkotor_path + "modules\\";
-                lips = swkotor_path + "lips\\";
-                music = swkotor_path + "streammusic\\";
-                sounds = swkotor_path + "streamsounds\\";
-                TexturePacks = swkotor_path + "TexturePacks\\";
-                rims = swkotor_path + "rims\\";
-                Override = swkotor_path + "Override\\";
-                chitin = swkotor_path + "chitin.key";
-                data = swkotor_path + "data\\";
+                swkotor = swkotor_path + "\\";
+                modules = swkotor + "modules\\";
+                lips = swkotor + "lips\\";
+                music = swkotor + "streammusic\\";
+                sounds = swkotor + "streamsounds\\";
+                TexturePacks = swkotor + "TexturePacks\\";
+                rims = swkotor + "rims\\";
+                Override = swkotor + "Override\\";
+                chitin = swkotor + "chitin.key";
+                data = swkotor + "data\\";
             }
 
             public readonly string swkotor;
@@ -109,6 +109,8 @@ namespace kotor_Randomizer_2
         {
             "g_i_collarlgt001", "g_i_glowrod01", "g_i_torch01", "ptar_sitharmor", "tat17_sandperdis", "g_i_progspike02"
         };
+        //Dictionary of selected 2DAs to be randomized
+        public static Dictionary<string, List<string>> Selected2DAs = new Dictionary<string, List<string>>();
         #endregion
 
         #region Constants
@@ -309,6 +311,225 @@ namespace kotor_Randomizer_2
             }
 
         };
+        //Collectiuon of acceptable 2da files and collumns to randomize
+        public static readonly Dictionary<string, List<string>> TWODA_COLLUMNS = new Dictionary<string, List<string>>()
+        {
+            {"acbonus", new List<string>()
+                {
+                "scd", "sol", "sct", "jdc", "jds", "jdg"
+                }
+            },
+            {"aliensound", new List<string>()
+                {
+                "filename"
+                }
+            },
+            {"appearance", new List<string>()
+                {
+                "walkdist", "rundist", "moverate", "body_bag"
+                }
+            },
+            {"baseitems", new List<string>()
+                {
+                "name", "equipableslots", "defaulticon", "reqfeat0"
+                }
+            },
+            {"bodybag", new List<string>()
+                {
+                "appearance"
+                }
+            },
+            {"camerastyle", new List<string>()
+                {
+                "distance", "pitch", "height"
+                }
+            },
+            {"classes", new List<string>()
+                {
+                "name", "icon", "hitdie", "attackbonustable", "featstable", "savingthrowtable", "skillstable", "skillpointbase", "armorclasscolumn", "featgain"
+                }
+            },
+            {"classpowergain", new List<string>()
+                {
+                "jcn", "jsn", "jgd"
+                }
+            },
+            {"cls_atk_1", new List<string>()
+                {
+                "bab"
+                }
+            },
+            {"cls_atk_2", new List<string>()
+                {
+                "bab"
+                }
+            },
+            {"cls_atk_3", new List<string>()
+                {
+                "bab"
+                }
+            },
+            {"cls_st_cm_drd", new List<string>()
+                {
+                "fortsave", "refsave", "willsave"
+                }
+            },
+            {"cls_st_ex_drd", new List<string>()
+                {
+                "fortsave", "refsave", "willsave"
+                }
+            },
+            {"cls_st_jedi_c", new List<string>()
+                {
+                "fortsave", "refsave", "willsave"
+                }
+            },
+            {"cls_st_jedi_g", new List<string>()
+                {
+                "fortsave", "refsave", "willsave"
+                }
+            },
+            {"cls_st_jedi_s", new List<string>()
+                {
+                "fortsave", "refsave", "willsave"
+                }
+            },
+            {"cls_st_minion", new List<string>()
+                {
+                "fortsave", "refsave", "willsave"
+                }
+            },
+            {"cls_st_scndrl", new List<string>()
+                {
+                "fortsave", "refsave", "willsave"
+                }
+            },
+            {"cls_st_scout", new List<string>()
+                {
+                "fortsave", "refsave", "willsave"
+                }
+            },
+            {"cls_st_soldier", new List<string>()
+                {
+                "fortsave", "refsave", "willsave"
+                }
+            },
+            {"comptypes", new List<string>()
+                {
+                "computerbackground"
+                }
+            },
+            {"creaturespeed", new List<string>()
+                {
+                "walkrate", "runrate"
+                }
+            },
+            {"effecticon", new List<string>()
+                {
+                "iconresref", "good", "priority"
+                }
+            },
+            {"feat", new List<string>()
+                {
+                "name", "description", "icon"
+                }
+            },
+            {"featgain", new List<string>()
+                {
+                "sol_reg", "sct_reg", "scd_reg", "jcn_reg", "jsn_reg", "jgd_reg", "drx_reg", "drc_reg"
+                }
+            },
+            {"forceadjust", new List<string>()
+                {
+                "goodcost", "evilcost"
+                }
+            },
+            {"forceshields", new List<string>()
+                {
+                "visualeffectdef", "amount",
+                }
+            },
+            {"genericdoors", new List<string>()
+                {
+                "soundapptype"
+                }
+            },
+            {"guisounds", new List<string>()
+                {
+                "soundresref"
+                }
+            },
+            {"heads", new List<string>()
+                {
+                "head"
+                }
+            },
+            {"lightcolor", new List<string>()
+                {
+                "red", "green", "blue"
+                }
+            },
+            {"loadscreenhints", new List<string>()
+                {
+                "gameplayhint"
+                }
+            },
+            {"placeableobjsnds", new List<string>()
+                {
+                "opened", "closed", "locked"
+                }
+            },
+            {"skills", new List<string>()
+                {
+                "name", "description", "icon", "keyability", "scd_class", "sol_class", "sct_class", "jcn_class", "jgd_class", "jsn_class", "drx_class", "drc_class"
+                }
+            },
+            {"soundset", new List<string>()
+                {
+                "resref"
+                }
+            },
+            {"spells", new List<string>()
+                {
+                "name", "spelldesc", "forcepoints", "goodevil", "iconresref", "castanim"
+                }
+            },
+            {"tilecolor", new List<string>()
+                {
+                "red", "green", "blue"
+                }
+            },
+            {"traps", new List<string>()
+                {
+                "setdc", "detectdcmod", "disarmdcmod", "trapname", "explosionsound"
+                }
+            },
+            {"upcrystals", new List<string>()
+                {
+                "shortmdlvar", "longmdlvar", "doublemdlvar"
+                }
+            },
+            {"upgradetypes", new List<string>()
+                {
+                "label"
+                }
+            },
+            {"videoeffects", new List<string>()
+                {
+                "modulationred", "modulationgreen", "modulationblue", "saturation"
+                }
+            },
+            {"xpbaseconst", new List<string>()
+                {
+                "balance", "bonus"
+                }
+            },
+            {"xptable", new List<string>()
+                {
+                "c0","c1","c2","c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13","c14","c15","c16","c17","c18","c19","c20"
+                }
+            }
+    };
         #endregion
 
     }

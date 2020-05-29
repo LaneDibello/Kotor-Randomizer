@@ -11,16 +11,16 @@ Active Cats  : 8 bytes : Boolean Category Flags
 		Omitted Modules : sting list (null-terminated)
 		Modules Settings : byte array : Boolean Module Setting Flags
 	Items : 4 chars : "ITEM"
-		Randomization Levels : 18 bytes : int rando level for each category
+		Randomization Levels : 18 ints : int rando level for each category
 		Omitted Items : string list (null-terminated)
 	Sounds : 4 chars : "SOUN"
-		Randomization Levels : 6 bytes : int rando level for each category
+		Randomization Levels : 6 ints : int rando level for each category
 		Sound Settings : 1 byte : Boolean Sound Setting Flags
 	Models : 4 chars : "MODE"
-		Randomization Levels : 3 bytes : int rando level for each category
+		Randomization Levels : 3 ints : int rando level for each category
 	Textures : 4 chars : "TEXU"
-		Randomization Levels : 14 bytes : int rando level for each category
-		Texture Pack : 1 byte : int texture pack index
+		Randomization Levels : 14 ints : int rando level for each category
+		Texture Pack : 1 int : int texture pack index
 	2das : 4 chars : "TWDA"
 		//TBD
 	Text : 4 chars : "TEXT"
