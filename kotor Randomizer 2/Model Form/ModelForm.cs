@@ -35,7 +35,7 @@ namespace kotor_Randomizer_2
             cbBrokenPlace.Checked = (Properties.Settings.Default.RandomizePlaceModels & 4) > 0;
 
             cbDoorRando.Checked = (Properties.Settings.Default.RandomizeDoorModels & 1) > 0;
-            cbLargeDoor.Checked = (Properties.Settings.Default.RandomizeDoorModels & 2) > 0;
+            cbLargeDoor.Checked = (Properties.Settings.Default.RandomizeDoorModels & 2) > 0; //Airlock ommision
             cbBrokenDoor.Checked = (Properties.Settings.Default.RandomizeDoorModels & 4) > 0;
 
             checks_set = true;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,6 +53,22 @@ namespace kotor_Randomizer_2
                 T value = list[k];
                 list[k] = list[n];
                 list[n] = value;
+            }
+        }
+
+        public static void RandomizeFiles(IEnumerable<FileInfo> files, string outPath)
+        {
+            if (files.Any())
+            {
+                var randList = files.ToList();
+                FisherYatesShuffle(randList);
+
+                int i = 0;
+                foreach (FileInfo fi in files)
+                {
+                    File.Copy(fi.FullName, outPath + randList[i].Name, true);
+                    ++i;
+                }
             }
         }
     }

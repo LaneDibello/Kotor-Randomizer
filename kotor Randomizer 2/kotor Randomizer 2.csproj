@@ -69,6 +69,7 @@
     <Compile Include="Model Form\ModelForm.Designer.cs">
       <DependentUpon>ModelForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model Form\ModelRando.cs" />
     <Compile Include="Module Form\ModuleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +111,7 @@
     <Compile Include="Sound Form\SoundForm.Designer.cs">
       <DependentUpon>SoundForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sound Form\SoundRando.cs" />
     <Compile Include="Start Form\StartForm.cs">
       <SubType>Form</SubType>
     </Compile>

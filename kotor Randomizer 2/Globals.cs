@@ -114,6 +114,14 @@ namespace kotor_Randomizer_2
         #endregion
 
         #region Constants
+        //Large Creature Models
+        public static readonly List<int> LARGE_CHARS = new List<int>() { 354, 334, 80, 77, 81 };
+        //Broken Creature Models
+        public static readonly List<int> BROKEN_CHARS = new List<int>() { 0, 29, 82 };
+        //Large Placeable Models
+        public static readonly List<int> LARGE_PLACE = new List<int>() { 142, };//NEED TO RESEARCH
+        //Broken Placeable Models
+        public static readonly List<int> BROKEN_PLACE = new List<int>() { 0, 8, 9, 47, 62, 78, 84, 90, 94, 97, 115, 158, 159 };
         //Extra Files found in the 'lips' directory
         public static readonly List<string> lipXtras = new List<string>() { "global.mod", "legal.mod", "localization.mod", "mainmenu.mod", "miniglobal.mod", "subglobal.mod", };
         //Characters that the letter-combo probability files can handle.

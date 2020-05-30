@@ -6,25 +6,31 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace kotor_Randomizer_2
 {
     //This is no where near finished, and partially temporary
     public partial class RandoForm : Form
     {
+
         public RandoForm()
         {
             InitializeComponent();
-
-            if (!Properties.Settings.Default.KotorIsRandomized) { RunRando(); }
-            else { UnRando(); }
-
         }
 
+        #region Private Properties
+
+        private string curr_task = "";
+
         //Class for easy access and auto-generation of Paths
-        Globals.KPaths paths = new Globals.KPaths(Properties.Settings.Default.Kotor1Path);
+        private Globals.KPaths paths = new Globals.KPaths(Properties.Settings.Default.Kotor1Path);
+
+        #endregion
+
+        #region private methods
 
         //Creates the back-ups for teh passed category
         private void CreateBackUps(string category)
@@ -166,13 +172,10 @@ namespace kotor_Randomizer_2
             }
         }
 
+        //Runs the necessary Randomization Scripts
         private void RunRando()
         {
-
-            //TEMPORARY - PREVENT EXECUTION
-            //return;
-            //******************************
-
+            //Determine Step size and throw error if no categories are selected.
             int ActiveCats = CountActiveCategories();
 
             if (ActiveCats == 0)
@@ -181,128 +184,77 @@ namespace kotor_Randomizer_2
                 ActiveCats++;
             }
 
-            RandomizationProgress.Step = 100 / ActiveCats;
+            int step_size = 100 / ActiveCats;
+            int curr_progress = 0;
 
-            #region Module Randomization
+            //Rando Categories
             if (Properties.Settings.Default.module_rando_active)
             {
-                currentRandoTask_label.Text = "Randomizing Modules";
+                curr_task = "Randomizing Modules";
+                bwRandomizing.ReportProgress(curr_progress);
                 CreateBackUps("module");
-                //run appropriate rando script
-                List<string> Randomized_modules = new List<string>();
-                if (ModuleForm.Module_rando(out Randomized_modules))
-                {
-                    switch (Properties.Settings.Default.ModuleSaveStatus)
-                    {
-                        case 0:
-                            File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.NODELETE_modulesave);
-                            break;
-                        default:
-                        case 1:
-                            //This is kotor's default configuration
-                            break;
-                        case 2:
-                            File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.NODELETE_MGINCLUDED_modulesave);
-                            break;
-                        case 3:
-                            File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.MGINCLUDED_modulesave);
-                            break;
-                        case 6:
-                            File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.NODELETE_ALLINCLUDED_modulesave);
-                            break;
-                        case 7:
-                            File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.ALLINCLUDED_modulesave);
-                            break;
-                    }
-
-                    if (Properties.Settings.Default.AddOverideFiles.Contains("k_ren_visionland.ncs"))
-                    {
-                        File.WriteAllBytes(paths.Override + "k_ren_visionland.ncs", Properties.Resources.k_ren_visionland);
-                    }
-
-                    if (Properties.Settings.Default.AddOverideFiles.Contains("k_pebn_galaxy.ncs"))
-                    {
-                        File.WriteAllBytes(paths.Override + "k_pebn_galaxy.ncs", Properties.Resources.k_pebn_galaxy);
-                    }
-                }
-
-                int k = 0;
-                foreach (string M in Globals.BoundModules.Where(x => !x.ommitted).Select(x => x.name))
-                {
-                    File.Copy(paths.get_backup(paths.modules) + M + ".rim", paths.modules + Randomized_modules[k] + ".rim", true);
-                    File.Copy(paths.get_backup(paths.modules) + M + "_s.rim", paths.modules + Randomized_modules[k] + "_s.rim", true);
-                    File.Copy(paths.get_backup(paths.lips) + M + "_loc.mod", paths.lips + Randomized_modules[k] + "_loc.mod", true);
-                    k++;
-                }
-
-                foreach (string M in Globals.BoundModules.Where(x => x.ommitted).Select(x => x.name))
-                {
-                    File.Copy(paths.get_backup(paths.modules) + M + ".rim", paths.modules + M + ".rim", true);
-                    File.Copy(paths.get_backup(paths.modules) + M + "_s.rim", paths.modules + M + "_s.rim", true);
-                    File.Copy(paths.get_backup(paths.lips) + M + "_loc.mod", paths.lips + M + "_loc.mod", true);
-                }
-
-                foreach (string L in Globals.lipXtras)
-                {
-                    File.Copy(paths.get_backup(paths.lips) + L,  paths.lips + L, true);
-                }
-
-                RandomizationProgress.PerformStep();
+                ModuleForm.Module_rando(paths);//run appropriate rando script
+                curr_progress += step_size;
             }
-            #endregion
             if (Properties.Settings.Default.item_rando_active)
             {
-                currentRandoTask_label.Text = "Randomizing Items";
+                curr_task = "Randomizing Items";
+                bwRandomizing.ReportProgress(curr_progress);
                 CreateBackUps("item");
                 //run appropriate rando script
-                RandomizationProgress.PerformStep();
+                curr_progress += step_size;
             }
             if (Properties.Settings.Default.sound_rando_active)
             {
-                currentRandoTask_label.Text = "Randomizing Music and Sounds";
+                curr_task = "Randomizing Music and Sounds";
+                bwRandomizing.ReportProgress(curr_progress);
                 CreateBackUps("sound");
-                //run appropriate rando script
-                RandomizationProgress.PerformStep();
+                SoundRando.sound_rando(paths);//run appropriate rando script
+                curr_progress += step_size;
             }
             if (Properties.Settings.Default.model_rando_active)
             {
-                currentRandoTask_label.Text = "Randomizing Models";
+                curr_task = "Randomizing Models";
+                bwRandomizing.ReportProgress(curr_progress);
                 CreateBackUps("model");
-                //run appropriate rando script
-                RandomizationProgress.PerformStep();
+                ModelRando.model_rando(paths);//run appropriate rando script
+                curr_progress += step_size;
             }
             if (Properties.Settings.Default.texture_rando_active)
             {
-                currentRandoTask_label.Text = "Randomizing Textures";
+                curr_task = "Randomizing Textures";
+                bwRandomizing.ReportProgress(curr_progress);
                 CreateBackUps("texture");
                 //run appropriate rando script
-                RandomizationProgress.PerformStep();
+                curr_progress += step_size;
             }
             if (Properties.Settings.Default.twoda_rando_active)
             {
-                currentRandoTask_label.Text = "Randomizing 2-D Arrays";
+                curr_task = "Randomizing 2-D Arrays";
+                bwRandomizing.ReportProgress(curr_progress);
                 CreateBackUps("twoda");
-                TwodaRandom.Twoda_rando(paths);
-                RandomizationProgress.PerformStep();
+                TwodaRandom.Twoda_rando(paths);//run appropriate rando script
+                curr_progress += step_size;
             }
             if (Properties.Settings.Default.text_rando_active)
             {
-                currentRandoTask_label.Text = "Randomizing Text";
+                curr_task = "Randomizing Text";
+                bwRandomizing.ReportProgress(curr_progress);
                 CreateBackUps("text");
                 //run appropriate rando script
-                RandomizationProgress.PerformStep();
+                curr_progress += step_size;
             }
             if (Properties.Settings.Default.other_rando_active)
             {
-                currentRandoTask_label.Text = "Randomizing Other Things";
+                curr_task = "Randomizing Other Things";
+                bwRandomizing.ReportProgress(curr_progress);
                 CreateBackUps("other");
                 //run appropriate rando script
-                RandomizationProgress.PerformStep();
+                curr_progress += step_size;
             }
 
-            currentRandoTask_label.Text = "Done!";
-            //The Last Step in the Rando Process should be to set the progress value to 100
-            RandomizationProgress.Value = 100;
+            //UNCOMMENT WHEN UNRANDO FUCTION COMPLETE
+            //Properties.Settings.Default.KotorIsRandomized = true;
         }
 
         private void UnRando()
@@ -340,10 +292,58 @@ namespace kotor_Randomizer_2
             return i;
         }
 
-        private void RandomizationProgress_Click(object sender, EventArgs e)
+        #endregion
+
+        #region Events
+
+        private void bDone_Click(object sender, EventArgs e)
         {
-            //TEMPORARY, DELETE LATER
-            //RandomizationProgress.PerformStep();
+            Close();
         }
+
+        private void bwRandomizing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            bDone.Enabled = true;
+            currentRandoTask_label.Text = "Done!";
+            RandomizationProgress.Value = 100;
+        }
+
+        private void bwRandomizing_DoWork(object sender, DoWorkEventArgs e)
+        {
+            RunRando();
+        }
+
+        private void bwRandomizing_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            RandomizationProgress.Value = e.ProgressPercentage;
+            currentRandoTask_label.Text = curr_task;
+        }
+
+        private void RandoForm_Shown(object sender, EventArgs e)
+        {
+            if (!Properties.Settings.Default.KotorIsRandomized) { bwRandomizing.RunWorkerAsync(); }
+            else { bwUnrandomizing.RunWorkerAsync(); }
+        }
+
+        private void bwUnrandomizing_DoWork(object sender, DoWorkEventArgs e)
+        {
+            UnRando();
+        }
+
+        private void bwUnrandomizing_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+
+            RandomizationProgress.Value = e.ProgressPercentage;
+            currentRandoTask_label.Text = curr_task;
+        }
+
+        private void bwUnrandomizing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            bDone.Enabled = true;
+            currentRandoTask_label.Text = "Done!";
+            RandomizationProgress.Value = 100;
+        }
+
+        #endregion
     }
 }

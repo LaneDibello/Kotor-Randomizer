@@ -48,6 +48,19 @@ namespace kotor_Randomizer_2
             constructed = true;
         }
 
+        public static void static_loadPreset(string preset)
+        {
+            for (int i = 0; i < Globals.BoundModules.Count; i++)
+            {
+                Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].name, false);
+
+                if (Globals.OMIT_PRESETS[preset].Contains(Globals.BoundModules[i].name))
+                {
+                    Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].name, true);
+                }
+            }
+        }
+
         #endregion
         #region Private Members
 
@@ -66,7 +79,7 @@ namespace kotor_Randomizer_2
         //How we load the built in presets. (May be subject to change if I change my mind about how I want User-presets to work.)
         private void loadPreset(string preset)
         {
-            if(PresetComboBox.SelectedIndex == -1 || !Properties.Settings.Default.ModulePresetSelected) { return; }
+            if (PresetComboBox.SelectedIndex == -1 || !Properties.Settings.Default.ModulePresetSelected) { return; }
 
             for (int i = 0; i < Globals.BoundModules.Count; i++)
             {
