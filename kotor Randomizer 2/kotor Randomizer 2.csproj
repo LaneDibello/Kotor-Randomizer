@@ -63,6 +63,7 @@
     <Compile Include="Item Form\ItemForm.Designer.cs">
       <DependentUpon>ItemForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Item Form\ItemRando.cs" />
     <Compile Include="Model Form\ModelForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +86,7 @@
     <Compile Include="Other Form\OtherForm.Designer.cs">
       <DependentUpon>OtherForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Other Form\OtherRando.cs" />
     <Compile Include="PathForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -16,6 +16,7 @@
 	- Finsh back up scripts
 	- Finish randomizer scripts
 	- Add pazaak deck rando to other
+	- Name generator needs some work
 
 
 Categories:

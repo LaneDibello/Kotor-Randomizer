@@ -249,7 +249,7 @@ namespace kotor_Randomizer_2
                 curr_task = "Randomizing Other Things";
                 bwRandomizing.ReportProgress(curr_progress);
                 CreateBackUps("other");
-                //run appropriate rando script
+                OtherRando.other_rando(paths);//run appropriate rando script
                 curr_progress += step_size;
             }
 
