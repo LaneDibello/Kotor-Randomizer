@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -114,6 +115,17 @@ namespace kotor_Randomizer_2
         #endregion
 
         #region Constants
+        //new coordinates
+        //public static readonly Dictionary<string, Point3D> FIXED_COORDINATES = new Dictionary<string, Point3D>()
+        //{
+        //    { "tar_m04aa", new Point3D(183.5f, 167.4f, 1.5f)},
+        //    { "korr_m38ab", new Point3D(16.4f, 55.4f, 0.75f)},
+        //    { "lev_m40ac", new Point3D(12.5f, 155.2f, 3.0f) },
+        //    { "manm26aa", new Point3D(5.7f, -10.7f, 59.2f) },
+        //    { "manm27aa", new Point3D(112.8f, 2.4f, 0f) },
+        //    { "unk_m43aa", new Point3D(202.2f, 31.5f, 40.7f) },
+        //    { "unk_m44aa", new Point3D(95.3f, 42.0f, 0.44f) }
+        //};
         //Large Creature Models
         public static readonly List<int> LARGE_CHARS = new List<int>() { 354, 334, 80, 77, 81 };
         //Broken Creature Models

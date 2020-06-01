@@ -31,7 +31,7 @@ namespace kotor_Randomizer_2
     }
 
     //I created this class to deal with how awful the Kotor_IO version of 2DA I coded was, fixing all that garbage will be a future project.
-    class TwoDA_REFRACTOR
+    public class TwoDA_REFRACTOR
     {
         public string name;
 

@@ -43,7 +43,8 @@ namespace kotor_Randomizer_2
 
             FixedDream_checkBox.Checked = Properties.Settings.Default.AddOverideFiles.Contains("k_ren_visionland.ncs");
             galmap_checkbox.Checked = Properties.Settings.Default.AddOverideFiles.Contains("k_pebn_galaxy.ncs");
-            missionSpawn_checkbox.Checked = Properties.Settings.Default.AddOverideFiles.Contains("MISSIONFILENAME");
+            updatedCoords_checkbox.Checked = Properties.Settings.Default.FixWarpCoords;
+            cbRakataRiddle.Checked = Properties.Settings.Default.FixMindPrison;
 
             constructed = true;
         }
@@ -229,17 +230,10 @@ namespace kotor_Randomizer_2
             }
         }
 
-        private void missionSpawn_checkbox_CheckedChanged(object sender, EventArgs e)
+        private void updatedCoords_checkbox_CheckedChanged(object sender, EventArgs e)
         {
             if (!constructed) { return; }
-            if (missionSpawn_checkbox.Checked)
-            {
-                Properties.Settings.Default.AddOverideFiles.Add("MISSIONFILENAME");
-            }
-            else if (Properties.Settings.Default.AddOverideFiles.Contains("MISSIONFILENAME"))
-            {
-                Properties.Settings.Default.AddOverideFiles.Remove("MISSIONFILENAME");
-            }
+            Properties.Settings.Default.FixWarpCoords = updatedCoords_checkbox.Checked;
         }
 
         #endregion
@@ -247,6 +241,12 @@ namespace kotor_Randomizer_2
         private void label2_Click(object sender, EventArgs e)
         {
             MessageBox.Show(Convert.ToString(Properties.Settings.Default.ModuleSaveStatus));
+        }
+
+        private void cbRakataRiddle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!constructed) { return; }
+            Properties.Settings.Default.FixMindPrison = cbRakataRiddle.Checked;
         }
     }
 }

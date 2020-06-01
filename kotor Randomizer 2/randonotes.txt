@@ -15,8 +15,9 @@
 	- Have option to return all settings to default.
 	- Finsh back up scripts
 	- Finish randomizer scripts
-	- Add pazaak deck rando to other
-	- Name generator needs some work
+	- program polymorph mode
+	- Look into the issues with the adjusted mind prison data
+
 
 
 Categories:

@@ -842,5 +842,41 @@ namespace kotor_Randomizer_2.Properties {
                 this["TexturePack"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PazaakDecks {
+            get {
+                return ((bool)(this["PazaakDecks"]));
+            }
+            set {
+                this["PazaakDecks"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FixWarpCoords {
+            get {
+                return ((bool)(this["FixWarpCoords"]));
+            }
+            set {
+                this["FixWarpCoords"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FixMindPrison {
+            get {
+                return ((bool)(this["FixMindPrison"]));
+            }
+            set {
+                this["FixMindPrison"] = value;
+            }
+        }
     }
 }

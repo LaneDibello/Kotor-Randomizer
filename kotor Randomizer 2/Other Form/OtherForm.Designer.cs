@@ -33,6 +33,7 @@
             this.cbNameList = new System.Windows.Forms.ComboBox();
             this.cbPolymorph = new System.Windows.Forms.CheckBox();
             this.cbNameGen = new System.Windows.Forms.CheckBox();
+            this.cbPazaak = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -99,12 +100,26 @@
             this.cbNameGen.UseVisualStyleBackColor = true;
             this.cbNameGen.CheckedChanged += new System.EventHandler(this.cbNameGen_CheckedChanged);
             // 
+            // cbPazaak
+            // 
+            this.cbPazaak.CheckAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.cbPazaak.Location = new System.Drawing.Point(180, 170);
+            this.cbPazaak.Name = "cbPazaak";
+            this.cbPazaak.Size = new System.Drawing.Size(120, 90);
+            this.cbPazaak.TabIndex = 53;
+            this.cbPazaak.Text = "Random Pazaak Decks - Randomizes the cards contained within the NPC pazaak decks." +
+    "";
+            this.cbPazaak.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.cbPazaak.UseVisualStyleBackColor = true;
+            this.cbPazaak.CheckedChanged += new System.EventHandler(this.cbPazaak_CheckedChanged);
+            // 
             // OtherForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.ClientSize = new System.Drawing.Size(365, 401);
+            this.Controls.Add(this.cbPazaak);
             this.Controls.Add(this.cbNameGen);
             this.Controls.Add(this.cbPolymorph);
             this.Controls.Add(this.cbNameList);
@@ -129,5 +144,6 @@
         private System.Windows.Forms.ComboBox cbNameList;
         private System.Windows.Forms.CheckBox cbPolymorph;
         private System.Windows.Forms.CheckBox cbNameGen;
+        private System.Windows.Forms.CheckBox cbPazaak;
     }
 }

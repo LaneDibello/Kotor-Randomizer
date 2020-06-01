@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -203,6 +204,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Resources\ALLINCLUDED_modulesave.2da" />
+    <None Include="Resources\g_brakatan003.utc" />
     <None Include="Resources\k_pebn_galaxy.ncs" />
     <None Include="Resources\k_ren_visionland.ncs" />
     <None Include="Resources\MGINCLUDED_modulesave.2da" />

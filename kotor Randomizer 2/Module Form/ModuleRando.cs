@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
+using KotOR_IO;
 
 namespace kotor_Randomizer_2
 {
@@ -93,6 +94,106 @@ namespace kotor_Randomizer_2
             {
                 File.Copy(paths.get_backup(paths.lips) + L, paths.lips + L, true);
             }
+
+            //Fix warp coordinates
+            if (Properties.Settings.Default.FixWarpCoords)
+            {
+                DirectoryInfo di = new DirectoryInfo(paths.modules);
+                foreach (FileInfo fi in di.GetFiles())
+                {
+                    RIM r = KReader.ReadRIM(fi.OpenRead());
+
+                    if (fi.Name[fi.Name.Length - 5] == 's')
+                    {
+                        continue;
+                    }
+
+                    bool edit_flag = false;
+
+                    GFF g = new GFF(r.File_Table.Where(x => x.TypeID == 2014).FirstOrDefault().File_Data);
+
+                    switch((g.Field_Array.Where(x => x.Label == "Mod_Entry_Area").FirstOrDefault().Field_Data as GFF.CResRef).Text)
+                    {
+                        case "m04aa":
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_X").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(183.5f), 0);
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_Y").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(167.4f), 0);
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_Z").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(1.5f), 0);
+                            edit_flag = true;
+                            break;
+                        case "m38aa":
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_X").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(15.8f), 0);
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_Y").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(55.6f), 0);
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_Z").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(0.75f), 0);
+                            edit_flag = true;
+                            break;
+                        case "m40ac":
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_X").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(12.5f), 0);
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_Y").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(155.2f), 0);
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_Z").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(3.0f), 0);
+                            edit_flag = true;
+                            break;
+                        case "m26aa":
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_X").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(5.7f), 0);
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_Y").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(-10.7f), 0);
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_Z").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(59.2f), 0);
+                            edit_flag = true;
+                            break;
+                        case "m27aa":
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_X").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(112.8f), 0);
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_Y").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(2.4f), 0);
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_Z").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(0f), 0);
+                            edit_flag = true;
+                            break;
+                        case "m43aa":
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_X").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(202.2f), 0);
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_Y").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(31.5f), 0);
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_Z").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(40.7f), 0);
+                            edit_flag = true;
+                            break;
+                        case "m44aa":
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_X").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(95.3f), 0);
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_Y").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(42.0f), 0);
+                            (g.Field_Array.Where(x => x.Label == "Mod_Entry_Z").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(0.44f), 0);
+                            edit_flag = true;
+                            break;
+                    }
+                    if (edit_flag)
+                    {
+                        MemoryStream ms = new MemoryStream();
+
+                        kWriter.Write(g, ms);
+
+                        r.File_Table.Where(x => x.TypeID == 2014).FirstOrDefault().File_Data = ms.ToArray();
+
+                        kWriter.Write(r, fi.OpenWrite());
+                    }
+
+                }
+            }
+
+            //Issue with not fully writing the fixed file, could be a KIO problem? Or maybe a resource issue but thats doubtful.
+
+            //Fixed Rakata riddle Man in Mind Prison
+            //if (Properties.Settings.Default.FixMindPrison)
+            //{
+            //    DirectoryInfo di = new DirectoryInfo(paths.modules);
+            //    foreach (FileInfo fi in di.GetFiles())
+            //    {
+            //        if (fi.Name[fi.Name.Length - 5] != 's')
+            //        {
+            //            continue;
+            //        }
+
+            //        RIM r = KReader.ReadRIM(fi.OpenRead());
+            //        if (r.File_Table.Where(x => x.Label == "g_brakatan003").Any())
+            //        {
+            //            r.File_Table.Where(x => x.Label == "g_brakatan003").FirstOrDefault().File_Data = Properties.Resources.g_brakatan003;
+            //            kWriter.Write(r, fi.OpenWrite());
+            //            break;
+            //        }
+            //    }
+
+            //}
 
         }
     }

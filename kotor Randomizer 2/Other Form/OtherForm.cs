@@ -21,6 +21,7 @@ namespace kotor_Randomizer_2
 
             cbNameGen.Checked = Properties.Settings.Default.NameGenRando;
             cbPolymorph.Checked = Properties.Settings.Default.PolymorphMode;
+            cbPazaak.Checked = Properties.Settings.Default.PazaakDecks;
         }
 
         #region private properties
@@ -125,5 +126,10 @@ namespace kotor_Randomizer_2
         }
 
         #endregion
+
+        private void cbPazaak_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.PazaakDecks = cbPazaak.Checked;
+        }
     }
 }

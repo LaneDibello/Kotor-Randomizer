@@ -167,6 +167,11 @@ namespace kotor_Randomizer_2
                             string temppath = paths.get_backup(paths.Override) + file.Name;
                             file.CopyTo(temppath, true);
                         }
+
+                        if (!File.Exists(paths.get_backup(paths.chitin)))
+                        {
+                            File.Copy(paths.chitin, paths.get_backup(paths.chitin));
+                        }
                     }
                     break;
             }

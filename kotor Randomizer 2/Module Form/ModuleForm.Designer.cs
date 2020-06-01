@@ -39,7 +39,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.FixedDream_checkBox = new System.Windows.Forms.CheckBox();
             this.galmap_checkbox = new System.Windows.Forms.CheckBox();
-            this.missionSpawn_checkbox = new System.Windows.Forms.CheckBox();
+            this.updatedCoords_checkbox = new System.Windows.Forms.CheckBox();
+            this.cbRakataRiddle = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // OmittedListBox
@@ -182,26 +183,39 @@
             this.galmap_checkbox.UseVisualStyleBackColor = true;
             this.galmap_checkbox.CheckedChanged += new System.EventHandler(this.galmap_checkbox_CheckedChanged);
             // 
-            // missionSpawn_checkbox
+            // updatedCoords_checkbox
             // 
-            this.missionSpawn_checkbox.AutoSize = true;
-            this.missionSpawn_checkbox.Enabled = false;
-            this.missionSpawn_checkbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.missionSpawn_checkbox.Location = new System.Drawing.Point(340, 510);
-            this.missionSpawn_checkbox.Name = "missionSpawn_checkbox";
-            this.missionSpawn_checkbox.Size = new System.Drawing.Size(125, 17);
-            this.missionSpawn_checkbox.TabIndex = 27;
-            this.missionSpawn_checkbox.Text = "Fixed Mission Spawn";
-            this.missionSpawn_checkbox.UseVisualStyleBackColor = true;
-            this.missionSpawn_checkbox.CheckedChanged += new System.EventHandler(this.missionSpawn_checkbox_CheckedChanged);
+            this.updatedCoords_checkbox.AutoSize = true;
+            this.updatedCoords_checkbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.updatedCoords_checkbox.Location = new System.Drawing.Point(340, 510);
+            this.updatedCoords_checkbox.Name = "updatedCoords_checkbox";
+            this.updatedCoords_checkbox.Size = new System.Drawing.Size(148, 17);
+            this.updatedCoords_checkbox.TabIndex = 27;
+            this.updatedCoords_checkbox.Text = "Fixed Module Coordinates";
+            this.updatedCoords_checkbox.UseVisualStyleBackColor = true;
+            this.updatedCoords_checkbox.CheckedChanged += new System.EventHandler(this.updatedCoords_checkbox_CheckedChanged);
+            // 
+            // cbRakataRiddle
+            // 
+            this.cbRakataRiddle.AutoSize = true;
+            this.cbRakataRiddle.Enabled = false;
+            this.cbRakataRiddle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbRakataRiddle.Location = new System.Drawing.Point(20, 530);
+            this.cbRakataRiddle.Name = "cbRakataRiddle";
+            this.cbRakataRiddle.Size = new System.Drawing.Size(109, 17);
+            this.cbRakataRiddle.TabIndex = 28;
+            this.cbRakataRiddle.Text = "Fixed Mind Prison";
+            this.cbRakataRiddle.UseVisualStyleBackColor = true;
+            this.cbRakataRiddle.CheckedChanged += new System.EventHandler(this.cbRakataRiddle_CheckedChanged);
             // 
             // ModuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(541, 551);
-            this.Controls.Add(this.missionSpawn_checkbox);
+            this.ClientSize = new System.Drawing.Size(541, 572);
+            this.Controls.Add(this.cbRakataRiddle);
+            this.Controls.Add(this.updatedCoords_checkbox);
             this.Controls.Add(this.galmap_checkbox);
             this.Controls.Add(this.FixedDream_checkBox);
             this.Controls.Add(this.label3);
@@ -237,6 +251,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox FixedDream_checkBox;
         private System.Windows.Forms.CheckBox galmap_checkbox;
-        private System.Windows.Forms.CheckBox missionSpawn_checkbox;
+        private System.Windows.Forms.CheckBox updatedCoords_checkbox;
+        private System.Windows.Forms.CheckBox cbRakataRiddle;
     }
 }
