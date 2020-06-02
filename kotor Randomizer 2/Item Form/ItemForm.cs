@@ -171,11 +171,7 @@ namespace kotor_Randomizer_2
             {
                 if (cbVarious.Checked)
                 {
-                    if (rbVariousSType.Checked)
-                    {
-                        return Globals.RandomizationLevel.Subtype;
-                    }
-                    else if (rbVariousType.Checked)
+                    if (rbVariousType.Checked)
                     {
                         return Globals.RandomizationLevel.Type;
                     }
@@ -200,8 +196,6 @@ namespace kotor_Randomizer_2
                         rbVariousType.Checked = true;
                         break;
                     case Globals.RandomizationLevel.Subtype:
-                        rbVariousSType.Checked = true;
-                        break;
                     case Globals.RandomizationLevel.None:
                     default:
                         cbVarious.Checked = false;

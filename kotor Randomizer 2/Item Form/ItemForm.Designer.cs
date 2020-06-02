@@ -58,7 +58,6 @@
             this.rbBeltsType = new System.Windows.Forms.RadioButton();
             this.rbBeltsMax = new System.Windows.Forms.RadioButton();
             this.flpVarious = new System.Windows.Forms.FlowLayoutPanel();
-            this.rbVariousSType = new System.Windows.Forms.RadioButton();
             this.rbVariousType = new System.Windows.Forms.RadioButton();
             this.rbVariousMax = new System.Windows.Forms.RadioButton();
             this.flpDroid = new System.Windows.Forms.FlowLayoutPanel();
@@ -124,6 +123,7 @@
             this.bAddOmitItem = new System.Windows.Forms.Button();
             this.bAllOff = new System.Windows.Forms.Button();
             this.bAllMax = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
             this.flpArmor.SuspendLayout();
             this.flpStims.SuspendLayout();
             this.flpBelts.SuspendLayout();
@@ -513,7 +513,7 @@
             this.flpVarious.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpVarious.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpVarious.Controls.Add(this.rbVariousSType);
+            this.flpVarious.Controls.Add(this.label7);
             this.flpVarious.Controls.Add(this.rbVariousType);
             this.flpVarious.Controls.Add(this.rbVariousMax);
             this.flpVarious.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
@@ -521,18 +521,6 @@
             this.flpVarious.Name = "flpVarious";
             this.flpVarious.Size = new System.Drawing.Size(180, 20);
             this.flpVarious.TabIndex = 18;
-            // 
-            // rbVariousSType
-            // 
-            this.rbVariousSType.AutoSize = true;
-            this.rbVariousSType.Location = new System.Drawing.Point(2, 2);
-            this.rbVariousSType.Margin = new System.Windows.Forms.Padding(2);
-            this.rbVariousSType.Name = "rbVariousSType";
-            this.rbVariousSType.Size = new System.Drawing.Size(64, 17);
-            this.rbVariousSType.TabIndex = 2;
-            this.rbVariousSType.TabStop = true;
-            this.rbVariousSType.Text = "Subtype";
-            this.rbVariousSType.UseVisualStyleBackColor = true;
             // 
             // rbVariousType
             // 
@@ -1326,6 +1314,17 @@
             this.bAllMax.UseVisualStyleBackColor = false;
             this.bAllMax.Click += new System.EventHandler(this.bAllMax_Click);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(2, 0);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(64, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "                   ";
+            // 
             // ItemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1456,7 +1455,6 @@
         private System.Windows.Forms.RadioButton rbBeltsType;
         private System.Windows.Forms.RadioButton rbBeltsMax;
         private System.Windows.Forms.FlowLayoutPanel flpVarious;
-        private System.Windows.Forms.RadioButton rbVariousSType;
         private System.Windows.Forms.RadioButton rbVariousType;
         private System.Windows.Forms.RadioButton rbVariousMax;
         private System.Windows.Forms.FlowLayoutPanel flpDroid;
@@ -1522,5 +1520,6 @@
         private System.Windows.Forms.Button bAddOmitItem;
         private System.Windows.Forms.Button bAllOff;
         private System.Windows.Forms.Button bAllMax;
+        private System.Windows.Forms.Label label7;
     }
 }

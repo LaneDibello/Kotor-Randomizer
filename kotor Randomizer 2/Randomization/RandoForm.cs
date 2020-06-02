@@ -206,7 +206,7 @@ namespace kotor_Randomizer_2
                 curr_task = "Randomizing Items";
                 bwRandomizing.ReportProgress(curr_progress);
                 CreateBackUps("item");
-                //run appropriate rando script
+                ItemRando.item_rando(paths);//run appropriate rando script
                 curr_progress += step_size;
             }
             if (Properties.Settings.Default.sound_rando_active)
@@ -262,6 +262,7 @@ namespace kotor_Randomizer_2
             //Properties.Settings.Default.KotorIsRandomized = true;
         }
 
+        //Unrandomizes Things
         private void UnRando()
         {
             //Figure out how many rando categories have been done

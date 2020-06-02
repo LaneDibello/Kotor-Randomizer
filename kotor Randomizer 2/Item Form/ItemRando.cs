@@ -16,116 +16,291 @@ namespace kotor_Randomizer_2
         {
             KEY k = KReader.ReadKEY(File.OpenRead(paths.chitin));
 
+            //handle categories
+            handle_category(k, ArmorRegs, Properties.Settings.Default.RandomizeArmor);
+            handle_category(k, StimsRegs, Properties.Settings.Default.RandomizeStims);
+            handle_category(k, BeltsRegs, Properties.Settings.Default.RandomizeBelts);
+            handle_category(k, HidesRegs, Properties.Settings.Default.RandomizeHides);
+            handle_category(k, DroidRegs, Properties.Settings.Default.RandomizeDroid);
+            handle_category(k, ArmbandsRegs, Properties.Settings.Default.RandomizeArmbands);
+            handle_category(k, GlovesRegs, Properties.Settings.Default.RandomizeGloves);
+            handle_category(k, ImplantsRegs, Properties.Settings.Default.RandomizeImplants);
+            handle_category(k, MaskRegs, Properties.Settings.Default.RandomizeMask);
+            handle_category(k, PazRegs, Properties.Settings.Default.RandomizePaz);
+            handle_category(k, MinesRegs, Properties.Settings.Default.RandomizeMines);
+            handle_category(k, UpgradeRegs, Properties.Settings.Default.RandomizeUpgrade);
+            handle_category(k, BlastersRegs, Properties.Settings.Default.RandomizeBlasters);
+            handle_category(k, CreatureRegs, Properties.Settings.Default.RandomizeCreature);
+            handle_category(k, LightsabersRegs, Properties.Settings.Default.RandomizeLightsabers);
+            handle_category(k, GrenadesRegs, Properties.Settings.Default.RandomizeGrenades);
+            handle_category(k, MeleeRegs, Properties.Settings.Default.RandomizeMelee);
 
+            //handle Various
+            switch (Properties.Settings.Default.RandomizeVarious)
+            {
+                case 2:
+                    List<string> type = new List<string>(k.Key_Table.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
+                    Type_Lists.Add(type);
+                    break;
+                case 3:
+                    Max_Rando.AddRange(k.Key_Table.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
+                    break;
+                case 0:
+                default:
+                    break;
+            }
+
+            //Max Rando
+            List<string> Max_Rando_Iterator = new List<string>(Max_Rando);
+            Randomize.FisherYatesShuffle(Max_Rando);
+            int j = 0;
+            foreach (KEY.Key_Entry ke in k.Key_Table.Where(x => Max_Rando_Iterator.Contains(x.ResRef)))
+            {
+                ke.ResRef = Max_Rando[j];
+                j++;
+            }
+
+            //Type Rando
+            foreach (List<string> li in Type_Lists)
+            {
+                List<string> type_copy = new List<string>(li);
+                Randomize.FisherYatesShuffle(type_copy);
+                j = 0;
+                foreach (KEY.Key_Entry ke in k.Key_Table.Where(x => li.Contains(x.ResRef)))
+                {
+                    ke.ResRef = type_copy[j];
+                    j++;
+                }
+            }
+
+            kWriter.Write(k, File.OpenWrite(paths.chitin));
         }
 
+        private static void handle_category(KEY k, List<Regex> r, int Randomizationlevel)
+        {
+            switch (Randomizationlevel)
+            {
+                case 1:
+                    for (int i = 1; i < r.Count; i++)
+                    {
+                        List<string> temp = new List<string>(k.Key_Table.Where(x => r[i].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
+                        Type_Lists.Add(temp);
+                    }
+                    break;
+                case 2:
+                    List<string> type = new List<string>(k.Key_Table.Where(x => r[0].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
+                    Type_Lists.Add(type);
+                    break;
+                case 3:
+                    Max_Rando.AddRange(k.Key_Table.Where(x => r[0].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
+                    break;
+                case 0:
+                default:
+                    break;
+            }
+        }
+
+        private static bool Is_Forbidden(string s)
+        {
+            return Globals.OmitItems.Contains(s);
+        }
+
+        private static bool Matches_None(string s)
+        {
+            return
+                (
+                !ArmorRegs[0].IsMatch(s) &&
+                !StimsRegs[0].IsMatch(s) &&
+                !BeltsRegs[0].IsMatch(s) &&
+                !HidesRegs[0].IsMatch(s) &&
+                !DroidRegs[0].IsMatch(s) &&
+                !ArmbandsRegs[0].IsMatch(s) &&
+                !GlovesRegs[0].IsMatch(s) &&
+                !ImplantsRegs[0].IsMatch(s) &&
+                !MaskRegs[0].IsMatch(s) &&
+                !PazRegs[0].IsMatch(s) &&
+                !MinesRegs[0].IsMatch(s) &&
+                !UpgradeRegs[0].IsMatch(s) &&
+                !BlastersRegs[0].IsMatch(s) &&
+                !CreatureRegs[0].IsMatch(s) &&
+                !LightsabersRegs[0].IsMatch(s) &&
+                !GrenadesRegs[0].IsMatch(s) &&
+                !MeleeRegs[0].IsMatch(s)
+                );
+        }
+
+        private static List<string> Max_Rando = new List<string>();
+
+        private static List<List<string>> Type_Lists = new List<List<string>>();
 
         #region Regexes
         //Armor Regexes
-        private static Regex RegexArmor { get { return new Regex("^g1*_a_", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All armor
-        private static Regex RegexArmorC4 { get { return new Regex("^g1*_a_class4", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Armor Class 4
-        private static Regex RegexArmorC5 { get { return new Regex("^g1*_a_class5", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Armor Class 5
-        private static Regex RegexArmorC6 { get { return new Regex("^g1*_a_class6", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Armor Class 6
-        private static Regex RegexArmorC7 { get { return new Regex("^g1*_a_class7", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Armor Class 7
-        private static Regex RegexArmorC8 { get { return new Regex("^g1*_a_class8", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Armor Class 8
-        private static Regex RegexArmorC9 { get { return new Regex("^g1*_a_class9", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Armor Class 9
-        private static Regex RegexArmorClothes { get { return new Regex("^g1*_a_clothes", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Clothes
-        private static Regex RegexArmorRobes { get { return new Regex("^g1*_a_jedi", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Basic Robes
-        private static Regex RegexArmorKnightRobes { get { return new Regex("^g1*_a_kght", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Knight Robes
-        private static Regex RegexArmorMasterRobes { get { return new Regex("^g1*_a_mstr", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Master Robes
+        static List<Regex> ArmorRegs = new List<Regex>()
+        {
+            new Regex("^g1*_a_", RegexOptions.Compiled | RegexOptions.IgnoreCase),// All Armor
+
+            new Regex("^g1*_a_class4", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 4
+            new Regex("^g1*_a_class5", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 5
+            new Regex("^g1*_a_class6", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 6
+            new Regex("^g1*_a_class7", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 7
+            new Regex("^g1*_a_class8", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 8
+            new Regex("^g1*_a_class9", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 9
+            new Regex("^g1*_a_clothes", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Clothes
+            new Regex("^g1*_a_jedi", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Basic Robes
+            new Regex("^g1*_a_kght", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Knight Robes
+            new Regex("^g1*_a_mstr", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Master Robes
+
+        };
 
         //Stims Regexes
-        private static Regex RegexStims { get { return new Regex("^g1*_i_(adrn|cmbt|medeq)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Stims/Medpacs
-        private static Regex RegexStimsA { get { return new Regex("^g1*_i_adrn", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Adrenals
-        private static Regex RegexStimsB { get { return new Regex("^g1*_i_cmbt", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Battle Stims
-        private static Regex RegexStimsM { get { return new Regex("^g1*_i_medeq", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Medpacs
+        static List<Regex> StimsRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_(adrn|cmbt|medeq)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Stims/Medpacs
+
+            new Regex("^g1*_i_adrn", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Adrenals
+            new Regex("^g1*_i_cmbt", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Battle Stims
+            new Regex("^g1*_i_medeq", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Medpacs
+        };
 
         //Belt Regexs
-        private static Regex RegexBelts { get { return new Regex("^g1*_i_belt", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Belts
+        static List<Regex> BeltsRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_belt", RegexOptions.Compiled | RegexOptions.IgnoreCase)//All Belts
+        };
 
-        //Various Regexes
-        private static Regex RegexBith { get { return new Regex("^g1*_i_bith", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Bith items
-        private static Regex Regexcredits { get { return new Regex("^g1*_i_credit", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Credits
+        ////Various Regexes
+        //private static Regex RegexBith { get { return new Regex("^g1*_i_bith", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Bith items
+        //private static Regex Regexcredits { get { return new Regex("^g1*_i_credit", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Credits
 
         //Creature Hides
-        private static Regex RegexHides { get { return new Regex("^g1*_i_crhide", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Creature Hides
+        static List<Regex> HidesRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_crhide", RegexOptions.Compiled | RegexOptions.IgnoreCase)//Creature Hides
+        };
 
         //Droid equipment 
-        private static Regex RegexDroid { get { return new Regex("^g1*_i_drd", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Droid Equipment
-        private static Regex RegexDroidPlating { get { return new Regex("^g1*_i_drd.{0,2}plat", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Droid Plating
-        private static Regex RegexDroidProbes { get { return new Regex("^g1*_i_drd(comspk|secspk)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Droid probes
-        private static Regex RegexDroidSensors { get { return new Regex("^g1*_i_drd(mtn|snc)sen", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Droid Sensors
-        private static Regex RegexDroidRepair { get { return new Regex("^g1*_i_drdrep", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Droid repair kits
-        private static Regex RegexDroidShields { get { return new Regex("^g1*_i_drdshld", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Droid Shields
-        private static Regex RegexDroidScope { get { return new Regex("^g1*_i_drdsrc", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Droid Equipment
-        private static Regex RegexDroidComputers { get { return new Regex("^g1*_i_drdtrgcom", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Droid Computers
-        private static Regex RegexDroidDevice { get { return new Regex("^g1*_i_drdutldev", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Droid Devices
+        static List<Regex> DroidRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_drd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Droid Equipment
+
+            new Regex("^g1*_i_drd.{0,2}plat", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid Plating
+            new Regex("^g1*_i_drd(comspk|secspk)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid probes
+            new Regex("^g1*_i_drd(mtn|snc)sen", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid Sensors
+            new Regex("^g1*_i_drdrep", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid repair kits
+            new Regex("^g1*_i_drdshld", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid Shields
+            new Regex("^g1*_i_drdsrc", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid Equipment
+            new Regex("^g1*_i_drdtrgcom", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid Computers
+            new Regex("^g1*_i_drdutldev", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid Devices
+        };
 
         //Armbands
-        private static Regex RegexArmbands { get { return new Regex("^g1*_i_frarmbnds", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Armbands
-        private static Regex RegexArmbandsSheild { get { return new Regex("^g1*_i_frarmbnds0", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Armbands
-        private static Regex RegexArmbandsStat { get { return new Regex("^g1*_i_frarmbnds(1|2)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Armbands
+        static List<Regex> ArmbandsRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_frarmbnds", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Armbands
+
+            new Regex("^g1*_i_frarmbnds0", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Shields
+            new Regex("^g1*_i_frarmbnds(1|2)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Stats
+        };
 
         //Gauntlets
-        private static Regex RegexGloves { get { return new Regex("^g1*_i_gauntlet", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Gloves
+        static List<Regex> GlovesRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_gauntlet", RegexOptions.Compiled | RegexOptions.IgnoreCase)//Gloves
+        };
 
         //Implants
-        private static Regex RegexImplants { get { return new Regex("^g1*_i_implant", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Implants
-        private static Regex RegexImplants1 { get { return new Regex("^g1*_i_implant1", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Implant level 1
-        private static Regex RegexImplants2 { get { return new Regex("^g1*_i_implant2", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Implant level 2
-        private static Regex RegexImplants3 { get { return new Regex("^g1*_i_implant3", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Implant level 3
+        static List<Regex> ImplantsRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_implant", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Implants
+
+            new Regex("^g1*_i_implant1", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Implant level 1
+            new Regex("^g1*_i_implant2", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Implant level 2
+            new Regex("^g1*_i_implant3", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Implant level 3
+        };
 
         //Mask
-        private static Regex RegexMask { get { return new Regex("^g1*_i_mask", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Masks
-        private static Regex RegexMaskN { get { return new Regex("^g1*_i_mask(08|09|10|11|13|16|17|18|22|23|24)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Mask No Armor Prof
-        private static Regex RegexMaskL { get { return new Regex("^g1*_i_mask(01|02|03|04|05|07|19|20|21)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Mask Light
-        private static Regex RegexMaskM { get { return new Regex("^g1*_i_mask(06|12|15)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Mask Medium
-        private static Regex RegexMaskH { get { return new Regex("^g1*_i_mask14", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Mask Heavy
+        static List<Regex> MaskRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_mask", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Masks
+
+            new Regex("^g1*_i_mask(08|09|10|11|13|16|17|18|22|23|24)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Mask No Armor Prof
+            new Regex("^g1*_i_mask(01|02|03|04|05|07|19|20|21)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Mask Light
+            new Regex("^g1*_i_mask(06|12|15)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Mask Medium
+            new Regex("^g1*_i_mask14", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Mask Heavy
+        };
 
         //Paz
-        private static Regex RegexPaz { get { return new Regex("^g1*_i_pazcard", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Pazaak Cards
+        static List<Regex> PazRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_pazcard", RegexOptions.Compiled | RegexOptions.IgnoreCase)//Pazaak Cards
+        };
 
         //Mines
-        private static Regex RegexMines { get { return new Regex("^g1*_i_trapkit", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Mines
+        static List<Regex> MinesRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_trapkit", RegexOptions.Compiled | RegexOptions.IgnoreCase)//Mines
+        };
 
         //Upgrades/Crystals
-        private static Regex RegexUpgrade { get { return new Regex("^g1*_(i_upgrade|w_sbrcrstl)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Upgrades
-        private static Regex RegexUpgradeNorm { get { return new Regex("^g1*_i_upgrade", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Normal Upgrades
-        private static Regex RegexUpgradeCryst { get { return new Regex("^g1*_w_sbrcrstl", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Crystal Upgrades
+        static List<Regex> UpgradeRegs = new List<Regex>()
+        {
+            new Regex("^g1*_(i_upgrade|w_sbrcrstl)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Upgrades
+
+            new Regex("^g1*_i_upgrade", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Normal Upgrades
+            new Regex("^g1*_w_sbrcrstl", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Crystal Upgrades
+        };
 
         //Blaster
-        private static Regex RegexBlasters { get { return new Regex("^g1*_w_.*(bls*tr*|rfl|pstl|cstr)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Blasters
-        private static Regex RegexBlastersHeavy { get { return new Regex("^g1*_w_.*(rptn)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Heavy Blasters
-        private static Regex RegexBlastersPistol { get { return new Regex("^g1*_w_.*(pstl|hldoblst|hvyblstr|ionblstr)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Blaster Pistols
-        private static Regex RegexBlastersRifle { get { return new Regex("^g1*_w_.*(crbn|rfl|cstr)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Blaster Rifles
+        static List<Regex> BlastersRegs = new List<Regex>()
+        {
+            new Regex("^g1*_w_.*(bls*tr*|rfl|pstl|cstr)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Blasters
+
+            new Regex("^g1*_w_.*(rptn)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Heavy Blasters
+            new Regex("^g1*_w_.*(pstl|hldoblst|hvyblstr|ionblstr)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Blaster Pistols
+            new Regex("^g1*_w_.*(crbn|rfl|cstr)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Blaster Rifles
+        };
 
         //Creature Weapons
-        private static Regex RegexCreature { get { return new Regex("^g1*_w_cr(go|sl)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Creature weapons
-        private static Regex RegexCreaturePierce { get { return new Regex("^g1*_w_crgore", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Piercing Creature Weapons
-        private static Regex RegexCreatureSlash { get { return new Regex("^g1*_w_crslash", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Slashing Creature Weapons
-        private static Regex RegexCreaturePierceSlash { get { return new Regex("^g1*_w_crslprc", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Piercing/slashing Creature weapons
+        static List<Regex> CreatureRegs = new List<Regex>()
+        {
+            new Regex("^g1*_w_cr(go|sl)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Creature weapons
+
+            new Regex("^g1*_w_crgore", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Piercing Creature Weapons
+            new Regex("^g1*_w_crslash", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Slashing Creature Weapons
+            new Regex("^g1*_w_crslprc", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Piercing/slashing Creature weapons
+        };
 
         //Lightsabers
-        private static Regex RegexLightsabers { get { return new Regex("^g1*_w_.{1,}sbr", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Lightsabers
-        private static Regex RegexLightsabersDouble { get { return new Regex("^g1*_w_dblsbr", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Double Lightsabers
-        private static Regex RegexLightsabersRegular { get { return new Regex("^g1*_w_(lght|drkjdi)sbr", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Regular Lightsabers
-        private static Regex RegexLightsabersShort { get { return new Regex("^g1*_w_shortsbr", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Short Lightsabers
+        static List<Regex> LightsabersRegs = new List<Regex>()
+        {
+            new Regex("^g1*_w_.{1,}sbr", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Lightsabers
+
+            new Regex("^g1*_w_dblsbr", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Double Lightsabers
+            new Regex("^g1*_w_(lght|drkjdi)sbr", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Regular Lightsabers
+            new Regex("^g1*_w_shortsbr", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Short Lightsabers
+        };
 
         //Grenades
-        private static Regex RegexGrenades { get { return new Regex("^g1*_w_(.*gren|thermldet)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Grenades
+        static List<Regex> GrenadesRegs = new List<Regex>()
+        {
+            new Regex("^g1*_w_(.*gren|thermldet)", RegexOptions.Compiled | RegexOptions.IgnoreCase)//Grenades
+        };
 
         //Melee
-        private static Regex RegexMelee { get { return new Regex("^g1*_w_(stunbaton|war|.*swr*d|vi*bro|gaffi|qtrstaff)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Melee Weapons
-        private static Regex RegexMeleeBatons { get { return new Regex("^g1*_w_stunbaton", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Stun Batons
-        private static Regex RegexMeleeLongSword { get { return new Regex("^g1*_w_lngswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Long Swords
-        private static Regex RegexMeleeShortSword { get { return new Regex("^g1*_w_shortswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Short Swords
-        private static Regex RegexMeleeVibroShort { get { return new Regex("^g1*_w_vbroshort", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Vibro Shortblades
-        private static Regex RegexMeleeVibro { get { return new Regex("^g1*_w_vbroswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Vibroblades
-        private static Regex RegexMeleeDoubleSword { get { return new Regex("^g1*_w_dblswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Double Swords
-        private static Regex RegexMeleeQuarterStaff { get { return new Regex("^g1*_w_qtrstaff", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Quarter Staves
-        private static Regex RegexMeleeVibroDouble { get { return new Regex("^g1*_w_vbrdblswd", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Vibro Doubleblades
-        private static Regex RegexMeleeWar { get { return new Regex("^g1*_w_war", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//War blade/axes
+        static List<Regex> MeleeRegs = new List<Regex>()
+        {
+            new Regex("^g1*_w_(stunbaton|war|.*swr*d|vi*bro|gaffi|qtrstaff)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Melee Weapons
 
+            new Regex("^g1*_w_stunbaton", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Stun Batons
+            new Regex("^g1*_w_lngswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Long Swords
+            new Regex("^g1*_w_shortswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Short Swords
+            new Regex("^g1*_w_vbroshort", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Vibro Shortblades
+            new Regex("^g1*_w_vbroswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Vibroblades
+            new Regex("^g1*_w_dblswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Double Swords
+            new Regex("^g1*_w_qtrstaff", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Quarter Staves
+            new Regex("^g1*_w_vbrdblswd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Vibro Doubleblades
+            new Regex("^g1*_w_war", RegexOptions.Compiled | RegexOptions.IgnoreCase),//War blade/axes
+        };
         #endregion
     }
 
