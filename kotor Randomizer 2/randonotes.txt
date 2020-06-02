@@ -17,6 +17,7 @@
 	- Finish randomizer scripts
 	- program polymorph mode
 	- Look into the issues with the adjusted mind prison data
+	- Finsh item rando script
 
 
 

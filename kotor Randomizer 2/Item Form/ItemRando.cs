@@ -12,7 +12,15 @@ namespace kotor_Randomizer_2
 {
     public static class ItemRando
     {
+        public static void item_rando(Globals.KPaths paths)
+        {
+            KEY k = KReader.ReadKEY(File.OpenRead(paths.chitin));
 
+
+        }
+
+
+        #region Regexes
         //Armor Regexes
         private static Regex RegexArmor { get { return new Regex("^g1*_a_", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All armor
         private static Regex RegexArmorC4 { get { return new Regex("^g1*_a_class4", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Armor Class 4
@@ -87,9 +95,38 @@ namespace kotor_Randomizer_2
 
         //Blaster
         private static Regex RegexBlasters { get { return new Regex("^g1*_w_.*(bls*tr*|rfl|pstl|cstr)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Blasters
+        private static Regex RegexBlastersHeavy { get { return new Regex("^g1*_w_.*(rptn)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Heavy Blasters
+        private static Regex RegexBlastersPistol { get { return new Regex("^g1*_w_.*(pstl|hldoblst|hvyblstr|ionblstr)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Blaster Pistols
+        private static Regex RegexBlastersRifle { get { return new Regex("^g1*_w_.*(crbn|rfl|cstr)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Blaster Rifles
 
+        //Creature Weapons
+        private static Regex RegexCreature { get { return new Regex("^g1*_w_cr(go|sl)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Creature weapons
+        private static Regex RegexCreaturePierce { get { return new Regex("^g1*_w_crgore", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Piercing Creature Weapons
+        private static Regex RegexCreatureSlash { get { return new Regex("^g1*_w_crslash", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Slashing Creature Weapons
+        private static Regex RegexCreaturePierceSlash { get { return new Regex("^g1*_w_crslprc", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Piercing/slashing Creature weapons
 
+        //Lightsabers
+        private static Regex RegexLightsabers { get { return new Regex("^g1*_w_.{1,}sbr", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Lightsabers
+        private static Regex RegexLightsabersDouble { get { return new Regex("^g1*_w_dblsbr", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Double Lightsabers
+        private static Regex RegexLightsabersRegular { get { return new Regex("^g1*_w_(lght|drkjdi)sbr", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Regular Lightsabers
+        private static Regex RegexLightsabersShort { get { return new Regex("^g1*_w_shortsbr", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Short Lightsabers
 
+        //Grenades
+        private static Regex RegexGrenades { get { return new Regex("^g1*_w_(.*gren|thermldet)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Grenades
+
+        //Melee
+        private static Regex RegexMelee { get { return new Regex("^g1*_w_(stunbaton|war|.*swr*d|vi*bro|gaffi|qtrstaff)", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//All Melee Weapons
+        private static Regex RegexMeleeBatons { get { return new Regex("^g1*_w_stunbaton", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Stun Batons
+        private static Regex RegexMeleeLongSword { get { return new Regex("^g1*_w_lngswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Long Swords
+        private static Regex RegexMeleeShortSword { get { return new Regex("^g1*_w_shortswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Short Swords
+        private static Regex RegexMeleeVibroShort { get { return new Regex("^g1*_w_vbroshort", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Vibro Shortblades
+        private static Regex RegexMeleeVibro { get { return new Regex("^g1*_w_vbroswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Vibroblades
+        private static Regex RegexMeleeDoubleSword { get { return new Regex("^g1*_w_dblswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Double Swords
+        private static Regex RegexMeleeQuarterStaff { get { return new Regex("^g1*_w_qtrstaff", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Quarter Staves
+        private static Regex RegexMeleeVibroDouble { get { return new Regex("^g1*_w_vbrdblswd", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Vibro Doubleblades
+        private static Regex RegexMeleeWar { get { return new Regex("^g1*_w_war", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//War blade/axes
+
+        #endregion
     }
 
 }

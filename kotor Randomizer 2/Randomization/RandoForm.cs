@@ -230,7 +230,7 @@ namespace kotor_Randomizer_2
                 curr_task = "Randomizing Textures";
                 bwRandomizing.ReportProgress(curr_progress);
                 CreateBackUps("texture");
-                //run appropriate rando script
+                TextureRando.texture_rando(paths);//run appropriate rando script
                 curr_progress += step_size;
             }
             if (Properties.Settings.Default.twoda_rando_active)
