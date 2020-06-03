@@ -8,7 +8,7 @@
 	- Deal with empty BoundModules possibility
 	- Finish KRP Write
 	- Add KRP Read
-	- Update KRP stuff when TwoDA and TExt Are done
+	- Update KRP stuff when TwoDA and Text Are done
 	- Do Text
 	- For text look into switch to just dialogue rand as might be easier \/(=.=)\/
 	- Besure to have the rando feature save the Settings before starting in case the user hasn't closed all the forms. May not matter?
@@ -16,8 +16,8 @@
 	- Finsh back up scripts
 	- Finish randomizer scripts
 	- program polymorph mode
-	- Look into the issues with the adjusted mind prison data
 	- Finsh item rando script
+	- Separate Color crystals from upgrade crystals, add in forgotten items like geno stuff
 
 
 

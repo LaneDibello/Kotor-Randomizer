@@ -198,7 +198,6 @@
             // cbRakataRiddle
             // 
             this.cbRakataRiddle.AutoSize = true;
-            this.cbRakataRiddle.Enabled = false;
             this.cbRakataRiddle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbRakataRiddle.Location = new System.Drawing.Point(20, 530);
             this.cbRakataRiddle.Name = "cbRakataRiddle";

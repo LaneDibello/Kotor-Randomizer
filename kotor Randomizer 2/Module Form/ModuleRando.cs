@@ -171,29 +171,42 @@ namespace kotor_Randomizer_2
                 }
             }
 
-            //Issue with not fully writing the fixed file, could be a KIO problem? Or maybe a resource issue but thats doubtful.
-
             //Fixed Rakata riddle Man in Mind Prison
-            //if (Properties.Settings.Default.FixMindPrison)
-            //{
-            //    DirectoryInfo di = new DirectoryInfo(paths.modules);
-            //    foreach (FileInfo fi in di.GetFiles())
-            //    {
-            //        if (fi.Name[fi.Name.Length - 5] != 's')
-            //        {
-            //            continue;
-            //        }
+            if (Properties.Settings.Default.FixMindPrison)
+            {
+                DirectoryInfo di = new DirectoryInfo(paths.modules);
+                foreach (FileInfo fi in di.GetFiles())
+                {
+                    if (fi.Name[fi.Name.Length - 5] != 's')
+                    {
+                        continue;
+                    }
 
-            //        RIM r = KReader.ReadRIM(fi.OpenRead());
-            //        if (r.File_Table.Where(x => x.Label == "g_brakatan003").Any())
-            //        {
-            //            r.File_Table.Where(x => x.Label == "g_brakatan003").FirstOrDefault().File_Data = Properties.Resources.g_brakatan003;
-            //            kWriter.Write(r, fi.OpenWrite());
-            //            break;
-            //        }
-            //    }
+                    RIM r = KReader.ReadRIM(fi.OpenRead());
+                    if (r.File_Table.Where(x => x.Label == "g_brakatan003").Any())
+                    {
+                        bool offadjust = false;
+                        foreach (RIM.rFile rf in r.File_Table)
+                        {
+                            if (rf.Label == "g_brakatan003")
+                            {
+                                rf.File_Data = Properties.Resources.g_brakatan003;
+                                rf.DataSize += 192;
+                                offadjust = true;
+                                continue;
+                            }
+                            if (offadjust)
+                            {
+                                rf.DataOffset += 192;
+                            }
 
-            //}
+                        }
+
+                        kWriter.Write(r, fi.OpenWrite());
+                    }
+                }
+
+            }
 
         }
     }
