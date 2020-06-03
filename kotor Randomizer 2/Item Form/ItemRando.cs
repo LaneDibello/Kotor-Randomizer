@@ -247,16 +247,17 @@ namespace kotor_Randomizer_2
             new Regex("^g1*_(i_upgrade|w_sbrcrstl)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Upgrades
 
             new Regex("^g1*_i_upgrade", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Normal Upgrades
-            new Regex("^g1*_w_sbrcrstl", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Crystal Upgrades
+            new Regex("(^g1*_w_sbrcrstl(0|1([1-3]|9))|^tat18_dragonprl)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Crystal Upgrades
+            new Regex("^g1*_w_sbrcrstl(1[4-8]|2)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Crystal Colors
         };
 
         //Blaster
         static List<Regex> BlastersRegs = new List<Regex>()
         {
-            new Regex("^g1*_w_.*(bls*tr*|rfl|pstl|cstr)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Blasters
+            new Regex("^g1*_(w_.*(bls*tr*|rfl|pstl|cstr)|i_bithitem)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Blasters
 
-            new Regex("^g1*_w_.*(rptn)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Heavy Blasters
-            new Regex("^g1*_w_.*(pstl|hldoblst|hvyblstr|ionblstr)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Blaster Pistols
+            new Regex("^g1*_w_.*(rptn)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Heavy Weapons
+            new Regex("^g1*_(w_.*(pstl|hldoblst|hvyblstr|ionblstr)|i_bithitem)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Blaster Pistols
             new Regex("^g1*_w_.*(crbn|rfl|cstr)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Blaster Rifles
         };
 

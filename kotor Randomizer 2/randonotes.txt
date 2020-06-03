@@ -17,7 +17,7 @@
 	- Finish randomizer scripts
 	- program polymorph mode
 	- Finsh item rando script
-	- Separate Color crystals from upgrade crystals, add in forgotten items like geno stuff
+	- Add in forgotten items like geno stuff, Credits, null items, lightsources, parts, compspikes, plot items, disguises, etc
 
 
 

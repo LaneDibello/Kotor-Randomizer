@@ -178,6 +178,8 @@ namespace kotor_Randomizer_2
 
             if (Properties.Settings.Default.ModuleSaveStatus != 1) { Properties.Settings.Default.AddOverideFiles.Add("modulesave.2da"); }
             else if (Properties.Settings.Default.AddOverideFiles.Contains("modulesave.2da")) { Properties.Settings.Default.AddOverideFiles.Remove("modulesave.2da"); }
+            Properties.Settings.Default.Save();
+
         }
 
         private void modDelete_checkbox_CheckedChanged(object sender, EventArgs e)
