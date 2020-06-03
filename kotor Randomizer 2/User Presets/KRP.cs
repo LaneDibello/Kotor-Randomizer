@@ -15,7 +15,7 @@ namespace kotor_Randomizer_2
         #endregion
 
         #region public methods
-        public static void ReadKRP(Stream s) //Need to Finish
+        public static void ReadKRP(Stream s)
         {
             BinaryReader br = new BinaryReader(s);
 
@@ -32,7 +32,7 @@ namespace kotor_Randomizer_2
                 Properties.Settings.Default.other_rando_active = br.ReadBoolean();
 
                 //Categories
-                //Modules
+                #region Modules
                 if (Properties.Settings.Default.module_rando_active)
                 {
                     //Check that Module data is present
@@ -58,9 +58,11 @@ namespace kotor_Randomizer_2
                         {
                             sb.Append(br.ReadChar());
                         }
+                        br.ReadChar();
 
                         omit_mods.Add(sb.ToString());
                     }
+                    br.ReadChar();
 
                     //Load the omitted preset into BoundModules
                     for (int i = 0; i < Globals.BoundModules.Count; i++)
@@ -73,8 +75,214 @@ namespace kotor_Randomizer_2
                         }
                     }
 
+                    //Load bool settings
+                    Properties.Settings.Default.ModuleSaveStatus = 0;
+                    if (br.ReadBoolean()) { Properties.Settings.Default.ModuleSaveStatus ^= 1; }
+                    if (br.ReadBoolean()) { Properties.Settings.Default.ModuleSaveStatus ^= 2; }
+                    if (br.ReadBoolean()) { Properties.Settings.Default.ModuleSaveStatus ^= 4; }
+                    if (br.ReadBoolean()) { Properties.Settings.Default.AddOverideFiles.Add("k_ren_visionland.ncs"); }
+                    if (br.ReadBoolean()) { Properties.Settings.Default.AddOverideFiles.Add("k_pebn_galaxy.ncs"); }
+                    Properties.Settings.Default.FixWarpCoords = br.ReadBoolean();
+                    Properties.Settings.Default.FixMindPrison = br.ReadBoolean();
+                }
+                #endregion
+                #region Items
+                if (Properties.Settings.Default.item_rando_active)
+                {
+                    //Check that Item data is present
+                    if (new string(br.ReadChars(4)) != "ITEM") { throw new IOException("Item Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
+
+                    //Load in randolevels
+                    Properties.Settings.Default.RandomizeArmor = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeStims = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeBelts = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeVarious = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeHides = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeArmbands = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeDroid = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeGloves = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeImplants = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeMask = br.ReadInt32();
+                    Properties.Settings.Default.RandomizePaz = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeMines = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeUpgrade = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeBlasters = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeCreature = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeLightsabers = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeGrenades = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeMelee = br.ReadInt32();
+
+                    //Load Omit Items
+                    Globals.OmitItems.Clear();
+                    while (br.PeekChar() != '\n')
+                    {
+                        StringBuilder sb = new StringBuilder();
+
+                        while (br.PeekChar() != '\0')
+                        {
+                            sb.Append(br.ReadChar());
+                        }
+                        br.ReadChar();
+
+                        Globals.OmitItems.Add(sb.ToString());
+                    }
+                    br.ReadChar();
+                }
+                #endregion
+                #region Sounds
+                if (Properties.Settings.Default.sound_rando_active)
+                {
+                    //Check that Sound data is present
+                    if (new string(br.ReadChars(4)) != "SOUN") { throw new IOException("Sound Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
+
+                    //Rando Levels
+                    Properties.Settings.Default.RandomizeAreaMusic = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeBattleMusic = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeAmbientNoise = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeCutsceneNoise = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeNpcSounds = br.ReadInt32();
+                    Properties.Settings.Default.RandomizePartySounds = br.ReadInt32();
+
+                    //Bools
+                    Properties.Settings.Default.MixNpcAndPartySounds = br.ReadBoolean();
+                }
+                #endregion
+                #region Models
+                if (Properties.Settings.Default.model_rando_active)
+                {
+                    //Check that Model data is present
+                    if (new string(br.ReadChars(4)) != "MODE") { throw new IOException("Model Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
+
+                    //Settings
+                    Properties.Settings.Default.RandomizeCharModels = br.ReadInt32();
+                    Properties.Settings.Default.RandomizePlaceModels = br.ReadInt32();
+                    Properties.Settings.Default.RandomizeDoorModels = br.ReadInt32();
 
                 }
+                #endregion
+                #region Textures
+                if (Properties.Settings.Default.texture_rando_active)
+                {
+                    //Check that Texture data is present
+                    if (new string(br.ReadChars(4)) != "TEXU") { throw new IOException("Texture Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
+
+                    //Settings
+                    Properties.Settings.Default.TextureRandomizeCubeMaps = br.ReadInt32();
+                    Properties.Settings.Default.TextureRandomizeCreatures = br.ReadInt32();
+                    Properties.Settings.Default.TextureRandomizeEffects = br.ReadInt32();
+                    Properties.Settings.Default.TextureRandomizeItems = br.ReadInt32();
+                    Properties.Settings.Default.TextureRandomizePlanetary = br.ReadInt32();
+                    Properties.Settings.Default.TextureRandomizeNPC = br.ReadInt32();
+                    Properties.Settings.Default.TextureRandomizePlayHeads = br.ReadInt32();
+                    Properties.Settings.Default.TextureRandomizePlayBodies = br.ReadInt32();
+                    Properties.Settings.Default.TextureRandomizePlaceables = br.ReadInt32();
+                    Properties.Settings.Default.TextureRandomizeParty = br.ReadInt32();
+                    Properties.Settings.Default.TextureRandomizeStunt = br.ReadInt32();
+                    Properties.Settings.Default.TextureRandomizeVehicles = br.ReadInt32();
+                    Properties.Settings.Default.TextureRandomizeWeapons = br.ReadInt32();
+                    Properties.Settings.Default.TextureRandomizeOther = br.ReadInt32();
+
+                    //Texture Pack
+                    Properties.Settings.Default.TexturePack = br.ReadInt32();
+                }
+                #endregion
+                #region 2DAs
+                if (Properties.Settings.Default.twoda_rando_active)
+                {
+                    //Check that 2DA data is present
+                    if (new string(br.ReadChars(4)) != "TWDA") { throw new IOException("2-Dimensional Array Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
+
+                    Globals.Selected2DAs.Clear();
+                    while (br.PeekChar() != '\x3')
+                    {
+                        StringBuilder kb = new StringBuilder();
+                        while (br.PeekChar() != '\r')
+                        {
+                            kb.Append(br.ReadChar());
+                        }
+                        br.ReadChar();
+                        string key = kb.ToString();
+                        Globals.Selected2DAs.Add(key, new List<string>());
+                        while (br.PeekChar() != '\n')
+                        {
+                            StringBuilder vb = new StringBuilder();
+                            while (br.PeekChar() != '\0')
+                            {
+                                vb.Append(br.ReadChar());
+                            }
+                            br.ReadChar();
+                            Globals.Selected2DAs[key].Add(vb.ToString());
+                        }
+                        br.ReadChar();
+                    }
+                    br.ReadChar();
+                }
+                #endregion
+                #region Text
+                if (Properties.Settings.Default.text_rando_active)
+                {
+                    //Check that Text data is present
+                    if (new string(br.ReadChars(4)) != "TEXT") { throw new IOException("Text Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
+
+                    //TBD
+                }
+                #endregion
+                #region Other
+                if (Properties.Settings.Default.other_rando_active)
+                {
+                    //Check that Other data is present
+                    if (new string(br.ReadChars(4)) != "OTHR") { throw new IOException("Other Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
+
+                    //Name Gen
+                    Properties.Settings.Default.NameGenRando = br.ReadBoolean();
+                    if (Properties.Settings.Default.NameGenRando)
+                    {
+                        Properties.Settings.Default.FirstnamesM.Clear();
+                        while (br.PeekChar() != '\n')
+                        {
+                            StringBuilder mb = new StringBuilder();
+                            while (br.PeekChar() != '\0')
+                            {
+                                mb.Append(br.ReadChar());
+                            }
+                            br.ReadChar();
+                            Properties.Settings.Default.FirstnamesM.Add(mb.ToString());
+                        }
+                        br.ReadChar();
+
+                        Properties.Settings.Default.FirstnamesF.Clear();
+                        while (br.PeekChar() != '\n')
+                        {
+                            StringBuilder mb = new StringBuilder();
+                            while (br.PeekChar() != '\0')
+                            {
+                                mb.Append(br.ReadChar());
+                            }
+                            br.ReadChar();
+                            Properties.Settings.Default.FirstnamesF.Add(mb.ToString());
+                        }
+                        br.ReadChar();
+
+                        Properties.Settings.Default.Lastnames.Clear();
+                        while (br.PeekChar() != '\n')
+                        {
+                            StringBuilder mb = new StringBuilder();
+                            while (br.PeekChar() != '\0')
+                            {
+                                mb.Append(br.ReadChar());
+                            }
+                            br.ReadChar();
+                            Properties.Settings.Default.Lastnames.Add(mb.ToString());
+                        }
+                        br.ReadChar();
+                    }
+
+                    Properties.Settings.Default.PolymorphMode = br.ReadBoolean();
+                    Properties.Settings.Default.PazaakDecks = br.ReadBoolean();
+                }
+                #endregion
+
+
             }
         }
 
@@ -114,7 +322,8 @@ namespace kotor_Randomizer_2
                 bw.Write((Properties.Settings.Default.ModuleSaveStatus & 4) > 0); //All Save
                 bw.Write(Properties.Settings.Default.AddOverideFiles.Contains("k_ren_visionland.ncs")); //Fixed Dream
                 bw.Write(Properties.Settings.Default.AddOverideFiles.Contains("k_pebn_galaxy.ncs")); //Unlocked Galaxy Map
-                bw.Write(Properties.Settings.Default.AddOverideFiles.Contains("MISSIONFILENAME")); //Mission Fix *NOT YET IMPLEMENTED*
+                bw.Write(Properties.Settings.Default.FixWarpCoords);//Fixed Module Coordinates
+                bw.Write(Properties.Settings.Default.FixMindPrison);//Fixed Rakatan Riddles
 
             }
             //Items
@@ -199,7 +408,20 @@ namespace kotor_Randomizer_2
             if (Properties.Settings.Default.twoda_rando_active)
             {
                 bw.Write("TWDA".ToCharArray());
-                //TBD
+
+                foreach (KeyValuePair<string, List<string>> k in Globals.Selected2DAs)
+                {
+                    bw.Write(k.Key.ToCharArray());
+                    bw.Write('\r');
+
+                    foreach (string v in k.Value)
+                    {
+                        bw.Write(v.ToCharArray());
+                        bw.Write('\0');
+                    }
+                    bw.Write('\n');
+                }
+                bw.Write('\x3');
 
             }
             //Text
@@ -238,6 +460,7 @@ namespace kotor_Randomizer_2
                 }
 
                 bw.Write(Properties.Settings.Default.PolymorphMode);
+                bw.Write(Properties.Settings.Default.PazaakDecks);
 
 
             }

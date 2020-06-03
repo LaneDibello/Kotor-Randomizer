@@ -28,7 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.ofdPresets = new System.Windows.Forms.OpenFileDialog();
+            this.sfdPresets = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
+            // 
+            // ofdPresets
+            // 
+            this.ofdPresets.DefaultExt = "krp";
+            this.ofdPresets.Filter = "Randomizer File|*.krp|All files|*.*";
+            this.ofdPresets.Title = "Load Preset";
+            // 
+            // sfdPresets
+            // 
+            this.sfdPresets.DefaultExt = "krp";
+            this.sfdPresets.Filter = "Randomizer File|*.krp|All files|*.*";
+            this.sfdPresets.Title = "Save Preset";
             // 
             // PresetForm
             // 
@@ -48,5 +62,8 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.OpenFileDialog ofdPresets;
+        private System.Windows.Forms.SaveFileDialog sfdPresets;
     }
 }

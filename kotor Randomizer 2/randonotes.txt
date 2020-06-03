@@ -3,33 +3,17 @@
 	- look into crafting a fixed mission undercity script
 	- consider name gen presets
 	- Deal with empty BoundModules possibility
-	- Finish KRP Write
-	- Add KRP Read
-	- Update KRP stuff when TwoDA and Text Are done
+	- Update KRP stuff when TwoDA and Text Are done, and if other features are added
 	- Do Text
 	- For text look into switch to just dialogue rand as might be easier \/(=.=)\/
-	- Besure to have the rando feature save the Settings before starting in case the user hasn't closed all the forms. May not matter?
 	- Have option to return all settings to default.
 	- Finsh back up scripts
 	- Finish randomizer scripts
 	- program polymorph mode
 	- Finsh item rando script
 	- Add in forgotten items like geno stuff, Credits, null items, lightsources, parts, compspikes, plot items, disguises, etc
+	- Deal with large placeables like speeders n stuff
 
-
-
-Categories:
-	Modules
-	Items
-	Sounds 
-	Models 
-	Textures 
-	Text
-	Character Location
-	Placable location
-	2das
-	Name Generation
-	doors
 
 Colors:
 	Background: 0, 0, 22

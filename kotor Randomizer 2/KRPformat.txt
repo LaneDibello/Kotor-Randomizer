@@ -9,10 +9,12 @@ Active Cats  : 8 bytes : Boolean Category Flags
 *Categories* - Each section will only exist if it was flagged as active
 	Modules : 4 chars : "MODU"
 		Omitted Modules : sting list (null-terminated)
+		[New Line]
 		Modules Settings : byte array : Boolean Module Setting Flags
 	Items : 4 chars : "ITEM"
 		Randomization Levels : 18 ints : int rando level for each category
 		Omitted Items : string list (null-terminated)
+		[NewLine]
 	Sounds : 4 chars : "SOUN"
 		Randomization Levels : 6 ints : int rando level for each category
 		Sound Settings : 1 byte : Boolean Sound Setting Flags
@@ -22,7 +24,7 @@ Active Cats  : 8 bytes : Boolean Category Flags
 		Randomization Levels : 14 ints : int rando level for each category
 		Texture Pack : 1 int : int texture pack index
 	2das : 4 chars : "TWDA"
-		//TBD
+		Selected 2DAs : Dictionary of String List : The keys are \r terminated, Each string is null terminated, each list is \n terminated, the whole group is \x3 terminated
 	Text : 4 chars : "TEXT"
 		//TBD
 	Other : 4 chars : "OTHR"

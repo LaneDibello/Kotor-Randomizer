@@ -260,6 +260,7 @@ namespace kotor_Randomizer_2
 
             Properties.Settings.Default.KotorIsRandomized = true;
 
+            //Creates a basic log file with a date, version, and things done.
             curr_task = "Finishing Up";
             bwRandomizing.ReportProgress(curr_progress);
             StreamWriter sw = new StreamWriter(paths.swkotor + "RANDOMIZED.log");
@@ -273,6 +274,8 @@ namespace kotor_Randomizer_2
             if (Properties.Settings.Default.twoda_rando_active) { sw.WriteLine("2-Dimensional Arrays Randomized"); }
             if (Properties.Settings.Default.text_rando_active) { sw.WriteLine("Text Randomized"); }
             if (Properties.Settings.Default.other_rando_active) { sw.WriteLine("\'Other\' Randomized"); }
+            sw.WriteLine("\nThe Kotor Randomizer was created by Lane Dibello, with help from Glasnonck, and the greater Kotor Speedrunning community.");
+            sw.WriteLine("If you encounter any issues please try to contact me @Lane#5847 on Discord");
             sw.Close();
             curr_progress += step_size;
         }
@@ -283,6 +286,7 @@ namespace kotor_Randomizer_2
             int step_size = 13;
             int curr_progress = 0;
 
+            //Checks for and loads back-up folders
             if (Directory.Exists(paths.get_backup(paths.modules)))
             {
                 curr_task = "Unrandomizing Modules";
@@ -340,6 +344,7 @@ namespace kotor_Randomizer_2
                 curr_progress += step_size;
             }
 
+            //Removing log file
             curr_task = "Finishing Up";
             bwUnrandomizing.ReportProgress(curr_progress);
             File.Delete(paths.swkotor + "RANDOMIZED.log");
