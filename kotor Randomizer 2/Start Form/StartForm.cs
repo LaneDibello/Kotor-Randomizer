@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace kotor_Randomizer_2
 {
@@ -33,6 +34,24 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.twoda_rando_active = false;
             Properties.Settings.Default.text_rando_active = false;
             Properties.Settings.Default.other_rando_active = false;
+
+            if (File.Exists(Properties.Settings.Default.Kotor1Path + "\\RANDOMIZED.log"))
+            {
+                Properties.Settings.Default.KotorIsRandomized = true;
+            }
+            else
+            {
+                Properties.Settings.Default.KotorIsRandomized = false;
+            }
+
+            if (Properties.Settings.Default.KotorIsRandomized)
+            {
+                randomize_button.Text = "Unrandomize!";
+            }
+            else
+            {
+                randomize_button.Text = "Randomize!";
+            }
         }
 
         #region  Events
@@ -207,6 +226,15 @@ namespace kotor_Randomizer_2
             }
 
             new RandoForm().Show();
+
+            if (Properties.Settings.Default.KotorIsRandomized)
+            {
+                randomize_button.Text = "Randomize!";
+            }
+            else
+            {
+                randomize_button.Text = "Unrandomize!";
+            }
         }
 
         private void bPresets_Click(object sender, EventArgs e)
@@ -221,6 +249,11 @@ namespace kotor_Randomizer_2
             }
 
             new PresetForm().Show();
+        }
+
+        private void StartForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Save();
         }
         #endregion
     }

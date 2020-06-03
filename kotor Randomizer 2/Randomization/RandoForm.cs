@@ -186,8 +186,8 @@ namespace kotor_Randomizer_2
             if (ActiveCats == 0)
             {
                 MessageBox.Show("No Randomization Categories Selected");
-                ActiveCats++;
             }
+            ActiveCats++;
 
             int step_size = 100 / ActiveCats;
             int curr_progress = 0;
@@ -258,30 +258,94 @@ namespace kotor_Randomizer_2
                 curr_progress += step_size;
             }
 
-            //UNCOMMENT WHEN UNRANDO FUCTION COMPLETE
-            //Properties.Settings.Default.KotorIsRandomized = true;
+            Properties.Settings.Default.KotorIsRandomized = true;
+
+            curr_task = "Finishing Up";
+            bwRandomizing.ReportProgress(curr_progress);
+            StreamWriter sw = new StreamWriter(paths.swkotor + "RANDOMIZED.log");
+            sw.WriteLine(DateTime.Now.ToString());
+            sw.WriteLine("Kotor Randomizer V2.0\n");
+            if (Properties.Settings.Default.module_rando_active) { sw.WriteLine("Modules Randomized"); }
+            if (Properties.Settings.Default.item_rando_active) { sw.WriteLine("Items Randomized"); }
+            if (Properties.Settings.Default.sound_rando_active) { sw.WriteLine("Sounds Randomized"); }
+            if (Properties.Settings.Default.model_rando_active) { sw.WriteLine("Models Randomized"); }
+            if (Properties.Settings.Default.texture_rando_active) { sw.WriteLine("Textures Randomized"); }
+            if (Properties.Settings.Default.twoda_rando_active) { sw.WriteLine("2-Dimensional Arrays Randomized"); }
+            if (Properties.Settings.Default.text_rando_active) { sw.WriteLine("Text Randomized"); }
+            if (Properties.Settings.Default.other_rando_active) { sw.WriteLine("\'Other\' Randomized"); }
+            sw.Close();
+            curr_progress += step_size;
         }
 
         //Unrandomizes Things
         private void UnRando()
         {
-            //Figure out how many rando categories have been done
-            //Consider placing a file in swkotor during the rando process the details waht was done so it can be more easily un-done.
+            int step_size = 13;
+            int curr_progress = 0;
 
-            //Set the step to 100/those categories
-            //RandomizationProgress.Step = 100 / ActiveCats;
+            if (Directory.Exists(paths.get_backup(paths.modules)))
+            {
+                curr_task = "Unrandomizing Modules";
+                bwUnrandomizing.ReportProgress(curr_progress);
+                Directory.Delete(paths.modules, true);
+                Directory.Move(paths.get_backup(paths.modules), paths.modules);
+                curr_progress += step_size;
+            }
+            if (Directory.Exists(paths.get_backup(paths.lips)))
+            {
+                curr_task = "Unrandomizing Lips";
+                bwUnrandomizing.ReportProgress(curr_progress);
+                Directory.Delete(paths.lips, true);
+                Directory.Move(paths.get_backup(paths.lips), paths.lips);
+                curr_progress += step_size;
+            }
+            if (Directory.Exists(paths.get_backup(paths.Override)))
+            {
+                curr_task = "Unrandomizing Overrides";
+                bwUnrandomizing.ReportProgress(curr_progress);
+                Directory.Delete(paths.Override, true);
+                Directory.Move(paths.get_backup(paths.Override), paths.Override);
+                curr_progress += step_size;
+            }
+            if (Directory.Exists(paths.get_backup(paths.music)))
+            {
+                curr_task = "Unrandomizing Msuic";
+                bwUnrandomizing.ReportProgress(curr_progress);
+                Directory.Delete(paths.music, true);
+                Directory.Move(paths.get_backup(paths.music), paths.music);
+                curr_progress += step_size;
+            }
+            if (Directory.Exists(paths.get_backup(paths.sounds)))
+            {
+                curr_task = "Unrandomizing Sounds";
+                bwUnrandomizing.ReportProgress(curr_progress);
+                Directory.Delete(paths.sounds, true);
+                Directory.Move(paths.get_backup(paths.sounds), paths.sounds);
+                curr_progress += step_size;
+            }
+            if (Directory.Exists(paths.get_backup(paths.TexturePacks)))
+            {
+                curr_task = "Unrandomizing Textures";
+                bwUnrandomizing.ReportProgress(curr_progress);
+                Directory.Delete(paths.TexturePacks, true);
+                Directory.Move(paths.get_backup(paths.TexturePacks), paths.TexturePacks);
+                curr_progress += step_size;
+            }
+            if (File.Exists(paths.get_backup(paths.chitin)))
+            {
+                curr_task = "Unrandomizing Key Table";
+                bwUnrandomizing.ReportProgress(curr_progress);
+                File.Delete(paths.chitin);
+                File.Move(paths.get_backup(paths.chitin), paths.chitin);
+                curr_progress += step_size;
+            }
 
-            //Undo each category
-            //if (CategoryRandomized)
-            //{
-            //    currentRandoTask_label.Text = "Unrandomizing Category";
-            //    run appropriate unrando script
-            //    RandomizationProgress.PerformStep();
-            //}
+            curr_task = "Finishing Up";
+            bwUnrandomizing.ReportProgress(curr_progress);
+            File.Delete(paths.swkotor + "RANDOMIZED.log");
 
-            currentRandoTask_label.Text = "Done!";
-            //The Last Step in the Rando Process should be to set the progress value to 100
-            RandomizationProgress.Value = 100;
+            Properties.Settings.Default.KotorIsRandomized = false;
+
         }
 
         private int CountActiveCategories()
@@ -338,7 +402,6 @@ namespace kotor_Randomizer_2
 
         private void bwUnrandomizing_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-
             RandomizationProgress.Value = e.ProgressPercentage;
             currentRandoTask_label.Text = curr_task;
         }

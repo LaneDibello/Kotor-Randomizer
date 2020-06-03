@@ -1,8 +1,5 @@
 ﻿TO DO:
-	- Add Unrandomize button on Start Form
-		On randomization place a file in swkotor that flags the game as begin randomized, and contains the different settings that were used.
 	- devise a better preset saving system
-	- Actually Make it randomize things
 	- look into crafting a fixed mission undercity script
 	- consider name gen presets
 	- Deal with empty BoundModules possibility
