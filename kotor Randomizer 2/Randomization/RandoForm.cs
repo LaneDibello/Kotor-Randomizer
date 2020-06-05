@@ -186,6 +186,7 @@ namespace kotor_Randomizer_2
             if (ActiveCats == 0)
             {
                 MessageBox.Show("No Randomization Categories Selected");
+                return;
             }
             ActiveCats++;
 
@@ -283,6 +284,12 @@ namespace kotor_Randomizer_2
         //Unrandomizes Things
         private void UnRando()
         {
+            if (!File.Exists(Properties.Settings.Default.Kotor1Path + "\\RANDOMIZED.log"))
+            {
+                MessageBox.Show("Game is not randomized!");
+                return;
+            }
+
             int step_size = 13;
             int curr_progress = 0;
 

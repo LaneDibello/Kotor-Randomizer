@@ -248,6 +248,18 @@ namespace kotor_Randomizer_2
         {
             Properties.Settings.Default.Save();
         }
+
+        private void StartForm_Activated(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.KotorIsRandomized)
+            {
+                randomize_button.Text = "Unrandomize!";
+            }
+            else
+            {
+                randomize_button.Text = "Randomize!";
+            }
+        }
         #endregion
     }
 }

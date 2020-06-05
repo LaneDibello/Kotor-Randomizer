@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
 using System.Linq;
-using System.Windows.Forms.DataVisualization.Charting;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace kotor_Randomizer_2
 {
@@ -131,7 +127,7 @@ namespace kotor_Randomizer_2
         //Broken Creature Models
         public static readonly List<int> BROKEN_CHARS = new List<int>() { 0, 29, 82 };
         //Large Placeable Models
-        public static readonly List<int> LARGE_PLACE = new List<int>() { 142, };//NEED TO RESEARCH
+        public static readonly List<int> LARGE_PLACE = new List<int>() { 1, 2, 55, 56, 57, 58, 65, 66, 110, 111, 142, 172, 217, 218, 226};//NEED TO RESEARCH
         //Broken Placeable Models
         public static readonly List<int> BROKEN_PLACE = new List<int>() { 0, 8, 9, 47, 62, 78, 84, 90, 94, 97, 115, 158, 159 };
         //Extra Files found in the 'lips' directory
