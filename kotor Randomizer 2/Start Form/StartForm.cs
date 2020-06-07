@@ -6,7 +6,7 @@ namespace kotor_Randomizer_2
 {
     public partial class StartForm : Form
     {
-        public StartForm()
+        public StartForm(string fn = "")
         {
             InitializeComponent();
 
@@ -44,6 +44,11 @@ namespace kotor_Randomizer_2
             else
             {
                 randomize_button.Text = "Randomize!";
+            }
+
+            if (fn != "")
+            {
+                new PresetForm(fn).Show();
             }
         }
 

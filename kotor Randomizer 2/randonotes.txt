@@ -1,16 +1,13 @@
 ﻿TO DO:
-	- devise a better preset saving system
-	- look into crafting a fixed mission undercity script
 	- consider name gen presets
 	- Deal with empty BoundModules possibility
-	- Update KRP stuff when TwoDA and Text Are done, and if other features are added
+	- Update KRP stuff when Text is done, and if other features are added
 	- Do Text
 	- For text look into switch to just dialogue rand as might be easier \/(=.=)\/
 	- Have option to return all settings to default.
 	- Finsh back up scripts
 	- Finish randomizer scripts
 	- program polymorph mode
-	- Finsh item rando script
 	- Add in forgotten items like geno stuff, Credits, null items, lightsources, parts, compspikes, plot items, disguises, etc
 
 

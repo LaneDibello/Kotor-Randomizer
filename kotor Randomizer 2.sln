@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kotor Randomizer 2", "kotor Randomizer 2\kotor Randomizer 2.csproj", "{36FBE2A5-15E6-4CC3-9174-377807476732}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "KRandomSetup", "KRandomSetup\KRandomSetup.vdproj", "{8B040375-A776-43BB-954E-578C9046E42F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{36FBE2A5-15E6-4CC3-9174-377807476732}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36FBE2A5-15E6-4CC3-9174-377807476732}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36FBE2A5-15E6-4CC3-9174-377807476732}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B040375-A776-43BB-954E-578C9046E42F}.Debug|Any CPU.ActiveCfg = Debug
+		{8B040375-A776-43BB-954E-578C9046E42F}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

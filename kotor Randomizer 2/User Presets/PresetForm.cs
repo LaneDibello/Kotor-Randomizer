@@ -13,16 +13,34 @@ namespace kotor_Randomizer_2
 {
     public partial class PresetForm : Form
     {
-        public PresetForm()
+        public PresetForm(string fn = "")
         {
             InitializeComponent();
 
             foreach (string s in Properties.Settings.Default.PresetPaths)
             {
+                if (!File.Exists(s))
+                {
+                    Properties.Settings.Default.PresetPaths.Remove(s);
+                    continue;
+                }
                 PresetPaths.Add(new FileInfo(s));
             }
             lbPresetPaths.DataSource = PresetPaths;
             lbPresetPaths.DisplayMember = "Name";
+
+            if (fn != "" && File.Exists(fn))
+            {
+                if (!Properties.Settings.Default.PresetPaths.Contains(fn))
+                {
+                    Properties.Settings.Default.PresetPaths.Add(fn);
+                }
+                update_listBox();
+                if (KRP.ReadKRP(File.OpenRead(fn)))
+                {
+                    MessageBox.Show("Preset Loaded");
+                }
+            }
 
             cbIncModu.Checked = Properties.Settings.Default.module_rando_active;
             cbIncItem.Checked = Properties.Settings.Default.item_rando_active;
@@ -32,6 +50,8 @@ namespace kotor_Randomizer_2
             cbInc2da.Checked = Properties.Settings.Default.twoda_rando_active;
             cbIncText.Checked = Properties.Settings.Default.text_rando_active;
             cbIncOther.Checked = Properties.Settings.Default.other_rando_active;
+
+
 
         }
 
@@ -51,7 +71,10 @@ namespace kotor_Randomizer_2
         {
             if (ofdPresets.ShowDialog() == DialogResult.OK)
             {
-                Properties.Settings.Default.PresetPaths.Add(ofdPresets.FileName);
+                if (!Properties.Settings.Default.PresetPaths.Contains(ofdPresets.FileName))
+                {
+                    Properties.Settings.Default.PresetPaths.Add(ofdPresets.FileName);
+                }
                 update_listBox();
                 if (KRP.ReadKRP(ofdPresets.OpenFile()))
                 {
@@ -104,7 +127,10 @@ namespace kotor_Randomizer_2
             {
                 KRP.WriteKRP(sfdPresets.OpenFile());
 
-                Properties.Settings.Default.PresetPaths.Add(sfdPresets.FileName);
+                if (!Properties.Settings.Default.PresetPaths.Contains(sfdPresets.FileName))
+                {
+                    Properties.Settings.Default.PresetPaths.Add(sfdPresets.FileName);
+                }
                 update_listBox();
             }
 

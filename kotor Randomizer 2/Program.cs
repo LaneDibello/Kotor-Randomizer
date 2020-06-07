@@ -13,11 +13,18 @@ namespace kotor_Randomizer_2
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new StartForm());
+            if (args.Length == 0)
+            {
+                Application.Run(new StartForm());
+            }
+            else
+            {
+                Application.Run(new StartForm(args[0]));
+            }
         }
     }
 }
