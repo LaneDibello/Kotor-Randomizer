@@ -78,6 +78,7 @@
             // cbPolymorph
             // 
             this.cbPolymorph.CheckAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.cbPolymorph.Enabled = false;
             this.cbPolymorph.Location = new System.Drawing.Point(180, 20);
             this.cbPolymorph.Name = "cbPolymorph";
             this.cbPolymorph.Size = new System.Drawing.Size(120, 140);

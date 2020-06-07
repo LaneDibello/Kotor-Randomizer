@@ -246,6 +246,7 @@ namespace kotor_Randomizer_2
 
         private void StartForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Properties.Settings.Default.ModulesInitialized = false;
             Properties.Settings.Default.Save();
         }
 
@@ -259,6 +260,14 @@ namespace kotor_Randomizer_2
             {
                 randomize_button.Text = "Randomize!";
             }
+            module_radio_MouseLeave(sender, e);
+            sound_radio_MouseLeave(sender, e);
+            model_radio_MouseLeave(sender, e);
+            item_radio_MouseLeave(sender, e);
+            texture_radio_MouseLeave(sender, e);
+            twoda_radio_MouseLeave(sender, e);
+            text_radio_MouseLeave(sender, e);
+            other_radio_MouseLeave(sender, e);
         }
         #endregion
     }

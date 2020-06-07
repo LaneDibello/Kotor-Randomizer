@@ -15,6 +15,7 @@ namespace kotor_Randomizer_2
             //Set up the bound module collection if it hasn't been already
             if (!Properties.Settings.Default.ModulesInitialized)
             {
+                Globals.BoundModules.Clear();
                 foreach (string s in Globals.MODULES)
                 {
                     Globals.BoundModules.Add(new Globals.Mod_Entry(s, true));

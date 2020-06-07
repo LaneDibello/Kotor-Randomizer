@@ -15,7 +15,7 @@ namespace kotor_Randomizer_2
         #endregion
 
         #region public methods
-        public static void ReadKRP(Stream s)
+        public static bool ReadKRP(Stream s)
         {
             BinaryReader br = new BinaryReader(s);
 
@@ -74,6 +74,7 @@ namespace kotor_Randomizer_2
                             Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].name, true);
                         }
                     }
+                    Properties.Settings.Default.ModulesInitialized = true;
 
                     //Load bool settings
                     Properties.Settings.Default.ModuleSaveStatus = 0;
@@ -282,8 +283,9 @@ namespace kotor_Randomizer_2
                 }
                 #endregion
 
-
+                return true;
             }
+            return false;
         }
 
         public static void WriteKRP(Stream s)
@@ -464,6 +466,8 @@ namespace kotor_Randomizer_2
 
 
             }
+
+            bw.Close();
         }
         #endregion
     }

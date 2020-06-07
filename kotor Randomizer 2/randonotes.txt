@@ -12,7 +12,6 @@
 	- program polymorph mode
 	- Finsh item rando script
 	- Add in forgotten items like geno stuff, Credits, null items, lightsources, parts, compspikes, plot items, disguises, etc
-	- Deal with large placeables like speeders n stuff
 
 
 Colors:
