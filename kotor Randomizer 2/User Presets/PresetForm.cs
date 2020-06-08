@@ -51,8 +51,6 @@ namespace kotor_Randomizer_2
             cbIncText.Checked = Properties.Settings.Default.text_rando_active;
             cbIncOther.Checked = Properties.Settings.Default.other_rando_active;
 
-
-
         }
 
         private BindingList<FileInfo> PresetPaths = new BindingList<FileInfo>();

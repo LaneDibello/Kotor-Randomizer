@@ -281,7 +281,60 @@ namespace kotor_Randomizer_2
             curr_progress += step_size;
         }
 
-        //Unrandomizes Things
+        //Unused - I'm keeping this around In case I try to tackle the release config issues again
+        private void UnRando_new()
+        {
+            if (!File.Exists(Properties.Settings.Default.Kotor1Path + "\\RANDOMIZED.log"))
+            {
+                MessageBox.Show("Game is not randomized!");
+                return;
+            }
+
+            //Checks for and loads back-up folders
+            if (Directory.Exists(paths.get_backup(paths.modules)))
+            {
+                Directory.Delete(paths.modules, true);
+                Directory.Move(paths.get_backup(paths.modules), paths.modules);
+            }
+            if (Directory.Exists(paths.get_backup(paths.lips)))
+            {
+                Directory.Delete(paths.lips, true);
+                Directory.Move(paths.get_backup(paths.lips), paths.lips);
+            }
+            if (Directory.Exists(paths.get_backup(paths.Override)))
+            {
+                Directory.Delete(paths.Override, true);
+                Directory.Move(paths.get_backup(paths.Override), paths.Override);
+            }
+            if (Directory.Exists(paths.get_backup(paths.music)))
+            {
+                Directory.Delete(paths.music, true);
+                Directory.Move(paths.get_backup(paths.music), paths.music);
+            }
+            if (Directory.Exists(paths.get_backup(paths.sounds)))
+            {
+                Directory.Delete(paths.sounds, true);
+                Directory.Move(paths.get_backup(paths.sounds), paths.sounds);
+            }
+            if (Directory.Exists(paths.get_backup(paths.TexturePacks)))
+            {
+                Directory.Delete(paths.TexturePacks, true);
+                Directory.Move(paths.get_backup(paths.TexturePacks), paths.TexturePacks);
+            }
+            if (File.Exists(paths.get_backup(paths.chitin)))
+            {
+                File.Delete(paths.chitin);
+                File.Move(paths.get_backup(paths.chitin), paths.chitin);
+            }
+
+            //Removing log file
+            File.Delete(paths.swkotor + "RANDOMIZED.log");
+
+            Properties.Settings.Default.KotorIsRandomized = false;
+
+        }
+
+        //Unrandomizes Things **CURRENTLY BROKEN IN RELEASE BUILDS**
         private void UnRando()
         {
             if (!File.Exists(Properties.Settings.Default.Kotor1Path + "\\RANDOMIZED.log"))
@@ -404,7 +457,18 @@ namespace kotor_Randomizer_2
         private void RandoForm_Shown(object sender, EventArgs e)
         {
             if (!Properties.Settings.Default.KotorIsRandomized) { bwRandomizing.RunWorkerAsync(); }
-            else { bwUnrandomizing.RunWorkerAsync(); }
+            else
+            {
+                bwUnrandomizing.RunWorkerAsync();
+
+                //TEMPORARY
+                //RandomizationProgress.Style = ProgressBarStyle.Marquee;
+                //UnRando_new(); //Until I figure out what the hell is wrong with the other one.
+                //RandomizationProgress.Style = ProgressBarStyle.Continuous;
+                //bDone.Enabled = true;
+                //currentRandoTask_label.Text = "Done!";
+                //RandomizationProgress.Value = 100;
+            }
         }
 
         private void bwUnrandomizing_DoWork(object sender, DoWorkEventArgs e)

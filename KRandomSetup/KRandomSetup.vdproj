@@ -16,13 +16,7 @@
         "Entry"
         {
         "MsmKey" = "8:_04FF249B1558D0B909E7709EDAB2B811"
-        "OwnerKey" = "8:_77A18B63AE2F4C0F9495D608B41ADB73"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_77A18B63AE2F4C0F9495D608B41ADB73"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -33,8 +27,14 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_CA2DAC5FC89E4B3FD11C3E2CB8D1111F"
-        "OwnerKey" = "8:_77A18B63AE2F4C0F9495D608B41ADB73"
+        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -46,7 +46,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_77A18B63AE2F4C0F9495D608B41ADB73"
+        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -213,7 +213,7 @@
             "IconIndex" = "3:0"
                 "Command"
                 {
-                "Command" = "8:_77A18B63AE2F4C0F9495D608B41ADB73"
+                "Command" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
                 }
                 "Verbs"
                 {
@@ -280,7 +280,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Kotor Randomizer"
         "ProductCode" = "8:{41B9CAE3-D4FE-4AE4-B9D6-D8EE704DCF77}"
-        "PackageCode" = "8:{4531D2C4-8E94-4BF7-B077-3614A4E2E683}"
+        "PackageCode" = "8:{56B720E9-2E3C-4C35-80B1-1EB3B305C9F3}"
         "UpgradeCode" = "8:{3DA44908-725D-48AE-860D-C34768CFA05C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -408,7 +408,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_77A18B63AE2F4C0F9495D608B41ADB73"
+            "Target" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
             "Folder" = "8:_3E298B683E3C4A37B31DBC6C29223617"
             "WorkingFolder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
             "Icon" = "8:_7F05BC87BC1D48E4925F69445CC45F82"
@@ -422,7 +422,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_77A18B63AE2F4C0F9495D608B41ADB73"
+            "Target" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
             "Folder" = "8:_F5452B2152DD4B4E958D476D55855B11"
             "WorkingFolder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
             "Icon" = "8:_7F05BC87BC1D48E4925F69445CC45F82"
@@ -827,9 +827,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_77A18B63AE2F4C0F9495D608B41ADB73"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AA9D070ACAB14309A8AAA185C080E7C1"
             {
-            "SourcePath" = "8:..\\kotor Randomizer 2\\obj\\Release\\kotor Randomizer 2.exe"
+            "SourcePath" = "8:..\\kotor Randomizer 2\\obj\\Debug\\kotor Randomizer 2.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
@@ -847,7 +847,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:Release|Any CPU"
+            "OutputConfiguration" = "8:Debug|Any CPU"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{36FBE2A5-15E6-4CC3-9174-377807476732}"
             "ShowKeyOutput" = "11:TRUE"

@@ -94,6 +94,18 @@ namespace kotor_Randomizer_2
                 }
             }
 
+            public string get_old(string path)
+            {
+                if (path.Last() == '\\')
+                {
+                    return path.TrimEnd('\\') + "_old\\";
+                }
+                else
+                {
+                    return path + ".old";
+                }
+            }
+
 
         }
         #endregion

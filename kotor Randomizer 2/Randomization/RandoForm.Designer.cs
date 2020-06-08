@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RandoForm));
             this.RandomizationProgress = new System.Windows.Forms.ProgressBar();
             this.currentRandoTask_label = new System.Windows.Forms.Label();
             this.bDone = new System.Windows.Forms.Button();
@@ -97,7 +98,9 @@
             this.Controls.Add(this.currentRandoTask_label);
             this.Controls.Add(this.RandomizationProgress);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RandoForm";
+            this.ShowIcon = false;
             this.Text = "RandoForm";
             this.Shown += new System.EventHandler(this.RandoForm_Shown);
             this.ResumeLayout(false);
