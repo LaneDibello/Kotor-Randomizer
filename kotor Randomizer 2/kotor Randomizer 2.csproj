@@ -269,6 +269,12 @@
     <None Include="Resources\ModelHelp.txt" />
     <None Include="Resources\TextureHelp.txt" />
     <None Include="Resources\TwoDAHelp.txt" />
+    <None Include="Resources\TextHelp.txt" />
+    <None Include="Resources\OtherHelp.txt" />
+    <None Include="Resources\PresetHelp.txt" />
+    <None Include="Resources\SeedHelp.txt" />
+    <None Include="Resources\PathHelp.txt" />
+    <None Include="Resources\RandoHelp.txt" />
     <Content Include="Texture Name Scheme.txt" />
     <None Include="Resources\Krandom.ico" />
     <None Include="BoxActive.png" />

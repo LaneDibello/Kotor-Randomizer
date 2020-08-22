@@ -49,22 +49,22 @@ namespace kotor_Randomizer_2
                     source = Properties.Resources.TwoDAHelp;
                     break;
                 case "Text":
-
+                    source = Properties.Resources.TextHelp;
                     break;
                 case "Other":
-
+                    source = Properties.Resources.OtherHelp;
                     break;
                 case "Paths":
-
+                    source = Properties.Resources.PathHelp;
                     break;
                 case "Seeds":
-
+                    source = Properties.Resources.SeedHelp;
                     break;
                 case "Presets":
-
+                    source = Properties.Resources.PresetHelp;
                     break;
                 case "Randomization":
-
+                    source = Properties.Resources.RandoHelp;
                     break;
             }
 
