@@ -23,10 +23,10 @@ namespace kotor_Randomizer_2
                 Properties.Settings.Default.ModulesInitialized = true;
             }
 
-            if (!Properties.Settings.Default.ModulePresetSelected)
-            {
-                //Figure something out here
-            }
+            //if (!Properties.Settings.Default.ModulePresetSelected)
+            //{
+            //    //Figure something out here
+            //}
 
 
 

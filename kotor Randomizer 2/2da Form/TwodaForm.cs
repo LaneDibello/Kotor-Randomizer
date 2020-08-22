@@ -16,6 +16,11 @@ namespace kotor_Randomizer_2
         {
             InitializeComponent();
             cbTwodaOptions.DataSource = Globals.TWODA_COLLUMNS.Keys.ToList();
+            if (Globals.Selected2DAs.Any())
+            {
+                UpdateParentListBox();
+                UpdateChildListBox();
+            }
         }
 
         private void UpdateParentListBox()

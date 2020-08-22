@@ -92,6 +92,12 @@
     </Compile>
     <Compile Include="2da Form\TwodaRandom.cs" />
     <Compile Include="Globals.cs" />
+    <Compile Include="HelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelpForm.Designer.cs">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Item Form\ItemForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +133,11 @@
     </Compile>
     <Compile Include="PathForm.Designer.cs">
       <DependentUpon>PathForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Randomization\RandoForm.cs">
       <SubType>Form</SubType>
@@ -183,6 +194,9 @@
     <EmbeddedResource Include="2da Form\TwodaForm.resx">
       <DependentUpon>TwodaForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="HelpForm.resx">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Item Form\ItemForm.resx">
       <DependentUpon>ItemForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -212,14 +226,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Text Form\TextForm.resx">
       <DependentUpon>TextForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -253,6 +262,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="KRPformat.txt" />
+    <None Include="Resources\GeneralHelp.txt" />
+    <None Include="Resources\ModuleHelp.txt" />
+    <None Include="Resources\ItemHelp.txt" />
+    <None Include="Resources\SoundHelp.txt" />
+    <None Include="Resources\ModelHelp.txt" />
+    <None Include="Resources\TextureHelp.txt" />
+    <None Include="Resources\TwoDAHelp.txt" />
     <Content Include="Texture Name Scheme.txt" />
     <None Include="Resources\Krandom.ico" />
     <None Include="BoxActive.png" />
