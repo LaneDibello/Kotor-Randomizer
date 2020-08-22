@@ -101,7 +101,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RandoForm";
             this.ShowIcon = false;
-            this.Text = "RandoForm";
+            this.Text = "Randomizing";
             this.Shown += new System.EventHandler(this.RandoForm_Shown);
             this.ResumeLayout(false);
 

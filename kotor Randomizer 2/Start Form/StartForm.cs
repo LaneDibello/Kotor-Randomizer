@@ -274,6 +274,20 @@ namespace kotor_Randomizer_2
             text_radio_MouseLeave(sender, e);
             other_radio_MouseLeave(sender, e);
         }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is HelpForm)
+                {
+                    f.Focus();
+                    return;
+                }
+            }
+
+            new HelpForm().Show();
+        }
         #endregion
     }
 }

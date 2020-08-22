@@ -121,6 +121,28 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The function of the randomizer is quite simple. By selecting the different categories of randomization you can enable and disable them, and adjust their settings within their respective forms. The radio buttons to teh side of each category are a quick way to enable, and disable categories.
+        ///
+        ///The Module category randomizes the individual levels in the game. The Item randomizer randomizes the templated items aquired in the game. Music and Sounds, shuffles the audio files for the music and sounds in the game. [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GeneralHelp {
+            get {
+                return ResourceManager.GetString("GeneralHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item randomization randomizes the template items in the game&apos;s key data. This means that items that are hard coded to the module will not be randomized. Which is beneifcial for most plot items.
+        ///
+        ///Each category can be enabled or disabled by checkbox. The radio buttons cauuse each category to be randomized at different levels. Everything with the &apos;max&apos; option selected will be shuffled together. Each category with &apos;type&apos; option selected will only shuffle within itself. Each catagory with the &apos;Subtype&apos; option  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ItemHelp {
+            get {
+                return ResourceManager.GetString("ItemHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] k_pebn_galaxy {
@@ -161,6 +183,34 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Model randomization randomly assigns new models to characters, placeables, and doors, changing how they appear in-game.
+        ///
+        ///The left-most checkboxes disable and enable categories.
+        ///
+        ///&gt; Character Models include all of the NPCs and MOBs (.utc) that are not spawned by template (such as party members, the player, and a few odd creatures). 
+        ///Omit large models prevents characters from being randomized to some of the huge models such as Krayt Dragon, or rancor.
+        ///Omit Broken models prevents characters from being ran [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ModelHelp {
+            get {
+                return ResourceManager.GetString("ModelHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Module randomization essentially randomizes the locations of &apos;levels&apos; or &apos;maps&apos; in the game.
+        ///
+        ///Randomized - This list box contains the resource reference codes for all of the modules that will be randomized by the program when executed. You can find the equivalent location names for these codes on the strategy wiki cheat page under &apos;Warp&apos;.
+        ///
+        ///Omitted - This list box contains the resource reference codes for all of the modules that will not be randomized. Double clicking, or pressing return will transfer an [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ModuleHelp {
+            get {
+                return ResourceManager.GetString("ModuleHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] NODELETE_ALLINCLUDED_modulesave {
@@ -187,6 +237,46 @@ namespace kotor_Randomizer_2.Properties {
             get {
                 object obj = ResourceManager.GetObject("NODELETE_modulesave", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sounds and music randomizes the sound and music files. 
+        ///
+        ///The checkboxes allow for the enabling and disabling of each category. The type radio button keeps the randomization within each category. All categories with max selected will have their audio files mixed in together.
+        ///
+        ///&gt; Area music is just the generral ambient music in each module.
+        ///&gt; Battle music is the track that the area switches to when combat begins.
+        ///&gt; Ambinet noise is just a simple track that is usually playing in the background of location [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SoundHelp {
+            get {
+                return ResourceManager.GetString("SoundHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Texture randomization will shuffle most of the images stored in the selected texture pack making the game appear as a freaky hell-scape.
+        ///
+        ///WARNING:
+        ///Texture randomization frequently results in visual experiences that may prove harmful to photosensitive users. Use with caution.
+        ///
+        ///NOTE: This rando does not edit with GUI textures, only those used in 3D environments.
+        ///
+        ///Each category can be enabled or disabled by checkbox. The radio buttons cause each category to be randomized at different levels. Everything  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string TextureHelp {
+            get {
+                return ResourceManager.GetString("TextureHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A 2DA, or 2-dimensional array, is a data table used by the game to store all sorts of constants.
+        /// </summary>
+        internal static string TwoDAHelp {
+            get {
+                return ResourceManager.GetString("TwoDAHelp", resourceCulture);
             }
         }
     }
