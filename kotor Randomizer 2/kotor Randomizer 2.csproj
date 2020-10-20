@@ -252,6 +252,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Xml\KotorModules.xml" />
     <Content Include="KRPformat.txt" />
     <Content Include="Texture Name Scheme.txt" />
     <None Include="Resources\Krandom.ico" />
