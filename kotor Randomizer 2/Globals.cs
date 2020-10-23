@@ -55,6 +55,18 @@ namespace kotor_Randomizer_2
             Max = 3,
         }
 
+        [Flags]
+        [Serializable]
+        public enum ModuleSaveStatusValues : byte
+        {
+            NoDelete = 0x00,
+            DeleteMilestones = 0x01,
+            SaveMiniGames = 0x02,
+            SaveAllModules = 0x04,
+            FixedDream = 0x08,
+            UnlockedMap = 0x10,
+        }
+
         public class KPaths
         {
             public KPaths(string swkotor_path)

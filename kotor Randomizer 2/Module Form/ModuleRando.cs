@@ -32,34 +32,32 @@ namespace kotor_Randomizer_2
 
 
 
-            List<string> Shuffled_Mods = new List<string>();
-
             //Split the Bound modules into their respective list
-            Shuffled_Mods = Globals.BoundModules.Where(x => !x.ommitted).Select(x => x.name).ToList();
-
+            List<string> Shuffled_Mods = Globals.BoundModules.Where(x => !x.ommitted).Select(x => x.name).ToList();
             Randomize.FisherYatesShuffle(Shuffled_Mods);
 
+            // todo: create a readonly constant for paths.Override + "modulesave.2da"
             if (Properties.Settings.Default.AddOverideFiles.Count > 0)
             {
                 switch (Properties.Settings.Default.ModuleSaveStatus)
                 {
-                    case 0:
+                    case 0: // 0000
                         File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.NODELETE_modulesave);
                         break;
                     default:
-                    case 1:
+                    case 1: // 0001
                         //This is kotor's default configuration
                         break;
-                    case 2:
+                    case 2: // 0010
                         File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.NODELETE_MGINCLUDED_modulesave);
                         break;
-                    case 3:
+                    case 3: // 0011
                         File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.MGINCLUDED_modulesave);
                         break;
-                    case 6:
+                    case 6: // 0110
                         File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.NODELETE_ALLINCLUDED_modulesave);
                         break;
-                    case 7:
+                    case 7: // 0111
                         File.WriteAllBytes(paths.Override + "modulesave.2da", Properties.Resources.ALLINCLUDED_modulesave);
                         break;
                 }
@@ -100,7 +98,7 @@ namespace kotor_Randomizer_2
             if (Properties.Settings.Default.FixWarpCoords)
             {
                 DirectoryInfo di = new DirectoryInfo(paths.modules);
-                foreach (FileInfo fi in di.GetFiles())
+                foreach (FileInfo fi in di.GetFiles())  // todo: can we query for the appropriate files before going into a loop?
                 {
                     RIM r = KReader.ReadRIM(fi.OpenRead());
 
@@ -111,47 +109,50 @@ namespace kotor_Randomizer_2
 
                     bool edit_flag = false;
 
-                    GFF g = new GFF(r.File_Table.Where(x => x.TypeID == 2014).FirstOrDefault().File_Data);
+                    // 2014 refers to the IFO type code within the resource tables "Res_Types" and "TypeCodes". It is a GFF type
+                    GFF g = new GFF(r.File_Table.Where(x => x.TypeID == 2014).FirstOrDefault().File_Data);  // todo: fix usage of undefined constants
 
+                    // todo: update switch cases with readonly constants for both the case and the XYZ tuple
+                    // todo: separate the memory stream write into a separate method that can be called at the end of each case
                     switch((g.Field_Array.Where(x => x.Label == "Mod_Entry_Area").FirstOrDefault().Field_Data as GFF.CResRef).Text)
                     {
-                        case "m04aa":
+                        case "m04aa":   // Undercity
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_X").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(183.5f), 0);
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_Y").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(167.4f), 0);
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_Z").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(1.5f), 0);
                             edit_flag = true;
                             break;
-                        case "m38aa":
+                        case "m38aa":   // Tomb of Marka Ragnos
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_X").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(15.8f), 0);
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_Y").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(55.6f), 0);
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_Z").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(0.75f), 0);
                             edit_flag = true;
                             break;
-                        case "m40ac":
+                        case "m40ac":   // Leviathan Hangar
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_X").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(12.5f), 0);
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_Y").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(155.2f), 0);
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_Z").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(3.0f), 0);
                             edit_flag = true;
                             break;
-                        case "m26aa":
+                        case "m26aa":   // Ahto West
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_X").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(5.7f), 0);
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_Y").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(-10.7f), 0);
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_Z").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(59.2f), 0);
                             edit_flag = true;
                             break;
-                        case "m27aa":
+                        case "m27aa":   // Manaan Sith Base
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_X").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(112.8f), 0);
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_Y").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(2.4f), 0);
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_Z").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(0f), 0);
                             edit_flag = true;
                             break;
-                        case "m43aa":
+                        case "m43aa":   // Rakatan Settlement
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_X").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(202.2f), 0);
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_Y").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(31.5f), 0);
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_Z").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(40.7f), 0);
                             edit_flag = true;
                             break;
-                        case "m44aa":
+                        case "m44aa":   // Temple Main Floor
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_X").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(95.3f), 0);
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_Y").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(42.0f), 0);
                             (g.Field_Array.Where(x => x.Label == "Mod_Entry_Z").FirstOrDefault().DataOrDataOffset) = BitConverter.ToInt32(BitConverter.GetBytes(0.44f), 0);
