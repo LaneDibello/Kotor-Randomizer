@@ -9,6 +9,12 @@
 	- Finish randomizer scripts
 	- program polymorph mode
 	- Add in forgotten items like geno stuff, Credits, null items, lightsources, parts, compspikes, plot items, disguises, etc
+	- Write routine to clean modules folder of foreign files
+	- See about key randomizing the party UTCs
+	- Investigate item upgrade things
+	- Option to omit player models from char rando
+	- Finish Help form, and add context menu to get to it
+	- Finish writing help texts use ` to separate boxes.
 
 
 Colors:

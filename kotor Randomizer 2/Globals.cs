@@ -135,7 +135,7 @@ namespace kotor_Randomizer_2
         //    { "unk_m44aa", new Point3D(95.3f, 42.0f, 0.44f) }
         //};
         //Large Creature Models
-        public static readonly List<int> LARGE_CHARS = new List<int>() { 354, 334, 80, 77, 81 };
+        public static readonly List<int> LARGE_CHARS = new List<int>() { 354, 334, 87, 80, 77, 81, 54 };
         //Broken Creature Models
         public static readonly List<int> BROKEN_CHARS = new List<int>() { 0, 29, 82 };
         //Large Placeable Models
@@ -462,11 +462,6 @@ namespace kotor_Randomizer_2
                 "name", "description", "icon"
                 }
             },
-            {"featgain", new List<string>()
-                {
-                "sol_reg", "sct_reg", "scd_reg", "jcn_reg", "jsn_reg", "jgd_reg", "drx_reg", "drc_reg"
-                }
-            },
             {"forceadjust", new List<string>()
                 {
                 "goodcost", "evilcost"
@@ -490,11 +485,6 @@ namespace kotor_Randomizer_2
             {"heads", new List<string>()
                 {
                 "head"
-                }
-            },
-            {"lightcolor", new List<string>()
-                {
-                "red", "green", "blue"
                 }
             },
             {"loadscreenhints", new List<string>()

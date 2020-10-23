@@ -157,4 +157,43 @@
   <data name="g_brakatan003" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\g_brakatan003.utc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="GeneralHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GeneralHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ItemHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ItemHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ModuleHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ModuleHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="ModelHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ModelHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="SoundHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SoundHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TextureHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TextureHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TwoDAHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TwoDAHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="OtherHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OtherHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PathHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PathHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="PresetHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PresetHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="RandoHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RandoHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="SeedHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SeedHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="TextHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TextHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

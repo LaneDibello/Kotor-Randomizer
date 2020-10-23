@@ -1,0 +1,17 @@
+Model randomization randomly assigns new models to characters, placeables, and doors, changing how they appear in-game.
+
+The left-most checkboxes disable and enable categories.
+
+> Character Models include all of the NPCs and MOBs (.utc) that are not spawned by template (such as party members, the player, and a few odd creatures). 
+Omit large models prevents characters from being randomized to some of the huge models such as Krayt Dragon, or rancor.
+Omit Broken models prevents characters from being randomized to entirely invisible, or testing models.
+
+> Placeable Models include all placeable objects (.utp) such as footlockers, computer consoles, or marker-post.
+Omit large models prevents placeables from being randomized to some of the huge models such as the invisible Acid wall, or some land-speeders.
+Omit Broken models prevents placeables from being randomized to entirely invisible, or testing models.
+	> Door Models include all door objects (.utd) such as regular doors, force-fields, and even sith sarcophagi.
+Omit airlocks prevents the airlocks in Hrakert station from being overwritten, which can sometimes cause them not to function.
+Omit Broken models prevents doors from being randomized to entirely invisible, or testing models.
+
+WARNING:
+There is potential for softlocks in the event that a module that just isn't quite the right size prevents the player from moving to a location, or from lotting an important object. Use with care.

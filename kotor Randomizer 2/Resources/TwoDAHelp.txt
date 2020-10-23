@@ -1,0 +1,228 @@
+A 2DA, or 2-dimensional array, is a data table used by the game to store all sorts of constants from character appearance data, to AC bonus, to item properties to sound effects. This randomizer allows for certian, pre-selected colemns to be randomized resulting in strange and fun events in game.
+
+The left list-box is where you can select which files are being randomized. The right list-box allows you to select which colemns (of those allowed) you wish to randomize.
+
+WARNING:
+Many of these 2DAs have similar effects to the other rando categories, and they can interact in unexpected ways. Seeing as how numerous the combination possibilities are it was not possible for us to test them all.
+	CATEGORIES:
+> acbonus: The increase to armor class that occurs at each level for each class
+- scd: Scoundrel
+- sol: Soldier
+- sct: Scout
+- jdc: Counselor
+- jds: Sentinel 
+- jdg: Guardian
+
+> aliensound: The Various sounds made by different aliens
+- filename: The file that each sound references
+
+> appearance: All the data regarding how people appear in game (Can be volitile)
+- walkdist: The distance the model moves with each walk animation
+- rundist: The distance the model moves with each run animation
+- moverate: The movement speed category that this model falls in
+- body_bag: What appears after death
+
+> baseitems: The base items that all the items in the game are based off of
+- name: The name held by this base item
+- equipableslots: What slots this item type can be equipped to (can have strange results)
+- defaulticon: The default icon for this base item.
+- reqfeat0: What feat is required to use this item.
+
+> bodybag: What appears after a creature/character has died.
+- appearance: what appears
+
+> camerastyle: The camera that the user is viewing the player through
+- distance: The distance from the player
+- pitch: The angle up or down the camera is
+- height: The height from the ground the camera is
+
+> classes: Information regarding each class
+- name: The display name for each class
+- icon: The icon for each class
+- hitdie: The amount of health gained between levels
+- attackbonustable: Which table is used to calculate the attack bonus increase.
+- featstable: Which table is used to populate the feats
+- savingthrowtable: Which table is used to calculate the saving throw increases.
+- skillstable: Which table is used to populate the skills
+- skillpointbase: The base amount of skill points started with
+- armorclasscolumn: Which AC colemn in 'acbonus' does each class use. 
+- featgain: Which table in 'featgain' does each class use.
+
+> classpowergain: What level different classes gain powers
+- jcn: Counselor
+- jsn: Sentinel
+- jgd: Guardian
+
+> cls_atk_1: Attack bonus Table 1
+- bab: Attack Bonuses
+
+> cls_atk_2: Attack bonus Table 2
+- bab: Attack Bonuses
+
+> cls_atk_3: Attack bonus Table 3
+- bab: Attack Bonuses
+
+> cls_st_cm_drd: Saving throw increase for Combat Droids
+- fortsave
+- refsave
+- willsave
+
+> cls_st_ex_drd: Saving throw increase for Expert Droids
+- fortsave
+- refsave
+- willsave
+
+> cls_st_jedi_c: Saving throw increase for Counselors
+- fortsave
+- refsave
+- willsave
+
+> cls_st_jedi_g: Saving throw increase for Guardians
+- fortsave
+- refsave
+- willsave
+
+> cls_st_jedi_s: Saving throw increase for Sentinels
+- fortsave
+- refsave
+- willsave
+
+> cls_st_minion: Saving throw increase for Minions
+- fortsave
+- refsave
+- willsave
+
+> cls_st_scndrl: Saving throw increase for Scoundrels
+- fortsave
+- refsave
+- willsave
+
+> cls_st_scout: Saving throw increase for Scouts
+- fortsave
+- refsave
+- willsave
+
+> cls_st_soldier: Saving throw increase for Soldiers
+- fortsave
+- refsave
+- willsave
+
+> comptypes: Which back ground the computer has
+- computerbackground: Rakatan or normal
+
+> creaturespeed: The speed categories for creatures
+- walkrate: The speed they walk
+- runrate: The speed they run
+
+> effecticon: The icons associated with different active effects
+- iconresref: The reference to the image
+- good: Does it appear in the positive or negative list
+- priority: How high does it appear on the list
+
+> feat: The feats
+- name: The name of the feat
+- description: The description text for the feat
+- icon: The Icon for the feat
+
+> forceadjust: The amount by which the cost of force powers in adjusted
+- goodcost: Adjustment for lightside points
+- evilcost: Adjustment for darkside points
+
+> forceshields: Personal shield generators
+- visualeffectdef: Which visual effect appears
+- amount: The damge it absorbs
+
+> genericdoors: The doors
+- soundapptype: The sound made by the doors
+
+> guisounds: The sounds made by GUI elements
+- soundresref: The sounds
+
+> heads: Heads
+- head: Heads
+
+> loadscreenhints: The text on the load screen
+- gameplayhint: The hint displayed
+
+> placeableobjsnds: Sounds placeables will make
+- opened: When opened
+- closed: When closed
+- locked: When Locked
+
+> skills: Skill data
+- name: Name of the skill
+- description: Description text for the skill
+- icon: Icon for the skill
+- keyability: Which attribute icreases this skill
+- scd_class: Class skills for Scoundrels
+- sol_class: Class skills for Soldiers
+- sct_class: Class skills for Scouts
+- jcn_class: Class skills for Counselors
+- jgd_class: Class skills for Guardians
+- jsn_class: Class skills for Sentinels
+- drx_class: Class skills for Expert Droids
+- drc_class: Class skills for Combat Droids
+
+> soundset: Sets of sounds used for character action groups
+- resref: The sounds
+
+> spells: Force Power data
+- name: The name of the Power
+- spelldesc: Description text for the power
+- forcepoints: Forcepoints to cast the power
+- goodevil: Darkside, lightside, or neutral
+- iconresref: The icon
+- castanim: Cast animation
+
+> tilecolor: Color of certain in-game tiles
+- red: Amount of red
+- green: Amount of green
+- blue: Amount of blue
+
+> traps: Mines and other traps
+- setdc: Difficulty check to set it
+- detectdcmod: Difficulty check to see it
+- disarmdcmod: Difficulty check to disarm it
+- trapname: Name of the trap
+- explosionsound: Sound it makes when tripped
+
+> upcrystals: Upgrade crystals
+- shortmdlvar: Models varience for short sabers
+- longmdlvar: Models varience for regular sabers
+- doublemdlvar: Models varience for double sabers
+
+> upgradetypes: Types of upgrade
+- label: the types
+
+> videoeffects: Special effects used in some cutscenes
+- modulationred: Redshift
+- modulationgreen: Greenshift
+- modulationblue: Blueshift
+- saturation: Saturation
+
+> xpbaseconst: Calculation for xpgain used in rare senarios
+- balance: Adjust for level difference
+- bonus: Bonus xp givin at level disadvantages
+
+> xptable: XP granted for defeating different challenge ratings (CR) compared to player level
+- c0: CR 0
+- c1: CR 1
+- c2: CR 2
+- c3: CR 3
+- c4: CR 4
+- c5: CR 5
+- c6: CR 6
+- c7: CR 7
+- c8: CR 8
+- c9: CR 9
+- c10: CR 10
+- c11: CR 11
+- c12: CR 12
+- c13: CR 13
+- c14: CR 14
+- c15: CR 15 
+- c16: CR 16
+- c17: CR 17
+- c18: CR 18
+- c19: CR 19
+- c20: CR 20

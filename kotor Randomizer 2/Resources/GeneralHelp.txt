@@ -1,0 +1,14 @@
+The function of the randomizer is quite simple. By selecting the different categories of randomization you can enable and disable them, and adjust their settings within their respective forms. The radio buttons to the side of each category are a quick way to enable, and disable categories.
+
+The Module category randomizes the individual levels in the game. The Item randomizer randomizes the templated items aquired in the game. Music and Sounds, shuffles the audio files for the music and sounds in the game. Models randomly assigns new models to creatures, placeables, and doors. Textures shuffle the image files used by the game. 2 dimensional arrays allow for the shuffling of specific data tables the game relies on. Text randomizes dialogue and menu text. Other contains randomizations that dont cleanly fit into other categories or maybe stand alone.
+
+Path Settings allows for the setting of the file explorer path to the 'swkotor' file for your kotor install. Seed Allows for the setting and viewing of the seed used for randomization. Randomize/Unrandomize execute the primary function of the program. Presets allows for the saving and loading of randomization settings.
+	`Warnings:
+
+> There is currently no support for modded games, therefore there is a possibility of damaging your kotor install, if used on a modded version.
+
+> With each additional Randomization setting enabled the stability and playability of the game will suffer by some amount. The interaction between randos can often result in softlocks.
+
+> There are some outcomes of this randomizer that can be triggering to photosensitive viewers. Use with caution.
+
+> I am not responsible for any damage that occurs to your install.

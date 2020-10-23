@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartForm));
             this.label1 = new System.Windows.Forms.Label();
             this.module_button = new System.Windows.Forms.Button();
@@ -50,6 +51,8 @@
             this.other_radio = new System.Windows.Forms.PictureBox();
             this.seed_button = new System.Windows.Forms.Button();
             this.bPresets = new System.Windows.Forms.Button();
+            this.cms1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.module_radio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.item_radio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sound_radio)).BeginInit();
@@ -58,6 +61,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.twoda_radio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.text_radio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.other_radio)).BeginInit();
+            this.cms1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -412,12 +416,27 @@
             this.bPresets.MouseEnter += new System.EventHandler(this.bPresets_button_MouseEnter);
             this.bPresets.MouseLeave += new System.EventHandler(this.bPresets_button_MouseLeave);
             // 
+            // cms1
+            // 
+            this.cms1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.helpToolStripMenuItem});
+            this.cms1.Name = "contextMenuStrip1";
+            this.cms1.Size = new System.Drawing.Size(100, 26);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
+            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
+            // 
             // StartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.ClientSize = new System.Drawing.Size(332, 521);
+            this.ContextMenuStrip = this.cms1;
             this.Controls.Add(this.bPresets);
             this.Controls.Add(this.seed_button);
             this.Controls.Add(this.other_radio);
@@ -456,6 +475,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.twoda_radio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.text_radio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.other_radio)).EndInit();
+            this.cms1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -484,6 +504,8 @@
         private System.Windows.Forms.PictureBox other_radio;
         private System.Windows.Forms.Button seed_button;
         private System.Windows.Forms.Button bPresets;
+        private System.Windows.Forms.ContextMenuStrip cms1;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     }
 }
 

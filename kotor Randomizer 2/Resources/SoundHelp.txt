@@ -1,0 +1,8 @@
+Sounds and music randomizes the sound and music files. 
+
+The checkboxes allow for the enabling and disabling of each category. The type radio button keeps the randomization within each category. All categories with max selected will have their audio files mixed in together.
+	> Area music is just the generral ambient music in each module.
+> Battle music is the track that the area switches to when combat begins.
+> Ambinet noise is just a simple track that is usually playing in the background of locations, such as wind or the sound of crowds.
+> Cutscene noise is a particular track that plays with scripted cutscenes.
+> Party sounds are are the sounds made by the various actions taken by the party. The Actions radio keeps the rando within each action category subtype (i.e. grunts will mix with other grunts).
