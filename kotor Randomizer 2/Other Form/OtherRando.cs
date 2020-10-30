@@ -10,6 +10,9 @@ namespace kotor_Randomizer_2
 {
     public static class OtherRando
     {
+        public static readonly string PAZAAKDECKS_RESREF = "pazaakdecks";
+        public static readonly string DECKNAME_COLUMN = "deckname";
+
         public static void other_rando(Globals.KPaths paths)
         {
             //NameGen
@@ -47,22 +50,35 @@ namespace kotor_Randomizer_2
                 KEY k = KReader.ReadKEY(File.OpenRead(paths.get_backup(paths.chitin)));
                 b.attachKey(k, "data\\2da.bif");
 
-                MemoryStream ms = new MemoryStream(b.Variable_Resource_Table.Where(x => x.ResRef == "pazaakdecks").FirstOrDefault().Entry_Data);
+                var resource = b.Variable_Resource_Table.Where(x => x.ResRef == PAZAAKDECKS_RESREF).FirstOrDefault();
+                if (resource == null)
+                {
+                    throw new ArgumentOutOfRangeException($"The ResRef \"{PAZAAKDECKS_RESREF}\" could not be found.");
+                }
 
-                TwoDA_REFRACTOR t = new TwoDA_REFRACTOR(ms, "pazaakdecks");
+                TwoDA_REFRACTOR t = new TwoDA_REFRACTOR(resource.Entry_Data, PAZAAKDECKS_RESREF);
+
+                //using (MemoryStream ms = new MemoryStream(resource.Entry_Data))
+                //{
+                //    t = new TwoDA_REFRACTOR(ms, PAZAAKDECKS_RESREF);
+                //}
+
+                //MemoryStream ms = new MemoryStream(b.Variable_Resource_Table.Where(x => x.ResRef == PAZAAKDECKS_RESREF).FirstOrDefault().Entry_Data);
+                //TwoDA_REFRACTOR t = new TwoDA_REFRACTOR(ms, PAZAAKDECKS_RESREF);
 
                 foreach (string c in t.Columns)
                 {
-                    if (c == "deckname") { continue; }
+                    if (c == DECKNAME_COLUMN) { continue; }
 
-                    t.Data[c][0] = "" + ops[Randomize.Rng.Next(0, 3)] + Convert.ToString(Randomize.Rng.Next(1, 7));
-                    t.Data[c][1] = "" + ops[Randomize.Rng.Next(0, 3)] + Convert.ToString(Randomize.Rng.Next(1, 7));
-                    t.Data[c][2] = "" + ops[Randomize.Rng.Next(0, 3)] + Convert.ToString(Randomize.Rng.Next(1, 7));
-                    t.Data[c][3] = "" + ops[Randomize.Rng.Next(0, 3)] + Convert.ToString(Randomize.Rng.Next(1, 7));
+                    // [+-*][1-6]
+                    // "" + ops[Randomize.Rng.Next(0, 3)] + Convert.ToString(Randomize.Rng.Next(1, 7));
+                    t.Data[c][0] = $"{ops[Randomize.Rng.Next(0, 3)]}{Convert.ToString(Randomize.Rng.Next(1, 7))}";
+                    t.Data[c][1] = $"{ops[Randomize.Rng.Next(0, 3)]}{Convert.ToString(Randomize.Rng.Next(1, 7))}";
+                    t.Data[c][2] = $"{ops[Randomize.Rng.Next(0, 3)]}{Convert.ToString(Randomize.Rng.Next(1, 7))}";
+                    t.Data[c][3] = $"{ops[Randomize.Rng.Next(0, 3)]}{Convert.ToString(Randomize.Rng.Next(1, 7))}";
                 }
 
-                t.write(File.OpenWrite(paths.Override + "pazaakdecks.2da"));
-
+                t.WriteToFile(paths.Override);
             }
 
 

@@ -12,31 +12,31 @@ namespace kotor_Randomizer_2
             lbOmitItems.DataSource = Globals.OmitItems; 
 
             //Set Intiial Values
-            RandomizeArmor = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeArmor;
-            RandomizeStims = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeStims;
-            RandomizeBelts = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeBelts;
-            RandomizeVarious = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeVarious;
-            RandomizeHides = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeHides;
-            RandomizeArmbands = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeArmbands;
-            RandomizeDroid = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeDroid;
-            RandomizeGloves = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeGloves;
-            RandomizeImplants = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeImplants;
-            RandomizeMask = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeMask;
-            RandomizePaz = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizePaz;
-            RandomizeMines = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeMines;
-            RandomizeUpgrade = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeUpgrade;
-            RandomizeBlasters = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeBlasters;
-            RandomizeCreature = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeCreature;
-            RandomizeLightsabers = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeLightsabers;
-            RandomizeGrenades = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeGrenades;
-            RandomizeMelee = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeMelee;
+            RandomizeArmor = (RandomizationLevel)Properties.Settings.Default.RandomizeArmor;
+            RandomizeStims = (RandomizationLevel)Properties.Settings.Default.RandomizeStims;
+            RandomizeBelts = (RandomizationLevel)Properties.Settings.Default.RandomizeBelts;
+            RandomizeVarious = (RandomizationLevel)Properties.Settings.Default.RandomizeVarious;
+            RandomizeHides = (RandomizationLevel)Properties.Settings.Default.RandomizeHides;
+            RandomizeArmbands = (RandomizationLevel)Properties.Settings.Default.RandomizeArmbands;
+            RandomizeDroid = (RandomizationLevel)Properties.Settings.Default.RandomizeDroid;
+            RandomizeGloves = (RandomizationLevel)Properties.Settings.Default.RandomizeGloves;
+            RandomizeImplants = (RandomizationLevel)Properties.Settings.Default.RandomizeImplants;
+            RandomizeMask = (RandomizationLevel)Properties.Settings.Default.RandomizeMask;
+            RandomizePaz = (RandomizationLevel)Properties.Settings.Default.RandomizePaz;
+            RandomizeMines = (RandomizationLevel)Properties.Settings.Default.RandomizeMines;
+            RandomizeUpgrade = (RandomizationLevel)Properties.Settings.Default.RandomizeUpgrade;
+            RandomizeBlasters = (RandomizationLevel)Properties.Settings.Default.RandomizeBlasters;
+            RandomizeCreature = (RandomizationLevel)Properties.Settings.Default.RandomizeCreature;
+            RandomizeLightsabers = (RandomizationLevel)Properties.Settings.Default.RandomizeLightsabers;
+            RandomizeGrenades = (RandomizationLevel)Properties.Settings.Default.RandomizeGrenades;
+            RandomizeMelee = (RandomizationLevel)Properties.Settings.Default.RandomizeMelee;
 
 
         }
         //Rando level for each item. Either max, type, or subtype
         #region Public Properties
 
-        public Globals.RandomizationLevel RandomizeArmor
+        public RandomizationLevel RandomizeArmor
         {
             get
             {
@@ -44,36 +44,36 @@ namespace kotor_Randomizer_2
                 {
                     if (rbArmorSType.Checked)
                     {
-                        return Globals.RandomizationLevel.Subtype;
+                        return RandomizationLevel.Subtype;
                     }
                     else if (rbArmorType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbArmorMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbArmorType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         rbArmorSType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         cbArmor.Checked = false;
                         break;
@@ -81,7 +81,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeStims
+        public RandomizationLevel RandomizeStims
         {
             get
             {
@@ -89,36 +89,36 @@ namespace kotor_Randomizer_2
                 {
                     if (rbStimsSType.Checked)
                     {
-                        return Globals.RandomizationLevel.Subtype;
+                        return RandomizationLevel.Subtype;
                     }
                     else if (rbStimsType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbStimsMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbStimsType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         rbStimsSType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         cbStims.Checked = false;
                         break;
@@ -126,7 +126,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeBelts
+        public RandomizationLevel RandomizeBelts
         {
             get
             {
@@ -134,30 +134,30 @@ namespace kotor_Randomizer_2
                 {
                     if (rbBeltsType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbBeltsMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbBeltsType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.Subtype:
+                    case RandomizationLevel.None:
                     default:
                         cbBelts.Checked = false;
                         break;
@@ -165,7 +165,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeVarious
+        public RandomizationLevel RandomizeVarious
         {
             get
             {
@@ -173,30 +173,30 @@ namespace kotor_Randomizer_2
                 {
                     if (rbVariousType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbVariousMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbVariousType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.Subtype:
+                    case RandomizationLevel.None:
                     default:
                         cbVarious.Checked = false;
                         break;
@@ -204,7 +204,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeHides
+        public RandomizationLevel RandomizeHides
         {
             get
             {
@@ -212,30 +212,30 @@ namespace kotor_Randomizer_2
                 {
                     if (rbHidesType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbHidesMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbHidesType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.Subtype:
+                    case RandomizationLevel.None:
                     default:
                         cbHides.Checked = false;
                         break;
@@ -243,7 +243,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeArmbands
+        public RandomizationLevel RandomizeArmbands
         {
             get
             {
@@ -251,36 +251,36 @@ namespace kotor_Randomizer_2
                 {
                     if (rbArmbandsSType.Checked)
                     {
-                        return Globals.RandomizationLevel.Subtype;
+                        return RandomizationLevel.Subtype;
                     }
                     else if (rbArmbandsType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbArmbandsMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbArmbandsType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         rbArmbandsSType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         cbArmbands.Checked = false;
                         break;
@@ -288,7 +288,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeDroid
+        public RandomizationLevel RandomizeDroid
         {
             get
             {
@@ -296,36 +296,36 @@ namespace kotor_Randomizer_2
                 {
                     if (rbDroidSType.Checked)
                     {
-                        return Globals.RandomizationLevel.Subtype;
+                        return RandomizationLevel.Subtype;
                     }
                     else if (rbDroidType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbDroidMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbDroidType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         rbDroidSType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         cbDroid.Checked = false;
                         break;
@@ -333,7 +333,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeGloves
+        public RandomizationLevel RandomizeGloves
         {
             get
             {
@@ -341,30 +341,30 @@ namespace kotor_Randomizer_2
                 {
                     if (rbGlovesType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbGlovesMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbGlovesType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.Subtype:
+                    case RandomizationLevel.None:
                     default:
                         cbGloves.Checked = false;
                         break;
@@ -372,7 +372,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeImplants
+        public RandomizationLevel RandomizeImplants
         {
             get
             {
@@ -380,36 +380,36 @@ namespace kotor_Randomizer_2
                 {
                     if (rbImplantsSType.Checked)
                     {
-                        return Globals.RandomizationLevel.Subtype;
+                        return RandomizationLevel.Subtype;
                     }
                     else if (rbImplantsType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbImplantsMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbImplantsType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         rbImplantsSType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         cbImplants.Checked = false;
                         break;
@@ -417,7 +417,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeMask
+        public RandomizationLevel RandomizeMask
         {
             get
             {
@@ -425,36 +425,36 @@ namespace kotor_Randomizer_2
                 {
                     if (rbMasksSType.Checked)
                     {
-                        return Globals.RandomizationLevel.Subtype;
+                        return RandomizationLevel.Subtype;
                     }
                     else if (rbMasksType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbMasksMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbMasksType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         rbMasksSType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         cbMask.Checked = false;
                         break;
@@ -462,7 +462,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizePaz
+        public RandomizationLevel RandomizePaz
         {
             get
             {
@@ -470,30 +470,30 @@ namespace kotor_Randomizer_2
                 {
                     if (rbPazType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbPazMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbPazType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.Subtype:
+                    case RandomizationLevel.None:
                     default:
                         cbPaz.Checked = false;
                         break;
@@ -501,7 +501,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeMines
+        public RandomizationLevel RandomizeMines
         {
             get
             {
@@ -509,36 +509,36 @@ namespace kotor_Randomizer_2
                 {
                     if (rbMinesSType.Checked)
                     {
-                        return Globals.RandomizationLevel.Subtype;
+                        return RandomizationLevel.Subtype;
                     }
                     else if (rbMinesType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbMinesMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbMinesType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         rbMinesSType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         cbMines.Checked = false;
                         break;
@@ -546,7 +546,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeUpgrade
+        public RandomizationLevel RandomizeUpgrade
         {
             get
             {
@@ -554,36 +554,36 @@ namespace kotor_Randomizer_2
                 {
                     if (rbUpgradesSType.Checked)
                     {
-                        return Globals.RandomizationLevel.Subtype;
+                        return RandomizationLevel.Subtype;
                     }
                     else if (rbUpgradesType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbUpgradesMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbUpgradesType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         rbUpgradesSType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         cbUpgrade.Checked = false;
                         break;
@@ -591,7 +591,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeBlasters
+        public RandomizationLevel RandomizeBlasters
         {
             get
             {
@@ -599,36 +599,36 @@ namespace kotor_Randomizer_2
                 {
                     if (rbBlastersSType.Checked)
                     {
-                        return Globals.RandomizationLevel.Subtype;
+                        return RandomizationLevel.Subtype;
                     }
                     else if (rbBlastersType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbBlastersMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbBlastersType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         rbBlastersSType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         cbBlasters.Checked = false;
                         break;
@@ -636,7 +636,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeCreature
+        public RandomizationLevel RandomizeCreature
         {
             get
             {
@@ -644,36 +644,36 @@ namespace kotor_Randomizer_2
                 {
                     if (rbCreatureSType.Checked)
                     {
-                        return Globals.RandomizationLevel.Subtype;
+                        return RandomizationLevel.Subtype;
                     }
                     else if (rbCreatureType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbCreatureMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbCreatureType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         rbCreatureSType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         cbCreature.Checked = false;
                         break;
@@ -681,7 +681,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeLightsabers
+        public RandomizationLevel RandomizeLightsabers
         {
             get
             {
@@ -689,36 +689,36 @@ namespace kotor_Randomizer_2
                 {
                     if (rbLightsabersSType.Checked)
                     {
-                        return Globals.RandomizationLevel.Subtype;
+                        return RandomizationLevel.Subtype;
                     }
                     else if (rbLightsabersType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbLightsabersMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbLightsabersType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         rbLightsabersSType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         cbLightsabers.Checked = false;
                         break;
@@ -726,7 +726,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeGrenades
+        public RandomizationLevel RandomizeGrenades
         {
             get
             {
@@ -734,30 +734,30 @@ namespace kotor_Randomizer_2
                 {
                     if (rbGrenadesType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbGrenadesMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbGrenadesType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.Subtype:
+                    case RandomizationLevel.None:
                     default:
                         cbGrenades.Checked = false;
                         break;
@@ -765,7 +765,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeMelee
+        public RandomizationLevel RandomizeMelee
         {
             get
             {
@@ -773,36 +773,36 @@ namespace kotor_Randomizer_2
                 {
                     if (rbMeleeSType.Checked)
                     {
-                        return Globals.RandomizationLevel.Subtype;
+                        return RandomizationLevel.Subtype;
                     }
                     else if (rbMeleeType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbMeleeMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbMeleeType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         rbMeleeSType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         cbMelee.Checked = false;
                         break;
