@@ -16,13 +16,13 @@ namespace kotor_Randomizer_2
             cbMixNpcParty.Enabled = false;
             cbMixNpcParty.Visible = false;
 
-            RandomizeAreaMusic = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeAreaMusic;
-            RandomizeBattleMusic = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeBattleMusic;
-            RandomizeAmbientNoise = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeAmbientNoise;
-            RandomizeCutsceneNoise = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizeCutsceneNoise;
+            RandomizeAreaMusic = (RandomizationLevel)Properties.Settings.Default.RandomizeAreaMusic;
+            RandomizeBattleMusic = (RandomizationLevel)Properties.Settings.Default.RandomizeBattleMusic;
+            RandomizeAmbientNoise = (RandomizationLevel)Properties.Settings.Default.RandomizeAmbientNoise;
+            RandomizeCutsceneNoise = (RandomizationLevel)Properties.Settings.Default.RandomizeCutsceneNoise;
             //RandomizeNpcSounds = Properties.Settings.Default.RandomizeNpcSounds;
-            RandomizeNpcSounds = Globals.RandomizationLevel.None; // Functionality Disabled
-            RandomizePartySounds = (Globals.RandomizationLevel)Properties.Settings.Default.RandomizePartySounds;
+            RandomizeNpcSounds = RandomizationLevel.None; // Functionality Disabled
+            RandomizePartySounds = (RandomizationLevel)Properties.Settings.Default.RandomizePartySounds;
 
             //MixNpcAndParty = Properties.Settings.Default.MixNpcAndPartySounds;
             MixNpcAndParty = false; // Functionality Disabled
@@ -31,7 +31,7 @@ namespace kotor_Randomizer_2
 
         #region Public Properties
 
-        public Globals.RandomizationLevel RandomizeAreaMusic
+        public RandomizationLevel RandomizeAreaMusic
         {
             get
             {
@@ -39,30 +39,30 @@ namespace kotor_Randomizer_2
                 {
                     if (rbAreaMusicType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbAreaMusicMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbAreaMusicType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.Subtype:
+                    case RandomizationLevel.None:
                     default:
                         cbAreaMusic.Checked = false;
                         break;
@@ -70,7 +70,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeBattleMusic
+        public RandomizationLevel RandomizeBattleMusic
         {
             get
             {
@@ -78,30 +78,30 @@ namespace kotor_Randomizer_2
                 {
                     if (rbBattleMusicType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbBattleMusicMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbBattleMusicType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.Subtype:
+                    case RandomizationLevel.None:
                     default:
                         cbBattleMusic.Checked = false;
                         break;
@@ -109,7 +109,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeAmbientNoise
+        public RandomizationLevel RandomizeAmbientNoise
         {
             get
             {
@@ -117,30 +117,30 @@ namespace kotor_Randomizer_2
                 {
                     if (rbAmbientNoiseType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbAmbientNoiseMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbAmbientNoiseType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.Subtype:
+                    case RandomizationLevel.None:
                     default:
                         cbAmbientNoise.Checked = false;
                         break;
@@ -148,7 +148,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeCutsceneNoise
+        public RandomizationLevel RandomizeCutsceneNoise
         {
             get
             {
@@ -156,30 +156,30 @@ namespace kotor_Randomizer_2
                 {
                     if (rbCutsceneNoiseType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbCutsceneNoiseMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbCutsceneNoiseType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.Subtype:
+                    case RandomizationLevel.None:
                     default:
                         cbCutsceneNoise.Checked = false;
                         break;
@@ -187,7 +187,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizeNpcSounds
+        public RandomizationLevel RandomizeNpcSounds
         {
             get
             {
@@ -195,36 +195,36 @@ namespace kotor_Randomizer_2
                 {
                     if (rbNpcSoundsActions.Checked)
                     {
-                        return Globals.RandomizationLevel.Subtype;
+                        return RandomizationLevel.Subtype;
                     }
                     else if (rbNpcSoundsType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbNpcSoundsMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbNpcSoundsType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         rbNpcSoundsActions.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         cbNpcSounds.Checked = false;
                         break;
@@ -232,7 +232,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public Globals.RandomizationLevel RandomizePartySounds
+        public RandomizationLevel RandomizePartySounds
         {
             get
             {
@@ -240,36 +240,36 @@ namespace kotor_Randomizer_2
                 {
                     if (rbPartySoundsActions.Checked)
                     {
-                        return Globals.RandomizationLevel.Subtype;
+                        return RandomizationLevel.Subtype;
                     }
                     else if (rbPartySoundsType.Checked)
                     {
-                        return Globals.RandomizationLevel.Type;
+                        return RandomizationLevel.Type;
                     }
                     else
                     {
-                        return Globals.RandomizationLevel.Max;
+                        return RandomizationLevel.Max;
                     }
                 }
                 else
                 {
-                    return Globals.RandomizationLevel.None;
+                    return RandomizationLevel.None;
                 }
             }
             set
             {
                 switch (value)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         rbPartySoundsMax.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         rbPartySoundsType.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         rbPartySoundsActions.Checked = true;
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         cbPartySounds.Checked = false;
                         break;

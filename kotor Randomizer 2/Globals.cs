@@ -5,6 +5,20 @@ using System.Linq;
 
 namespace kotor_Randomizer_2
 {
+    //Don't rememebr why I made this Serializable but I'm too afraid to remove it lmao
+    [Serializable]
+    public enum RandomizationLevel //Thank you Glasnonck
+    {
+        /// <summary> No randomization. </summary>
+        None = 0,
+        /// <summary> Randomize similar types within the same category. </summary>
+        Subtype = 1,
+        /// <summary> Randomize within the same category. </summary>
+        Type = 2,
+        /// <summary> Randomize with everything else set to Max. </summary>
+        Max = 3,
+    }
+
     public class Globals
     {
         
@@ -41,18 +55,16 @@ namespace kotor_Randomizer_2
             }
         }
 
-        //Don't rememebr why I made this Serializable but I'm too afraid to remove it lmao
+        [Flags]
         [Serializable]
-        public enum RandomizationLevel //Thank you Glasnonck
+        public enum ModuleSaveStatusValues : byte
         {
-            /// <summary> No randomization. </summary>
-            None = 0,
-            /// <summary> Randomize similar types within the same category. </summary>
-            Subtype = 1,
-            /// <summary> Randomize within the same category. </summary>
-            Type = 2,
-            /// <summary> Randomize with everything else set to Max. </summary>
-            Max = 3,
+            NoDelete = 0x00,
+            DeleteMilestones = 0x01,
+            SaveMiniGames = 0x02,
+            SaveAllModules = 0x04,
+            FixedDream = 0x08,
+            UnlockedMap = 0x10,
         }
 
         public class KPaths
@@ -148,9 +160,9 @@ namespace kotor_Randomizer_2
         public static readonly string NAMEGEN_CHARS = "qwertyuiopasdfghjklzxcvbnm-'";
         //All items in the game
         public static readonly List<string> ITEMS = new List<string>() {
-            "g1_a_class5001", "g1_a_class5002", "g1_a_class6001", "g1_a_class8001",
-            "g1_i_belt001", "g1_i_drdcomspk01", "g1_i_drdhvplat01", "g1_i_drdshld001",
-            "g1_i_drdutldev01", "g1_i_drdutldev02", "g1_i_drdutldev03", "g1_i_gauntlet01",
+            "g1_a_class5001", "g1_a_class5002", "g1_a_class6001", "g1_a_class8001",         // 
+            "g1_i_belt001", "g1_i_drdcomspk01", "g1_i_drdhvplat01", "g1_i_drdshld001",      // 
+            "g1_i_drdutldev01", "g1_i_drdutldev02", "g1_i_drdutldev03", "g1_i_gauntlet01",  // 
             "g1_i_implant301", "g1_i_implant302", "g1_i_implant303", "g1_i_implant304",
             "g1_i_mask01", "g1_i_mask02", "g1_i_mask03", "g1_w_dblsbr001", 
             "g1_w_dblsbr002", "g1_w_dsrptrfl001", "g1_w_hvrptbltr01", "g1_w_ionrfl01",
@@ -286,28 +298,30 @@ namespace kotor_Randomizer_2
             "geno_stealth", "geno_visor", "kas25_wookcrysta", "ptar_rakghoulser",
             "ptar_sbpasscrd", "ptar_sitharmor", "tat17_sandperdis", "tat18_dragonprl",
             "w_blhvy001", "w_bstrcrbn", "w_lghtsbr001", "w_null" };
+
         //All modules in the game
         public static readonly List<string> MODULES = new List<string>() {
-            "danm13","danm14aa","danm14ab","danm14ac","danm14ad","danm14ae",
-            "danm15","danm16","ebo_m12aa","ebo_m40aa","ebo_m40ad","ebo_m41aa",
-            "ebo_m46ab","end_m01aa","end_m01ab","kas_m22aa","kas_m22ab","kas_m23aa",
-            "kas_m23ab","kas_m23ac","kas_m23ad","kas_m24aa","kas_m25aa","korr_m33aa",
-            "korr_m33ab","korr_m34aa","korr_m35aa","korr_m36aa","korr_m37aa",
-            "korr_m38aa","korr_m38ab","korr_m39aa","lev_m40aa","lev_m40ab",
-            "lev_m40ac","lev_m40ad","liv_m99aa","M12ab","manm26aa","manm26ab",
-            "manm26ac","manm26ad","manm26ae","manm26mg","manm27aa","manm28aa",
-            "manm28ab","manm28ac","manm28ad","sta_m45aa","sta_m45ab","sta_m45ac",
-            "sta_m45ad","STUNT_00","STUNT_03a","STUNT_06","STUNT_07","STUNT_12",
-            "STUNT_14","STUNT_16","STUNT_18","STUNT_19","STUNT_31b","STUNT_34",
-            "STUNT_35","STUNT_42","STUNT_44","STUNT_50a","STUNT_51a","STUNT_54a",
-            "STUNT_55a","STUNT_56a","STUNT_57","tar_m02aa","tar_m02ab","tar_m02ac",
-            "tar_m02ad","tar_m02ae","tar_m02af","tar_m03aa","tar_m03ab","tar_m03ad",
-            "tar_m03ae","tar_m03af","tar_m03mg","tar_m04aa","tar_m05aa","tar_m05ab",
-            "tar_m08aa","tar_m09aa","tar_m09ab","tar_m10aa","tar_m10ab","tar_m10ac",
-            "tar_m11aa","tar_m11ab","tat_m17aa","tat_m17ab","tat_m17ac","tat_m17ad",
-            "tat_m17ae","tat_m17af","tat_m17ag","tat_m17mg","tat_m18aa","tat_m18ab",
-            "tat_m18ac","tat_m20aa","unk_m41aa","unk_m41ab","unk_m41ac","unk_m41ad",
-            "unk_m42aa","unk_m43aa","unk_m44aa","unk_m44ab","unk_m44ac" };
+            "danm13","danm14aa","danm14ab","danm14ac","danm14ad","danm14ae",            // Jedi Enclave, Courtyard, Matale Grounds, Grove, Sandral Grounds, Crystal Caves,
+            "danm15","danm16","ebo_m12aa","ebo_m40aa","ebo_m40ad","ebo_m41aa",          // Dantooine Ruins, Sandral Estate, Ebon Hawk, Leviathan Game-Plan CS, Escaped the Leviathan, Lehon Hawk,
+            "ebo_m46ab","end_m01aa","end_m01ab","kas_m22aa","kas_m22ab","kas_m23aa",    // Mystery Box, Command Module, Starboard Section, Czerka Landing Port, Great Walkway, Village of Rwookrrorro,
+            "kas_m23ab","kas_m23ac","kas_m23ad","kas_m24aa","kas_m25aa","korr_m33aa",   // Woorwill's Home, Worrroznor's Home, Chieftain's Hall, Upper Shadowlands, Lower Shadowlands, Dreshdae,
+            "korr_m33ab","korr_m34aa","korr_m35aa","korr_m36aa","korr_m37aa",           // Sith Academy Entrance, Shyrack Caves, Sith Academy, Valley of the Dark Lords, Tomb of Ajunta Pall,
+            "korr_m38aa","korr_m38ab","korr_m39aa","lev_m40aa","lev_m40ab",             // Tomb of Marka Ragnos, Tomb of Tulak Hord, Tomb of Naga Sadow, Prison Block, Command Deck,
+            "lev_m40ac","lev_m40ad","liv_m99aa","M12ab","manm26aa","manm26ab",          // Leviathan Hangar, Leviathan Bridge, Yavin Station, Fighter Skirmish, Ahto West, Ahto East,
+            "manm26ac","manm26ad","manm26ae","manm26mg","manm27aa","manm28aa",          // West Central, Manaan Docking Bay, East Central, Manaan Swoops, Manaan Sith Base, Hrakert Station,
+            "manm28ab","manm28ac","manm28ad","sta_m45aa","sta_m45ab","sta_m45ac",       // Sea Floor, Kolto Control, Hrakert Rift, Deck 1, Deck 2, Command Center,
+            "sta_m45ad","STUNT_00","STUNT_03a","STUNT_06","STUNT_07","STUNT_12",        // Viewing Platform, Dream Sequence, Taris Destruction Orders, Taris Destruction Update, Taris Escape, Calo Nord Lives,
+            "STUNT_14","STUNT_16","STUNT_18","STUNT_19","STUNT_31b","STUNT_34",         // Darth Bandon Recruited, My Old Mentor, Bastila Tortured, Jaw Drop, Revan Reveal, Star Forge Arrival,
+            "STUNT_35","STUNT_42","STUNT_44","STUNT_50a","STUNT_51a","STUNT_54a",       // Lehon Distruptor Field, LS Pre-Star Forge CS, DS Pre-Star Forge CS, Green Squadron, Bastila Destroys Fleet, Republic Doomed,
+            "STUNT_55a","STUNT_56a","STUNT_57","tar_m02aa","tar_m02ab","tar_m02ac",     // DS Credits, Star Forge Destroyed, LS Credits, South Apartments, Upper City North, Upper City South,
+            "tar_m02ad","tar_m02ae","tar_m02af","tar_m03aa","tar_m03ab","tar_m03ad",    // North Apartments, Upper City Cantina, Hideout, Lower City, Lower City Apt West, Lower City Apt East,
+            "tar_m03ae","tar_m03af","tar_m03mg","tar_m04aa","tar_m05aa","tar_m05ab",    // Javyar's Cantina, Swoop Platform, Taris Swoops, Undercity, Lower Sewers, Upper Sewers,
+            "tar_m08aa","tar_m09aa","tar_m09ab","tar_m10aa","tar_m10ab","tar_m10ac",    // Davik's Estate, Taris Sith Base, Governor Office, Vulkar Base, Vulkar Spice Lab, Vulkar Garage,
+            "tar_m11aa","tar_m11ab","tat_m17aa","tat_m17ab","tat_m17ac","tat_m17ad",    // Bek Base, Gadon's Office, Anchorhead, Tatooine Docking Bay, Droid Shop, Hunting Lodge,
+            "tat_m17ae","tat_m17af","tat_m17ag","tat_m17mg","tat_m18aa","tat_m18ab",    // Swoop Registration, Tatooine Cantina, Czerka Office, Tatooine Swoops, Dune Sea, Sand People Territory,
+            "tat_m18ac","tat_m20aa","unk_m41aa","unk_m41ab","unk_m41ac","unk_m41ad",    // Eastern Dune Sea, Sand People Enclave, Central Beach, South Beach, North Beach, Temple Exterior,
+            "unk_m42aa","unk_m43aa","unk_m44aa","unk_m44ab","unk_m44ac" };              // Elder Settlement, Rakatan Settlement, Temple Main Floor, Temple Catacombs, Temple Summit
+
         //Built-in module omission presets. The key being the preset name, and the valuebeing a string list of modules to omit. Not to be confused with user-defined presets.
         public static readonly Dictionary<string, List<string>> OMIT_PRESETS = new Dictionary<string, List<string>>()
         {

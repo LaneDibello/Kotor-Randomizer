@@ -58,6 +58,7 @@
             this.rbBeltsType = new System.Windows.Forms.RadioButton();
             this.rbBeltsMax = new System.Windows.Forms.RadioButton();
             this.flpVarious = new System.Windows.Forms.FlowLayoutPanel();
+            this.label7 = new System.Windows.Forms.Label();
             this.rbVariousType = new System.Windows.Forms.RadioButton();
             this.rbVariousMax = new System.Windows.Forms.RadioButton();
             this.flpDroid = new System.Windows.Forms.FlowLayoutPanel();
@@ -123,7 +124,6 @@
             this.bAddOmitItem = new System.Windows.Forms.Button();
             this.bAllOff = new System.Windows.Forms.Button();
             this.bAllMax = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
             this.flpArmor.SuspendLayout();
             this.flpStims.SuspendLayout();
             this.flpBelts.SuspendLayout();
@@ -148,7 +148,7 @@
             // 
             this.cbArmor.Checked = true;
             this.cbArmor.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbArmor.Location = new System.Drawing.Point(20, 20);
+            this.cbArmor.Location = new System.Drawing.Point(20, 23);
             this.cbArmor.Margin = new System.Windows.Forms.Padding(2);
             this.cbArmor.Name = "cbArmor";
             this.cbArmor.Size = new System.Drawing.Size(120, 20);
@@ -161,7 +161,7 @@
             // 
             this.cbStims.Checked = true;
             this.cbStims.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbStims.Location = new System.Drawing.Point(20, 50);
+            this.cbStims.Location = new System.Drawing.Point(20, 53);
             this.cbStims.Margin = new System.Windows.Forms.Padding(2);
             this.cbStims.Name = "cbStims";
             this.cbStims.Size = new System.Drawing.Size(120, 20);
@@ -174,7 +174,7 @@
             // 
             this.cbBelts.Checked = true;
             this.cbBelts.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbBelts.Location = new System.Drawing.Point(20, 80);
+            this.cbBelts.Location = new System.Drawing.Point(20, 83);
             this.cbBelts.Margin = new System.Windows.Forms.Padding(2);
             this.cbBelts.Name = "cbBelts";
             this.cbBelts.Size = new System.Drawing.Size(120, 20);
@@ -187,7 +187,7 @@
             // 
             this.cbVarious.Checked = true;
             this.cbVarious.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbVarious.Location = new System.Drawing.Point(20, 110);
+            this.cbVarious.Location = new System.Drawing.Point(20, 113);
             this.cbVarious.Margin = new System.Windows.Forms.Padding(2);
             this.cbVarious.Name = "cbVarious";
             this.cbVarious.Size = new System.Drawing.Size(120, 20);
@@ -200,7 +200,7 @@
             // 
             this.cbArmbands.Checked = true;
             this.cbArmbands.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbArmbands.Location = new System.Drawing.Point(20, 200);
+            this.cbArmbands.Location = new System.Drawing.Point(20, 203);
             this.cbArmbands.Margin = new System.Windows.Forms.Padding(2);
             this.cbArmbands.Name = "cbArmbands";
             this.cbArmbands.Size = new System.Drawing.Size(120, 20);
@@ -213,7 +213,7 @@
             // 
             this.cbDroid.Checked = true;
             this.cbDroid.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbDroid.Location = new System.Drawing.Point(20, 170);
+            this.cbDroid.Location = new System.Drawing.Point(20, 173);
             this.cbDroid.Margin = new System.Windows.Forms.Padding(2);
             this.cbDroid.Name = "cbDroid";
             this.cbDroid.Size = new System.Drawing.Size(120, 20);
@@ -226,7 +226,7 @@
             // 
             this.cbGloves.Checked = true;
             this.cbGloves.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbGloves.Location = new System.Drawing.Point(20, 230);
+            this.cbGloves.Location = new System.Drawing.Point(20, 233);
             this.cbGloves.Margin = new System.Windows.Forms.Padding(2);
             this.cbGloves.Name = "cbGloves";
             this.cbGloves.Size = new System.Drawing.Size(120, 20);
@@ -239,7 +239,7 @@
             // 
             this.cbImplants.Checked = true;
             this.cbImplants.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbImplants.Location = new System.Drawing.Point(20, 260);
+            this.cbImplants.Location = new System.Drawing.Point(20, 263);
             this.cbImplants.Margin = new System.Windows.Forms.Padding(2);
             this.cbImplants.Name = "cbImplants";
             this.cbImplants.Size = new System.Drawing.Size(120, 20);
@@ -252,7 +252,7 @@
             // 
             this.cbMask.Checked = true;
             this.cbMask.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbMask.Location = new System.Drawing.Point(20, 290);
+            this.cbMask.Location = new System.Drawing.Point(20, 293);
             this.cbMask.Margin = new System.Windows.Forms.Padding(2);
             this.cbMask.Name = "cbMask";
             this.cbMask.Size = new System.Drawing.Size(120, 20);
@@ -265,7 +265,7 @@
             // 
             this.cbPaz.Checked = true;
             this.cbPaz.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbPaz.Location = new System.Drawing.Point(20, 320);
+            this.cbPaz.Location = new System.Drawing.Point(20, 323);
             this.cbPaz.Margin = new System.Windows.Forms.Padding(2);
             this.cbPaz.Name = "cbPaz";
             this.cbPaz.Size = new System.Drawing.Size(120, 20);
@@ -278,7 +278,7 @@
             // 
             this.cbMines.Checked = true;
             this.cbMines.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbMines.Location = new System.Drawing.Point(20, 350);
+            this.cbMines.Location = new System.Drawing.Point(20, 353);
             this.cbMines.Margin = new System.Windows.Forms.Padding(2);
             this.cbMines.Name = "cbMines";
             this.cbMines.Size = new System.Drawing.Size(120, 20);
@@ -291,7 +291,7 @@
             // 
             this.cbUpgrade.Checked = true;
             this.cbUpgrade.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbUpgrade.Location = new System.Drawing.Point(20, 380);
+            this.cbUpgrade.Location = new System.Drawing.Point(20, 383);
             this.cbUpgrade.Margin = new System.Windows.Forms.Padding(2);
             this.cbUpgrade.Name = "cbUpgrade";
             this.cbUpgrade.Size = new System.Drawing.Size(120, 20);
@@ -304,7 +304,7 @@
             // 
             this.cbBlasters.Checked = true;
             this.cbBlasters.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbBlasters.Location = new System.Drawing.Point(20, 410);
+            this.cbBlasters.Location = new System.Drawing.Point(20, 413);
             this.cbBlasters.Margin = new System.Windows.Forms.Padding(2);
             this.cbBlasters.Name = "cbBlasters";
             this.cbBlasters.Size = new System.Drawing.Size(120, 20);
@@ -317,7 +317,7 @@
             // 
             this.cbCreature.Checked = true;
             this.cbCreature.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbCreature.Location = new System.Drawing.Point(20, 440);
+            this.cbCreature.Location = new System.Drawing.Point(20, 443);
             this.cbCreature.Margin = new System.Windows.Forms.Padding(2);
             this.cbCreature.Name = "cbCreature";
             this.cbCreature.Size = new System.Drawing.Size(120, 20);
@@ -330,7 +330,7 @@
             // 
             this.cbLightsabers.Checked = true;
             this.cbLightsabers.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbLightsabers.Location = new System.Drawing.Point(20, 470);
+            this.cbLightsabers.Location = new System.Drawing.Point(20, 473);
             this.cbLightsabers.Margin = new System.Windows.Forms.Padding(2);
             this.cbLightsabers.Name = "cbLightsabers";
             this.cbLightsabers.Size = new System.Drawing.Size(120, 20);
@@ -343,7 +343,7 @@
             // 
             this.cbGrenades.Checked = true;
             this.cbGrenades.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbGrenades.Location = new System.Drawing.Point(20, 500);
+            this.cbGrenades.Location = new System.Drawing.Point(20, 503);
             this.cbGrenades.Margin = new System.Windows.Forms.Padding(2);
             this.cbGrenades.Name = "cbGrenades";
             this.cbGrenades.Size = new System.Drawing.Size(120, 20);
@@ -356,7 +356,7 @@
             // 
             this.cbMelee.Checked = true;
             this.cbMelee.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbMelee.Location = new System.Drawing.Point(20, 530);
+            this.cbMelee.Location = new System.Drawing.Point(20, 533);
             this.cbMelee.Margin = new System.Windows.Forms.Padding(2);
             this.cbMelee.Name = "cbMelee";
             this.cbMelee.Size = new System.Drawing.Size(120, 20);
@@ -376,14 +376,15 @@
             this.flpArmor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpArmor.Location = new System.Drawing.Point(150, 20);
             this.flpArmor.Name = "flpArmor";
-            this.flpArmor.Size = new System.Drawing.Size(180, 20);
+            this.flpArmor.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpArmor.Size = new System.Drawing.Size(180, 24);
             this.flpArmor.TabIndex = 17;
             // 
             // rbArmorSType
             // 
             this.rbArmorSType.AutoSize = true;
-            this.rbArmorSType.Location = new System.Drawing.Point(2, 2);
-            this.rbArmorSType.Margin = new System.Windows.Forms.Padding(2);
+            this.rbArmorSType.Location = new System.Drawing.Point(6, 3);
+            this.rbArmorSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
             this.rbArmorSType.Name = "rbArmorSType";
             this.rbArmorSType.Size = new System.Drawing.Size(64, 17);
             this.rbArmorSType.TabIndex = 2;
@@ -394,7 +395,7 @@
             // rbArmorType
             // 
             this.rbArmorType.AutoSize = true;
-            this.rbArmorType.Location = new System.Drawing.Point(71, 3);
+            this.rbArmorType.Location = new System.Drawing.Point(75, 3);
             this.rbArmorType.Name = "rbArmorType";
             this.rbArmorType.Size = new System.Drawing.Size(49, 17);
             this.rbArmorType.TabIndex = 0;
@@ -405,7 +406,7 @@
             // 
             this.rbArmorMax.AutoSize = true;
             this.rbArmorMax.Checked = true;
-            this.rbArmorMax.Location = new System.Drawing.Point(126, 3);
+            this.rbArmorMax.Location = new System.Drawing.Point(130, 3);
             this.rbArmorMax.Name = "rbArmorMax";
             this.rbArmorMax.Size = new System.Drawing.Size(45, 17);
             this.rbArmorMax.TabIndex = 1;
@@ -424,14 +425,15 @@
             this.flpStims.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpStims.Location = new System.Drawing.Point(150, 50);
             this.flpStims.Name = "flpStims";
-            this.flpStims.Size = new System.Drawing.Size(180, 20);
+            this.flpStims.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpStims.Size = new System.Drawing.Size(180, 24);
             this.flpStims.TabIndex = 18;
             // 
             // rbStimsSType
             // 
             this.rbStimsSType.AutoSize = true;
-            this.rbStimsSType.Location = new System.Drawing.Point(2, 2);
-            this.rbStimsSType.Margin = new System.Windows.Forms.Padding(2);
+            this.rbStimsSType.Location = new System.Drawing.Point(6, 3);
+            this.rbStimsSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
             this.rbStimsSType.Name = "rbStimsSType";
             this.rbStimsSType.Size = new System.Drawing.Size(64, 17);
             this.rbStimsSType.TabIndex = 2;
@@ -442,7 +444,7 @@
             // rbStimsType
             // 
             this.rbStimsType.AutoSize = true;
-            this.rbStimsType.Location = new System.Drawing.Point(71, 3);
+            this.rbStimsType.Location = new System.Drawing.Point(75, 3);
             this.rbStimsType.Name = "rbStimsType";
             this.rbStimsType.Size = new System.Drawing.Size(49, 17);
             this.rbStimsType.TabIndex = 0;
@@ -453,7 +455,7 @@
             // 
             this.rbStimsMax.AutoSize = true;
             this.rbStimsMax.Checked = true;
-            this.rbStimsMax.Location = new System.Drawing.Point(126, 3);
+            this.rbStimsMax.Location = new System.Drawing.Point(130, 3);
             this.rbStimsMax.Name = "rbStimsMax";
             this.rbStimsMax.Size = new System.Drawing.Size(45, 17);
             this.rbStimsMax.TabIndex = 1;
@@ -472,14 +474,15 @@
             this.flpBelts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpBelts.Location = new System.Drawing.Point(150, 80);
             this.flpBelts.Name = "flpBelts";
-            this.flpBelts.Size = new System.Drawing.Size(180, 20);
+            this.flpBelts.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpBelts.Size = new System.Drawing.Size(180, 24);
             this.flpBelts.TabIndex = 18;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(2, 0);
+            this.label1.Location = new System.Drawing.Point(6, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(64, 13);
@@ -489,7 +492,7 @@
             // rbBeltsType
             // 
             this.rbBeltsType.AutoSize = true;
-            this.rbBeltsType.Location = new System.Drawing.Point(71, 3);
+            this.rbBeltsType.Location = new System.Drawing.Point(75, 3);
             this.rbBeltsType.Name = "rbBeltsType";
             this.rbBeltsType.Size = new System.Drawing.Size(49, 17);
             this.rbBeltsType.TabIndex = 0;
@@ -500,7 +503,7 @@
             // 
             this.rbBeltsMax.AutoSize = true;
             this.rbBeltsMax.Checked = true;
-            this.rbBeltsMax.Location = new System.Drawing.Point(126, 3);
+            this.rbBeltsMax.Location = new System.Drawing.Point(130, 3);
             this.rbBeltsMax.Name = "rbBeltsMax";
             this.rbBeltsMax.Size = new System.Drawing.Size(45, 17);
             this.rbBeltsMax.TabIndex = 1;
@@ -519,13 +522,25 @@
             this.flpVarious.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpVarious.Location = new System.Drawing.Point(150, 110);
             this.flpVarious.Name = "flpVarious";
-            this.flpVarious.Size = new System.Drawing.Size(180, 20);
+            this.flpVarious.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpVarious.Size = new System.Drawing.Size(180, 24);
             this.flpVarious.TabIndex = 18;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(6, 0);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(64, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "                   ";
             // 
             // rbVariousType
             // 
             this.rbVariousType.AutoSize = true;
-            this.rbVariousType.Location = new System.Drawing.Point(71, 3);
+            this.rbVariousType.Location = new System.Drawing.Point(75, 3);
             this.rbVariousType.Name = "rbVariousType";
             this.rbVariousType.Size = new System.Drawing.Size(49, 17);
             this.rbVariousType.TabIndex = 0;
@@ -536,7 +551,7 @@
             // 
             this.rbVariousMax.AutoSize = true;
             this.rbVariousMax.Checked = true;
-            this.rbVariousMax.Location = new System.Drawing.Point(126, 3);
+            this.rbVariousMax.Location = new System.Drawing.Point(130, 3);
             this.rbVariousMax.Name = "rbVariousMax";
             this.rbVariousMax.Size = new System.Drawing.Size(45, 17);
             this.rbVariousMax.TabIndex = 1;
@@ -555,14 +570,15 @@
             this.flpDroid.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpDroid.Location = new System.Drawing.Point(150, 170);
             this.flpDroid.Name = "flpDroid";
-            this.flpDroid.Size = new System.Drawing.Size(180, 20);
+            this.flpDroid.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpDroid.Size = new System.Drawing.Size(180, 24);
             this.flpDroid.TabIndex = 18;
             // 
             // rbDroidSType
             // 
             this.rbDroidSType.AutoSize = true;
-            this.rbDroidSType.Location = new System.Drawing.Point(2, 2);
-            this.rbDroidSType.Margin = new System.Windows.Forms.Padding(2);
+            this.rbDroidSType.Location = new System.Drawing.Point(6, 3);
+            this.rbDroidSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
             this.rbDroidSType.Name = "rbDroidSType";
             this.rbDroidSType.Size = new System.Drawing.Size(64, 17);
             this.rbDroidSType.TabIndex = 2;
@@ -573,7 +589,7 @@
             // rbDroidType
             // 
             this.rbDroidType.AutoSize = true;
-            this.rbDroidType.Location = new System.Drawing.Point(71, 3);
+            this.rbDroidType.Location = new System.Drawing.Point(75, 3);
             this.rbDroidType.Name = "rbDroidType";
             this.rbDroidType.Size = new System.Drawing.Size(49, 17);
             this.rbDroidType.TabIndex = 0;
@@ -584,7 +600,7 @@
             // 
             this.rbDroidMax.AutoSize = true;
             this.rbDroidMax.Checked = true;
-            this.rbDroidMax.Location = new System.Drawing.Point(126, 3);
+            this.rbDroidMax.Location = new System.Drawing.Point(130, 3);
             this.rbDroidMax.Name = "rbDroidMax";
             this.rbDroidMax.Size = new System.Drawing.Size(45, 17);
             this.rbDroidMax.TabIndex = 1;
@@ -603,14 +619,15 @@
             this.flpArmbands.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpArmbands.Location = new System.Drawing.Point(150, 200);
             this.flpArmbands.Name = "flpArmbands";
-            this.flpArmbands.Size = new System.Drawing.Size(180, 20);
+            this.flpArmbands.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpArmbands.Size = new System.Drawing.Size(180, 24);
             this.flpArmbands.TabIndex = 18;
             // 
             // rbArmbandsSType
             // 
             this.rbArmbandsSType.AutoSize = true;
-            this.rbArmbandsSType.Location = new System.Drawing.Point(2, 2);
-            this.rbArmbandsSType.Margin = new System.Windows.Forms.Padding(2);
+            this.rbArmbandsSType.Location = new System.Drawing.Point(6, 3);
+            this.rbArmbandsSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
             this.rbArmbandsSType.Name = "rbArmbandsSType";
             this.rbArmbandsSType.Size = new System.Drawing.Size(64, 17);
             this.rbArmbandsSType.TabIndex = 2;
@@ -622,7 +639,7 @@
             // 
             this.rbArmbandsType.AutoSize = true;
             this.rbArmbandsType.Checked = true;
-            this.rbArmbandsType.Location = new System.Drawing.Point(71, 3);
+            this.rbArmbandsType.Location = new System.Drawing.Point(75, 3);
             this.rbArmbandsType.Name = "rbArmbandsType";
             this.rbArmbandsType.Size = new System.Drawing.Size(49, 17);
             this.rbArmbandsType.TabIndex = 0;
@@ -633,7 +650,7 @@
             // rbArmbandsMax
             // 
             this.rbArmbandsMax.AutoSize = true;
-            this.rbArmbandsMax.Location = new System.Drawing.Point(126, 3);
+            this.rbArmbandsMax.Location = new System.Drawing.Point(130, 3);
             this.rbArmbandsMax.Name = "rbArmbandsMax";
             this.rbArmbandsMax.Size = new System.Drawing.Size(45, 17);
             this.rbArmbandsMax.TabIndex = 1;
@@ -651,14 +668,15 @@
             this.flpGloves.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpGloves.Location = new System.Drawing.Point(150, 230);
             this.flpGloves.Name = "flpGloves";
-            this.flpGloves.Size = new System.Drawing.Size(180, 20);
+            this.flpGloves.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpGloves.Size = new System.Drawing.Size(180, 24);
             this.flpGloves.TabIndex = 18;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(2, 0);
+            this.label3.Location = new System.Drawing.Point(6, 0);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 13);
@@ -668,7 +686,7 @@
             // rbGlovesType
             // 
             this.rbGlovesType.AutoSize = true;
-            this.rbGlovesType.Location = new System.Drawing.Point(71, 3);
+            this.rbGlovesType.Location = new System.Drawing.Point(75, 3);
             this.rbGlovesType.Name = "rbGlovesType";
             this.rbGlovesType.Size = new System.Drawing.Size(49, 17);
             this.rbGlovesType.TabIndex = 0;
@@ -679,7 +697,7 @@
             // 
             this.rbGlovesMax.AutoSize = true;
             this.rbGlovesMax.Checked = true;
-            this.rbGlovesMax.Location = new System.Drawing.Point(126, 3);
+            this.rbGlovesMax.Location = new System.Drawing.Point(130, 3);
             this.rbGlovesMax.Name = "rbGlovesMax";
             this.rbGlovesMax.Size = new System.Drawing.Size(45, 17);
             this.rbGlovesMax.TabIndex = 1;
@@ -698,14 +716,15 @@
             this.flpImplants.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpImplants.Location = new System.Drawing.Point(150, 260);
             this.flpImplants.Name = "flpImplants";
-            this.flpImplants.Size = new System.Drawing.Size(180, 20);
+            this.flpImplants.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpImplants.Size = new System.Drawing.Size(180, 24);
             this.flpImplants.TabIndex = 18;
             // 
             // rbImplantsSType
             // 
             this.rbImplantsSType.AutoSize = true;
-            this.rbImplantsSType.Location = new System.Drawing.Point(2, 2);
-            this.rbImplantsSType.Margin = new System.Windows.Forms.Padding(2);
+            this.rbImplantsSType.Location = new System.Drawing.Point(6, 3);
+            this.rbImplantsSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
             this.rbImplantsSType.Name = "rbImplantsSType";
             this.rbImplantsSType.Size = new System.Drawing.Size(64, 17);
             this.rbImplantsSType.TabIndex = 2;
@@ -716,7 +735,7 @@
             // rbImplantsType
             // 
             this.rbImplantsType.AutoSize = true;
-            this.rbImplantsType.Location = new System.Drawing.Point(71, 3);
+            this.rbImplantsType.Location = new System.Drawing.Point(75, 3);
             this.rbImplantsType.Name = "rbImplantsType";
             this.rbImplantsType.Size = new System.Drawing.Size(49, 17);
             this.rbImplantsType.TabIndex = 0;
@@ -727,7 +746,7 @@
             // 
             this.rbImplantsMax.AutoSize = true;
             this.rbImplantsMax.Checked = true;
-            this.rbImplantsMax.Location = new System.Drawing.Point(126, 3);
+            this.rbImplantsMax.Location = new System.Drawing.Point(130, 3);
             this.rbImplantsMax.Name = "rbImplantsMax";
             this.rbImplantsMax.Size = new System.Drawing.Size(45, 17);
             this.rbImplantsMax.TabIndex = 1;
@@ -746,14 +765,15 @@
             this.flpMasks.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpMasks.Location = new System.Drawing.Point(150, 290);
             this.flpMasks.Name = "flpMasks";
-            this.flpMasks.Size = new System.Drawing.Size(180, 20);
+            this.flpMasks.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpMasks.Size = new System.Drawing.Size(180, 24);
             this.flpMasks.TabIndex = 18;
             // 
             // rbMasksSType
             // 
             this.rbMasksSType.AutoSize = true;
-            this.rbMasksSType.Location = new System.Drawing.Point(2, 2);
-            this.rbMasksSType.Margin = new System.Windows.Forms.Padding(2);
+            this.rbMasksSType.Location = new System.Drawing.Point(6, 3);
+            this.rbMasksSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
             this.rbMasksSType.Name = "rbMasksSType";
             this.rbMasksSType.Size = new System.Drawing.Size(64, 17);
             this.rbMasksSType.TabIndex = 2;
@@ -764,7 +784,7 @@
             // rbMasksType
             // 
             this.rbMasksType.AutoSize = true;
-            this.rbMasksType.Location = new System.Drawing.Point(71, 3);
+            this.rbMasksType.Location = new System.Drawing.Point(75, 3);
             this.rbMasksType.Name = "rbMasksType";
             this.rbMasksType.Size = new System.Drawing.Size(49, 17);
             this.rbMasksType.TabIndex = 0;
@@ -775,7 +795,7 @@
             // 
             this.rbMasksMax.AutoSize = true;
             this.rbMasksMax.Checked = true;
-            this.rbMasksMax.Location = new System.Drawing.Point(126, 3);
+            this.rbMasksMax.Location = new System.Drawing.Point(130, 3);
             this.rbMasksMax.Name = "rbMasksMax";
             this.rbMasksMax.Size = new System.Drawing.Size(45, 17);
             this.rbMasksMax.TabIndex = 1;
@@ -794,14 +814,15 @@
             this.flpPaz.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpPaz.Location = new System.Drawing.Point(150, 320);
             this.flpPaz.Name = "flpPaz";
-            this.flpPaz.Size = new System.Drawing.Size(180, 20);
+            this.flpPaz.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpPaz.Size = new System.Drawing.Size(180, 24);
             this.flpPaz.TabIndex = 18;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(2, 0);
+            this.label5.Location = new System.Drawing.Point(6, 0);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(64, 13);
@@ -811,7 +832,7 @@
             // rbPazType
             // 
             this.rbPazType.AutoSize = true;
-            this.rbPazType.Location = new System.Drawing.Point(71, 3);
+            this.rbPazType.Location = new System.Drawing.Point(75, 3);
             this.rbPazType.Name = "rbPazType";
             this.rbPazType.Size = new System.Drawing.Size(49, 17);
             this.rbPazType.TabIndex = 0;
@@ -822,7 +843,7 @@
             // 
             this.rbPazMax.AutoSize = true;
             this.rbPazMax.Checked = true;
-            this.rbPazMax.Location = new System.Drawing.Point(126, 3);
+            this.rbPazMax.Location = new System.Drawing.Point(130, 3);
             this.rbPazMax.Name = "rbPazMax";
             this.rbPazMax.Size = new System.Drawing.Size(45, 17);
             this.rbPazMax.TabIndex = 1;
@@ -841,14 +862,15 @@
             this.flpMines.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpMines.Location = new System.Drawing.Point(150, 350);
             this.flpMines.Name = "flpMines";
-            this.flpMines.Size = new System.Drawing.Size(180, 20);
+            this.flpMines.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpMines.Size = new System.Drawing.Size(180, 24);
             this.flpMines.TabIndex = 18;
             // 
             // rbMinesSType
             // 
             this.rbMinesSType.AutoSize = true;
-            this.rbMinesSType.Location = new System.Drawing.Point(2, 2);
-            this.rbMinesSType.Margin = new System.Windows.Forms.Padding(2);
+            this.rbMinesSType.Location = new System.Drawing.Point(6, 3);
+            this.rbMinesSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
             this.rbMinesSType.Name = "rbMinesSType";
             this.rbMinesSType.Size = new System.Drawing.Size(64, 17);
             this.rbMinesSType.TabIndex = 2;
@@ -859,7 +881,7 @@
             // rbMinesType
             // 
             this.rbMinesType.AutoSize = true;
-            this.rbMinesType.Location = new System.Drawing.Point(71, 3);
+            this.rbMinesType.Location = new System.Drawing.Point(75, 3);
             this.rbMinesType.Name = "rbMinesType";
             this.rbMinesType.Size = new System.Drawing.Size(49, 17);
             this.rbMinesType.TabIndex = 0;
@@ -870,7 +892,7 @@
             // 
             this.rbMinesMax.AutoSize = true;
             this.rbMinesMax.Checked = true;
-            this.rbMinesMax.Location = new System.Drawing.Point(126, 3);
+            this.rbMinesMax.Location = new System.Drawing.Point(130, 3);
             this.rbMinesMax.Name = "rbMinesMax";
             this.rbMinesMax.Size = new System.Drawing.Size(45, 17);
             this.rbMinesMax.TabIndex = 1;
@@ -889,14 +911,15 @@
             this.flpUpgrades.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpUpgrades.Location = new System.Drawing.Point(150, 380);
             this.flpUpgrades.Name = "flpUpgrades";
-            this.flpUpgrades.Size = new System.Drawing.Size(180, 20);
+            this.flpUpgrades.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpUpgrades.Size = new System.Drawing.Size(180, 24);
             this.flpUpgrades.TabIndex = 18;
             // 
             // rbUpgradesSType
             // 
             this.rbUpgradesSType.AutoSize = true;
-            this.rbUpgradesSType.Location = new System.Drawing.Point(2, 2);
-            this.rbUpgradesSType.Margin = new System.Windows.Forms.Padding(2);
+            this.rbUpgradesSType.Location = new System.Drawing.Point(6, 3);
+            this.rbUpgradesSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
             this.rbUpgradesSType.Name = "rbUpgradesSType";
             this.rbUpgradesSType.Size = new System.Drawing.Size(64, 17);
             this.rbUpgradesSType.TabIndex = 2;
@@ -907,7 +930,7 @@
             // rbUpgradesType
             // 
             this.rbUpgradesType.AutoSize = true;
-            this.rbUpgradesType.Location = new System.Drawing.Point(71, 3);
+            this.rbUpgradesType.Location = new System.Drawing.Point(75, 3);
             this.rbUpgradesType.Name = "rbUpgradesType";
             this.rbUpgradesType.Size = new System.Drawing.Size(49, 17);
             this.rbUpgradesType.TabIndex = 0;
@@ -918,7 +941,7 @@
             // 
             this.rbUpgradesMax.AutoSize = true;
             this.rbUpgradesMax.Checked = true;
-            this.rbUpgradesMax.Location = new System.Drawing.Point(126, 3);
+            this.rbUpgradesMax.Location = new System.Drawing.Point(130, 3);
             this.rbUpgradesMax.Name = "rbUpgradesMax";
             this.rbUpgradesMax.Size = new System.Drawing.Size(45, 17);
             this.rbUpgradesMax.TabIndex = 1;
@@ -937,14 +960,15 @@
             this.flpBlasters.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpBlasters.Location = new System.Drawing.Point(150, 410);
             this.flpBlasters.Name = "flpBlasters";
-            this.flpBlasters.Size = new System.Drawing.Size(180, 20);
+            this.flpBlasters.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpBlasters.Size = new System.Drawing.Size(180, 24);
             this.flpBlasters.TabIndex = 18;
             // 
             // rbBlastersSType
             // 
             this.rbBlastersSType.AutoSize = true;
-            this.rbBlastersSType.Location = new System.Drawing.Point(2, 2);
-            this.rbBlastersSType.Margin = new System.Windows.Forms.Padding(2);
+            this.rbBlastersSType.Location = new System.Drawing.Point(6, 3);
+            this.rbBlastersSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
             this.rbBlastersSType.Name = "rbBlastersSType";
             this.rbBlastersSType.Size = new System.Drawing.Size(64, 17);
             this.rbBlastersSType.TabIndex = 2;
@@ -955,7 +979,7 @@
             // rbBlastersType
             // 
             this.rbBlastersType.AutoSize = true;
-            this.rbBlastersType.Location = new System.Drawing.Point(71, 3);
+            this.rbBlastersType.Location = new System.Drawing.Point(75, 3);
             this.rbBlastersType.Name = "rbBlastersType";
             this.rbBlastersType.Size = new System.Drawing.Size(49, 17);
             this.rbBlastersType.TabIndex = 0;
@@ -966,7 +990,7 @@
             // 
             this.rbBlastersMax.AutoSize = true;
             this.rbBlastersMax.Checked = true;
-            this.rbBlastersMax.Location = new System.Drawing.Point(126, 3);
+            this.rbBlastersMax.Location = new System.Drawing.Point(130, 3);
             this.rbBlastersMax.Name = "rbBlastersMax";
             this.rbBlastersMax.Size = new System.Drawing.Size(45, 17);
             this.rbBlastersMax.TabIndex = 1;
@@ -985,14 +1009,15 @@
             this.flpCreature.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpCreature.Location = new System.Drawing.Point(150, 440);
             this.flpCreature.Name = "flpCreature";
-            this.flpCreature.Size = new System.Drawing.Size(180, 20);
+            this.flpCreature.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpCreature.Size = new System.Drawing.Size(180, 24);
             this.flpCreature.TabIndex = 18;
             // 
             // rbCreatureSType
             // 
             this.rbCreatureSType.AutoSize = true;
-            this.rbCreatureSType.Location = new System.Drawing.Point(2, 2);
-            this.rbCreatureSType.Margin = new System.Windows.Forms.Padding(2);
+            this.rbCreatureSType.Location = new System.Drawing.Point(6, 3);
+            this.rbCreatureSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
             this.rbCreatureSType.Name = "rbCreatureSType";
             this.rbCreatureSType.Size = new System.Drawing.Size(64, 17);
             this.rbCreatureSType.TabIndex = 2;
@@ -1003,7 +1028,7 @@
             // rbCreatureType
             // 
             this.rbCreatureType.AutoSize = true;
-            this.rbCreatureType.Location = new System.Drawing.Point(71, 3);
+            this.rbCreatureType.Location = new System.Drawing.Point(75, 3);
             this.rbCreatureType.Name = "rbCreatureType";
             this.rbCreatureType.Size = new System.Drawing.Size(49, 17);
             this.rbCreatureType.TabIndex = 0;
@@ -1014,7 +1039,7 @@
             // 
             this.rbCreatureMax.AutoSize = true;
             this.rbCreatureMax.Checked = true;
-            this.rbCreatureMax.Location = new System.Drawing.Point(126, 3);
+            this.rbCreatureMax.Location = new System.Drawing.Point(130, 3);
             this.rbCreatureMax.Name = "rbCreatureMax";
             this.rbCreatureMax.Size = new System.Drawing.Size(45, 17);
             this.rbCreatureMax.TabIndex = 1;
@@ -1033,14 +1058,15 @@
             this.flpLightsabers.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpLightsabers.Location = new System.Drawing.Point(150, 470);
             this.flpLightsabers.Name = "flpLightsabers";
-            this.flpLightsabers.Size = new System.Drawing.Size(180, 20);
+            this.flpLightsabers.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpLightsabers.Size = new System.Drawing.Size(180, 24);
             this.flpLightsabers.TabIndex = 18;
             // 
             // rbLightsabersSType
             // 
             this.rbLightsabersSType.AutoSize = true;
-            this.rbLightsabersSType.Location = new System.Drawing.Point(2, 2);
-            this.rbLightsabersSType.Margin = new System.Windows.Forms.Padding(2);
+            this.rbLightsabersSType.Location = new System.Drawing.Point(6, 3);
+            this.rbLightsabersSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
             this.rbLightsabersSType.Name = "rbLightsabersSType";
             this.rbLightsabersSType.Size = new System.Drawing.Size(64, 17);
             this.rbLightsabersSType.TabIndex = 2;
@@ -1051,7 +1077,7 @@
             // rbLightsabersType
             // 
             this.rbLightsabersType.AutoSize = true;
-            this.rbLightsabersType.Location = new System.Drawing.Point(71, 3);
+            this.rbLightsabersType.Location = new System.Drawing.Point(75, 3);
             this.rbLightsabersType.Name = "rbLightsabersType";
             this.rbLightsabersType.Size = new System.Drawing.Size(49, 17);
             this.rbLightsabersType.TabIndex = 0;
@@ -1062,7 +1088,7 @@
             // 
             this.rbLightsabersMax.AutoSize = true;
             this.rbLightsabersMax.Checked = true;
-            this.rbLightsabersMax.Location = new System.Drawing.Point(126, 3);
+            this.rbLightsabersMax.Location = new System.Drawing.Point(130, 3);
             this.rbLightsabersMax.Name = "rbLightsabersMax";
             this.rbLightsabersMax.Size = new System.Drawing.Size(45, 17);
             this.rbLightsabersMax.TabIndex = 1;
@@ -1081,14 +1107,15 @@
             this.flpGrenades.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpGrenades.Location = new System.Drawing.Point(150, 500);
             this.flpGrenades.Name = "flpGrenades";
-            this.flpGrenades.Size = new System.Drawing.Size(180, 20);
+            this.flpGrenades.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpGrenades.Size = new System.Drawing.Size(180, 24);
             this.flpGrenades.TabIndex = 18;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(2, 0);
+            this.label4.Location = new System.Drawing.Point(6, 0);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(64, 13);
@@ -1098,7 +1125,7 @@
             // rbGrenadesType
             // 
             this.rbGrenadesType.AutoSize = true;
-            this.rbGrenadesType.Location = new System.Drawing.Point(71, 3);
+            this.rbGrenadesType.Location = new System.Drawing.Point(75, 3);
             this.rbGrenadesType.Name = "rbGrenadesType";
             this.rbGrenadesType.Size = new System.Drawing.Size(49, 17);
             this.rbGrenadesType.TabIndex = 0;
@@ -1109,7 +1136,7 @@
             // 
             this.rbGrenadesMax.AutoSize = true;
             this.rbGrenadesMax.Checked = true;
-            this.rbGrenadesMax.Location = new System.Drawing.Point(126, 3);
+            this.rbGrenadesMax.Location = new System.Drawing.Point(130, 3);
             this.rbGrenadesMax.Name = "rbGrenadesMax";
             this.rbGrenadesMax.Size = new System.Drawing.Size(45, 17);
             this.rbGrenadesMax.TabIndex = 1;
@@ -1128,14 +1155,15 @@
             this.flpMelee.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpMelee.Location = new System.Drawing.Point(150, 530);
             this.flpMelee.Name = "flpMelee";
-            this.flpMelee.Size = new System.Drawing.Size(180, 20);
+            this.flpMelee.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpMelee.Size = new System.Drawing.Size(180, 24);
             this.flpMelee.TabIndex = 18;
             // 
             // rbMeleeSType
             // 
             this.rbMeleeSType.AutoSize = true;
-            this.rbMeleeSType.Location = new System.Drawing.Point(2, 2);
-            this.rbMeleeSType.Margin = new System.Windows.Forms.Padding(2);
+            this.rbMeleeSType.Location = new System.Drawing.Point(6, 3);
+            this.rbMeleeSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
             this.rbMeleeSType.Name = "rbMeleeSType";
             this.rbMeleeSType.Size = new System.Drawing.Size(64, 17);
             this.rbMeleeSType.TabIndex = 2;
@@ -1146,7 +1174,7 @@
             // rbMeleeType
             // 
             this.rbMeleeType.AutoSize = true;
-            this.rbMeleeType.Location = new System.Drawing.Point(71, 3);
+            this.rbMeleeType.Location = new System.Drawing.Point(75, 3);
             this.rbMeleeType.Name = "rbMeleeType";
             this.rbMeleeType.Size = new System.Drawing.Size(49, 17);
             this.rbMeleeType.TabIndex = 0;
@@ -1157,7 +1185,7 @@
             // 
             this.rbMeleeMax.AutoSize = true;
             this.rbMeleeMax.Checked = true;
-            this.rbMeleeMax.Location = new System.Drawing.Point(126, 3);
+            this.rbMeleeMax.Location = new System.Drawing.Point(130, 3);
             this.rbMeleeMax.Name = "rbMeleeMax";
             this.rbMeleeMax.Size = new System.Drawing.Size(45, 17);
             this.rbMeleeMax.TabIndex = 1;
@@ -1169,7 +1197,7 @@
             // 
             this.cbHides.Checked = true;
             this.cbHides.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbHides.Location = new System.Drawing.Point(20, 140);
+            this.cbHides.Location = new System.Drawing.Point(20, 143);
             this.cbHides.Margin = new System.Windows.Forms.Padding(2);
             this.cbHides.Name = "cbHides";
             this.cbHides.Size = new System.Drawing.Size(120, 20);
@@ -1189,14 +1217,15 @@
             this.flpHides.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.flpHides.Location = new System.Drawing.Point(150, 140);
             this.flpHides.Name = "flpHides";
-            this.flpHides.Size = new System.Drawing.Size(180, 20);
+            this.flpHides.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.flpHides.Size = new System.Drawing.Size(180, 24);
             this.flpHides.TabIndex = 19;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(2, 0);
+            this.label2.Location = new System.Drawing.Point(6, 0);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 13);
@@ -1206,7 +1235,7 @@
             // rbHidesType
             // 
             this.rbHidesType.AutoSize = true;
-            this.rbHidesType.Location = new System.Drawing.Point(71, 3);
+            this.rbHidesType.Location = new System.Drawing.Point(75, 3);
             this.rbHidesType.Name = "rbHidesType";
             this.rbHidesType.Size = new System.Drawing.Size(49, 17);
             this.rbHidesType.TabIndex = 0;
@@ -1217,7 +1246,7 @@
             // 
             this.rbHidesMax.AutoSize = true;
             this.rbHidesMax.Checked = true;
-            this.rbHidesMax.Location = new System.Drawing.Point(126, 3);
+            this.rbHidesMax.Location = new System.Drawing.Point(130, 3);
             this.rbHidesMax.Name = "rbHidesMax";
             this.rbHidesMax.Size = new System.Drawing.Size(45, 17);
             this.rbHidesMax.TabIndex = 1;
@@ -1269,7 +1298,7 @@
             this.bAddOmitItem.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.bAddOmitItem.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.bAddOmitItem.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bAddOmitItem.Font = new System.Drawing.Font("Unispace", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bAddOmitItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bAddOmitItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.bAddOmitItem.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.bAddOmitItem.Location = new System.Drawing.Point(490, 390);
@@ -1313,17 +1342,6 @@
             this.bAllMax.Text = "All Max";
             this.bAllMax.UseVisualStyleBackColor = false;
             this.bAllMax.Click += new System.EventHandler(this.bAllMax_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(2, 0);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(64, 13);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "                   ";
             // 
             // ItemForm
             // 

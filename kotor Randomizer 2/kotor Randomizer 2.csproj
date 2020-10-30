@@ -261,6 +261,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Xml\KotorModules.xml" />
     <Content Include="KRPformat.txt" />
     <None Include="Resources\GeneralHelp.txt" />
     <None Include="Resources\ModuleHelp.txt" />
