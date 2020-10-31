@@ -29,16 +29,16 @@ namespace kotor_Randomizer_2
                 areaMusic.AddRange(musicFiles.Where(f => f.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)));
             }
 
-            switch ((Globals.RandomizationLevel)Properties.Settings.Default.RandomizeAreaMusic)
+            switch ((RandomizationLevel)Properties.Settings.Default.RandomizeAreaMusic)
             {
-                case Globals.RandomizationLevel.Max:
+                case RandomizationLevel.Max:
                     maxMusic.AddRange(areaMusic);
                     break;
-                case Globals.RandomizationLevel.Type:
+                case RandomizationLevel.Type:
                     Randomize.RandomizeFiles(areaMusic, paths.music);
                     break;
-                case Globals.RandomizationLevel.Subtype:
-                case Globals.RandomizationLevel.None:
+                case RandomizationLevel.Subtype:
+                case RandomizationLevel.None:
                 default:
                     break;
             }
@@ -56,18 +56,18 @@ namespace kotor_Randomizer_2
                 ambientNoiseSound.AddRange(soundFiles.Where(f => f.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)));
             }
 
-            switch ((Globals.RandomizationLevel)Properties.Settings.Default.RandomizeAmbientNoise)
+            switch ((RandomizationLevel)Properties.Settings.Default.RandomizeAmbientNoise)
             {
-                case Globals.RandomizationLevel.Max:
+                case RandomizationLevel.Max:
                     maxMusic.AddRange(ambientNoiseMusic);
                     maxSound.AddRange(ambientNoiseSound);
                     break;
-                case Globals.RandomizationLevel.Type:
+                case RandomizationLevel.Type:
                     Randomize.RandomizeFiles(ambientNoiseMusic, paths.music);
                     Randomize.RandomizeFiles(ambientNoiseSound, paths.sounds);
                     break;
-                case Globals.RandomizationLevel.Subtype:
-                case Globals.RandomizationLevel.None:
+                case RandomizationLevel.Subtype:
+                case RandomizationLevel.None:
                 default:
                     break;
             }
@@ -76,18 +76,18 @@ namespace kotor_Randomizer_2
             List<FileInfo> battleMusic = new List<FileInfo>(musicFiles.Where(f => RegexBattleMusic.IsMatch(f.Name)));
             List<FileInfo> battleMusicEnd = new List<FileInfo>(soundFiles.Where(f => RegexBattleMusic.IsMatch(f.Name)));
 
-            switch ((Globals.RandomizationLevel)Properties.Settings.Default.RandomizeBattleMusic)
+            switch ((RandomizationLevel)Properties.Settings.Default.RandomizeBattleMusic)
             {
-                case Globals.RandomizationLevel.Max:
+                case RandomizationLevel.Max:
                     maxMusic.AddRange(battleMusic);
                     maxSound.AddRange(battleMusicEnd);
                     break;
-                case Globals.RandomizationLevel.Type:
+                case RandomizationLevel.Type:
                     Randomize.RandomizeFiles(battleMusic, paths.music);
                     Randomize.RandomizeFiles(battleMusicEnd, paths.sounds);
                     break;
-                case Globals.RandomizationLevel.Subtype:
-                case Globals.RandomizationLevel.None:
+                case RandomizationLevel.Subtype:
+                case RandomizationLevel.None:
                 default:
                     break;
             }
@@ -96,16 +96,16 @@ namespace kotor_Randomizer_2
             List<FileInfo> cutsceneNoise = new List<FileInfo>(musicFiles.Where(f => RegexCutscene.IsMatch(f.Name)));
             cutsceneNoise.RemoveAll(f => f.Name.StartsWith("57.")); // Remove specific exception
 
-            switch ((Globals.RandomizationLevel)Properties.Settings.Default.RandomizeCutsceneNoise)
+            switch ((RandomizationLevel)Properties.Settings.Default.RandomizeCutsceneNoise)
             {
-                case Globals.RandomizationLevel.Max:
+                case RandomizationLevel.Max:
                     maxMusic.AddRange(cutsceneNoise);
                     break;
-                case Globals.RandomizationLevel.Type:
+                case RandomizationLevel.Type:
                     Randomize.RandomizeFiles(cutsceneNoise, paths.music);
                     break;
-                case Globals.RandomizationLevel.Subtype:
-                case Globals.RandomizationLevel.None:
+                case RandomizationLevel.Subtype:
+                case RandomizationLevel.None:
                 default:
                     break;
             }
@@ -121,18 +121,18 @@ namespace kotor_Randomizer_2
             //else
             {
                 // Party Sounds (if not mixing)
-                switch ((Globals.RandomizationLevel)Properties.Settings.Default.RandomizePartySounds)
+                switch ((RandomizationLevel)Properties.Settings.Default.RandomizePartySounds)
                 {
-                    case Globals.RandomizationLevel.Max:
+                    case RandomizationLevel.Max:
                         maxSound.AddRange(partySounds);
                         break;
-                    case Globals.RandomizationLevel.Type:
+                    case RandomizationLevel.Type:
                         Randomize.RandomizeFiles(partySounds, paths.sounds);
                         break;
-                    case Globals.RandomizationLevel.Subtype:
+                    case RandomizationLevel.Subtype:
                         RandomizeSoundActions(partySounds, paths.sounds);
                         break;
-                    case Globals.RandomizationLevel.None:
+                    case RandomizationLevel.None:
                     default:
                         break;
                 }
@@ -141,16 +141,16 @@ namespace kotor_Randomizer_2
             //// NPC Sounds (or both if mixing) // Functionality Disabled
             //switch (RandomizeNpcSounds)
             //{
-            //    case Globals.RandomizationLevel.Max:
+            //    case RandomizationLevel.Max:
             //        maxSound.AddRange(npcSounds);
             //        break;
-            //    case Globals.RandomizationLevel.Type:
+            //    case RandomizationLevel.Type:
             //        Randomize.RandomizeFiles(npcSounds, SoundsPath);
             //        break;
-            //    case Globals.RandomizationLevel.Subtype:
+            //    case RandomizationLevel.Subtype:
             //        RandomizeSoundActions(npcSounds, SoundsPath);
             //        break;
-            //    case Globals.RandomizationLevel.None:
+            //    case RandomizationLevel.None:
             //    default:
             //        break;
             //}

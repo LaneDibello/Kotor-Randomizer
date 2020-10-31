@@ -13,24 +13,24 @@ namespace kotor_Randomizer_2
     {
         public static void texture_rando(Globals.KPaths paths)
         {
-            //Load in texture pack
+            // Load in texture pack.
             string pack_name;
             switch (Properties.Settings.Default.TexturePack)
             {
-                case 1:
+                default:
+                case 0: // High quality
+                    pack_name = "\\swpc_tex_tpa.erf";
+                    break;
+                case 1: // Medium quality
                     pack_name = "\\swpc_tex_tpb.erf";
                     break;
-                case 2:
+                case 2: // Low quality
                     pack_name = "\\swpc_tex_tpc.erf";
-                    break;
-                default:
-                case 0:
-                    pack_name = "\\swpc_tex_tpa.erf";
                     break;
             }
             ERF e = KReader.ReadERF(File.OpenRead(paths.TexturePacks + pack_name));
 
-            //handle categories
+            // Handle categories.
             handle_category(e, RegexCubeMaps, Properties.Settings.Default.TextureRandomizeCubeMaps);
             handle_category(e, RegexCreatures, Properties.Settings.Default.TextureRandomizeCreatures);
             handle_category(e, RegexEffects, Properties.Settings.Default.TextureRandomizeEffects);
@@ -45,22 +45,22 @@ namespace kotor_Randomizer_2
             handle_category(e, RegexVehicles, Properties.Settings.Default.TextureRandomizeVehicles);
             handle_category(e, RegexWeapons, Properties.Settings.Default.TextureRandomizeWeapons);
 
-            //handle other
-            switch (Properties.Settings.Default.TextureRandomizeOther)
+            // Handle other.
+            switch ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeOther)
             {
-                case 2:
+                default:
+                case RandomizationLevel.None:
+                    break; // Do nothing.
+                case RandomizationLevel.Type:
                     List<int> type = new List<int>(e.Key_List.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef)).Select(x => x.ResID));
                     Type_Lists.Add(type);
                     break;
-                case 3:
+                case RandomizationLevel.Max:
                     Max_Rando.AddRange(e.Key_List.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef)).Select(x => x.ResID));
-                    break;
-                case 0:
-                default:
                     break;
             }
 
-            //Max Rando
+            // Max Rando.
             List<int> Max_Rando_Iterator = new List<int>(Max_Rando);
             Randomize.FisherYatesShuffle(Max_Rando);
             int j = 0;
@@ -70,7 +70,7 @@ namespace kotor_Randomizer_2
                 j++;
             }
 
-            //Type Rando
+            // Type Rando.
             foreach (List<int> li in Type_Lists)
             {
                 List<int> type_copy = new List<int>(li);
@@ -123,17 +123,17 @@ namespace kotor_Randomizer_2
 
         private static void handle_category(ERF e, Regex r, int randomizationlevel)
         {
-            switch (randomizationlevel)
+            switch ((RandomizationLevel)randomizationlevel)
             {
-                case 2:
+                default:
+                case RandomizationLevel.None:
+                    break; // Do nothing.
+                case RandomizationLevel.Type:
                     List<int> type = new List<int>(e.Key_List.Where(x => r.IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef)).Select(x => x.ResID));
                     Type_Lists.Add(type);
                     break;
-                case 3:
+                case RandomizationLevel.Max:
                     Max_Rando.AddRange(e.Key_List.Where(x => r.IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef)).Select(x => x.ResID));
-                    break;
-                case 0:
-                default:
                     break;
             }
         }
