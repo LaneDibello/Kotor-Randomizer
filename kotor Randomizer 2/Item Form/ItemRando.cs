@@ -7,46 +7,45 @@ using System.IO;
 using KotOR_IO;
 using System.Text.RegularExpressions;
 
-
 namespace kotor_Randomizer_2
 {
     public static class ItemRando
     {
         public static void item_rando(Globals.KPaths paths)
         {
-            KEY k = KReader.ReadKEY(File.OpenRead(paths.chitin));
+            KEY k = new KEY(paths.chitin);
 
             //handle categories
-            handle_category(k, ArmorRegs, Properties.Settings.Default.RandomizeArmor);
-            handle_category(k, StimsRegs, Properties.Settings.Default.RandomizeStims);
-            handle_category(k, BeltsRegs, Properties.Settings.Default.RandomizeBelts);
-            handle_category(k, HidesRegs, Properties.Settings.Default.RandomizeHides);
-            handle_category(k, DroidRegs, Properties.Settings.Default.RandomizeDroid);
-            handle_category(k, ArmbandsRegs, Properties.Settings.Default.RandomizeArmbands);
-            handle_category(k, GlovesRegs, Properties.Settings.Default.RandomizeGloves);
-            handle_category(k, ImplantsRegs, Properties.Settings.Default.RandomizeImplants);
-            handle_category(k, MaskRegs, Properties.Settings.Default.RandomizeMask);
-            handle_category(k, PazRegs, Properties.Settings.Default.RandomizePaz);
-            handle_category(k, MinesRegs, Properties.Settings.Default.RandomizeMines);
-            handle_category(k, UpgradeRegs, Properties.Settings.Default.RandomizeUpgrade);
-            handle_category(k, BlastersRegs, Properties.Settings.Default.RandomizeBlasters);
-            handle_category(k, CreatureRegs, Properties.Settings.Default.RandomizeCreature);
-            handle_category(k, LightsabersRegs, Properties.Settings.Default.RandomizeLightsabers);
-            handle_category(k, GrenadesRegs, Properties.Settings.Default.RandomizeGrenades);
-            handle_category(k, MeleeRegs, Properties.Settings.Default.RandomizeMelee);
+            HandleCategory(k, ArmorRegs, Properties.Settings.Default.RandomizeArmor);
+            HandleCategory(k, StimsRegs, Properties.Settings.Default.RandomizeStims);
+            HandleCategory(k, BeltsRegs, Properties.Settings.Default.RandomizeBelts);
+            HandleCategory(k, HidesRegs, Properties.Settings.Default.RandomizeHides);
+            HandleCategory(k, DroidRegs, Properties.Settings.Default.RandomizeDroid);
+            HandleCategory(k, ArmbandsRegs, Properties.Settings.Default.RandomizeArmbands);
+            HandleCategory(k, GlovesRegs, Properties.Settings.Default.RandomizeGloves);
+            HandleCategory(k, ImplantsRegs, Properties.Settings.Default.RandomizeImplants);
+            HandleCategory(k, MaskRegs, Properties.Settings.Default.RandomizeMask);
+            HandleCategory(k, PazRegs, Properties.Settings.Default.RandomizePaz);
+            HandleCategory(k, MinesRegs, Properties.Settings.Default.RandomizeMines);
+            HandleCategory(k, UpgradeRegs, Properties.Settings.Default.RandomizeUpgrade);
+            HandleCategory(k, BlastersRegs, Properties.Settings.Default.RandomizeBlasters);
+            HandleCategory(k, CreatureRegs, Properties.Settings.Default.RandomizeCreature);
+            HandleCategory(k, LightsabersRegs, Properties.Settings.Default.RandomizeLightsabers);
+            HandleCategory(k, GrenadesRegs, Properties.Settings.Default.RandomizeGrenades);
+            HandleCategory(k, MeleeRegs, Properties.Settings.Default.RandomizeMelee);
 
             //handle Various
-            switch (Properties.Settings.Default.RandomizeVarious)
+            switch ((RandomizationLevel)Properties.Settings.Default.RandomizeVarious)
             {
-                case 2:
-                    List<string> type = new List<string>(k.Key_Table.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
+                default:
+                case RandomizationLevel.None:
+                    break;
+                case RandomizationLevel.Type:
+                    List<string> type = new List<string>(k.KeyTable.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
                     Type_Lists.Add(type);
                     break;
-                case 3:
-                    Max_Rando.AddRange(k.Key_Table.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
-                    break;
-                case 0:
-                default:
+                case RandomizationLevel.Max:
+                    Max_Rando.AddRange(k.KeyTable.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
                     break;
             }
 
@@ -54,7 +53,7 @@ namespace kotor_Randomizer_2
             List<string> Max_Rando_Iterator = new List<string>(Max_Rando);
             Randomize.FisherYatesShuffle(Max_Rando);
             int j = 0;
-            foreach (KEY.Key_Entry ke in k.Key_Table.Where(x => Max_Rando_Iterator.Contains(x.ResRef)))
+            foreach (KEY.KeyEntry ke in k.KeyTable.Where(x => Max_Rando_Iterator.Contains(x.ResRef)))
             {
                 ke.ResRef = Max_Rando[j];
                 j++;
@@ -66,36 +65,36 @@ namespace kotor_Randomizer_2
                 List<string> type_copy = new List<string>(li);
                 Randomize.FisherYatesShuffle(type_copy);
                 j = 0;
-                foreach (KEY.Key_Entry ke in k.Key_Table.Where(x => li.Contains(x.ResRef)))
+                foreach (KEY.KeyEntry ke in k.KeyTable.Where(x => li.Contains(x.ResRef)))
                 {
                     ke.ResRef = type_copy[j];
                     j++;
                 }
             }
 
-            kWriter.Write(k, File.OpenWrite(paths.chitin));
+            k.WriteToFile(paths.chitin);
         }
 
-        private static void handle_category(KEY k, List<Regex> r, int Randomizationlevel)
+        private static void HandleCategory(KEY k, List<Regex> r, int randomizationLevel)
         {
-            switch (Randomizationlevel)
+            switch ((RandomizationLevel)randomizationLevel)
             {
-                case 1:
+                case RandomizationLevel.None:
+                default:
+                    break;
+                case RandomizationLevel.Subtype:
                     for (int i = 1; i < r.Count; i++)
                     {
-                        List<string> temp = new List<string>(k.Key_Table.Where(x => r[i].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
+                        List<string> temp = new List<string>(k.KeyTable.Where(x => r[i].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
                         Type_Lists.Add(temp);
                     }
                     break;
-                case 2:
-                    List<string> type = new List<string>(k.Key_Table.Where(x => r[0].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
+                case RandomizationLevel.Type:
+                    List<string> type = new List<string>(k.KeyTable.Where(x => r[0].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
                     Type_Lists.Add(type);
                     break;
-                case 3:
-                    Max_Rando.AddRange(k.Key_Table.Where(x => r[0].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
-                    break;
-                case 0:
-                default:
+                case RandomizationLevel.Max:
+                    Max_Rando.AddRange(k.KeyTable.Where(x => r[0].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
                     break;
             }
         }
@@ -109,23 +108,23 @@ namespace kotor_Randomizer_2
         {
             return
                 (
-                !ArmorRegs[0].IsMatch(s) &&
-                !StimsRegs[0].IsMatch(s) &&
-                !BeltsRegs[0].IsMatch(s) &&
-                !HidesRegs[0].IsMatch(s) &&
-                !DroidRegs[0].IsMatch(s) &&
-                !ArmbandsRegs[0].IsMatch(s) &&
-                !GlovesRegs[0].IsMatch(s) &&
-                !ImplantsRegs[0].IsMatch(s) &&
-                !MaskRegs[0].IsMatch(s) &&
-                !PazRegs[0].IsMatch(s) &&
-                !MinesRegs[0].IsMatch(s) &&
-                !UpgradeRegs[0].IsMatch(s) &&
-                !BlastersRegs[0].IsMatch(s) &&
-                !CreatureRegs[0].IsMatch(s) &&
-                !LightsabersRegs[0].IsMatch(s) &&
-                !GrenadesRegs[0].IsMatch(s) &&
-                !MeleeRegs[0].IsMatch(s)
+                    !ArmorRegs[0].IsMatch(s) &&
+                    !StimsRegs[0].IsMatch(s) &&
+                    !BeltsRegs[0].IsMatch(s) &&
+                    !HidesRegs[0].IsMatch(s) &&
+                    !DroidRegs[0].IsMatch(s) &&
+                    !ArmbandsRegs[0].IsMatch(s) &&
+                    !GlovesRegs[0].IsMatch(s) &&
+                    !ImplantsRegs[0].IsMatch(s) &&
+                    !MaskRegs[0].IsMatch(s) &&
+                    !PazRegs[0].IsMatch(s) &&
+                    !MinesRegs[0].IsMatch(s) &&
+                    !UpgradeRegs[0].IsMatch(s) &&
+                    !BlastersRegs[0].IsMatch(s) &&
+                    !CreatureRegs[0].IsMatch(s) &&
+                    !LightsabersRegs[0].IsMatch(s) &&
+                    !GrenadesRegs[0].IsMatch(s) &&
+                    !MeleeRegs[0].IsMatch(s)
                 );
         }
 
@@ -304,5 +303,4 @@ namespace kotor_Randomizer_2
         };
         #endregion
     }
-
 }

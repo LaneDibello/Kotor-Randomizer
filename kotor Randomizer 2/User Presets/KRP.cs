@@ -464,8 +464,6 @@ namespace kotor_Randomizer_2
 
                     bw.Write(Properties.Settings.Default.PolymorphMode);
                     bw.Write(Properties.Settings.Default.PazaakDecks);
-
-
                 }
             }
         }

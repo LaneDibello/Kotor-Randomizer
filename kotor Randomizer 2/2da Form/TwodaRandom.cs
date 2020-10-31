@@ -10,25 +10,26 @@ namespace kotor_Randomizer_2
     {
         public static void Twoda_rando(Globals.KPaths paths)
         {
-            BIF b = KReader.ReadBIF(File.OpenRead(paths.data + "\\2da.bif"));
-            KEY k = KReader.ReadKEY(File.OpenRead(paths.get_backup(paths.chitin)));
-            b.attachKey(k, "data\\2da.bif");
+            BIF b = new BIF(paths.data + "\\2da.bif");
+            KEY k = new KEY(paths.get_backup(paths.chitin));
+            b.AttachKey(k, "data\\2da.bif");
 
-            foreach (BIF.Var_Res_Entry VRE in b.Variable_Resource_Table.Where(x => Globals.Selected2DAs.Keys.Contains(x.ResRef)))
+            foreach (BIF.VariableResourceEntry VRE in b.VariableResourceTable.Where(x => Globals.Selected2DAs.Keys.Contains(x.ResRef)))
             {
-                TwoDA_REFRACTOR t = new TwoDA_REFRACTOR(new MemoryStream(VRE.Entry_Data), VRE.ResRef);
+                TwoDA t = new TwoDA(new MemoryStream(VRE.Entry_Data), VRE.ResRef);
 
                 foreach (string col in Globals.Selected2DAs[VRE.ResRef])
                 {
                     Randomize.FisherYatesShuffle(t.Data[col]);
                 }
 
-                t.WriteToFile(paths.Override);
+                t.WriteToDirectory(paths.Override);
             }
         }
     }
 
-    //I created this class to deal with how awful the Kotor_IO version of 2DA I coded was, fixing all that garbage will be a future project.
+    /*
+    // I created this class to deal with how awful the Kotor_IO version of 2DA I coded was, fixing all that garbage will be a future project.
     public class TwoDA_REFRACTOR
     {
         public TwoDA_REFRACTOR(byte[] rawData, string name)
@@ -124,7 +125,7 @@ namespace kotor_Randomizer_2
         public Dictionary<string, List<string>> Data = new Dictionary<string, List<string>>();
         public int row_count { get; }
 
-        public void write(Stream s)
+        public void Write(Stream s)
         {
             using (BinaryWriter bw = new BinaryWriter(s))
             {
@@ -188,10 +189,15 @@ namespace kotor_Randomizer_2
             }
         }
 
-        internal void WriteToFile(string directory)
+        /// <summary>
+        /// Writes a file to the given directory using the Name property in this class object.
+        /// </summary>
+        /// <param name="directory">Directory to write a file to.</param>
+        public void WriteToDirectory(string directory)
         {
             var path = Path.Combine(directory, $"{name}.2da");
-            write(File.OpenWrite(path));
+            Write(File.OpenWrite(path));
         }
     }
+    */
 }

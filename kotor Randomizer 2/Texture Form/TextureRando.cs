@@ -11,6 +11,26 @@ namespace kotor_Randomizer_2
 {
     public static class TextureRando
     {
+        private static List<int> MaxRando { get; } = new List<int>();
+
+        private static List<List<int>> TypeLists { get; } = new List<List<int>>();
+
+        #region Regexes
+        private static readonly Regex RegexCubeMaps = new Regex("^CM_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex RegexCreatures = new Regex("^C_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex RegexEffects = new Regex("^FX_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex RegexItems = new Regex("^I_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex RegexPlanetary = new Regex("^L.{2}_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex RegexNPC = new Regex("^N_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex RegexPlayHeads = new Regex("^P(F|M)H", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex RegexPlayBodies = new Regex("^P(F|M)B", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex RegexPlaceables = new Regex("^PLC_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex RegexParty = new Regex("^P_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex RegexStunt = new Regex("^Stunt", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex RegexVehicles = new Regex("^V_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex RegexWeapons = new Regex("^W_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        #endregion
+
         public static void texture_rando(Globals.KPaths paths)
         {
             // Load in texture pack.
@@ -28,22 +48,23 @@ namespace kotor_Randomizer_2
                     pack_name = "\\swpc_tex_tpc.erf";
                     break;
             }
-            ERF e = KReader.ReadERF(File.OpenRead(paths.TexturePacks + pack_name));
+
+            ERF e = new ERF(paths.TexturePacks + pack_name);
 
             // Handle categories.
-            handle_category(e, RegexCubeMaps, Properties.Settings.Default.TextureRandomizeCubeMaps);
-            handle_category(e, RegexCreatures, Properties.Settings.Default.TextureRandomizeCreatures);
-            handle_category(e, RegexEffects, Properties.Settings.Default.TextureRandomizeEffects);
-            handle_category(e, RegexItems, Properties.Settings.Default.TextureRandomizeItems);
-            handle_category(e, RegexPlanetary, Properties.Settings.Default.TextureRandomizePlanetary);
-            handle_category(e, RegexNPC, Properties.Settings.Default.TextureRandomizeNPC);
-            handle_category(e, RegexPlayHeads, Properties.Settings.Default.TextureRandomizePlayHeads);
-            handle_category(e, RegexPlayBodies, Properties.Settings.Default.TextureRandomizePlayBodies);
-            handle_category(e, RegexPlaceables, Properties.Settings.Default.TextureRandomizePlaceables);
-            handle_category(e, RegexParty, Properties.Settings.Default.TextureRandomizeParty);
-            handle_category(e, RegexStunt, Properties.Settings.Default.TextureRandomizeStunt);
-            handle_category(e, RegexVehicles, Properties.Settings.Default.TextureRandomizeVehicles);
-            handle_category(e, RegexWeapons, Properties.Settings.Default.TextureRandomizeWeapons);
+            HandleCategory(e, RegexCubeMaps, Properties.Settings.Default.TextureRandomizeCubeMaps);
+            HandleCategory(e, RegexCreatures, Properties.Settings.Default.TextureRandomizeCreatures);
+            HandleCategory(e, RegexEffects, Properties.Settings.Default.TextureRandomizeEffects);
+            HandleCategory(e, RegexItems, Properties.Settings.Default.TextureRandomizeItems);
+            HandleCategory(e, RegexPlanetary, Properties.Settings.Default.TextureRandomizePlanetary);
+            HandleCategory(e, RegexNPC, Properties.Settings.Default.TextureRandomizeNPC);
+            HandleCategory(e, RegexPlayHeads, Properties.Settings.Default.TextureRandomizePlayHeads);
+            HandleCategory(e, RegexPlayBodies, Properties.Settings.Default.TextureRandomizePlayBodies);
+            HandleCategory(e, RegexPlaceables, Properties.Settings.Default.TextureRandomizePlaceables);
+            HandleCategory(e, RegexParty, Properties.Settings.Default.TextureRandomizeParty);
+            HandleCategory(e, RegexStunt, Properties.Settings.Default.TextureRandomizeStunt);
+            HandleCategory(e, RegexVehicles, Properties.Settings.Default.TextureRandomizeVehicles);
+            HandleCategory(e, RegexWeapons, Properties.Settings.Default.TextureRandomizeWeapons);
 
             // Handle other.
             switch ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeOther)
@@ -53,25 +74,25 @@ namespace kotor_Randomizer_2
                     break; // Do nothing.
                 case RandomizationLevel.Type:
                     List<int> type = new List<int>(e.Key_List.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef)).Select(x => x.ResID));
-                    Type_Lists.Add(type);
+                    TypeLists.Add(type);
                     break;
                 case RandomizationLevel.Max:
-                    Max_Rando.AddRange(e.Key_List.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef)).Select(x => x.ResID));
+                    MaxRando.AddRange(e.Key_List.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef)).Select(x => x.ResID));
                     break;
             }
 
             // Max Rando.
-            List<int> Max_Rando_Iterator = new List<int>(Max_Rando);
-            Randomize.FisherYatesShuffle(Max_Rando);
+            List<int> Max_Rando_Iterator = new List<int>(MaxRando);
+            Randomize.FisherYatesShuffle(MaxRando);
             int j = 0;
             foreach (ERF.Key k in e.Key_List.Where(x => Max_Rando_Iterator.Contains(x.ResID)))
             {
-                k.ResID = Max_Rando[j];
+                k.ResID = MaxRando[j];
                 j++;
             }
 
             // Type Rando.
-            foreach (List<int> li in Type_Lists)
+            foreach (List<int> li in TypeLists)
             {
                 List<int> type_copy = new List<int>(li);
                 Randomize.FisherYatesShuffle(type_copy);
@@ -83,7 +104,7 @@ namespace kotor_Randomizer_2
                 }
             }
 
-            kWriter.Write(e, File.OpenWrite(paths.TexturePacks + pack_name));
+            e.WriteToFile(paths.TexturePacks + pack_name);
         }
 
         private static bool Matches_None(string s)
@@ -110,18 +131,14 @@ namespace kotor_Randomizer_2
         {
             return
             (
-            s.ToUpper().Last() == 'B' ||
-            s.ToUpper().Contains("BMP") ||
-            s.ToUpper().Contains("BUMP") ||
-            s == "MGG_ebonhawkB01"
+                s.ToUpper().Last() == 'B' ||
+                s.ToUpper().Contains("BMP") ||
+                s.ToUpper().Contains("BUMP") ||
+                s == "MGG_ebonhawkB01"
             );
         }
 
-        private static List<int> Max_Rando = new List<int>();
-
-        private static List<List<int>> Type_Lists = new List<List<int>>();
-
-        private static void handle_category(ERF e, Regex r, int randomizationlevel)
+        private static void HandleCategory(ERF e, Regex r, int randomizationlevel)
         {
             switch ((RandomizationLevel)randomizationlevel)
             {
@@ -130,28 +147,12 @@ namespace kotor_Randomizer_2
                     break; // Do nothing.
                 case RandomizationLevel.Type:
                     List<int> type = new List<int>(e.Key_List.Where(x => r.IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef)).Select(x => x.ResID));
-                    Type_Lists.Add(type);
+                    TypeLists.Add(type);
                     break;
                 case RandomizationLevel.Max:
-                    Max_Rando.AddRange(e.Key_List.Where(x => r.IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef)).Select(x => x.ResID));
+                    MaxRando.AddRange(e.Key_List.Where(x => r.IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef)).Select(x => x.ResID));
                     break;
             }
         }
-
-        #region Regexes
-        private static Regex RegexCubeMaps { get { return new Regex("^CM_", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-        private static Regex RegexCreatures { get { return new Regex("^C_", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-        private static Regex RegexEffects { get { return new Regex("^FX_", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-        private static Regex RegexItems { get { return new Regex("^I_", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-        private static Regex RegexPlanetary { get { return new Regex("^L.{2}_", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-        private static Regex RegexNPC { get { return new Regex("^N_", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-        private static Regex RegexPlayHeads { get { return new Regex("^P(F|M)H", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-        private static Regex RegexPlayBodies { get { return new Regex("^P(F|M)B", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-        private static Regex RegexPlaceables { get { return new Regex("^PLC_", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-        private static Regex RegexParty { get { return new Regex("^P_", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-        private static Regex RegexStunt { get { return new Regex("^Stunt", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-        private static Regex RegexVehicles { get { return new Regex("^V_", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-        private static Regex RegexWeapons { get { return new Regex("^W_", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-        #endregion
     }
 }

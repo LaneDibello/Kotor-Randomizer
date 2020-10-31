@@ -9,10 +9,10 @@ namespace kotor_Randomizer_2
 {
     public partial class ModuleForm
     {
-        //Populates and shuffles the the modules flagged to be randomized. Returns true if override files should be added.
+        // Populates and shuffles the the modules flagged to be randomized. Returns true if override files should be added.
         public static void Module_rando(Globals.KPaths paths)
         {
-            //Set up the bound module collection if it hasn't been already
+            // Set up the bound module collection if it hasn't been already.
             if (!Properties.Settings.Default.ModulesInitialized)
             {
                 Globals.BoundModules.Clear();
@@ -28,11 +28,7 @@ namespace kotor_Randomizer_2
             //    //Figure something out here
             //}
 
-
-
-
-
-            //Split the Bound modules into their respective list
+            // Split the Bound modules into their respective list.
             List<string> Shuffled_Mods = Globals.BoundModules.Where(x => !x.ommitted).Select(x => x.name).ToList();
             Randomize.FisherYatesShuffle(Shuffled_Mods);
 
@@ -94,13 +90,13 @@ namespace kotor_Randomizer_2
                 File.Copy(paths.get_backup(paths.lips) + L, paths.lips + L, true);
             }
 
-            //Fix warp coordinates
+            // Fix warp coordinates.
             if (Properties.Settings.Default.FixWarpCoords)
             {
                 DirectoryInfo di = new DirectoryInfo(paths.modules);
                 foreach (FileInfo fi in di.GetFiles())  // todo: can we query for the appropriate files before going into a loop?
                 {
-                    RIM r = KReader.ReadRIM(fi.OpenRead());
+                    RIM r = new RIM(fi.FullName);
 
                     if (fi.Name[fi.Name.Length - 5] == 's')
                     {
@@ -109,7 +105,7 @@ namespace kotor_Randomizer_2
 
                     bool edit_flag = false;
 
-                    // 2014 refers to the IFO type code within the resource tables "Res_Types" and "TypeCodes". It is a GFF type
+                    // 2014 refers to the IFO type code within the resource tables "Res_Types" and "TypeCodes". It is a GFF type.
                     GFF g = new GFF(r.File_Table.Where(x => x.TypeID == 2014).FirstOrDefault().File_Data);  // todo: fix usage of undefined constants
 
                     // todo: update switch cases with readonly constants for both the case and the XYZ tuple
@@ -159,21 +155,17 @@ namespace kotor_Randomizer_2
                             edit_flag = true;
                             break;
                     }
+
                     if (edit_flag)
                     {
                         MemoryStream ms = new MemoryStream();
-
-                        kWriter.Write(g, ms);
-
-                        r.File_Table.Where(x => x.TypeID == 2014).FirstOrDefault().File_Data = ms.ToArray();
-
-                        kWriter.Write(r, fi.OpenWrite());
+                        r.File_Table.Where(x => x.TypeID == 2014).FirstOrDefault().File_Data = g.ToRawData();
+                        r.WriteToFile(fi.FullName);
                     }
-
                 }
             }
 
-            //Fixed Rakata riddle Man in Mind Prison
+            // Fixed Rakata riddle Man in Mind Prison.
             if (Properties.Settings.Default.FixMindPrison)
             {
                 DirectoryInfo di = new DirectoryInfo(paths.modules);
@@ -184,7 +176,7 @@ namespace kotor_Randomizer_2
                         continue;
                     }
 
-                    RIM r = KReader.ReadRIM(fi.OpenRead());
+                    RIM r = new RIM(fi.FullName);
                     if (r.File_Table.Where(x => x.Label == "g_brakatan003").Any())
                     {
                         bool offadjust = false;
@@ -204,12 +196,10 @@ namespace kotor_Randomizer_2
 
                         }
 
-                        kWriter.Write(r, fi.OpenWrite());
+                        r.WriteToFile(fi.FullName);
                     }
                 }
-
             }
-
         }
     }
 }

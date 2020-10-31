@@ -12,7 +12,7 @@ namespace kotor_Randomizer_2
             
             foreach (FileInfo fi in di.GetFiles())
             {
-                RIM r = KReader.ReadRIM(fi.OpenRead());
+                RIM r = new RIM(fi.FullName);
 
                 //Doors
                 if ((Properties.Settings.Default.RandomizeDoorModels & 1) > 0)
@@ -38,9 +38,7 @@ namespace kotor_Randomizer_2
 
                         MemoryStream ms = new MemoryStream();
 
-                        kWriter.Write(g, ms);
-
-                        rf.File_Data = ms.ToArray();
+                        rf.File_Data = g.ToRawData();
                     }
                 }
 
@@ -69,9 +67,7 @@ namespace kotor_Randomizer_2
 
                         MemoryStream ms = new MemoryStream();
 
-                        kWriter.Write(g, ms);
-
-                        rf.File_Data = ms.ToArray();
+                        rf.File_Data = g.ToRawData();
                     }
                 }
 
@@ -99,13 +95,11 @@ namespace kotor_Randomizer_2
 
                         MemoryStream ms = new MemoryStream();
 
-                        kWriter.Write(g, ms);
-
-                        rf.File_Data = ms.ToArray();
+                        rf.File_Data = g.ToRawData();
                     }
                 }
 
-                kWriter.Write(r, fi.OpenWrite());
+                r.WriteToFile(fi.FullName);
             }
         }
     }
