@@ -285,7 +285,10 @@
     <Content Include="randonotes.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Forms\" />
     <Folder Include="Properties\DataSources\" />
+    <Folder Include="Resources\help\" />
+    <Folder Include="Resources\img\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

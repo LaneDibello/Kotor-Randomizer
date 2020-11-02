@@ -56,7 +56,7 @@ namespace kotor_Randomizer_2
                     throw new ArgumentOutOfRangeException($"The ResRef \"{PAZAAKDECKS_RESREF}\" could not be found.");
                 }
 
-                TwoDA t = new TwoDA(resource.Entry_Data, PAZAAKDECKS_RESREF);
+                TwoDA t = new TwoDA(resource.EntryData, PAZAAKDECKS_RESREF);
 
                 foreach (string c in t.Columns)
                 {
