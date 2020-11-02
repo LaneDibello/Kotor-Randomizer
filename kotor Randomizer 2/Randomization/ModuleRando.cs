@@ -7,7 +7,7 @@ using KotOR_IO;
 
 namespace kotor_Randomizer_2
 {
-    public partial class ModuleForm
+    public static class ModuleRando
     {
         // Populates and shuffles the the modules flagged to be randomized. Returns true if override files should be added.
         public static void Module_rando(Globals.KPaths paths)

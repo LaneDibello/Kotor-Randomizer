@@ -199,7 +199,7 @@ namespace kotor_Randomizer_2
                 curr_task = "Randomizing Modules";
                 bwRandomizing.ReportProgress(curr_progress);
                 CreateBackUps("module");
-                ModuleForm.Module_rando(paths);//run appropriate rando script
+                ModuleRando.Module_rando(paths);//run appropriate rando script
                 curr_progress += step_size;
             }
             if (Properties.Settings.Default.item_rando_active)
