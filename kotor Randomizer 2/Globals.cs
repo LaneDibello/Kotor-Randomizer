@@ -19,81 +19,104 @@ namespace kotor_Randomizer_2
         Max = 3,
     }
 
+    [Serializable]
+    public enum RandomizationCategory
+    {
+        /// <summary>
+        /// Uninitialized value - nothing will be done.
+        /// </summary>
+        Unknown = 0,
+        Module = 1,
+        Item = 2,
+        Sound = 3,
+        Model = 4,
+        Texture = 5,
+        TwoDA = 6,
+        Text = 7,
+        Other = 8,
+    }
+
+    [Flags]
+    [Serializable]
+    public enum ModuleSaveStatusValues : byte
+    {
+        NoDelete = 0x00,
+        DeleteMilestones = 0x01,
+        SaveMiniGames = 0x02,
+        SaveAllModules = 0x04,
+        FixedDream = 0x08,
+        UnlockedMap = 0x10,
+    }
+
     public class Globals
     {
-        
+        public static List<int> rand = new List<int>();
+
         #region Types
-        //Struct used in Collections for module randomization denoting omission.
+        /// <summary>
+        /// Struct used in Collections for module randomization denoting omission.
+        /// </summary>
         public struct Mod_Entry
         {
-            private string _name;
-            private bool _ommitted;
+            public string Name { get; }
+            public bool Omitted { get; set; }
 
-            public string name
+            public Mod_Entry(string name, bool omitted)
             {
-                get
-                {
-                    return _name;
-                }
-            }
-            public bool ommitted
-            {
-                get
-                {
-                    return _ommitted;
-                }
-                set
-                {
-                    _ommitted = value;
-                }
-            }
-
-            public Mod_Entry(string name, bool ommited)
-            {
-                _name = name;
-                _ommitted = ommited;
+                Name = name;
+                Omitted = omitted;
             }
         }
 
-        [Flags]
-        [Serializable]
-        public enum ModuleSaveStatusValues : byte
-        {
-            NoDelete = 0x00,
-            DeleteMilestones = 0x01,
-            SaveMiniGames = 0x02,
-            SaveAllModules = 0x04,
-            FixedDream = 0x08,
-            UnlockedMap = 0x10,
-        }
-
+        /// <summary>
+        /// Contains paths to the various subdirectories within the game directory.
+        /// </summary>
         public class KPaths
         {
+            /// <summary> Path to the swkotor game directory. </summary>
+            public readonly string swkotor;
+            /// <summary> Path to the chitin.key file within the swkotor directory. </summary>
+            public readonly string chitin;
+            /// <summary> Path to the swkotor\data directory. </summary>
+            public readonly string data;
+            /// <summary> Path to the swkotor\lips directory. </summary>
+            public readonly string lips;
+            /// <summary> Path to the swkotor\modules directory. </summary>
+            public readonly string modules;
+            /// <summary> Path to the swkotor\Override directory. </summary>
+            public readonly string Override;
+            /// <summary> Path to the swkotor\rims directory. </summary>
+            public readonly string rims;
+            /// <summary> Path to the swkotor\streammusic directory. </summary>
+            public readonly string music;
+            /// <summary> Path to the swkotor\streamsounds directory. </summary>
+            public readonly string sounds;
+            /// <summary> Path to the swkotor\TexturePacks directory. </summary>
+            public readonly string TexturePacks;
+
+            /// <summary>
+            /// Constructs paths to the SW KotOR directory and subdirectories.
+            /// </summary>
+            /// <param name="swkotor_path">Path to the base swkotor game directory.</param>
             public KPaths(string swkotor_path)
             {
                 swkotor = swkotor_path + "\\";
-                modules = swkotor + "modules\\";
+                chitin = swkotor + "chitin.key";
+                data = swkotor + "data\\";
                 lips = swkotor + "lips\\";
+                modules = swkotor + "modules\\";
+                Override = swkotor + "Override\\";
+                rims = swkotor + "rims\\";
                 music = swkotor + "streammusic\\";
                 sounds = swkotor + "streamsounds\\";
                 TexturePacks = swkotor + "TexturePacks\\";
-                rims = swkotor + "rims\\";
-                Override = swkotor + "Override\\";
-                chitin = swkotor + "chitin.key";
-                data = swkotor + "data\\";
             }
 
-            public readonly string swkotor;
-            public readonly string modules;
-            public readonly string lips;
-            public readonly string music;
-            public readonly string sounds;
-            public readonly string TexturePacks;
-            public readonly string rims;
-            public readonly string Override;
-            public readonly string chitin;
-            public readonly string data;
-
+            /// <summary>
+            /// Gets the backup version of the requested path.
+            /// </summary>
+            /// <param name="path">Path to a directory or file.</param>
+            /// <returns>Path to the backup version.</returns>
             public string get_backup(string path)
             {
                 if (path.Last() == '\\')
@@ -106,6 +129,11 @@ namespace kotor_Randomizer_2
                 }
             }
 
+            /// <summary>
+            /// Gets the old version of the requested path.
+            /// </summary>
+            /// <param name="path">Path to a directory or file.</param>
+            /// <returns>Path to the old version.</returns>
             public string get_old(string path)
             {
                 if (path.Last() == '\\')
@@ -117,8 +145,6 @@ namespace kotor_Randomizer_2
                     return path + ".old";
                 }
             }
-
-
         }
         #endregion
 

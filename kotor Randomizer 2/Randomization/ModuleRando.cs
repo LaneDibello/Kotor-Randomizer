@@ -29,7 +29,7 @@ namespace kotor_Randomizer_2
             //}
 
             // Split the Bound modules into their respective list.
-            List<string> Shuffled_Mods = Globals.BoundModules.Where(x => !x.ommitted).Select(x => x.name).ToList();
+            List<string> Shuffled_Mods = Globals.BoundModules.Where(x => !x.Omitted).Select(x => x.Name).ToList();
             Randomize.FisherYatesShuffle(Shuffled_Mods);
 
             // todo: create a readonly constant for paths.Override + "modulesave.2da"
@@ -70,7 +70,7 @@ namespace kotor_Randomizer_2
             }
 
             int k = 0;
-            foreach (string M in Globals.BoundModules.Where(x => !x.ommitted).Select(x => x.name))
+            foreach (string M in Globals.BoundModules.Where(x => !x.Omitted).Select(x => x.Name))
             {
                 File.Copy(paths.get_backup(paths.modules) + M + ".rim", paths.modules + Shuffled_Mods[k] + ".rim", true);
                 File.Copy(paths.get_backup(paths.modules) + M + "_s.rim", paths.modules + Shuffled_Mods[k] + "_s.rim", true);
@@ -78,7 +78,7 @@ namespace kotor_Randomizer_2
                 k++;
             }
 
-            foreach (string M in Globals.BoundModules.Where(x => x.ommitted).Select(x => x.name))
+            foreach (string M in Globals.BoundModules.Where(x => x.Omitted).Select(x => x.Name))
             {
                 File.Copy(paths.get_backup(paths.modules) + M + ".rim", paths.modules + M + ".rim", true);
                 File.Copy(paths.get_backup(paths.modules) + M + "_s.rim", paths.modules + M + "_s.rim", true);

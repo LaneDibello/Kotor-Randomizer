@@ -15,14 +15,18 @@ namespace kotor_Randomizer_2
         public SeedForm()
         {
             InitializeComponent();
-            //Pull the seed that was generated at start-time from settings
-            seed_text.Text = Convert.ToString(Properties.Settings.Default.Seed);
-            //You cannot edit the seed while the game is currently randomized.
-            seed_text.Enabled = !Properties.Settings.Default.KotorIsRandomized;
+
+            // Pull the seed that was generated at start-time from settings.
+            SeedText.Text = Convert.ToString(Properties.Settings.Default.Seed);
+
+            // You cannot edit the seed while the game is currently randomized.
+            SeedText.Enabled = !Properties.Settings.Default.KotorIsRandomized;
         }
 
-        //Prevents non-numeric characters from being input
-        private void seed_text_KeyPress(object sender, KeyPressEventArgs e)
+        /// <summary>
+        /// Prevents non-numeric characters from being input.
+        /// </summary>
+        private void SeedText_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
@@ -30,14 +34,45 @@ namespace kotor_Randomizer_2
             }
         }
 
-        //Parses the user-defined seed 
-        private void seed_text_TextChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Parses the user-defined seed.
+        /// </summary>
+        private void SeedText_TextChanged(object sender, EventArgs e)
         {
             int o;
-            if(int.TryParse(seed_text.Text, out o) && seed_text.Focused)
+            if(int.TryParse(SeedText.Text, out o) && SeedText.Focused)
             {
                 Properties.Settings.Default.Seed = o;
                 Properties.Settings.Default.SeedSelected = true;
+            }
+        }
+
+        /// <summary>
+        /// Handle enable / disable of SeedText
+        /// </summary>
+        private void SeedForm_Activated(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.KotorIsRandomized)
+            {
+                SeedText.Enabled = false;
+                btnNewSeed.Enabled = false;
+            }
+            else
+            {
+                SeedText.Enabled = true;
+                btnNewSeed.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Generate new seed when clicked.
+        /// </summary>
+        private void btnNewSeed_Click(object sender, EventArgs e)
+        {
+            if (!Properties.Settings.Default.KotorIsRandomized)
+            {
+                Properties.Settings.Default.Seed = Randomize.Rng.Next();
+                SeedText.Text = Properties.Settings.Default.Seed.ToString();
             }
         }
     }

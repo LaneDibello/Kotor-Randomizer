@@ -13,6 +13,11 @@ namespace kotor_Randomizer_2
     {
         public static void item_rando(Globals.KPaths paths)
         {
+            // Prepare lists for new randomization.
+            Max_Rando.Clear();
+            Type_Lists.Clear();
+
+            // Load KEY file.
             KEY k = new KEY(paths.chitin);
 
             //handle categories
@@ -41,11 +46,11 @@ namespace kotor_Randomizer_2
                 case RandomizationLevel.None:
                     break;
                 case RandomizationLevel.Type:
-                    List<string> type = new List<string>(k.KeyTable.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
+                    List<string> type = new List<string>(k.KeyTable.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == (short)ResourceType.UTI).Select(x => x.ResRef));
                     Type_Lists.Add(type);
                     break;
                 case RandomizationLevel.Max:
-                    Max_Rando.AddRange(k.KeyTable.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
+                    Max_Rando.AddRange(k.KeyTable.Where(x => Matches_None(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == (short)ResourceType.UTI).Select(x => x.ResRef));
                     break;
             }
 
@@ -85,16 +90,16 @@ namespace kotor_Randomizer_2
                 case RandomizationLevel.Subtype:
                     for (int i = 1; i < r.Count; i++)
                     {
-                        List<string> temp = new List<string>(k.KeyTable.Where(x => r[i].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
+                        List<string> temp = new List<string>(k.KeyTable.Where(x => r[i].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == (short)ResourceType.UTI).Select(x => x.ResRef));
                         Type_Lists.Add(temp);
                     }
                     break;
                 case RandomizationLevel.Type:
-                    List<string> type = new List<string>(k.KeyTable.Where(x => r[0].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
+                    List<string> type = new List<string>(k.KeyTable.Where(x => r[0].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == (short)ResourceType.UTI).Select(x => x.ResRef));
                     Type_Lists.Add(type);
                     break;
                 case RandomizationLevel.Max:
-                    Max_Rando.AddRange(k.KeyTable.Where(x => r[0].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == Reference_Tables.TypeCodes["UTI "]).Select(x => x.ResRef));
+                    Max_Rando.AddRange(k.KeyTable.Where(x => r[0].IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef) && x.ResourceType == (short)ResourceType.UTI).Select(x => x.ResRef));
                     break;
             }
         }

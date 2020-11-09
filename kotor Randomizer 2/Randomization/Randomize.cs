@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace kotor_Randomizer_2
 {
-    //Slightly adjusted version of the 'ThreadSafeRandom' used in previous versions.
+    // Slightly adjusted version of the 'ThreadSafeRandom' used in previous versions.
     public static class Randomize
     {
-
         [ThreadStatic]
         private static Random Local;
 
@@ -26,7 +25,7 @@ namespace kotor_Randomizer_2
 
         public static int GenerateSeed()
         {
-            //base seeding off of current time
+            // Base seeding off of current time.
             Seed = DateTime.Now.Millisecond * DateTime.Now.Second;
             return Seed;
         }

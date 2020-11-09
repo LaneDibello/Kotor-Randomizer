@@ -33,6 +33,10 @@ namespace kotor_Randomizer_2
 
         public static void texture_rando(Globals.KPaths paths)
         {
+            // Prepare lists for new randomization.
+            MaxRando.Clear();
+            TypeLists.Clear();
+
             // Load in texture pack.
             string pack_name;
             switch (Properties.Settings.Default.TexturePack)

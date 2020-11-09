@@ -15,7 +15,6 @@ namespace kotor_Randomizer_2
     //This is no where near finished, and partially temporary
     public partial class RandoForm : Form
     {
-
         public RandoForm()
         {
             InitializeComponent();
@@ -25,16 +24,22 @@ namespace kotor_Randomizer_2
 
         private string curr_task = "";
 
-        //Class for easy access and auto-generation of Paths
+        // Class for easy access and auto-generation of Paths.
         private Globals.KPaths paths = new Globals.KPaths(Properties.Settings.Default.Kotor1Path);
 
         #endregion
 
         #region private methods
 
-        //Creates the back-ups for teh passed category
+        /// <summary>
+        /// Creates the back-ups for the requested category.
+        /// </summary>
+        /// <param name="category"></param>
         private void CreateBackUps(string category)
         {
+            // todo: refactor this method to use enumeration instead of string
+            // todo: refactor directories below to reduce unnecessary new statements
+
             DirectoryInfo modules_dir = new DirectoryInfo(paths.modules);
             FileInfo[] modules_files = modules_dir.GetFiles();
             DirectoryInfo lips_dir = new DirectoryInfo(paths.lips);
@@ -48,6 +53,7 @@ namespace kotor_Randomizer_2
             DirectoryInfo Texture_dir = new DirectoryInfo(paths.TexturePacks);
             FileInfo[] Texture_files = Texture_dir.GetFiles();
 
+            // todo: refactor switch statement to call separate methods instead of doing the work itself
             switch (category)
             {
                 case "module":
@@ -177,111 +183,114 @@ namespace kotor_Randomizer_2
             }
         }
 
-        //Runs the necessary Randomization Scripts
+        // Runs the necessary Randomization Scripts
         private void RunRando()
         {
-            //Determine Step size and throw error if no categories are selected.
-            int ActiveCats = CountActiveCategories();
+            // Determine Step size and throw error if no categories are selected.
+            int ActiveCategories = CountActiveCategories();
 
-            if (ActiveCats == 0)
+            if (ActiveCategories == 0)
             {
                 MessageBox.Show("No Randomization Categories Selected");
                 return;
             }
-            ActiveCats++;
+            ActiveCategories++;
 
-            int step_size = 100 / ActiveCats;
+            int step_size = 100 / ActiveCategories;
             int curr_progress = 0;
 
-            //Rando Categories
-            if (Properties.Settings.Default.module_rando_active)
+            using (StreamWriter sw = new StreamWriter(paths.swkotor + "RANDOMIZED.log"))
             {
-                curr_task = "Randomizing Modules";
-                bwRandomizing.ReportProgress(curr_progress);
-                CreateBackUps("module");
-                ModuleRando.Module_rando(paths);//run appropriate rando script
-                curr_progress += step_size;
-            }
-            if (Properties.Settings.Default.item_rando_active)
-            {
-                curr_task = "Randomizing Items";
-                bwRandomizing.ReportProgress(curr_progress);
-                CreateBackUps("item");
-                ItemRando.item_rando(paths);//run appropriate rando script
-                curr_progress += step_size;
-            }
-            if (Properties.Settings.Default.sound_rando_active)
-            {
-                curr_task = "Randomizing Music and Sounds";
-                bwRandomizing.ReportProgress(curr_progress);
-                CreateBackUps("sound");
-                SoundRando.sound_rando(paths);//run appropriate rando script
-                curr_progress += step_size;
-            }
-            if (Properties.Settings.Default.model_rando_active)
-            {
-                curr_task = "Randomizing Models";
-                bwRandomizing.ReportProgress(curr_progress);
-                CreateBackUps("model");
-                ModelRando.model_rando(paths);//run appropriate rando script
-                curr_progress += step_size;
-            }
-            if (Properties.Settings.Default.texture_rando_active)
-            {
-                curr_task = "Randomizing Textures";
-                bwRandomizing.ReportProgress(curr_progress);
-                CreateBackUps("texture");
-                TextureRando.texture_rando(paths);//run appropriate rando script
-                curr_progress += step_size;
-            }
-            if (Properties.Settings.Default.twoda_rando_active)
-            {
-                curr_task = "Randomizing 2-D Arrays";
-                bwRandomizing.ReportProgress(curr_progress);
-                CreateBackUps("twoda");
-                TwodaRandom.Twoda_rando(paths);//run appropriate rando script
-                curr_progress += step_size;
-            }
-            if (Properties.Settings.Default.text_rando_active)
-            {
-                curr_task = "Randomizing Text";
-                bwRandomizing.ReportProgress(curr_progress);
-                CreateBackUps("text");
-                //run appropriate rando script
-                curr_progress += step_size;
-            }
-            if (Properties.Settings.Default.other_rando_active)
-            {
-                curr_task = "Randomizing Other Things";
-                bwRandomizing.ReportProgress(curr_progress);
-                CreateBackUps("other");
-                OtherRando.other_rando(paths);//run appropriate rando script
-                curr_progress += step_size;
-            }
+                sw.WriteLine(DateTime.Now.ToString());
+                sw.WriteLine("Kotor Randomizer V2.0\n");
+                Properties.Settings.Default.KotorIsRandomized = true;
+                // todo: update the seed for each category instead of once for the whole process
+                Randomize.SetSeed(Properties.Settings.Default.Seed);
 
-            Properties.Settings.Default.KotorIsRandomized = true;
+                // Randomize the categories.
+                if (Properties.Settings.Default.module_rando_active)
+                {
+                    curr_task = "Randomizing Modules";
+                    bwRandomizing.ReportProgress(curr_progress);
+                    CreateBackUps("module");
+                    ModuleRando.Module_rando(paths); // Run appropriate rando script.
+                    sw.WriteLine("Modules Randomized");
+                    curr_progress += step_size;
+                }
+                if (Properties.Settings.Default.item_rando_active)
+                {
+                    curr_task = "Randomizing Items";
+                    bwRandomizing.ReportProgress(curr_progress);
+                    CreateBackUps("item");
+                    ItemRando.item_rando(paths); // Run appropriate rando script.
+                    sw.WriteLine("Items Randomized");
+                    curr_progress += step_size;
+                }
+                if (Properties.Settings.Default.sound_rando_active)
+                {
+                    curr_task = "Randomizing Music and Sounds";
+                    bwRandomizing.ReportProgress(curr_progress);
+                    CreateBackUps("sound");
+                    SoundRando.sound_rando(paths); // Run appropriate rando script.
+                    sw.WriteLine("Sounds Randomized");
+                    curr_progress += step_size;
+                }
+                if (Properties.Settings.Default.model_rando_active)
+                {
+                    curr_task = "Randomizing Models";
+                    bwRandomizing.ReportProgress(curr_progress);
+                    CreateBackUps("model");
+                    ModelRando.model_rando(paths); // Run appropriate rando script.
+                    sw.WriteLine("Models Randomized");
+                    curr_progress += step_size;
+                }
+                if (Properties.Settings.Default.texture_rando_active)
+                {
+                    curr_task = "Randomizing Textures";
+                    bwRandomizing.ReportProgress(curr_progress);
+                    CreateBackUps("texture");
+                    TextureRando.texture_rando(paths); // Run appropriate rando script.
+                    sw.WriteLine("Textures Randomized");
+                    curr_progress += step_size;
+                }
+                if (Properties.Settings.Default.twoda_rando_active)
+                {
+                    curr_task = "Randomizing 2-D Arrays";
+                    bwRandomizing.ReportProgress(curr_progress);
+                    CreateBackUps("twoda");
+                    TwodaRandom.Twoda_rando(paths); // Run appropriate rando script.
+                    sw.WriteLine("2-Dimensional Arrays Randomized");
+                    curr_progress += step_size;
+                }
+                if (Properties.Settings.Default.text_rando_active)
+                {
+                    curr_task = "Randomizing Text";
+                    bwRandomizing.ReportProgress(curr_progress);
+                    CreateBackUps("text");
+                    // ** Not yet implemented. ** // Run appropriate rando script.
+                    sw.WriteLine("Text Randomized");
+                    curr_progress += step_size;
+                }
+                if (Properties.Settings.Default.other_rando_active)
+                {
+                    curr_task = "Randomizing Other Things";
+                    bwRandomizing.ReportProgress(curr_progress);
+                    CreateBackUps("other");
+                    OtherRando.other_rando(paths); // Run appropriate rando script.
+                    sw.WriteLine("\'Other\' Randomized");
+                    curr_progress += step_size;
+                }
 
-            //Creates a basic log file with a date, version, and things done.
-            curr_task = "Finishing Up";
-            bwRandomizing.ReportProgress(curr_progress);
-            StreamWriter sw = new StreamWriter(paths.swkotor + "RANDOMIZED.log");
-            sw.WriteLine(DateTime.Now.ToString());
-            sw.WriteLine("Kotor Randomizer V2.0\n");
-            if (Properties.Settings.Default.module_rando_active) { sw.WriteLine("Modules Randomized"); }
-            if (Properties.Settings.Default.item_rando_active) { sw.WriteLine("Items Randomized"); }
-            if (Properties.Settings.Default.sound_rando_active) { sw.WriteLine("Sounds Randomized"); }
-            if (Properties.Settings.Default.model_rando_active) { sw.WriteLine("Models Randomized"); }
-            if (Properties.Settings.Default.texture_rando_active) { sw.WriteLine("Textures Randomized"); }
-            if (Properties.Settings.Default.twoda_rando_active) { sw.WriteLine("2-Dimensional Arrays Randomized"); }
-            if (Properties.Settings.Default.text_rando_active) { sw.WriteLine("Text Randomized"); }
-            if (Properties.Settings.Default.other_rando_active) { sw.WriteLine("\'Other\' Randomized"); }
-            sw.WriteLine("\nThe Kotor Randomizer was created by Lane Dibello, with help from Glasnonck, and the greater Kotor Speedrunning community.");
-            sw.WriteLine("If you encounter any issues please try to contact me @Lane#5847 on Discord");
-            sw.Close();
+                // Creates a basic log file with a date, version, and things done.
+                curr_task = "Finishing Up";
+                bwRandomizing.ReportProgress(curr_progress);
+                sw.WriteLine("\nThe Kotor Randomizer was created by Lane Dibello, with help from Glasnonck, and the greater Kotor Speedrunning community.");
+                sw.WriteLine("If you encounter any issues please try to contact me @Lane#5847 on Discord");
+            }
             curr_progress += step_size;
         }
 
-        //Unused - I'm keeping this around In case I try to tackle the release config issues again
+        // Unused - I'm keeping this around In case I try to tackle the release config issues again.
         private void UnRando_new()
         {
             if (!File.Exists(Properties.Settings.Default.Kotor1Path + "\\RANDOMIZED.log"))
@@ -290,7 +299,7 @@ namespace kotor_Randomizer_2
                 return;
             }
 
-            //Checks for and loads back-up folders
+            // Checks for and loads back-up folders.
             if (Directory.Exists(paths.get_backup(paths.modules)))
             {
                 Directory.Delete(paths.modules, true);
@@ -327,14 +336,14 @@ namespace kotor_Randomizer_2
                 File.Move(paths.get_backup(paths.chitin), paths.chitin);
             }
 
-            //Removing log file
+            // Removing log file.
             File.Delete(paths.swkotor + "RANDOMIZED.log");
 
             Properties.Settings.Default.KotorIsRandomized = false;
 
         }
 
-        //Unrandomizes Things **CURRENTLY BROKEN IN RELEASE BUILDS**
+        // Unrandomizes Things **CURRENTLY BROKEN IN RELEASE BUILDS**
         private void UnRando()
         {
             if (!File.Exists(Properties.Settings.Default.Kotor1Path + "\\RANDOMIZED.log"))
@@ -346,7 +355,7 @@ namespace kotor_Randomizer_2
             int step_size = 13;
             int curr_progress = 0;
 
-            //Checks for and loads back-up folders
+            // Checks for and loads back-up folders.
             if (Directory.Exists(paths.get_backup(paths.modules)))
             {
                 curr_task = "Unrandomizing Modules";
@@ -404,7 +413,7 @@ namespace kotor_Randomizer_2
                 curr_progress += step_size;
             }
 
-            //Removing log file
+            // Removing log file.
             curr_task = "Finishing Up";
             bwUnrandomizing.ReportProgress(curr_progress);
             File.Delete(paths.swkotor + "RANDOMIZED.log");

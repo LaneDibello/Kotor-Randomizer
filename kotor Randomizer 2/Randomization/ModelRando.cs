@@ -23,16 +23,17 @@ namespace kotor_Randomizer_2
 
                         int temp = 0;
 
-                        if ((Properties.Settings.Default.RandomizeDoorModels & 4) > 0)//Broken Doors
+                        if ((Properties.Settings.Default.RandomizeDoorModels & 4) > 0) // Broken Doors
                         {
-                            temp = Randomize.Rng.Next(13, 64); //Fisrt 12 doors are open so this is easier
+                            temp = Randomize.Rng.Next(13, 64); // First 12 doors are open so this is easier
                         }
                         else
                         {
                             temp = Randomize.Rng.Next(0, 64);
                         }
 
-                        if ((Properties.Settings.Default.RandomizeDoorModels & 2) > 0 && (g.Field_Array.Where(x => x.Label == "LocName").FirstOrDefault().Field_Data as GFF.CExoLocString).StringRef == 21080) { continue; }//Airlock
+                        // Airlock
+                        if ((Properties.Settings.Default.RandomizeDoorModels & 2) > 0 && (g.Field_Array.Where(x => x.Label == "LocName").FirstOrDefault().Field_Data as GFF.CExoLocString).StringRef == 21080) { continue; }
                         g.Field_Array.Where(k => k.Label == "GenericType").FirstOrDefault().Field_Data = temp;
                         g.Field_Array.Where(k => k.Label == "GenericType").FirstOrDefault().DataOrDataOffset = temp;
 
