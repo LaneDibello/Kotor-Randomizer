@@ -8,16 +8,14 @@ namespace kotor_Randomizer_2
     {
         public static void model_rando(Globals.KPaths paths)
         {
-            DirectoryInfo di = new DirectoryInfo(paths.modules);
-            
-            foreach (FileInfo fi in di.GetFiles())
+            foreach (FileInfo fi in paths.FilesInModules)
             {
                 RIM r = new RIM(fi.FullName);
 
-                //Doors
+                // Doors
                 if ((Properties.Settings.Default.RandomizeDoorModels & 1) > 0)
                 {
-                    foreach (RIM.rFile rf in r.File_Table.Where(x => x.TypeID == 2042))
+                    foreach (RIM.rFile rf in r.File_Table.Where(x => x.TypeID == (int)ResourceType.UTD))
                     {
                         GFF g = new GFF(rf.File_Data);
 

@@ -11,7 +11,7 @@ namespace kotor_Randomizer_2
         public static void Twoda_rando(Globals.KPaths paths)
         {
             BIF b = new BIF(Path.Combine(paths.data, "2da.bif"));
-            KEY k = new KEY(paths.get_backup(paths.chitin));
+            KEY k = new KEY(paths.chitin_backup);
             b.AttachKey(k, "data\\2da.bif");
 
             foreach (BIF.VariableResourceEntry VRE in b.VariableResourceTable.Where(x => Globals.Selected2DAs.Keys.Contains(x.ResRef)))

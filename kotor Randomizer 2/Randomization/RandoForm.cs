@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 namespace kotor_Randomizer_2
 {
-    //This is no where near finished, and partially temporary
+    // This is no where near finished, and partially temporary
     public partial class RandoForm : Form
     {
         public RandoForm()
@@ -31,156 +31,49 @@ namespace kotor_Randomizer_2
 
         #region private methods
 
-        /// <summary>
-        /// Creates the back-ups for the requested category.
-        /// </summary>
-        /// <param name="category"></param>
-        private void CreateBackUps(string category)
+        private void CreateModuleBackups()
         {
-            // todo: refactor this method to use enumeration instead of string
-            // todo: refactor directories below to reduce unnecessary new statements
+            paths.BackUpModulesDirectory();
+            paths.BackUpLipsDirectory();
+            paths.BackUpOverrideDirectory();
+        }
 
-            DirectoryInfo modules_dir = new DirectoryInfo(paths.modules);
-            FileInfo[] modules_files = modules_dir.GetFiles();
-            DirectoryInfo lips_dir = new DirectoryInfo(paths.lips);
-            FileInfo[] lips_files = lips_dir.GetFiles();
-            DirectoryInfo music_dir = new DirectoryInfo(paths.music);
-            FileInfo[] music_files = music_dir.GetFiles();
-            DirectoryInfo sounds_dir = new DirectoryInfo(paths.sounds);
-            FileInfo[] sounds_files = sounds_dir.GetFiles();
-            DirectoryInfo override_dir = new DirectoryInfo(paths.Override);
-            FileInfo[] override_files = override_dir.GetFiles();
-            DirectoryInfo Texture_dir = new DirectoryInfo(paths.TexturePacks);
-            FileInfo[] Texture_files = Texture_dir.GetFiles();
+        private void CreateItemBackups()
+        {
+            paths.BackUpChitinFile();
+        }
 
-            // todo: refactor switch statement to call separate methods instead of doing the work itself
-            switch (category)
-            {
-                case "module":
+        private void CreateSoundBackups()
+        {
+            paths.BackUpMusicDirectory();
+            paths.BackUpSoundDirectory();
+        }
 
-                    if (!Directory.Exists(paths.get_backup(paths.modules)))
-                    {
-                        Directory.CreateDirectory(paths.get_backup(paths.modules));
+        private void CreateModelBackups()
+        {
+            paths.BackUpModulesDirectory();
+        }
 
-                        foreach (FileInfo file in modules_files)
-                        {
-                            string temppath = paths.get_backup(paths.modules) + file.Name;
-                            file.CopyTo(temppath, true);
-                        }
-                    }
+        private void CreateTextureBackups()
+        {
+            paths.BackUpTexturesDirectory();
+        }
 
-                    if (!Directory.Exists(paths.get_backup(paths.lips)))
-                    {
-                        Directory.CreateDirectory(paths.get_backup(paths.lips));
+        private void CreateTwoDABackups()
+        {
+            paths.BackUpChitinFile();
+            paths.BackUpOverrideDirectory();
+        }
 
-                        foreach (FileInfo file in lips_files)
-                        {
-                            string temppath = paths.get_backup(paths.lips) + file.Name;
-                            file.CopyTo(temppath, true);
-                        }
-                    }
+        private void CreateTextBackups()
+        {
+            // Not yet implemented.
+        }
 
-                    if (!Directory.Exists(paths.get_backup(paths.Override)))
-                    {
-                        Directory.CreateDirectory(paths.get_backup(paths.Override));
-
-                        foreach (FileInfo file in override_files)
-                        {
-                            string temppath = paths.get_backup(paths.Override) + file.Name;
-                            file.CopyTo(temppath, true);
-                        }
-                    }
-                    break;
-                case "item":
-                    if (!File.Exists(paths.get_backup(paths.chitin)))
-                    {
-                        File.Copy(paths.chitin, paths.get_backup(paths.chitin));
-                    }
-                    break;
-                case "sound":
-
-                    if (!Directory.Exists(paths.get_backup(paths.music)))
-                    {
-                        Directory.CreateDirectory(paths.get_backup(paths.music));
-
-                        foreach (FileInfo file in music_files)
-                        {
-                            string temppath = paths.get_backup(paths.music) + file.Name;
-                            file.CopyTo(temppath, true);
-                        }
-                    }
-
-                    if (!Directory.Exists(paths.get_backup(paths.sounds)))
-                    {
-                        Directory.CreateDirectory(paths.get_backup(paths.sounds));
-
-                        foreach (FileInfo file in sounds_files)
-                        {
-                            string temppath = paths.get_backup(paths.sounds) + file.Name;
-                            file.CopyTo(temppath, true);
-                        }
-                    }
-                    break;
-                case "model":
-                    if (!Directory.Exists(paths.get_backup(paths.modules)))
-                    {
-                        Directory.CreateDirectory(paths.get_backup(paths.modules));
-
-                        foreach (FileInfo file in modules_files)
-                        {
-                            string temppath = paths.get_backup(paths.modules) + file.Name;
-                            file.CopyTo(temppath, true);
-                        }
-                    }
-                    break;
-                case "texture":
-                    if (!Directory.Exists(paths.get_backup(paths.TexturePacks)))
-                    {
-                        Directory.CreateDirectory(paths.get_backup(paths.TexturePacks));
-
-                        foreach (FileInfo file in Texture_files)
-                        {
-                            string temppath = paths.get_backup(paths.TexturePacks) + file.Name;
-                            file.CopyTo(temppath, true);
-                        }
-                    }
-                    break;
-                case "twoda":
-                    if (!File.Exists(paths.get_backup(paths.chitin)))
-                    {
-                        File.Copy(paths.chitin, paths.get_backup(paths.chitin));
-                    }
-                    if (!Directory.Exists(paths.get_backup(paths.Override)))
-                    {
-                        Directory.CreateDirectory(paths.get_backup(paths.Override));
-
-                        foreach (FileInfo file in override_files)
-                        {
-                            string temppath = paths.get_backup(paths.Override) + file.Name;
-                            file.CopyTo(temppath, true);
-                        }
-                    }
-                    break;
-                case "text":
-                    break;
-                case "other":
-                    if (!Directory.Exists(paths.get_backup(paths.Override)))
-                    {
-                        Directory.CreateDirectory(paths.get_backup(paths.Override));
-
-                        foreach (FileInfo file in override_files)
-                        {
-                            string temppath = paths.get_backup(paths.Override) + file.Name;
-                            file.CopyTo(temppath, true);
-                        }
-
-                        if (!File.Exists(paths.get_backup(paths.chitin)))
-                        {
-                            File.Copy(paths.chitin, paths.get_backup(paths.chitin));
-                        }
-                    }
-                    break;
-            }
+        private void CreateOtherBackups()
+        {
+            paths.BackUpChitinFile();
+            paths.BackUpOverrideDirectory();
         }
 
         // Runs the necessary Randomization Scripts
@@ -191,7 +84,7 @@ namespace kotor_Randomizer_2
 
             if (ActiveCategories == 0)
             {
-                MessageBox.Show("No Randomization Categories Selected");
+                MessageBox.Show(Properties.Resources.ErrorNoRandomization);
                 return;
             }
             ActiveCategories++;
@@ -199,90 +92,97 @@ namespace kotor_Randomizer_2
             int step_size = 100 / ActiveCategories;
             int curr_progress = 0;
 
-            using (StreamWriter sw = new StreamWriter(paths.swkotor + "RANDOMIZED.log"))
+            using (StreamWriter sw = new StreamWriter(paths.RANDOMIZED_LOG))
             {
                 sw.WriteLine(DateTime.Now.ToString());
-                sw.WriteLine("Kotor Randomizer V2.0\n");
+                sw.WriteLine(Properties.Resources.LogHeader);
                 Properties.Settings.Default.KotorIsRandomized = true;
-                // todo: update the seed for each category instead of once for the whole process
-                Randomize.SetSeed(Properties.Settings.Default.Seed);
+                Randomize.SetSeed(Properties.Settings.Default.Seed);    // Not sure when is the best time to set the seed.
 
                 // Randomize the categories.
                 if (Properties.Settings.Default.module_rando_active)
                 {
-                    curr_task = "Randomizing Modules";
+                    Randomize.RestartRng();
+                    curr_task = Properties.Resources.RandomizingModules;
                     bwRandomizing.ReportProgress(curr_progress);
-                    CreateBackUps("module");
+                    CreateModuleBackups();
                     ModuleRando.Module_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine("Modules Randomized");
+                    sw.WriteLine(Properties.Resources.LogModulesDone);
                     curr_progress += step_size;
                 }
                 if (Properties.Settings.Default.item_rando_active)
                 {
-                    curr_task = "Randomizing Items";
+                    Randomize.RestartRng();
+                    curr_task = Properties.Resources.RandomizingItems;
                     bwRandomizing.ReportProgress(curr_progress);
-                    CreateBackUps("item");
+                    CreateItemBackups();
                     ItemRando.item_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine("Items Randomized");
+                    sw.WriteLine(Properties.Resources.LogItemsDone);
                     curr_progress += step_size;
                 }
                 if (Properties.Settings.Default.sound_rando_active)
                 {
-                    curr_task = "Randomizing Music and Sounds";
+                    Randomize.RestartRng();
+                    curr_task = Properties.Resources.RandomizingMusicSound;
                     bwRandomizing.ReportProgress(curr_progress);
-                    CreateBackUps("sound");
+                    CreateSoundBackups();
                     SoundRando.sound_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine("Sounds Randomized");
+                    sw.WriteLine(Properties.Resources.LogMusicSoundDone);
                     curr_progress += step_size;
                 }
                 if (Properties.Settings.Default.model_rando_active)
                 {
-                    curr_task = "Randomizing Models";
+                    Randomize.RestartRng();
+                    curr_task = Properties.Resources.RandomizingModels;
                     bwRandomizing.ReportProgress(curr_progress);
-                    CreateBackUps("model");
+                    CreateModelBackups();
                     ModelRando.model_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine("Models Randomized");
+                    sw.WriteLine(Properties.Resources.LogModelsDone);
                     curr_progress += step_size;
                 }
                 if (Properties.Settings.Default.texture_rando_active)
                 {
-                    curr_task = "Randomizing Textures";
+                    Randomize.RestartRng();
+                    curr_task = Properties.Resources.RandomizingTextures;
                     bwRandomizing.ReportProgress(curr_progress);
-                    CreateBackUps("texture");
+                    CreateTextureBackups();
                     TextureRando.texture_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine("Textures Randomized");
+                    sw.WriteLine(Properties.Resources.LogTexturesDone);
                     curr_progress += step_size;
                 }
                 if (Properties.Settings.Default.twoda_rando_active)
                 {
-                    curr_task = "Randomizing 2-D Arrays";
+                    Randomize.RestartRng();
+                    curr_task = Properties.Resources.Randomizing2DA;
                     bwRandomizing.ReportProgress(curr_progress);
-                    CreateBackUps("twoda");
+                    CreateTwoDABackups();
                     TwodaRandom.Twoda_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine("2-Dimensional Arrays Randomized");
+                    sw.WriteLine(Properties.Resources.Log2DADone);
                     curr_progress += step_size;
                 }
                 if (Properties.Settings.Default.text_rando_active)
                 {
-                    curr_task = "Randomizing Text";
+                    Randomize.RestartRng();
+                    curr_task = Properties.Resources.RandomizingText;
                     bwRandomizing.ReportProgress(curr_progress);
-                    CreateBackUps("text");
+                    CreateTextBackups();
                     // ** Not yet implemented. ** // Run appropriate rando script.
-                    sw.WriteLine("Text Randomized");
+                    sw.WriteLine(Properties.Resources.LogTextDone);
                     curr_progress += step_size;
                 }
                 if (Properties.Settings.Default.other_rando_active)
                 {
-                    curr_task = "Randomizing Other Things";
+                    Randomize.RestartRng();
+                    curr_task = Properties.Resources.RandomizingOther;
                     bwRandomizing.ReportProgress(curr_progress);
-                    CreateBackUps("other");
+                    CreateOtherBackups();
                     OtherRando.other_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine("\'Other\' Randomized");
+                    sw.WriteLine(Properties.Resources.LogOtherDone);
                     curr_progress += step_size;
                 }
 
                 // Creates a basic log file with a date, version, and things done.
-                curr_task = "Finishing Up";
+                curr_task = Properties.Resources.TaskFinishing;
                 bwRandomizing.ReportProgress(curr_progress);
                 sw.WriteLine("\nThe Kotor Randomizer was created by Lane Dibello, with help from Glasnonck, and the greater Kotor Speedrunning community.");
                 sw.WriteLine("If you encounter any issues please try to contact me @Lane#5847 on Discord");
@@ -293,62 +193,60 @@ namespace kotor_Randomizer_2
         // Unused - I'm keeping this around In case I try to tackle the release config issues again.
         private void UnRando_new()
         {
-            if (!File.Exists(Properties.Settings.Default.Kotor1Path + "\\RANDOMIZED.log"))
+            if (!File.Exists(paths.RANDOMIZED_LOG))
             {
-                MessageBox.Show("Game is not randomized!");
+                MessageBox.Show(Properties.Resources.ErrorNotRandomized);
                 return;
             }
 
             // Checks for and loads back-up folders.
-            if (Directory.Exists(paths.get_backup(paths.modules)))
+            if (Directory.Exists(paths.modules_backup))
             {
                 Directory.Delete(paths.modules, true);
-                Directory.Move(paths.get_backup(paths.modules), paths.modules);
+                Directory.Move(paths.modules_backup, paths.modules);
             }
-            if (Directory.Exists(paths.get_backup(paths.lips)))
+            if (Directory.Exists(paths.lips_backup))
             {
                 Directory.Delete(paths.lips, true);
-                Directory.Move(paths.get_backup(paths.lips), paths.lips);
+                Directory.Move(paths.lips_backup, paths.lips);
             }
-            if (Directory.Exists(paths.get_backup(paths.Override)))
+            if (Directory.Exists(paths.Override_backup))
             {
                 Directory.Delete(paths.Override, true);
-                Directory.Move(paths.get_backup(paths.Override), paths.Override);
+                Directory.Move(paths.Override_backup, paths.Override);
             }
-            if (Directory.Exists(paths.get_backup(paths.music)))
+            if (Directory.Exists(paths.music_backup))
             {
                 Directory.Delete(paths.music, true);
-                Directory.Move(paths.get_backup(paths.music), paths.music);
+                Directory.Move(paths.music_backup, paths.music);
             }
-            if (Directory.Exists(paths.get_backup(paths.sounds)))
+            if (Directory.Exists(paths.sounds_backup))
             {
                 Directory.Delete(paths.sounds, true);
-                Directory.Move(paths.get_backup(paths.sounds), paths.sounds);
+                Directory.Move(paths.sounds_backup, paths.sounds);
             }
-            if (Directory.Exists(paths.get_backup(paths.TexturePacks)))
+            if (Directory.Exists(paths.TexturePacks_backup))
             {
                 Directory.Delete(paths.TexturePacks, true);
-                Directory.Move(paths.get_backup(paths.TexturePacks), paths.TexturePacks);
+                Directory.Move(paths.TexturePacks_backup, paths.TexturePacks);
             }
-            if (File.Exists(paths.get_backup(paths.chitin)))
+            if (File.Exists(paths.chitin_backup))
             {
                 File.Delete(paths.chitin);
-                File.Move(paths.get_backup(paths.chitin), paths.chitin);
+                File.Move(paths.chitin_backup, paths.chitin);
             }
 
             // Removing log file.
-            File.Delete(paths.swkotor + "RANDOMIZED.log");
-
+            File.Delete(paths.RANDOMIZED_LOG);
             Properties.Settings.Default.KotorIsRandomized = false;
-
         }
 
         // Unrandomizes Things **CURRENTLY BROKEN IN RELEASE BUILDS**
         private void UnRando()
         {
-            if (!File.Exists(Properties.Settings.Default.Kotor1Path + "\\RANDOMIZED.log"))
+            if (!File.Exists(paths.RANDOMIZED_LOG))
             {
-                MessageBox.Show("Game is not randomized!");
+                MessageBox.Show(Properties.Resources.ErrorNotRandomized);
                 return;
             }
 
@@ -356,70 +254,68 @@ namespace kotor_Randomizer_2
             int curr_progress = 0;
 
             // Checks for and loads back-up folders.
-            if (Directory.Exists(paths.get_backup(paths.modules)))
+            if (Directory.Exists(paths.modules_backup))
             {
-                curr_task = "Unrandomizing Modules";
+                curr_task = Properties.Resources.UnrandomizingModules;
                 bwUnrandomizing.ReportProgress(curr_progress);
                 Directory.Delete(paths.modules, true);
-                Directory.Move(paths.get_backup(paths.modules), paths.modules);
+                Directory.Move(paths.modules_backup, paths.modules);
                 curr_progress += step_size;
             }
-            if (Directory.Exists(paths.get_backup(paths.lips)))
+            if (Directory.Exists(paths.lips_backup))
             {
-                curr_task = "Unrandomizing Lips";
+                curr_task = Properties.Resources.UnrandomizingLips;
                 bwUnrandomizing.ReportProgress(curr_progress);
                 Directory.Delete(paths.lips, true);
-                Directory.Move(paths.get_backup(paths.lips), paths.lips);
+                Directory.Move(paths.lips_backup, paths.lips);
                 curr_progress += step_size;
             }
-            if (Directory.Exists(paths.get_backup(paths.Override)))
+            if (Directory.Exists(paths.Override_backup))
             {
-                curr_task = "Unrandomizing Overrides";
+                curr_task = Properties.Resources.UnrandomizingOverrides;
                 bwUnrandomizing.ReportProgress(curr_progress);
                 Directory.Delete(paths.Override, true);
-                Directory.Move(paths.get_backup(paths.Override), paths.Override);
+                Directory.Move(paths.Override_backup, paths.Override);
                 curr_progress += step_size;
             }
-            if (Directory.Exists(paths.get_backup(paths.music)))
+            if (Directory.Exists(paths.music_backup))
             {
-                curr_task = "Unrandomizing Msuic";
+                curr_task = Properties.Resources.UnrandomizingMusic;
                 bwUnrandomizing.ReportProgress(curr_progress);
                 Directory.Delete(paths.music, true);
-                Directory.Move(paths.get_backup(paths.music), paths.music);
+                Directory.Move(paths.music_backup, paths.music);
                 curr_progress += step_size;
             }
-            if (Directory.Exists(paths.get_backup(paths.sounds)))
+            if (Directory.Exists(paths.sounds_backup))
             {
-                curr_task = "Unrandomizing Sounds";
+                curr_task = Properties.Resources.UnrandomizingSounds;
                 bwUnrandomizing.ReportProgress(curr_progress);
                 Directory.Delete(paths.sounds, true);
-                Directory.Move(paths.get_backup(paths.sounds), paths.sounds);
+                Directory.Move(paths.sounds_backup, paths.sounds);
                 curr_progress += step_size;
             }
-            if (Directory.Exists(paths.get_backup(paths.TexturePacks)))
+            if (Directory.Exists(paths.TexturePacks_backup))
             {
-                curr_task = "Unrandomizing Textures";
+                curr_task = Properties.Resources.UnrandomizingTextures;
                 bwUnrandomizing.ReportProgress(curr_progress);
                 Directory.Delete(paths.TexturePacks, true);
-                Directory.Move(paths.get_backup(paths.TexturePacks), paths.TexturePacks);
+                Directory.Move(paths.TexturePacks_backup, paths.TexturePacks);
                 curr_progress += step_size;
             }
-            if (File.Exists(paths.get_backup(paths.chitin)))
+            if (File.Exists(paths.chitin_backup))
             {
-                curr_task = "Unrandomizing Key Table";
+                curr_task = Properties.Resources.UnrandomizingKeyTable;
                 bwUnrandomizing.ReportProgress(curr_progress);
                 File.Delete(paths.chitin);
-                File.Move(paths.get_backup(paths.chitin), paths.chitin);
+                File.Move(paths.chitin_backup, paths.chitin);
                 curr_progress += step_size;
             }
 
             // Removing log file.
-            curr_task = "Finishing Up";
+            curr_task = Properties.Resources.TaskFinishing;
             bwUnrandomizing.ReportProgress(curr_progress);
-            File.Delete(paths.swkotor + "RANDOMIZED.log");
-
+            File.Delete(paths.RANDOMIZED_LOG);
             Properties.Settings.Default.KotorIsRandomized = false;
-
         }
 
         private int CountActiveCategories()
@@ -448,7 +344,7 @@ namespace kotor_Randomizer_2
         private void bwRandomizing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             bDone.Enabled = true;
-            currentRandoTask_label.Text = "Done!";
+            currentRandoTask_label.Text = Properties.Resources.Done;
             RandomizationProgress.Value = 100;
         }
 
@@ -494,7 +390,7 @@ namespace kotor_Randomizer_2
         private void bwUnrandomizing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             bDone.Enabled = true;
-            currentRandoTask_label.Text = "Done!";
+            currentRandoTask_label.Text = Properties.Resources.Done;
             RandomizationProgress.Value = 100;
         }
 

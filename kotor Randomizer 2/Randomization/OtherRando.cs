@@ -47,7 +47,7 @@ namespace kotor_Randomizer_2
                 string ops = "+-*";
 
                 BIF b = new BIF(paths.data + "\\2da.bif");
-                KEY k = new KEY(paths.get_backup(paths.chitin));
+                KEY k = new KEY(paths.chitin_backup);
                 b.AttachKey(k, "data\\2da.bif");
 
                 var resource = b.VariableResourceTable.Where(x => x.ResRef == PAZAAKDECKS_RESREF).FirstOrDefault();

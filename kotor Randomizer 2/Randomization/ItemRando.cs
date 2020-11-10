@@ -20,7 +20,7 @@ namespace kotor_Randomizer_2
             // Load KEY file.
             KEY k = new KEY(paths.chitin);
 
-            //handle categories
+            // Handle categories
             HandleCategory(k, ArmorRegs, Properties.Settings.Default.RandomizeArmor);
             HandleCategory(k, StimsRegs, Properties.Settings.Default.RandomizeStims);
             HandleCategory(k, BeltsRegs, Properties.Settings.Default.RandomizeBelts);

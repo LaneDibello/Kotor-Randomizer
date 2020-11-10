@@ -196,4 +196,127 @@
   <data name="TextHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\help\TextHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done!</value>
+  </data>
+  <data name="ErrorNoRandomization" xml:space="preserve">
+    <value>No Randomization Categories Selected</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="ErrorNotRandomized" xml:space="preserve">
+    <value>Game is not randomized!</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="Log2DADone" xml:space="preserve">
+    <value>2-Dimensional Arrays Randomized</value>
+    <comment>Task completed message for the log.</comment>
+  </data>
+  <data name="LogHeader" xml:space="preserve">
+    <value>Kotor Randomizer V2.0
+</value>
+    <comment>Header message for the log.</comment>
+  </data>
+  <data name="LogItemsDone" xml:space="preserve">
+    <value>Items Randomized</value>
+    <comment>Task completed message for the log.</comment>
+  </data>
+  <data name="LogModelsDone" xml:space="preserve">
+    <value>Models Randomized</value>
+    <comment>Task completed message for the log.</comment>
+  </data>
+  <data name="LogModulesDone" xml:space="preserve">
+    <value>Modules Randomized</value>
+    <comment>Task completed message for the log.</comment>
+  </data>
+  <data name="LogMusicSoundDone" xml:space="preserve">
+    <value>Sounds Randomized</value>
+    <comment>Task completed message for the log.</comment>
+  </data>
+  <data name="LogOtherDone" xml:space="preserve">
+    <value>'Other' Randomized</value>
+    <comment>Task completed message for the log.</comment>
+  </data>
+  <data name="LogTextDone" xml:space="preserve">
+    <value>Text Randomized</value>
+    <comment>Task completed message for the log.</comment>
+  </data>
+  <data name="LogTexturesDone" xml:space="preserve">
+    <value>Textures Randomized</value>
+    <comment>Task completed message for the log.</comment>
+  </data>
+  <data name="Randomizing2DA" xml:space="preserve">
+    <value>Randomizing 2-D Arrays</value>
+    <comment>A title for the current task.</comment>
+  </data>
+  <data name="RandomizingItems" xml:space="preserve">
+    <value>Randomizing Items</value>
+    <comment>A title for the current task.</comment>
+  </data>
+  <data name="RandomizingModels" xml:space="preserve">
+    <value>Randomizing Models</value>
+    <comment>A title for the current task.</comment>
+  </data>
+  <data name="RandomizingModules" xml:space="preserve">
+    <value>Randomizing Modules</value>
+    <comment>A title for the current task.</comment>
+  </data>
+  <data name="RandomizingMusicSound" xml:space="preserve">
+    <value>Randomizing Music and Sounds</value>
+    <comment>A title for the current task.</comment>
+  </data>
+  <data name="RandomizingOther" xml:space="preserve">
+    <value>Randomizing Other Things</value>
+    <comment>A title for the current task.</comment>
+  </data>
+  <data name="RandomizingText" xml:space="preserve">
+    <value>Randomizing Text</value>
+    <comment>A title for the current task.</comment>
+  </data>
+  <data name="RandomizingTextures" xml:space="preserve">
+    <value>Randomizing Textures</value>
+    <comment>A title for the current task.</comment>
+  </data>
+  <data name="TaskFinishing" xml:space="preserve">
+    <value>Finishing Up</value>
+    <comment>A title for the current task.</comment>
+  </data>
+  <data name="UnrandomizingKeyTable" xml:space="preserve">
+    <value>Unrandomizing Key Table</value>
+  </data>
+  <data name="UnrandomizingLips" xml:space="preserve">
+    <value>Unrandomizing Lips</value>
+  </data>
+  <data name="UnrandomizingModules" xml:space="preserve">
+    <value>Unrandomizing Modules</value>
+  </data>
+  <data name="UnrandomizingMusic" xml:space="preserve">
+    <value>Unrandomizing Music</value>
+  </data>
+  <data name="UnrandomizingOverrides" xml:space="preserve">
+    <value>Unrandomizing Overrides</value>
+  </data>
+  <data name="UnrandomizingSounds" xml:space="preserve">
+    <value>Unrandomizing Sounds</value>
+  </data>
+  <data name="UnrandomizingTextures" xml:space="preserve">
+    <value>Unrandomizing Textures</value>
+  </data>
+  <data name="ModuleEntryArea" xml:space="preserve">
+    <value>Mod_Entry_Area</value>
+  </data>
+  <data name="ModuleEntryX" xml:space="preserve">
+    <value>Mod_Entry_X</value>
+    <comment>X coordinate of the module entry point.</comment>
+  </data>
+  <data name="ModuleEntryY" xml:space="preserve">
+    <value>Mod_Entry_Y</value>
+    <comment>Y coordinate of the module entry point.</comment>
+  </data>
+  <data name="ModuleEntryZ" xml:space="preserve">
+    <value>Mod_Entry_Z</value>
+    <comment>Z coordinate of the module entry point.</comment>
+  </data>
+  <data name="MsgPresetLoaded" xml:space="preserve">
+    <value>Preset Loaded</value>
+  </data>
 </root>

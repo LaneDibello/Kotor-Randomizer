@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 
 namespace kotor_Randomizer_2
@@ -94,22 +95,200 @@ namespace kotor_Randomizer_2
             /// <summary> Path to the swkotor\TexturePacks directory. </summary>
             public readonly string TexturePacks;
 
+            /// <summary> Path to the RANDOMIZED.log file within the swkotor directory. </summary>
+            public readonly string RANDOMIZED_LOG;
+
+            /// <summary> Path to the backup of the chitin.key file within the swkotor directory. </summary>
+            public readonly string chitin_backup;
+            /// <summary> Path to the backup of the swkotor\data directory. </summary>
+            public readonly string data_backup;
+            /// <summary> Path to the backup of the swkotor\lips directory. </summary>
+            public readonly string lips_backup;
+            /// <summary> Path to the backup of the swkotor\modules directory. </summary>
+            public readonly string modules_backup;
+            /// <summary> Path to the backup of the swkotor\Override directory. </summary>
+            public readonly string Override_backup;
+            /// <summary> Path to the backup of the swkotor\rims directory. </summary>
+            public readonly string rims_backup;
+            /// <summary> Path to the backup of the swkotor\streammusic directory. </summary>
+            public readonly string music_backup;
+            /// <summary> Path to the backup of the swkotor\streamsounds directory. </summary>
+            public readonly string sounds_backup;
+            /// <summary> Path to the backup of the swkotor\TexturePacks directory. </summary>
+            public readonly string TexturePacks_backup;
+
             /// <summary>
             /// Constructs paths to the SW KotOR directory and subdirectories.
             /// </summary>
             /// <param name="swkotor_path">Path to the base swkotor game directory.</param>
             public KPaths(string swkotor_path)
             {
-                swkotor = swkotor_path + "\\";
-                chitin = swkotor + "chitin.key";
-                data = swkotor + "data\\";
-                lips = swkotor + "lips\\";
-                modules = swkotor + "modules\\";
-                Override = swkotor + "Override\\";
-                rims = swkotor + "rims\\";
-                music = swkotor + "streammusic\\";
-                sounds = swkotor + "streamsounds\\";
-                TexturePacks = swkotor + "TexturePacks\\";
+                swkotor = $"{swkotor_path}\\";
+                //swkotor = Path.Combine(swkotor_path);
+                chitin = $"{swkotor_path}\\chitin.key";
+                data = $"{swkotor_path}\\data\\";
+                lips = $"{swkotor_path}\\lips\\";
+                modules = $"{swkotor_path}\\modules\\";
+                Override = $"{swkotor_path}\\Override\\";
+                rims = $"{swkotor_path}\\rims\\";
+                music = $"{swkotor_path}\\streammusic\\";
+                sounds = $"{swkotor_path}\\streamsounds\\";
+                TexturePacks = $"{swkotor_path}\\TexturePacks\\";
+
+                RANDOMIZED_LOG = $"{swkotor_path}\\RANDOMIZED.log";
+
+                chitin_backup = $"{swkotor_path}\\chitin.key.bak";
+                data_backup = $"{swkotor_path}\\data_bak\\";
+                lips_backup = $"{swkotor_path}\\lips_bak\\";
+                modules_backup = $"{swkotor_path}\\modules_bak\\";
+                Override_backup = $"{swkotor_path}\\Override_bak\\";
+                rims_backup = $"{swkotor_path}\\rims_bak\\";
+                music_backup = $"{swkotor_path}\\streammusic_bak\\";
+                sounds_backup = $"{swkotor_path}\\streamsounds_bak\\";
+                TexturePacks_backup = $"{swkotor_path}\\TexturePacks_bak\\";
+            }
+
+            /// <summary> Returns a list of the current files in the swkotor base directory. </summary>
+            public FileInfo[] FilesInBaseDir
+            { get { return new DirectoryInfo(swkotor).GetFiles(); } }
+
+            /// <summary> Returns a list of the current files in the swkotor\data directory. </summary>
+            public FileInfo[] FilesInData
+            { get { return new DirectoryInfo(data).GetFiles(); } }
+
+            /// <summary> Returns a list of the current files in the swkotor\lips directory. </summary>
+            public FileInfo[] FilesInLips
+            { get { return new DirectoryInfo(lips).GetFiles(); } }
+
+            /// <summary> Returns a list of the current files in the swkotor\modules directory. </summary>
+            public FileInfo[] FilesInModules
+            { get { return new DirectoryInfo(modules).GetFiles(); } }
+
+            /// <summary> Returns a list of the current files in the swkotor\music directory. </summary>
+            public FileInfo[] FilesInMusic
+            { get { return new DirectoryInfo(music).GetFiles(); } }
+
+            public FileInfo[] FilesInMusicBackup
+            { get { return new DirectoryInfo(music_backup).GetFiles(); } }
+
+            /// <summary> Returns a list of the current files in the swkotor\sounds directory. </summary>
+            public FileInfo[] FilesInSounds
+            { get { return new DirectoryInfo(sounds).GetFiles(); } }
+
+            public FileInfo[] FilesInSoundsBackup
+            { get { return new DirectoryInfo(sounds_backup).GetFiles(); } }
+
+            /// <summary> Returns a list of the current files in the swkotor\Override directory. </summary>
+            public FileInfo[] FilesInOverride
+            { get { return new DirectoryInfo(Override).GetFiles(); } }
+
+            /// <summary> Returns a list of the current files in the swkotor\rims directory. </summary>
+            public FileInfo[] FilesInRims
+            { get { return new DirectoryInfo(rims).GetFiles(); } }
+
+            /// <summary> Returns a list of the current files in the swkotor\TexturePacks directory. </summary>
+            public FileInfo[] FilesInTexturePacks
+            { get { return new DirectoryInfo(TexturePacks).GetFiles(); } }
+
+            /// <summary>
+            /// Creates a backup of the modules directory if it doesn't exist already.
+            /// </summary>
+            public void BackUpModulesDirectory()
+            {
+                if (!Directory.Exists(modules_backup))
+                {
+                    Directory.CreateDirectory(modules_backup);
+                    foreach (FileInfo file in FilesInModules)
+                    {
+                        file.CopyTo(Path.Combine(modules_backup, file.Name), true);
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Creates a backup of the lips directory if it doesn't exist already.
+            /// </summary>
+            public void BackUpLipsDirectory()
+            {
+                if (!Directory.Exists(lips_backup))
+                {
+                    Directory.CreateDirectory(lips_backup);
+                    foreach (FileInfo file in FilesInLips)
+                    {
+                        file.CopyTo(Path.Combine(lips_backup, file.Name), true);
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Creates a backup of the Override directory if it doesn't exist already.
+            /// </summary>
+            public void BackUpOverrideDirectory()
+            {
+                if (!Directory.Exists(Override_backup))
+                {
+                    Directory.CreateDirectory(Override_backup);
+                    foreach (FileInfo file in FilesInOverride)
+                    {
+                        file.CopyTo(Path.Combine(Override_backup, file.Name), true);
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Creates a backup of the chitin file if it doesn't exist already.
+            /// </summary>
+            public void BackUpChitinFile()
+            {
+                if (!File.Exists(chitin_backup))
+                {
+                    File.Copy(chitin, chitin_backup);
+                }
+            }
+
+            /// <summary>
+            /// Creates a backup of the music directory if it doesn't exist already.
+            /// </summary>
+            public void BackUpMusicDirectory()
+            {
+                if (!Directory.Exists(music_backup))
+                {
+                    Directory.CreateDirectory(music_backup);
+                    foreach (FileInfo file in FilesInMusic)
+                    {
+                        file.CopyTo(Path.Combine(music_backup, file.Name), true);
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Creates a backup of the sound directory if it doesn't exist already.
+            /// </summary>
+            public void BackUpSoundDirectory()
+            {
+                if (!Directory.Exists(sounds_backup))
+                {
+                    Directory.CreateDirectory(sounds_backup);
+                    foreach (FileInfo file in FilesInSounds)
+                    {
+                        file.CopyTo(Path.Combine(sounds_backup, file.Name), true);
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Creates a backup of the TexturePacks directory if it doesn't exist already.
+            /// </summary>
+            public void BackUpTexturesDirectory()
+            {
+                if (!Directory.Exists(TexturePacks_backup))
+                {
+                    Directory.CreateDirectory(TexturePacks_backup);
+                    foreach (FileInfo file in FilesInTexturePacks)
+                    {
+                        file.CopyTo(Path.Combine(TexturePacks_backup, file.Name), true);
+                    }
+                }
             }
 
             /// <summary>
@@ -117,7 +296,7 @@ namespace kotor_Randomizer_2
             /// </summary>
             /// <param name="path">Path to a directory or file.</param>
             /// <returns>Path to the backup version.</returns>
-            public string get_backup(string path)
+            public static string get_backup(string path)
             {
                 if (path.Last() == '\\')
                 {
@@ -134,7 +313,7 @@ namespace kotor_Randomizer_2
             /// </summary>
             /// <param name="path">Path to a directory or file.</param>
             /// <returns>Path to the old version.</returns>
-            public string get_old(string path)
+            public static string get_old(string path)
             {
                 if (path.Last() == '\\')
                 {
@@ -151,40 +330,80 @@ namespace kotor_Randomizer_2
         #region Variables
         //Bound list of modules where the mod entries with selected omissions will be stored.
         public static BindingList<Mod_Entry> BoundModules = new BindingList<Mod_Entry>();
+
         //Bound list of items to be omitted from randomization. This is necessary because certain items can result in soft locks if randomized.
         public static BindingList<string> OmitItems = new BindingList<string>()
         {
             "g_i_collarlgt001", "g_i_glowrod01", "g_i_torch01", "ptar_sitharmor", "tat17_sandperdis", "g_i_progspike02"
         };
+
         //Dictionary of selected 2DAs to be randomized
         public static Dictionary<string, List<string>> Selected2DAs = new Dictionary<string, List<string>>();
         #endregion
 
         #region Constants
-        //new coordinates
-        //public static readonly Dictionary<string, Point3D> FIXED_COORDINATES = new Dictionary<string, Point3D>()
-        //{
-        //    { "tar_m04aa", new Point3D(183.5f, 167.4f, 1.5f)},
-        //    { "korr_m38ab", new Point3D(16.4f, 55.4f, 0.75f)},
-        //    { "lev_m40ac", new Point3D(12.5f, 155.2f, 3.0f) },
-        //    { "manm26aa", new Point3D(5.7f, -10.7f, 59.2f) },
-        //    { "manm27aa", new Point3D(112.8f, 2.4f, 0f) },
-        //    { "unk_m43aa", new Point3D(202.2f, 31.5f, 40.7f) },
-        //    { "unk_m44aa", new Point3D(95.3f, 42.0f, 0.44f) }
-        //};
-        //Large Creature Models
+        public const string AREA_UNDERCITY = "m04aa";
+        public const string AREA_TOMB_RAGNOS = "m38aa";
+        public const string AREA_LEVI_HANGAR = "m40ac";
+        public const string AREA_AHTO_WEST = "m26aa";
+        public const string AREA_MANAAN_SITH = "m27aa";
+        public const string AREA_RAKA_SETTLE = "m43aa";
+        public const string AREA_TEMPLE_MAIN = "m44aa";
+
+        /// <summary>
+        /// New coordinates for bad randomizer spawn locations.
+        /// </summary>
+        public static readonly Dictionary<string, Tuple<int, int, int>> FIXED_COORDINATES = new Dictionary<string, Tuple<int, int, int>>()
+        {
+            { AREA_UNDERCITY, new Tuple<int, int, int>(
+                BitConverter.ToInt32(BitConverter.GetBytes(183.5f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(167.4f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(1.5f), 0)) },
+            { AREA_TOMB_RAGNOS, new Tuple<int, int, int>(
+                BitConverter.ToInt32(BitConverter.GetBytes(15.8f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(55.6f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(0.75f), 0)) },
+            { AREA_LEVI_HANGAR, new Tuple<int, int, int>(
+                BitConverter.ToInt32(BitConverter.GetBytes(12.5f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(155.2f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(3.0f), 0)) },
+            { AREA_AHTO_WEST, new Tuple<int, int, int>(
+                BitConverter.ToInt32(BitConverter.GetBytes(5.7f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(-10.7f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(59.2f), 0)) },
+            { AREA_MANAAN_SITH, new Tuple<int, int, int>(
+                BitConverter.ToInt32(BitConverter.GetBytes(112.8f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(2.4f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(0f), 0)) },
+            { AREA_RAKA_SETTLE, new Tuple<int, int, int>(
+                BitConverter.ToInt32(BitConverter.GetBytes(202.2f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(31.5f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(40.7f), 0)) },
+            { AREA_TEMPLE_MAIN, new Tuple<int, int, int>(
+                BitConverter.ToInt32(BitConverter.GetBytes(95.3f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(42.0f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(0.44f), 0)) },
+        };
+
+        // Large Creature Models
         public static readonly List<int> LARGE_CHARS = new List<int>() { 354, 334, 87, 80, 77, 81, 54 };
-        //Broken Creature Models
+
+        // Broken Creature Models
         public static readonly List<int> BROKEN_CHARS = new List<int>() { 0, 29, 82 };
-        //Large Placeable Models
-        public static readonly List<int> LARGE_PLACE = new List<int>() { 1, 2, 55, 56, 57, 58, 65, 66, 110, 111, 142, 172, 217, 218, 226};//NEED TO RESEARCH
-        //Broken Placeable Models
+
+        // Large Placeable Models
+        public static readonly List<int> LARGE_PLACE = new List<int>() { 1, 2, 55, 56, 57, 58, 65, 66, 110, 111, 142, 172, 217, 218, 226}; // NEED TO RESEARCH
+
+        // Broken Placeable Models
         public static readonly List<int> BROKEN_PLACE = new List<int>() { 0, 8, 9, 47, 62, 78, 84, 90, 94, 97, 115, 158, 159 };
-        //Extra Files found in the 'lips' directory
+
+        // Extra Files found in the 'lips' directory
         public static readonly List<string> lipXtras = new List<string>() { "global.mod", "legal.mod", "localization.mod", "mainmenu.mod", "miniglobal.mod", "subglobal.mod", };
-        //Characters that the letter-combo probability files can handle.
+
+        // Characters that the letter-combo probability files can handle.
         public static readonly string NAMEGEN_CHARS = "qwertyuiopasdfghjklzxcvbnm-'";
-        //All items in the game
+
+        // All items in the game
         public static readonly List<string> ITEMS = new List<string>() {
             "g1_a_class5001", "g1_a_class5002", "g1_a_class6001", "g1_a_class8001",         // 
             "g1_i_belt001", "g1_i_drdcomspk01", "g1_i_drdhvplat01", "g1_i_drdshld001",      // 
@@ -325,7 +544,7 @@ namespace kotor_Randomizer_2
             "ptar_sbpasscrd", "ptar_sitharmor", "tat17_sandperdis", "tat18_dragonprl",
             "w_blhvy001", "w_bstrcrbn", "w_lghtsbr001", "w_null" };
 
-        //All modules in the game
+        // All modules in the game
         public static readonly List<string> MODULES = new List<string>() {
             "danm13","danm14aa","danm14ab","danm14ac","danm14ad","danm14ae",            // Jedi Enclave, Courtyard, Matale Grounds, Grove, Sandral Grounds, Crystal Caves,
             "danm15","danm16","ebo_m12aa","ebo_m40aa","ebo_m40ad","ebo_m41aa",          // Dantooine Ruins, Sandral Estate, Ebon Hawk, Leviathan Game-Plan CS, Escaped the Leviathan, Lehon Hawk,
@@ -348,7 +567,7 @@ namespace kotor_Randomizer_2
             "tat_m18ac","tat_m20aa","unk_m41aa","unk_m41ab","unk_m41ac","unk_m41ad",    // Eastern Dune Sea, Sand People Enclave, Central Beach, South Beach, North Beach, Temple Exterior,
             "unk_m42aa","unk_m43aa","unk_m44aa","unk_m44ab","unk_m44ac" };              // Elder Settlement, Rakatan Settlement, Temple Main Floor, Temple Catacombs, Temple Summit
 
-        //Built-in module omission presets. The key being the preset name, and the valuebeing a string list of modules to omit. Not to be confused with user-defined presets.
+        // Built-in module omission presets. The key being the preset name, and the valuebeing a string list of modules to omit. Not to be confused with user-defined presets.
         public static readonly Dictionary<string, List<string>> OMIT_PRESETS = new Dictionary<string, List<string>>()
         {
             {"Default", new List<string>()
@@ -379,7 +598,8 @@ namespace kotor_Randomizer_2
             }
 
         };
-        //Collectiuon of acceptable 2da files and collumns to randomize
+
+        // Collectiuon of acceptable 2da files and collumns to randomize
         public static readonly Dictionary<string, List<string>> TWODA_COLLUMNS = new Dictionary<string, List<string>>()
         {
             {"acbonus", new List<string>()
@@ -587,8 +807,7 @@ namespace kotor_Randomizer_2
                 "c0","c1","c2","c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13","c14","c15","c16","c17","c18","c19","c20"
                 }
             }
-    };
+        };
         #endregion
-
     }
 }

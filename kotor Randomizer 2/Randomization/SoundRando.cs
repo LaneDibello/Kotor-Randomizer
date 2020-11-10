@@ -11,12 +11,8 @@ namespace kotor_Randomizer_2
     {
         public static void sound_rando(Globals.KPaths paths)
         {
-            DirectoryInfo music = new DirectoryInfo(paths.get_backup(paths.music));
-            List<FileInfo> musicFiles = music.GetFiles().ToList();
-            DirectoryInfo sounds = new DirectoryInfo(paths.get_backup(paths.sounds));
-            List<FileInfo> soundFiles = sounds.GetFiles().ToList();
-
-            //ThreadSafeRandom.SetSeed(Convert.ToInt32(seedBox.Text)); // We could restart the seed, or just leave it alone. Either way will give randomness.
+            var musicFiles = paths.FilesInMusicBackup;
+            var soundFiles = paths.FilesInSoundsBackup;
 
             // Get file collections
             List<FileInfo> maxMusic = new List<FileInfo>();

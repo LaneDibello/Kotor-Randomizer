@@ -38,7 +38,7 @@ namespace kotor_Randomizer_2
                 update_listBox();
                 if (KRP.ReadKRP(File.OpenRead(fn)))
                 {
-                    MessageBox.Show("Preset Loaded");
+                    MessageBox.Show(Properties.Resources.MsgPresetLoaded);
                 }
             }
 
@@ -76,7 +76,7 @@ namespace kotor_Randomizer_2
                 update_listBox();
                 if (KRP.ReadKRP(ofdPresets.OpenFile()))
                 {
-                    MessageBox.Show("Preset Loaded");
+                    MessageBox.Show(Properties.Resources.MsgPresetLoaded);
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace kotor_Randomizer_2
         {
             if (KRP.ReadKRP((lbPresetPaths.SelectedItem as FileInfo).OpenRead()))
             {
-                MessageBox.Show("Preset Loaded");
+                MessageBox.Show(Properties.Resources.MsgPresetLoaded);
             }
         }
 
@@ -111,7 +111,7 @@ namespace kotor_Randomizer_2
 
         private void bsave_Click(object sender, EventArgs e)
         {
-            //Category Booleans
+            // Category Booleans
             Properties.Settings.Default.module_rando_active = cbIncModu.Checked;
             Properties.Settings.Default.item_rando_active = cbIncItem.Checked;
             Properties.Settings.Default.sound_rando_active = cbIncSound.Checked;
