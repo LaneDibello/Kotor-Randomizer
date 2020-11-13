@@ -25,7 +25,7 @@ namespace kotor_Randomizer_2
         private string curr_task = "";
 
         // Class for easy access and auto-generation of Paths.
-        private Globals.KPaths paths = new Globals.KPaths(Properties.Settings.Default.Kotor1Path);
+        private KPaths paths = new KPaths(Properties.Settings.Default.Kotor1Path);
 
         #endregion
 

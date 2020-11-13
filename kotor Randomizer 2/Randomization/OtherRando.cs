@@ -13,7 +13,7 @@ namespace kotor_Randomizer_2
         public static readonly string PAZAAKDECKS_RESREF = "pazaakdecks";
         public static readonly string DECKNAME_COLUMN = "deckname";
 
-        public static void other_rando(Globals.KPaths paths)
+        public static void other_rando(KPaths paths)
         {
             // NameGen
             if (Properties.Settings.Default.NameGenRando)

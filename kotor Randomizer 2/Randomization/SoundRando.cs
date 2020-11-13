@@ -9,7 +9,7 @@ namespace kotor_Randomizer_2
     //This has absically been copied verbatim from what Glasnonck coded in the last rando, could probably be cleaned up, but I cannot be bothered 
     class SoundRando
     {
-        public static void sound_rando(Globals.KPaths paths)
+        public static void sound_rando(KPaths paths)
         {
             var musicFiles = paths.FilesInMusicBackup;
             var soundFiles = paths.FilesInSoundsBackup;

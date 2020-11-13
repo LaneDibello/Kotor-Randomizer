@@ -19,9 +19,9 @@ namespace kotor_Randomizer_2
         {
             using (BinaryReader br = new BinaryReader(s))
             {
-                if (new string(br.ReadChars(8)) == "KRP V2.0") //Version Check
+                if (new string(br.ReadChars(8)) == "KRP V2.0") // Version Check
                 {
-                    //Category Booleans
+                    // Category Booleans
                     Properties.Settings.Default.module_rando_active = br.ReadBoolean();
                     Properties.Settings.Default.item_rando_active = br.ReadBoolean();
                     Properties.Settings.Default.sound_rando_active = br.ReadBoolean();
@@ -31,14 +31,14 @@ namespace kotor_Randomizer_2
                     Properties.Settings.Default.text_rando_active = br.ReadBoolean();
                     Properties.Settings.Default.other_rando_active = br.ReadBoolean();
 
-                    //Categories
+                    // Categories
                     #region Modules
                     if (Properties.Settings.Default.module_rando_active)
                     {
-                        //Check that Module data is present
+                        // Check that Module data is present
                         if (new string(br.ReadChars(4)) != "MODU") { throw new IOException("Module Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
 
-                        //initialize the BoundModules global if it hasn't been already
+                        // Initialize the BoundModules global if it hasn't been already
                         if (!Properties.Settings.Default.ModulesInitialized)
                         {
                             foreach (string st in Globals.MODULES)
@@ -48,7 +48,7 @@ namespace kotor_Randomizer_2
                             Properties.Settings.Default.ModulesInitialized = true;
                         }
 
-                        //Pull the list of omitted modules from the save
+                        // Pull the list of omitted modules from the save
                         List<string> omit_mods = new List<string>();
                         while (br.PeekChar() != '\n')
                         {
@@ -64,7 +64,7 @@ namespace kotor_Randomizer_2
                         }
                         br.ReadChar();
 
-                        //Load the omitted preset into BoundModules
+                        // Load the omitted preset into BoundModules
                         for (int i = 0; i < Globals.BoundModules.Count; i++)
                         {
                             Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, false);
@@ -76,7 +76,7 @@ namespace kotor_Randomizer_2
                         }
                         Properties.Settings.Default.ModulesInitialized = true;
 
-                        //Load bool settings
+                        // Load bool settings
                         Properties.Settings.Default.ModuleSaveStatus = 0;
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleSaveStatus ^= 1; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleSaveStatus ^= 2; }
@@ -85,15 +85,18 @@ namespace kotor_Randomizer_2
                         if (br.ReadBoolean()) { Properties.Settings.Default.AddOverideFiles.Add("k_pebn_galaxy.ncs"); }
                         Properties.Settings.Default.FixWarpCoords = br.ReadBoolean();
                         Properties.Settings.Default.FixMindPrison = br.ReadBoolean();
+
+                        Properties.Settings.Default.LastPresetComboIndex = -2;
+                        Properties.Settings.Default.ModulePresetSelected = false;
                     }
                     #endregion
                     #region Items
                     if (Properties.Settings.Default.item_rando_active)
                     {
-                        //Check that Item data is present
+                        // Check that Item data is present
                         if (new string(br.ReadChars(4)) != "ITEM") { throw new IOException("Item Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
 
-                        //Load in randolevels
+                        // Load in randolevels
                         Properties.Settings.Default.RandomizeArmor = br.ReadInt32();
                         Properties.Settings.Default.RandomizeStims = br.ReadInt32();
                         Properties.Settings.Default.RandomizeBelts = br.ReadInt32();
@@ -113,7 +116,7 @@ namespace kotor_Randomizer_2
                         Properties.Settings.Default.RandomizeGrenades = br.ReadInt32();
                         Properties.Settings.Default.RandomizeMelee = br.ReadInt32();
 
-                        //Load Omit Items
+                        // Load Omit Items
                         Globals.OmitItems.Clear();
                         while (br.PeekChar() != '\n')
                         {
@@ -133,10 +136,10 @@ namespace kotor_Randomizer_2
                     #region Sounds
                     if (Properties.Settings.Default.sound_rando_active)
                     {
-                        //Check that Sound data is present
+                        // Check that Sound data is present
                         if (new string(br.ReadChars(4)) != "SOUN") { throw new IOException("Sound Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
 
-                        //Rando Levels
+                        // Rando Levels
                         Properties.Settings.Default.RandomizeAreaMusic = br.ReadInt32();
                         Properties.Settings.Default.RandomizeBattleMusic = br.ReadInt32();
                         Properties.Settings.Default.RandomizeAmbientNoise = br.ReadInt32();
@@ -144,17 +147,17 @@ namespace kotor_Randomizer_2
                         Properties.Settings.Default.RandomizeNpcSounds = br.ReadInt32();
                         Properties.Settings.Default.RandomizePartySounds = br.ReadInt32();
 
-                        //Bools
+                        // Bools
                         Properties.Settings.Default.MixNpcAndPartySounds = br.ReadBoolean();
                     }
                     #endregion
                     #region Models
                     if (Properties.Settings.Default.model_rando_active)
                     {
-                        //Check that Model data is present
+                        // Check that Model data is present
                         if (new string(br.ReadChars(4)) != "MODE") { throw new IOException("Model Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
 
-                        //Settings
+                        // Settings
                         Properties.Settings.Default.RandomizeCharModels = br.ReadInt32();
                         Properties.Settings.Default.RandomizePlaceModels = br.ReadInt32();
                         Properties.Settings.Default.RandomizeDoorModels = br.ReadInt32();
@@ -164,10 +167,10 @@ namespace kotor_Randomizer_2
                     #region Textures
                     if (Properties.Settings.Default.texture_rando_active)
                     {
-                        //Check that Texture data is present
+                        // Check that Texture data is present
                         if (new string(br.ReadChars(4)) != "TEXU") { throw new IOException("Texture Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
 
-                        //Settings
+                        // Settings
                         Properties.Settings.Default.TextureRandomizeCubeMaps = br.ReadInt32();
                         Properties.Settings.Default.TextureRandomizeCreatures = br.ReadInt32();
                         Properties.Settings.Default.TextureRandomizeEffects = br.ReadInt32();
@@ -183,14 +186,14 @@ namespace kotor_Randomizer_2
                         Properties.Settings.Default.TextureRandomizeWeapons = br.ReadInt32();
                         Properties.Settings.Default.TextureRandomizeOther = br.ReadInt32();
 
-                        //Texture Pack
+                        // Texture Pack
                         Properties.Settings.Default.TexturePack = br.ReadInt32();
                     }
                     #endregion
                     #region 2DAs
                     if (Properties.Settings.Default.twoda_rando_active)
                     {
-                        //Check that 2DA data is present
+                        // Check that 2DA data is present
                         if (new string(br.ReadChars(4)) != "TWDA") { throw new IOException("2-Dimensional Array Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
 
                         Globals.Selected2DAs.Clear();
@@ -222,19 +225,19 @@ namespace kotor_Randomizer_2
                     #region Text
                     if (Properties.Settings.Default.text_rando_active)
                     {
-                        //Check that Text data is present
+                        // Check that Text data is present
                         if (new string(br.ReadChars(4)) != "TEXT") { throw new IOException("Text Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
 
-                        //TBD
+                        // TBD
                     }
                     #endregion
                     #region Other
                     if (Properties.Settings.Default.other_rando_active)
                     {
-                        //Check that Other data is present
+                        // Check that Other data is present
                         if (new string(br.ReadChars(4)) != "OTHR") { throw new IOException("Other Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
 
-                        //Name Gen
+                        // Name Gen
                         Properties.Settings.Default.NameGenRando = br.ReadBoolean();
                         if (Properties.Settings.Default.NameGenRando)
                         {
@@ -293,10 +296,10 @@ namespace kotor_Randomizer_2
         {
             using (BinaryWriter bw = new BinaryWriter(s))
             {
-                //Version
+                // Version
                 bw.Write(Version.ToCharArray());
 
-                //Category Booleans
+                // Category Booleans
                 bw.Write(Properties.Settings.Default.module_rando_active);
                 bw.Write(Properties.Settings.Default.item_rando_active);
                 bw.Write(Properties.Settings.Default.sound_rando_active);
@@ -306,13 +309,13 @@ namespace kotor_Randomizer_2
                 bw.Write(Properties.Settings.Default.text_rando_active);
                 bw.Write(Properties.Settings.Default.other_rando_active);
 
-                //Categories
-                //Modules
+                // Categories
+                // Modules
                 if (Properties.Settings.Default.module_rando_active)
                 {
                     bw.Write("MODU".ToCharArray());
 
-                    //FIX LATER - Possibility that BoundModules is empty if Module Form never opened.
+                    // FIX LATER - Possibility that BoundModules is empty if Module Form never opened.
                     foreach (Globals.Mod_Entry me in Globals.BoundModules.Where(x => x.Omitted))
                     {
                         bw.Write(me.Name.ToCharArray());
@@ -320,16 +323,16 @@ namespace kotor_Randomizer_2
                     }
                     bw.Write('\n');
 
-                    bw.Write((Properties.Settings.Default.ModuleSaveStatus & 1) > 0); //Mod Delete
-                    bw.Write((Properties.Settings.Default.ModuleSaveStatus & 2) > 0); //Mini-Game Save
-                    bw.Write((Properties.Settings.Default.ModuleSaveStatus & 4) > 0); //All Save
-                    bw.Write(Properties.Settings.Default.AddOverideFiles.Contains("k_ren_visionland.ncs")); //Fixed Dream
-                    bw.Write(Properties.Settings.Default.AddOverideFiles.Contains("k_pebn_galaxy.ncs")); //Unlocked Galaxy Map
-                    bw.Write(Properties.Settings.Default.FixWarpCoords);//Fixed Module Coordinates
-                    bw.Write(Properties.Settings.Default.FixMindPrison);//Fixed Rakatan Riddles
+                    bw.Write((Properties.Settings.Default.ModuleSaveStatus & 1) > 0);   // Mod Delete
+                    bw.Write((Properties.Settings.Default.ModuleSaveStatus & 2) > 0);   // Mini-Game Save
+                    bw.Write((Properties.Settings.Default.ModuleSaveStatus & 4) > 0);   // All Save
+                    bw.Write(Properties.Settings.Default.AddOverideFiles.Contains("k_ren_visionland.ncs")); // Fixed Dream
+                    bw.Write(Properties.Settings.Default.AddOverideFiles.Contains("k_pebn_galaxy.ncs"));    // Unlocked Galaxy Map
+                    bw.Write(Properties.Settings.Default.FixWarpCoords);                // Fixed Module Coordinates
+                    bw.Write(Properties.Settings.Default.FixMindPrison);                // Fixed Rakatan Riddles
 
                 }
-                //Items
+                // Items
                 if (Properties.Settings.Default.item_rando_active)
                 {
                     bw.Write("ITEM".ToCharArray());
@@ -360,7 +363,7 @@ namespace kotor_Randomizer_2
                     }
                     bw.Write('\n');
                 }
-                //Sounds
+                // Sounds
                 if (Properties.Settings.Default.sound_rando_active)
                 {
                     bw.Write("SOUN".ToCharArray());
@@ -375,7 +378,7 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.MixNpcAndPartySounds);
 
                 }
-                //Models
+                // Models
                 if (Properties.Settings.Default.model_rando_active)
                 {
                     bw.Write("MODE".ToCharArray());
@@ -384,7 +387,7 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.RandomizePlaceModels);
                     bw.Write(Properties.Settings.Default.RandomizeDoorModels);
                 }
-                //Textures
+                // Textures
                 if (Properties.Settings.Default.texture_rando_active)
                 {
                     bw.Write("TEXU".ToCharArray());
@@ -407,7 +410,7 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.TexturePack);
 
                 }
-                //2das
+                // 2DAs
                 if (Properties.Settings.Default.twoda_rando_active)
                 {
                     bw.Write("TWDA".ToCharArray());
@@ -427,14 +430,14 @@ namespace kotor_Randomizer_2
                     bw.Write('\x3');
 
                 }
-                //Text
+                // Text
                 if (Properties.Settings.Default.text_rando_active)
                 {
                     bw.Write("TEXT".ToCharArray());
-                    //TBD
+                    // TBD
 
                 }
-                //Other
+                // Other
                 if (Properties.Settings.Default.other_rando_active)
                 {
                     bw.Write("OTHR".ToCharArray());

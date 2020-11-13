@@ -6,7 +6,7 @@ namespace kotor_Randomizer_2
 {
     public static class ModelRando
     {
-        public static void model_rando(Globals.KPaths paths)
+        public static void model_rando(KPaths paths)
         {
             foreach (FileInfo fi in paths.FilesInModules)
             {

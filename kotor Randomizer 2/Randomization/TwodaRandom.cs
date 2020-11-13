@@ -8,7 +8,7 @@ namespace kotor_Randomizer_2
 {
     public static class TwodaRandom
     {
-        public static void Twoda_rando(Globals.KPaths paths)
+        public static void Twoda_rando(KPaths paths)
         {
             BIF b = new BIF(Path.Combine(paths.data, "2da.bif"));
             KEY k = new KEY(paths.chitin_backup);

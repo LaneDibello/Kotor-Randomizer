@@ -12,7 +12,7 @@ namespace kotor_Randomizer_2
         private const string AREA_MIND_PRISON = "g_brakatan003";
 
         // Populates and shuffles the the modules flagged to be randomized. Returns true if override files should be added.
-        public static void Module_rando(Globals.KPaths paths)
+        public static void Module_rando(KPaths paths)
         {
             // Set up the bound module collection if it hasn't been already.
             if (!Properties.Settings.Default.ModulesInitialized)

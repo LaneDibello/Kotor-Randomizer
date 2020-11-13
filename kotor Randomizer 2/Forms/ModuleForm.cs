@@ -31,11 +31,15 @@ namespace kotor_Randomizer_2
             }
 
             //Set up the controls
-            updateListBoxes();
+            UpdateListBoxes();
             RandomizedListBox.DisplayMember = "name";
             OmittedListBox.DisplayMember = "name";
             
             PresetComboBox.DataSource = Globals.OMIT_PRESETS.Keys.ToList();
+            if (Properties.Settings.Default.LastPresetComboIndex < 0)
+            {
+                Properties.Settings.Default.LastPresetComboIndex = -1;
+            }
             PresetComboBox.SelectedIndex = Properties.Settings.Default.LastPresetComboIndex;
 
             modDelete_checkbox.Checked = (Properties.Settings.Default.ModuleSaveStatus & 1) > 0;
@@ -46,6 +50,8 @@ namespace kotor_Randomizer_2
             galmap_checkbox.Checked = Properties.Settings.Default.AddOverideFiles.Contains("k_pebn_galaxy.ncs");
             updatedCoords_checkbox.Checked = Properties.Settings.Default.FixWarpCoords;
             cbRakataRiddle.Checked = Properties.Settings.Default.FixMindPrison;
+
+            int val = Properties.Settings.Default.LastPresetComboIndex;
 
             constructed = true;
         }
@@ -66,11 +72,11 @@ namespace kotor_Randomizer_2
         #endregion
         #region Private Members
 
-        //Prevents Construction from triggering certain events
+        // Prevents Construction from triggering certain events
         private bool constructed = false;
 
-        //Makes list work
-        private void updateListBoxes()
+        // Makes list work
+        private void UpdateListBoxes()
         {
             RandomizedListBox.DataSource = Globals.BoundModules.Where(x => !x.Omitted).ToList();
             RandomizedListBox.Update();
@@ -78,11 +84,12 @@ namespace kotor_Randomizer_2
             OmittedListBox.Update();
         }
 
-        //How we load the built in presets. (May be subject to change if I change my mind about how I want User-presets to work.)
-        private void loadPreset(string preset)
+        // How we load the built in presets. (May be subject to change if I change my mind about how I want User-presets to work.)
+        private void LoadPreset(string preset)
         {
-            if (PresetComboBox.SelectedIndex == -1 || !Properties.Settings.Default.ModulePresetSelected) { return; }
+            if (PresetComboBox.SelectedIndex < 0 || !Properties.Settings.Default.ModulePresetSelected) { return; }
 
+            Properties.Settings.Default.LastPresetComboIndex = PresetComboBox.SelectedIndex;
             for (int i = 0; i < Globals.BoundModules.Count; i++)
             {
                 Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, false);
@@ -92,15 +99,16 @@ namespace kotor_Randomizer_2
                     Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, true);
                 }
             }
-            updateListBoxes();
+            //UpdateListBoxes();
         }
 
         #endregion
         #region Events
-        //ListBox Functions
+        // ListBox Functions
         private void RandomizedListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Properties.Settings.Default.ModulePresetSelected = false;
+            //Properties.Settings.Default.ModulePresetSelected = false;
+            PresetComboBox.SelectedIndex = -1;
 
             for (int i = 0; i < Globals.BoundModules.Count; i++)
             {
@@ -109,12 +117,13 @@ namespace kotor_Randomizer_2
                     Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, true);
                 }
             }
-            updateListBoxes();
+            UpdateListBoxes();
         }
 
         private void OmittedListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Properties.Settings.Default.ModulePresetSelected = false;
+            //Properties.Settings.Default.ModulePresetSelected = false;
+            PresetComboBox.SelectedIndex = -1;
 
             for (int i = 0; i < Globals.BoundModules.Count; i++)
             {
@@ -123,14 +132,15 @@ namespace kotor_Randomizer_2
                     Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, false);
                 }
             }
-            updateListBoxes();
+            UpdateListBoxes();
         }
 
         private void RandomizedListBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Return)
             {
-                Properties.Settings.Default.ModulePresetSelected = false;
+                //Properties.Settings.Default.ModulePresetSelected = false;
+                PresetComboBox.SelectedIndex = -1;
 
                 for (int i = 0; i < Globals.BoundModules.Count; i++)
                 {
@@ -139,7 +149,7 @@ namespace kotor_Randomizer_2
                         Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, true);
                     }
                 }
-                updateListBoxes();
+                UpdateListBoxes();
             }
         }
 
@@ -147,7 +157,8 @@ namespace kotor_Randomizer_2
         {
             if (e.KeyChar == (char)Keys.Return)
             {
-                Properties.Settings.Default.ModulePresetSelected = false;
+                //Properties.Settings.Default.ModulePresetSelected = false;
+                PresetComboBox.SelectedIndex = -1;
 
                 for (int i = 0; i < Globals.BoundModules.Count; i++)
                 {
@@ -156,15 +167,25 @@ namespace kotor_Randomizer_2
                         Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, false);
                     }
                 }
-                updateListBoxes();
+                UpdateListBoxes();
             }
         }
 
         //Built-in Preset control functions
         private void PresetComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            loadPreset(PresetComboBox.Text);
-            updateListBoxes();
+            if (!constructed) return;
+
+            if (PresetComboBox.SelectedIndex >= 0)
+            {
+                Properties.Settings.Default.ModulePresetSelected = true;
+                LoadPreset(PresetComboBox.Text);
+                UpdateListBoxes();
+            }
+            else
+            {
+                Properties.Settings.Default.ModulePresetSelected = false;
+            }
         }
 
         private void PresetComboBox_Enter(object sender, EventArgs e)
@@ -239,8 +260,6 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.FixWarpCoords = updatedCoords_checkbox.Checked;
         }
 
-        #endregion
-
         private void label2_Click(object sender, EventArgs e)
         {
             MessageBox.Show(Convert.ToString(Properties.Settings.Default.ModuleSaveStatus));
@@ -251,5 +270,17 @@ namespace kotor_Randomizer_2
             if (!constructed) { return; }
             Properties.Settings.Default.FixMindPrison = cbRakataRiddle.Checked;
         }
+
+        private void ModuleForm_Activated(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.LastPresetComboIndex == -2)
+            {
+                Properties.Settings.Default.LastPresetComboIndex = -1;
+                PresetComboBox.SelectedIndex = -1;
+                UpdateListBoxes();
+            }
+        }
+
+        #endregion
     }
 }

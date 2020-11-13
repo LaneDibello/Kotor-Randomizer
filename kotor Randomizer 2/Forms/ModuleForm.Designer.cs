@@ -83,7 +83,6 @@
             this.PresetComboBox.Size = new System.Drawing.Size(500, 21);
             this.PresetComboBox.TabIndex = 18;
             this.PresetComboBox.SelectedIndexChanged += new System.EventHandler(this.PresetComboBox_SelectedIndexChanged);
-            this.PresetComboBox.Enter += new System.EventHandler(this.PresetComboBox_Enter);
             // 
             // modDelete_checkbox
             // 
@@ -102,11 +101,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Unispace", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.label1.Location = new System.Drawing.Point(20, 440);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 14);
+            this.label1.Size = new System.Drawing.Size(53, 13);
             this.label1.TabIndex = 20;
             this.label1.Text = "Presets:";
             // 
@@ -232,6 +231,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modules";
+            this.Activated += new System.EventHandler(this.ModuleForm_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ModuleForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();

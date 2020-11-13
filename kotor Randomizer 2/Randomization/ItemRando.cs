@@ -11,7 +11,7 @@ namespace kotor_Randomizer_2
 {
     public static class ItemRando
     {
-        public static void item_rando(Globals.KPaths paths)
+        public static void item_rando(KPaths paths)
         {
             // Prepare lists for new randomization.
             Max_Rando.Clear();

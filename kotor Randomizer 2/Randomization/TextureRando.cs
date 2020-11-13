@@ -31,7 +31,7 @@ namespace kotor_Randomizer_2
         private static readonly Regex RegexWeapons = new Regex("^W_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         #endregion
 
-        public static void texture_rando(Globals.KPaths paths)
+        public static void texture_rando(KPaths paths)
         {
             // Prepare lists for new randomization.
             MaxRando.Clear();
