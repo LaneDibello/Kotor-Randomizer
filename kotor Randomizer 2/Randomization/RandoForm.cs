@@ -199,42 +199,14 @@ namespace kotor_Randomizer_2
                 return;
             }
 
-            // Checks for and loads back-up folders.
-            if (Directory.Exists(paths.modules_backup))
-            {
-                Directory.Delete(paths.modules, true);
-                Directory.Move(paths.modules_backup, paths.modules);
-            }
-            if (Directory.Exists(paths.lips_backup))
-            {
-                Directory.Delete(paths.lips, true);
-                Directory.Move(paths.lips_backup, paths.lips);
-            }
-            if (Directory.Exists(paths.Override_backup))
-            {
-                Directory.Delete(paths.Override, true);
-                Directory.Move(paths.Override_backup, paths.Override);
-            }
-            if (Directory.Exists(paths.music_backup))
-            {
-                Directory.Delete(paths.music, true);
-                Directory.Move(paths.music_backup, paths.music);
-            }
-            if (Directory.Exists(paths.sounds_backup))
-            {
-                Directory.Delete(paths.sounds, true);
-                Directory.Move(paths.sounds_backup, paths.sounds);
-            }
-            if (Directory.Exists(paths.TexturePacks_backup))
-            {
-                Directory.Delete(paths.TexturePacks, true);
-                Directory.Move(paths.TexturePacks_backup, paths.TexturePacks);
-            }
-            if (File.Exists(paths.chitin_backup))
-            {
-                File.Delete(paths.chitin);
-                File.Move(paths.chitin_backup, paths.chitin);
-            }
+            // Restore any backup folders to their active directories.
+            paths.RestoreModulesDirectory();
+            paths.RestoreLipsDirectory();
+            paths.RestoreOverrideDirectory();
+            paths.RestoreMusicDirectory();
+            paths.RestoreSoundsDirectory();
+            paths.RestoreTexturePacksDirectory();
+            paths.RestoreChitinFile();
 
             // Removing log file.
             File.Delete(paths.RANDOMIZED_LOG);
@@ -250,72 +222,50 @@ namespace kotor_Randomizer_2
                 return;
             }
 
-            int step_size = 13;
-            int curr_progress = 0;
-
-            // Checks for and loads back-up folders.
-            if (Directory.Exists(paths.modules_backup))
+            try
             {
+                int step_size = 13;
+                int curr_progress = 0;
+                bwUnrandomizing.ReportProgress(curr_progress);
+
+                // Restore any backup folders to their active directories.
                 curr_task = Properties.Resources.UnrandomizingModules;
-                bwUnrandomizing.ReportProgress(curr_progress);
-                Directory.Delete(paths.modules, true);
-                Directory.Move(paths.modules_backup, paths.modules);
-                curr_progress += step_size;
-            }
-            if (Directory.Exists(paths.lips_backup))
-            {
-                curr_task = Properties.Resources.UnrandomizingLips;
-                bwUnrandomizing.ReportProgress(curr_progress);
-                Directory.Delete(paths.lips, true);
-                Directory.Move(paths.lips_backup, paths.lips);
-                curr_progress += step_size;
-            }
-            if (Directory.Exists(paths.Override_backup))
-            {
-                curr_task = Properties.Resources.UnrandomizingOverrides;
-                bwUnrandomizing.ReportProgress(curr_progress);
-                Directory.Delete(paths.Override, true);
-                Directory.Move(paths.Override_backup, paths.Override);
-                curr_progress += step_size;
-            }
-            if (Directory.Exists(paths.music_backup))
-            {
-                curr_task = Properties.Resources.UnrandomizingMusic;
-                bwUnrandomizing.ReportProgress(curr_progress);
-                Directory.Delete(paths.music, true);
-                Directory.Move(paths.music_backup, paths.music);
-                curr_progress += step_size;
-            }
-            if (Directory.Exists(paths.sounds_backup))
-            {
-                curr_task = Properties.Resources.UnrandomizingSounds;
-                bwUnrandomizing.ReportProgress(curr_progress);
-                Directory.Delete(paths.sounds, true);
-                Directory.Move(paths.sounds_backup, paths.sounds);
-                curr_progress += step_size;
-            }
-            if (Directory.Exists(paths.TexturePacks_backup))
-            {
-                curr_task = Properties.Resources.UnrandomizingTextures;
-                bwUnrandomizing.ReportProgress(curr_progress);
-                Directory.Delete(paths.TexturePacks, true);
-                Directory.Move(paths.TexturePacks_backup, paths.TexturePacks);
-                curr_progress += step_size;
-            }
-            if (File.Exists(paths.chitin_backup))
-            {
-                curr_task = Properties.Resources.UnrandomizingKeyTable;
-                bwUnrandomizing.ReportProgress(curr_progress);
-                File.Delete(paths.chitin);
-                File.Move(paths.chitin_backup, paths.chitin);
-                curr_progress += step_size;
-            }
+                paths.RestoreModulesDirectory();
+                bwUnrandomizing.ReportProgress(curr_progress += step_size);
 
-            // Removing log file.
-            curr_task = Properties.Resources.TaskFinishing;
-            bwUnrandomizing.ReportProgress(curr_progress);
-            File.Delete(paths.RANDOMIZED_LOG);
-            Properties.Settings.Default.KotorIsRandomized = false;
+                curr_task = Properties.Resources.UnrandomizingLips;
+                paths.RestoreLipsDirectory();
+                bwUnrandomizing.ReportProgress(curr_progress += step_size);
+
+                curr_task = Properties.Resources.UnrandomizingOverrides;
+                paths.RestoreOverrideDirectory();
+                bwUnrandomizing.ReportProgress(curr_progress += step_size);
+
+                curr_task = Properties.Resources.UnrandomizingMusic;
+                paths.RestoreMusicDirectory();
+                bwUnrandomizing.ReportProgress(curr_progress += step_size);
+
+                curr_task = Properties.Resources.UnrandomizingSounds;
+                paths.RestoreSoundsDirectory();
+                bwUnrandomizing.ReportProgress(curr_progress += step_size);
+
+                curr_task = Properties.Resources.UnrandomizingTextures;
+                paths.RestoreTexturePacksDirectory();
+                bwUnrandomizing.ReportProgress(curr_progress += step_size);
+
+                curr_task = Properties.Resources.UnrandomizingKeyTable;
+                paths.RestoreChitinFile();
+                bwUnrandomizing.ReportProgress(curr_progress += step_size);
+
+                // Removing log file.
+                curr_task = Properties.Resources.TaskFinishing;
+                File.Delete(paths.RANDOMIZED_LOG);
+                Properties.Settings.Default.KotorIsRandomized = false;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Exception caught while {curr_task}. {e.Message}");
+            }
         }
 
         private int CountActiveCategories()

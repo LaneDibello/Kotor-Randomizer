@@ -231,6 +231,90 @@ namespace kotor_Randomizer_2
         }
 
         /// <summary>
+        /// If the backup Modules directory exists, restore it to the active directory.
+        /// </summary>
+        public void RestoreModulesDirectory()
+        {
+            if (Directory.Exists(modules_backup))
+            {
+                Directory.Delete(modules, true);
+                Directory.Move(modules_backup, modules);
+            }
+        }
+
+        /// <summary>
+        /// If the backup Lips directory exists, restore it to the active directory.
+        /// </summary>
+        public void RestoreLipsDirectory()
+        {
+            if (Directory.Exists(lips_backup))
+            {
+                Directory.Delete(lips, true);
+                Directory.Move(lips_backup, lips);
+            }
+        }
+
+        /// <summary>
+        /// If the backup Override directory exists, restore it to the active directory.
+        /// </summary>
+        public void RestoreOverrideDirectory()
+        {
+            if (Directory.Exists(Override_backup))
+            {
+                Directory.Delete(Override, true);
+                Directory.Move(Override_backup, Override);
+            }
+        }
+
+        /// <summary>
+        /// If the backup Music directory exists, restore it to the active directory.
+        /// </summary>
+        public void RestoreMusicDirectory()
+        {
+            if (Directory.Exists(music_backup))
+            {
+                Directory.Delete(music, true);
+                Directory.Move(music_backup, music);
+            }
+        }
+
+        /// <summary>
+        /// If the backup Sounds directory exists, restore it to the active directory.
+        /// </summary>
+        public void RestoreSoundsDirectory()
+        {
+            if (Directory.Exists(sounds_backup))
+            {
+                Directory.Delete(sounds, true);
+                Directory.Move(sounds_backup, sounds);
+            }
+        }
+
+        /// <summary>
+        /// If the backup TexturePacks directory exists, restore it to the active directory.
+        /// </summary>
+        public void RestoreTexturePacksDirectory()
+        {
+            if (Directory.Exists(TexturePacks_backup))
+            {
+                Directory.Delete(TexturePacks, true);
+                Directory.Move(TexturePacks_backup, TexturePacks);
+            }
+        }
+
+        /// <summary>
+        /// If the backup chitin file exists, restore it to the active directory.
+        /// </summary>
+        public void RestoreChitinFile()
+        {
+            if (File.Exists(chitin_backup))
+            {
+                File.Delete(chitin);
+                File.Move(chitin_backup, chitin);
+            }
+        }
+
+        /// <summary>
         /// Gets the backup version of the requested path.
         /// </summary>
         /// <param name="path">Path to a directory or file.</param>

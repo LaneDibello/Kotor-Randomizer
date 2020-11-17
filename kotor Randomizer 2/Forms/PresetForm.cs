@@ -95,7 +95,7 @@ namespace kotor_Randomizer_2
             {
                 lbPresetPaths_MouseDoubleClick(sender, new MouseEventArgs(MouseButtons.Left, 2, 0, 0, 0));
             }
-            if (e.KeyChar == (char)Keys.Delete || e.KeyChar == (char)8)
+            if (e.KeyChar == (char)Keys.Delete || e.KeyChar == (char)Keys.Back)
             {
                 if (MessageBox.Show("Are you sure you want to delete this Preset?", "Well?", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {

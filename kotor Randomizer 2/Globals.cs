@@ -49,13 +49,13 @@ namespace kotor_Randomizer_2
     public class Globals
     {
         #region Constants
-        public const string AREA_UNDERCITY = "m04aa";
-        public const string AREA_TOMB_RAGNOS = "m38aa";
-        public const string AREA_LEVI_HANGAR = "m40ac";
-        public const string AREA_AHTO_WEST = "m26aa";
-        public const string AREA_MANAAN_SITH = "m27aa";
-        public const string AREA_RAKA_SETTLE = "m43aa";
-        public const string AREA_TEMPLE_MAIN = "m44aa";
+        public const string AREA_UNDERCITY = "tar_m04aa";
+        public const string AREA_TOMB_TULAK = "korr_m38ab";
+        public const string AREA_LEVI_HANGAR = "lev_m40ac";
+        public const string AREA_AHTO_WEST = "manm26aa";
+        public const string AREA_MANAAN_SITH = "manm27aa";
+        public const string AREA_RAKA_SETTLE = "unk_m43aa";
+        public const string AREA_TEMPLE_MAIN = "unk_m44aa";
 
         /// <summary>
         /// New coordinates for bad randomizer spawn locations.
@@ -66,7 +66,7 @@ namespace kotor_Randomizer_2
                 BitConverter.ToInt32(BitConverter.GetBytes(183.5f), 0),
                 BitConverter.ToInt32(BitConverter.GetBytes(167.4f), 0),
                 BitConverter.ToInt32(BitConverter.GetBytes(1.5f), 0)) },
-            { AREA_TOMB_RAGNOS, new Tuple<int, int, int>(
+            { AREA_TOMB_TULAK, new Tuple<int, int, int>(
                 BitConverter.ToInt32(BitConverter.GetBytes(15.8f), 0),
                 BitConverter.ToInt32(BitConverter.GetBytes(55.6f), 0),
                 BitConverter.ToInt32(BitConverter.GetBytes(0.75f), 0)) },

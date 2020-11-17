@@ -19,7 +19,7 @@ namespace kotor_Randomizer_2
         {
             InitializeComponent();
 
-            //Set up the bound module collection if it hasn't been already
+            // Set up the bound module collection if it hasn't been already
             if (!Properties.Settings.Default.ModulesInitialized)
             {
                 Globals.BoundModules.Clear();
@@ -30,30 +30,37 @@ namespace kotor_Randomizer_2
                 Properties.Settings.Default.ModulesInitialized = true;
             }
 
-            //Set up the controls
-            UpdateListBoxes();
+            // Set up the controls
             RandomizedListBox.DisplayMember = "name";
             OmittedListBox.DisplayMember = "name";
             
-            PresetComboBox.DataSource = Globals.OMIT_PRESETS.Keys.ToList();
-            if (Properties.Settings.Default.LastPresetComboIndex < 0)
-            {
-                Properties.Settings.Default.LastPresetComboIndex = -1;
-            }
-            PresetComboBox.SelectedIndex = Properties.Settings.Default.LastPresetComboIndex;
-
+            // TODO: update storage of additional module settings to remove unnamed constants.
             modDelete_checkbox.Checked = (Properties.Settings.Default.ModuleSaveStatus & 1) > 0;
             mgSave_checkbox.Checked = (Properties.Settings.Default.ModuleSaveStatus & 2) > 0;
             allSave_checkbox.Checked = (Properties.Settings.Default.ModuleSaveStatus & 4) > 0;
 
+            // TODO: update override file usage to not use a string collection.
             FixedDream_checkBox.Checked = Properties.Settings.Default.AddOverideFiles.Contains("k_ren_visionland.ncs");
             galmap_checkbox.Checked = Properties.Settings.Default.AddOverideFiles.Contains("k_pebn_galaxy.ncs");
             updatedCoords_checkbox.Checked = Properties.Settings.Default.FixWarpCoords;
             cbRakataRiddle.Checked = Properties.Settings.Default.FixMindPrison;
 
-            int val = Properties.Settings.Default.LastPresetComboIndex;
-
+            PresetComboBox.DataSource = Globals.OMIT_PRESETS.Keys.ToList();
             constructed = true;
+
+            if (Properties.Settings.Default.LastPresetComboIndex < 0)
+            {
+                Properties.Settings.Default.LastPresetComboIndex = -1;
+                PresetComboBox.SelectedIndex = Properties.Settings.Default.LastPresetComboIndex;
+            }
+            else
+            {
+                PresetComboBox.SelectedIndex = Properties.Settings.Default.LastPresetComboIndex;
+                Properties.Settings.Default.ModulePresetSelected = true;
+                LoadPreset(PresetComboBox.Text);
+            }
+
+            UpdateListBoxes();
         }
 
         public static void static_loadPreset(string preset)
@@ -99,7 +106,6 @@ namespace kotor_Randomizer_2
                     Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, true);
                 }
             }
-            //UpdateListBoxes();
         }
 
         #endregion
@@ -107,7 +113,6 @@ namespace kotor_Randomizer_2
         // ListBox Functions
         private void RandomizedListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            //Properties.Settings.Default.ModulePresetSelected = false;
             PresetComboBox.SelectedIndex = -1;
 
             for (int i = 0; i < Globals.BoundModules.Count; i++)
@@ -122,7 +127,6 @@ namespace kotor_Randomizer_2
 
         private void OmittedListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            //Properties.Settings.Default.ModulePresetSelected = false;
             PresetComboBox.SelectedIndex = -1;
 
             for (int i = 0; i < Globals.BoundModules.Count; i++)
@@ -139,7 +143,6 @@ namespace kotor_Randomizer_2
         {
             if (e.KeyChar == (char)Keys.Return)
             {
-                //Properties.Settings.Default.ModulePresetSelected = false;
                 PresetComboBox.SelectedIndex = -1;
 
                 for (int i = 0; i < Globals.BoundModules.Count; i++)
@@ -157,7 +160,6 @@ namespace kotor_Randomizer_2
         {
             if (e.KeyChar == (char)Keys.Return)
             {
-                //Properties.Settings.Default.ModulePresetSelected = false;
                 PresetComboBox.SelectedIndex = -1;
 
                 for (int i = 0; i < Globals.BoundModules.Count; i++)
@@ -171,7 +173,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        //Built-in Preset control functions
+        // Built-in Preset control functions
         private void PresetComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!constructed) return;
@@ -193,15 +195,20 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.ModulePresetSelected = true;
         }
 
-        //Check box functions
+        // Check box functions
         private void ModuleForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.LastPresetComboIndex = PresetComboBox.SelectedIndex;
 
             if (Properties.Settings.Default.ModuleSaveStatus != 1) { Properties.Settings.Default.AddOverideFiles.Add("modulesave.2da"); }
             else if (Properties.Settings.Default.AddOverideFiles.Contains("modulesave.2da")) { Properties.Settings.Default.AddOverideFiles.Remove("modulesave.2da"); }
-            Properties.Settings.Default.Save();
 
+            // Remove any duplicates within the StringCollection.
+            var noDuplicates = Properties.Settings.Default.AddOverideFiles.Cast<string>().Distinct().ToArray();
+            Properties.Settings.Default.AddOverideFiles.Clear();
+            Properties.Settings.Default.AddOverideFiles.AddRange(noDuplicates);
+
+            Properties.Settings.Default.Save();
         }
 
         private void modDelete_checkbox_CheckedChanged(object sender, EventArgs e)
