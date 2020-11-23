@@ -29,36 +29,36 @@
         private void InitializeComponent()
         {
             this.cbArmor = new System.Windows.Forms.CheckBox();
-            this.cbStims = new System.Windows.Forms.CheckBox();
-            this.cbBelts = new System.Windows.Forms.CheckBox();
+            this.cbStimulant = new System.Windows.Forms.CheckBox();
+            this.cbBelt = new System.Windows.Forms.CheckBox();
             this.cbVarious = new System.Windows.Forms.CheckBox();
-            this.cbArmbands = new System.Windows.Forms.CheckBox();
+            this.cbArmband = new System.Windows.Forms.CheckBox();
             this.cbDroid = new System.Windows.Forms.CheckBox();
-            this.cbGloves = new System.Windows.Forms.CheckBox();
-            this.cbImplants = new System.Windows.Forms.CheckBox();
+            this.cbGlove = new System.Windows.Forms.CheckBox();
+            this.cbImplant = new System.Windows.Forms.CheckBox();
             this.cbMask = new System.Windows.Forms.CheckBox();
-            this.cbPaz = new System.Windows.Forms.CheckBox();
-            this.cbMines = new System.Windows.Forms.CheckBox();
+            this.cbPazaak = new System.Windows.Forms.CheckBox();
+            this.cbMine = new System.Windows.Forms.CheckBox();
             this.cbUpgrade = new System.Windows.Forms.CheckBox();
-            this.cbBlasters = new System.Windows.Forms.CheckBox();
-            this.cbCreature = new System.Windows.Forms.CheckBox();
-            this.cbLightsabers = new System.Windows.Forms.CheckBox();
-            this.cbGrenades = new System.Windows.Forms.CheckBox();
+            this.cbBlaster = new System.Windows.Forms.CheckBox();
+            this.cbCreatureWeapon = new System.Windows.Forms.CheckBox();
+            this.cbLightsaber = new System.Windows.Forms.CheckBox();
+            this.cbGrenade = new System.Windows.Forms.CheckBox();
             this.cbMelee = new System.Windows.Forms.CheckBox();
             this.flpArmor = new System.Windows.Forms.FlowLayoutPanel();
             this.rbArmorSType = new System.Windows.Forms.RadioButton();
             this.rbArmorType = new System.Windows.Forms.RadioButton();
             this.rbArmorMax = new System.Windows.Forms.RadioButton();
             this.flpStims = new System.Windows.Forms.FlowLayoutPanel();
-            this.rbStimsSType = new System.Windows.Forms.RadioButton();
-            this.rbStimsType = new System.Windows.Forms.RadioButton();
-            this.rbStimsMax = new System.Windows.Forms.RadioButton();
+            this.rbStimSType = new System.Windows.Forms.RadioButton();
+            this.rbStimulantType = new System.Windows.Forms.RadioButton();
+            this.rbStimulantMax = new System.Windows.Forms.RadioButton();
             this.flpBelts = new System.Windows.Forms.FlowLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.rbBeltsType = new System.Windows.Forms.RadioButton();
-            this.rbBeltsMax = new System.Windows.Forms.RadioButton();
+            this.labelSpacer1 = new System.Windows.Forms.Label();
+            this.rbBeltType = new System.Windows.Forms.RadioButton();
+            this.rbBeltMax = new System.Windows.Forms.RadioButton();
             this.flpVarious = new System.Windows.Forms.FlowLayoutPanel();
-            this.label7 = new System.Windows.Forms.Label();
+            this.labelSpacer6 = new System.Windows.Forms.Label();
             this.rbVariousType = new System.Windows.Forms.RadioButton();
             this.rbVariousMax = new System.Windows.Forms.RadioButton();
             this.flpDroid = new System.Windows.Forms.FlowLayoutPanel();
@@ -66,64 +66,66 @@
             this.rbDroidType = new System.Windows.Forms.RadioButton();
             this.rbDroidMax = new System.Windows.Forms.RadioButton();
             this.flpArmbands = new System.Windows.Forms.FlowLayoutPanel();
-            this.rbArmbandsSType = new System.Windows.Forms.RadioButton();
-            this.rbArmbandsType = new System.Windows.Forms.RadioButton();
-            this.rbArmbandsMax = new System.Windows.Forms.RadioButton();
+            this.rbArmbandSType = new System.Windows.Forms.RadioButton();
+            this.rbArmbandType = new System.Windows.Forms.RadioButton();
+            this.rbArmbandMax = new System.Windows.Forms.RadioButton();
             this.flpGloves = new System.Windows.Forms.FlowLayoutPanel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.rbGlovesType = new System.Windows.Forms.RadioButton();
-            this.rbGlovesMax = new System.Windows.Forms.RadioButton();
+            this.labelSpacer3 = new System.Windows.Forms.Label();
+            this.rbGloveType = new System.Windows.Forms.RadioButton();
+            this.rbGloveMax = new System.Windows.Forms.RadioButton();
             this.flpImplants = new System.Windows.Forms.FlowLayoutPanel();
-            this.rbImplantsSType = new System.Windows.Forms.RadioButton();
-            this.rbImplantsType = new System.Windows.Forms.RadioButton();
-            this.rbImplantsMax = new System.Windows.Forms.RadioButton();
+            this.rbImplantSType = new System.Windows.Forms.RadioButton();
+            this.rbImplantType = new System.Windows.Forms.RadioButton();
+            this.rbImplantMax = new System.Windows.Forms.RadioButton();
             this.flpMasks = new System.Windows.Forms.FlowLayoutPanel();
-            this.rbMasksSType = new System.Windows.Forms.RadioButton();
-            this.rbMasksType = new System.Windows.Forms.RadioButton();
-            this.rbMasksMax = new System.Windows.Forms.RadioButton();
+            this.rbMaskSType = new System.Windows.Forms.RadioButton();
+            this.rbMaskType = new System.Windows.Forms.RadioButton();
+            this.rbMaskMax = new System.Windows.Forms.RadioButton();
             this.flpPaz = new System.Windows.Forms.FlowLayoutPanel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.rbPazType = new System.Windows.Forms.RadioButton();
-            this.rbPazMax = new System.Windows.Forms.RadioButton();
+            this.labelSpacer5 = new System.Windows.Forms.Label();
+            this.rbPazaakType = new System.Windows.Forms.RadioButton();
+            this.rbPazaakMax = new System.Windows.Forms.RadioButton();
             this.flpMines = new System.Windows.Forms.FlowLayoutPanel();
-            this.rbMinesSType = new System.Windows.Forms.RadioButton();
-            this.rbMinesType = new System.Windows.Forms.RadioButton();
-            this.rbMinesMax = new System.Windows.Forms.RadioButton();
+            this.rbMineSType = new System.Windows.Forms.RadioButton();
+            this.rbMineType = new System.Windows.Forms.RadioButton();
+            this.rbMineMax = new System.Windows.Forms.RadioButton();
             this.flpUpgrades = new System.Windows.Forms.FlowLayoutPanel();
-            this.rbUpgradesSType = new System.Windows.Forms.RadioButton();
-            this.rbUpgradesType = new System.Windows.Forms.RadioButton();
-            this.rbUpgradesMax = new System.Windows.Forms.RadioButton();
+            this.rbUpgradeSType = new System.Windows.Forms.RadioButton();
+            this.rbUpgradeType = new System.Windows.Forms.RadioButton();
+            this.rbUpgradeMax = new System.Windows.Forms.RadioButton();
             this.flpBlasters = new System.Windows.Forms.FlowLayoutPanel();
-            this.rbBlastersSType = new System.Windows.Forms.RadioButton();
-            this.rbBlastersType = new System.Windows.Forms.RadioButton();
-            this.rbBlastersMax = new System.Windows.Forms.RadioButton();
+            this.rbBlasterSType = new System.Windows.Forms.RadioButton();
+            this.rbBlasterType = new System.Windows.Forms.RadioButton();
+            this.rbBlasterMax = new System.Windows.Forms.RadioButton();
             this.flpCreature = new System.Windows.Forms.FlowLayoutPanel();
-            this.rbCreatureSType = new System.Windows.Forms.RadioButton();
-            this.rbCreatureType = new System.Windows.Forms.RadioButton();
-            this.rbCreatureMax = new System.Windows.Forms.RadioButton();
+            this.rbCreatureWeaponSType = new System.Windows.Forms.RadioButton();
+            this.rbCreatureWeaponType = new System.Windows.Forms.RadioButton();
+            this.rbCreatureWeaponMax = new System.Windows.Forms.RadioButton();
             this.flpLightsabers = new System.Windows.Forms.FlowLayoutPanel();
-            this.rbLightsabersSType = new System.Windows.Forms.RadioButton();
-            this.rbLightsabersType = new System.Windows.Forms.RadioButton();
-            this.rbLightsabersMax = new System.Windows.Forms.RadioButton();
+            this.rbLightsaberSType = new System.Windows.Forms.RadioButton();
+            this.rbLightsaberType = new System.Windows.Forms.RadioButton();
+            this.rbLightsaberMax = new System.Windows.Forms.RadioButton();
             this.flpGrenades = new System.Windows.Forms.FlowLayoutPanel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.rbGrenadesType = new System.Windows.Forms.RadioButton();
-            this.rbGrenadesMax = new System.Windows.Forms.RadioButton();
+            this.labelSpacer4 = new System.Windows.Forms.Label();
+            this.rbGrenadeType = new System.Windows.Forms.RadioButton();
+            this.rbGrenadeMax = new System.Windows.Forms.RadioButton();
             this.flpMelee = new System.Windows.Forms.FlowLayoutPanel();
             this.rbMeleeSType = new System.Windows.Forms.RadioButton();
             this.rbMeleeType = new System.Windows.Forms.RadioButton();
             this.rbMeleeMax = new System.Windows.Forms.RadioButton();
-            this.cbHides = new System.Windows.Forms.CheckBox();
+            this.cbCreatureHide = new System.Windows.Forms.CheckBox();
             this.flpHides = new System.Windows.Forms.FlowLayoutPanel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.rbHidesType = new System.Windows.Forms.RadioButton();
-            this.rbHidesMax = new System.Windows.Forms.RadioButton();
-            this.label6 = new System.Windows.Forms.Label();
+            this.labelSpacer2 = new System.Windows.Forms.Label();
+            this.rbCreatureHideType = new System.Windows.Forms.RadioButton();
+            this.rbCreatureHideMax = new System.Windows.Forms.RadioButton();
+            this.lblOmitted = new System.Windows.Forms.Label();
             this.lbOmitItems = new System.Windows.Forms.ListBox();
             this.tbItemOmitAdd = new System.Windows.Forms.TextBox();
             this.bAddOmitItem = new System.Windows.Forms.Button();
-            this.bAllOff = new System.Windows.Forms.Button();
-            this.bAllMax = new System.Windows.Forms.Button();
+            this.bToggleAll = new System.Windows.Forms.Button();
+            this.bSubtypeAll = new System.Windows.Forms.Button();
+            this.bTypeAll = new System.Windows.Forms.Button();
+            this.bMaxAll = new System.Windows.Forms.Button();
             this.flpArmor.SuspendLayout();
             this.flpStims.SuspendLayout();
             this.flpBelts.SuspendLayout();
@@ -148,7 +150,7 @@
             // 
             this.cbArmor.Checked = true;
             this.cbArmor.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbArmor.Location = new System.Drawing.Point(20, 23);
+            this.cbArmor.Location = new System.Drawing.Point(20, 84);
             this.cbArmor.Margin = new System.Windows.Forms.Padding(2);
             this.cbArmor.Name = "cbArmor";
             this.cbArmor.Size = new System.Drawing.Size(120, 20);
@@ -157,37 +159,37 @@
             this.cbArmor.UseVisualStyleBackColor = true;
             this.cbArmor.CheckedChanged += new System.EventHandler(this.cbArmor_CheckedChanged);
             // 
-            // cbStims
+            // cbStimulant
             // 
-            this.cbStims.Checked = true;
-            this.cbStims.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbStims.Location = new System.Drawing.Point(20, 53);
-            this.cbStims.Margin = new System.Windows.Forms.Padding(2);
-            this.cbStims.Name = "cbStims";
-            this.cbStims.Size = new System.Drawing.Size(120, 20);
-            this.cbStims.TabIndex = 1;
-            this.cbStims.Text = "Stims/Medpacs";
-            this.cbStims.UseVisualStyleBackColor = true;
-            this.cbStims.CheckedChanged += new System.EventHandler(this.cbStims_CheckedChanged);
+            this.cbStimulant.Checked = true;
+            this.cbStimulant.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbStimulant.Location = new System.Drawing.Point(20, 504);
+            this.cbStimulant.Margin = new System.Windows.Forms.Padding(2);
+            this.cbStimulant.Name = "cbStimulant";
+            this.cbStimulant.Size = new System.Drawing.Size(120, 20);
+            this.cbStimulant.TabIndex = 1;
+            this.cbStimulant.Text = "Stims/Medpacs";
+            this.cbStimulant.UseVisualStyleBackColor = true;
+            this.cbStimulant.CheckedChanged += new System.EventHandler(this.cbStims_CheckedChanged);
             // 
-            // cbBelts
+            // cbBelt
             // 
-            this.cbBelts.Checked = true;
-            this.cbBelts.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbBelts.Location = new System.Drawing.Point(20, 83);
-            this.cbBelts.Margin = new System.Windows.Forms.Padding(2);
-            this.cbBelts.Name = "cbBelts";
-            this.cbBelts.Size = new System.Drawing.Size(120, 20);
-            this.cbBelts.TabIndex = 2;
-            this.cbBelts.Text = "Belts";
-            this.cbBelts.UseVisualStyleBackColor = true;
-            this.cbBelts.CheckedChanged += new System.EventHandler(this.cbBelts_CheckedChanged);
+            this.cbBelt.Checked = true;
+            this.cbBelt.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbBelt.Location = new System.Drawing.Point(20, 114);
+            this.cbBelt.Margin = new System.Windows.Forms.Padding(2);
+            this.cbBelt.Name = "cbBelt";
+            this.cbBelt.Size = new System.Drawing.Size(120, 20);
+            this.cbBelt.TabIndex = 2;
+            this.cbBelt.Text = "Belts";
+            this.cbBelt.UseVisualStyleBackColor = true;
+            this.cbBelt.CheckedChanged += new System.EventHandler(this.cbBelts_CheckedChanged);
             // 
             // cbVarious
             // 
             this.cbVarious.Checked = true;
             this.cbVarious.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbVarious.Location = new System.Drawing.Point(20, 113);
+            this.cbVarious.Location = new System.Drawing.Point(20, 564);
             this.cbVarious.Margin = new System.Windows.Forms.Padding(2);
             this.cbVarious.Name = "cbVarious";
             this.cbVarious.Size = new System.Drawing.Size(120, 20);
@@ -196,24 +198,24 @@
             this.cbVarious.UseVisualStyleBackColor = true;
             this.cbVarious.CheckedChanged += new System.EventHandler(this.cbVarious_CheckedChanged);
             // 
-            // cbArmbands
+            // cbArmband
             // 
-            this.cbArmbands.Checked = true;
-            this.cbArmbands.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbArmbands.Location = new System.Drawing.Point(20, 203);
-            this.cbArmbands.Margin = new System.Windows.Forms.Padding(2);
-            this.cbArmbands.Name = "cbArmbands";
-            this.cbArmbands.Size = new System.Drawing.Size(120, 20);
-            this.cbArmbands.TabIndex = 4;
-            this.cbArmbands.Text = "Armbands";
-            this.cbArmbands.UseVisualStyleBackColor = true;
-            this.cbArmbands.CheckedChanged += new System.EventHandler(this.cbArmbands_CheckedChanged);
+            this.cbArmband.Checked = true;
+            this.cbArmband.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbArmband.Location = new System.Drawing.Point(20, 54);
+            this.cbArmband.Margin = new System.Windows.Forms.Padding(2);
+            this.cbArmband.Name = "cbArmband";
+            this.cbArmband.Size = new System.Drawing.Size(120, 20);
+            this.cbArmband.TabIndex = 4;
+            this.cbArmband.Text = "Armbands";
+            this.cbArmband.UseVisualStyleBackColor = true;
+            this.cbArmband.CheckedChanged += new System.EventHandler(this.cbArmbands_CheckedChanged);
             // 
             // cbDroid
             // 
             this.cbDroid.Checked = true;
             this.cbDroid.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbDroid.Location = new System.Drawing.Point(20, 173);
+            this.cbDroid.Location = new System.Drawing.Point(20, 234);
             this.cbDroid.Margin = new System.Windows.Forms.Padding(2);
             this.cbDroid.Name = "cbDroid";
             this.cbDroid.Size = new System.Drawing.Size(120, 20);
@@ -222,37 +224,37 @@
             this.cbDroid.UseVisualStyleBackColor = true;
             this.cbDroid.CheckedChanged += new System.EventHandler(this.cbDroid_CheckedChanged);
             // 
-            // cbGloves
+            // cbGlove
             // 
-            this.cbGloves.Checked = true;
-            this.cbGloves.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbGloves.Location = new System.Drawing.Point(20, 233);
-            this.cbGloves.Margin = new System.Windows.Forms.Padding(2);
-            this.cbGloves.Name = "cbGloves";
-            this.cbGloves.Size = new System.Drawing.Size(120, 20);
-            this.cbGloves.TabIndex = 6;
-            this.cbGloves.Text = "Gauntlets";
-            this.cbGloves.UseVisualStyleBackColor = true;
-            this.cbGloves.CheckedChanged += new System.EventHandler(this.cbGloves_CheckedChanged);
+            this.cbGlove.Checked = true;
+            this.cbGlove.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbGlove.Location = new System.Drawing.Point(20, 264);
+            this.cbGlove.Margin = new System.Windows.Forms.Padding(2);
+            this.cbGlove.Name = "cbGlove";
+            this.cbGlove.Size = new System.Drawing.Size(120, 20);
+            this.cbGlove.TabIndex = 6;
+            this.cbGlove.Text = "Gauntlets";
+            this.cbGlove.UseVisualStyleBackColor = true;
+            this.cbGlove.CheckedChanged += new System.EventHandler(this.cbGloves_CheckedChanged);
             // 
-            // cbImplants
+            // cbImplant
             // 
-            this.cbImplants.Checked = true;
-            this.cbImplants.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbImplants.Location = new System.Drawing.Point(20, 263);
-            this.cbImplants.Margin = new System.Windows.Forms.Padding(2);
-            this.cbImplants.Name = "cbImplants";
-            this.cbImplants.Size = new System.Drawing.Size(120, 20);
-            this.cbImplants.TabIndex = 7;
-            this.cbImplants.Text = "Implants";
-            this.cbImplants.UseVisualStyleBackColor = true;
-            this.cbImplants.CheckedChanged += new System.EventHandler(this.cbImplants_CheckedChanged);
+            this.cbImplant.Checked = true;
+            this.cbImplant.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbImplant.Location = new System.Drawing.Point(20, 324);
+            this.cbImplant.Margin = new System.Windows.Forms.Padding(2);
+            this.cbImplant.Name = "cbImplant";
+            this.cbImplant.Size = new System.Drawing.Size(120, 20);
+            this.cbImplant.TabIndex = 7;
+            this.cbImplant.Text = "Implants";
+            this.cbImplant.UseVisualStyleBackColor = true;
+            this.cbImplant.CheckedChanged += new System.EventHandler(this.cbImplants_CheckedChanged);
             // 
             // cbMask
             // 
             this.cbMask.Checked = true;
             this.cbMask.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbMask.Location = new System.Drawing.Point(20, 293);
+            this.cbMask.Location = new System.Drawing.Point(20, 384);
             this.cbMask.Margin = new System.Windows.Forms.Padding(2);
             this.cbMask.Name = "cbMask";
             this.cbMask.Size = new System.Drawing.Size(120, 20);
@@ -261,37 +263,37 @@
             this.cbMask.UseVisualStyleBackColor = true;
             this.cbMask.CheckedChanged += new System.EventHandler(this.cbMask_CheckedChanged);
             // 
-            // cbPaz
+            // cbPazaak
             // 
-            this.cbPaz.Checked = true;
-            this.cbPaz.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbPaz.Location = new System.Drawing.Point(20, 323);
-            this.cbPaz.Margin = new System.Windows.Forms.Padding(2);
-            this.cbPaz.Name = "cbPaz";
-            this.cbPaz.Size = new System.Drawing.Size(120, 20);
-            this.cbPaz.TabIndex = 9;
-            this.cbPaz.Text = "Pazaak Cards";
-            this.cbPaz.UseVisualStyleBackColor = true;
-            this.cbPaz.CheckedChanged += new System.EventHandler(this.cbPaz_CheckedChanged);
+            this.cbPazaak.Checked = true;
+            this.cbPazaak.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbPazaak.Location = new System.Drawing.Point(20, 474);
+            this.cbPazaak.Margin = new System.Windows.Forms.Padding(2);
+            this.cbPazaak.Name = "cbPazaak";
+            this.cbPazaak.Size = new System.Drawing.Size(120, 20);
+            this.cbPazaak.TabIndex = 9;
+            this.cbPazaak.Text = "Pazaak Cards";
+            this.cbPazaak.UseVisualStyleBackColor = true;
+            this.cbPazaak.CheckedChanged += new System.EventHandler(this.cbPaz_CheckedChanged);
             // 
-            // cbMines
+            // cbMine
             // 
-            this.cbMines.Checked = true;
-            this.cbMines.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbMines.Location = new System.Drawing.Point(20, 353);
-            this.cbMines.Margin = new System.Windows.Forms.Padding(2);
-            this.cbMines.Name = "cbMines";
-            this.cbMines.Size = new System.Drawing.Size(120, 20);
-            this.cbMines.TabIndex = 10;
-            this.cbMines.Text = "Mines";
-            this.cbMines.UseVisualStyleBackColor = true;
-            this.cbMines.CheckedChanged += new System.EventHandler(this.cbMines_CheckedChanged);
+            this.cbMine.Checked = true;
+            this.cbMine.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbMine.Location = new System.Drawing.Point(20, 444);
+            this.cbMine.Margin = new System.Windows.Forms.Padding(2);
+            this.cbMine.Name = "cbMine";
+            this.cbMine.Size = new System.Drawing.Size(120, 20);
+            this.cbMine.TabIndex = 10;
+            this.cbMine.Text = "Mines";
+            this.cbMine.UseVisualStyleBackColor = true;
+            this.cbMine.CheckedChanged += new System.EventHandler(this.cbMines_CheckedChanged);
             // 
             // cbUpgrade
             // 
             this.cbUpgrade.Checked = true;
             this.cbUpgrade.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbUpgrade.Location = new System.Drawing.Point(20, 383);
+            this.cbUpgrade.Location = new System.Drawing.Point(20, 534);
             this.cbUpgrade.Margin = new System.Windows.Forms.Padding(2);
             this.cbUpgrade.Name = "cbUpgrade";
             this.cbUpgrade.Size = new System.Drawing.Size(120, 20);
@@ -300,63 +302,63 @@
             this.cbUpgrade.UseVisualStyleBackColor = true;
             this.cbUpgrade.CheckedChanged += new System.EventHandler(this.cbUpgrade_CheckedChanged);
             // 
-            // cbBlasters
+            // cbBlaster
             // 
-            this.cbBlasters.Checked = true;
-            this.cbBlasters.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbBlasters.Location = new System.Drawing.Point(20, 413);
-            this.cbBlasters.Margin = new System.Windows.Forms.Padding(2);
-            this.cbBlasters.Name = "cbBlasters";
-            this.cbBlasters.Size = new System.Drawing.Size(120, 20);
-            this.cbBlasters.TabIndex = 12;
-            this.cbBlasters.Text = "Blasters";
-            this.cbBlasters.UseVisualStyleBackColor = true;
-            this.cbBlasters.CheckedChanged += new System.EventHandler(this.cbBlasters_CheckedChanged);
+            this.cbBlaster.Checked = true;
+            this.cbBlaster.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbBlaster.Location = new System.Drawing.Point(20, 144);
+            this.cbBlaster.Margin = new System.Windows.Forms.Padding(2);
+            this.cbBlaster.Name = "cbBlaster";
+            this.cbBlaster.Size = new System.Drawing.Size(120, 20);
+            this.cbBlaster.TabIndex = 12;
+            this.cbBlaster.Text = "Blasters";
+            this.cbBlaster.UseVisualStyleBackColor = true;
+            this.cbBlaster.CheckedChanged += new System.EventHandler(this.cbBlasters_CheckedChanged);
             // 
-            // cbCreature
+            // cbCreatureWeapon
             // 
-            this.cbCreature.Checked = true;
-            this.cbCreature.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbCreature.Location = new System.Drawing.Point(20, 443);
-            this.cbCreature.Margin = new System.Windows.Forms.Padding(2);
-            this.cbCreature.Name = "cbCreature";
-            this.cbCreature.Size = new System.Drawing.Size(120, 20);
-            this.cbCreature.TabIndex = 13;
-            this.cbCreature.Text = "Creature Weapons";
-            this.cbCreature.UseVisualStyleBackColor = true;
-            this.cbCreature.CheckedChanged += new System.EventHandler(this.cbCreature_CheckedChanged);
+            this.cbCreatureWeapon.Checked = true;
+            this.cbCreatureWeapon.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbCreatureWeapon.Location = new System.Drawing.Point(20, 204);
+            this.cbCreatureWeapon.Margin = new System.Windows.Forms.Padding(2);
+            this.cbCreatureWeapon.Name = "cbCreatureWeapon";
+            this.cbCreatureWeapon.Size = new System.Drawing.Size(120, 20);
+            this.cbCreatureWeapon.TabIndex = 13;
+            this.cbCreatureWeapon.Text = "Creature Weapons";
+            this.cbCreatureWeapon.UseVisualStyleBackColor = true;
+            this.cbCreatureWeapon.CheckedChanged += new System.EventHandler(this.cbCreature_CheckedChanged);
             // 
-            // cbLightsabers
+            // cbLightsaber
             // 
-            this.cbLightsabers.Checked = true;
-            this.cbLightsabers.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbLightsabers.Location = new System.Drawing.Point(20, 473);
-            this.cbLightsabers.Margin = new System.Windows.Forms.Padding(2);
-            this.cbLightsabers.Name = "cbLightsabers";
-            this.cbLightsabers.Size = new System.Drawing.Size(120, 20);
-            this.cbLightsabers.TabIndex = 14;
-            this.cbLightsabers.Text = "Lightsabers";
-            this.cbLightsabers.UseVisualStyleBackColor = true;
-            this.cbLightsabers.CheckedChanged += new System.EventHandler(this.cbLightsabers_CheckedChanged);
+            this.cbLightsaber.Checked = true;
+            this.cbLightsaber.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbLightsaber.Location = new System.Drawing.Point(20, 354);
+            this.cbLightsaber.Margin = new System.Windows.Forms.Padding(2);
+            this.cbLightsaber.Name = "cbLightsaber";
+            this.cbLightsaber.Size = new System.Drawing.Size(120, 20);
+            this.cbLightsaber.TabIndex = 14;
+            this.cbLightsaber.Text = "Lightsabers";
+            this.cbLightsaber.UseVisualStyleBackColor = true;
+            this.cbLightsaber.CheckedChanged += new System.EventHandler(this.cbLightsabers_CheckedChanged);
             // 
-            // cbGrenades
+            // cbGrenade
             // 
-            this.cbGrenades.Checked = true;
-            this.cbGrenades.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbGrenades.Location = new System.Drawing.Point(20, 503);
-            this.cbGrenades.Margin = new System.Windows.Forms.Padding(2);
-            this.cbGrenades.Name = "cbGrenades";
-            this.cbGrenades.Size = new System.Drawing.Size(120, 20);
-            this.cbGrenades.TabIndex = 15;
-            this.cbGrenades.Text = "Grenades";
-            this.cbGrenades.UseVisualStyleBackColor = true;
-            this.cbGrenades.CheckedChanged += new System.EventHandler(this.cbGrenades_CheckedChanged);
+            this.cbGrenade.Checked = true;
+            this.cbGrenade.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbGrenade.Location = new System.Drawing.Point(20, 294);
+            this.cbGrenade.Margin = new System.Windows.Forms.Padding(2);
+            this.cbGrenade.Name = "cbGrenade";
+            this.cbGrenade.Size = new System.Drawing.Size(120, 20);
+            this.cbGrenade.TabIndex = 15;
+            this.cbGrenade.Text = "Grenades";
+            this.cbGrenade.UseVisualStyleBackColor = true;
+            this.cbGrenade.CheckedChanged += new System.EventHandler(this.cbGrenades_CheckedChanged);
             // 
             // cbMelee
             // 
             this.cbMelee.Checked = true;
             this.cbMelee.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbMelee.Location = new System.Drawing.Point(20, 533);
+            this.cbMelee.Location = new System.Drawing.Point(20, 414);
             this.cbMelee.Margin = new System.Windows.Forms.Padding(2);
             this.cbMelee.Name = "cbMelee";
             this.cbMelee.Size = new System.Drawing.Size(120, 20);
@@ -374,7 +376,7 @@
             this.flpArmor.Controls.Add(this.rbArmorType);
             this.flpArmor.Controls.Add(this.rbArmorMax);
             this.flpArmor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpArmor.Location = new System.Drawing.Point(150, 20);
+            this.flpArmor.Location = new System.Drawing.Point(150, 81);
             this.flpArmor.Name = "flpArmor";
             this.flpArmor.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpArmor.Size = new System.Drawing.Size(180, 24);
@@ -419,123 +421,123 @@
             this.flpStims.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpStims.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpStims.Controls.Add(this.rbStimsSType);
-            this.flpStims.Controls.Add(this.rbStimsType);
-            this.flpStims.Controls.Add(this.rbStimsMax);
+            this.flpStims.Controls.Add(this.rbStimSType);
+            this.flpStims.Controls.Add(this.rbStimulantType);
+            this.flpStims.Controls.Add(this.rbStimulantMax);
             this.flpStims.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpStims.Location = new System.Drawing.Point(150, 50);
+            this.flpStims.Location = new System.Drawing.Point(150, 501);
             this.flpStims.Name = "flpStims";
             this.flpStims.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpStims.Size = new System.Drawing.Size(180, 24);
             this.flpStims.TabIndex = 18;
             // 
-            // rbStimsSType
+            // rbStimSType
             // 
-            this.rbStimsSType.AutoSize = true;
-            this.rbStimsSType.Location = new System.Drawing.Point(6, 3);
-            this.rbStimsSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
-            this.rbStimsSType.Name = "rbStimsSType";
-            this.rbStimsSType.Size = new System.Drawing.Size(64, 17);
-            this.rbStimsSType.TabIndex = 2;
-            this.rbStimsSType.TabStop = true;
-            this.rbStimsSType.Text = "Subtype";
-            this.rbStimsSType.UseVisualStyleBackColor = true;
+            this.rbStimSType.AutoSize = true;
+            this.rbStimSType.Location = new System.Drawing.Point(6, 3);
+            this.rbStimSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
+            this.rbStimSType.Name = "rbStimSType";
+            this.rbStimSType.Size = new System.Drawing.Size(64, 17);
+            this.rbStimSType.TabIndex = 2;
+            this.rbStimSType.TabStop = true;
+            this.rbStimSType.Text = "Subtype";
+            this.rbStimSType.UseVisualStyleBackColor = true;
             // 
-            // rbStimsType
+            // rbStimulantType
             // 
-            this.rbStimsType.AutoSize = true;
-            this.rbStimsType.Location = new System.Drawing.Point(75, 3);
-            this.rbStimsType.Name = "rbStimsType";
-            this.rbStimsType.Size = new System.Drawing.Size(49, 17);
-            this.rbStimsType.TabIndex = 0;
-            this.rbStimsType.Text = "Type";
-            this.rbStimsType.UseVisualStyleBackColor = true;
+            this.rbStimulantType.AutoSize = true;
+            this.rbStimulantType.Location = new System.Drawing.Point(75, 3);
+            this.rbStimulantType.Name = "rbStimulantType";
+            this.rbStimulantType.Size = new System.Drawing.Size(49, 17);
+            this.rbStimulantType.TabIndex = 0;
+            this.rbStimulantType.Text = "Type";
+            this.rbStimulantType.UseVisualStyleBackColor = true;
             // 
-            // rbStimsMax
+            // rbStimulantMax
             // 
-            this.rbStimsMax.AutoSize = true;
-            this.rbStimsMax.Checked = true;
-            this.rbStimsMax.Location = new System.Drawing.Point(130, 3);
-            this.rbStimsMax.Name = "rbStimsMax";
-            this.rbStimsMax.Size = new System.Drawing.Size(45, 17);
-            this.rbStimsMax.TabIndex = 1;
-            this.rbStimsMax.TabStop = true;
-            this.rbStimsMax.Text = "Max";
-            this.rbStimsMax.UseVisualStyleBackColor = true;
+            this.rbStimulantMax.AutoSize = true;
+            this.rbStimulantMax.Checked = true;
+            this.rbStimulantMax.Location = new System.Drawing.Point(130, 3);
+            this.rbStimulantMax.Name = "rbStimulantMax";
+            this.rbStimulantMax.Size = new System.Drawing.Size(45, 17);
+            this.rbStimulantMax.TabIndex = 1;
+            this.rbStimulantMax.TabStop = true;
+            this.rbStimulantMax.Text = "Max";
+            this.rbStimulantMax.UseVisualStyleBackColor = true;
             // 
             // flpBelts
             // 
             this.flpBelts.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpBelts.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpBelts.Controls.Add(this.label1);
-            this.flpBelts.Controls.Add(this.rbBeltsType);
-            this.flpBelts.Controls.Add(this.rbBeltsMax);
+            this.flpBelts.Controls.Add(this.labelSpacer1);
+            this.flpBelts.Controls.Add(this.rbBeltType);
+            this.flpBelts.Controls.Add(this.rbBeltMax);
             this.flpBelts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpBelts.Location = new System.Drawing.Point(150, 80);
+            this.flpBelts.Location = new System.Drawing.Point(150, 111);
             this.flpBelts.Name = "flpBelts";
             this.flpBelts.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpBelts.Size = new System.Drawing.Size(180, 24);
             this.flpBelts.TabIndex = 18;
             // 
-            // label1
+            // labelSpacer1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "                   ";
+            this.labelSpacer1.AutoSize = true;
+            this.labelSpacer1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSpacer1.Location = new System.Drawing.Point(6, 0);
+            this.labelSpacer1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelSpacer1.Name = "labelSpacer1";
+            this.labelSpacer1.Size = new System.Drawing.Size(64, 13);
+            this.labelSpacer1.TabIndex = 2;
+            this.labelSpacer1.Text = "                   ";
             // 
-            // rbBeltsType
+            // rbBeltType
             // 
-            this.rbBeltsType.AutoSize = true;
-            this.rbBeltsType.Location = new System.Drawing.Point(75, 3);
-            this.rbBeltsType.Name = "rbBeltsType";
-            this.rbBeltsType.Size = new System.Drawing.Size(49, 17);
-            this.rbBeltsType.TabIndex = 0;
-            this.rbBeltsType.Text = "Type";
-            this.rbBeltsType.UseVisualStyleBackColor = true;
+            this.rbBeltType.AutoSize = true;
+            this.rbBeltType.Location = new System.Drawing.Point(75, 3);
+            this.rbBeltType.Name = "rbBeltType";
+            this.rbBeltType.Size = new System.Drawing.Size(49, 17);
+            this.rbBeltType.TabIndex = 0;
+            this.rbBeltType.Text = "Type";
+            this.rbBeltType.UseVisualStyleBackColor = true;
             // 
-            // rbBeltsMax
+            // rbBeltMax
             // 
-            this.rbBeltsMax.AutoSize = true;
-            this.rbBeltsMax.Checked = true;
-            this.rbBeltsMax.Location = new System.Drawing.Point(130, 3);
-            this.rbBeltsMax.Name = "rbBeltsMax";
-            this.rbBeltsMax.Size = new System.Drawing.Size(45, 17);
-            this.rbBeltsMax.TabIndex = 1;
-            this.rbBeltsMax.TabStop = true;
-            this.rbBeltsMax.Text = "Max";
-            this.rbBeltsMax.UseVisualStyleBackColor = true;
+            this.rbBeltMax.AutoSize = true;
+            this.rbBeltMax.Checked = true;
+            this.rbBeltMax.Location = new System.Drawing.Point(130, 3);
+            this.rbBeltMax.Name = "rbBeltMax";
+            this.rbBeltMax.Size = new System.Drawing.Size(45, 17);
+            this.rbBeltMax.TabIndex = 1;
+            this.rbBeltMax.TabStop = true;
+            this.rbBeltMax.Text = "Max";
+            this.rbBeltMax.UseVisualStyleBackColor = true;
             // 
             // flpVarious
             // 
             this.flpVarious.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpVarious.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpVarious.Controls.Add(this.label7);
+            this.flpVarious.Controls.Add(this.labelSpacer6);
             this.flpVarious.Controls.Add(this.rbVariousType);
             this.flpVarious.Controls.Add(this.rbVariousMax);
             this.flpVarious.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpVarious.Location = new System.Drawing.Point(150, 110);
+            this.flpVarious.Location = new System.Drawing.Point(150, 561);
             this.flpVarious.Name = "flpVarious";
             this.flpVarious.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpVarious.Size = new System.Drawing.Size(180, 24);
             this.flpVarious.TabIndex = 18;
             // 
-            // label7
+            // labelSpacer6
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(6, 0);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(64, 13);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "                   ";
+            this.labelSpacer6.AutoSize = true;
+            this.labelSpacer6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSpacer6.Location = new System.Drawing.Point(6, 0);
+            this.labelSpacer6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelSpacer6.Name = "labelSpacer6";
+            this.labelSpacer6.Size = new System.Drawing.Size(64, 13);
+            this.labelSpacer6.TabIndex = 3;
+            this.labelSpacer6.Text = "                   ";
             // 
             // rbVariousType
             // 
@@ -568,7 +570,7 @@
             this.flpDroid.Controls.Add(this.rbDroidType);
             this.flpDroid.Controls.Add(this.rbDroidMax);
             this.flpDroid.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpDroid.Location = new System.Drawing.Point(150, 170);
+            this.flpDroid.Location = new System.Drawing.Point(150, 231);
             this.flpDroid.Name = "flpDroid";
             this.flpDroid.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpDroid.Size = new System.Drawing.Size(180, 24);
@@ -613,536 +615,536 @@
             this.flpArmbands.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpArmbands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpArmbands.Controls.Add(this.rbArmbandsSType);
-            this.flpArmbands.Controls.Add(this.rbArmbandsType);
-            this.flpArmbands.Controls.Add(this.rbArmbandsMax);
+            this.flpArmbands.Controls.Add(this.rbArmbandSType);
+            this.flpArmbands.Controls.Add(this.rbArmbandType);
+            this.flpArmbands.Controls.Add(this.rbArmbandMax);
             this.flpArmbands.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpArmbands.Location = new System.Drawing.Point(150, 200);
+            this.flpArmbands.Location = new System.Drawing.Point(150, 51);
             this.flpArmbands.Name = "flpArmbands";
             this.flpArmbands.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpArmbands.Size = new System.Drawing.Size(180, 24);
             this.flpArmbands.TabIndex = 18;
             // 
-            // rbArmbandsSType
+            // rbArmbandSType
             // 
-            this.rbArmbandsSType.AutoSize = true;
-            this.rbArmbandsSType.Location = new System.Drawing.Point(6, 3);
-            this.rbArmbandsSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
-            this.rbArmbandsSType.Name = "rbArmbandsSType";
-            this.rbArmbandsSType.Size = new System.Drawing.Size(64, 17);
-            this.rbArmbandsSType.TabIndex = 2;
-            this.rbArmbandsSType.TabStop = true;
-            this.rbArmbandsSType.Text = "Subtype";
-            this.rbArmbandsSType.UseVisualStyleBackColor = true;
+            this.rbArmbandSType.AutoSize = true;
+            this.rbArmbandSType.Location = new System.Drawing.Point(6, 3);
+            this.rbArmbandSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
+            this.rbArmbandSType.Name = "rbArmbandSType";
+            this.rbArmbandSType.Size = new System.Drawing.Size(64, 17);
+            this.rbArmbandSType.TabIndex = 2;
+            this.rbArmbandSType.TabStop = true;
+            this.rbArmbandSType.Text = "Subtype";
+            this.rbArmbandSType.UseVisualStyleBackColor = true;
             // 
-            // rbArmbandsType
+            // rbArmbandType
             // 
-            this.rbArmbandsType.AutoSize = true;
-            this.rbArmbandsType.Checked = true;
-            this.rbArmbandsType.Location = new System.Drawing.Point(75, 3);
-            this.rbArmbandsType.Name = "rbArmbandsType";
-            this.rbArmbandsType.Size = new System.Drawing.Size(49, 17);
-            this.rbArmbandsType.TabIndex = 0;
-            this.rbArmbandsType.TabStop = true;
-            this.rbArmbandsType.Text = "Type";
-            this.rbArmbandsType.UseVisualStyleBackColor = true;
+            this.rbArmbandType.AutoSize = true;
+            this.rbArmbandType.Checked = true;
+            this.rbArmbandType.Location = new System.Drawing.Point(75, 3);
+            this.rbArmbandType.Name = "rbArmbandType";
+            this.rbArmbandType.Size = new System.Drawing.Size(49, 17);
+            this.rbArmbandType.TabIndex = 0;
+            this.rbArmbandType.TabStop = true;
+            this.rbArmbandType.Text = "Type";
+            this.rbArmbandType.UseVisualStyleBackColor = true;
             // 
-            // rbArmbandsMax
+            // rbArmbandMax
             // 
-            this.rbArmbandsMax.AutoSize = true;
-            this.rbArmbandsMax.Location = new System.Drawing.Point(130, 3);
-            this.rbArmbandsMax.Name = "rbArmbandsMax";
-            this.rbArmbandsMax.Size = new System.Drawing.Size(45, 17);
-            this.rbArmbandsMax.TabIndex = 1;
-            this.rbArmbandsMax.Text = "Max";
-            this.rbArmbandsMax.UseVisualStyleBackColor = true;
+            this.rbArmbandMax.AutoSize = true;
+            this.rbArmbandMax.Location = new System.Drawing.Point(130, 3);
+            this.rbArmbandMax.Name = "rbArmbandMax";
+            this.rbArmbandMax.Size = new System.Drawing.Size(45, 17);
+            this.rbArmbandMax.TabIndex = 1;
+            this.rbArmbandMax.Text = "Max";
+            this.rbArmbandMax.UseVisualStyleBackColor = true;
             // 
             // flpGloves
             // 
             this.flpGloves.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpGloves.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpGloves.Controls.Add(this.label3);
-            this.flpGloves.Controls.Add(this.rbGlovesType);
-            this.flpGloves.Controls.Add(this.rbGlovesMax);
+            this.flpGloves.Controls.Add(this.labelSpacer3);
+            this.flpGloves.Controls.Add(this.rbGloveType);
+            this.flpGloves.Controls.Add(this.rbGloveMax);
             this.flpGloves.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpGloves.Location = new System.Drawing.Point(150, 230);
+            this.flpGloves.Location = new System.Drawing.Point(150, 261);
             this.flpGloves.Name = "flpGloves";
             this.flpGloves.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpGloves.Size = new System.Drawing.Size(180, 24);
             this.flpGloves.TabIndex = 18;
             // 
-            // label3
+            // labelSpacer3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(6, 0);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "                   ";
+            this.labelSpacer3.AutoSize = true;
+            this.labelSpacer3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSpacer3.Location = new System.Drawing.Point(6, 0);
+            this.labelSpacer3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelSpacer3.Name = "labelSpacer3";
+            this.labelSpacer3.Size = new System.Drawing.Size(64, 13);
+            this.labelSpacer3.TabIndex = 3;
+            this.labelSpacer3.Text = "                   ";
             // 
-            // rbGlovesType
+            // rbGloveType
             // 
-            this.rbGlovesType.AutoSize = true;
-            this.rbGlovesType.Location = new System.Drawing.Point(75, 3);
-            this.rbGlovesType.Name = "rbGlovesType";
-            this.rbGlovesType.Size = new System.Drawing.Size(49, 17);
-            this.rbGlovesType.TabIndex = 0;
-            this.rbGlovesType.Text = "Type";
-            this.rbGlovesType.UseVisualStyleBackColor = true;
+            this.rbGloveType.AutoSize = true;
+            this.rbGloveType.Location = new System.Drawing.Point(75, 3);
+            this.rbGloveType.Name = "rbGloveType";
+            this.rbGloveType.Size = new System.Drawing.Size(49, 17);
+            this.rbGloveType.TabIndex = 0;
+            this.rbGloveType.Text = "Type";
+            this.rbGloveType.UseVisualStyleBackColor = true;
             // 
-            // rbGlovesMax
+            // rbGloveMax
             // 
-            this.rbGlovesMax.AutoSize = true;
-            this.rbGlovesMax.Checked = true;
-            this.rbGlovesMax.Location = new System.Drawing.Point(130, 3);
-            this.rbGlovesMax.Name = "rbGlovesMax";
-            this.rbGlovesMax.Size = new System.Drawing.Size(45, 17);
-            this.rbGlovesMax.TabIndex = 1;
-            this.rbGlovesMax.TabStop = true;
-            this.rbGlovesMax.Text = "Max";
-            this.rbGlovesMax.UseVisualStyleBackColor = true;
+            this.rbGloveMax.AutoSize = true;
+            this.rbGloveMax.Checked = true;
+            this.rbGloveMax.Location = new System.Drawing.Point(130, 3);
+            this.rbGloveMax.Name = "rbGloveMax";
+            this.rbGloveMax.Size = new System.Drawing.Size(45, 17);
+            this.rbGloveMax.TabIndex = 1;
+            this.rbGloveMax.TabStop = true;
+            this.rbGloveMax.Text = "Max";
+            this.rbGloveMax.UseVisualStyleBackColor = true;
             // 
             // flpImplants
             // 
             this.flpImplants.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpImplants.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpImplants.Controls.Add(this.rbImplantsSType);
-            this.flpImplants.Controls.Add(this.rbImplantsType);
-            this.flpImplants.Controls.Add(this.rbImplantsMax);
+            this.flpImplants.Controls.Add(this.rbImplantSType);
+            this.flpImplants.Controls.Add(this.rbImplantType);
+            this.flpImplants.Controls.Add(this.rbImplantMax);
             this.flpImplants.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpImplants.Location = new System.Drawing.Point(150, 260);
+            this.flpImplants.Location = new System.Drawing.Point(150, 321);
             this.flpImplants.Name = "flpImplants";
             this.flpImplants.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpImplants.Size = new System.Drawing.Size(180, 24);
             this.flpImplants.TabIndex = 18;
             // 
-            // rbImplantsSType
+            // rbImplantSType
             // 
-            this.rbImplantsSType.AutoSize = true;
-            this.rbImplantsSType.Location = new System.Drawing.Point(6, 3);
-            this.rbImplantsSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
-            this.rbImplantsSType.Name = "rbImplantsSType";
-            this.rbImplantsSType.Size = new System.Drawing.Size(64, 17);
-            this.rbImplantsSType.TabIndex = 2;
-            this.rbImplantsSType.TabStop = true;
-            this.rbImplantsSType.Text = "Subtype";
-            this.rbImplantsSType.UseVisualStyleBackColor = true;
+            this.rbImplantSType.AutoSize = true;
+            this.rbImplantSType.Location = new System.Drawing.Point(6, 3);
+            this.rbImplantSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
+            this.rbImplantSType.Name = "rbImplantSType";
+            this.rbImplantSType.Size = new System.Drawing.Size(64, 17);
+            this.rbImplantSType.TabIndex = 2;
+            this.rbImplantSType.TabStop = true;
+            this.rbImplantSType.Text = "Subtype";
+            this.rbImplantSType.UseVisualStyleBackColor = true;
             // 
-            // rbImplantsType
+            // rbImplantType
             // 
-            this.rbImplantsType.AutoSize = true;
-            this.rbImplantsType.Location = new System.Drawing.Point(75, 3);
-            this.rbImplantsType.Name = "rbImplantsType";
-            this.rbImplantsType.Size = new System.Drawing.Size(49, 17);
-            this.rbImplantsType.TabIndex = 0;
-            this.rbImplantsType.Text = "Type";
-            this.rbImplantsType.UseVisualStyleBackColor = true;
+            this.rbImplantType.AutoSize = true;
+            this.rbImplantType.Location = new System.Drawing.Point(75, 3);
+            this.rbImplantType.Name = "rbImplantType";
+            this.rbImplantType.Size = new System.Drawing.Size(49, 17);
+            this.rbImplantType.TabIndex = 0;
+            this.rbImplantType.Text = "Type";
+            this.rbImplantType.UseVisualStyleBackColor = true;
             // 
-            // rbImplantsMax
+            // rbImplantMax
             // 
-            this.rbImplantsMax.AutoSize = true;
-            this.rbImplantsMax.Checked = true;
-            this.rbImplantsMax.Location = new System.Drawing.Point(130, 3);
-            this.rbImplantsMax.Name = "rbImplantsMax";
-            this.rbImplantsMax.Size = new System.Drawing.Size(45, 17);
-            this.rbImplantsMax.TabIndex = 1;
-            this.rbImplantsMax.TabStop = true;
-            this.rbImplantsMax.Text = "Max";
-            this.rbImplantsMax.UseVisualStyleBackColor = true;
+            this.rbImplantMax.AutoSize = true;
+            this.rbImplantMax.Checked = true;
+            this.rbImplantMax.Location = new System.Drawing.Point(130, 3);
+            this.rbImplantMax.Name = "rbImplantMax";
+            this.rbImplantMax.Size = new System.Drawing.Size(45, 17);
+            this.rbImplantMax.TabIndex = 1;
+            this.rbImplantMax.TabStop = true;
+            this.rbImplantMax.Text = "Max";
+            this.rbImplantMax.UseVisualStyleBackColor = true;
             // 
             // flpMasks
             // 
             this.flpMasks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpMasks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpMasks.Controls.Add(this.rbMasksSType);
-            this.flpMasks.Controls.Add(this.rbMasksType);
-            this.flpMasks.Controls.Add(this.rbMasksMax);
+            this.flpMasks.Controls.Add(this.rbMaskSType);
+            this.flpMasks.Controls.Add(this.rbMaskType);
+            this.flpMasks.Controls.Add(this.rbMaskMax);
             this.flpMasks.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpMasks.Location = new System.Drawing.Point(150, 290);
+            this.flpMasks.Location = new System.Drawing.Point(150, 381);
             this.flpMasks.Name = "flpMasks";
             this.flpMasks.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpMasks.Size = new System.Drawing.Size(180, 24);
             this.flpMasks.TabIndex = 18;
             // 
-            // rbMasksSType
+            // rbMaskSType
             // 
-            this.rbMasksSType.AutoSize = true;
-            this.rbMasksSType.Location = new System.Drawing.Point(6, 3);
-            this.rbMasksSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
-            this.rbMasksSType.Name = "rbMasksSType";
-            this.rbMasksSType.Size = new System.Drawing.Size(64, 17);
-            this.rbMasksSType.TabIndex = 2;
-            this.rbMasksSType.TabStop = true;
-            this.rbMasksSType.Text = "Subtype";
-            this.rbMasksSType.UseVisualStyleBackColor = true;
+            this.rbMaskSType.AutoSize = true;
+            this.rbMaskSType.Location = new System.Drawing.Point(6, 3);
+            this.rbMaskSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
+            this.rbMaskSType.Name = "rbMaskSType";
+            this.rbMaskSType.Size = new System.Drawing.Size(64, 17);
+            this.rbMaskSType.TabIndex = 2;
+            this.rbMaskSType.TabStop = true;
+            this.rbMaskSType.Text = "Subtype";
+            this.rbMaskSType.UseVisualStyleBackColor = true;
             // 
-            // rbMasksType
+            // rbMaskType
             // 
-            this.rbMasksType.AutoSize = true;
-            this.rbMasksType.Location = new System.Drawing.Point(75, 3);
-            this.rbMasksType.Name = "rbMasksType";
-            this.rbMasksType.Size = new System.Drawing.Size(49, 17);
-            this.rbMasksType.TabIndex = 0;
-            this.rbMasksType.Text = "Type";
-            this.rbMasksType.UseVisualStyleBackColor = true;
+            this.rbMaskType.AutoSize = true;
+            this.rbMaskType.Location = new System.Drawing.Point(75, 3);
+            this.rbMaskType.Name = "rbMaskType";
+            this.rbMaskType.Size = new System.Drawing.Size(49, 17);
+            this.rbMaskType.TabIndex = 0;
+            this.rbMaskType.Text = "Type";
+            this.rbMaskType.UseVisualStyleBackColor = true;
             // 
-            // rbMasksMax
+            // rbMaskMax
             // 
-            this.rbMasksMax.AutoSize = true;
-            this.rbMasksMax.Checked = true;
-            this.rbMasksMax.Location = new System.Drawing.Point(130, 3);
-            this.rbMasksMax.Name = "rbMasksMax";
-            this.rbMasksMax.Size = new System.Drawing.Size(45, 17);
-            this.rbMasksMax.TabIndex = 1;
-            this.rbMasksMax.TabStop = true;
-            this.rbMasksMax.Text = "Max";
-            this.rbMasksMax.UseVisualStyleBackColor = true;
+            this.rbMaskMax.AutoSize = true;
+            this.rbMaskMax.Checked = true;
+            this.rbMaskMax.Location = new System.Drawing.Point(130, 3);
+            this.rbMaskMax.Name = "rbMaskMax";
+            this.rbMaskMax.Size = new System.Drawing.Size(45, 17);
+            this.rbMaskMax.TabIndex = 1;
+            this.rbMaskMax.TabStop = true;
+            this.rbMaskMax.Text = "Max";
+            this.rbMaskMax.UseVisualStyleBackColor = true;
             // 
             // flpPaz
             // 
             this.flpPaz.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpPaz.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpPaz.Controls.Add(this.label5);
-            this.flpPaz.Controls.Add(this.rbPazType);
-            this.flpPaz.Controls.Add(this.rbPazMax);
+            this.flpPaz.Controls.Add(this.labelSpacer5);
+            this.flpPaz.Controls.Add(this.rbPazaakType);
+            this.flpPaz.Controls.Add(this.rbPazaakMax);
             this.flpPaz.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpPaz.Location = new System.Drawing.Point(150, 320);
+            this.flpPaz.Location = new System.Drawing.Point(150, 471);
             this.flpPaz.Name = "flpPaz";
             this.flpPaz.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpPaz.Size = new System.Drawing.Size(180, 24);
             this.flpPaz.TabIndex = 18;
             // 
-            // label5
+            // labelSpacer5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(6, 0);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "                   ";
+            this.labelSpacer5.AutoSize = true;
+            this.labelSpacer5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSpacer5.Location = new System.Drawing.Point(6, 0);
+            this.labelSpacer5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelSpacer5.Name = "labelSpacer5";
+            this.labelSpacer5.Size = new System.Drawing.Size(64, 13);
+            this.labelSpacer5.TabIndex = 4;
+            this.labelSpacer5.Text = "                   ";
             // 
-            // rbPazType
+            // rbPazaakType
             // 
-            this.rbPazType.AutoSize = true;
-            this.rbPazType.Location = new System.Drawing.Point(75, 3);
-            this.rbPazType.Name = "rbPazType";
-            this.rbPazType.Size = new System.Drawing.Size(49, 17);
-            this.rbPazType.TabIndex = 0;
-            this.rbPazType.Text = "Type";
-            this.rbPazType.UseVisualStyleBackColor = true;
+            this.rbPazaakType.AutoSize = true;
+            this.rbPazaakType.Location = new System.Drawing.Point(75, 3);
+            this.rbPazaakType.Name = "rbPazaakType";
+            this.rbPazaakType.Size = new System.Drawing.Size(49, 17);
+            this.rbPazaakType.TabIndex = 0;
+            this.rbPazaakType.Text = "Type";
+            this.rbPazaakType.UseVisualStyleBackColor = true;
             // 
-            // rbPazMax
+            // rbPazaakMax
             // 
-            this.rbPazMax.AutoSize = true;
-            this.rbPazMax.Checked = true;
-            this.rbPazMax.Location = new System.Drawing.Point(130, 3);
-            this.rbPazMax.Name = "rbPazMax";
-            this.rbPazMax.Size = new System.Drawing.Size(45, 17);
-            this.rbPazMax.TabIndex = 1;
-            this.rbPazMax.TabStop = true;
-            this.rbPazMax.Text = "Max";
-            this.rbPazMax.UseVisualStyleBackColor = true;
+            this.rbPazaakMax.AutoSize = true;
+            this.rbPazaakMax.Checked = true;
+            this.rbPazaakMax.Location = new System.Drawing.Point(130, 3);
+            this.rbPazaakMax.Name = "rbPazaakMax";
+            this.rbPazaakMax.Size = new System.Drawing.Size(45, 17);
+            this.rbPazaakMax.TabIndex = 1;
+            this.rbPazaakMax.TabStop = true;
+            this.rbPazaakMax.Text = "Max";
+            this.rbPazaakMax.UseVisualStyleBackColor = true;
             // 
             // flpMines
             // 
             this.flpMines.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpMines.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpMines.Controls.Add(this.rbMinesSType);
-            this.flpMines.Controls.Add(this.rbMinesType);
-            this.flpMines.Controls.Add(this.rbMinesMax);
+            this.flpMines.Controls.Add(this.rbMineSType);
+            this.flpMines.Controls.Add(this.rbMineType);
+            this.flpMines.Controls.Add(this.rbMineMax);
             this.flpMines.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpMines.Location = new System.Drawing.Point(150, 350);
+            this.flpMines.Location = new System.Drawing.Point(150, 441);
             this.flpMines.Name = "flpMines";
             this.flpMines.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpMines.Size = new System.Drawing.Size(180, 24);
             this.flpMines.TabIndex = 18;
             // 
-            // rbMinesSType
+            // rbMineSType
             // 
-            this.rbMinesSType.AutoSize = true;
-            this.rbMinesSType.Location = new System.Drawing.Point(6, 3);
-            this.rbMinesSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
-            this.rbMinesSType.Name = "rbMinesSType";
-            this.rbMinesSType.Size = new System.Drawing.Size(64, 17);
-            this.rbMinesSType.TabIndex = 2;
-            this.rbMinesSType.TabStop = true;
-            this.rbMinesSType.Text = "Subtype";
-            this.rbMinesSType.UseVisualStyleBackColor = true;
+            this.rbMineSType.AutoSize = true;
+            this.rbMineSType.Location = new System.Drawing.Point(6, 3);
+            this.rbMineSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
+            this.rbMineSType.Name = "rbMineSType";
+            this.rbMineSType.Size = new System.Drawing.Size(64, 17);
+            this.rbMineSType.TabIndex = 2;
+            this.rbMineSType.TabStop = true;
+            this.rbMineSType.Text = "Subtype";
+            this.rbMineSType.UseVisualStyleBackColor = true;
             // 
-            // rbMinesType
+            // rbMineType
             // 
-            this.rbMinesType.AutoSize = true;
-            this.rbMinesType.Location = new System.Drawing.Point(75, 3);
-            this.rbMinesType.Name = "rbMinesType";
-            this.rbMinesType.Size = new System.Drawing.Size(49, 17);
-            this.rbMinesType.TabIndex = 0;
-            this.rbMinesType.Text = "Type";
-            this.rbMinesType.UseVisualStyleBackColor = true;
+            this.rbMineType.AutoSize = true;
+            this.rbMineType.Location = new System.Drawing.Point(75, 3);
+            this.rbMineType.Name = "rbMineType";
+            this.rbMineType.Size = new System.Drawing.Size(49, 17);
+            this.rbMineType.TabIndex = 0;
+            this.rbMineType.Text = "Type";
+            this.rbMineType.UseVisualStyleBackColor = true;
             // 
-            // rbMinesMax
+            // rbMineMax
             // 
-            this.rbMinesMax.AutoSize = true;
-            this.rbMinesMax.Checked = true;
-            this.rbMinesMax.Location = new System.Drawing.Point(130, 3);
-            this.rbMinesMax.Name = "rbMinesMax";
-            this.rbMinesMax.Size = new System.Drawing.Size(45, 17);
-            this.rbMinesMax.TabIndex = 1;
-            this.rbMinesMax.TabStop = true;
-            this.rbMinesMax.Text = "Max";
-            this.rbMinesMax.UseVisualStyleBackColor = true;
+            this.rbMineMax.AutoSize = true;
+            this.rbMineMax.Checked = true;
+            this.rbMineMax.Location = new System.Drawing.Point(130, 3);
+            this.rbMineMax.Name = "rbMineMax";
+            this.rbMineMax.Size = new System.Drawing.Size(45, 17);
+            this.rbMineMax.TabIndex = 1;
+            this.rbMineMax.TabStop = true;
+            this.rbMineMax.Text = "Max";
+            this.rbMineMax.UseVisualStyleBackColor = true;
             // 
             // flpUpgrades
             // 
             this.flpUpgrades.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpUpgrades.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpUpgrades.Controls.Add(this.rbUpgradesSType);
-            this.flpUpgrades.Controls.Add(this.rbUpgradesType);
-            this.flpUpgrades.Controls.Add(this.rbUpgradesMax);
+            this.flpUpgrades.Controls.Add(this.rbUpgradeSType);
+            this.flpUpgrades.Controls.Add(this.rbUpgradeType);
+            this.flpUpgrades.Controls.Add(this.rbUpgradeMax);
             this.flpUpgrades.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpUpgrades.Location = new System.Drawing.Point(150, 380);
+            this.flpUpgrades.Location = new System.Drawing.Point(150, 531);
             this.flpUpgrades.Name = "flpUpgrades";
             this.flpUpgrades.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpUpgrades.Size = new System.Drawing.Size(180, 24);
             this.flpUpgrades.TabIndex = 18;
             // 
-            // rbUpgradesSType
+            // rbUpgradeSType
             // 
-            this.rbUpgradesSType.AutoSize = true;
-            this.rbUpgradesSType.Location = new System.Drawing.Point(6, 3);
-            this.rbUpgradesSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
-            this.rbUpgradesSType.Name = "rbUpgradesSType";
-            this.rbUpgradesSType.Size = new System.Drawing.Size(64, 17);
-            this.rbUpgradesSType.TabIndex = 2;
-            this.rbUpgradesSType.TabStop = true;
-            this.rbUpgradesSType.Text = "Subtype";
-            this.rbUpgradesSType.UseVisualStyleBackColor = true;
+            this.rbUpgradeSType.AutoSize = true;
+            this.rbUpgradeSType.Location = new System.Drawing.Point(6, 3);
+            this.rbUpgradeSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
+            this.rbUpgradeSType.Name = "rbUpgradeSType";
+            this.rbUpgradeSType.Size = new System.Drawing.Size(64, 17);
+            this.rbUpgradeSType.TabIndex = 2;
+            this.rbUpgradeSType.TabStop = true;
+            this.rbUpgradeSType.Text = "Subtype";
+            this.rbUpgradeSType.UseVisualStyleBackColor = true;
             // 
-            // rbUpgradesType
+            // rbUpgradeType
             // 
-            this.rbUpgradesType.AutoSize = true;
-            this.rbUpgradesType.Location = new System.Drawing.Point(75, 3);
-            this.rbUpgradesType.Name = "rbUpgradesType";
-            this.rbUpgradesType.Size = new System.Drawing.Size(49, 17);
-            this.rbUpgradesType.TabIndex = 0;
-            this.rbUpgradesType.Text = "Type";
-            this.rbUpgradesType.UseVisualStyleBackColor = true;
+            this.rbUpgradeType.AutoSize = true;
+            this.rbUpgradeType.Location = new System.Drawing.Point(75, 3);
+            this.rbUpgradeType.Name = "rbUpgradeType";
+            this.rbUpgradeType.Size = new System.Drawing.Size(49, 17);
+            this.rbUpgradeType.TabIndex = 0;
+            this.rbUpgradeType.Text = "Type";
+            this.rbUpgradeType.UseVisualStyleBackColor = true;
             // 
-            // rbUpgradesMax
+            // rbUpgradeMax
             // 
-            this.rbUpgradesMax.AutoSize = true;
-            this.rbUpgradesMax.Checked = true;
-            this.rbUpgradesMax.Location = new System.Drawing.Point(130, 3);
-            this.rbUpgradesMax.Name = "rbUpgradesMax";
-            this.rbUpgradesMax.Size = new System.Drawing.Size(45, 17);
-            this.rbUpgradesMax.TabIndex = 1;
-            this.rbUpgradesMax.TabStop = true;
-            this.rbUpgradesMax.Text = "Max";
-            this.rbUpgradesMax.UseVisualStyleBackColor = true;
+            this.rbUpgradeMax.AutoSize = true;
+            this.rbUpgradeMax.Checked = true;
+            this.rbUpgradeMax.Location = new System.Drawing.Point(130, 3);
+            this.rbUpgradeMax.Name = "rbUpgradeMax";
+            this.rbUpgradeMax.Size = new System.Drawing.Size(45, 17);
+            this.rbUpgradeMax.TabIndex = 1;
+            this.rbUpgradeMax.TabStop = true;
+            this.rbUpgradeMax.Text = "Max";
+            this.rbUpgradeMax.UseVisualStyleBackColor = true;
             // 
             // flpBlasters
             // 
             this.flpBlasters.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpBlasters.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpBlasters.Controls.Add(this.rbBlastersSType);
-            this.flpBlasters.Controls.Add(this.rbBlastersType);
-            this.flpBlasters.Controls.Add(this.rbBlastersMax);
+            this.flpBlasters.Controls.Add(this.rbBlasterSType);
+            this.flpBlasters.Controls.Add(this.rbBlasterType);
+            this.flpBlasters.Controls.Add(this.rbBlasterMax);
             this.flpBlasters.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpBlasters.Location = new System.Drawing.Point(150, 410);
+            this.flpBlasters.Location = new System.Drawing.Point(150, 141);
             this.flpBlasters.Name = "flpBlasters";
             this.flpBlasters.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpBlasters.Size = new System.Drawing.Size(180, 24);
             this.flpBlasters.TabIndex = 18;
             // 
-            // rbBlastersSType
+            // rbBlasterSType
             // 
-            this.rbBlastersSType.AutoSize = true;
-            this.rbBlastersSType.Location = new System.Drawing.Point(6, 3);
-            this.rbBlastersSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
-            this.rbBlastersSType.Name = "rbBlastersSType";
-            this.rbBlastersSType.Size = new System.Drawing.Size(64, 17);
-            this.rbBlastersSType.TabIndex = 2;
-            this.rbBlastersSType.TabStop = true;
-            this.rbBlastersSType.Text = "Subtype";
-            this.rbBlastersSType.UseVisualStyleBackColor = true;
+            this.rbBlasterSType.AutoSize = true;
+            this.rbBlasterSType.Location = new System.Drawing.Point(6, 3);
+            this.rbBlasterSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
+            this.rbBlasterSType.Name = "rbBlasterSType";
+            this.rbBlasterSType.Size = new System.Drawing.Size(64, 17);
+            this.rbBlasterSType.TabIndex = 2;
+            this.rbBlasterSType.TabStop = true;
+            this.rbBlasterSType.Text = "Subtype";
+            this.rbBlasterSType.UseVisualStyleBackColor = true;
             // 
-            // rbBlastersType
+            // rbBlasterType
             // 
-            this.rbBlastersType.AutoSize = true;
-            this.rbBlastersType.Location = new System.Drawing.Point(75, 3);
-            this.rbBlastersType.Name = "rbBlastersType";
-            this.rbBlastersType.Size = new System.Drawing.Size(49, 17);
-            this.rbBlastersType.TabIndex = 0;
-            this.rbBlastersType.Text = "Type";
-            this.rbBlastersType.UseVisualStyleBackColor = true;
+            this.rbBlasterType.AutoSize = true;
+            this.rbBlasterType.Location = new System.Drawing.Point(75, 3);
+            this.rbBlasterType.Name = "rbBlasterType";
+            this.rbBlasterType.Size = new System.Drawing.Size(49, 17);
+            this.rbBlasterType.TabIndex = 0;
+            this.rbBlasterType.Text = "Type";
+            this.rbBlasterType.UseVisualStyleBackColor = true;
             // 
-            // rbBlastersMax
+            // rbBlasterMax
             // 
-            this.rbBlastersMax.AutoSize = true;
-            this.rbBlastersMax.Checked = true;
-            this.rbBlastersMax.Location = new System.Drawing.Point(130, 3);
-            this.rbBlastersMax.Name = "rbBlastersMax";
-            this.rbBlastersMax.Size = new System.Drawing.Size(45, 17);
-            this.rbBlastersMax.TabIndex = 1;
-            this.rbBlastersMax.TabStop = true;
-            this.rbBlastersMax.Text = "Max";
-            this.rbBlastersMax.UseVisualStyleBackColor = true;
+            this.rbBlasterMax.AutoSize = true;
+            this.rbBlasterMax.Checked = true;
+            this.rbBlasterMax.Location = new System.Drawing.Point(130, 3);
+            this.rbBlasterMax.Name = "rbBlasterMax";
+            this.rbBlasterMax.Size = new System.Drawing.Size(45, 17);
+            this.rbBlasterMax.TabIndex = 1;
+            this.rbBlasterMax.TabStop = true;
+            this.rbBlasterMax.Text = "Max";
+            this.rbBlasterMax.UseVisualStyleBackColor = true;
             // 
             // flpCreature
             // 
             this.flpCreature.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpCreature.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpCreature.Controls.Add(this.rbCreatureSType);
-            this.flpCreature.Controls.Add(this.rbCreatureType);
-            this.flpCreature.Controls.Add(this.rbCreatureMax);
+            this.flpCreature.Controls.Add(this.rbCreatureWeaponSType);
+            this.flpCreature.Controls.Add(this.rbCreatureWeaponType);
+            this.flpCreature.Controls.Add(this.rbCreatureWeaponMax);
             this.flpCreature.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpCreature.Location = new System.Drawing.Point(150, 440);
+            this.flpCreature.Location = new System.Drawing.Point(150, 201);
             this.flpCreature.Name = "flpCreature";
             this.flpCreature.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpCreature.Size = new System.Drawing.Size(180, 24);
             this.flpCreature.TabIndex = 18;
             // 
-            // rbCreatureSType
+            // rbCreatureWeaponSType
             // 
-            this.rbCreatureSType.AutoSize = true;
-            this.rbCreatureSType.Location = new System.Drawing.Point(6, 3);
-            this.rbCreatureSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
-            this.rbCreatureSType.Name = "rbCreatureSType";
-            this.rbCreatureSType.Size = new System.Drawing.Size(64, 17);
-            this.rbCreatureSType.TabIndex = 2;
-            this.rbCreatureSType.TabStop = true;
-            this.rbCreatureSType.Text = "Subtype";
-            this.rbCreatureSType.UseVisualStyleBackColor = true;
+            this.rbCreatureWeaponSType.AutoSize = true;
+            this.rbCreatureWeaponSType.Location = new System.Drawing.Point(6, 3);
+            this.rbCreatureWeaponSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
+            this.rbCreatureWeaponSType.Name = "rbCreatureWeaponSType";
+            this.rbCreatureWeaponSType.Size = new System.Drawing.Size(64, 17);
+            this.rbCreatureWeaponSType.TabIndex = 2;
+            this.rbCreatureWeaponSType.TabStop = true;
+            this.rbCreatureWeaponSType.Text = "Subtype";
+            this.rbCreatureWeaponSType.UseVisualStyleBackColor = true;
             // 
-            // rbCreatureType
+            // rbCreatureWeaponType
             // 
-            this.rbCreatureType.AutoSize = true;
-            this.rbCreatureType.Location = new System.Drawing.Point(75, 3);
-            this.rbCreatureType.Name = "rbCreatureType";
-            this.rbCreatureType.Size = new System.Drawing.Size(49, 17);
-            this.rbCreatureType.TabIndex = 0;
-            this.rbCreatureType.Text = "Type";
-            this.rbCreatureType.UseVisualStyleBackColor = true;
+            this.rbCreatureWeaponType.AutoSize = true;
+            this.rbCreatureWeaponType.Location = new System.Drawing.Point(75, 3);
+            this.rbCreatureWeaponType.Name = "rbCreatureWeaponType";
+            this.rbCreatureWeaponType.Size = new System.Drawing.Size(49, 17);
+            this.rbCreatureWeaponType.TabIndex = 0;
+            this.rbCreatureWeaponType.Text = "Type";
+            this.rbCreatureWeaponType.UseVisualStyleBackColor = true;
             // 
-            // rbCreatureMax
+            // rbCreatureWeaponMax
             // 
-            this.rbCreatureMax.AutoSize = true;
-            this.rbCreatureMax.Checked = true;
-            this.rbCreatureMax.Location = new System.Drawing.Point(130, 3);
-            this.rbCreatureMax.Name = "rbCreatureMax";
-            this.rbCreatureMax.Size = new System.Drawing.Size(45, 17);
-            this.rbCreatureMax.TabIndex = 1;
-            this.rbCreatureMax.TabStop = true;
-            this.rbCreatureMax.Text = "Max";
-            this.rbCreatureMax.UseVisualStyleBackColor = true;
+            this.rbCreatureWeaponMax.AutoSize = true;
+            this.rbCreatureWeaponMax.Checked = true;
+            this.rbCreatureWeaponMax.Location = new System.Drawing.Point(130, 3);
+            this.rbCreatureWeaponMax.Name = "rbCreatureWeaponMax";
+            this.rbCreatureWeaponMax.Size = new System.Drawing.Size(45, 17);
+            this.rbCreatureWeaponMax.TabIndex = 1;
+            this.rbCreatureWeaponMax.TabStop = true;
+            this.rbCreatureWeaponMax.Text = "Max";
+            this.rbCreatureWeaponMax.UseVisualStyleBackColor = true;
             // 
             // flpLightsabers
             // 
             this.flpLightsabers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpLightsabers.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpLightsabers.Controls.Add(this.rbLightsabersSType);
-            this.flpLightsabers.Controls.Add(this.rbLightsabersType);
-            this.flpLightsabers.Controls.Add(this.rbLightsabersMax);
+            this.flpLightsabers.Controls.Add(this.rbLightsaberSType);
+            this.flpLightsabers.Controls.Add(this.rbLightsaberType);
+            this.flpLightsabers.Controls.Add(this.rbLightsaberMax);
             this.flpLightsabers.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpLightsabers.Location = new System.Drawing.Point(150, 470);
+            this.flpLightsabers.Location = new System.Drawing.Point(150, 351);
             this.flpLightsabers.Name = "flpLightsabers";
             this.flpLightsabers.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpLightsabers.Size = new System.Drawing.Size(180, 24);
             this.flpLightsabers.TabIndex = 18;
             // 
-            // rbLightsabersSType
+            // rbLightsaberSType
             // 
-            this.rbLightsabersSType.AutoSize = true;
-            this.rbLightsabersSType.Location = new System.Drawing.Point(6, 3);
-            this.rbLightsabersSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
-            this.rbLightsabersSType.Name = "rbLightsabersSType";
-            this.rbLightsabersSType.Size = new System.Drawing.Size(64, 17);
-            this.rbLightsabersSType.TabIndex = 2;
-            this.rbLightsabersSType.TabStop = true;
-            this.rbLightsabersSType.Text = "Subtype";
-            this.rbLightsabersSType.UseVisualStyleBackColor = true;
+            this.rbLightsaberSType.AutoSize = true;
+            this.rbLightsaberSType.Location = new System.Drawing.Point(6, 3);
+            this.rbLightsaberSType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 2);
+            this.rbLightsaberSType.Name = "rbLightsaberSType";
+            this.rbLightsaberSType.Size = new System.Drawing.Size(64, 17);
+            this.rbLightsaberSType.TabIndex = 2;
+            this.rbLightsaberSType.TabStop = true;
+            this.rbLightsaberSType.Text = "Subtype";
+            this.rbLightsaberSType.UseVisualStyleBackColor = true;
             // 
-            // rbLightsabersType
+            // rbLightsaberType
             // 
-            this.rbLightsabersType.AutoSize = true;
-            this.rbLightsabersType.Location = new System.Drawing.Point(75, 3);
-            this.rbLightsabersType.Name = "rbLightsabersType";
-            this.rbLightsabersType.Size = new System.Drawing.Size(49, 17);
-            this.rbLightsabersType.TabIndex = 0;
-            this.rbLightsabersType.Text = "Type";
-            this.rbLightsabersType.UseVisualStyleBackColor = true;
+            this.rbLightsaberType.AutoSize = true;
+            this.rbLightsaberType.Location = new System.Drawing.Point(75, 3);
+            this.rbLightsaberType.Name = "rbLightsaberType";
+            this.rbLightsaberType.Size = new System.Drawing.Size(49, 17);
+            this.rbLightsaberType.TabIndex = 0;
+            this.rbLightsaberType.Text = "Type";
+            this.rbLightsaberType.UseVisualStyleBackColor = true;
             // 
-            // rbLightsabersMax
+            // rbLightsaberMax
             // 
-            this.rbLightsabersMax.AutoSize = true;
-            this.rbLightsabersMax.Checked = true;
-            this.rbLightsabersMax.Location = new System.Drawing.Point(130, 3);
-            this.rbLightsabersMax.Name = "rbLightsabersMax";
-            this.rbLightsabersMax.Size = new System.Drawing.Size(45, 17);
-            this.rbLightsabersMax.TabIndex = 1;
-            this.rbLightsabersMax.TabStop = true;
-            this.rbLightsabersMax.Text = "Max";
-            this.rbLightsabersMax.UseVisualStyleBackColor = true;
+            this.rbLightsaberMax.AutoSize = true;
+            this.rbLightsaberMax.Checked = true;
+            this.rbLightsaberMax.Location = new System.Drawing.Point(130, 3);
+            this.rbLightsaberMax.Name = "rbLightsaberMax";
+            this.rbLightsaberMax.Size = new System.Drawing.Size(45, 17);
+            this.rbLightsaberMax.TabIndex = 1;
+            this.rbLightsaberMax.TabStop = true;
+            this.rbLightsaberMax.Text = "Max";
+            this.rbLightsaberMax.UseVisualStyleBackColor = true;
             // 
             // flpGrenades
             // 
             this.flpGrenades.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpGrenades.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpGrenades.Controls.Add(this.label4);
-            this.flpGrenades.Controls.Add(this.rbGrenadesType);
-            this.flpGrenades.Controls.Add(this.rbGrenadesMax);
+            this.flpGrenades.Controls.Add(this.labelSpacer4);
+            this.flpGrenades.Controls.Add(this.rbGrenadeType);
+            this.flpGrenades.Controls.Add(this.rbGrenadeMax);
             this.flpGrenades.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpGrenades.Location = new System.Drawing.Point(150, 500);
+            this.flpGrenades.Location = new System.Drawing.Point(150, 291);
             this.flpGrenades.Name = "flpGrenades";
             this.flpGrenades.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpGrenades.Size = new System.Drawing.Size(180, 24);
             this.flpGrenades.TabIndex = 18;
             // 
-            // label4
+            // labelSpacer4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(6, 0);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(64, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "                   ";
+            this.labelSpacer4.AutoSize = true;
+            this.labelSpacer4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSpacer4.Location = new System.Drawing.Point(6, 0);
+            this.labelSpacer4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelSpacer4.Name = "labelSpacer4";
+            this.labelSpacer4.Size = new System.Drawing.Size(64, 13);
+            this.labelSpacer4.TabIndex = 3;
+            this.labelSpacer4.Text = "                   ";
             // 
-            // rbGrenadesType
+            // rbGrenadeType
             // 
-            this.rbGrenadesType.AutoSize = true;
-            this.rbGrenadesType.Location = new System.Drawing.Point(75, 3);
-            this.rbGrenadesType.Name = "rbGrenadesType";
-            this.rbGrenadesType.Size = new System.Drawing.Size(49, 17);
-            this.rbGrenadesType.TabIndex = 0;
-            this.rbGrenadesType.Text = "Type";
-            this.rbGrenadesType.UseVisualStyleBackColor = true;
+            this.rbGrenadeType.AutoSize = true;
+            this.rbGrenadeType.Location = new System.Drawing.Point(75, 3);
+            this.rbGrenadeType.Name = "rbGrenadeType";
+            this.rbGrenadeType.Size = new System.Drawing.Size(49, 17);
+            this.rbGrenadeType.TabIndex = 0;
+            this.rbGrenadeType.Text = "Type";
+            this.rbGrenadeType.UseVisualStyleBackColor = true;
             // 
-            // rbGrenadesMax
+            // rbGrenadeMax
             // 
-            this.rbGrenadesMax.AutoSize = true;
-            this.rbGrenadesMax.Checked = true;
-            this.rbGrenadesMax.Location = new System.Drawing.Point(130, 3);
-            this.rbGrenadesMax.Name = "rbGrenadesMax";
-            this.rbGrenadesMax.Size = new System.Drawing.Size(45, 17);
-            this.rbGrenadesMax.TabIndex = 1;
-            this.rbGrenadesMax.TabStop = true;
-            this.rbGrenadesMax.Text = "Max";
-            this.rbGrenadesMax.UseVisualStyleBackColor = true;
+            this.rbGrenadeMax.AutoSize = true;
+            this.rbGrenadeMax.Checked = true;
+            this.rbGrenadeMax.Location = new System.Drawing.Point(130, 3);
+            this.rbGrenadeMax.Name = "rbGrenadeMax";
+            this.rbGrenadeMax.Size = new System.Drawing.Size(45, 17);
+            this.rbGrenadeMax.TabIndex = 1;
+            this.rbGrenadeMax.TabStop = true;
+            this.rbGrenadeMax.Text = "Max";
+            this.rbGrenadeMax.UseVisualStyleBackColor = true;
             // 
             // flpMelee
             // 
@@ -1153,7 +1155,7 @@
             this.flpMelee.Controls.Add(this.rbMeleeType);
             this.flpMelee.Controls.Add(this.rbMeleeMax);
             this.flpMelee.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpMelee.Location = new System.Drawing.Point(150, 530);
+            this.flpMelee.Location = new System.Drawing.Point(150, 411);
             this.flpMelee.Name = "flpMelee";
             this.flpMelee.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpMelee.Size = new System.Drawing.Size(180, 24);
@@ -1193,77 +1195,77 @@
             this.rbMeleeMax.Text = "Max";
             this.rbMeleeMax.UseVisualStyleBackColor = true;
             // 
-            // cbHides
+            // cbCreatureHide
             // 
-            this.cbHides.Checked = true;
-            this.cbHides.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbHides.Location = new System.Drawing.Point(20, 143);
-            this.cbHides.Margin = new System.Windows.Forms.Padding(2);
-            this.cbHides.Name = "cbHides";
-            this.cbHides.Size = new System.Drawing.Size(120, 20);
-            this.cbHides.TabIndex = 19;
-            this.cbHides.Text = "Creature Hides";
-            this.cbHides.UseVisualStyleBackColor = true;
-            this.cbHides.CheckedChanged += new System.EventHandler(this.cbHides_CheckedChanged);
+            this.cbCreatureHide.Checked = true;
+            this.cbCreatureHide.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbCreatureHide.Location = new System.Drawing.Point(20, 174);
+            this.cbCreatureHide.Margin = new System.Windows.Forms.Padding(2);
+            this.cbCreatureHide.Name = "cbCreatureHide";
+            this.cbCreatureHide.Size = new System.Drawing.Size(120, 20);
+            this.cbCreatureHide.TabIndex = 19;
+            this.cbCreatureHide.Text = "Creature Hides";
+            this.cbCreatureHide.UseVisualStyleBackColor = true;
+            this.cbCreatureHide.CheckedChanged += new System.EventHandler(this.cbHides_CheckedChanged);
             // 
             // flpHides
             // 
             this.flpHides.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpHides.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpHides.Controls.Add(this.label2);
-            this.flpHides.Controls.Add(this.rbHidesType);
-            this.flpHides.Controls.Add(this.rbHidesMax);
+            this.flpHides.Controls.Add(this.labelSpacer2);
+            this.flpHides.Controls.Add(this.rbCreatureHideType);
+            this.flpHides.Controls.Add(this.rbCreatureHideMax);
             this.flpHides.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpHides.Location = new System.Drawing.Point(150, 140);
+            this.flpHides.Location = new System.Drawing.Point(150, 171);
             this.flpHides.Name = "flpHides";
             this.flpHides.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.flpHides.Size = new System.Drawing.Size(180, 24);
             this.flpHides.TabIndex = 19;
             // 
-            // label2
+            // labelSpacer2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 0);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "                   ";
+            this.labelSpacer2.AutoSize = true;
+            this.labelSpacer2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSpacer2.Location = new System.Drawing.Point(6, 0);
+            this.labelSpacer2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelSpacer2.Name = "labelSpacer2";
+            this.labelSpacer2.Size = new System.Drawing.Size(64, 13);
+            this.labelSpacer2.TabIndex = 3;
+            this.labelSpacer2.Text = "                   ";
             // 
-            // rbHidesType
+            // rbCreatureHideType
             // 
-            this.rbHidesType.AutoSize = true;
-            this.rbHidesType.Location = new System.Drawing.Point(75, 3);
-            this.rbHidesType.Name = "rbHidesType";
-            this.rbHidesType.Size = new System.Drawing.Size(49, 17);
-            this.rbHidesType.TabIndex = 0;
-            this.rbHidesType.Text = "Type";
-            this.rbHidesType.UseVisualStyleBackColor = true;
+            this.rbCreatureHideType.AutoSize = true;
+            this.rbCreatureHideType.Location = new System.Drawing.Point(75, 3);
+            this.rbCreatureHideType.Name = "rbCreatureHideType";
+            this.rbCreatureHideType.Size = new System.Drawing.Size(49, 17);
+            this.rbCreatureHideType.TabIndex = 0;
+            this.rbCreatureHideType.Text = "Type";
+            this.rbCreatureHideType.UseVisualStyleBackColor = true;
             // 
-            // rbHidesMax
+            // rbCreatureHideMax
             // 
-            this.rbHidesMax.AutoSize = true;
-            this.rbHidesMax.Checked = true;
-            this.rbHidesMax.Location = new System.Drawing.Point(130, 3);
-            this.rbHidesMax.Name = "rbHidesMax";
-            this.rbHidesMax.Size = new System.Drawing.Size(45, 17);
-            this.rbHidesMax.TabIndex = 1;
-            this.rbHidesMax.TabStop = true;
-            this.rbHidesMax.Text = "Max";
-            this.rbHidesMax.UseVisualStyleBackColor = true;
+            this.rbCreatureHideMax.AutoSize = true;
+            this.rbCreatureHideMax.Checked = true;
+            this.rbCreatureHideMax.Location = new System.Drawing.Point(130, 3);
+            this.rbCreatureHideMax.Name = "rbCreatureHideMax";
+            this.rbCreatureHideMax.Size = new System.Drawing.Size(45, 17);
+            this.rbCreatureHideMax.TabIndex = 1;
+            this.rbCreatureHideMax.TabStop = true;
+            this.rbCreatureHideMax.Text = "Max";
+            this.rbCreatureHideMax.UseVisualStyleBackColor = true;
             // 
-            // label6
+            // lblOmitted
             // 
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.label6.Location = new System.Drawing.Point(340, 20);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(200, 20);
-            this.label6.TabIndex = 24;
-            this.label6.Text = "Omitted";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblOmitted.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOmitted.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.lblOmitted.Location = new System.Drawing.Point(340, 17);
+            this.lblOmitted.Name = "lblOmitted";
+            this.lblOmitted.Size = new System.Drawing.Size(200, 20);
+            this.lblOmitted.TabIndex = 24;
+            this.lblOmitted.Text = "Omitted";
+            this.lblOmitted.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lbOmitItems
             // 
@@ -1271,10 +1273,10 @@
             this.lbOmitItems.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lbOmitItems.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.lbOmitItems.FormattingEnabled = true;
-            this.lbOmitItems.Location = new System.Drawing.Point(340, 50);
+            this.lbOmitItems.Location = new System.Drawing.Point(340, 45);
             this.lbOmitItems.Name = "lbOmitItems";
             this.lbOmitItems.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbOmitItems.Size = new System.Drawing.Size(200, 327);
+            this.lbOmitItems.Size = new System.Drawing.Size(200, 509);
             this.lbOmitItems.TabIndex = 25;
             this.lbOmitItems.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lbOmitItems_KeyPress);
             this.lbOmitItems.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbOmitItems_MouseDoubleClick);
@@ -1285,7 +1287,7 @@
             this.tbItemOmitAdd.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbItemOmitAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.tbItemOmitAdd.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.tbItemOmitAdd.Location = new System.Drawing.Point(340, 390);
+            this.tbItemOmitAdd.Location = new System.Drawing.Point(340, 564);
             this.tbItemOmitAdd.Name = "tbItemOmitAdd";
             this.tbItemOmitAdd.Size = new System.Drawing.Size(140, 20);
             this.tbItemOmitAdd.TabIndex = 26;
@@ -1301,7 +1303,7 @@
             this.bAddOmitItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bAddOmitItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.bAddOmitItem.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.bAddOmitItem.Location = new System.Drawing.Point(490, 390);
+            this.bAddOmitItem.Location = new System.Drawing.Point(490, 564);
             this.bAddOmitItem.Name = "bAddOmitItem";
             this.bAddOmitItem.Size = new System.Drawing.Size(50, 20);
             this.bAddOmitItem.TabIndex = 27;
@@ -1309,53 +1311,69 @@
             this.bAddOmitItem.UseVisualStyleBackColor = false;
             this.bAddOmitItem.Click += new System.EventHandler(this.bAddOmitItem_Click);
             // 
-            // bAllOff
+            // bToggleAll
             // 
-            this.bAllOff.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.bAllOff.FlatAppearance.BorderSize = 2;
-            this.bAllOff.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.bAllOff.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.bAllOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bAllOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bAllOff.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.bAllOff.Location = new System.Drawing.Point(340, 420);
-            this.bAllOff.Name = "bAllOff";
-            this.bAllOff.Size = new System.Drawing.Size(200, 60);
-            this.bAllOff.TabIndex = 28;
-            this.bAllOff.Text = "Disable All";
-            this.bAllOff.UseVisualStyleBackColor = false;
-            this.bAllOff.Click += new System.EventHandler(this.bAllOff_Click);
+            this.bToggleAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bToggleAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.bToggleAll.Location = new System.Drawing.Point(20, 26);
+            this.bToggleAll.Name = "bToggleAll";
+            this.bToggleAll.Size = new System.Drawing.Size(120, 23);
+            this.bToggleAll.TabIndex = 30;
+            this.bToggleAll.Text = "Toggle All";
+            this.bToggleAll.UseVisualStyleBackColor = false;
+            this.bToggleAll.Click += new System.EventHandler(this.bToggleAll_Click);
             // 
-            // bAllMax
+            // bSubtypeAll
             // 
-            this.bAllMax.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.bAllMax.FlatAppearance.BorderSize = 2;
-            this.bAllMax.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.bAllMax.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.bAllMax.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bAllMax.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bAllMax.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.bAllMax.Location = new System.Drawing.Point(340, 490);
-            this.bAllMax.Name = "bAllMax";
-            this.bAllMax.Size = new System.Drawing.Size(200, 60);
-            this.bAllMax.TabIndex = 29;
-            this.bAllMax.Text = "All Max";
-            this.bAllMax.UseVisualStyleBackColor = false;
-            this.bAllMax.Click += new System.EventHandler(this.bAllMax_Click);
+            this.bSubtypeAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bSubtypeAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.bSubtypeAll.Location = new System.Drawing.Point(157, 26);
+            this.bSubtypeAll.Name = "bSubtypeAll";
+            this.bSubtypeAll.Size = new System.Drawing.Size(64, 23);
+            this.bSubtypeAll.TabIndex = 31;
+            this.bSubtypeAll.Text = "Subtype";
+            this.bSubtypeAll.UseVisualStyleBackColor = false;
+            this.bSubtypeAll.Click += new System.EventHandler(this.bSubtypeAll_Click);
+            // 
+            // bTypeAll
+            // 
+            this.bTypeAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bTypeAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.bTypeAll.Location = new System.Drawing.Point(226, 26);
+            this.bTypeAll.Name = "bTypeAll";
+            this.bTypeAll.Size = new System.Drawing.Size(49, 23);
+            this.bTypeAll.TabIndex = 32;
+            this.bTypeAll.Text = "Type";
+            this.bTypeAll.UseVisualStyleBackColor = false;
+            this.bTypeAll.Click += new System.EventHandler(this.bTypeAll_Click);
+            // 
+            // bMaxAll
+            // 
+            this.bMaxAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bMaxAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.bMaxAll.Location = new System.Drawing.Point(281, 26);
+            this.bMaxAll.Name = "bMaxAll";
+            this.bMaxAll.Size = new System.Drawing.Size(45, 23);
+            this.bMaxAll.TabIndex = 33;
+            this.bMaxAll.Text = "Max";
+            this.bMaxAll.UseVisualStyleBackColor = false;
+            this.bMaxAll.Click += new System.EventHandler(this.bMaxAll_Click);
             // 
             // ItemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(561, 572);
-            this.Controls.Add(this.bAllMax);
-            this.Controls.Add(this.bAllOff);
+            this.ClientSize = new System.Drawing.Size(561, 599);
+            this.Controls.Add(this.bMaxAll);
+            this.Controls.Add(this.bTypeAll);
+            this.Controls.Add(this.bSubtypeAll);
+            this.Controls.Add(this.bToggleAll);
             this.Controls.Add(this.bAddOmitItem);
             this.Controls.Add(this.tbItemOmitAdd);
             this.Controls.Add(this.lbOmitItems);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.cbHides);
+            this.Controls.Add(this.lblOmitted);
+            this.Controls.Add(this.cbCreatureHide);
             this.Controls.Add(this.flpStims);
             this.Controls.Add(this.flpArmor);
             this.Controls.Add(this.flpHides);
@@ -1375,21 +1393,21 @@
             this.Controls.Add(this.flpDroid);
             this.Controls.Add(this.flpVarious);
             this.Controls.Add(this.flpBelts);
-            this.Controls.Add(this.cbGrenades);
-            this.Controls.Add(this.cbLightsabers);
-            this.Controls.Add(this.cbCreature);
-            this.Controls.Add(this.cbBlasters);
+            this.Controls.Add(this.cbGrenade);
+            this.Controls.Add(this.cbLightsaber);
+            this.Controls.Add(this.cbCreatureWeapon);
+            this.Controls.Add(this.cbBlaster);
             this.Controls.Add(this.cbUpgrade);
-            this.Controls.Add(this.cbMines);
-            this.Controls.Add(this.cbPaz);
+            this.Controls.Add(this.cbMine);
+            this.Controls.Add(this.cbPazaak);
             this.Controls.Add(this.cbMask);
-            this.Controls.Add(this.cbImplants);
-            this.Controls.Add(this.cbGloves);
+            this.Controls.Add(this.cbImplant);
+            this.Controls.Add(this.cbGlove);
             this.Controls.Add(this.cbDroid);
-            this.Controls.Add(this.cbArmbands);
+            this.Controls.Add(this.cbArmband);
             this.Controls.Add(this.cbVarious);
-            this.Controls.Add(this.cbBelts);
-            this.Controls.Add(this.cbStims);
+            this.Controls.Add(this.cbBelt);
+            this.Controls.Add(this.cbStimulant);
             this.Controls.Add(this.cbArmor);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -1444,34 +1462,34 @@
         #endregion
 
         private System.Windows.Forms.CheckBox cbArmor;
-        private System.Windows.Forms.CheckBox cbStims;
-        private System.Windows.Forms.CheckBox cbBelts;
+        private System.Windows.Forms.CheckBox cbStimulant;
+        private System.Windows.Forms.CheckBox cbBelt;
         private System.Windows.Forms.CheckBox cbVarious;
-        private System.Windows.Forms.CheckBox cbArmbands;
+        private System.Windows.Forms.CheckBox cbArmband;
         private System.Windows.Forms.CheckBox cbDroid;
-        private System.Windows.Forms.CheckBox cbGloves;
-        private System.Windows.Forms.CheckBox cbImplants;
+        private System.Windows.Forms.CheckBox cbGlove;
+        private System.Windows.Forms.CheckBox cbImplant;
         private System.Windows.Forms.CheckBox cbMask;
-        private System.Windows.Forms.CheckBox cbPaz;
-        private System.Windows.Forms.CheckBox cbMines;
+        private System.Windows.Forms.CheckBox cbPazaak;
+        private System.Windows.Forms.CheckBox cbMine;
         private System.Windows.Forms.CheckBox cbUpgrade;
-        private System.Windows.Forms.CheckBox cbBlasters;
-        private System.Windows.Forms.CheckBox cbCreature;
-        private System.Windows.Forms.CheckBox cbLightsabers;
-        private System.Windows.Forms.CheckBox cbGrenades;
+        private System.Windows.Forms.CheckBox cbBlaster;
+        private System.Windows.Forms.CheckBox cbCreatureWeapon;
+        private System.Windows.Forms.CheckBox cbLightsaber;
+        private System.Windows.Forms.CheckBox cbGrenade;
         private System.Windows.Forms.CheckBox cbMelee;
         private System.Windows.Forms.FlowLayoutPanel flpArmor;
         private System.Windows.Forms.RadioButton rbArmorType;
         private System.Windows.Forms.RadioButton rbArmorMax;
         private System.Windows.Forms.RadioButton rbArmorSType;
         private System.Windows.Forms.FlowLayoutPanel flpStims;
-        private System.Windows.Forms.RadioButton rbStimsSType;
-        private System.Windows.Forms.RadioButton rbStimsType;
-        private System.Windows.Forms.RadioButton rbStimsMax;
+        private System.Windows.Forms.RadioButton rbStimSType;
+        private System.Windows.Forms.RadioButton rbStimulantType;
+        private System.Windows.Forms.RadioButton rbStimulantMax;
         private System.Windows.Forms.FlowLayoutPanel flpBelts;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RadioButton rbBeltsType;
-        private System.Windows.Forms.RadioButton rbBeltsMax;
+        private System.Windows.Forms.Label labelSpacer1;
+        private System.Windows.Forms.RadioButton rbBeltType;
+        private System.Windows.Forms.RadioButton rbBeltMax;
         private System.Windows.Forms.FlowLayoutPanel flpVarious;
         private System.Windows.Forms.RadioButton rbVariousType;
         private System.Windows.Forms.RadioButton rbVariousMax;
@@ -1480,64 +1498,66 @@
         private System.Windows.Forms.RadioButton rbDroidType;
         private System.Windows.Forms.RadioButton rbDroidMax;
         private System.Windows.Forms.FlowLayoutPanel flpArmbands;
-        private System.Windows.Forms.RadioButton rbArmbandsSType;
-        private System.Windows.Forms.RadioButton rbArmbandsType;
-        private System.Windows.Forms.RadioButton rbArmbandsMax;
+        private System.Windows.Forms.RadioButton rbArmbandSType;
+        private System.Windows.Forms.RadioButton rbArmbandType;
+        private System.Windows.Forms.RadioButton rbArmbandMax;
         private System.Windows.Forms.FlowLayoutPanel flpGloves;
-        private System.Windows.Forms.RadioButton rbGlovesType;
-        private System.Windows.Forms.RadioButton rbGlovesMax;
+        private System.Windows.Forms.RadioButton rbGloveType;
+        private System.Windows.Forms.RadioButton rbGloveMax;
         private System.Windows.Forms.FlowLayoutPanel flpImplants;
-        private System.Windows.Forms.RadioButton rbImplantsSType;
-        private System.Windows.Forms.RadioButton rbImplantsType;
-        private System.Windows.Forms.RadioButton rbImplantsMax;
+        private System.Windows.Forms.RadioButton rbImplantSType;
+        private System.Windows.Forms.RadioButton rbImplantType;
+        private System.Windows.Forms.RadioButton rbImplantMax;
         private System.Windows.Forms.FlowLayoutPanel flpMasks;
-        private System.Windows.Forms.RadioButton rbMasksSType;
-        private System.Windows.Forms.RadioButton rbMasksType;
-        private System.Windows.Forms.RadioButton rbMasksMax;
+        private System.Windows.Forms.RadioButton rbMaskSType;
+        private System.Windows.Forms.RadioButton rbMaskType;
+        private System.Windows.Forms.RadioButton rbMaskMax;
         private System.Windows.Forms.FlowLayoutPanel flpPaz;
-        private System.Windows.Forms.RadioButton rbPazType;
-        private System.Windows.Forms.RadioButton rbPazMax;
+        private System.Windows.Forms.RadioButton rbPazaakType;
+        private System.Windows.Forms.RadioButton rbPazaakMax;
         private System.Windows.Forms.FlowLayoutPanel flpMines;
-        private System.Windows.Forms.RadioButton rbMinesSType;
-        private System.Windows.Forms.RadioButton rbMinesType;
-        private System.Windows.Forms.RadioButton rbMinesMax;
+        private System.Windows.Forms.RadioButton rbMineSType;
+        private System.Windows.Forms.RadioButton rbMineType;
+        private System.Windows.Forms.RadioButton rbMineMax;
         private System.Windows.Forms.FlowLayoutPanel flpUpgrades;
-        private System.Windows.Forms.RadioButton rbUpgradesSType;
-        private System.Windows.Forms.RadioButton rbUpgradesType;
-        private System.Windows.Forms.RadioButton rbUpgradesMax;
+        private System.Windows.Forms.RadioButton rbUpgradeSType;
+        private System.Windows.Forms.RadioButton rbUpgradeType;
+        private System.Windows.Forms.RadioButton rbUpgradeMax;
         private System.Windows.Forms.FlowLayoutPanel flpBlasters;
-        private System.Windows.Forms.RadioButton rbBlastersSType;
-        private System.Windows.Forms.RadioButton rbBlastersType;
-        private System.Windows.Forms.RadioButton rbBlastersMax;
+        private System.Windows.Forms.RadioButton rbBlasterSType;
+        private System.Windows.Forms.RadioButton rbBlasterType;
+        private System.Windows.Forms.RadioButton rbBlasterMax;
         private System.Windows.Forms.FlowLayoutPanel flpCreature;
-        private System.Windows.Forms.RadioButton rbCreatureSType;
-        private System.Windows.Forms.RadioButton rbCreatureType;
-        private System.Windows.Forms.RadioButton rbCreatureMax;
+        private System.Windows.Forms.RadioButton rbCreatureWeaponSType;
+        private System.Windows.Forms.RadioButton rbCreatureWeaponType;
+        private System.Windows.Forms.RadioButton rbCreatureWeaponMax;
         private System.Windows.Forms.FlowLayoutPanel flpLightsabers;
-        private System.Windows.Forms.RadioButton rbLightsabersSType;
-        private System.Windows.Forms.RadioButton rbLightsabersType;
-        private System.Windows.Forms.RadioButton rbLightsabersMax;
+        private System.Windows.Forms.RadioButton rbLightsaberSType;
+        private System.Windows.Forms.RadioButton rbLightsaberType;
+        private System.Windows.Forms.RadioButton rbLightsaberMax;
         private System.Windows.Forms.FlowLayoutPanel flpGrenades;
-        private System.Windows.Forms.RadioButton rbGrenadesType;
-        private System.Windows.Forms.RadioButton rbGrenadesMax;
+        private System.Windows.Forms.RadioButton rbGrenadeType;
+        private System.Windows.Forms.RadioButton rbGrenadeMax;
         private System.Windows.Forms.FlowLayoutPanel flpMelee;
         private System.Windows.Forms.RadioButton rbMeleeSType;
         private System.Windows.Forms.RadioButton rbMeleeType;
         private System.Windows.Forms.RadioButton rbMeleeMax;
-        private System.Windows.Forms.CheckBox cbHides;
+        private System.Windows.Forms.CheckBox cbCreatureHide;
         private System.Windows.Forms.FlowLayoutPanel flpHides;
-        private System.Windows.Forms.RadioButton rbHidesType;
-        private System.Windows.Forms.RadioButton rbHidesMax;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.RadioButton rbCreatureHideType;
+        private System.Windows.Forms.RadioButton rbCreatureHideMax;
+        private System.Windows.Forms.Label labelSpacer3;
+        private System.Windows.Forms.Label labelSpacer4;
+        private System.Windows.Forms.Label labelSpacer2;
+        private System.Windows.Forms.Label labelSpacer5;
+        private System.Windows.Forms.Label lblOmitted;
         private System.Windows.Forms.ListBox lbOmitItems;
         private System.Windows.Forms.TextBox tbItemOmitAdd;
         private System.Windows.Forms.Button bAddOmitItem;
-        private System.Windows.Forms.Button bAllOff;
-        private System.Windows.Forms.Button bAllMax;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labelSpacer6;
+        private System.Windows.Forms.Button bToggleAll;
+        private System.Windows.Forms.Button bSubtypeAll;
+        private System.Windows.Forms.Button bTypeAll;
+        private System.Windows.Forms.Button bMaxAll;
     }
 }

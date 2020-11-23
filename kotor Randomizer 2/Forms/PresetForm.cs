@@ -42,14 +42,14 @@ namespace kotor_Randomizer_2
                 }
             }
 
-            cbIncModu.Checked = Properties.Settings.Default.module_rando_active;
-            cbIncItem.Checked = Properties.Settings.Default.item_rando_active;
-            cbIncSound.Checked = Properties.Settings.Default.sound_rando_active;
-            cbIncModel.Checked = Properties.Settings.Default.model_rando_active;
-            cbIncTexture.Checked = Properties.Settings.Default.texture_rando_active;
-            cbInc2da.Checked = Properties.Settings.Default.twoda_rando_active;
-            cbIncText.Checked = Properties.Settings.Default.text_rando_active;
-            cbIncOther.Checked = Properties.Settings.Default.other_rando_active;
+            cbIncModu.Checked = Properties.Settings.Default.DoRandomization_Module;
+            cbIncItem.Checked = Properties.Settings.Default.DoRandomization_Item;
+            cbIncSound.Checked = Properties.Settings.Default.DoRandomization_Sound;
+            cbIncModel.Checked = Properties.Settings.Default.DoRandomization_Model;
+            cbIncTexture.Checked = Properties.Settings.Default.DoRandomization_Texture;
+            cbInc2da.Checked = Properties.Settings.Default.DoRandomization_TwoDA;
+            cbIncText.Checked = Properties.Settings.Default.DoRandomization_Text;
+            cbIncOther.Checked = Properties.Settings.Default.DoRandomization_Other;
 
         }
 
@@ -112,14 +112,14 @@ namespace kotor_Randomizer_2
         private void bsave_Click(object sender, EventArgs e)
         {
             // Category Booleans
-            Properties.Settings.Default.module_rando_active = cbIncModu.Checked;
-            Properties.Settings.Default.item_rando_active = cbIncItem.Checked;
-            Properties.Settings.Default.sound_rando_active = cbIncSound.Checked;
-            Properties.Settings.Default.model_rando_active = cbIncModel.Checked;
-            Properties.Settings.Default.texture_rando_active = cbIncTexture.Checked;
-            Properties.Settings.Default.twoda_rando_active = cbInc2da.Checked;
-            Properties.Settings.Default.text_rando_active = cbIncText.Checked;
-            Properties.Settings.Default.other_rando_active = cbIncOther.Checked;
+            Properties.Settings.Default.DoRandomization_Module = cbIncModu.Checked;
+            Properties.Settings.Default.DoRandomization_Item = cbIncItem.Checked;
+            Properties.Settings.Default.DoRandomization_Sound = cbIncSound.Checked;
+            Properties.Settings.Default.DoRandomization_Model = cbIncModel.Checked;
+            Properties.Settings.Default.DoRandomization_Texture = cbIncTexture.Checked;
+            Properties.Settings.Default.DoRandomization_TwoDA = cbInc2da.Checked;
+            Properties.Settings.Default.DoRandomization_Text = cbIncText.Checked;
+            Properties.Settings.Default.DoRandomization_Other = cbIncOther.Checked;
 
             if (sfdPresets.ShowDialog() == DialogResult.OK)
             {
@@ -131,7 +131,6 @@ namespace kotor_Randomizer_2
                 }
                 update_listBox();
             }
-
         }
     }
 }

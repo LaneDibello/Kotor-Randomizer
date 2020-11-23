@@ -26,24 +26,24 @@ namespace kotor_Randomizer_2.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool module_rando_active {
+        public bool DoRandomization_Module {
             get {
-                return ((bool)(this["module_rando_active"]));
+                return ((bool)(this["DoRandomization_Module"]));
             }
             set {
-                this["module_rando_active"] = value;
+                this["DoRandomization_Module"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool sound_rando_active {
+        public bool DoRandomization_Sound {
             get {
-                return ((bool)(this["sound_rando_active"]));
+                return ((bool)(this["DoRandomization_Sound"]));
             }
             set {
-                this["sound_rando_active"] = value;
+                this["DoRandomization_Sound"] = value;
             }
         }
         
@@ -181,61 +181,25 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MilestoneDelete {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DoRandomization_Model {
             get {
-                return ((bool)(this["MilestoneDelete"]));
+                return ((bool)(this["DoRandomization_Model"]));
             }
             set {
-                this["MilestoneDelete"] = value;
+                this["DoRandomization_Model"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IncludeMG {
+        public bool DoRandomization_Item {
             get {
-                return ((bool)(this["IncludeMG"]));
+                return ((bool)(this["DoRandomization_Item"]));
             }
             set {
-                this["IncludeMG"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IncludeAll {
-            get {
-                return ((bool)(this["IncludeAll"]));
-            }
-            set {
-                this["IncludeAll"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool model_rando_active {
-            get {
-                return ((bool)(this["model_rando_active"]));
-            }
-            set {
-                this["model_rando_active"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool item_rando_active {
-            get {
-                return ((bool)(this["item_rando_active"]));
-            }
-            set {
-                this["item_rando_active"] = value;
+                this["DoRandomization_Item"] = value;
             }
         }
         
@@ -254,60 +218,48 @@ namespace kotor_Randomizer_2.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool SeedSelected {
+        public bool DoRandomization_Texture {
             get {
-                return ((bool)(this["SeedSelected"]));
+                return ((bool)(this["DoRandomization_Texture"]));
             }
             set {
-                this["SeedSelected"] = value;
+                this["DoRandomization_Texture"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool texture_rando_active {
+        public bool DoRandomization_TwoDA {
             get {
-                return ((bool)(this["texture_rando_active"]));
+                return ((bool)(this["DoRandomization_TwoDA"]));
             }
             set {
-                this["texture_rando_active"] = value;
+                this["DoRandomization_TwoDA"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool twoda_rando_active {
+        public bool DoRandomization_Text {
             get {
-                return ((bool)(this["twoda_rando_active"]));
+                return ((bool)(this["DoRandomization_Text"]));
             }
             set {
-                this["twoda_rando_active"] = value;
+                this["DoRandomization_Text"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool text_rando_active {
+        public bool DoRandomization_Other {
             get {
-                return ((bool)(this["text_rando_active"]));
+                return ((bool)(this["DoRandomization_Other"]));
             }
             set {
-                this["text_rando_active"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool other_rando_active {
-            get {
-                return ((bool)(this["other_rando_active"]));
-            }
-            set {
-                this["other_rando_active"] = value;
+                this["DoRandomization_Other"] = value;
             }
         }
         
@@ -565,31 +517,6 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int ModuleSaveStatus {
-            get {
-                return ((int)(this["ModuleSaveStatus"]));
-            }
-            set {
-                this["ModuleSaveStatus"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
-            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" />")]
-        public global::System.Collections.Specialized.StringCollection AddOverideFiles {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["AddOverideFiles"]));
-            }
-            set {
-                this["AddOverideFiles"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int TextureRandomizeCubeMaps {
             get {
@@ -822,12 +749,12 @@ namespace kotor_Randomizer_2.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool NameGenRando {
+        public bool RandomizeNameGen {
             get {
-                return ((bool)(this["NameGenRando"]));
+                return ((bool)(this["RandomizeNameGen"]));
             }
             set {
-                this["NameGenRando"] = value;
+                this["RandomizeNameGen"] = value;
             }
         }
         
@@ -846,36 +773,12 @@ namespace kotor_Randomizer_2.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool PazaakDecks {
+        public bool RandomizePazaakDecks {
             get {
-                return ((bool)(this["PazaakDecks"]));
+                return ((bool)(this["RandomizePazaakDecks"]));
             }
             set {
-                this["PazaakDecks"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool FixWarpCoords {
-            get {
-                return ((bool)(this["FixWarpCoords"]));
-            }
-            set {
-                this["FixWarpCoords"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool FixMindPrison {
-            get {
-                return ((bool)(this["FixMindPrison"]));
-            }
-            set {
-                this["FixMindPrison"] = value;
+                this["RandomizePazaakDecks"] = value;
             }
         }
         
@@ -889,6 +792,18 @@ namespace kotor_Randomizer_2.Properties {
             }
             set {
                 this["PresetPaths"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Default")]
+        public global::kotor_Randomizer_2.ModuleExtras ModuleExtrasValue {
+            get {
+                return ((global::kotor_Randomizer_2.ModuleExtras)(this["ModuleExtrasValue"]));
+            }
+            set {
+                this["ModuleExtrasValue"] = value;
             }
         }
     }

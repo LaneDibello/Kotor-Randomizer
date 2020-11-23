@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace kotor_Randomizer_2
@@ -26,8 +28,36 @@ namespace kotor_Randomizer_2
 
             //MixNpcAndParty = Properties.Settings.Default.MixNpcAndPartySounds;
             MixNpcAndParty = false; // Functionality Disabled
-        }
 
+            // Create easy access lists.
+            CheckBoxes.AddRange(new List<CheckBox>()
+            {
+                cbAreaMusic,
+                cbBattleMusic,
+                cbAmbientNoise,
+                cbCutsceneNoise,
+                //cbNpcSounds,      // Randomization not implemented.
+                cbPartySounds,
+            });
+
+            TypeRadioButtons.AddRange(new List<RadioButton>()
+            {
+                rbAreaMusicType,
+                rbBattleMusicType,
+                rbAmbientNoiseType,
+                rbCutsceneNoiseType,
+                rbPartySoundsType,
+            });
+
+            MaxRadioButtons.AddRange(new List<RadioButton>()
+            {
+                rbAreaMusicMax,
+                rbBattleMusicMax,
+                rbAmbientNoiseMax,
+                rbCutsceneNoiseMax,
+                rbPartySoundsMax,
+            });
+        }
 
         #region Public Properties
 
@@ -282,10 +312,14 @@ namespace kotor_Randomizer_2
             get { return cbMixNpcParty.Checked; }
             set { cbMixNpcParty.Checked = value; }
         }
-        
+
         #endregion
 
         #region Private Methods
+
+        private List<CheckBox> CheckBoxes = new List<CheckBox>();
+        private List<RadioButton> TypeRadioButtons = new List<RadioButton>();
+        private List<RadioButton> MaxRadioButtons = new List<RadioButton>();
 
         private void cbAreaMusic_CheckedChanged(object sender, EventArgs e)
         {
@@ -366,6 +400,45 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.RandomizePartySounds = (int)RandomizePartySounds;
             Properties.Settings.Default.MixNpcAndPartySounds = MixNpcAndParty;
             Properties.Settings.Default.Save();
+        }
+
+        private void bToggleAll_Click(object sender, EventArgs e)
+        {
+            // If all checkboxes are checked, uncheck all of them. If any are unchecked, check all of them.
+            bool CheckAllBoxes = false;
+            if (CheckBoxes.Any(cb => !cb.Checked))
+            {
+                CheckAllBoxes = true;
+            }
+
+            foreach (var cb in CheckBoxes)
+            {
+                cb.Checked = CheckAllBoxes;
+            }
+        }
+
+        private void bTypeAll_Click(object sender, EventArgs e)
+        {
+            foreach (var cb in CheckBoxes)
+            {
+                cb.Checked = true;
+            }
+            foreach (var rb in TypeRadioButtons)
+            {
+                rb.Checked = true;
+            }
+        }
+
+        private void bMaxAll_Click(object sender, EventArgs e)
+        {
+            foreach (var cb in CheckBoxes)
+            {
+                cb.Checked = true;
+            }
+            foreach (var rb in MaxRadioButtons)
+            {
+                rb.Checked = true;
+            }
         }
 
         #endregion

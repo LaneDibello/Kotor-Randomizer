@@ -31,16 +31,16 @@
             this.OmittedListBox = new System.Windows.Forms.ListBox();
             this.RandomizedListBox = new System.Windows.Forms.ListBox();
             this.PresetComboBox = new System.Windows.Forms.ComboBox();
-            this.modDelete_checkbox = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.allSave_checkbox = new System.Windows.Forms.CheckBox();
-            this.mgSave_checkbox = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.FixedDream_checkBox = new System.Windows.Forms.CheckBox();
-            this.galmap_checkbox = new System.Windows.Forms.CheckBox();
-            this.updatedCoords_checkbox = new System.Windows.Forms.CheckBox();
-            this.cbRakataRiddle = new System.Windows.Forms.CheckBox();
+            this.cbDeleteMilestones = new System.Windows.Forms.CheckBox();
+            this.lblPresets = new System.Windows.Forms.Label();
+            this.cbSaveAllMods = new System.Windows.Forms.CheckBox();
+            this.cbSaveMiniGame = new System.Windows.Forms.CheckBox();
+            this.lblRandomized = new System.Windows.Forms.Label();
+            this.lblOmitted = new System.Windows.Forms.Label();
+            this.cbFixDream = new System.Windows.Forms.CheckBox();
+            this.cbUnlockGalaxyMap = new System.Windows.Forms.CheckBox();
+            this.cbFixCoordinates = new System.Windows.Forms.CheckBox();
+            this.cbFixMindPrison = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // OmittedListBox
@@ -84,127 +84,127 @@
             this.PresetComboBox.TabIndex = 18;
             this.PresetComboBox.SelectedIndexChanged += new System.EventHandler(this.PresetComboBox_SelectedIndexChanged);
             // 
-            // modDelete_checkbox
+            // cbDeleteMilestones
             // 
-            this.modDelete_checkbox.AutoSize = true;
-            this.modDelete_checkbox.Checked = true;
-            this.modDelete_checkbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.modDelete_checkbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.modDelete_checkbox.Location = new System.Drawing.Point(20, 490);
-            this.modDelete_checkbox.Name = "modDelete_checkbox";
-            this.modDelete_checkbox.Size = new System.Drawing.Size(159, 17);
-            this.modDelete_checkbox.TabIndex = 19;
-            this.modDelete_checkbox.Text = "Delete Milestone Save Data";
-            this.modDelete_checkbox.UseVisualStyleBackColor = true;
-            this.modDelete_checkbox.CheckedChanged += new System.EventHandler(this.modDelete_checkbox_CheckedChanged);
+            this.cbDeleteMilestones.AutoSize = true;
+            this.cbDeleteMilestones.Checked = true;
+            this.cbDeleteMilestones.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbDeleteMilestones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbDeleteMilestones.Location = new System.Drawing.Point(20, 490);
+            this.cbDeleteMilestones.Name = "cbDeleteMilestones";
+            this.cbDeleteMilestones.Size = new System.Drawing.Size(159, 17);
+            this.cbDeleteMilestones.TabIndex = 19;
+            this.cbDeleteMilestones.Text = "Delete Milestone Save Data";
+            this.cbDeleteMilestones.UseVisualStyleBackColor = true;
+            this.cbDeleteMilestones.CheckedChanged += new System.EventHandler(this.cbDeleteMilestones_CheckedChanged);
             // 
-            // label1
+            // lblPresets
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.label1.Location = new System.Drawing.Point(20, 440);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 13);
-            this.label1.TabIndex = 20;
-            this.label1.Text = "Presets:";
+            this.lblPresets.AutoSize = true;
+            this.lblPresets.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPresets.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.lblPresets.Location = new System.Drawing.Point(20, 440);
+            this.lblPresets.Name = "lblPresets";
+            this.lblPresets.Size = new System.Drawing.Size(53, 13);
+            this.lblPresets.TabIndex = 20;
+            this.lblPresets.Text = "Presets:";
             // 
-            // allSave_checkbox
+            // cbSaveAllMods
             // 
-            this.allSave_checkbox.AutoSize = true;
-            this.allSave_checkbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.allSave_checkbox.Location = new System.Drawing.Point(340, 490);
-            this.allSave_checkbox.Name = "allSave_checkbox";
-            this.allSave_checkbox.Size = new System.Drawing.Size(157, 17);
-            this.allSave_checkbox.TabIndex = 21;
-            this.allSave_checkbox.Text = "Include All Modules in Save";
-            this.allSave_checkbox.UseVisualStyleBackColor = true;
-            this.allSave_checkbox.CheckedChanged += new System.EventHandler(this.allSave_checkbox_CheckedChanged);
+            this.cbSaveAllMods.AutoSize = true;
+            this.cbSaveAllMods.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbSaveAllMods.Location = new System.Drawing.Point(340, 490);
+            this.cbSaveAllMods.Name = "cbSaveAllMods";
+            this.cbSaveAllMods.Size = new System.Drawing.Size(157, 17);
+            this.cbSaveAllMods.TabIndex = 21;
+            this.cbSaveAllMods.Text = "Include All Modules in Save";
+            this.cbSaveAllMods.UseVisualStyleBackColor = true;
+            this.cbSaveAllMods.CheckedChanged += new System.EventHandler(this.cbSaveAllMods_CheckedChanged);
             // 
-            // mgSave_checkbox
+            // cbSaveMinigame
             // 
-            this.mgSave_checkbox.AutoSize = true;
-            this.mgSave_checkbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.mgSave_checkbox.Location = new System.Drawing.Point(180, 490);
-            this.mgSave_checkbox.Name = "mgSave_checkbox";
-            this.mgSave_checkbox.Size = new System.Drawing.Size(153, 17);
-            this.mgSave_checkbox.TabIndex = 22;
-            this.mgSave_checkbox.Text = "Include Minigames in Save";
-            this.mgSave_checkbox.UseVisualStyleBackColor = true;
-            this.mgSave_checkbox.CheckedChanged += new System.EventHandler(this.mgSave_checkbox_CheckedChanged);
+            this.cbSaveMiniGame.AutoSize = true;
+            this.cbSaveMiniGame.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbSaveMiniGame.Location = new System.Drawing.Point(180, 490);
+            this.cbSaveMiniGame.Name = "cbSaveMinigame";
+            this.cbSaveMiniGame.Size = new System.Drawing.Size(153, 17);
+            this.cbSaveMiniGame.TabIndex = 22;
+            this.cbSaveMiniGame.Text = "Include Minigames in Save";
+            this.cbSaveMiniGame.UseVisualStyleBackColor = true;
+            this.cbSaveMiniGame.CheckedChanged += new System.EventHandler(this.cbSaveMiniGame_CheckedChanged);
             // 
-            // label2
+            // lblRandomized
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.label2.Location = new System.Drawing.Point(20, 20);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(95, 16);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "Randomized";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            this.lblRandomized.AutoSize = true;
+            this.lblRandomized.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRandomized.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.lblRandomized.Location = new System.Drawing.Point(20, 20);
+            this.lblRandomized.Name = "lblRandomized";
+            this.lblRandomized.Size = new System.Drawing.Size(95, 16);
+            this.lblRandomized.TabIndex = 23;
+            this.lblRandomized.Text = "Randomized";
+            this.lblRandomized.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblRandomized.Click += new System.EventHandler(this.lblRandomized_Click);
             // 
-            // label3
+            // lblOmitted
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.label3.Location = new System.Drawing.Point(460, 20);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(61, 16);
-            this.label3.TabIndex = 24;
-            this.label3.Text = "Omitted";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblOmitted.AutoSize = true;
+            this.lblOmitted.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOmitted.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.lblOmitted.Location = new System.Drawing.Point(460, 20);
+            this.lblOmitted.Name = "lblOmitted";
+            this.lblOmitted.Size = new System.Drawing.Size(61, 16);
+            this.lblOmitted.TabIndex = 24;
+            this.lblOmitted.Text = "Omitted";
+            this.lblOmitted.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // FixedDream_checkBox
+            // cbFixDream
             // 
-            this.FixedDream_checkBox.AutoSize = true;
-            this.FixedDream_checkBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.FixedDream_checkBox.Location = new System.Drawing.Point(20, 510);
-            this.FixedDream_checkBox.Name = "FixedDream_checkBox";
-            this.FixedDream_checkBox.Size = new System.Drawing.Size(137, 17);
-            this.FixedDream_checkBox.TabIndex = 25;
-            this.FixedDream_checkBox.Text = "Fixed Dream Sequence";
-            this.FixedDream_checkBox.UseVisualStyleBackColor = true;
-            this.FixedDream_checkBox.CheckedChanged += new System.EventHandler(this.FixedDream_checkBox_CheckedChanged);
+            this.cbFixDream.AutoSize = true;
+            this.cbFixDream.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbFixDream.Location = new System.Drawing.Point(20, 510);
+            this.cbFixDream.Name = "cbFixDream";
+            this.cbFixDream.Size = new System.Drawing.Size(137, 17);
+            this.cbFixDream.TabIndex = 25;
+            this.cbFixDream.Text = "Fixed Dream Sequence";
+            this.cbFixDream.UseVisualStyleBackColor = true;
+            this.cbFixDream.CheckedChanged += new System.EventHandler(this.cbFixDream_CheckedChanged);
             // 
-            // galmap_checkbox
+            // cbUnlockGalaxyMap
             // 
-            this.galmap_checkbox.AutoSize = true;
-            this.galmap_checkbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.galmap_checkbox.Location = new System.Drawing.Point(180, 510);
-            this.galmap_checkbox.Name = "galmap_checkbox";
-            this.galmap_checkbox.Size = new System.Drawing.Size(131, 17);
-            this.galmap_checkbox.TabIndex = 26;
-            this.galmap_checkbox.Text = "Unlocked Galaxy Map";
-            this.galmap_checkbox.UseVisualStyleBackColor = true;
-            this.galmap_checkbox.CheckedChanged += new System.EventHandler(this.galmap_checkbox_CheckedChanged);
+            this.cbUnlockGalaxyMap.AutoSize = true;
+            this.cbUnlockGalaxyMap.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUnlockGalaxyMap.Location = new System.Drawing.Point(180, 510);
+            this.cbUnlockGalaxyMap.Name = "cbUnlockGalaxyMap";
+            this.cbUnlockGalaxyMap.Size = new System.Drawing.Size(131, 17);
+            this.cbUnlockGalaxyMap.TabIndex = 26;
+            this.cbUnlockGalaxyMap.Text = "Unlocked Galaxy Map";
+            this.cbUnlockGalaxyMap.UseVisualStyleBackColor = true;
+            this.cbUnlockGalaxyMap.CheckedChanged += new System.EventHandler(this.cbUnlockGalaxyMap_CheckedChanged);
             // 
-            // updatedCoords_checkbox
+            // cbFixCoordinates
             // 
-            this.updatedCoords_checkbox.AutoSize = true;
-            this.updatedCoords_checkbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.updatedCoords_checkbox.Location = new System.Drawing.Point(340, 510);
-            this.updatedCoords_checkbox.Name = "updatedCoords_checkbox";
-            this.updatedCoords_checkbox.Size = new System.Drawing.Size(148, 17);
-            this.updatedCoords_checkbox.TabIndex = 27;
-            this.updatedCoords_checkbox.Text = "Fixed Module Coordinates";
-            this.updatedCoords_checkbox.UseVisualStyleBackColor = true;
-            this.updatedCoords_checkbox.CheckedChanged += new System.EventHandler(this.updatedCoords_checkbox_CheckedChanged);
+            this.cbFixCoordinates.AutoSize = true;
+            this.cbFixCoordinates.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbFixCoordinates.Location = new System.Drawing.Point(340, 510);
+            this.cbFixCoordinates.Name = "cbFixCoordinates";
+            this.cbFixCoordinates.Size = new System.Drawing.Size(148, 17);
+            this.cbFixCoordinates.TabIndex = 27;
+            this.cbFixCoordinates.Text = "Fixed Module Coordinates";
+            this.cbFixCoordinates.UseVisualStyleBackColor = true;
+            this.cbFixCoordinates.CheckedChanged += new System.EventHandler(this.cbFixCoordinates_CheckedChanged);
             // 
-            // cbRakataRiddle
+            // cbFixMindPrison
             // 
-            this.cbRakataRiddle.AutoSize = true;
-            this.cbRakataRiddle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbRakataRiddle.Location = new System.Drawing.Point(20, 530);
-            this.cbRakataRiddle.Name = "cbRakataRiddle";
-            this.cbRakataRiddle.Size = new System.Drawing.Size(109, 17);
-            this.cbRakataRiddle.TabIndex = 28;
-            this.cbRakataRiddle.Text = "Fixed Mind Prison";
-            this.cbRakataRiddle.UseVisualStyleBackColor = true;
-            this.cbRakataRiddle.CheckedChanged += new System.EventHandler(this.cbRakataRiddle_CheckedChanged);
+            this.cbFixMindPrison.AutoSize = true;
+            this.cbFixMindPrison.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbFixMindPrison.Location = new System.Drawing.Point(20, 530);
+            this.cbFixMindPrison.Name = "cbFixMindPrison";
+            this.cbFixMindPrison.Size = new System.Drawing.Size(109, 17);
+            this.cbFixMindPrison.TabIndex = 28;
+            this.cbFixMindPrison.Text = "Fixed Mind Prison";
+            this.cbFixMindPrison.UseVisualStyleBackColor = true;
+            this.cbFixMindPrison.CheckedChanged += new System.EventHandler(this.cbFixMindPrison_CheckedChanged);
             // 
             // ModuleForm
             // 
@@ -212,16 +212,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.ClientSize = new System.Drawing.Size(541, 572);
-            this.Controls.Add(this.cbRakataRiddle);
-            this.Controls.Add(this.updatedCoords_checkbox);
-            this.Controls.Add(this.galmap_checkbox);
-            this.Controls.Add(this.FixedDream_checkBox);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.mgSave_checkbox);
-            this.Controls.Add(this.allSave_checkbox);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.modDelete_checkbox);
+            this.Controls.Add(this.cbFixMindPrison);
+            this.Controls.Add(this.cbFixCoordinates);
+            this.Controls.Add(this.cbUnlockGalaxyMap);
+            this.Controls.Add(this.cbFixDream);
+            this.Controls.Add(this.lblOmitted);
+            this.Controls.Add(this.lblRandomized);
+            this.Controls.Add(this.cbSaveMiniGame);
+            this.Controls.Add(this.cbSaveAllMods);
+            this.Controls.Add(this.lblPresets);
+            this.Controls.Add(this.cbDeleteMilestones);
             this.Controls.Add(this.PresetComboBox);
             this.Controls.Add(this.OmittedListBox);
             this.Controls.Add(this.RandomizedListBox);
@@ -242,15 +242,15 @@
         private System.Windows.Forms.ListBox OmittedListBox;
         private System.Windows.Forms.ListBox RandomizedListBox;
         private System.Windows.Forms.ComboBox PresetComboBox;
-        private System.Windows.Forms.CheckBox modDelete_checkbox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox allSave_checkbox;
-        private System.Windows.Forms.CheckBox mgSave_checkbox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox FixedDream_checkBox;
-        private System.Windows.Forms.CheckBox galmap_checkbox;
-        private System.Windows.Forms.CheckBox updatedCoords_checkbox;
-        private System.Windows.Forms.CheckBox cbRakataRiddle;
+        private System.Windows.Forms.CheckBox cbDeleteMilestones;
+        private System.Windows.Forms.Label lblPresets;
+        private System.Windows.Forms.CheckBox cbSaveAllMods;
+        private System.Windows.Forms.CheckBox cbSaveMiniGame;
+        private System.Windows.Forms.Label lblRandomized;
+        private System.Windows.Forms.Label lblOmitted;
+        private System.Windows.Forms.CheckBox cbFixDream;
+        private System.Windows.Forms.CheckBox cbUnlockGalaxyMap;
+        private System.Windows.Forms.CheckBox cbFixCoordinates;
+        private System.Windows.Forms.CheckBox cbFixMindPrison;
     }
 }

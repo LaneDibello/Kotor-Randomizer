@@ -157,7 +157,7 @@ namespace kotor_Randomizer_2
         //Modules
         private void module_radio_MouseEnter(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.module_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Module)
             {
                 module_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
@@ -169,7 +169,7 @@ namespace kotor_Randomizer_2
 
         private void module_radio_MouseLeave(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.module_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Module)
             {
                 module_radio.BackgroundImage = Properties.Resources.BoxSlected;
             }
@@ -181,14 +181,14 @@ namespace kotor_Randomizer_2
 
         private void module_radio_Click(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.module_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Module)
             {
-                Properties.Settings.Default.module_rando_active = false;
+                Properties.Settings.Default.DoRandomization_Module = false;
                 module_radio.BackgroundImage = Properties.Resources.BoxActUnselected;
             }
             else
             {
-                Properties.Settings.Default.module_rando_active = true;
+                Properties.Settings.Default.DoRandomization_Module = true;
                 module_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
         }
@@ -197,21 +197,21 @@ namespace kotor_Randomizer_2
 
         private void sound_radio_Click(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.sound_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Sound)
             {
-                Properties.Settings.Default.sound_rando_active = false;
+                Properties.Settings.Default.DoRandomization_Sound = false;
                 sound_radio.BackgroundImage = Properties.Resources.BoxActUnselected;
             }
             else
             {
-                Properties.Settings.Default.sound_rando_active = true;
+                Properties.Settings.Default.DoRandomization_Sound = true;
                 sound_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
         }
 
         private void sound_radio_MouseEnter(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.sound_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Sound)
             {
                 sound_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
@@ -223,7 +223,7 @@ namespace kotor_Randomizer_2
 
         private void sound_radio_MouseLeave(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.sound_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Sound)
             {
                 sound_radio.BackgroundImage = Properties.Resources.BoxSlected;
             }
@@ -237,21 +237,21 @@ namespace kotor_Randomizer_2
 
         private void model_radio_Click(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.model_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Model)
             {
-                Properties.Settings.Default.model_rando_active = false;
+                Properties.Settings.Default.DoRandomization_Model = false;
                 model_radio.BackgroundImage = Properties.Resources.BoxActUnselected;
             }
             else
             {
-                Properties.Settings.Default.model_rando_active = true;
+                Properties.Settings.Default.DoRandomization_Model = true;
                 model_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
         }
 
         private void model_radio_MouseEnter(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.model_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Model)
             {
                 model_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
@@ -263,7 +263,7 @@ namespace kotor_Randomizer_2
 
         private void model_radio_MouseLeave(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.model_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Model)
             {
                 model_radio.BackgroundImage = Properties.Resources.BoxSlected;
             }
@@ -277,21 +277,21 @@ namespace kotor_Randomizer_2
 
         private void item_radio_Click(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.item_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Item)
             {
-                Properties.Settings.Default.item_rando_active = false;
+                Properties.Settings.Default.DoRandomization_Item = false;
                 item_radio.BackgroundImage = Properties.Resources.BoxActUnselected;
             }
             else
             {
-                Properties.Settings.Default.item_rando_active = true;
+                Properties.Settings.Default.DoRandomization_Item = true;
                 item_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
         }
 
         private void item_radio_MouseEnter(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.item_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Item)
             {
                 item_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
@@ -303,7 +303,7 @@ namespace kotor_Randomizer_2
 
         private void item_radio_MouseLeave(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.item_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Item)
             {
                 item_radio.BackgroundImage = Properties.Resources.BoxSlected;
             }
@@ -317,21 +317,21 @@ namespace kotor_Randomizer_2
 
         private void texture_radio_Click(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.texture_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Texture)
             {
-                Properties.Settings.Default.texture_rando_active = false;
+                Properties.Settings.Default.DoRandomization_Texture = false;
                 texture_radio.BackgroundImage = Properties.Resources.BoxActUnselected;
             }
             else
             {
-                Properties.Settings.Default.texture_rando_active = true;
+                Properties.Settings.Default.DoRandomization_Texture = true;
                 texture_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
         }
 
         private void texture_radio_MouseEnter(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.texture_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Texture)
             {
                 texture_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
@@ -343,7 +343,7 @@ namespace kotor_Randomizer_2
 
         private void texture_radio_MouseLeave(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.texture_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Texture)
             {
                 texture_radio.BackgroundImage = Properties.Resources.BoxSlected;
             }
@@ -357,21 +357,21 @@ namespace kotor_Randomizer_2
 
         private void twoda_radio_Click(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.twoda_rando_active)
+            if (Properties.Settings.Default.DoRandomization_TwoDA)
             {
-                Properties.Settings.Default.twoda_rando_active = false;
+                Properties.Settings.Default.DoRandomization_TwoDA = false;
                 twoda_radio.BackgroundImage = Properties.Resources.BoxActUnselected;
             }
             else
             {
-                Properties.Settings.Default.twoda_rando_active = true;
+                Properties.Settings.Default.DoRandomization_TwoDA = true;
                 twoda_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
         }
 
         private void twoda_radio_MouseEnter(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.twoda_rando_active)
+            if (Properties.Settings.Default.DoRandomization_TwoDA)
             {
                 twoda_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
@@ -383,7 +383,7 @@ namespace kotor_Randomizer_2
 
         private void twoda_radio_MouseLeave(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.twoda_rando_active)
+            if (Properties.Settings.Default.DoRandomization_TwoDA)
             {
                 twoda_radio.BackgroundImage = Properties.Resources.BoxSlected;
             }
@@ -397,21 +397,21 @@ namespace kotor_Randomizer_2
 
         private void text_radio_Click(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.text_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Text)
             {
-                Properties.Settings.Default.text_rando_active = false;
+                Properties.Settings.Default.DoRandomization_Text = false;
                 text_radio.BackgroundImage = Properties.Resources.BoxActUnselected;
             }
             else
             {
-                Properties.Settings.Default.text_rando_active = true;
+                Properties.Settings.Default.DoRandomization_Text = true;
                 text_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
         }
 
         private void text_radio_MouseEnter(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.text_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Text)
             {
                 text_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
@@ -423,7 +423,7 @@ namespace kotor_Randomizer_2
 
         private void text_radio_MouseLeave(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.text_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Text)
             {
                 text_radio.BackgroundImage = Properties.Resources.BoxSlected;
             }
@@ -437,21 +437,21 @@ namespace kotor_Randomizer_2
 
         private void other_radio_Click(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.other_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Other)
             {
-                Properties.Settings.Default.other_rando_active = false;
+                Properties.Settings.Default.DoRandomization_Other = false;
                 other_radio.BackgroundImage = Properties.Resources.BoxActUnselected;
             }
             else
             {
-                Properties.Settings.Default.other_rando_active = true;
+                Properties.Settings.Default.DoRandomization_Other = true;
                 other_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
         }
 
         private void other_radio_MouseEnter(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.other_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Other)
             {
                 other_radio.BackgroundImage = Properties.Resources.BoxActive;
             }
@@ -463,7 +463,7 @@ namespace kotor_Randomizer_2
 
         private void other_radio_MouseLeave(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.other_rando_active)
+            if (Properties.Settings.Default.DoRandomization_Other)
             {
                 other_radio.BackgroundImage = Properties.Resources.BoxSlected;
             }

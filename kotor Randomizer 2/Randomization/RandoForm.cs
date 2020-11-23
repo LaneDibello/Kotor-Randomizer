@@ -31,51 +31,6 @@ namespace kotor_Randomizer_2
 
         #region private methods
 
-        private void CreateModuleBackups()
-        {
-            paths.BackUpModulesDirectory();
-            paths.BackUpLipsDirectory();
-            paths.BackUpOverrideDirectory();
-        }
-
-        private void CreateItemBackups()
-        {
-            paths.BackUpChitinFile();
-        }
-
-        private void CreateSoundBackups()
-        {
-            paths.BackUpMusicDirectory();
-            paths.BackUpSoundDirectory();
-        }
-
-        private void CreateModelBackups()
-        {
-            paths.BackUpModulesDirectory();
-        }
-
-        private void CreateTextureBackups()
-        {
-            paths.BackUpTexturesDirectory();
-        }
-
-        private void CreateTwoDABackups()
-        {
-            paths.BackUpChitinFile();
-            paths.BackUpOverrideDirectory();
-        }
-
-        private void CreateTextBackups()
-        {
-            // Not yet implemented.
-        }
-
-        private void CreateOtherBackups()
-        {
-            paths.BackUpChitinFile();
-            paths.BackUpOverrideDirectory();
-        }
-
         // Runs the necessary Randomization Scripts
         private void RunRando()
         {
@@ -100,7 +55,7 @@ namespace kotor_Randomizer_2
                 Randomize.SetSeed(Properties.Settings.Default.Seed);    // Not sure when is the best time to set the seed.
 
                 // Randomize the categories.
-                if (Properties.Settings.Default.module_rando_active)
+                if (Properties.Settings.Default.DoRandomization_Module)
                 {
                     Randomize.RestartRng();
                     curr_task = Properties.Resources.RandomizingModules;
@@ -110,7 +65,7 @@ namespace kotor_Randomizer_2
                     sw.WriteLine(Properties.Resources.LogModulesDone);
                     curr_progress += step_size;
                 }
-                if (Properties.Settings.Default.item_rando_active)
+                if (Properties.Settings.Default.DoRandomization_Item)
                 {
                     Randomize.RestartRng();
                     curr_task = Properties.Resources.RandomizingItems;
@@ -120,7 +75,7 @@ namespace kotor_Randomizer_2
                     sw.WriteLine(Properties.Resources.LogItemsDone);
                     curr_progress += step_size;
                 }
-                if (Properties.Settings.Default.sound_rando_active)
+                if (Properties.Settings.Default.DoRandomization_Sound)
                 {
                     Randomize.RestartRng();
                     curr_task = Properties.Resources.RandomizingMusicSound;
@@ -130,7 +85,7 @@ namespace kotor_Randomizer_2
                     sw.WriteLine(Properties.Resources.LogMusicSoundDone);
                     curr_progress += step_size;
                 }
-                if (Properties.Settings.Default.model_rando_active)
+                if (Properties.Settings.Default.DoRandomization_Model)
                 {
                     Randomize.RestartRng();
                     curr_task = Properties.Resources.RandomizingModels;
@@ -140,7 +95,7 @@ namespace kotor_Randomizer_2
                     sw.WriteLine(Properties.Resources.LogModelsDone);
                     curr_progress += step_size;
                 }
-                if (Properties.Settings.Default.texture_rando_active)
+                if (Properties.Settings.Default.DoRandomization_Texture)
                 {
                     Randomize.RestartRng();
                     curr_task = Properties.Resources.RandomizingTextures;
@@ -150,7 +105,7 @@ namespace kotor_Randomizer_2
                     sw.WriteLine(Properties.Resources.LogTexturesDone);
                     curr_progress += step_size;
                 }
-                if (Properties.Settings.Default.twoda_rando_active)
+                if (Properties.Settings.Default.DoRandomization_TwoDA)
                 {
                     Randomize.RestartRng();
                     curr_task = Properties.Resources.Randomizing2DA;
@@ -160,7 +115,7 @@ namespace kotor_Randomizer_2
                     sw.WriteLine(Properties.Resources.Log2DADone);
                     curr_progress += step_size;
                 }
-                if (Properties.Settings.Default.text_rando_active)
+                if (Properties.Settings.Default.DoRandomization_Text)
                 {
                     Randomize.RestartRng();
                     curr_task = Properties.Resources.RandomizingText;
@@ -170,7 +125,7 @@ namespace kotor_Randomizer_2
                     sw.WriteLine(Properties.Resources.LogTextDone);
                     curr_progress += step_size;
                 }
-                if (Properties.Settings.Default.other_rando_active)
+                if (Properties.Settings.Default.DoRandomization_Other)
                 {
                     Randomize.RestartRng();
                     curr_task = Properties.Resources.RandomizingOther;
@@ -271,15 +226,60 @@ namespace kotor_Randomizer_2
         private int CountActiveCategories()
         {
             int i = 0;
-            if (Properties.Settings.Default.module_rando_active) { i++; }
-            if (Properties.Settings.Default.item_rando_active) { i++; }
-            if (Properties.Settings.Default.sound_rando_active) { i++; }
-            if (Properties.Settings.Default.model_rando_active) { i++; }
-            if (Properties.Settings.Default.texture_rando_active) { i++; }
-            if (Properties.Settings.Default.twoda_rando_active) { i++; }
-            if (Properties.Settings.Default.text_rando_active) { i++; }
-            if (Properties.Settings.Default.other_rando_active) { i++; }
+            if (Properties.Settings.Default.DoRandomization_Module) { i++; }
+            if (Properties.Settings.Default.DoRandomization_Item) { i++; }
+            if (Properties.Settings.Default.DoRandomization_Sound) { i++; }
+            if (Properties.Settings.Default.DoRandomization_Model) { i++; }
+            if (Properties.Settings.Default.DoRandomization_Texture) { i++; }
+            if (Properties.Settings.Default.DoRandomization_TwoDA) { i++; }
+            if (Properties.Settings.Default.DoRandomization_Text) { i++; }
+            if (Properties.Settings.Default.DoRandomization_Other) { i++; }
             return i;
+        }
+
+        private void CreateModuleBackups()
+        {
+            paths.BackUpModulesDirectory();
+            paths.BackUpLipsDirectory();
+            paths.BackUpOverrideDirectory();
+        }
+
+        private void CreateItemBackups()
+        {
+            paths.BackUpChitinFile();
+        }
+
+        private void CreateSoundBackups()
+        {
+            paths.BackUpMusicDirectory();
+            paths.BackUpSoundDirectory();
+        }
+
+        private void CreateModelBackups()
+        {
+            paths.BackUpModulesDirectory();
+        }
+
+        private void CreateTextureBackups()
+        {
+            paths.BackUpTexturesDirectory();
+        }
+
+        private void CreateTwoDABackups()
+        {
+            paths.BackUpChitinFile();
+            paths.BackUpOverrideDirectory();
+        }
+
+        private void CreateTextBackups()
+        {
+            // Not yet implemented.
+        }
+
+        private void CreateOtherBackups()
+        {
+            paths.BackUpChitinFile();
+            paths.BackUpOverrideDirectory();
         }
 
         #endregion

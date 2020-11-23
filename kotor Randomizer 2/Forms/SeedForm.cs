@@ -43,7 +43,6 @@ namespace kotor_Randomizer_2
             if(int.TryParse(SeedText.Text, out o) && SeedText.Focused)
             {
                 Properties.Settings.Default.Seed = o;
-                Properties.Settings.Default.SeedSelected = true;
             }
         }
 

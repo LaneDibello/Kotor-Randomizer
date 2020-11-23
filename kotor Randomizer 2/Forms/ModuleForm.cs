@@ -12,12 +12,15 @@ namespace kotor_Randomizer_2
 {
     public partial class ModuleForm : Form
     {
-        
+        // Prevents Construction from triggering certain events
+        private bool Constructed = false;
+
         #region Public Members
 
         public ModuleForm()
         {
             InitializeComponent();
+            var settings = Properties.Settings.Default;
 
             // Set up the bound module collection if it hasn't been already
             if (!Properties.Settings.Default.ModulesInitialized)
@@ -33,20 +36,19 @@ namespace kotor_Randomizer_2
             // Set up the controls
             RandomizedListBox.DisplayMember = "name";
             OmittedListBox.DisplayMember = "name";
-            
-            // TODO: update storage of additional module settings to remove unnamed constants.
-            modDelete_checkbox.Checked = (Properties.Settings.Default.ModuleSaveStatus & 1) > 0;
-            mgSave_checkbox.Checked = (Properties.Settings.Default.ModuleSaveStatus & 2) > 0;
-            allSave_checkbox.Checked = (Properties.Settings.Default.ModuleSaveStatus & 4) > 0;
 
-            // TODO: update override file usage to not use a string collection.
-            FixedDream_checkBox.Checked = Properties.Settings.Default.AddOverideFiles.Contains("k_ren_visionland.ncs");
-            galmap_checkbox.Checked = Properties.Settings.Default.AddOverideFiles.Contains("k_pebn_galaxy.ncs");
-            updatedCoords_checkbox.Checked = Properties.Settings.Default.FixWarpCoords;
-            cbRakataRiddle.Checked = Properties.Settings.Default.FixMindPrison;
+            cbDeleteMilestones.Checked = !settings.ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete);
+            cbSaveMiniGame.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames);
+            cbSaveAllMods.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules);
+            cbSaveMiniGame.Enabled = !cbSaveAllMods.Checked; // If all save checked, disable mg save checkbox.
+
+            cbFixDream.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream);
+            cbUnlockGalaxyMap.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
+            cbFixCoordinates.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates);
+            cbFixMindPrison.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
 
             PresetComboBox.DataSource = Globals.OMIT_PRESETS.Keys.ToList();
-            constructed = true;
+            Constructed = true;
 
             if (Properties.Settings.Default.LastPresetComboIndex < 0)
             {
@@ -78,9 +80,6 @@ namespace kotor_Randomizer_2
 
         #endregion
         #region Private Members
-
-        // Prevents Construction from triggering certain events
-        private bool constructed = false;
 
         // Makes list work
         private void UpdateListBoxes()
@@ -176,7 +175,7 @@ namespace kotor_Randomizer_2
         // Built-in Preset control functions
         private void PresetComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!constructed) return;
+            if (!Constructed) return;
 
             if (PresetComboBox.SelectedIndex >= 0)
             {
@@ -199,83 +198,56 @@ namespace kotor_Randomizer_2
         private void ModuleForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.LastPresetComboIndex = PresetComboBox.SelectedIndex;
-
-            if (Properties.Settings.Default.ModuleSaveStatus != 1) { Properties.Settings.Default.AddOverideFiles.Add("modulesave.2da"); }
-            else if (Properties.Settings.Default.AddOverideFiles.Contains("modulesave.2da")) { Properties.Settings.Default.AddOverideFiles.Remove("modulesave.2da"); }
-
-            // Remove any duplicates within the StringCollection.
-            var noDuplicates = Properties.Settings.Default.AddOverideFiles.Cast<string>().Distinct().ToArray();
-            Properties.Settings.Default.AddOverideFiles.Clear();
-            Properties.Settings.Default.AddOverideFiles.AddRange(noDuplicates);
-
             Properties.Settings.Default.Save();
         }
 
-        private void modDelete_checkbox_CheckedChanged(object sender, EventArgs e)
+        private void cbDeleteMilestones_CheckedChanged(object sender, EventArgs e)
         {
-            if (!constructed) { return; }
-            Properties.Settings.Default.ModuleSaveStatus ^= 1;
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.NoSaveDelete;
         }
 
-        private void mgSave_checkbox_CheckedChanged(object sender, EventArgs e)
+        private void cbSaveMiniGame_CheckedChanged(object sender, EventArgs e)
         {
-            if (!constructed) { return; }
-            Properties.Settings.Default.ModuleSaveStatus ^= 1 << 1;
-
-            if (allSave_checkbox.Checked && !mgSave_checkbox.Checked)
-            {
-                mgSave_checkbox.Checked = true;
-            }
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.SaveMiniGames;
         }
 
-        private void allSave_checkbox_CheckedChanged(object sender, EventArgs e)
+        private void cbSaveAllMods_CheckedChanged(object sender, EventArgs e)
         {
-            if (!constructed) { return; }
-            Properties.Settings.Default.ModuleSaveStatus ^= 1 << 2;
-            mgSave_checkbox.Checked = true;
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.SaveAllModules;
+            cbSaveMiniGame.Checked = true;
+            cbSaveMiniGame.Enabled = !cbSaveAllMods.Checked;    // If all save checked, disable mg save.
         }
 
-        private void FixedDream_checkBox_CheckedChanged(object sender, EventArgs e)
+        private void cbFixDream_CheckedChanged(object sender, EventArgs e)
         {
-            if (!constructed) { return; }
-            if (FixedDream_checkBox.Checked)
-            {
-                Properties.Settings.Default.AddOverideFiles.Add("k_ren_visionland.ncs");
-            }
-            else if (Properties.Settings.Default.AddOverideFiles.Contains("k_ren_visionland.ncs"))
-            {
-                Properties.Settings.Default.AddOverideFiles.Remove("k_ren_visionland.ncs");
-            }
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.FixDream;
         }
 
-        private void galmap_checkbox_CheckedChanged(object sender, EventArgs e)
+        private void cbUnlockGalaxyMap_CheckedChanged(object sender, EventArgs e)
         {
-            if (!constructed) { return; }
-            if (galmap_checkbox.Checked)
-            {
-                Properties.Settings.Default.AddOverideFiles.Add("k_pebn_galaxy.ncs");
-            }
-            else if (Properties.Settings.Default.AddOverideFiles.Contains("k_pebn_galaxy.ncs"))
-            {
-                Properties.Settings.Default.AddOverideFiles.Remove("k_pebn_galaxy.ncs");
-            }
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockGalaxyMap;
         }
 
-        private void updatedCoords_checkbox_CheckedChanged(object sender, EventArgs e)
+        private void cbFixCoordinates_CheckedChanged(object sender, EventArgs e)
         {
-            if (!constructed) { return; }
-            Properties.Settings.Default.FixWarpCoords = updatedCoords_checkbox.Checked;
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.FixCoordinates;
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void lblRandomized_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Convert.ToString(Properties.Settings.Default.ModuleSaveStatus));
+            MessageBox.Show(Convert.ToString(Properties.Settings.Default.ModuleExtrasValue));
         }
 
-        private void cbRakataRiddle_CheckedChanged(object sender, EventArgs e)
+        private void cbFixMindPrison_CheckedChanged(object sender, EventArgs e)
         {
-            if (!constructed) { return; }
-            Properties.Settings.Default.FixMindPrison = cbRakataRiddle.Checked;
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.FixMindPrison;
         }
 
         private void ModuleForm_Activated(object sender, EventArgs e)
@@ -285,6 +257,18 @@ namespace kotor_Randomizer_2
                 Properties.Settings.Default.LastPresetComboIndex = -1;
                 PresetComboBox.SelectedIndex = -1;
                 UpdateListBoxes();
+
+                Constructed = false;
+                cbDeleteMilestones.Checked = !Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete);
+                cbSaveMiniGame.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames);
+                cbSaveAllMods.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules);
+                cbSaveMiniGame.Enabled = !cbSaveAllMods.Checked; // If all save checked, disable mg save checkbox.
+
+                cbFixDream.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream);
+                cbUnlockGalaxyMap.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
+                cbFixCoordinates.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates);
+                cbFixMindPrison.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
+                Constructed = true;
             }
         }
 

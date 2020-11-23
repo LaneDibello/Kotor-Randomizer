@@ -61,6 +61,9 @@
             this.rbNpcSoundsActions = new System.Windows.Forms.RadioButton();
             this.rbNpcSoundsType = new System.Windows.Forms.RadioButton();
             this.rbNpcSoundsMax = new System.Windows.Forms.RadioButton();
+            this.bToggleAll = new System.Windows.Forms.Button();
+            this.bTypeAll = new System.Windows.Forms.Button();
+            this.bMaxAll = new System.Windows.Forms.Button();
             this.flpAreaMusic.SuspendLayout();
             this.flpCutsceneNoise.SuspendLayout();
             this.flpAmbientNoise.SuspendLayout();
@@ -73,7 +76,7 @@
             // 
             this.cbMixNpcParty.AutoSize = true;
             this.cbMixNpcParty.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbMixNpcParty.Location = new System.Drawing.Point(45, 164);
+            this.cbMixNpcParty.Location = new System.Drawing.Point(45, 190);
             this.cbMixNpcParty.Name = "cbMixNpcParty";
             this.cbMixNpcParty.Size = new System.Drawing.Size(200, 17);
             this.cbMixNpcParty.TabIndex = 8;
@@ -87,7 +90,7 @@
             this.cbCutsceneNoise.Checked = true;
             this.cbCutsceneNoise.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbCutsceneNoise.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbCutsceneNoise.Location = new System.Drawing.Point(30, 92);
+            this.cbCutsceneNoise.Location = new System.Drawing.Point(27, 121);
             this.cbCutsceneNoise.Name = "cbCutsceneNoise";
             this.cbCutsceneNoise.Size = new System.Drawing.Size(101, 17);
             this.cbCutsceneNoise.TabIndex = 6;
@@ -101,7 +104,7 @@
             this.cbAmbientNoise.Checked = true;
             this.cbAmbientNoise.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbAmbientNoise.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbAmbientNoise.Location = new System.Drawing.Point(30, 69);
+            this.cbAmbientNoise.Location = new System.Drawing.Point(27, 98);
             this.cbAmbientNoise.Name = "cbAmbientNoise";
             this.cbAmbientNoise.Size = new System.Drawing.Size(94, 17);
             this.cbAmbientNoise.TabIndex = 4;
@@ -115,7 +118,7 @@
             this.cbPartySounds.Checked = true;
             this.cbPartySounds.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbPartySounds.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbPartySounds.Location = new System.Drawing.Point(30, 138);
+            this.cbPartySounds.Location = new System.Drawing.Point(27, 167);
             this.cbPartySounds.Name = "cbPartySounds";
             this.cbPartySounds.Size = new System.Drawing.Size(89, 17);
             this.cbPartySounds.TabIndex = 3;
@@ -129,7 +132,7 @@
             this.cbNpcSounds.Checked = true;
             this.cbNpcSounds.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbNpcSounds.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbNpcSounds.Location = new System.Drawing.Point(30, 115);
+            this.cbNpcSounds.Location = new System.Drawing.Point(27, 144);
             this.cbNpcSounds.Name = "cbNpcSounds";
             this.cbNpcSounds.Size = new System.Drawing.Size(87, 17);
             this.cbNpcSounds.TabIndex = 2;
@@ -143,7 +146,7 @@
             this.cbBattleMusic.Checked = true;
             this.cbBattleMusic.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbBattleMusic.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbBattleMusic.Location = new System.Drawing.Point(30, 46);
+            this.cbBattleMusic.Location = new System.Drawing.Point(27, 75);
             this.cbBattleMusic.Name = "cbBattleMusic";
             this.cbBattleMusic.Size = new System.Drawing.Size(84, 17);
             this.cbBattleMusic.TabIndex = 1;
@@ -157,7 +160,7 @@
             this.cbAreaMusic.Checked = true;
             this.cbAreaMusic.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbAreaMusic.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbAreaMusic.Location = new System.Drawing.Point(30, 23);
+            this.cbAreaMusic.Location = new System.Drawing.Point(27, 52);
             this.cbAreaMusic.Name = "cbAreaMusic";
             this.cbAreaMusic.Size = new System.Drawing.Size(79, 17);
             this.cbAreaMusic.TabIndex = 0;
@@ -169,7 +172,7 @@
             // 
             this.labelUnavailable2.AutoSize = true;
             this.labelUnavailable2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.labelUnavailable2.Location = new System.Drawing.Point(126, 117);
+            this.labelUnavailable2.Location = new System.Drawing.Point(123, 146);
             this.labelUnavailable2.Name = "labelUnavailable2";
             this.labelUnavailable2.Size = new System.Drawing.Size(171, 13);
             this.labelUnavailable2.TabIndex = 18;
@@ -184,7 +187,7 @@
             this.flpAreaMusic.Controls.Add(this.rbAreaMusicType);
             this.flpAreaMusic.Controls.Add(this.rbAreaMusicMax);
             this.flpAreaMusic.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpAreaMusic.Location = new System.Drawing.Point(130, 20);
+            this.flpAreaMusic.Location = new System.Drawing.Point(127, 49);
             this.flpAreaMusic.Name = "flpAreaMusic";
             this.flpAreaMusic.Size = new System.Drawing.Size(181, 23);
             this.flpAreaMusic.TabIndex = 12;
@@ -229,7 +232,7 @@
             this.flpCutsceneNoise.Controls.Add(this.rbCutsceneNoiseType);
             this.flpCutsceneNoise.Controls.Add(this.rbCutsceneNoiseMax);
             this.flpCutsceneNoise.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpCutsceneNoise.Location = new System.Drawing.Point(130, 89);
+            this.flpCutsceneNoise.Location = new System.Drawing.Point(127, 118);
             this.flpCutsceneNoise.Name = "flpCutsceneNoise";
             this.flpCutsceneNoise.Size = new System.Drawing.Size(181, 23);
             this.flpCutsceneNoise.TabIndex = 14;
@@ -274,7 +277,7 @@
             this.flpAmbientNoise.Controls.Add(this.rbAmbientNoiseType);
             this.flpAmbientNoise.Controls.Add(this.rbAmbientNoiseMax);
             this.flpAmbientNoise.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpAmbientNoise.Location = new System.Drawing.Point(130, 66);
+            this.flpAmbientNoise.Location = new System.Drawing.Point(127, 95);
             this.flpAmbientNoise.Name = "flpAmbientNoise";
             this.flpAmbientNoise.Size = new System.Drawing.Size(181, 23);
             this.flpAmbientNoise.TabIndex = 15;
@@ -319,7 +322,7 @@
             this.flpBattleMusic.Controls.Add(this.rbBattleMusicType);
             this.flpBattleMusic.Controls.Add(this.rbBattleMusicMax);
             this.flpBattleMusic.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpBattleMusic.Location = new System.Drawing.Point(130, 43);
+            this.flpBattleMusic.Location = new System.Drawing.Point(127, 72);
             this.flpBattleMusic.Name = "flpBattleMusic";
             this.flpBattleMusic.Size = new System.Drawing.Size(181, 23);
             this.flpBattleMusic.TabIndex = 13;
@@ -364,7 +367,7 @@
             this.flpPartySounds.Controls.Add(this.rbPartySoundsType);
             this.flpPartySounds.Controls.Add(this.rbPartySoundsMax);
             this.flpPartySounds.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpPartySounds.Location = new System.Drawing.Point(130, 135);
+            this.flpPartySounds.Location = new System.Drawing.Point(127, 164);
             this.flpPartySounds.Name = "flpPartySounds";
             this.flpPartySounds.Size = new System.Drawing.Size(181, 23);
             this.flpPartySounds.TabIndex = 16;
@@ -409,7 +412,7 @@
             this.flpNpcSounds.Controls.Add(this.rbNpcSoundsType);
             this.flpNpcSounds.Controls.Add(this.rbNpcSoundsMax);
             this.flpNpcSounds.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpNpcSounds.Location = new System.Drawing.Point(130, 112);
+            this.flpNpcSounds.Location = new System.Drawing.Point(127, 141);
             this.flpNpcSounds.Name = "flpNpcSounds";
             this.flpNpcSounds.Size = new System.Drawing.Size(181, 23);
             this.flpNpcSounds.TabIndex = 17;
@@ -446,12 +449,51 @@
             this.rbNpcSoundsMax.Text = "Max";
             this.rbNpcSoundsMax.UseVisualStyleBackColor = true;
             // 
+            // bToggleAll
+            // 
+            this.bToggleAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bToggleAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.bToggleAll.Location = new System.Drawing.Point(27, 20);
+            this.bToggleAll.Name = "bToggleAll";
+            this.bToggleAll.Size = new System.Drawing.Size(94, 23);
+            this.bToggleAll.TabIndex = 19;
+            this.bToggleAll.Text = "Toggle All";
+            this.bToggleAll.UseVisualStyleBackColor = false;
+            this.bToggleAll.Click += new System.EventHandler(this.bToggleAll_Click);
+            // 
+            // bTypeAll
+            // 
+            this.bTypeAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bTypeAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.bTypeAll.Location = new System.Drawing.Point(196, 20);
+            this.bTypeAll.Name = "bTypeAll";
+            this.bTypeAll.Size = new System.Drawing.Size(50, 23);
+            this.bTypeAll.TabIndex = 20;
+            this.bTypeAll.Text = "Type";
+            this.bTypeAll.UseVisualStyleBackColor = false;
+            this.bTypeAll.Click += new System.EventHandler(this.bTypeAll_Click);
+            // 
+            // bMaxAll
+            // 
+            this.bMaxAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bMaxAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.bMaxAll.Location = new System.Drawing.Point(252, 20);
+            this.bMaxAll.Name = "bMaxAll";
+            this.bMaxAll.Size = new System.Drawing.Size(45, 23);
+            this.bMaxAll.TabIndex = 21;
+            this.bMaxAll.Text = "Max";
+            this.bMaxAll.UseVisualStyleBackColor = false;
+            this.bMaxAll.Click += new System.EventHandler(this.bMaxAll_Click);
+            // 
             // SoundForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(331, 202);
+            this.ClientSize = new System.Drawing.Size(331, 222);
+            this.Controls.Add(this.bMaxAll);
+            this.Controls.Add(this.bTypeAll);
+            this.Controls.Add(this.bToggleAll);
             this.Controls.Add(this.labelUnavailable2);
             this.Controls.Add(this.flpAreaMusic);
             this.Controls.Add(this.flpCutsceneNoise);
@@ -525,5 +567,8 @@
         private System.Windows.Forms.RadioButton rbNpcSoundsActions;
         private System.Windows.Forms.RadioButton rbNpcSoundsType;
         private System.Windows.Forms.RadioButton rbNpcSoundsMax;
+        private System.Windows.Forms.Button bToggleAll;
+        private System.Windows.Forms.Button bTypeAll;
+        private System.Windows.Forms.Button bMaxAll;
     }
 }

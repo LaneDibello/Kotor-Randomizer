@@ -19,31 +19,50 @@ namespace kotor_Randomizer_2
         Max = 3,
     }
 
+    [Flags]
     [Serializable]
     public enum RandomizationCategory
     {
         /// <summary> Uninitialized value - nothing will be done. </summary>
-        Unknown = 0,
-        Module = 1,
-        Item = 2,
-        Sound = 3,
-        Model = 4,
-        Texture = 5,
-        TwoDA = 6,
-        Text = 7,
-        Other = 8,
+        None    = 0x00, // 0b00000000
+        /// <summary> Randomize module (RIM) files so loading zones lead to an unknown destination. </summary>
+        Module  = 0x01, // 0b00000001
+        /// <summary> Randomize items. </summary>
+        Item    = 0x02, // 0b00000010
+        /// <summary> Randomize music and sound files. </summary>
+        Sound   = 0x04, // 0b00000100
+        /// <summary> Randomize models. </summary>
+        Model   = 0x08, // 0b00001000
+        /// <summary> Randomize texture maps. </summary>
+        Texture = 0x10, // 0b00010000
+        /// <summary> Randomize 2DA tables. </summary>
+        TwoDA   = 0x20, // 0b00100000
+        /// <summary> Randomize text. -- Not yet implemented -- </summary>
+        Text    = 0x40, // 0b01000000
+        /// <summary> Perform other types of randomization. </summary>
+        Other   = 0x80, // 0b10000000
     }
 
     [Flags]
     [Serializable]
-    public enum ModuleSaveStatusValues : byte
+    public enum ModuleExtras
     {
-        NoDelete = 0x00,
-        DeleteMilestones = 0x01,
-        SaveMiniGames = 0x02,
-        SaveAllModules = 0x04,
-        FixedDream = 0x08,
-        UnlockedMap = 0x10,
+        /// <summary> (Default Behavior) Delete milestone save data. </summary>
+        Default         = 0x00, // 0b00000000
+        /// <summary> Do not delete milestone save data. </summary>
+        NoSaveDelete    = 0x01, // 0b00000001
+        /// <summary> Include minigame data in the save file. </summary>
+        SaveMiniGames   = 0x02, // 0b00000010
+        /// <summary> Include all module data in the save file. </summary>
+        SaveAllModules  = 0x04, // 0b00000100
+        /// <summary> Fix dream cutscenes. </summary>
+        FixDream        = 0x08, // 0b00001000
+        /// <summary> Unlock all destinations on the galaxy map. </summary>
+        UnlockGalaxyMap = 0x10, // 0b00010000
+        /// <summary> Fix warp spawn coordinates in certain modules. </summary>
+        FixCoordinates  = 0x20, // 0b00100000
+        /// <summary> Fix Rakatan mind prison to prevent soft-locks. </summary>
+        FixMindPrison   = 0x40, // 0b01000000
     }
 
     public class Globals

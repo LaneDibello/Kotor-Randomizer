@@ -16,7 +16,7 @@ namespace kotor_Randomizer_2
         public static void other_rando(KPaths paths)
         {
             // NameGen
-            if (Properties.Settings.Default.NameGenRando)
+            if (Properties.Settings.Default.RandomizeNameGen)
             {
                 List<string> male_names = Properties.Settings.Default.FirstnamesM.Cast<string>().Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
                 LTR ltr_male_names = new LTR(male_names);
@@ -42,7 +42,7 @@ namespace kotor_Randomizer_2
             // Polymorph
 
             // Random NPC Pazaak Decks
-            if (Properties.Settings.Default.PazaakDecks)
+            if (Properties.Settings.Default.RandomizePazaakDecks)
             {
                 string ops = "+-*";
 

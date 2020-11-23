@@ -19,14 +19,14 @@ namespace kotor_Randomizer_2
             }
 
             //Active Rando Categories (start false)
-            Properties.Settings.Default.module_rando_active = false;
-            Properties.Settings.Default.sound_rando_active = false;
-            Properties.Settings.Default.model_rando_active = false;
-            Properties.Settings.Default.item_rando_active = false;
-            Properties.Settings.Default.texture_rando_active = false;
-            Properties.Settings.Default.twoda_rando_active = false;
-            Properties.Settings.Default.text_rando_active = false;
-            Properties.Settings.Default.other_rando_active = false;
+            Properties.Settings.Default.DoRandomization_Module = false;
+            Properties.Settings.Default.DoRandomization_Sound = false;
+            Properties.Settings.Default.DoRandomization_Model = false;
+            Properties.Settings.Default.DoRandomization_Item = false;
+            Properties.Settings.Default.DoRandomization_Texture = false;
+            Properties.Settings.Default.DoRandomization_TwoDA = false;
+            Properties.Settings.Default.DoRandomization_Text = false;
+            Properties.Settings.Default.DoRandomization_Other = false;
 
             if (File.Exists(Properties.Settings.Default.Kotor1Path + "\\RANDOMIZED.log"))
             {
@@ -129,7 +129,7 @@ namespace kotor_Randomizer_2
             if (false == FocusOpenForm<ModuleForm>())
             {
                 new ModuleForm().Show();
-                if (!Properties.Settings.Default.module_rando_active) { module_radio_Click(sender, e); module_radio_MouseLeave(sender, e); }
+                if (!Properties.Settings.Default.DoRandomization_Module) { module_radio_Click(sender, e); module_radio_MouseLeave(sender, e); }
             }
         }
 
@@ -138,7 +138,7 @@ namespace kotor_Randomizer_2
             if (false == FocusOpenForm<ItemForm>())
             {
                 new ItemForm().Show();
-                if (!Properties.Settings.Default.item_rando_active) { item_radio_Click(sender, e); item_radio_MouseLeave(sender, e); }
+                if (!Properties.Settings.Default.DoRandomization_Item) { item_radio_Click(sender, e); item_radio_MouseLeave(sender, e); }
             }
         }
 
@@ -147,7 +147,7 @@ namespace kotor_Randomizer_2
             if (false == FocusOpenForm<SoundForm>())
             {
                 new SoundForm().Show();
-                if (!Properties.Settings.Default.sound_rando_active) { sound_radio_Click(sender, e); sound_radio_MouseLeave(sender, e); }
+                if (!Properties.Settings.Default.DoRandomization_Sound) { sound_radio_Click(sender, e); sound_radio_MouseLeave(sender, e); }
             }
         }
 
@@ -156,7 +156,7 @@ namespace kotor_Randomizer_2
             if (false == FocusOpenForm<ModelForm>())
             {
                 new ModelForm().Show();
-                if (!Properties.Settings.Default.model_rando_active) { model_radio_Click(sender, e); model_radio_MouseLeave(sender, e); }
+                if (!Properties.Settings.Default.DoRandomization_Model) { model_radio_Click(sender, e); model_radio_MouseLeave(sender, e); }
             }
         }
 
@@ -165,7 +165,7 @@ namespace kotor_Randomizer_2
             if (false == FocusOpenForm<TextureForm>())
             {
                 new TextureForm().Show();
-                if (!Properties.Settings.Default.texture_rando_active) { texture_radio_Click(sender, e); texture_radio_MouseLeave(sender, e); }
+                if (!Properties.Settings.Default.DoRandomization_Texture) { texture_radio_Click(sender, e); texture_radio_MouseLeave(sender, e); }
             }
         }
 
@@ -174,7 +174,7 @@ namespace kotor_Randomizer_2
             if (false == FocusOpenForm<TwodaForm>())
             {
                 new TwodaForm().Show();
-                if (!Properties.Settings.Default.twoda_rando_active) { twoda_radio_Click(sender, e); twoda_radio_MouseLeave(sender, e); }
+                if (!Properties.Settings.Default.DoRandomization_TwoDA) { twoda_radio_Click(sender, e); twoda_radio_MouseLeave(sender, e); }
             }
         }
 
@@ -183,7 +183,7 @@ namespace kotor_Randomizer_2
             if (false == FocusOpenForm<TextF>())
             {
                 new TextF().Show();
-                if (!Properties.Settings.Default.text_rando_active) { text_radio_Click(sender, e); text_radio_MouseLeave(sender, e); }
+                if (!Properties.Settings.Default.DoRandomization_Text) { text_radio_Click(sender, e); text_radio_MouseLeave(sender, e); }
             }
         }
 
@@ -192,7 +192,7 @@ namespace kotor_Randomizer_2
             if (false == FocusOpenForm<OtherForm>())
             {
                 new OtherForm().Show();
-                if (!Properties.Settings.Default.other_rando_active) { other_radio_Click(sender, e); other_radio_MouseLeave(sender, e); }
+                if (!Properties.Settings.Default.DoRandomization_Other) { other_radio_Click(sender, e); other_radio_MouseLeave(sender, e); }
             }
         }
 

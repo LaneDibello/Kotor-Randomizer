@@ -92,8 +92,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lWarning = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.bAllOff = new System.Windows.Forms.Button();
+            this.bToggleAll = new System.Windows.Forms.Button();
             this.bAllMax = new System.Windows.Forms.Button();
+            this.bTypeAll = new System.Windows.Forms.Button();
             this.flpCubeMaps.SuspendLayout();
             this.flpCreatures.SuspendLayout();
             this.flpEffects.SuspendLayout();
@@ -115,7 +116,7 @@
             // 
             this.cbCubeMaps.Checked = true;
             this.cbCubeMaps.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbCubeMaps.Location = new System.Drawing.Point(20, 20);
+            this.cbCubeMaps.Location = new System.Drawing.Point(23, 53);
             this.cbCubeMaps.Margin = new System.Windows.Forms.Padding(2);
             this.cbCubeMaps.Name = "cbCubeMaps";
             this.cbCubeMaps.Size = new System.Drawing.Size(120, 20);
@@ -132,7 +133,7 @@
             this.flpCubeMaps.Controls.Add(this.rbCubeMapsType);
             this.flpCubeMaps.Controls.Add(this.rbCubeMapsMax);
             this.flpCubeMaps.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpCubeMaps.Location = new System.Drawing.Point(150, 20);
+            this.flpCubeMaps.Location = new System.Drawing.Point(153, 53);
             this.flpCubeMaps.Name = "flpCubeMaps";
             this.flpCubeMaps.Size = new System.Drawing.Size(110, 20);
             this.flpCubeMaps.TabIndex = 19;
@@ -168,7 +169,7 @@
             this.flpCreatures.Controls.Add(this.rbCreaturesType);
             this.flpCreatures.Controls.Add(this.rbCreaturesMax);
             this.flpCreatures.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpCreatures.Location = new System.Drawing.Point(150, 50);
+            this.flpCreatures.Location = new System.Drawing.Point(153, 83);
             this.flpCreatures.Name = "flpCreatures";
             this.flpCreatures.Size = new System.Drawing.Size(110, 20);
             this.flpCreatures.TabIndex = 21;
@@ -199,7 +200,7 @@
             // 
             this.cbCreatures.Checked = true;
             this.cbCreatures.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbCreatures.Location = new System.Drawing.Point(20, 50);
+            this.cbCreatures.Location = new System.Drawing.Point(23, 83);
             this.cbCreatures.Margin = new System.Windows.Forms.Padding(2);
             this.cbCreatures.Name = "cbCreatures";
             this.cbCreatures.Size = new System.Drawing.Size(120, 20);
@@ -216,7 +217,7 @@
             this.flpEffects.Controls.Add(this.rbEffectsType);
             this.flpEffects.Controls.Add(this.rbEffectsMax);
             this.flpEffects.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpEffects.Location = new System.Drawing.Point(150, 80);
+            this.flpEffects.Location = new System.Drawing.Point(153, 113);
             this.flpEffects.Name = "flpEffects";
             this.flpEffects.Size = new System.Drawing.Size(110, 20);
             this.flpEffects.TabIndex = 23;
@@ -247,7 +248,7 @@
             // 
             this.cbEffects.Checked = true;
             this.cbEffects.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbEffects.Location = new System.Drawing.Point(20, 80);
+            this.cbEffects.Location = new System.Drawing.Point(23, 113);
             this.cbEffects.Margin = new System.Windows.Forms.Padding(2);
             this.cbEffects.Name = "cbEffects";
             this.cbEffects.Size = new System.Drawing.Size(120, 20);
@@ -264,7 +265,7 @@
             this.flpItems.Controls.Add(this.rbItemsType);
             this.flpItems.Controls.Add(this.rbItemsMax);
             this.flpItems.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpItems.Location = new System.Drawing.Point(150, 110);
+            this.flpItems.Location = new System.Drawing.Point(153, 143);
             this.flpItems.Name = "flpItems";
             this.flpItems.Size = new System.Drawing.Size(110, 20);
             this.flpItems.TabIndex = 21;
@@ -295,7 +296,7 @@
             // 
             this.cbItems.Checked = true;
             this.cbItems.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbItems.Location = new System.Drawing.Point(20, 110);
+            this.cbItems.Location = new System.Drawing.Point(23, 143);
             this.cbItems.Margin = new System.Windows.Forms.Padding(2);
             this.cbItems.Name = "cbItems";
             this.cbItems.Size = new System.Drawing.Size(120, 20);
@@ -312,7 +313,7 @@
             this.flpPlanetary.Controls.Add(this.rbPlanetaryType);
             this.flpPlanetary.Controls.Add(this.rbPlanetaryMax);
             this.flpPlanetary.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpPlanetary.Location = new System.Drawing.Point(150, 140);
+            this.flpPlanetary.Location = new System.Drawing.Point(153, 173);
             this.flpPlanetary.Name = "flpPlanetary";
             this.flpPlanetary.Size = new System.Drawing.Size(110, 20);
             this.flpPlanetary.TabIndex = 25;
@@ -343,7 +344,7 @@
             // 
             this.cbPlanetary.Checked = true;
             this.cbPlanetary.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbPlanetary.Location = new System.Drawing.Point(20, 140);
+            this.cbPlanetary.Location = new System.Drawing.Point(23, 173);
             this.cbPlanetary.Margin = new System.Windows.Forms.Padding(2);
             this.cbPlanetary.Name = "cbPlanetary";
             this.cbPlanetary.Size = new System.Drawing.Size(120, 20);
@@ -360,7 +361,7 @@
             this.flpNPC.Controls.Add(this.rbNPCType);
             this.flpNPC.Controls.Add(this.rbNPCMax);
             this.flpNPC.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpNPC.Location = new System.Drawing.Point(150, 170);
+            this.flpNPC.Location = new System.Drawing.Point(153, 203);
             this.flpNPC.Name = "flpNPC";
             this.flpNPC.Size = new System.Drawing.Size(110, 20);
             this.flpNPC.TabIndex = 27;
@@ -391,7 +392,7 @@
             // 
             this.cbNPC.Checked = true;
             this.cbNPC.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbNPC.Location = new System.Drawing.Point(20, 170);
+            this.cbNPC.Location = new System.Drawing.Point(23, 203);
             this.cbNPC.Margin = new System.Windows.Forms.Padding(2);
             this.cbNPC.Name = "cbNPC";
             this.cbNPC.Size = new System.Drawing.Size(120, 20);
@@ -408,7 +409,7 @@
             this.flpPlayHeads.Controls.Add(this.rbPlayHeadsType);
             this.flpPlayHeads.Controls.Add(this.rbPlayHeadsMax);
             this.flpPlayHeads.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpPlayHeads.Location = new System.Drawing.Point(150, 200);
+            this.flpPlayHeads.Location = new System.Drawing.Point(153, 233);
             this.flpPlayHeads.Name = "flpPlayHeads";
             this.flpPlayHeads.Size = new System.Drawing.Size(110, 20);
             this.flpPlayHeads.TabIndex = 29;
@@ -439,7 +440,7 @@
             // 
             this.cbPlayHeads.Checked = true;
             this.cbPlayHeads.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbPlayHeads.Location = new System.Drawing.Point(20, 200);
+            this.cbPlayHeads.Location = new System.Drawing.Point(23, 233);
             this.cbPlayHeads.Margin = new System.Windows.Forms.Padding(2);
             this.cbPlayHeads.Name = "cbPlayHeads";
             this.cbPlayHeads.Size = new System.Drawing.Size(120, 20);
@@ -456,7 +457,7 @@
             this.flpPlayBodies.Controls.Add(this.rbPlayBodiesType);
             this.flpPlayBodies.Controls.Add(this.rbPlayBodiesMax);
             this.flpPlayBodies.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpPlayBodies.Location = new System.Drawing.Point(150, 230);
+            this.flpPlayBodies.Location = new System.Drawing.Point(153, 263);
             this.flpPlayBodies.Name = "flpPlayBodies";
             this.flpPlayBodies.Size = new System.Drawing.Size(110, 20);
             this.flpPlayBodies.TabIndex = 31;
@@ -487,7 +488,7 @@
             // 
             this.cbPlayBodies.Checked = true;
             this.cbPlayBodies.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbPlayBodies.Location = new System.Drawing.Point(20, 230);
+            this.cbPlayBodies.Location = new System.Drawing.Point(23, 263);
             this.cbPlayBodies.Margin = new System.Windows.Forms.Padding(2);
             this.cbPlayBodies.Name = "cbPlayBodies";
             this.cbPlayBodies.Size = new System.Drawing.Size(120, 20);
@@ -504,7 +505,7 @@
             this.flpPlaceables.Controls.Add(this.rbPlaceablesType);
             this.flpPlaceables.Controls.Add(this.rbPlaceablesMax);
             this.flpPlaceables.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpPlaceables.Location = new System.Drawing.Point(150, 260);
+            this.flpPlaceables.Location = new System.Drawing.Point(153, 293);
             this.flpPlaceables.Name = "flpPlaceables";
             this.flpPlaceables.Size = new System.Drawing.Size(110, 20);
             this.flpPlaceables.TabIndex = 33;
@@ -535,7 +536,7 @@
             // 
             this.cbPlaceables.Checked = true;
             this.cbPlaceables.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbPlaceables.Location = new System.Drawing.Point(20, 260);
+            this.cbPlaceables.Location = new System.Drawing.Point(23, 293);
             this.cbPlaceables.Margin = new System.Windows.Forms.Padding(2);
             this.cbPlaceables.Name = "cbPlaceables";
             this.cbPlaceables.Size = new System.Drawing.Size(120, 20);
@@ -552,7 +553,7 @@
             this.flpParty.Controls.Add(this.rbPartyType);
             this.flpParty.Controls.Add(this.rbPartyMax);
             this.flpParty.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpParty.Location = new System.Drawing.Point(150, 290);
+            this.flpParty.Location = new System.Drawing.Point(153, 323);
             this.flpParty.Name = "flpParty";
             this.flpParty.Size = new System.Drawing.Size(110, 20);
             this.flpParty.TabIndex = 35;
@@ -583,7 +584,7 @@
             // 
             this.cbParty.Checked = true;
             this.cbParty.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbParty.Location = new System.Drawing.Point(20, 290);
+            this.cbParty.Location = new System.Drawing.Point(23, 323);
             this.cbParty.Margin = new System.Windows.Forms.Padding(2);
             this.cbParty.Name = "cbParty";
             this.cbParty.Size = new System.Drawing.Size(120, 20);
@@ -600,7 +601,7 @@
             this.flpStunt.Controls.Add(this.rbStuntType);
             this.flpStunt.Controls.Add(this.rbStuntMax);
             this.flpStunt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpStunt.Location = new System.Drawing.Point(150, 320);
+            this.flpStunt.Location = new System.Drawing.Point(153, 353);
             this.flpStunt.Name = "flpStunt";
             this.flpStunt.Size = new System.Drawing.Size(110, 20);
             this.flpStunt.TabIndex = 37;
@@ -631,7 +632,7 @@
             // 
             this.cbStunt.Checked = true;
             this.cbStunt.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbStunt.Location = new System.Drawing.Point(20, 320);
+            this.cbStunt.Location = new System.Drawing.Point(23, 353);
             this.cbStunt.Margin = new System.Windows.Forms.Padding(2);
             this.cbStunt.Name = "cbStunt";
             this.cbStunt.Size = new System.Drawing.Size(120, 20);
@@ -648,7 +649,7 @@
             this.flpVehicles.Controls.Add(this.rbVehiclesType);
             this.flpVehicles.Controls.Add(this.rbVehiclesMax);
             this.flpVehicles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpVehicles.Location = new System.Drawing.Point(151, 351);
+            this.flpVehicles.Location = new System.Drawing.Point(154, 384);
             this.flpVehicles.Name = "flpVehicles";
             this.flpVehicles.Size = new System.Drawing.Size(109, 20);
             this.flpVehicles.TabIndex = 39;
@@ -679,7 +680,7 @@
             // 
             this.cbVehicles.Checked = true;
             this.cbVehicles.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbVehicles.Location = new System.Drawing.Point(20, 350);
+            this.cbVehicles.Location = new System.Drawing.Point(23, 383);
             this.cbVehicles.Margin = new System.Windows.Forms.Padding(2);
             this.cbVehicles.Name = "cbVehicles";
             this.cbVehicles.Size = new System.Drawing.Size(120, 20);
@@ -696,7 +697,7 @@
             this.flpWeapons.Controls.Add(this.rbWeaponsType);
             this.flpWeapons.Controls.Add(this.rbWeaponsMax);
             this.flpWeapons.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpWeapons.Location = new System.Drawing.Point(151, 381);
+            this.flpWeapons.Location = new System.Drawing.Point(154, 414);
             this.flpWeapons.Name = "flpWeapons";
             this.flpWeapons.Size = new System.Drawing.Size(109, 20);
             this.flpWeapons.TabIndex = 41;
@@ -727,7 +728,7 @@
             // 
             this.cbWeapons.Checked = true;
             this.cbWeapons.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbWeapons.Location = new System.Drawing.Point(20, 380);
+            this.cbWeapons.Location = new System.Drawing.Point(23, 413);
             this.cbWeapons.Margin = new System.Windows.Forms.Padding(2);
             this.cbWeapons.Name = "cbWeapons";
             this.cbWeapons.Size = new System.Drawing.Size(120, 20);
@@ -744,7 +745,7 @@
             this.flpOther.Controls.Add(this.rbOtherType);
             this.flpOther.Controls.Add(this.rbOtherMax);
             this.flpOther.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.flpOther.Location = new System.Drawing.Point(150, 410);
+            this.flpOther.Location = new System.Drawing.Point(153, 443);
             this.flpOther.Name = "flpOther";
             this.flpOther.Size = new System.Drawing.Size(110, 20);
             this.flpOther.TabIndex = 43;
@@ -775,7 +776,7 @@
             // 
             this.cbOther.Checked = true;
             this.cbOther.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbOther.Location = new System.Drawing.Point(20, 410);
+            this.cbOther.Location = new System.Drawing.Point(23, 443);
             this.cbOther.Margin = new System.Windows.Forms.Padding(2);
             this.cbOther.Name = "cbOther";
             this.cbOther.Size = new System.Drawing.Size(120, 20);
@@ -856,48 +857,58 @@
             this.label2.TabIndex = 46;
             this.label2.Text = resources.GetString("label2.Text");
             // 
-            // bAllOff
+            // bToggleAll
             // 
-            this.bAllOff.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.bAllOff.FlatAppearance.BorderSize = 2;
-            this.bAllOff.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
-            this.bAllOff.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.bAllOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bAllOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bAllOff.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.bAllOff.Location = new System.Drawing.Point(20, 440);
-            this.bAllOff.Name = "bAllOff";
-            this.bAllOff.Size = new System.Drawing.Size(120, 30);
-            this.bAllOff.TabIndex = 47;
-            this.bAllOff.Text = "Disable All";
-            this.bAllOff.UseVisualStyleBackColor = false;
-            this.bAllOff.Click += new System.EventHandler(this.bAllOff_Click);
+            this.bToggleAll.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.bToggleAll.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
+            this.bToggleAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bToggleAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bToggleAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.bToggleAll.Location = new System.Drawing.Point(23, 25);
+            this.bToggleAll.Name = "bToggleAll";
+            this.bToggleAll.Size = new System.Drawing.Size(120, 23);
+            this.bToggleAll.TabIndex = 47;
+            this.bToggleAll.Text = "Toggle All";
+            this.bToggleAll.UseVisualStyleBackColor = false;
+            this.bToggleAll.Click += new System.EventHandler(this.bToggleAll_Click);
             // 
             // bAllMax
             // 
             this.bAllMax.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.bAllMax.FlatAppearance.BorderSize = 2;
-            this.bAllMax.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.bAllMax.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.bAllMax.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bAllMax.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bAllMax.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.bAllMax.Location = new System.Drawing.Point(150, 440);
+            this.bAllMax.Location = new System.Drawing.Point(213, 25);
             this.bAllMax.Name = "bAllMax";
-            this.bAllMax.Size = new System.Drawing.Size(110, 30);
+            this.bAllMax.Size = new System.Drawing.Size(44, 23);
             this.bAllMax.TabIndex = 48;
-            this.bAllMax.Text = "Max All";
+            this.bAllMax.Text = "Max";
             this.bAllMax.UseVisualStyleBackColor = false;
-            this.bAllMax.Click += new System.EventHandler(this.bAllMax_Click);
+            this.bAllMax.Click += new System.EventHandler(this.bMaxAll_Click);
+            // 
+            // bTypeAll
+            // 
+            this.bTypeAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bTypeAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bTypeAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.bTypeAll.Location = new System.Drawing.Point(158, 25);
+            this.bTypeAll.Name = "bTypeAll";
+            this.bTypeAll.Size = new System.Drawing.Size(48, 23);
+            this.bTypeAll.TabIndex = 49;
+            this.bTypeAll.Text = "Type";
+            this.bTypeAll.UseVisualStyleBackColor = false;
+            this.bTypeAll.Click += new System.EventHandler(this.bTypeAll_Click);
             // 
             // TextureForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(410, 491);
+            this.ClientSize = new System.Drawing.Size(410, 479);
+            this.Controls.Add(this.bTypeAll);
             this.Controls.Add(this.bAllMax);
-            this.Controls.Add(this.bAllOff);
+            this.Controls.Add(this.bToggleAll);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lWarning);
             this.Controls.Add(this.panel1);
@@ -1036,7 +1047,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lWarning;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button bAllOff;
+        private System.Windows.Forms.Button bToggleAll;
         private System.Windows.Forms.Button bAllMax;
+        private System.Windows.Forms.Button bTypeAll;
     }
 }

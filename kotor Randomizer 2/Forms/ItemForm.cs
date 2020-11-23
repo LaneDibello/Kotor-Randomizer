@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace kotor_Randomizer_2
@@ -9,7 +11,7 @@ namespace kotor_Randomizer_2
         {
             InitializeComponent();
 
-            lbOmitItems.DataSource = Globals.OmitItems; 
+            lbOmitItems.DataSource = Globals.OmitItems;
 
             //Set Intiial Values
             RandomizeArmor = (RandomizationLevel)Properties.Settings.Default.RandomizeArmor;
@@ -31,8 +33,90 @@ namespace kotor_Randomizer_2
             RandomizeGrenades = (RandomizationLevel)Properties.Settings.Default.RandomizeGrenades;
             RandomizeMelee = (RandomizationLevel)Properties.Settings.Default.RandomizeMelee;
 
+            // Create easy access lists.
+            CheckBoxes.AddRange(new List<CheckBox>()
+            {
+                cbArmband,
+                cbArmor,
+                cbBelt,
+                cbBlaster,
+                cbCreatureHide,
+                cbCreatureWeapon,
+                cbDroid,
+                cbGlove,
+                cbGrenade,
+                cbImplant,
+                cbLightsaber,
+                cbMask,
+                cbMelee,
+                cbMine,
+                cbPazaak,
+                cbStimulant,
+                cbUpgrade,
+                cbVarious,
+            });
 
+            SubtypeRadioButtons.AddRange(new List<RadioButton>()
+            {
+                rbArmbandSType,
+                rbArmorSType,
+                rbBlasterSType,
+                rbCreatureWeaponSType,
+                rbDroidSType,
+                rbImplantSType,
+                rbLightsaberSType,
+                rbMaskSType,
+                rbMeleeSType,
+                rbMineSType,
+                rbStimSType,
+                rbUpgradeSType,
+            });
+
+            TypeRadioButtons.AddRange(new List<RadioButton>()
+            {
+                rbArmbandType,
+                rbArmorType,
+                rbBeltType,
+                rbBlasterType,
+                rbCreatureHideType,
+                rbCreatureWeaponType,
+                rbDroidType,
+                rbGloveType,
+                rbGrenadeType,
+                rbImplantType,
+                rbLightsaberType,
+                rbMaskType,
+                rbMeleeType,
+                rbMineType,
+                rbPazaakType,
+                rbStimulantType,
+                rbUpgradeType,
+                rbVariousType,
+            });
+
+            MaxRadioButtons.AddRange(new List<RadioButton>()
+            {
+                rbArmbandMax,
+                rbArmorMax,
+                rbBeltMax,
+                rbBlasterMax,
+                rbCreatureHideMax,
+                rbCreatureWeaponMax,
+                rbDroidMax,
+                rbGloveMax,
+                rbGrenadeMax,
+                rbImplantMax,
+                rbLightsaberMax,
+                rbMaskMax,
+                rbMeleeMax,
+                rbMineMax,
+                rbPazaakMax,
+                rbStimulantMax,
+                rbUpgradeMax,
+                rbVariousMax,
+            });
         }
+
         //Rando level for each item. Either max, type, or subtype
         #region Public Properties
 
@@ -85,13 +169,13 @@ namespace kotor_Randomizer_2
         {
             get
             {
-                if (cbStims.Checked)
+                if (cbStimulant.Checked)
                 {
-                    if (rbStimsSType.Checked)
+                    if (rbStimSType.Checked)
                     {
                         return RandomizationLevel.Subtype;
                     }
-                    else if (rbStimsType.Checked)
+                    else if (rbStimulantType.Checked)
                     {
                         return RandomizationLevel.Type;
                     }
@@ -110,17 +194,17 @@ namespace kotor_Randomizer_2
                 switch (value)
                 {
                     case RandomizationLevel.Max:
-                        rbStimsMax.Checked = true;
+                        rbStimulantMax.Checked = true;
                         break;
                     case RandomizationLevel.Type:
-                        rbStimsType.Checked = true;
+                        rbStimulantType.Checked = true;
                         break;
                     case RandomizationLevel.Subtype:
-                        rbStimsSType.Checked = true;
+                        rbStimSType.Checked = true;
                         break;
                     case RandomizationLevel.None:
                     default:
-                        cbStims.Checked = false;
+                        cbStimulant.Checked = false;
                         break;
                 }
             }
@@ -130,9 +214,9 @@ namespace kotor_Randomizer_2
         {
             get
             {
-                if (cbBelts.Checked)
+                if (cbBelt.Checked)
                 {
-                    if (rbBeltsType.Checked)
+                    if (rbBeltType.Checked)
                     {
                         return RandomizationLevel.Type;
                     }
@@ -151,15 +235,15 @@ namespace kotor_Randomizer_2
                 switch (value)
                 {
                     case RandomizationLevel.Max:
-                        rbBeltsMax.Checked = true;
+                        rbBeltMax.Checked = true;
                         break;
                     case RandomizationLevel.Type:
-                        rbBeltsType.Checked = true;
+                        rbBeltType.Checked = true;
                         break;
                     case RandomizationLevel.Subtype:
                     case RandomizationLevel.None:
                     default:
-                        cbBelts.Checked = false;
+                        cbBelt.Checked = false;
                         break;
                 }
             }
@@ -208,9 +292,9 @@ namespace kotor_Randomizer_2
         {
             get
             {
-                if (cbHides.Checked)
+                if (cbCreatureHide.Checked)
                 {
-                    if (rbHidesType.Checked)
+                    if (rbCreatureHideType.Checked)
                     {
                         return RandomizationLevel.Type;
                     }
@@ -229,15 +313,15 @@ namespace kotor_Randomizer_2
                 switch (value)
                 {
                     case RandomizationLevel.Max:
-                        rbHidesMax.Checked = true;
+                        rbCreatureHideMax.Checked = true;
                         break;
                     case RandomizationLevel.Type:
-                        rbHidesType.Checked = true;
+                        rbCreatureHideType.Checked = true;
                         break;
                     case RandomizationLevel.Subtype:
                     case RandomizationLevel.None:
                     default:
-                        cbHides.Checked = false;
+                        cbCreatureHide.Checked = false;
                         break;
                 }
             }
@@ -247,13 +331,13 @@ namespace kotor_Randomizer_2
         {
             get
             {
-                if (cbArmbands.Checked)
+                if (cbArmband.Checked)
                 {
-                    if (rbArmbandsSType.Checked)
+                    if (rbArmbandSType.Checked)
                     {
                         return RandomizationLevel.Subtype;
                     }
-                    else if (rbArmbandsType.Checked)
+                    else if (rbArmbandType.Checked)
                     {
                         return RandomizationLevel.Type;
                     }
@@ -272,17 +356,17 @@ namespace kotor_Randomizer_2
                 switch (value)
                 {
                     case RandomizationLevel.Max:
-                        rbArmbandsMax.Checked = true;
+                        rbArmbandMax.Checked = true;
                         break;
                     case RandomizationLevel.Type:
-                        rbArmbandsType.Checked = true;
+                        rbArmbandType.Checked = true;
                         break;
                     case RandomizationLevel.Subtype:
-                        rbArmbandsSType.Checked = true;
+                        rbArmbandSType.Checked = true;
                         break;
                     case RandomizationLevel.None:
                     default:
-                        cbArmbands.Checked = false;
+                        cbArmband.Checked = false;
                         break;
                 }
             }
@@ -337,9 +421,9 @@ namespace kotor_Randomizer_2
         {
             get
             {
-                if (cbGloves.Checked)
+                if (cbGlove.Checked)
                 {
-                    if (rbGlovesType.Checked)
+                    if (rbGloveType.Checked)
                     {
                         return RandomizationLevel.Type;
                     }
@@ -358,15 +442,15 @@ namespace kotor_Randomizer_2
                 switch (value)
                 {
                     case RandomizationLevel.Max:
-                        rbGlovesMax.Checked = true;
+                        rbGloveMax.Checked = true;
                         break;
                     case RandomizationLevel.Type:
-                        rbGlovesType.Checked = true;
+                        rbGloveType.Checked = true;
                         break;
                     case RandomizationLevel.Subtype:
                     case RandomizationLevel.None:
                     default:
-                        cbGloves.Checked = false;
+                        cbGlove.Checked = false;
                         break;
                 }
             }
@@ -376,13 +460,13 @@ namespace kotor_Randomizer_2
         {
             get
             {
-                if (cbImplants.Checked)
+                if (cbImplant.Checked)
                 {
-                    if (rbImplantsSType.Checked)
+                    if (rbImplantSType.Checked)
                     {
                         return RandomizationLevel.Subtype;
                     }
-                    else if (rbImplantsType.Checked)
+                    else if (rbImplantType.Checked)
                     {
                         return RandomizationLevel.Type;
                     }
@@ -401,17 +485,17 @@ namespace kotor_Randomizer_2
                 switch (value)
                 {
                     case RandomizationLevel.Max:
-                        rbImplantsMax.Checked = true;
+                        rbImplantMax.Checked = true;
                         break;
                     case RandomizationLevel.Type:
-                        rbImplantsType.Checked = true;
+                        rbImplantType.Checked = true;
                         break;
                     case RandomizationLevel.Subtype:
-                        rbImplantsSType.Checked = true;
+                        rbImplantSType.Checked = true;
                         break;
                     case RandomizationLevel.None:
                     default:
-                        cbImplants.Checked = false;
+                        cbImplant.Checked = false;
                         break;
                 }
             }
@@ -423,11 +507,11 @@ namespace kotor_Randomizer_2
             {
                 if (cbMask.Checked)
                 {
-                    if (rbMasksSType.Checked)
+                    if (rbMaskSType.Checked)
                     {
                         return RandomizationLevel.Subtype;
                     }
-                    else if (rbMasksType.Checked)
+                    else if (rbMaskType.Checked)
                     {
                         return RandomizationLevel.Type;
                     }
@@ -446,13 +530,13 @@ namespace kotor_Randomizer_2
                 switch (value)
                 {
                     case RandomizationLevel.Max:
-                        rbMasksMax.Checked = true;
+                        rbMaskMax.Checked = true;
                         break;
                     case RandomizationLevel.Type:
-                        rbMasksType.Checked = true;
+                        rbMaskType.Checked = true;
                         break;
                     case RandomizationLevel.Subtype:
-                        rbMasksSType.Checked = true;
+                        rbMaskSType.Checked = true;
                         break;
                     case RandomizationLevel.None:
                     default:
@@ -466,9 +550,9 @@ namespace kotor_Randomizer_2
         {
             get
             {
-                if (cbPaz.Checked)
+                if (cbPazaak.Checked)
                 {
-                    if (rbPazType.Checked)
+                    if (rbPazaakType.Checked)
                     {
                         return RandomizationLevel.Type;
                     }
@@ -487,15 +571,15 @@ namespace kotor_Randomizer_2
                 switch (value)
                 {
                     case RandomizationLevel.Max:
-                        rbPazMax.Checked = true;
+                        rbPazaakMax.Checked = true;
                         break;
                     case RandomizationLevel.Type:
-                        rbPazType.Checked = true;
+                        rbPazaakType.Checked = true;
                         break;
                     case RandomizationLevel.Subtype:
                     case RandomizationLevel.None:
                     default:
-                        cbPaz.Checked = false;
+                        cbPazaak.Checked = false;
                         break;
                 }
             }
@@ -505,13 +589,13 @@ namespace kotor_Randomizer_2
         {
             get
             {
-                if (cbMines.Checked)
+                if (cbMine.Checked)
                 {
-                    if (rbMinesSType.Checked)
+                    if (rbMineSType.Checked)
                     {
                         return RandomizationLevel.Subtype;
                     }
-                    else if (rbMinesType.Checked)
+                    else if (rbMineType.Checked)
                     {
                         return RandomizationLevel.Type;
                     }
@@ -530,17 +614,17 @@ namespace kotor_Randomizer_2
                 switch (value)
                 {
                     case RandomizationLevel.Max:
-                        rbMinesMax.Checked = true;
+                        rbMineMax.Checked = true;
                         break;
                     case RandomizationLevel.Type:
-                        rbMinesType.Checked = true;
+                        rbMineType.Checked = true;
                         break;
                     case RandomizationLevel.Subtype:
-                        rbMinesSType.Checked = true;
+                        rbMineSType.Checked = true;
                         break;
                     case RandomizationLevel.None:
                     default:
-                        cbMines.Checked = false;
+                        cbMine.Checked = false;
                         break;
                 }
             }
@@ -552,11 +636,11 @@ namespace kotor_Randomizer_2
             {
                 if (cbUpgrade.Checked)
                 {
-                    if (rbUpgradesSType.Checked)
+                    if (rbUpgradeSType.Checked)
                     {
                         return RandomizationLevel.Subtype;
                     }
-                    else if (rbUpgradesType.Checked)
+                    else if (rbUpgradeType.Checked)
                     {
                         return RandomizationLevel.Type;
                     }
@@ -575,13 +659,13 @@ namespace kotor_Randomizer_2
                 switch (value)
                 {
                     case RandomizationLevel.Max:
-                        rbUpgradesMax.Checked = true;
+                        rbUpgradeMax.Checked = true;
                         break;
                     case RandomizationLevel.Type:
-                        rbUpgradesType.Checked = true;
+                        rbUpgradeType.Checked = true;
                         break;
                     case RandomizationLevel.Subtype:
-                        rbUpgradesSType.Checked = true;
+                        rbUpgradeSType.Checked = true;
                         break;
                     case RandomizationLevel.None:
                     default:
@@ -595,13 +679,13 @@ namespace kotor_Randomizer_2
         {
             get
             {
-                if (cbBlasters.Checked)
+                if (cbBlaster.Checked)
                 {
-                    if (rbBlastersSType.Checked)
+                    if (rbBlasterSType.Checked)
                     {
                         return RandomizationLevel.Subtype;
                     }
-                    else if (rbBlastersType.Checked)
+                    else if (rbBlasterType.Checked)
                     {
                         return RandomizationLevel.Type;
                     }
@@ -620,17 +704,17 @@ namespace kotor_Randomizer_2
                 switch (value)
                 {
                     case RandomizationLevel.Max:
-                        rbBlastersMax.Checked = true;
+                        rbBlasterMax.Checked = true;
                         break;
                     case RandomizationLevel.Type:
-                        rbBlastersType.Checked = true;
+                        rbBlasterType.Checked = true;
                         break;
                     case RandomizationLevel.Subtype:
-                        rbBlastersSType.Checked = true;
+                        rbBlasterSType.Checked = true;
                         break;
                     case RandomizationLevel.None:
                     default:
-                        cbBlasters.Checked = false;
+                        cbBlaster.Checked = false;
                         break;
                 }
             }
@@ -640,13 +724,13 @@ namespace kotor_Randomizer_2
         {
             get
             {
-                if (cbCreature.Checked)
+                if (cbCreatureWeapon.Checked)
                 {
-                    if (rbCreatureSType.Checked)
+                    if (rbCreatureWeaponSType.Checked)
                     {
                         return RandomizationLevel.Subtype;
                     }
-                    else if (rbCreatureType.Checked)
+                    else if (rbCreatureWeaponType.Checked)
                     {
                         return RandomizationLevel.Type;
                     }
@@ -665,17 +749,17 @@ namespace kotor_Randomizer_2
                 switch (value)
                 {
                     case RandomizationLevel.Max:
-                        rbCreatureMax.Checked = true;
+                        rbCreatureWeaponMax.Checked = true;
                         break;
                     case RandomizationLevel.Type:
-                        rbCreatureType.Checked = true;
+                        rbCreatureWeaponType.Checked = true;
                         break;
                     case RandomizationLevel.Subtype:
-                        rbCreatureSType.Checked = true;
+                        rbCreatureWeaponSType.Checked = true;
                         break;
                     case RandomizationLevel.None:
                     default:
-                        cbCreature.Checked = false;
+                        cbCreatureWeapon.Checked = false;
                         break;
                 }
             }
@@ -685,13 +769,13 @@ namespace kotor_Randomizer_2
         {
             get
             {
-                if (cbLightsabers.Checked)
+                if (cbLightsaber.Checked)
                 {
-                    if (rbLightsabersSType.Checked)
+                    if (rbLightsaberSType.Checked)
                     {
                         return RandomizationLevel.Subtype;
                     }
-                    else if (rbLightsabersType.Checked)
+                    else if (rbLightsaberType.Checked)
                     {
                         return RandomizationLevel.Type;
                     }
@@ -710,17 +794,17 @@ namespace kotor_Randomizer_2
                 switch (value)
                 {
                     case RandomizationLevel.Max:
-                        rbLightsabersMax.Checked = true;
+                        rbLightsaberMax.Checked = true;
                         break;
                     case RandomizationLevel.Type:
-                        rbLightsabersType.Checked = true;
+                        rbLightsaberType.Checked = true;
                         break;
                     case RandomizationLevel.Subtype:
-                        rbLightsabersSType.Checked = true;
+                        rbLightsaberSType.Checked = true;
                         break;
                     case RandomizationLevel.None:
                     default:
-                        cbLightsabers.Checked = false;
+                        cbLightsaber.Checked = false;
                         break;
                 }
             }
@@ -730,9 +814,9 @@ namespace kotor_Randomizer_2
         {
             get
             {
-                if (cbGrenades.Checked)
+                if (cbGrenade.Checked)
                 {
-                    if (rbGrenadesType.Checked)
+                    if (rbGrenadeType.Checked)
                     {
                         return RandomizationLevel.Type;
                     }
@@ -751,15 +835,15 @@ namespace kotor_Randomizer_2
                 switch (value)
                 {
                     case RandomizationLevel.Max:
-                        rbGrenadesMax.Checked = true;
+                        rbGrenadeMax.Checked = true;
                         break;
                     case RandomizationLevel.Type:
-                        rbGrenadesType.Checked = true;
+                        rbGrenadeType.Checked = true;
                         break;
                     case RandomizationLevel.Subtype:
                     case RandomizationLevel.None:
                     default:
-                        cbGrenades.Checked = false;
+                        cbGrenade.Checked = false;
                         break;
                 }
             }
@@ -813,6 +897,12 @@ namespace kotor_Randomizer_2
         #endregion
 
         #region Private Methods
+
+        private List<CheckBox> CheckBoxes = new List<CheckBox>();
+        private List<RadioButton> SubtypeRadioButtons = new List<RadioButton>();
+        private List<RadioButton> TypeRadioButtons = new List<RadioButton>();
+        private List<RadioButton> MaxRadioButtons = new List<RadioButton>();
+
         //Check boxes Mostly
         private void cbArmor_CheckedChanged(object sender, EventArgs e)
         {
@@ -821,12 +911,12 @@ namespace kotor_Randomizer_2
 
         private void cbStims_CheckedChanged(object sender, EventArgs e)
         {
-            flpStims.Enabled = cbStims.Checked;
+            flpStims.Enabled = cbStimulant.Checked;
         }
 
         private void cbBelts_CheckedChanged(object sender, EventArgs e)
         {
-            flpBelts.Enabled = cbBelts.Checked;
+            flpBelts.Enabled = cbBelt.Checked;
         }
 
         private void cbVarious_CheckedChanged(object sender, EventArgs e)
@@ -836,7 +926,7 @@ namespace kotor_Randomizer_2
 
         private void cbHides_CheckedChanged(object sender, EventArgs e)
         {
-            flpHides.Enabled = cbHides.Checked;
+            flpHides.Enabled = cbCreatureHide.Checked;
         }
 
         private void cbDroid_CheckedChanged(object sender, EventArgs e)
@@ -846,17 +936,17 @@ namespace kotor_Randomizer_2
 
         private void cbArmbands_CheckedChanged(object sender, EventArgs e)
         {
-            flpArmbands.Enabled = cbArmbands.Checked;
+            flpArmbands.Enabled = cbArmband.Checked;
         }
 
         private void cbGloves_CheckedChanged(object sender, EventArgs e)
         {
-            flpGloves.Enabled = cbGloves.Checked;
+            flpGloves.Enabled = cbGlove.Checked;
         }
 
         private void cbImplants_CheckedChanged(object sender, EventArgs e)
         {
-            flpImplants.Enabled = cbImplants.Checked;
+            flpImplants.Enabled = cbImplant.Checked;
         }
 
         private void cbMask_CheckedChanged(object sender, EventArgs e)
@@ -866,12 +956,12 @@ namespace kotor_Randomizer_2
 
         private void cbPaz_CheckedChanged(object sender, EventArgs e)
         {
-            flpPaz.Enabled = cbPaz.Checked;
+            flpPaz.Enabled = cbPazaak.Checked;
         }
 
         private void cbMines_CheckedChanged(object sender, EventArgs e)
         {
-            flpMines.Enabled = cbMines.Checked;
+            flpMines.Enabled = cbMine.Checked;
         }
 
         private void cbUpgrade_CheckedChanged(object sender, EventArgs e)
@@ -881,22 +971,22 @@ namespace kotor_Randomizer_2
 
         private void cbBlasters_CheckedChanged(object sender, EventArgs e)
         {
-            flpBlasters.Enabled = cbBlasters.Checked;
+            flpBlasters.Enabled = cbBlaster.Checked;
         }
 
         private void cbCreature_CheckedChanged(object sender, EventArgs e)
         {
-            flpCreature.Enabled = cbCreature.Checked;
+            flpCreature.Enabled = cbCreatureWeapon.Checked;
         }
 
         private void cbLightsabers_CheckedChanged(object sender, EventArgs e)
         {
-            flpLightsabers.Enabled = cbLightsabers.Checked;
+            flpLightsabers.Enabled = cbLightsaber.Checked;
         }
 
         private void cbGrenades_CheckedChanged(object sender, EventArgs e)
         {
-            flpGrenades.Enabled = cbGrenades.Checked;
+            flpGrenades.Enabled = cbGrenade.Checked;
         }
 
         private void cbMelee_CheckedChanged(object sender, EventArgs e)
@@ -969,50 +1059,54 @@ namespace kotor_Randomizer_2
             }
         }
 
-        //Some quick selection buttons
-        private void bAllOff_Click(object sender, EventArgs e)
+        private void bToggleAll_Click(object sender, EventArgs e)
         {
-            foreach (Control c in ActiveForm.Controls)
+            // If all checkboxes are checked, uncheck all of them. If any are unchecked, check all of them.
+            bool CheckAllBoxes = false;
+            if (CheckBoxes.Any(cb => !cb.Checked))
             {
-                if (c is CheckBox)
-                {
-                    if ((c as CheckBox).Checked)
-                    {
-                        (c as CheckBox).Checked = false;
-                    }
-                }
+                CheckAllBoxes = true;
+            }
+
+            foreach (var cb in CheckBoxes)
+            {
+                cb.Checked = CheckAllBoxes;
             }
         }
 
-        private void bAllMax_Click(object sender, EventArgs e)
+        private void bSubtypeAll_Click(object sender, EventArgs e)
         {
-            foreach (Control c in ActiveForm.Controls)
+            foreach (var cb in CheckBoxes)
             {
-                if (c is CheckBox)
-                {
-                    if (!(c as CheckBox).Checked)
-                    {
-                        (c as CheckBox).Checked = true;
-                    }
-                }
+                cb.Checked = true;
             }
-
-            foreach (Control c in ActiveForm.Controls)
+            foreach (var rb in SubtypeRadioButtons)
             {
-                if (c is FlowLayoutPanel)
-                {
-                    foreach (Control o in (c as FlowLayoutPanel).Controls)
-                    {
-                        if (o is RadioButton)
-                        {
-                            if ((o as RadioButton).Text == "Max")
-                            {
-                                (o as RadioButton).Checked = true;
-                            }
-                        }
-                        
-                    }
-                }
+                rb.Checked = true;
+            }
+        }
+
+        private void bTypeAll_Click(object sender, EventArgs e)
+        {
+            foreach (var cb in CheckBoxes)
+            {
+                cb.Checked = true;
+            }
+            foreach (var rb in TypeRadioButtons)
+            {
+                rb.Checked = true;
+            }
+        }
+
+        private void bMaxAll_Click(object sender, EventArgs e)
+        {
+            foreach (var cb in CheckBoxes)
+            {
+                cb.Checked = true;
+            }
+            foreach (var rb in MaxRadioButtons)
+            {
+                rb.Checked = true;
             }
         }
 

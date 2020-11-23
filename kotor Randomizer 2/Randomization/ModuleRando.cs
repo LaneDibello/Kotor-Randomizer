@@ -68,46 +68,63 @@ namespace kotor_Randomizer_2
             }
 
             // Write additional override files.
-            if (Properties.Settings.Default.AddOverideFiles.Count > 0)
+            string moduleSavePath = Path.Combine(paths.Override, TwoDA_MODULE_SAVE);
+            ModuleExtras saveFileExtras = Properties.Settings.Default.ModuleExtrasValue & (ModuleExtras.SaveAllModules | ModuleExtras.SaveMiniGames | ModuleExtras.NoSaveDelete);
+
+            //if (0 == (saveFileExtras ^ (ModuleExtras.Default)))
+            //{
+            //    // 0b000 - Milestone Delete (Default)
+            //    // Do nothing.
+            //}
+
+            if (0 == (saveFileExtras ^ (ModuleExtras.NoSaveDelete)))
             {
-                string moduleSavePath = Path.Combine(paths.Override, TwoDA_MODULE_SAVE);
+                // 0b001 - No Milestone Delete
+                File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_modulesave);
+            }
 
-                switch (Properties.Settings.Default.ModuleSaveStatus)
-                {
-                    case 0: // 0000
-                        File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_modulesave);
-                        break;
-                    default:
-                    case 1: // 0001
-                        //This is kotor's default configuration
-                        break;
-                    case 2: // 0010
-                        File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_MGINCLUDED_modulesave);
-                        break;
-                    case 3: // 0011
-                        File.WriteAllBytes(moduleSavePath, Properties.Resources.MGINCLUDED_modulesave);
-                        break;
-                    case 6: // 0110
-                        File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_ALLINCLUDED_modulesave);
-                        break;
-                    case 7: // 0111
-                        File.WriteAllBytes(moduleSavePath, Properties.Resources.ALLINCLUDED_modulesave);
-                        break;
-                }
+            if (0 == (saveFileExtras ^ (ModuleExtras.SaveMiniGames)))
+            {
+                // 0b010 - Include Minigames | Milestone Delete
+                File.WriteAllBytes(moduleSavePath, Properties.Resources.MGINCLUDED_modulesave);
+            }
 
-                if (Properties.Settings.Default.AddOverideFiles.Contains(FIXED_DREAM_OVERRIDE))
-                {
-                    File.WriteAllBytes(Path.Combine(paths.Override, FIXED_DREAM_OVERRIDE), Properties.Resources.k_ren_visionland);
-                }
+            if (0 == (saveFileExtras ^ (ModuleExtras.NoSaveDelete | ModuleExtras.SaveMiniGames)))
+            {
+                // 0b011 - Include Minigames | No Milestone Delete
+                File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_MGINCLUDED_modulesave);
+            }
 
-                if (Properties.Settings.Default.AddOverideFiles.Contains(UNLOCK_MAP_OVERRIDE))
-                {
-                    File.WriteAllBytes(Path.Combine(paths.Override, UNLOCK_MAP_OVERRIDE), Properties.Resources.k_pebn_galaxy);
-                }
+            if (0 == (saveFileExtras ^ (ModuleExtras.SaveAllModules)) ||
+                0 == (saveFileExtras ^ (ModuleExtras.SaveMiniGames | ModuleExtras.SaveAllModules)))
+            {
+                // Treat both the same.
+                // 0b100 - Include All Modules | Milestone Delete
+                // 0b110 - Include All Modules | Include Minigames | Milestone Delete
+                File.WriteAllBytes(moduleSavePath, Properties.Resources.ALLINCLUDED_modulesave);
+            }
+
+            if (0 == (saveFileExtras ^ (ModuleExtras.NoSaveDelete | ModuleExtras.SaveAllModules)) ||
+                0 == (saveFileExtras ^ (ModuleExtras.NoSaveDelete | ModuleExtras.SaveMiniGames | ModuleExtras.SaveAllModules)))
+            {
+                // Treat both the same.
+                // 0b101 - Include All Modules | No Milestone Delete
+                // 0b111 - Include All Modules | Include Minigames | No Milestone Delete
+                File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_ALLINCLUDED_modulesave);
+            }
+
+            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream))
+            {
+                File.WriteAllBytes(Path.Combine(paths.Override, FIXED_DREAM_OVERRIDE), Properties.Resources.k_ren_visionland);
+            }
+
+            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap))
+            {
+                File.WriteAllBytes(Path.Combine(paths.Override, UNLOCK_MAP_OVERRIDE), Properties.Resources.k_pebn_galaxy);
             }
 
             // Fix warp coordinates.
-            if (Properties.Settings.Default.FixWarpCoords)
+            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates))
             {
                 // Create a lookup for modules needing coordinate fix with their newly shuffled FileInfos.
                 var shuffleFileLookup = new Dictionary<string, FileInfo>();
@@ -135,7 +152,7 @@ namespace kotor_Randomizer_2
             }
 
             // Fixed Rakata riddle Man in Mind Prison.
-            if (Properties.Settings.Default.FixMindPrison)
+            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison))
             {
                 // Find the files associated with AREA_MYSTERY_BOX.
                 var files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_MYSTERY_BOX]));

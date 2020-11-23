@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace kotor_Randomizer_2
@@ -42,6 +44,61 @@ namespace kotor_Randomizer_2
                     rbTextHigh.Checked = true;
                     break;
             }
+
+            // Create easy access lists.
+            CheckBoxes.AddRange(new List<CheckBox>()
+            {
+                cbCubeMaps,
+                cbCreatures,
+                cbEffects,
+                cbItems,
+                cbPlanetary,
+                cbNPC,
+                cbPlayHeads,
+                cbPlayBodies,
+                cbPlaceables,
+                cbParty,
+                cbStunt,
+                cbVehicles,
+                cbWeapons,
+                cbOther,
+            });
+
+            TypeRadioButtons.AddRange(new List<RadioButton>()
+            {
+                rbCubeMapsType,
+                rbCreaturesType,
+                rbEffectsType,
+                rbItemsType,
+                rbPlanetaryType,
+                rbNPCType,
+                rbPlayHeadsType,
+                rbPlayBodiesType,
+                rbPlaceablesType,
+                rbPartyType,
+                rbStuntType,
+                rbVehiclesType,
+                rbWeaponsType,
+                rbOtherType,
+            });
+
+            MaxRadioButtons.AddRange(new List<RadioButton>()
+            {
+                rbCubeMapsMax,
+                rbCreaturesMax,
+                rbEffectsMax,
+                rbItemsMax,
+                rbPlanetaryMax,
+                rbNPCMax,
+                rbPlayHeadsMax,
+                rbPlayBodiesMax,
+                rbPlaceablesMax,
+                rbPartyMax,
+                rbStuntMax,
+                rbVehiclesMax,
+                rbWeaponsMax,
+                rbOtherMax,
+            });
         }
 
         #region Public Properties
@@ -594,6 +651,10 @@ namespace kotor_Randomizer_2
         #endregion
 
         #region private methods
+        private List<CheckBox> CheckBoxes = new List<CheckBox>();
+        private List<RadioButton> TypeRadioButtons = new List<RadioButton>();
+        private List<RadioButton> MaxRadioButtons = new List<RadioButton>();
+
         private void cbCubeMaps_CheckedChanged(object sender, EventArgs e)
         {
             flpCubeMaps.Enabled = cbCubeMaps.Checked;
@@ -688,49 +749,44 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.Save();
         }
 
-        private void bAllOff_Click(object sender, EventArgs e)
+        private void bToggleAll_Click(object sender, EventArgs e)
         {
-            foreach (Control c in ActiveForm.Controls)
+            bool CheckAllBoxes = false;
+            if (CheckBoxes.Any(cb => !cb.Checked))
             {
-                if (c is CheckBox)
-                {
-                    if ((c as CheckBox).Checked)
-                    {
-                        (c as CheckBox).Checked = false;
-                    }
-                }
+                CheckAllBoxes = true;
+            }
+
+            foreach (var cb in CheckBoxes)
+            {
+                cb.Checked = CheckAllBoxes;
             }
         }
 
-        private void bAllMax_Click(object sender, EventArgs e)
+        private void bTypeAll_Click(object sender, EventArgs e)
         {
-            foreach (Control c in ActiveForm.Controls)
+            foreach (var cb in CheckBoxes)
             {
-                if (c is CheckBox)
-                {
-                    if (!(c as CheckBox).Checked)
-                    {
-                        (c as CheckBox).Checked = true;
-                    }
-                }
+                cb.Checked = true;
             }
-
-            foreach (Control c in ActiveForm.Controls)
+            foreach (var rb in TypeRadioButtons)
             {
-                if (c is FlowLayoutPanel)
-                {
-                    foreach (Control o in (c as FlowLayoutPanel).Controls)
-                    {
-                        if ((o as RadioButton).Text == "Max")
-                        {
-                            (o as RadioButton).Checked = true;
-                        }
-                    }
-                }
+                rb.Checked = true;
             }
         }
+
+        private void bMaxAll_Click(object sender, EventArgs e)
+        {
+            foreach (var cb in CheckBoxes)
+            {
+                cb.Checked = true;
+            }
+            foreach (var rb in MaxRadioButtons)
+            {
+                rb.Checked = true;
+            }
+        }
+
         #endregion
-
-
     }
 }
