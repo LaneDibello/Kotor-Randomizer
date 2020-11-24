@@ -1,6 +1,6 @@
-Currently the 'Other' category holds rando options that don't quite fit into any other category.
+Currently the 'Other' category holds randomization options that don't quite fit into any other category.
 
 Name Generator Rando generates and replaces the letter-combo-probabiliy files used when generating random names in-game. By seeding Line break separated text the program will generate a file that can create new names based on the text provided.
-	Random Pazaak Decks randomizes the cards possessed by the NPC Pazaak players.
+	Random Pazaak Decks randomizes the cards possessed by the NPC Pazaak players beyond simply swapping around existing cards.
 
-Other Various Rando options coiming in the future, hopefully.
+Other Various Rando options coming in the future, hopefully!

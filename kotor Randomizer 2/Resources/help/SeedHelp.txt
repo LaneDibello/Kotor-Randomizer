@@ -1,2 +1,2 @@
-Seeds are used a base for the randomization process. By having the same presets and sharing a seed with a friend your will recieve the same randomization.
-	A random seed is generated on Program start-up, however it can be changed or copied by opening the seed menu and editing the text.
+Seeds are used as the base for the randomization process. By having the same presets and sharing a seed with a friend, you will both recieve the same randomization.
+	A random seed is generated on Program start-up, however it can be changed or copied by opening the seed menu and editing the text. The Generate New Seed button can also be used to randomly change the seed.

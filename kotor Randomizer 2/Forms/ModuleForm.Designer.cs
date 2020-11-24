@@ -121,12 +121,12 @@
             this.cbSaveAllMods.UseVisualStyleBackColor = true;
             this.cbSaveAllMods.CheckedChanged += new System.EventHandler(this.cbSaveAllMods_CheckedChanged);
             // 
-            // cbSaveMinigame
+            // cbSaveMiniGame
             // 
             this.cbSaveMiniGame.AutoSize = true;
             this.cbSaveMiniGame.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbSaveMiniGame.Location = new System.Drawing.Point(180, 490);
-            this.cbSaveMiniGame.Name = "cbSaveMinigame";
+            this.cbSaveMiniGame.Name = "cbSaveMiniGame";
             this.cbSaveMiniGame.Size = new System.Drawing.Size(153, 17);
             this.cbSaveMiniGame.TabIndex = 22;
             this.cbSaveMiniGame.Text = "Include Minigames in Save";
@@ -164,9 +164,9 @@
             this.cbFixDream.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbFixDream.Location = new System.Drawing.Point(20, 510);
             this.cbFixDream.Name = "cbFixDream";
-            this.cbFixDream.Size = new System.Drawing.Size(137, 17);
+            this.cbFixDream.Size = new System.Drawing.Size(125, 17);
             this.cbFixDream.TabIndex = 25;
-            this.cbFixDream.Text = "Fixed Dream Sequence";
+            this.cbFixDream.Text = "Fix Dream Sequence";
             this.cbFixDream.UseVisualStyleBackColor = true;
             this.cbFixDream.CheckedChanged += new System.EventHandler(this.cbFixDream_CheckedChanged);
             // 
@@ -176,9 +176,9 @@
             this.cbUnlockGalaxyMap.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbUnlockGalaxyMap.Location = new System.Drawing.Point(180, 510);
             this.cbUnlockGalaxyMap.Name = "cbUnlockGalaxyMap";
-            this.cbUnlockGalaxyMap.Size = new System.Drawing.Size(131, 17);
+            this.cbUnlockGalaxyMap.Size = new System.Drawing.Size(119, 17);
             this.cbUnlockGalaxyMap.TabIndex = 26;
-            this.cbUnlockGalaxyMap.Text = "Unlocked Galaxy Map";
+            this.cbUnlockGalaxyMap.Text = "Unlock Galaxy Map";
             this.cbUnlockGalaxyMap.UseVisualStyleBackColor = true;
             this.cbUnlockGalaxyMap.CheckedChanged += new System.EventHandler(this.cbUnlockGalaxyMap_CheckedChanged);
             // 
@@ -188,9 +188,9 @@
             this.cbFixCoordinates.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbFixCoordinates.Location = new System.Drawing.Point(340, 510);
             this.cbFixCoordinates.Name = "cbFixCoordinates";
-            this.cbFixCoordinates.Size = new System.Drawing.Size(148, 17);
+            this.cbFixCoordinates.Size = new System.Drawing.Size(136, 17);
             this.cbFixCoordinates.TabIndex = 27;
-            this.cbFixCoordinates.Text = "Fixed Module Coordinates";
+            this.cbFixCoordinates.Text = "Fix Module Coordinates";
             this.cbFixCoordinates.UseVisualStyleBackColor = true;
             this.cbFixCoordinates.CheckedChanged += new System.EventHandler(this.cbFixCoordinates_CheckedChanged);
             // 
@@ -200,9 +200,9 @@
             this.cbFixMindPrison.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbFixMindPrison.Location = new System.Drawing.Point(20, 530);
             this.cbFixMindPrison.Name = "cbFixMindPrison";
-            this.cbFixMindPrison.Size = new System.Drawing.Size(109, 17);
+            this.cbFixMindPrison.Size = new System.Drawing.Size(97, 17);
             this.cbFixMindPrison.TabIndex = 28;
-            this.cbFixMindPrison.Text = "Fixed Mind Prison";
+            this.cbFixMindPrison.Text = "Fix Mind Prison";
             this.cbFixMindPrison.UseVisualStyleBackColor = true;
             this.cbFixMindPrison.CheckedChanged += new System.EventHandler(this.cbFixMindPrison_CheckedChanged);
             // 

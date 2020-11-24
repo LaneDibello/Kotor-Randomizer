@@ -3,22 +3,34 @@ Texture randomization will shuffle most of the images stored in the selected tex
 WARNING:
 Texture randomization frequently results in visual experiences that may prove harmful to photosensitive users. Use with caution.
 
-NOTE: This rando does not edit with GUI textures, only those used in 3D environments.
+NOTE: This randomization does not edit with GUI textures, only those used in 3D environments.
 
-Each category can be enabled or disabled by checkbox. The radio buttons cause each category to be randomized at different levels. Everything with the 'max' option selected will be shuffled together. Each category with 'type' option selected will only shuffle within itself.
+Each category can be enabled or disabled by checkbox. The radio buttons cause each category to be randomized at different levels. Everything with the 'Max' option selected will be shuffled together. Each category with 'Type' option selected will only shuffle within itself.
 
-The 'Texture Packs' refer the the three quality settings (low, medium, and high) avaiable in the game's graphical settings. This allows you to select which pack is being randomized, which also provides an escpae from the textures, by switching to another pack.
+The 'Texture Packs' refer the the three quality settings (low, medium, and high) avaiable in the game's graphical settings. This allows you to select which pack is being randomized, which also provides an escape from the textures by switching to another pack.
 	CATEGORIES:
 > Cube Maps - A simple map used to generate the faint image seen in the reflection of shiny objects.
-> Creatures - The maps used to texture creatures
-> Effects - All files prefixed with FX, usually rays of light, and other special events.
-> Items - The 3D rendered image of items, most of these go unused in the game as the 3D varients of many items never see use.
-> Planetary - Textures that are tied to a spefic planet.
-> NPC - Textures used by NPCs
-> Player Heads - The heads of all the player models
-> Player Bodies - The bodies of all the player models
-> Placeables - Placeable objects such as footlockers, coomputer consoles, marker post, etc.
-> Party - The textures used by party members
-> Vehicles - Vehicle textures
-> Weapons - The textures used by the 3D rendering of weapons.
-> Other - Anything that did not fall into these other categories (theres quite a few actually).
+
+> Creatures - The maps used to texture creatures.
+
+> Effects - All files prefixed with FX, usually rays of light and other special events.
+
+> Items - The 3D rendered image of items. Most of these go unused in the game as the 3D varients of many items never see use.
+
+> Planetary - Textures that are tied to a specific planet.
+
+> NPC - Textures used by NPCs.
+
+> Player Heads - The heads of all the player models.
+
+> Player Bodies - The bodies of all the player models.
+
+> Placeables - Placeable objects such as footlockers, computer consoles, marker posts, etc.
+
+> Party - The textures used by party members.
+
+> Vehicles - Vehicle textures.
+
+> Weapons - The textures used in the 3D rendering of weapons.
+
+> Other - Anything that does not fall into these other categories (there are quite a few actually).

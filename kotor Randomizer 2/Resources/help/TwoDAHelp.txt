@@ -1,22 +1,22 @@
-A 2DA, or 2-dimensional array, is a data table used by the game to store all sorts of constants from character appearance data, to AC bonus, to item properties to sound effects. This randomizer allows for certian, pre-selected colemns to be randomized resulting in strange and fun events in game.
+A 2DA, or 2-dimensional array, is a data table used by the game to store all sorts of constants from character appearance data, to AC bonus, to item properties to sound effects. This randomizer allows for certain preselected columns to be randomized, resulting in strange and fun events in-game.
 
-The left list-box is where you can select which files are being randomized. The right list-box allows you to select which colemns (of those allowed) you wish to randomize.
+The left list-box is where you can select which files/arrays are being randomized. The right list-box allows you to select which columns (of those allowed) you wish to randomize.
 
 WARNING:
-Many of these 2DAs have similar effects to the other rando categories, and they can interact in unexpected ways. Seeing as how numerous the combination possibilities are it was not possible for us to test them all.
+Many of these 2DAs have similar effects to the other rando categories, and they can interact in unexpected ways. Seeing as how numerous the combinations are, it was not possible for us to test them all.
 	CATEGORIES:
 > acbonus: The increase to armor class that occurs at each level for each class
 - scd: Scoundrel
 - sol: Soldier
 - sct: Scout
-- jdc: Counselor
+- jdc: Consular
 - jds: Sentinel 
 - jdg: Guardian
 
-> aliensound: The Various sounds made by different aliens
+> aliensound: The various sounds made by different aliens
 - filename: The file that each sound references
 
-> appearance: All the data regarding how people appear in game (Can be volitile)
+> appearance: All the data regarding how people appear in game (can be volatile)
 - walkdist: The distance the model moves with each walk animation
 - rundist: The distance the model moves with each run animation
 - moverate: The movement speed category that this model falls in
@@ -31,8 +31,8 @@ Many of these 2DAs have similar effects to the other rando categories, and they 
 > bodybag: What appears after a creature/character has died.
 - appearance: what appears
 
-> camerastyle: The camera that the user is viewing the player through
-- distance: The distance from the player
+> camerastyle: The camera through which the player views the characters and world
+- distance: The distance from the leader
 - pitch: The angle up or down the camera is
 - height: The height from the ground the camera is
 
@@ -45,11 +45,11 @@ Many of these 2DAs have similar effects to the other rando categories, and they 
 - savingthrowtable: Which table is used to calculate the saving throw increases.
 - skillstable: Which table is used to populate the skills
 - skillpointbase: The base amount of skill points started with
-- armorclasscolumn: Which AC colemn in 'acbonus' does each class use. 
+- armorclasscolumn: Which AC column in 'acbonus' does each class use. 
 - featgain: Which table in 'featgain' does each class use.
 
 > classpowergain: What level different classes gain powers
-- jcn: Counselor
+- jcn: Consular
 - jsn: Sentinel
 - jgd: Guardian
 
@@ -72,7 +72,7 @@ Many of these 2DAs have similar effects to the other rando categories, and they 
 - refsave
 - willsave
 
-> cls_st_jedi_c: Saving throw increase for Counselors
+> cls_st_jedi_c: Saving throw increase for Consulars
 - fortsave
 - refsave
 - willsave
@@ -107,7 +107,7 @@ Many of these 2DAs have similar effects to the other rando categories, and they 
 - refsave
 - willsave
 
-> comptypes: Which back ground the computer has
+> comptypes: Which background the computer has
 - computerbackground: Rakatan or normal
 
 > creaturespeed: The speed categories for creatures
@@ -122,7 +122,7 @@ Many of these 2DAs have similar effects to the other rando categories, and they 
 > feat: The feats
 - name: The name of the feat
 - description: The description text for the feat
-- icon: The Icon for the feat
+- icon: The icon for the feat
 
 > forceadjust: The amount by which the cost of force powers in adjusted
 - goodcost: Adjustment for lightside points
@@ -147,17 +147,17 @@ Many of these 2DAs have similar effects to the other rando categories, and they 
 > placeableobjsnds: Sounds placeables will make
 - opened: When opened
 - closed: When closed
-- locked: When Locked
+- locked: When locked
 
 > skills: Skill data
 - name: Name of the skill
 - description: Description text for the skill
 - icon: Icon for the skill
-- keyability: Which attribute icreases this skill
+- keyability: Which attribute increases this skill
 - scd_class: Class skills for Scoundrels
 - sol_class: Class skills for Soldiers
 - sct_class: Class skills for Scouts
-- jcn_class: Class skills for Counselors
+- jcn_class: Class skills for Consulars
 - jgd_class: Class skills for Guardians
 - jsn_class: Class skills for Sentinels
 - drx_class: Class skills for Expert Droids
@@ -169,7 +169,7 @@ Many of these 2DAs have similar effects to the other rando categories, and they 
 > spells: Force Power data
 - name: The name of the Power
 - spelldesc: Description text for the power
-- forcepoints: Forcepoints to cast the power
+- forcepoints: Force points to cast the power
 - goodevil: Darkside, lightside, or neutral
 - iconresref: The icon
 - castanim: Cast animation
@@ -187,17 +187,17 @@ Many of these 2DAs have similar effects to the other rando categories, and they 
 - explosionsound: Sound it makes when tripped
 
 > upcrystals: Upgrade crystals
-- shortmdlvar: Models varience for short sabers
-- longmdlvar: Models varience for regular sabers
-- doublemdlvar: Models varience for double sabers
+- shortmdlvar: Models variance for short sabers
+- longmdlvar: Models variance for regular sabers
+- doublemdlvar: Models variance for double sabers
 
 > upgradetypes: Types of upgrade
 - label: the types
 
 > videoeffects: Special effects used in some cutscenes
-- modulationred: Redshift
-- modulationgreen: Greenshift
-- modulationblue: Blueshift
+- modulationred: Red shift
+- modulationgreen: Green shift
+- modulationblue: Blue shift
 - saturation: Saturation
 
 > xpbaseconst: Calculation for xpgain used in rare senarios
