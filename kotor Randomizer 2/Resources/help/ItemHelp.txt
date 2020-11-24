@@ -1,0 +1,42 @@
+Item randomization randomizes the template items in the game's key data. This means that items that are hard coded to the module will not be randomized. Which is beneifical for most plot items.
+
+Each category can be enabled or disabled by checkbox. The radio buttons cause each category to be randomized at different levels. Everything with the 'Max' option selected will be shuffled together. Each category with 'Type' option selected will only shuffle within itself. Each catagory with the 'Subtype' option selected will shuffle amoung that categories sub-categories.
+
+All items selected on the 'Omitted' list will not be shuffled it, and will remain in their vanilla location and form. This list is populated by the Item resource Reference Codes, which can be found in the cheat section on the StrategyWiki under 'Giveitem'.
+	I will briefly describe each category:
+
+> Armbands include everything that can go into the armband slot. The subtypes are shield generators and save reductions (the latter usually not obtainable).
+
+> Armor includes all items that go in the center equipment slot. The subtypes include different armor classes, robes, and clothes.
+
+> Belts include all belts.
+
+> Blasters include all blasters. Subtypes include Heavy Weapons, Pistols, and Rifles.
+
+> Creature Hides are the usually unobtainable items that are worn in the inaccessible 'hide' slot on most creatures.
+
+> Creature Weapons include all of unobtainable weapons used by many creatures, such as claws. Subtypes include piercing, slashing, and piercing/slashing.
+
+> Droid Equipment includes all of the various droid equipment items. The subtypes include plate, probes, sensors, repair kits, shields, computers, devices, etc.
+
+> Gauntlets include all gauntlets and gloves.
+
+> Grenades include all grenades.
+
+> Implants include all implants, with subtypes for each implant level.
+
+> Lightsabers include all lightsabers, with subtypes for double bladed, single bladed, and short sabers.
+
+> Masks includes all masks. Subtypes for armor proficiencies (if any).
+
+> Melee Weapons includes all melee weapons. The subtypes are stun batons, long swords, short swords, Vibro shortblades, vibroblades, double swords, quarterstaves, vibro double blades, and War blade/axes.
+
+> Mines includes all mines.
+
+> Pazaak Cards includes all pazaak cards. The deck and side-deck items fall under various.
+
+> Stims/Medpacs include all the self-consumables and have subtypes Adrenals, Battle Stims, and Medpacs.
+
+> Upgrades/Crystals include all upgrades. Subtypes include power crystals, color crystals, and other. It is recommended to keep this on type, subtype, or off as max rando can result in item upgrade stability issues.
+
+> Various includes any items that do not fit into one of the other categories, such as datapads or gizka poison.
