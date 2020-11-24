@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
+using System.Text;
 
 namespace kotor_Randomizer_2
 {
-    //Don't rememebr why I made this Serializable but I'm too afraid to remove it lmao
+    // Don't rememeber why I made this Serializable but I'm too afraid to remove it lmao
     [Serializable]
-    public enum RandomizationLevel //Thank you Glasnonck
+    public enum RandomizationLevel // Thank you Glasnonck
     {
         /// <summary> No randomization. </summary>
         None = 0,
@@ -19,152 +19,137 @@ namespace kotor_Randomizer_2
         Max = 3,
     }
 
+    [Flags]
+    [Serializable]
+    public enum RandomizationCategory
+    {
+        /// <summary> Uninitialized value - nothing will be done. </summary>
+        None    = 0x00, // 0b00000000
+        /// <summary> Randomize module (RIM) files so loading zones lead to an unknown destination. </summary>
+        Module  = 0x01, // 0b00000001
+        /// <summary> Randomize items. </summary>
+        Item    = 0x02, // 0b00000010
+        /// <summary> Randomize music and sound files. </summary>
+        Sound   = 0x04, // 0b00000100
+        /// <summary> Randomize models. </summary>
+        Model   = 0x08, // 0b00001000
+        /// <summary> Randomize texture maps. </summary>
+        Texture = 0x10, // 0b00010000
+        /// <summary> Randomize 2DA tables. </summary>
+        TwoDA   = 0x20, // 0b00100000
+        /// <summary> Randomize text. -- Not yet implemented -- </summary>
+        Text    = 0x40, // 0b01000000
+        /// <summary> Perform other types of randomization. </summary>
+        Other   = 0x80, // 0b10000000
+    }
+
+    [Flags]
+    [Serializable]
+    public enum ModuleExtras
+    {
+        /// <summary> (Default Behavior) Delete milestone save data. </summary>
+        Default         = 0x00, // 0b00000000
+        /// <summary> Do not delete milestone save data. </summary>
+        NoSaveDelete    = 0x01, // 0b00000001
+        /// <summary> Include minigame data in the save file. </summary>
+        SaveMiniGames   = 0x02, // 0b00000010
+        /// <summary> Include all module data in the save file. </summary>
+        SaveAllModules  = 0x04, // 0b00000100
+        /// <summary> Fix dream cutscenes. </summary>
+        FixDream        = 0x08, // 0b00001000
+        /// <summary> Unlock all destinations on the galaxy map. </summary>
+        UnlockGalaxyMap = 0x10, // 0b00010000
+        /// <summary> Fix warp spawn coordinates in certain modules. </summary>
+        FixCoordinates  = 0x20, // 0b00100000
+        /// <summary> Fix Rakatan mind prison to prevent soft-locks. </summary>
+        FixMindPrison   = 0x40, // 0b01000000
+    }
+
     public class Globals
     {
-        
-        #region Types
-        //Struct used in Collections for module randomization denoting omission.
-        public struct Mod_Entry
-        {
-            private string _name;
-            private bool _ommitted;
-
-            public string name
-            {
-                get
-                {
-                    return _name;
-                }
-            }
-            public bool ommitted
-            {
-                get
-                {
-                    return _ommitted;
-                }
-                set
-                {
-                    _ommitted = value;
-                }
-            }
-
-            public Mod_Entry(string name, bool ommited)
-            {
-                _name = name;
-                _ommitted = ommited;
-            }
-        }
-
-        [Flags]
-        [Serializable]
-        public enum ModuleSaveStatusValues : byte
-        {
-            NoDelete = 0x00,
-            DeleteMilestones = 0x01,
-            SaveMiniGames = 0x02,
-            SaveAllModules = 0x04,
-            FixedDream = 0x08,
-            UnlockedMap = 0x10,
-        }
-
-        public class KPaths
-        {
-            public KPaths(string swkotor_path)
-            {
-                swkotor = swkotor_path + "\\";
-                modules = swkotor + "modules\\";
-                lips = swkotor + "lips\\";
-                music = swkotor + "streammusic\\";
-                sounds = swkotor + "streamsounds\\";
-                TexturePacks = swkotor + "TexturePacks\\";
-                rims = swkotor + "rims\\";
-                Override = swkotor + "Override\\";
-                chitin = swkotor + "chitin.key";
-                data = swkotor + "data\\";
-            }
-
-            public readonly string swkotor;
-            public readonly string modules;
-            public readonly string lips;
-            public readonly string music;
-            public readonly string sounds;
-            public readonly string TexturePacks;
-            public readonly string rims;
-            public readonly string Override;
-            public readonly string chitin;
-            public readonly string data;
-
-            public string get_backup(string path)
-            {
-                if (path.Last() == '\\')
-                {
-                    return path.TrimEnd('\\') + "_bak\\";
-                }
-                else
-                {
-                    return path + ".bak";
-                }
-            }
-
-            public string get_old(string path)
-            {
-                if (path.Last() == '\\')
-                {
-                    return path.TrimEnd('\\') + "_old\\";
-                }
-                else
-                {
-                    return path + ".old";
-                }
-            }
-
-
-        }
-        #endregion
-
-        #region Variables
-        //Bound list of modules where the mod entries with selected omissions will be stored.
-        public static BindingList<Mod_Entry> BoundModules = new BindingList<Mod_Entry>();
-        //Bound list of items to be omitted from randomization. This is necessary because certain items can result in soft locks if randomized.
-        public static BindingList<string> OmitItems = new BindingList<string>()
-        {
-            "g_i_collarlgt001", "g_i_glowrod01", "g_i_torch01", "ptar_sitharmor", "tat17_sandperdis", "g_i_progspike02"
-        };
-        //Dictionary of selected 2DAs to be randomized
-        public static Dictionary<string, List<string>> Selected2DAs = new Dictionary<string, List<string>>();
-        #endregion
-
         #region Constants
-        //new coordinates
-        //public static readonly Dictionary<string, Point3D> FIXED_COORDINATES = new Dictionary<string, Point3D>()
-        //{
-        //    { "tar_m04aa", new Point3D(183.5f, 167.4f, 1.5f)},
-        //    { "korr_m38ab", new Point3D(16.4f, 55.4f, 0.75f)},
-        //    { "lev_m40ac", new Point3D(12.5f, 155.2f, 3.0f) },
-        //    { "manm26aa", new Point3D(5.7f, -10.7f, 59.2f) },
-        //    { "manm27aa", new Point3D(112.8f, 2.4f, 0f) },
-        //    { "unk_m43aa", new Point3D(202.2f, 31.5f, 40.7f) },
-        //    { "unk_m44aa", new Point3D(95.3f, 42.0f, 0.44f) }
-        //};
-        //Large Creature Models
+        public const string AREA_UNDERCITY = "tar_m04aa";
+        public const string AREA_TOMB_TULAK = "korr_m38ab";
+        public const string AREA_LEVI_HANGAR = "lev_m40ac";
+        public const string AREA_AHTO_WEST = "manm26aa";
+        public const string AREA_MANAAN_SITH = "manm27aa";
+        public const string AREA_RAKA_SETTLE = "unk_m43aa";
+        public const string AREA_TEMPLE_MAIN = "unk_m44aa";
+
+        /// <summary>
+        /// New coordinates for bad randomizer spawn locations.
+        /// </summary>
+        public static readonly Dictionary<string, Tuple<int, int, int>> FIXED_COORDINATES = new Dictionary<string, Tuple<int, int, int>>()
+        {
+            { AREA_UNDERCITY, new Tuple<int, int, int>(
+                BitConverter.ToInt32(BitConverter.GetBytes(183.5f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(167.4f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(1.5f), 0)) },
+            { AREA_TOMB_TULAK, new Tuple<int, int, int>(
+                BitConverter.ToInt32(BitConverter.GetBytes(15.8f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(55.6f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(0.75f), 0)) },
+            { AREA_LEVI_HANGAR, new Tuple<int, int, int>(
+                BitConverter.ToInt32(BitConverter.GetBytes(12.5f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(155.2f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(3.0f), 0)) },
+            { AREA_AHTO_WEST, new Tuple<int, int, int>(
+                BitConverter.ToInt32(BitConverter.GetBytes(5.7f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(-10.7f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(59.2f), 0)) },
+            { AREA_MANAAN_SITH, new Tuple<int, int, int>(
+                BitConverter.ToInt32(BitConverter.GetBytes(112.8f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(2.4f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(0f), 0)) },
+            { AREA_RAKA_SETTLE, new Tuple<int, int, int>(
+                BitConverter.ToInt32(BitConverter.GetBytes(202.2f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(31.5f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(40.7f), 0)) },
+            { AREA_TEMPLE_MAIN, new Tuple<int, int, int>(
+                BitConverter.ToInt32(BitConverter.GetBytes(95.3f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(42.0f), 0),
+                BitConverter.ToInt32(BitConverter.GetBytes(0.44f), 0)) },
+        };
+
+        /// <summary>
+        /// Large Creature Models
+        /// </summary>
         public static readonly List<int> LARGE_CHARS = new List<int>() { 354, 334, 87, 80, 77, 81, 54 };
-        //Broken Creature Models
+
+        /// <summary>
+        /// Broken Creature Models
+        /// </summary>
         public static readonly List<int> BROKEN_CHARS = new List<int>() { 0, 29, 82 };
-        //Large Placeable Models
-        public static readonly List<int> LARGE_PLACE = new List<int>() { 1, 2, 55, 56, 57, 58, 65, 66, 110, 111, 142, 172, 217, 218, 226};//NEED TO RESEARCH
-        //Broken Placeable Models
+
+        /// <summary>
+        /// Large Placeable Models
+        /// </summary>
+        public static readonly List<int> LARGE_PLACE = new List<int>() { 1, 2, 55, 56, 57, 58, 65, 66, 110, 111, 142, 172, 176, 217, 218, 226 }; // NEED TO RESEARCH
+
+        /// <summary>
+        /// Broken Placeable Models
+        /// </summary>
         public static readonly List<int> BROKEN_PLACE = new List<int>() { 0, 8, 9, 47, 62, 78, 84, 90, 94, 97, 115, 158, 159 };
-        //Extra Files found in the 'lips' directory
+
+        /// <summary>
+        /// Extra Files found in the 'lips' directory
+        /// </summary>
         public static readonly List<string> lipXtras = new List<string>() { "global.mod", "legal.mod", "localization.mod", "mainmenu.mod", "miniglobal.mod", "subglobal.mod", };
-        //Characters that the letter-combo probability files can handle.
+
+        /// <summary>
+        /// Characters that the letter-combo probability files can handle.
+        /// </summary>
         public static readonly string NAMEGEN_CHARS = "qwertyuiopasdfghjklzxcvbnm-'";
-        //All items in the game
+
+        /// <summary>
+        /// All items in the game
+        /// </summary>
         public static readonly List<string> ITEMS = new List<string>() {
             "g1_a_class5001", "g1_a_class5002", "g1_a_class6001", "g1_a_class8001",         // 
             "g1_i_belt001", "g1_i_drdcomspk01", "g1_i_drdhvplat01", "g1_i_drdshld001",      // 
             "g1_i_drdutldev01", "g1_i_drdutldev02", "g1_i_drdutldev03", "g1_i_gauntlet01",  // 
             "g1_i_implant301", "g1_i_implant302", "g1_i_implant303", "g1_i_implant304",
-            "g1_i_mask01", "g1_i_mask02", "g1_i_mask03", "g1_w_dblsbr001", 
+            "g1_i_mask01", "g1_i_mask02", "g1_i_mask03", "g1_w_dblsbr001",
             "g1_w_dblsbr002", "g1_w_dsrptrfl001", "g1_w_hvrptbltr01", "g1_w_ionrfl01",
             "g1_w_lghtsbr01", "g1_w_lghtsbr02", "g1_w_rptnblstr01", "g1_w_sbrcrstl20",
             "g1_w_sbrcrstl21", "g1_w_shortsbr01", "g1_w_shortsbr02", "g1_w_vbroswrd01",
@@ -299,7 +284,9 @@ namespace kotor_Randomizer_2
             "ptar_sbpasscrd", "ptar_sitharmor", "tat17_sandperdis", "tat18_dragonprl",
             "w_blhvy001", "w_bstrcrbn", "w_lghtsbr001", "w_null" };
 
-        //All modules in the game
+        /// <summary>
+        /// All modules in the game
+        /// </summary>
         public static readonly List<string> MODULES = new List<string>() {
             "danm13","danm14aa","danm14ab","danm14ac","danm14ad","danm14ae",            // Jedi Enclave, Courtyard, Matale Grounds, Grove, Sandral Grounds, Crystal Caves,
             "danm15","danm16","ebo_m12aa","ebo_m40aa","ebo_m40ad","ebo_m41aa",          // Dantooine Ruins, Sandral Estate, Ebon Hawk, Leviathan Game-Plan CS, Escaped the Leviathan, Lehon Hawk,
@@ -322,10 +309,13 @@ namespace kotor_Randomizer_2
             "tat_m18ac","tat_m20aa","unk_m41aa","unk_m41ab","unk_m41ac","unk_m41ad",    // Eastern Dune Sea, Sand People Enclave, Central Beach, South Beach, North Beach, Temple Exterior,
             "unk_m42aa","unk_m43aa","unk_m44aa","unk_m44ab","unk_m44ac" };              // Elder Settlement, Rakatan Settlement, Temple Main Floor, Temple Catacombs, Temple Summit
 
-        //Built-in module omission presets. The key being the preset name, and the valuebeing a string list of modules to omit. Not to be confused with user-defined presets.
+        /// <summary>
+        /// Built-in module omission presets. The key being the preset name, and the value being a string list of modules to omit. Not to be confused with user-defined presets.
+        /// </summary>
         public static readonly Dictionary<string, List<string>> OMIT_PRESETS = new Dictionary<string, List<string>>()
         {
-            {"Default", new List<string>()
+            //{ "<Custom>", null },
+            { "Default", new List<string>()
                 {
                 "M12ab", "end_m01aa", "end_m01ab", "ebo_m40aa", "ebo_m12aa",
                 "ebo_m40ad", "STUNT_00", "STUNT_03a", "STUNT_06", "STUNT_07",
@@ -335,7 +325,7 @@ namespace kotor_Randomizer_2
                 "STUNT_57"
                 }
             },
-            {"No Major Hubs", new List<string>()
+            { "No Major Hubs", new List<string>()
                 {
                 "tar_m10ab", "ebo_m46ab", "liv_m99aa", "unk_m44ac", "manm26mg",
                 "tar_m03mg", "tat_m17mg", "unk_m43aa", "tar_m03aa", "tat_m17aa",
@@ -347,222 +337,186 @@ namespace kotor_Randomizer_2
                 "STUNT_56a", "STUNT_57"
                 }
             },
-            {"Max Random", new List<string>()
+            { "Max Random", new List<string>()
                 {
                 }
             }
 
         };
-        //Collectiuon of acceptable 2da files and collumns to randomize
+
+        /// <summary>
+        /// Collectiuon of acceptable 2da files and collumns to randomize
+        /// </summary>
         public static readonly Dictionary<string, List<string>> TWODA_COLLUMNS = new Dictionary<string, List<string>>()
         {
-            {"acbonus", new List<string>()
-                {
-                "scd", "sol", "sct", "jdc", "jds", "jdg"
-                }
+            { "acbonus", new List<string>()
+                { "scd", "sol", "sct", "jdc", "jds", "jdg" }
             },
-            {"aliensound", new List<string>()
-                {
-                "filename"
-                }
+            { "aliensound", new List<string>()
+                { "filename" }
             },
-            {"appearance", new List<string>()
-                {
-                "walkdist", "rundist", "moverate", "body_bag"
-                }
+            { "appearance", new List<string>()
+                { "walkdist", "rundist", "moverate", "body_bag" }
             },
-            {"baseitems", new List<string>()
-                {
-                "name", "equipableslots", "defaulticon", "reqfeat0"
-                }
+            { "baseitems", new List<string>()
+                { "name", "equipableslots", "defaulticon", "reqfeat0" }
             },
-            {"bodybag", new List<string>()
-                {
-                "appearance"
-                }
+            { "bodybag", new List<string>()
+                { "appearance" }
             },
-            {"camerastyle", new List<string>()
-                {
-                "distance", "pitch", "height"
-                }
+            { "camerastyle", new List<string>()
+                { "distance", "pitch", "height" }
             },
-            {"classes", new List<string>()
-                {
-                "name", "icon", "hitdie", "attackbonustable", "featstable", "savingthrowtable", "skillstable", "skillpointbase", "armorclasscolumn", "featgain"
-                }
+            { "classes", new List<string>()
+                { "name", "icon", "hitdie", "attackbonustable", "featstable", "savingthrowtable", "skillstable", "skillpointbase", "armorclasscolumn", "featgain" }
             },
-            {"classpowergain", new List<string>()
-                {
-                "jcn", "jsn", "jgd"
-                }
+            { "classpowergain", new List<string>()
+                { "jcn", "jsn", "jgd" }
             },
-            {"cls_atk_1", new List<string>()
-                {
-                "bab"
-                }
+            { "cls_atk_1", new List<string>()
+                { "bab" }
             },
-            {"cls_atk_2", new List<string>()
-                {
-                "bab"
-                }
+            { "cls_atk_2", new List<string>()
+                { "bab" }
             },
-            {"cls_atk_3", new List<string>()
-                {
-                "bab"
-                }
+            { "cls_atk_3", new List<string>()
+                { "bab" }
             },
-            {"cls_st_cm_drd", new List<string>()
-                {
-                "fortsave", "refsave", "willsave"
-                }
+            { "cls_st_cm_drd", new List<string>()
+                { "fortsave", "refsave", "willsave" }
             },
-            {"cls_st_ex_drd", new List<string>()
-                {
-                "fortsave", "refsave", "willsave"
-                }
+            { "cls_st_ex_drd", new List<string>()
+                { "fortsave", "refsave", "willsave" }
             },
-            {"cls_st_jedi_c", new List<string>()
-                {
-                "fortsave", "refsave", "willsave"
-                }
+            { "cls_st_jedi_c", new List<string>()
+                { "fortsave", "refsave", "willsave" }
             },
-            {"cls_st_jedi_g", new List<string>()
-                {
-                "fortsave", "refsave", "willsave"
-                }
+            { "cls_st_jedi_g", new List<string>()
+                { "fortsave", "refsave", "willsave" }
             },
-            {"cls_st_jedi_s", new List<string>()
-                {
-                "fortsave", "refsave", "willsave"
-                }
+            { "cls_st_jedi_s", new List<string>()
+                { "fortsave", "refsave", "willsave" }
             },
-            {"cls_st_minion", new List<string>()
-                {
-                "fortsave", "refsave", "willsave"
-                }
+            { "cls_st_minion", new List<string>()
+                { "fortsave", "refsave", "willsave" }
             },
-            {"cls_st_scndrl", new List<string>()
-                {
-                "fortsave", "refsave", "willsave"
-                }
+            { "cls_st_scndrl", new List<string>()
+                { "fortsave", "refsave", "willsave" }
             },
-            {"cls_st_scout", new List<string>()
-                {
-                "fortsave", "refsave", "willsave"
-                }
+            { "cls_st_scout", new List<string>()
+                { "fortsave", "refsave", "willsave" }
             },
-            {"cls_st_soldier", new List<string>()
-                {
-                "fortsave", "refsave", "willsave"
-                }
+            { "cls_st_soldier", new List<string>()
+                { "fortsave", "refsave", "willsave" }
             },
-            {"comptypes", new List<string>()
-                {
-                "computerbackground"
-                }
+            { "comptypes", new List<string>()
+                { "computerbackground" }
             },
-            {"creaturespeed", new List<string>()
-                {
-                "walkrate", "runrate"
-                }
+            { "creaturespeed", new List<string>()
+                { "walkrate", "runrate" }
             },
-            {"effecticon", new List<string>()
-                {
-                "iconresref", "good", "priority"
-                }
+            { "effecticon", new List<string>()
+                { "iconresref", "good", "priority" }
             },
-            {"feat", new List<string>()
-                {
-                "name", "description", "icon"
-                }
+            { "feat", new List<string>()
+                { "name", "description", "icon" }
             },
-            {"forceadjust", new List<string>()
-                {
-                "goodcost", "evilcost"
-                }
+            { "forceadjust", new List<string>()
+                { "goodcost", "evilcost" }
             },
-            {"forceshields", new List<string>()
-                {
-                "visualeffectdef", "amount",
-                }
+            { "forceshields", new List<string>()
+                { "visualeffectdef", "amount", }
             },
-            {"genericdoors", new List<string>()
-                {
-                "soundapptype"
-                }
+            { "genericdoors", new List<string>()
+                { "soundapptype" }
             },
-            {"guisounds", new List<string>()
-                {
-                "soundresref"
-                }
+            { "guisounds", new List<string>()
+                { "soundresref" }
             },
-            {"heads", new List<string>()
-                {
-                "head"
-                }
+            { "heads", new List<string>()
+                { "head" }
             },
-            {"loadscreenhints", new List<string>()
-                {
-                "gameplayhint"
-                }
+            { "loadscreenhints", new List<string>()
+                { "gameplayhint" }
             },
-            {"placeableobjsnds", new List<string>()
-                {
-                "opened", "closed", "locked"
-                }
+            { "placeableobjsnds", new List<string>()
+                { "opened", "closed", "locked" }
             },
-            {"skills", new List<string>()
-                {
-                "name", "description", "icon", "keyability", "scd_class", "sol_class", "sct_class", "jcn_class", "jgd_class", "jsn_class", "drx_class", "drc_class"
-                }
+            { "skills", new List<string>()
+                { "name", "description", "icon", "keyability", "scd_class", "sol_class", "sct_class", "jcn_class", "jgd_class", "jsn_class", "drx_class", "drc_class" }
             },
-            {"soundset", new List<string>()
-                {
-                "resref"
-                }
+            { "soundset", new List<string>()
+                { "resref" }
             },
-            {"spells", new List<string>()
-                {
-                "name", "spelldesc", "forcepoints", "goodevil", "iconresref", "castanim"
-                }
+            { "spells", new List<string>()
+                { "name", "spelldesc", "forcepoints", "goodevil", "iconresref", "castanim" }
             },
-            {"tilecolor", new List<string>()
-                {
-                "red", "green", "blue"
-                }
+            { "tilecolor", new List<string>()
+                { "red", "green", "blue" }
             },
-            {"traps", new List<string>()
-                {
-                "setdc", "detectdcmod", "disarmdcmod", "trapname", "explosionsound"
-                }
+            { "traps", new List<string>()
+                { "setdc", "detectdcmod", "disarmdcmod", "trapname", "explosionsound" }
             },
-            {"upcrystals", new List<string>()
-                {
-                "shortmdlvar", "longmdlvar", "doublemdlvar"
-                }
+            { "upcrystals", new List<string>()
+                { "shortmdlvar", "longmdlvar", "doublemdlvar" }
             },
-            {"upgradetypes", new List<string>()
-                {
-                "label"
-                }
+            { "upgradetypes", new List<string>()
+                { "label" }
             },
-            {"videoeffects", new List<string>()
-                {
-                "modulationred", "modulationgreen", "modulationblue", "saturation"
-                }
+            { "videoeffects", new List<string>()
+                { "modulationred", "modulationgreen", "modulationblue", "saturation" }
             },
-            {"xpbaseconst", new List<string>()
-                {
-                "balance", "bonus"
-                }
+            { "xpbaseconst", new List<string>()
+                { "balance", "bonus" }
             },
-            {"xptable", new List<string>()
-                {
-                "c0","c1","c2","c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13","c14","c15","c16","c17","c18","c19","c20"
-                }
+            { "xptable", new List<string>()
+                { "c0", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20" }
             }
-    };
+        };
         #endregion
 
+        #region Variables
+        /// <summary>
+        /// Bound list of modules where the mod entries with selected omissions will be stored.
+        /// </summary>
+        public static BindingList<Mod_Entry> BoundModules = new BindingList<Mod_Entry>();
+
+        /// <summary>
+        /// Bound list of items to be omitted from randomization. This is necessary because certain items can result in soft locks if randomized.
+        /// </summary>
+        public static BindingList<string> OmitItems = new BindingList<string>()
+        {
+            "g_i_collarlgt001", "g_i_glowrod01", "g_i_torch01", "ptar_sitharmor", "tat17_sandperdis", "g_i_progspike02"
+        };
+
+        /// <summary>
+        /// Dictionary of selected 2DAs to be randomized.
+        /// </summary>
+        public static Dictionary<string, List<string>> Selected2DAs = new Dictionary<string, List<string>>();
+        #endregion
+
+        #region Types
+        /// <summary>
+        /// Struct used in Collections for module randomization denoting omission.
+        /// </summary>
+        public struct Mod_Entry
+        {
+            public string Name { get; }
+            public bool Omitted { get; set; }
+
+            public Mod_Entry(string name, bool omitted)
+            {
+                Name = name;
+                Omitted = omitted;
+            }
+
+            public override string ToString()
+            {
+                StringBuilder sb = new StringBuilder(Omitted ? "X:" : "I:");
+                sb.Append(Name);
+                return sb.ToString();
+            }
+        }
+        #endregion
     }
 }

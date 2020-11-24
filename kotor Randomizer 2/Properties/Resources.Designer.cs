@@ -19,7 +19,7 @@ namespace kotor_Randomizer_2.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -111,6 +111,33 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Done!.
+        /// </summary>
+        internal static string Done {
+            get {
+                return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Randomization Categories Selected.
+        /// </summary>
+        internal static string ErrorNoRandomization {
+            get {
+                return ResourceManager.GetString("ErrorNoRandomization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game is not randomized!.
+        /// </summary>
+        internal static string ErrorNotRandomized {
+            get {
+                return ResourceManager.GetString("ErrorNotRandomized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] g_brakatan003 {
@@ -173,6 +200,88 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 2-Dimensional Arrays Randomized.
+        /// </summary>
+        internal static string Log2DADone {
+            get {
+                return ResourceManager.GetString("Log2DADone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kotor Randomizer V2.0
+        ///.
+        /// </summary>
+        internal static string LogHeader {
+            get {
+                return ResourceManager.GetString("LogHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Items Randomized.
+        /// </summary>
+        internal static string LogItemsDone {
+            get {
+                return ResourceManager.GetString("LogItemsDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Models Randomized.
+        /// </summary>
+        internal static string LogModelsDone {
+            get {
+                return ResourceManager.GetString("LogModelsDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modules Randomized.
+        /// </summary>
+        internal static string LogModulesDone {
+            get {
+                return ResourceManager.GetString("LogModulesDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sounds Randomized.
+        /// </summary>
+        internal static string LogMusicSoundDone {
+            get {
+                return ResourceManager.GetString("LogMusicSoundDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;Other&apos; Randomized.
+        /// </summary>
+        internal static string LogOtherDone {
+            get {
+                return ResourceManager.GetString("LogOtherDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text Randomized.
+        /// </summary>
+        internal static string LogTextDone {
+            get {
+                return ResourceManager.GetString("LogTextDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Textures Randomized.
+        /// </summary>
+        internal static string LogTexturesDone {
+            get {
+                return ResourceManager.GetString("LogTexturesDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] MGINCLUDED_modulesave {
@@ -198,6 +307,42 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mod_Entry_Area.
+        /// </summary>
+        internal static string ModuleEntryArea {
+            get {
+                return ResourceManager.GetString("ModuleEntryArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod_Entry_X.
+        /// </summary>
+        internal static string ModuleEntryX {
+            get {
+                return ResourceManager.GetString("ModuleEntryX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod_Entry_Y.
+        /// </summary>
+        internal static string ModuleEntryY {
+            get {
+                return ResourceManager.GetString("ModuleEntryY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod_Entry_Z.
+        /// </summary>
+        internal static string ModuleEntryZ {
+            get {
+                return ResourceManager.GetString("ModuleEntryZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Module randomization essentially randomizes the locations of &apos;levels&apos; or &apos;maps&apos; in the game.
         ///
         ///Randomized - This list box contains the resource reference codes for all of the modules that will be randomized by the program when executed. You can find the equivalent location names for these codes on the strategy wiki cheat page under &apos;Warp&apos;.
@@ -207,6 +352,15 @@ namespace kotor_Randomizer_2.Properties {
         internal static string ModuleHelp {
             get {
                 return ResourceManager.GetString("ModuleHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preset Loaded.
+        /// </summary>
+        internal static string MsgPresetLoaded {
+            get {
+                return ResourceManager.GetString("MsgPresetLoaded", resourceCulture);
             }
         }
         
@@ -287,6 +441,78 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Randomizing 2-D Arrays.
+        /// </summary>
+        internal static string Randomizing2DA {
+            get {
+                return ResourceManager.GetString("Randomizing2DA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomizing Items.
+        /// </summary>
+        internal static string RandomizingItems {
+            get {
+                return ResourceManager.GetString("RandomizingItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomizing Models.
+        /// </summary>
+        internal static string RandomizingModels {
+            get {
+                return ResourceManager.GetString("RandomizingModels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomizing Modules.
+        /// </summary>
+        internal static string RandomizingModules {
+            get {
+                return ResourceManager.GetString("RandomizingModules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomizing Music and Sounds.
+        /// </summary>
+        internal static string RandomizingMusicSound {
+            get {
+                return ResourceManager.GetString("RandomizingMusicSound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomizing Other Things.
+        /// </summary>
+        internal static string RandomizingOther {
+            get {
+                return ResourceManager.GetString("RandomizingOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomizing Text.
+        /// </summary>
+        internal static string RandomizingText {
+            get {
+                return ResourceManager.GetString("RandomizingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomizing Textures.
+        /// </summary>
+        internal static string RandomizingTextures {
+            get {
+                return ResourceManager.GetString("RandomizingTextures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seeds are used a base for the randomization process. By having the same presets and sharing a seed with a friend your will recieve the same randomization.
         ///	A random seed is generated on Program start-up, however it can be changed or copied by opening the seed menu and editing the text..
         /// </summary>
@@ -307,6 +533,15 @@ namespace kotor_Randomizer_2.Properties {
         internal static string SoundHelp {
             get {
                 return ResourceManager.GetString("SoundHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finishing Up.
+        /// </summary>
+        internal static string TaskFinishing {
+            get {
+                return ResourceManager.GetString("TaskFinishing", resourceCulture);
             }
         }
         
@@ -348,6 +583,69 @@ namespace kotor_Randomizer_2.Properties {
         internal static string TwoDAHelp {
             get {
                 return ResourceManager.GetString("TwoDAHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unrandomizing Key Table.
+        /// </summary>
+        internal static string UnrandomizingKeyTable {
+            get {
+                return ResourceManager.GetString("UnrandomizingKeyTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unrandomizing Lips.
+        /// </summary>
+        internal static string UnrandomizingLips {
+            get {
+                return ResourceManager.GetString("UnrandomizingLips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unrandomizing Modules.
+        /// </summary>
+        internal static string UnrandomizingModules {
+            get {
+                return ResourceManager.GetString("UnrandomizingModules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unrandomizing Music.
+        /// </summary>
+        internal static string UnrandomizingMusic {
+            get {
+                return ResourceManager.GetString("UnrandomizingMusic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unrandomizing Overrides.
+        /// </summary>
+        internal static string UnrandomizingOverrides {
+            get {
+                return ResourceManager.GetString("UnrandomizingOverrides", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unrandomizing Sounds.
+        /// </summary>
+        internal static string UnrandomizingSounds {
+            get {
+                return ResourceManager.GetString("UnrandomizingSounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unrandomizing Textures.
+        /// </summary>
+        internal static string UnrandomizingTextures {
+            get {
+                return ResourceManager.GetString("UnrandomizingTextures", resourceCulture);
             }
         }
     }
