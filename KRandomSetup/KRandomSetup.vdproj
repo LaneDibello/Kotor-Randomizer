@@ -21,7 +21,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7F05BC87BC1D48E4925F69445CC45F82"
+        "MsmKey" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -40,12 +40,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CA2DAC5FC89E4B3FD11C3E2CB8D1111F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -53,6 +47,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_04FF249B1558D0B909E7709EDAB2B811"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_CA2DAC5FC89E4B3FD11C3E2CB8D1111F"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -73,6 +73,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -89,6 +97,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -122,7 +138,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_04FF249B1558D0B909E7709EDAB2B811"
@@ -149,9 +165,9 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7F05BC87BC1D48E4925F69445CC45F82"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2B9129C3D1F4408E8CCCE0A421EE5646"
             {
-            "SourcePath" = "8:L:\\laned\\Downloads\\krandomsmall_aJB_icon.ico"
+            "SourcePath" = "8:krandomsmall_aJB_icon.ico"
             "TargetName" = "8:krandomsmall_aJB_icon.ico"
             "Tag" = "8:"
             "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
@@ -209,7 +225,7 @@
             "Description" = "8:Kotor Randomizer Preset"
             "Extensions" = "8:krp"
             "MIME" = "8:"
-            "Icon" = "8:_7F05BC87BC1D48E4925F69445CC45F82"
+            "Icon" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
             "IconIndex" = "3:0"
                 "Command"
                 {
@@ -297,7 +313,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:https://www.speedrun.com/kotor1"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -411,7 +427,7 @@
             "Target" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
             "Folder" = "8:_3E298B683E3C4A37B31DBC6C29223617"
             "WorkingFolder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
-            "Icon" = "8:_7F05BC87BC1D48E4925F69445CC45F82"
+            "Icon" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C6F70DF347134865AF85647A83F9C5B0"
@@ -425,7 +441,7 @@
             "Target" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
             "Folder" = "8:_F5452B2152DD4B4E958D476D55855B11"
             "WorkingFolder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
-            "Icon" = "8:_7F05BC87BC1D48E4925F69445CC45F82"
+            "Icon" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
             "Feature" = "8:"
             }
         }
