@@ -486,7 +486,7 @@ namespace kotor_Randomizer_2
         /// </summary>
         public static BindingList<string> OmitItems = new BindingList<string>()
         {
-            "g_i_collarlgt001", "g_i_glowrod01", "g_i_torch01", "ptar_sitharmor", "tat17_sandperdis", "g_i_progspike02"
+            "g_i_collarlgt001", "g_i_glowrod01", "g_i_torch01", "ptar_sitharmor", "tat17_sandperdis", "g_i_progspike02", "g_i_implant104"
         };
 
         /// <summary>
