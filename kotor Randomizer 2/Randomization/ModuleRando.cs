@@ -10,7 +10,9 @@ namespace kotor_Randomizer_2
     public static class ModuleRando
     {
         private const string AREA_MYSTERY_BOX = "ebo_m46ab";
+        private const string AREA_EBON_HAWK = "ebo_m12aa";
         private const string LABEL_MIND_PRISON = "g_brakatan003";
+        private const string LABEL_MYSTERY_BOX = "pebn_mystery";
         private const string TwoDA_MODULE_SAVE = "modulesave.2da";
         private const string FIXED_DREAM_OVERRIDE = "k_ren_visionland.ncs";
         private const string UNLOCK_MAP_OVERRIDE = "k_pebn_galaxy.ncs";
@@ -154,6 +156,42 @@ namespace kotor_Randomizer_2
             // Fixed Rakata riddle Man in Mind Prison.
             if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison))
             {
+                //Allowing Mystery Box to be accessed multiple times
+                // Find the files associated with AREA_EBON_HAWK.
+                var hawk_files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_EBON_HAWK]));
+                foreach (FileInfo fi in hawk_files)
+                {
+                    // Skip any files that don't end in "s.rim".
+                    if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
+
+                    // Check the RIM's File_Table for any rFiles labeled with LABEL_MYSTERY_BOX.
+                    RIM r = new RIM(fi.FullName);
+                    if (r.File_Table.Where(x => x.Label == LABEL_MYSTERY_BOX).Any())
+                    {
+                        bool offadjust = false;
+                        foreach (RIM.rFile rf in r.File_Table)
+                        {
+                            // For the rFile with LABEL_MIND_PRISON, update the file data with the fix.
+                            if (rf.Label == LABEL_MYSTERY_BOX)
+                            {
+                                rf.File_Data = Properties.Resources.pebn_mystery;
+                                rf.DataSize += 87;
+                                offadjust = true;
+                                continue;
+                            }
+                            // For rFiles after LABEL_MIND_PRISON, add the additional data offset.
+                            if (offadjust)
+                            {
+                                rf.DataOffset += 87;
+                            }
+                        }
+
+                        // Write updated RIM data to file.
+                        r.WriteToFile(fi.FullName);
+                    }
+                }
+
+                //Allowing Riddles to be done more than once
                 // Find the files associated with AREA_MYSTERY_BOX.
                 var files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_MYSTERY_BOX]));
                 foreach (FileInfo fi in files)

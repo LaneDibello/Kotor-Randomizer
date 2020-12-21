@@ -19,7 +19,7 @@ namespace kotor_Randomizer_2.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -159,9 +159,9 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Item randomization randomizes the template items in the game&apos;s key data. This means that items that are hard coded to the module will not be randomized. Which is beneifcial for most plot items.
+        ///   Looks up a localized string similar to Item randomization randomizes the template items in the game&apos;s key data. This means that items that are hard coded to the module will not be randomized. Which is beneifical for most plot items.
         ///
-        ///Each category can be enabled or disabled by checkbox. The radio buttons cauuse each category to be randomized at different levels. Everything with the &apos;max&apos; option selected will be shuffled together. Each category with &apos;type&apos; option selected will only shuffle within itself. Each catagory with the &apos;Subtype&apos; option  [rest of string was truncated]&quot;;.
+        ///Each category can be enabled or disabled by checkbox. The radio buttons cause each category to be randomized at different levels. Everything with the &apos;Max&apos; option selected will be shuffled together. Each category with &apos;Type&apos; option selected will only shuffle within itself. Each catagory with the &apos;Subtype&apos; option s [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ItemHelp {
             get {
@@ -297,8 +297,8 @@ namespace kotor_Randomizer_2.Properties {
         ///The left-most checkboxes disable and enable categories.
         ///
         ///&gt; Character Models include all of the NPCs and MOBs (.utc) that are not spawned by template (such as party members, the player, and a few odd creatures). 
-        ///Omit large models prevents characters from being randomized to some of the huge models such as Krayt Dragon, or rancor.
-        ///Omit Broken models prevents characters from being ran [rest of string was truncated]&quot;;.
+        ///Omit Large Models prevents characters from being randomized to some of the huge models, such as Krayt Dragon or Rancor.
+        ///Omit Broken Models prevents characters from being ran [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ModelHelp {
             get {
@@ -345,9 +345,9 @@ namespace kotor_Randomizer_2.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Module randomization essentially randomizes the locations of &apos;levels&apos; or &apos;maps&apos; in the game.
         ///
-        ///Randomized - This list box contains the resource reference codes for all of the modules that will be randomized by the program when executed. You can find the equivalent location names for these codes on the strategy wiki cheat page under &apos;Warp&apos;.
+        ///Randomized - This list box contains the resource reference codes for all of the modules that will be randomized by the program when executed. You can find the equivalent location names for these codes on the StrategyWiki cheat page under &apos;Warp&apos;.
         ///
-        ///Omitted - This list box contains the resource reference codes for all of the modules that will not be randomized. Double clicking, or pressing return will transfer an [rest of string was truncated]&quot;;.
+        ///Omitted - This list box contains the resource reference codes for all of the modules that will not be randomized. Double clicking or pressing return will transfer any  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ModuleHelp {
             get {
@@ -395,12 +395,12 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Currently the &apos;Other&apos; category holds rando options that don&apos;t quite fit into any other category.
+        ///   Looks up a localized string similar to Currently the &apos;Other&apos; category holds randomization options that don&apos;t quite fit into any other category.
         ///
         ///Name Generator Rando generates and replaces the letter-combo-probabiliy files used when generating random names in-game. By seeding Line break separated text the program will generate a file that can create new names based on the text provided.
-        ///	Random Pazaak Decks randomizes the cards possessed by the NPC Pazaak players.
+        ///	Random Pazaak Decks randomizes the cards possessed by the NPC Pazaak players beyond simply swapping around existing cards.
         ///
-        ///Other Various Rando options coiming in the future, hopefully..
+        ///Other Various Rando options com [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string OtherHelp {
             get {
@@ -411,7 +411,7 @@ namespace kotor_Randomizer_2.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The SWKOTOR Path is the path of your game&apos;s swkotor folder. This folder contains all the data we need to adjust for randomization to occur.
         ///
-        ///Paths are usually detected automatically, however if this process does not work you will have to enter the path manually. If you are using steam, finding this path is as simple as opening your library, right-clicking on the game, selecting properties, Local Files, and then Browse local files. From there, simply copy the path from the Address bar in file explorer, and [rest of string was truncated]&quot;;.
+        ///Paths are usually detected automatically, however if this process does not work you will have to enter the path manually. If you are using Steam, finding this path is as simple as opening your library, right-clicking on the game, selecting properties, Local Files, and then Browse local files. From there, simply copy the path from the Address bar in file explorer, and [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PathHelp {
             get {
@@ -420,7 +420,17 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preset INformation Coming Soon.
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] pebn_mystery {
+            get {
+                object obj = ResourceManager.GetObject("pebn_mystery", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preset Information Coming Soon.
         ///
         ///	I need to remember how presets work before I can finish them. Ah the dread of poor commenting and taking a hiatus from a project..
         /// </summary>
@@ -431,8 +441,8 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Once your presets have been selected you can select the &apos;Randomize&apos; button to begin the randomization process. A progress bar will show the process as it goes along. When it is complete you can select &apos;Close&apos; and continue to your game whenever you&apos;re ready.
-        ///	Undrandomizaing is a similar process. The program will detect if your game is currently randomized (Note this process isn&apos;t perfect, and if something seriously went wrong you may have to manually unrandomize your game, a process Lane can help you with) [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Once your presets have been selected you can click the &apos;Randomize&apos; button to begin the randomization process. A progress bar will show the process as it goes along. When it is complete you can select &apos;Close&apos; and continue to your game whenever you&apos;re ready.
+        ///	Undrandomizaing is a similar process. The program will detect if your game is currently randomized. (Note this process isn&apos;t perfect, and if something seriously went wrong you may have to manually unrandomize your game, a process Lane can help you with. [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string RandoHelp {
             get {
@@ -513,8 +523,8 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seeds are used a base for the randomization process. By having the same presets and sharing a seed with a friend your will recieve the same randomization.
-        ///	A random seed is generated on Program start-up, however it can be changed or copied by opening the seed menu and editing the text..
+        ///   Looks up a localized string similar to Seeds are used as the base for the randomization process. By having the same presets and sharing a seed with a friend, you will both recieve the same randomization.
+        ///	A random seed is generated on Program start-up, however it can be changed or copied by opening the seed menu and editing the text. The Generate New Seed button can also be used to randomly change the seed..
         /// </summary>
         internal static string SeedHelp {
             get {
@@ -525,10 +535,10 @@ namespace kotor_Randomizer_2.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Sounds and music randomizes the sound and music files. 
         ///
-        ///The checkboxes allow for the enabling and disabling of each category. The type radio button keeps the randomization within each category. All categories with max selected will have their audio files mixed in together.
-        ///	&gt; Area music is just the generral ambient music in each module.
-        ///&gt; Battle music is the track that the area switches to when combat begins.
-        ///&gt; Ambinet noise is just a simple track that is usually playing in the background of locations [rest of string was truncated]&quot;;.
+        ///The checkboxes enable and disable each category. The &apos;Type&apos; radio buttons keep the randomization within each category of music or sound. All categories with &apos;Max&apos; selected will have their audio files mixed in together.
+        ///	&gt; Area Music is the general ambient music in each module.
+        ///&gt; Battle Music is the track that the area switches to when combat begins.
+        ///&gt; Ambient Noise is a type of track that is usually playing in the background of locations, such as [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SoundHelp {
             get {
@@ -546,7 +556,7 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text Rando is Not Currently Ready. This is primarily due to my own stuborness/laziness, and desire to deliver something more than just a simple shuffling of the the Text in this game, though at the rate I&apos;ve made progress with it, I might just settle and deliver that instead.
+        ///   Looks up a localized string similar to Text Rando is Not Currently Ready. This is primarily due to my own stuborness/laziness, and desire to deliver something more than just a simple shuffling of the Text in this game, though at the rate I&apos;ve made progress with it, I might just settle and deliver that instead.
         ///	
         ///.
         /// </summary>
@@ -562,9 +572,9 @@ namespace kotor_Randomizer_2.Properties {
         ///WARNING:
         ///Texture randomization frequently results in visual experiences that may prove harmful to photosensitive users. Use with caution.
         ///
-        ///NOTE: This rando does not edit with GUI textures, only those used in 3D environments.
+        ///NOTE: This randomization does not edit with GUI textures, only those used in 3D environments.
         ///
-        ///Each category can be enabled or disabled by checkbox. The radio buttons cause each category to be randomized at different levels. Everything  [rest of string was truncated]&quot;;.
+        ///Each category can be enabled or disabled by checkbox. The radio buttons cause each category to be randomized at different levels. Eve [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TextureHelp {
             get {
@@ -573,12 +583,12 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A 2DA, or 2-dimensional array, is a data table used by the game to store all sorts of constants from character appearance data, to AC bonus, to item properties to sound effects. This randomizer allows for certian, pre-selected colemns to be randomized resulting in strange and fun events in game.
+        ///   Looks up a localized string similar to A 2DA, or 2-dimensional array, is a data table used by the game to store all sorts of constants from character appearance data, to AC bonus, to item properties to sound effects. This randomizer allows for certain preselected columns to be randomized, resulting in strange and fun events in-game.
         ///
-        ///The left list-box is where you can select which files are being randomized. The right list-box allows you to select which colemns (of those allowed) you wish to randomize.
+        ///The left list-box is where you can select which files/arrays are being randomized. The right list-box allows you to select which columns (of those allowed) you wish to randomize.
         ///
         ///WARNING:
-        ///Many of these 2DAs have sim [rest of string was truncated]&quot;;.
+        ///Many of these 2DAs ha [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TwoDAHelp {
             get {
