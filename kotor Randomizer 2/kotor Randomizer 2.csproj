@@ -255,6 +255,7 @@
     <None Include="Resources\NODELETE_ALLINCLUDED_modulesave.2da" />
     <None Include="Resources\NODELETE_MGINCLUDED_modulesave.2da" />
     <None Include="Resources\NODELETE_modulesave.2da" />
+    <None Include="Resources\pebn_mystery.dlg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
