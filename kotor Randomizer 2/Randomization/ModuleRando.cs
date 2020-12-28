@@ -140,7 +140,7 @@ namespace kotor_Randomizer_2
                     // Set up objects.
                     RIM r = new RIM(kvp.Value.FullName);
                     RIM.rFile rf = r.File_Table.Where(x => x.TypeID == (int)ResourceType.IFO).FirstOrDefault();
-                    GFF g = new GFF(rf.File_Data);
+                    GFF_old g = new GFF_old(rf.File_Data);
 
                     // Update coordinate data.
                     g.Field_Array.Where(x => x.Label == Properties.Resources.ModuleEntryX).FirstOrDefault().DataOrDataOffset = Globals.FIXED_COORDINATES[kvp.Key].Item1;
