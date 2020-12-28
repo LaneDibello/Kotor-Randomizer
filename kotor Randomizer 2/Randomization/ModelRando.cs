@@ -11,13 +11,13 @@ namespace kotor_Randomizer_2
             foreach (FileInfo fi in paths.FilesInModules)
             {
                 RIM r = new RIM(fi.FullName);
-
+                
                 // Doors
                 if ((Properties.Settings.Default.RandomizeDoorModels & 1) > 0)
                 {
                     foreach (RIM.rFile rf in r.File_Table.Where(x => x.TypeID == (int)ResourceType.UTD))
                     {
-                        GFF g = new GFF(rf.File_Data);
+                        GFF_old g = new GFF_old(rf.File_Data);
 
                         int temp = 0;
 
@@ -31,7 +31,7 @@ namespace kotor_Randomizer_2
                         }
 
                         // Airlock
-                        if ((Properties.Settings.Default.RandomizeDoorModels & 2) > 0 && (g.Field_Array.Where(x => x.Label == "LocName").FirstOrDefault().Field_Data as GFF.CExoLocString).StringRef == 21080) { continue; }
+                        if ((Properties.Settings.Default.RandomizeDoorModels & 2) > 0 && (g.Field_Array.Where(x => x.Label == "LocName").FirstOrDefault().Field_Data as GFF_old.CExoLocString).StringRef == 21080) { continue; }
                         g.Field_Array.Where(k => k.Label == "GenericType").FirstOrDefault().Field_Data = temp;
                         g.Field_Array.Where(k => k.Label == "GenericType").FirstOrDefault().DataOrDataOffset = temp;
 
@@ -46,7 +46,7 @@ namespace kotor_Randomizer_2
                 {
                     foreach (RIM.rFile rf in r.File_Table.Where(k => k.TypeID == 2044))
                     {
-                        GFF g = new GFF(rf.File_Data);
+                        GFF_old g = new GFF_old(rf.File_Data);
 
                         int temp = Randomize.Rng.Next(0, 231);
 
@@ -75,7 +75,7 @@ namespace kotor_Randomizer_2
                 {
                     foreach (RIM.rFile rf in r.File_Table.Where(k => k.TypeID == 2027))
                     {
-                        GFF g = new GFF(rf.File_Data);
+                        GFF_old g = new GFF_old(rf.File_Data);
 
                         int temp = Randomize.Rng.Next(0, 508);
 
