@@ -809,10 +809,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextSettingsValue {
+        [global::System.Configuration.DefaultSettingValueAttribute("Default")]
+        public global::kotor_Randomizer_2.TextSettings TextSettingsValue {
             get {
-                return ((int)(this["TextSettingsValue"]));
+                return ((global::kotor_Randomizer_2.TextSettings)(this["TextSettingsValue"]));
             }
             set {
                 this["TextSettingsValue"] = value;

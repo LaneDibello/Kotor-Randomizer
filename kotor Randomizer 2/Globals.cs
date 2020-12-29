@@ -67,7 +67,7 @@ namespace kotor_Randomizer_2
 
     [Flags]
     [Serializable]
-    public enum TextSettings //NOTE: I'VE ATTEMPTED TO USE THIS AS A TYPE IN SETTINGS HOWEVER VISUAL STUDIO WON'T COOPERATE, SO UNTIL GLAS CAN FIX THIS IT'S GONNA BE AN INT
+    public enum TextSettings 
     {
         /// <summary> (Default Behavior) No Randomization</summary>
         Default               = 0x00, // 0b00000000
