@@ -818,5 +818,17 @@ namespace kotor_Randomizer_2.Properties {
                 this["TextSettingsValue"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int TextLengthMargin {
+            get {
+                return ((int)(this["TextLengthMargin"]));
+            }
+            set {
+                this["TextLengthMargin"] = value;
+            }
+        }
     }
 }

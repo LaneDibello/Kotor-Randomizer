@@ -99,27 +99,24 @@ namespace kotor_Randomizer_2
         }
 
         //Randomize TLK
-        static void shuffle_TLK(KPaths paths, bool LengthMatching)
+        static void shuffle_TLK(KPaths paths, bool LengthMatching, int Length_Margin = 5)
         {
             TLK t = new TLK(paths.dialog);
 
             if (LengthMatching)
             {
-                int n = t.String_Data_Table.Count;
-
-                while (n > 1)
+                for (int i = 0; i < t.String_Data_Table.Count; i++)
                 {
-                    n--;
-                    int k = Randomize.Rng.Next(n + 1);
-                    int margin = 5;
-                    while (Math.Abs(t.String_Data_Table[k].StringText.Length - t.String_Data_Table[n].StringText.Length) > margin) //If there is more than a 'margin' character difference between the strings it rerolls, keeping similair length strings together.
+                    int margin = Length_Margin;
+
+                    List<TLK.String_Data> marginalized_strings = t.String_Data_Table.Where(x => Math.Abs(x.StringText.Length - t.String_Data_Table[i].StringText.Length) < margin).ToList();
+                    while (marginalized_strings.Count < 2)
                     {
-                        k = Randomize.Rng.Next(n + 1);
-                        margin++; //The margin widens as it goes on, both preventing infinite loops
+                        margin++;
+                        marginalized_strings = t.String_Data_Table.Where(x => Math.Abs(x.StringText.Length - t.String_Data_Table[i].StringText.Length) < margin).ToList();
                     }
-                    TLK.String_Data value = t.String_Data_Table[k];
-                    t.String_Data_Table[k] = t.String_Data_Table[n];
-                    t.String_Data_Table[n] = value;
+
+                    t.String_Data_Table[i] = marginalized_strings[Randomize.Rng.Next(marginalized_strings.Count)];
                 }
             }
             else
