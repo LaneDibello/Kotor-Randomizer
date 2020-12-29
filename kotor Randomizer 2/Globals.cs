@@ -65,6 +65,24 @@ namespace kotor_Randomizer_2
         FixMindPrison   = 0x40, // 0b01000000
     }
 
+    [Flags]
+    [Serializable]
+    public enum TextSettings //NOTE: I'VE ATTEMPTED TO USE THIS AS A TYPE IN SETTINGS HOWEVER VISUAL STUDIO WON'T COOPERATE, SO UNTIL GLAS CAN FIX THIS IT'S GONNA BE AN INT
+    {
+        /// <summary> (Default Behavior) No Randomization</summary>
+        Default               = 0x00, // 0b00000000
+        /// <summary> Randomizes the Text in conversation entries (The words spoken by NPCs) </summary>
+        RandoDialogEntries    = 0x01, // 0b00000001
+        /// <summary> Randomizes the Text in conversation replies (The options the MC may choose from) </summary>
+        RandoDialogReplies    = 0x02, // 0b00000010
+        /// <summary> Uses the TLK file to match Entry text with it's corresponding sound (This is about 90% effective as the included TLK file isn't entirely accurate) </summary>
+        MatchEntrySoundsWText = 0x04, // 0b00000100
+        /// <summary> This randomizes all the strings in the TLK file, which randomizes all the remaining in game text not in conversations. (Note: This TLK can still be used to match sounds) </summary>
+        RandoFullTLK          = 0x08, // 0b00001000
+        /// <summary> Attempts to match strings in TLK rando with ones of similar length (This will make some GUIs more pleasing to the eye)</summary>
+        MatchSimLengthStrings = 0x10, // 0b00010000
+    }
+
     public class Globals
     {
         #region Constants

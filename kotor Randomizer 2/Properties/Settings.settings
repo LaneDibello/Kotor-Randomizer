@@ -201,5 +201,8 @@
     <Setting Name="ModuleExtrasValue" Type="kotor_Randomizer_2.ModuleExtras" Scope="User">
       <Value Profile="(Default)">Default</Value>
     </Setting>
+    <Setting Name="TextSettingsValue" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
