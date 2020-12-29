@@ -121,7 +121,7 @@ namespace kotor_Randomizer_2
                     curr_task = Properties.Resources.RandomizingText;
                     bwRandomizing.ReportProgress(curr_progress);
                     CreateTextBackups();
-                    // ** Not yet implemented. ** // Run appropriate rando script.
+                    TextRando.text_rando(paths); // Run appropriate rando script.
                     sw.WriteLine(Properties.Resources.LogTextDone);
                     curr_progress += step_size;
                 }
@@ -179,7 +179,7 @@ namespace kotor_Randomizer_2
 
             try
             {
-                int step_size = 13;
+                int step_size = 12;
                 int curr_progress = 0;
                 bwUnrandomizing.ReportProgress(curr_progress);
 
@@ -210,6 +210,10 @@ namespace kotor_Randomizer_2
 
                 curr_task = Properties.Resources.UnrandomizingKeyTable;
                 paths.RestoreChitinFile();
+                bwUnrandomizing.ReportProgress(curr_progress += step_size);
+
+                curr_task = Properties.Resources.UnrandomizingTLKFile;
+                paths.RestoreDialogFile();
                 bwUnrandomizing.ReportProgress(curr_progress += step_size);
 
                 // Removing log file.
@@ -273,7 +277,8 @@ namespace kotor_Randomizer_2
 
         private void CreateTextBackups()
         {
-            // Not yet implemented.
+            paths.BackUpDialogFile();
+            paths.BackUpModulesDirectory();
         }
 
         private void CreateOtherBackups()
