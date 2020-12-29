@@ -168,21 +168,13 @@ namespace kotor_Randomizer_2
                     RIM r = new RIM(fi.FullName);
                     if (r.File_Table.Where(x => x.Label == LABEL_MYSTERY_BOX).Any())
                     {
-                        bool offadjust = false;
                         foreach (RIM.rFile rf in r.File_Table)
                         {
                             // For the rFile with LABEL_MIND_PRISON, update the file data with the fix.
                             if (rf.Label == LABEL_MYSTERY_BOX)
                             {
                                 rf.File_Data = Properties.Resources.pebn_mystery;
-                                rf.DataSize += 87;
-                                offadjust = true;
                                 continue;
-                            }
-                            // For rFiles after LABEL_MIND_PRISON, add the additional data offset.
-                            if (offadjust)
-                            {
-                                rf.DataOffset += 87;
                             }
                         }
 
@@ -203,21 +195,13 @@ namespace kotor_Randomizer_2
                     RIM r = new RIM(fi.FullName);
                     if (r.File_Table.Where(x => x.Label == LABEL_MIND_PRISON).Any())
                     {
-                        bool offadjust = false;
                         foreach (RIM.rFile rf in r.File_Table)
                         {
                             // For the rFile with LABEL_MIND_PRISON, update the file data with the fix.
                             if (rf.Label == LABEL_MIND_PRISON)
                             {
                                 rf.File_Data = Properties.Resources.g_brakatan003;
-                                rf.DataSize += 192;
-                                offadjust = true;
                                 continue;
-                            }
-                            // For rFiles after LABEL_MIND_PRISON, add the additional data offset.
-                            if (offadjust)
-                            {
-                                rf.DataOffset += 192;
                             }
                         }
 
