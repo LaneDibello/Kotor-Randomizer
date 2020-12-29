@@ -46,24 +46,34 @@ namespace kotor_Randomizer_2
                     {
                         foreach (GFF.STRUCT S in (g.Top_Level.Fields.Where(x => x.Label == "EntryList").FirstOrDefault() as GFF.LIST).Structs)
                         {
-                            //Find valid string
-                            int str_ref = 0;
-                            while (t.String_Data_Table[str_ref].SoundResRef == "") //Ensure the string we have has a sound to go with it
+                            if ((S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString).StringRef != -1) //Avoid averwriting dialogue end indicators, and animation nodes
                             {
-                                str_ref = Randomize.Rng.Next(TLK_STRING_COUNT);
-                            }
+                                int str_ref = 0; //Find valid string
+                                while (t.String_Data_Table[str_ref].SoundResRef == "") //Ensure the string we have has a sound to go with it
+                                {
+                                    str_ref = Randomize.Rng.Next(TLK_STRING_COUNT);
+                                }
 
-                            // Sound and Text Matching
-                            if (SoundMatching)
-                            {
-                                (S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString).StringRef = str_ref;
-                                (S.Fields.Where(x => x.Label == "VO_ResRef").FirstOrDefault() as GFF.ResRef).Reference = t.String_Data_Table[str_ref].SoundResRef;
+                                // Sound and Text Matching
+                                if (SoundMatching)
+                                {
+                                    (S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString).StringRef = str_ref;
+                                    try
+                                    {
+                                        (S.Fields.Where(x => x.Label == "VO_ResRef").FirstOrDefault() as GFF.ResRef).Reference = t.String_Data_Table[str_ref].SoundResRef;
+                                    }
+                                    catch { }
+                                    try
+                                    {
+                                        (S.Fields.Where(x => x.Label == "Sound").FirstOrDefault() as GFF.ResRef).Reference = t.String_Data_Table[str_ref].SoundResRef;
+                                    }
+                                    catch { } //If both VO_ResRef and Sound Fail we ignore the entry
+                                }
+                                else
+                                {
+                                    (S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString).StringRef = str_ref;
+                                }
                             }
-                            else
-                            {
-                                (S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString).StringRef = str_ref;
-                            }
-
                         }
                     }
 
@@ -72,7 +82,7 @@ namespace kotor_Randomizer_2
                     {
                         foreach (GFF.STRUCT S in (g.Top_Level.Fields.Where(x => x.Label == "ReplyList").FirstOrDefault() as GFF.LIST).Structs)
                         {
-                            if ((S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString).StringRef != -1) //Avoid averwriting dialogue end indicators
+                            if ((S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString).StringRef != -1) //Avoid averwriting dialogue end indicators, and animation nodes
                             {
                                 int str_ref = Randomize.Rng.Next(49264);
                                 (S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString).StringRef = str_ref;

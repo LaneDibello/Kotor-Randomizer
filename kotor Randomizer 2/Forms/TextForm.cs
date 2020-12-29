@@ -37,6 +37,13 @@ namespace kotor_Randomizer_2
         private void cbDialogRando_CheckedChanged(object sender, EventArgs e)
         {
             pDialogRando.Enabled = cbDialogRando.Checked;
+            if (!checks_set) { return; }
+            if (!pDialogRando.Enabled)
+            {
+                cbEntries.Checked = false;
+                cbReplies.Checked = false;
+                cbMatchEntrySound.Checked = false;
+            }
         }
 
         private void cbTLKRando_CheckedChanged(object sender, EventArgs e)

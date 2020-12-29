@@ -339,7 +339,7 @@ namespace kotor_Randomizer_2
             if (File.Exists(dialog_backup))
             {
                 File.Delete(dialog);
-                File.Move(dialog_backup, dialog_backup);
+                File.Move(dialog_backup, dialog);
             }
         }
 
