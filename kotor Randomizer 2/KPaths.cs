@@ -237,9 +237,9 @@ namespace kotor_Randomizer_2
         }
 
         /// <summary>
-        /// Creates a backup of the chitin file if it doesn't exist already.
+        /// Creates a backup of the dialog file if it doesn't exist already.
         /// </summary>
-        public void BackUpCDialogFile()
+        public void BackUpDialogFile()
         {
             if (!File.Exists(dialog_backup))
             {
@@ -332,7 +332,7 @@ namespace kotor_Randomizer_2
         }
 
         /// <summary>
-        /// If the backup chitin file exists, restore it to the active directory.
+        /// If the backup dialog file exists, restore it to the active directory.
         /// </summary>
         public void RestoreDialogFile()
         {
