@@ -32,6 +32,8 @@ namespace kotor_Randomizer_2
         public readonly string sounds;
         /// <summary> Path to the swkotor\TexturePacks directory. </summary>
         public readonly string TexturePacks;
+        /// <summary> Path to the dialog.tlk file within the swkotor directory </summary>
+        public readonly string dialog;
 
         /// <summary> Path to the RANDOMIZED.log file within the swkotor directory. </summary>
         public readonly string RANDOMIZED_LOG;
@@ -54,6 +56,8 @@ namespace kotor_Randomizer_2
         public readonly string sounds_backup;
         /// <summary> Path to the backup of the swkotor\TexturePacks directory. </summary>
         public readonly string TexturePacks_backup;
+        /// <summary> Path to the backup of the dialog.tlk file within the swkotor directory. </summary>
+        public readonly string dialog_backup;
 
         /// <summary>
         /// Constructs paths to the SW KotOR directory and subdirectories.
@@ -71,6 +75,7 @@ namespace kotor_Randomizer_2
             music = $"{swkotor_path}\\streammusic\\";
             sounds = $"{swkotor_path}\\streamsounds\\";
             TexturePacks = $"{swkotor_path}\\TexturePacks\\";
+            dialog = $"{swkotor_path}\\dialog.tlk";
 
             RANDOMIZED_LOG = $"{swkotor_path}\\RANDOMIZED.log";
 
@@ -83,6 +88,7 @@ namespace kotor_Randomizer_2
             music_backup = $"{swkotor_path}\\streammusic_bak\\";
             sounds_backup = $"{swkotor_path}\\streamsounds_bak\\";
             TexturePacks_backup = $"{swkotor_path}\\TexturePacks_bak\\";
+            dialog_backup = $"{swkotor_path}\\dialog.tlk.bak";
         }
 
         /// <summary> Returns a list of the current files in the swkotor base directory. </summary>
@@ -231,6 +237,17 @@ namespace kotor_Randomizer_2
         }
 
         /// <summary>
+        /// Creates a backup of the chitin file if it doesn't exist already.
+        /// </summary>
+        public void BackUpCDialogFile()
+        {
+            if (!File.Exists(dialog_backup))
+            {
+                File.Copy(dialog, dialog_backup);
+            }
+        }
+
+        /// <summary>
         /// If the backup Modules directory exists, restore it to the active directory.
         /// </summary>
         public void RestoreModulesDirectory()
@@ -311,6 +328,18 @@ namespace kotor_Randomizer_2
             {
                 File.Delete(chitin);
                 File.Move(chitin_backup, chitin);
+            }
+        }
+
+        /// <summary>
+        /// If the backup chitin file exists, restore it to the active directory.
+        /// </summary>
+        public void RestoreDialogFile()
+        {
+            if (File.Exists(dialog_backup))
+            {
+                File.Delete(dialog);
+                File.Move(dialog_backup, dialog_backup);
             }
         }
 

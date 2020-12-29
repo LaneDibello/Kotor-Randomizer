@@ -96,6 +96,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Randomization\TextRando.cs" />
     <Compile Include="Randomization\TwodaRandom.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Forms\HelpForm.cs">
