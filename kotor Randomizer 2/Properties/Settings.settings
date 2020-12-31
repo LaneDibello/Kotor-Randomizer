@@ -201,5 +201,11 @@
     <Setting Name="ModuleExtrasValue" Type="kotor_Randomizer_2.ModuleExtras" Scope="User">
       <Value Profile="(Default)">Default</Value>
     </Setting>
+    <Setting Name="TextSettingsValue" Type="kotor_Randomizer_2.TextSettings" Scope="User">
+      <Value Profile="(Default)">Default</Value>
+    </Setting>
+    <Setting Name="TextLengthMargin" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

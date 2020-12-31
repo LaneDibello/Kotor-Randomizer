@@ -101,7 +101,7 @@ namespace kotor_Randomizer_2
         {
             llTwitch.LinkVisited = true;
 
-            System.Diagnostics.Process.Start("https://www.twitch.tv/lane_dibello");
+            System.Diagnostics.Process.Start("https://www.twitch.tv/lane_m");
 
         }
 
