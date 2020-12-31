@@ -82,7 +82,7 @@ namespace kotor_Randomizer_2
                     {
                         foreach (GFF.STRUCT S in (g.Top_Level.Fields.Where(x => x.Label == "ReplyList").FirstOrDefault() as GFF.LIST).Structs)
                         {
-                            if ((S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString).StringRef != -1) //Avoid averwriting dialogue end indicators, and animation nodes
+                            if ((S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString).StringRef != -1) //Avoid overwriting dialogue end indicators, and animation nodes
                             {
                                 int str_ref = Randomize.Rng.Next(49264);
                                 (S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString).StringRef = str_ref;
@@ -99,24 +99,38 @@ namespace kotor_Randomizer_2
         }
 
         //Randomize TLK
-        static void shuffle_TLK(KPaths paths, bool LengthMatching, int Length_Margin = 5)
+        static void shuffle_TLK(KPaths paths, bool LengthMatching)
         {
             TLK t = new TLK(paths.dialog);
 
             if (LengthMatching)
             {
+                TLK t_ordered = new TLK(paths.dialog);
+
+                t_ordered.String_Data_Table = t_ordered.String_Data_Table.OrderBy(x => x.StringText.Length).ToList();
+
                 for (int i = 0; i < t.String_Data_Table.Count; i++)
-                {
-                    int margin = Length_Margin;
-
-                    List<TLK.String_Data> marginalized_strings = t.String_Data_Table.Where(x => Math.Abs(x.StringText.Length - t.String_Data_Table[i].StringText.Length) < margin).ToList();
-                    while (marginalized_strings.Count < 2)
+                {   try
                     {
-                        margin++;
-                        marginalized_strings = t.String_Data_Table.Where(x => Math.Abs(x.StringText.Length - t.String_Data_Table[i].StringText.Length) < margin).ToList();
+                        int index_offset = 0;
+                        while (index_offset == 0)
+                        {
+                            index_offset = Randomize.Rng.Next(-5, 5);
+                        } 
+                        t.String_Data_Table[i] = t_ordered.String_Data_Table[t_ordered.String_Data_Table.FindIndex(x => x.StringText == t.String_Data_Table[i].StringText) + index_offset]; //Could get faster execution time by matching the strings by lenght instead of text, but then there would be bias towards strings earlier in each lenght bracket
                     }
-
-                    t.String_Data_Table[i] = marginalized_strings[Randomize.Rng.Next(marginalized_strings.Count)];
+                    catch (Exception ex)
+                    {
+                        if (ex is IndexOutOfRangeException || ex is ArgumentOutOfRangeException)
+                        {
+                            continue; //ignoring extreme cases
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    
                 }
             }
             else
