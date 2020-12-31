@@ -26,7 +26,7 @@ Active Cats  : 8 bytes : Boolean Category Flags
 	2das : 4 chars : "TWDA"
 		Selected 2DAs : Dictionary of String List : The keys are \r terminated, Each string is null terminated, each list is \n terminated, the whole group is \x3 terminated
 	Text : 4 chars : "TEXT"
-		//TBD
+		Text Settings : a single 32 bit integer Representing the TextSettings Flags
 	Other : 4 chars : "OTHR"
 		Name Gen Bool : 1 byte : Boolean for if Name Gen is active (Following only exist if true)
 			Male Firstnames : string list : list of supplied Male First names

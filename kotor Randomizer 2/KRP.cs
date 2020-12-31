@@ -9,7 +9,7 @@ namespace kotor_Randomizer_2
 {
     public static class KRP
     {
-        private const string VERSION = "KRP V2.0";
+        private const string VERSION = "KRP V2.1";
         //private static int CategoryCount = 8;
 
         #region public methods
@@ -17,7 +17,10 @@ namespace kotor_Randomizer_2
         {
             using (BinaryReader br = new BinaryReader(s))
             {
-                if (new string(br.ReadChars(VERSION.Length)) == VERSION)    // Version Check
+                string versionText = new string(br.ReadChars(VERSION.Length));
+
+
+                if (versionText == VERSION)    // Version Check
                 {
                     // Category Booleans
                     Properties.Settings.Default.DoRandomization_Module = br.ReadBoolean();
@@ -83,6 +86,8 @@ namespace kotor_Randomizer_2
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockGalaxyMap; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.FixCoordinates; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.FixMindPrison; }
+                        if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockVarDoors; }
+                        if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.FixLevElevators; }
 
                         Properties.Settings.Default.LastPresetComboIndex = -2;
                         Properties.Settings.Default.ModulePresetSelected = false;
@@ -226,7 +231,8 @@ namespace kotor_Randomizer_2
                         // Check that Text data is present
                         if (new string(br.ReadChars(4)) != "TEXT") { throw new IOException("Text Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
 
-                        // TBD
+                        // Text Settings
+                        Properties.Settings.Default.TextSettingsValue = (TextSettings)br.ReadInt32();
                     }
                     #endregion
                     #region Other
@@ -328,6 +334,9 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap));  // Unlocked Galaxy Map
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates));   // Fixed Module Coordinates
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison));    // Fixed Rakatan Riddles
+                    bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors));   // Unlock Problem Doors
+                    bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators));  // Fixed Leviathan Elevators
+
                 }
                 // Items
                 if (Properties.Settings.Default.DoRandomization_Item)
@@ -431,7 +440,9 @@ namespace kotor_Randomizer_2
                 if (Properties.Settings.Default.DoRandomization_Text)
                 {
                     bw.Write("TEXT".ToCharArray());
-                    // TBD
+
+                    // Text Settings
+                    bw.Write((int)Properties.Settings.Default.TextSettingsValue);
 
                 }
                 // Other
