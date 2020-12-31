@@ -41,6 +41,8 @@
             this.cbUnlockGalaxyMap = new System.Windows.Forms.CheckBox();
             this.cbFixCoordinates = new System.Windows.Forms.CheckBox();
             this.cbFixMindPrison = new System.Windows.Forms.CheckBox();
+            this.cbDoorFix = new System.Windows.Forms.CheckBox();
+            this.cbFixLevElevators = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // OmittedListBox
@@ -206,12 +208,38 @@
             this.cbFixMindPrison.UseVisualStyleBackColor = true;
             this.cbFixMindPrison.CheckedChanged += new System.EventHandler(this.cbFixMindPrison_CheckedChanged);
             // 
+            // cbDoorFix
+            // 
+            this.cbDoorFix.AutoSize = true;
+            this.cbDoorFix.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbDoorFix.Location = new System.Drawing.Point(180, 530);
+            this.cbDoorFix.Name = "cbDoorFix";
+            this.cbDoorFix.Size = new System.Drawing.Size(129, 17);
+            this.cbDoorFix.TabIndex = 29;
+            this.cbDoorFix.Text = "Unlock Various Doors";
+            this.cbDoorFix.UseVisualStyleBackColor = true;
+            this.cbDoorFix.CheckedChanged += new System.EventHandler(this.cbDoorFix_CheckedChanged);
+            // 
+            // cbFixLevElevators
+            // 
+            this.cbFixLevElevators.AutoSize = true;
+            this.cbFixLevElevators.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbFixLevElevators.Location = new System.Drawing.Point(340, 530);
+            this.cbFixLevElevators.Name = "cbFixLevElevators";
+            this.cbFixLevElevators.Size = new System.Drawing.Size(136, 17);
+            this.cbFixLevElevators.TabIndex = 30;
+            this.cbFixLevElevators.Text = "Fix Leviathan Elevators";
+            this.cbFixLevElevators.UseVisualStyleBackColor = true;
+            this.cbFixLevElevators.CheckedChanged += new System.EventHandler(this.cbFixLevElevators_CheckedChanged);
+            // 
             // ModuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.ClientSize = new System.Drawing.Size(541, 572);
+            this.Controls.Add(this.cbFixLevElevators);
+            this.Controls.Add(this.cbDoorFix);
             this.Controls.Add(this.cbFixMindPrison);
             this.Controls.Add(this.cbFixCoordinates);
             this.Controls.Add(this.cbUnlockGalaxyMap);
@@ -252,5 +280,7 @@
         private System.Windows.Forms.CheckBox cbUnlockGalaxyMap;
         private System.Windows.Forms.CheckBox cbFixCoordinates;
         private System.Windows.Forms.CheckBox cbFixMindPrison;
+        private System.Windows.Forms.CheckBox cbDoorFix;
+        private System.Windows.Forms.CheckBox cbFixLevElevators;
     }
 }

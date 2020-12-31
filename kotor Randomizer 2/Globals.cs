@@ -48,21 +48,25 @@ namespace kotor_Randomizer_2
     public enum ModuleExtras
     {
         /// <summary> (Default Behavior) Delete milestone save data. </summary>
-        Default         = 0x00, // 0b00000000
+        Default         = 0x000, // 0b000000000
         /// <summary> Do not delete milestone save data. </summary>
-        NoSaveDelete    = 0x01, // 0b00000001
+        NoSaveDelete    = 0x001, // 0b000000001
         /// <summary> Include minigame data in the save file. </summary>
-        SaveMiniGames   = 0x02, // 0b00000010
+        SaveMiniGames   = 0x002, // 0b000000010
         /// <summary> Include all module data in the save file. </summary>
-        SaveAllModules  = 0x04, // 0b00000100
+        SaveAllModules  = 0x004, // 0b000000100
         /// <summary> Fix dream cutscenes. </summary>
-        FixDream        = 0x08, // 0b00001000
+        FixDream        = 0x008, // 0b000001000
         /// <summary> Unlock all destinations on the galaxy map. </summary>
-        UnlockGalaxyMap = 0x10, // 0b00010000
+        UnlockGalaxyMap = 0x010, // 0b000010000
         /// <summary> Fix warp spawn coordinates in certain modules. </summary>
-        FixCoordinates  = 0x20, // 0b00100000
+        FixCoordinates  = 0x020, // 0b000100000
         /// <summary> Fix Rakatan mind prison to prevent soft-locks. </summary>
-        FixMindPrison   = 0x40, // 0b01000000
+        FixMindPrison   = 0x040, // 0b001000000
+        /// <summary> Unlock ancient doors to Dantooine ruins, and on the Lehon Temple roof. </summary>
+        UnlockVarDoors  = 0x080, // 0b010000000
+        /// <summary> Allows Leviathan elevators to go to any of the other decks without prerequisites </summary>
+        FixLevElevators = 0x100, // 0b100000000
     }
 
     [Flags]

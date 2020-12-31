@@ -11,8 +11,12 @@ namespace kotor_Randomizer_2
     {
         private const string AREA_MYSTERY_BOX = "ebo_m46ab";
         private const string AREA_EBON_HAWK = "ebo_m12aa";
+        private const string AREA_DANTOOINE_COURTYARD = "danm14aa";
+        private const string AREA_TEMPLE_ROOF = "unk_m44ac";
         private const string LABEL_MIND_PRISON = "g_brakatan003";
         private const string LABEL_MYSTERY_BOX = "pebn_mystery";
+        private const string LABEL_DANTOOINE_DOOR = "man14aa_door04";
+        private const string LABEL_LEHON_DOOR = "unk44_tpllckdoor";
         private const string TwoDA_MODULE_SAVE = "modulesave.2da";
         private const string FIXED_DREAM_OVERRIDE = "k_ren_visionland.ncs";
         private const string UNLOCK_MAP_OVERRIDE = "k_pebn_galaxy.ncs";
@@ -219,6 +223,47 @@ namespace kotor_Randomizer_2
                     }
                 }
             }
+
+            //Unlock doors to dantooine ruins and on Lehon Temple Roof
+            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors))
+            {
+                //Dantooine Ruins
+                var dan_files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_DANTOOINE_COURTYARD]));
+                foreach (FileInfo fi in dan_files)
+                {
+                    // Skip any files that don't end in "s.rim".
+                    if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
+
+                    RIM r_dan = new RIM(fi.FullName); //Open what replaced danm14aa_s.rim
+                    GFF g_dan = new GFF(r_dan.File_Table.Where(x => x.Label == LABEL_DANTOOINE_DOOR).FirstOrDefault().File_Data); //Grab the door out of there
+
+                    //Set the "Locked" field to 0 (false)
+                    (g_dan.Top_Level.Fields.Where(x => x.Label == "Locked").FirstOrDefault() as GFF.BYTE).value = 0;
+
+                    r_dan.File_Table.Where(x => x.Label == LABEL_DANTOOINE_DOOR).FirstOrDefault().File_Data = g_dan.ToRawData();
+
+                    r_dan.WriteToFile(fi.FullName);
+                }
+
+                //Lehon Temple Roof
+                var unk_files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_TEMPLE_ROOF]));
+                foreach (FileInfo fi in unk_files)
+                {
+                    // Skip any files that don't end in "s.rim".
+                    if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
+
+                    RIM r_unk = new RIM(fi.FullName); //Open what replaced unk_m44aa_s.rim
+                    GFF g_unk = new GFF(r_unk.File_Table.Where(x => x.Label == LABEL_LEHON_DOOR).FirstOrDefault().File_Data); //Grab the door out of there
+
+                    //Set the "Locked" field to 0 (false)
+                    (g_unk.Top_Level.Fields.Where(x => x.Label == "Locked").FirstOrDefault() as GFF.BYTE).value = 0;
+
+                    r_unk.File_Table.Where(x => x.Label == LABEL_LEHON_DOOR).FirstOrDefault().File_Data = g_unk.ToRawData();
+
+                    r_unk.WriteToFile(fi.FullName);
+                }
+            }
+
         }
     }
 }

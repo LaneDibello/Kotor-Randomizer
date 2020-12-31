@@ -47,6 +47,9 @@ namespace kotor_Randomizer_2
             cbFixCoordinates.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates);
             cbFixMindPrison.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
 
+            cbDoorFix.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors);
+            cbFixLevElevators.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators);
+
             PresetComboBox.DataSource = Globals.OMIT_PRESETS.Keys.ToList();
             Constructed = true;
 
@@ -250,6 +253,18 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.FixMindPrison;
         }
 
+        private void cbDoorFix_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockVarDoors;
+        }
+
+        private void cbFixLevElevators_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.FixLevElevators;
+        }
+
         private void ModuleForm_Activated(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.LastPresetComboIndex == -2)
@@ -272,6 +287,9 @@ namespace kotor_Randomizer_2
             }
         }
 
+
         #endregion
+
+       
     }
 }
