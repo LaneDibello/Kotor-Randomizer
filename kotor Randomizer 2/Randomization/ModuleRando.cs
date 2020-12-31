@@ -140,12 +140,21 @@ namespace kotor_Randomizer_2
                     // Set up objects.
                     RIM r = new RIM(kvp.Value.FullName);
                     RIM.rFile rf = r.File_Table.Where(x => x.TypeID == (int)ResourceType.IFO).FirstOrDefault();
-                    GFF_old g = new GFF_old(rf.File_Data);
 
-                    // Update coordinate data.
-                    g.Field_Array.Where(x => x.Label == Properties.Resources.ModuleEntryX).FirstOrDefault().DataOrDataOffset = Globals.FIXED_COORDINATES[kvp.Key].Item1;
-                    g.Field_Array.Where(x => x.Label == Properties.Resources.ModuleEntryY).FirstOrDefault().DataOrDataOffset = Globals.FIXED_COORDINATES[kvp.Key].Item2;
-                    g.Field_Array.Where(x => x.Label == Properties.Resources.ModuleEntryZ).FirstOrDefault().DataOrDataOffset = Globals.FIXED_COORDINATES[kvp.Key].Item3;
+                    GFF g = new GFF(rf.File_Data);
+
+                    //Update coordinate data.
+                    (g.Top_Level.Fields.Where(x => x.Label == Properties.Resources.ModuleEntryX).FirstOrDefault() as GFF.FLOAT).value = Globals.FIXED_COORDINATES[kvp.Key].Item1;
+                    (g.Top_Level.Fields.Where(x => x.Label == Properties.Resources.ModuleEntryY).FirstOrDefault() as GFF.FLOAT).value = Globals.FIXED_COORDINATES[kvp.Key].Item2;
+                    (g.Top_Level.Fields.Where(x => x.Label == Properties.Resources.ModuleEntryZ).FirstOrDefault() as GFF.FLOAT).value = Globals.FIXED_COORDINATES[kvp.Key].Item3;
+
+                    //OLD IMPLEMENTATION:
+                    //GFF_old g = new GFF_old(rf.File_Data);
+
+                    //// Update coordinate data.
+                    //g.Field_Array.Where(x => x.Label == Properties.Resources.ModuleEntryX).FirstOrDefault().DataOrDataOffset = Globals.FIXED_COORDINATES[kvp.Key].Item1;
+                    //g.Field_Array.Where(x => x.Label == Properties.Resources.ModuleEntryY).FirstOrDefault().DataOrDataOffset = Globals.FIXED_COORDINATES[kvp.Key].Item2;
+                    //g.Field_Array.Where(x => x.Label == Properties.Resources.ModuleEntryZ).FirstOrDefault().DataOrDataOffset = Globals.FIXED_COORDINATES[kvp.Key].Item3;
 
                     // Write updated data to RIM file.
                     rf.File_Data = g.ToRawData();

@@ -97,36 +97,36 @@ namespace kotor_Randomizer_2
         /// <summary>
         /// New coordinates for bad randomizer spawn locations.
         /// </summary>
-        public static readonly Dictionary<string, Tuple<int, int, int>> FIXED_COORDINATES = new Dictionary<string, Tuple<int, int, int>>()
+        public static readonly Dictionary<string, Tuple<float, float, float>> FIXED_COORDINATES = new Dictionary<string, Tuple<float, float, float>>()
         {
-            { AREA_UNDERCITY, new Tuple<int, int, int>(
-                BitConverter.ToInt32(BitConverter.GetBytes(183.5f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(167.4f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(1.5f), 0)) },
-            { AREA_TOMB_TULAK, new Tuple<int, int, int>(
-                BitConverter.ToInt32(BitConverter.GetBytes(15.8f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(55.6f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(0.75f), 0)) },
-            { AREA_LEVI_HANGAR, new Tuple<int, int, int>(
-                BitConverter.ToInt32(BitConverter.GetBytes(12.5f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(155.2f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(3.0f), 0)) },
-            { AREA_AHTO_WEST, new Tuple<int, int, int>(
-                BitConverter.ToInt32(BitConverter.GetBytes(5.7f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(-10.7f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(59.2f), 0)) },
-            { AREA_MANAAN_SITH, new Tuple<int, int, int>(
-                BitConverter.ToInt32(BitConverter.GetBytes(112.8f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(2.4f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(0f), 0)) },
-            { AREA_RAKA_SETTLE, new Tuple<int, int, int>(
-                BitConverter.ToInt32(BitConverter.GetBytes(202.2f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(31.5f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(40.7f), 0)) },
-            { AREA_TEMPLE_MAIN, new Tuple<int, int, int>(
-                BitConverter.ToInt32(BitConverter.GetBytes(95.3f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(42.0f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(0.44f), 0)) },
+            { AREA_UNDERCITY, new Tuple<float, float, float>(
+                (183.5f),
+                (167.4f),
+                (1.5f)) },
+            { AREA_TOMB_TULAK, new Tuple<float, float, float>(
+                (15.8f),
+                (55.6f),
+                (0.75f)) },
+            { AREA_LEVI_HANGAR, new Tuple<float, float, float>(
+                (12.5f),
+                (155.2f),
+                (3.0f)) },
+            { AREA_AHTO_WEST, new Tuple<float, float, float>(
+                (5.7f),
+                (-10.7f),
+                (59.2f)) },
+            { AREA_MANAAN_SITH, new Tuple<float, float, float>(
+                (112.8f),
+                (2.4f),
+                (0f)) },
+            { AREA_RAKA_SETTLE, new Tuple<float, float, float>(
+                (202.2f),
+                (31.5f),
+                (40.7f)) },
+            { AREA_TEMPLE_MAIN, new Tuple<float, float, float>(
+                (95.3f),
+                (42.0f),
+                (0.44f)) },
         };
 
         /// <summary>
