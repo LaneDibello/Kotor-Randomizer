@@ -13,10 +13,16 @@ namespace kotor_Randomizer_2
         private const string AREA_EBON_HAWK = "ebo_m12aa";
         private const string AREA_DANTOOINE_COURTYARD = "danm14aa";
         private const string AREA_TEMPLE_ROOF = "unk_m44ac";
+        private const string AREA_LEVI_PRISON = "lev_m40aa";
+        private const string AREA_LEVI_COMMAND = "lev_m40ab";
+        private const string AREA_LEVI_HANGER = "lev_m40ac";
         private const string LABEL_MIND_PRISON = "g_brakatan003";
         private const string LABEL_MYSTERY_BOX = "pebn_mystery";
         private const string LABEL_DANTOOINE_DOOR = "man14aa_door04";
         private const string LABEL_LEHON_DOOR = "unk44_tpllckdoor";
+        private const string LABEL_LEVI_ELEVATOR_A = "plev_elev_dlg";
+        private const string LABEL_LEVI_ELEVATOR_B = "plev_elev_dlg";
+        private const string LABEL_LEVI_ELEVATOR_C = "lev40_accntl_dlg";
         private const string TwoDA_MODULE_SAVE = "modulesave.2da";
         private const string FIXED_DREAM_OVERRIDE = "k_ren_visionland.ncs";
         private const string UNLOCK_MAP_OVERRIDE = "k_pebn_galaxy.ncs";
@@ -264,6 +270,79 @@ namespace kotor_Randomizer_2
                 }
             }
 
+            //Leviathan Elevators
+            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators))
+            {
+                var lev_files_a = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_LEVI_PRISON]));
+                var lev_files_b = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_LEVI_COMMAND]));
+                var lev_files_c = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_LEVI_HANGER]));
+
+                //Prison Block Fix
+                foreach (FileInfo fi in lev_files_a)
+                {
+                    // Skip any files that don't end in "s.rim".
+                    if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
+
+                    RIM r_lev = new RIM(fi.FullName);
+                    GFF g_lev = new GFF(r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_A).FirstOrDefault().File_Data);
+
+                    //Change Entry connecting for bridge option Index to 3, which will transition to the command deck
+                    (((g_lev.Top_Level.Fields.Where(x => x.Label == "ReplyList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 3).FirstOrDefault().Fields.Where(x => x.Label == "EntriesList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 0).FirstOrDefault().Fields.Where(x => x.Label == "Index").FirstOrDefault() as GFF.DWORD).value = 3;
+                    //Sets the active reference for the hanger option to nothing, meaning there is no requirement to transition to the hanger
+                    (((g_lev.Top_Level.Fields.Where(x => x.Label == "ReplyList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 1).FirstOrDefault().Fields.Where(x => x.Label == "EntriesList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 0).FirstOrDefault().Fields.Where(x => x.Label == "Active").FirstOrDefault() as GFF.ResRef).Reference = "";
+
+                    r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_A).FirstOrDefault().File_Data = g_lev.ToRawData();
+
+                    r_lev.WriteToFile(fi.FullName);
+                }
+
+                //Commadn Deck Fix
+                foreach (FileInfo fi in lev_files_b)
+                {
+                    // Skip any files that don't end in "s.rim".
+                    if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
+
+                    RIM r_lev = new RIM(fi.FullName);
+                    GFF g_lev = new GFF(r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_B).FirstOrDefault().File_Data);
+
+                    //Sets the active reference for the hanger option to nothing, meaning there is no requirement to transition to the hanger
+                    (((g_lev.Top_Level.Fields.Where(x => x.Label == "ReplyList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 1).FirstOrDefault().Fields.Where(x => x.Label == "EntriesList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 1).FirstOrDefault().Fields.Where(x => x.Label == "Active").FirstOrDefault() as GFF.ResRef).Reference = "";
+
+                    r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_B).FirstOrDefault().File_Data = g_lev.ToRawData();
+
+                    r_lev.WriteToFile(fi.FullName);
+                }
+
+                //Hanger Fix
+                foreach (FileInfo fi in lev_files_c)
+                {
+                    // Skip any files that don't end in "s.rim".
+                    if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
+
+                    RIM r_lev = new RIM(fi.FullName);
+                    r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_C);
+
+                    //While I possess the ability to edit this file programmatically, due to the complexity I have opted to just load the modded file into resources.
+                    r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_C).FirstOrDefault().File_Data = Properties.Resources.lev40_accntl_dlg;
+                    //Adding module transition scripts to RIM
+                    //Prison Block
+                    RIM.rFile to40aa = new RIM.rFile();
+                    to40aa.TypeID = Reference_Tables.TypeCodes["NCS "];
+                    to40aa.Label = "k_plev_goto40aa";
+                    to40aa.File_Data = Properties.Resources.k_plev_goto40aa;
+                    //Command Deck
+                    RIM.rFile to40ab = new RIM.rFile();
+                    to40ab.TypeID = Reference_Tables.TypeCodes["NCS "];
+                    to40ab.Label = "k_plev_goto40ab";
+                    to40ab.File_Data = Properties.Resources.k_plev_goto40ab;
+                    //adding scripts
+                    r_lev.File_Table.Add(to40aa);
+                    r_lev.File_Table.Add(to40ab);
+
+                    r_lev.WriteToFile(fi.FullName);
+
+                }
+            }
         }
     }
 }

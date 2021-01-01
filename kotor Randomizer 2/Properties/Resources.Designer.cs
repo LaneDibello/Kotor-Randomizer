@@ -182,6 +182,26 @@ namespace kotor_Randomizer_2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] k_plev_goto40aa {
+            get {
+                object obj = ResourceManager.GetObject("k_plev_goto40aa", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] k_plev_goto40ab {
+            get {
+                object obj = ResourceManager.GetObject("k_plev_goto40ab", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] k_ren_visionland {
             get {
                 object obj = ResourceManager.GetObject("k_ren_visionland", resourceCulture);
@@ -196,6 +216,16 @@ namespace kotor_Randomizer_2.Properties {
             get {
                 object obj = ResourceManager.GetObject("Krandom", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] lev40_accntl_dlg {
+            get {
+                object obj = ResourceManager.GetObject("lev40_accntl_dlg", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -556,9 +586,9 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text Rando is Not Currently Ready. This is primarily due to my own stuborness/laziness, and desire to deliver something more than just a simple shuffling of the Text in this game, though at the rate I&apos;ve made progress with it, I might just settle and deliver that instead.
-        ///	
-        ///.
+        ///   Looks up a localized string similar to Text randomization can randomize some or most of the text appearing in the game. In its current state it has two main settings: Dialogue randomization and Additional Text Randomization. Dialogue randomization allows you to shuffle the entries (words spoken by NPCs), replies (options given to the MC), and match the entry sounds to the shuffled entries (So the new dialogue matches its text). 
+        ///
+        ///This process is not yet foolproof. The “TalkTable” file being used for these randomizations doesn&apos;t always accurate [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TextHelp {
             get {
