@@ -314,6 +314,16 @@ namespace kotor_Randomizer_2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] m10aa {
+            get {
+                object obj = ResourceManager.GetObject("m10aa", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] MGINCLUDED_modulesave {
             get {
                 object obj = ResourceManager.GetObject("MGINCLUDED_modulesave", resourceCulture);

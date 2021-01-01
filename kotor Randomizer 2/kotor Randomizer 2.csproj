@@ -255,6 +255,7 @@
     <None Include="Resources\k_plev_goto40ab.ncs" />
     <None Include="Resources\k_ren_visionland.ncs" />
     <None Include="Resources\lev40_accntl_dlg.dlg" />
+    <None Include="Resources\m10aa.git" />
     <None Include="Resources\MGINCLUDED_modulesave.2da" />
     <None Include="Resources\NODELETE_ALLINCLUDED_modulesave.2da" />
     <None Include="Resources\NODELETE_MGINCLUDED_modulesave.2da" />
