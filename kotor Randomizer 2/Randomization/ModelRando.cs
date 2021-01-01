@@ -48,6 +48,8 @@ namespace kotor_Randomizer_2
                     {
                         GFF_old g = new GFF_old(rf.File_Data);
 
+                        if (Globals.BROKEN_PLACE.Contains((int)g.Field_Array.Where(k => k.Label == "Appearance").FirstOrDefault().Field_Data)) { continue; }
+
                         int temp = Randomize.Rng.Next(0, 231);
 
                         bool broken_satisfied = !((Properties.Settings.Default.RandomizePlaceModels & 4) > 0) || !Globals.BROKEN_PLACE.Contains(temp);//Always Satisfied if Broken omission disbaled
