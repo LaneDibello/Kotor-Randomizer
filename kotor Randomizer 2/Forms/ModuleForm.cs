@@ -49,6 +49,7 @@ namespace kotor_Randomizer_2
 
             cbDoorFix.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors);
             cbFixLevElevators.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators);
+            cbVulkSpiceLZ.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
 
             PresetComboBox.DataSource = Globals.OMIT_PRESETS.Keys.ToList();
             Constructed = true;
@@ -265,6 +266,12 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.FixLevElevators;
         }
 
+        private void cbVulkSpiceLZ_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.VulkarSpiceLZ;
+        }
+
         private void ModuleForm_Activated(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.LastPresetComboIndex == -2)
@@ -288,8 +295,8 @@ namespace kotor_Randomizer_2
         }
 
 
+
         #endregion
 
-       
     }
 }

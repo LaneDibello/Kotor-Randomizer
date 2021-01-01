@@ -43,6 +43,7 @@
             this.cbFixMindPrison = new System.Windows.Forms.CheckBox();
             this.cbDoorFix = new System.Windows.Forms.CheckBox();
             this.cbFixLevElevators = new System.Windows.Forms.CheckBox();
+            this.cbVulkSpiceLZ = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // OmittedListBox
@@ -232,12 +233,25 @@
             this.cbFixLevElevators.UseVisualStyleBackColor = true;
             this.cbFixLevElevators.CheckedChanged += new System.EventHandler(this.cbFixLevElevators_CheckedChanged);
             // 
+            // cbVulkSpiceLZ
+            // 
+            this.cbVulkSpiceLZ.AutoSize = true;
+            this.cbVulkSpiceLZ.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbVulkSpiceLZ.Location = new System.Drawing.Point(20, 550);
+            this.cbVulkSpiceLZ.Name = "cbVulkSpiceLZ";
+            this.cbVulkSpiceLZ.Size = new System.Drawing.Size(151, 17);
+            this.cbVulkSpiceLZ.TabIndex = 31;
+            this.cbVulkSpiceLZ.Text = "Add Spice Lab Load Zone";
+            this.cbVulkSpiceLZ.UseVisualStyleBackColor = true;
+            this.cbVulkSpiceLZ.CheckedChanged += new System.EventHandler(this.cbVulkSpiceLZ_CheckedChanged);
+            // 
             // ModuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(541, 572);
+            this.ClientSize = new System.Drawing.Size(541, 583);
+            this.Controls.Add(this.cbVulkSpiceLZ);
             this.Controls.Add(this.cbFixLevElevators);
             this.Controls.Add(this.cbDoorFix);
             this.Controls.Add(this.cbFixMindPrison);
@@ -282,5 +296,6 @@
         private System.Windows.Forms.CheckBox cbFixMindPrison;
         private System.Windows.Forms.CheckBox cbDoorFix;
         private System.Windows.Forms.CheckBox cbFixLevElevators;
+        private System.Windows.Forms.CheckBox cbVulkSpiceLZ;
     }
 }
