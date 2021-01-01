@@ -151,7 +151,7 @@ namespace kotor_Randomizer_2
         /// <summary>
         /// Broken Placeable Models
         /// </summary>
-        public static readonly List<int> BROKEN_PLACE = new List<int>() { 0, 8, 9, 47, 62, 78, 84, 90, 94, 97, 115, 158, 159 };
+        public static readonly List<int> BROKEN_PLACE = new List<int>() { 0, 8, 9, 47, 54, 62, 78, 84, 90, 94, 97, 115, 158, 167, 159, 219 };
 
         /// <summary>
         /// Extra Files found in the 'lips' directory
