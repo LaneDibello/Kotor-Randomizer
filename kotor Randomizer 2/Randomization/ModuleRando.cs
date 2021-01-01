@@ -16,6 +16,7 @@ namespace kotor_Randomizer_2
         private const string AREA_LEVI_PRISON = "lev_m40aa";
         private const string AREA_LEVI_COMMAND = "lev_m40ab";
         private const string AREA_LEVI_HANGER = "lev_m40ac";
+        private const string AREA_VULKAR_BASE = "tar_m10aa";
         private const string LABEL_MIND_PRISON = "g_brakatan003";
         private const string LABEL_MYSTERY_BOX = "pebn_mystery";
         private const string LABEL_DANTOOINE_DOOR = "man14aa_door04";
@@ -23,6 +24,7 @@ namespace kotor_Randomizer_2
         private const string LABEL_LEVI_ELEVATOR_A = "plev_elev_dlg";
         private const string LABEL_LEVI_ELEVATOR_B = "plev_elev_dlg";
         private const string LABEL_LEVI_ELEVATOR_C = "lev40_accntl_dlg";
+        private const string LABEL_VULK_GIT = "m10aa";
         private const string TwoDA_MODULE_SAVE = "modulesave.2da";
         private const string FIXED_DREAM_OVERRIDE = "k_ren_visionland.ncs";
         private const string UNLOCK_MAP_OVERRIDE = "k_pebn_galaxy.ncs";
@@ -320,7 +322,6 @@ namespace kotor_Randomizer_2
                     if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
 
                     RIM r_lev = new RIM(fi.FullName);
-                    r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_C);
 
                     //While I possess the ability to edit this file programmatically, due to the complexity I have opted to just load the modded file into resources.
                     r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_C).FirstOrDefault().File_Data = Properties.Resources.lev40_accntl_dlg;
@@ -341,6 +342,22 @@ namespace kotor_Randomizer_2
 
                     r_lev.WriteToFile(fi.FullName);
 
+                }
+            }
+
+            //Vulkar Spice Lab Transition
+            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ))
+            {
+                var vulk_files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_VULKAR_BASE]));
+                foreach (FileInfo fi in vulk_files)
+                {
+                    // Skip any files that end in "s.rim".
+                    if (fi.Name[fi.Name.Length - 5] == 's') { continue; }
+
+                    RIM r_vul = new RIM(fi.FullName);
+                    r_vul.File_Table.Where(x => x.Label == LABEL_VULK_GIT && x.TypeID == Reference_Tables.TypeCodes["GIT "]).FirstOrDefault().File_Data = Properties.Resources.m10aa;
+
+                    r_vul.WriteToFile(fi.FullName);
                 }
             }
         }
