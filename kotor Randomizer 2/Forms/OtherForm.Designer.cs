@@ -34,6 +34,7 @@
             this.cbPolymorph = new System.Windows.Forms.CheckBox();
             this.cbNameGen = new System.Windows.Forms.CheckBox();
             this.cbPazaak = new System.Windows.Forms.CheckBox();
+            this.cbPartyRando = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -113,12 +114,26 @@
             this.cbPazaak.UseVisualStyleBackColor = true;
             this.cbPazaak.CheckedChanged += new System.EventHandler(this.cbPazaak_CheckedChanged);
             // 
+            // cbPartyRando
+            // 
+            this.cbPartyRando.CheckAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.cbPartyRando.Location = new System.Drawing.Point(180, 270);
+            this.cbPartyRando.Name = "cbPartyRando";
+            this.cbPartyRando.Size = new System.Drawing.Size(120, 110);
+            this.cbPartyRando.TabIndex = 54;
+            this.cbPartyRando.Text = "Randomize Party Members - This entirely morphs each party member into a different" +
+    " creature, wth different stats and equipment.\r\n";
+            this.cbPartyRando.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.cbPartyRando.UseVisualStyleBackColor = true;
+            this.cbPartyRando.CheckedChanged += new System.EventHandler(this.cbPartyRando_CheckedChanged);
+            // 
             // OtherForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.ClientSize = new System.Drawing.Size(365, 401);
+            this.Controls.Add(this.cbPartyRando);
             this.Controls.Add(this.cbPazaak);
             this.Controls.Add(this.cbNameGen);
             this.Controls.Add(this.cbPolymorph);
@@ -145,5 +160,6 @@
         private System.Windows.Forms.CheckBox cbPolymorph;
         private System.Windows.Forms.CheckBox cbNameGen;
         private System.Windows.Forms.CheckBox cbPazaak;
+        private System.Windows.Forms.CheckBox cbPartyRando;
     }
 }
