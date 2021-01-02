@@ -818,5 +818,17 @@ namespace kotor_Randomizer_2.Properties {
                 this["TextSettingsValue"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RandomizePartyMembers {
+            get {
+                return ((bool)(this["RandomizePartyMembers"]));
+            }
+            set {
+                this["RandomizePartyMembers"] = value;
+            }
+        }
     }
 }

@@ -204,5 +204,8 @@
     <Setting Name="TextSettingsValue" Type="kotor_Randomizer_2.TextSettings" Scope="User">
       <Value Profile="(Default)">Default</Value>
     </Setting>
+    <Setting Name="RandomizePartyMembers" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
