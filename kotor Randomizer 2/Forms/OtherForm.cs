@@ -125,11 +125,11 @@ namespace kotor_Randomizer_2
             }
         }
 
-        #endregion
-
         private void cbPazaak_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.RandomizePazaakDecks = cbPazaak.Checked;
         }
+
+        #endregion
     }
 }
