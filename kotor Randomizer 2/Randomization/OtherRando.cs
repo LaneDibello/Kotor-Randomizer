@@ -40,13 +40,58 @@ namespace kotor_Randomizer_2
             }
 
             // Polymorph
+            if (Properties.Settings.Default.PolymorphMode)
+            {
+                BIF b = new BIF(paths.data + "templates.bif");
+                KEY k = new KEY(paths.chitin);
+                b.AttachKey(k, "data\\templates.bif");
+
+                
+
+                foreach (var res in b.VariableResourceTable.Where(x => x.ResourceType == ResourceType.UTI))
+                {
+                    GFF g = new GFF(res.EntryData);
+                    int item_basetype = (g.Top_Level.Fields.Where(x => x.Label == "BaseItem").FirstOrDefault() as GFF.INT).value;
+                    //ignore items that can't be equipped in the chest slot
+                    if ((item_basetype < 35 || item_basetype > 43) && (item_basetype < 66 || item_basetype > 68) && item_basetype != 85 && item_basetype != 89)
+                    {
+                        continue;
+                    }
+
+                    ushort rando_appearance = 0;
+                    while (Globals.BROKEN_CHARS.Contains((int)rando_appearance) || Globals.LARGE_CHARS.Contains((int)rando_appearance))
+                    {
+                        rando_appearance = (ushort)Randomize.Rng.Next(508);
+                    }
+
+                    //STRUCT that gives an item the "disguise" property
+                    GFF.STRUCT disguise_prop = new GFF.STRUCT("", 0,
+                        new List<GFF.FIELD>()
+                        {
+                        new GFF.BYTE("ChanceAppear", 100),
+                        new GFF.BYTE("CostTable", 0),
+                        new GFF.WORD("CostValue", 0),
+                        new GFF.BYTE("Param1", 255),
+                        new GFF.BYTE("Param1Value", 0),
+                        new GFF.WORD("PropertyName", 59), //Disguise property
+                        new GFF.WORD("Subtype", rando_appearance), //The random appearance value (same values used in model rando)
+                        }
+                        );
+
+                    //Adds the disguise property to the UTI's property list
+                    (g.Top_Level.Fields.Where(x => x.Label == "PropertiesList").FirstOrDefault() as GFF.LIST).Structs.Add(disguise_prop);
+
+                    g.WriteToFile(paths.Override + res.ResRef + ".uti");
+                    
+                }
+            }
 
             // Random NPC Pazaak Decks
             if (Properties.Settings.Default.RandomizePazaakDecks)
             {
                 string ops = "+-*";
 
-                BIF b = new BIF(paths.data + "\\2da.bif");
+                BIF b = new BIF(paths.data + "2da.bif");
                 KEY k = new KEY(paths.chitin_backup);
                 b.AttachKey(k, "data\\2da.bif");
 
