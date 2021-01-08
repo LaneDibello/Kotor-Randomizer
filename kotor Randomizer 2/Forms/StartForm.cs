@@ -45,6 +45,27 @@ namespace kotor_Randomizer_2
             }
         }
 
+        private void LogCurrentSettings()
+        {
+            string path = Path.Combine(Environment.CurrentDirectory, "current.krp");
+            if (File.Exists(path)) { File.Delete(path); }
+            KRP.WriteKRP(File.OpenWrite(path));
+        }
+
+        private void CreateSpoilerLogs()
+        {
+            string spoilersPath = Path.Combine(Environment.CurrentDirectory, "Spoilers");
+            //if (Directory.Exists(spoilersPath)) { Directory.Delete(spoilersPath, true); }
+            Directory.CreateDirectory(spoilersPath);
+
+            var timestamp = DateTime.Now.ToString("yy-MM-dd_HH-mm-ss");
+            ItemRando.GenerateSpoilerLog(Path.Combine(spoilersPath, $"{timestamp}_items.csv"));
+            ModelRando.GenerateSpoilerLog(Path.Combine(spoilersPath, $"{timestamp}_models.csv"));
+            ModuleRando.GenerateSpoilerLog(Path.Combine(spoilersPath, $"{timestamp}_modules.csv"));
+
+            MessageBox.Show("Spoiler logs created.");
+        }
+
         #region  Events
 
         /// <summary>
@@ -225,6 +246,8 @@ namespace kotor_Randomizer_2
                 else
                 {
                     randomize_button.Text = "Unrandomize!";
+                    LogCurrentSettings();
+                    generateSpoilersToolStripMenuItem.Enabled = true;
                 }
 
                 new RandoForm().Show();
@@ -245,6 +268,16 @@ namespace kotor_Randomizer_2
             {
                 new HelpForm().Show();
             }
+        }
+
+        private void generateSpoilersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateSpoilerLogs();
+        }
+
+        private void openSpoilersFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Path.Combine(Environment.CurrentDirectory, "Spoilers"));
         }
         #endregion
     }
