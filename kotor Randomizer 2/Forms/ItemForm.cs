@@ -14,24 +14,24 @@ namespace kotor_Randomizer_2
             lbOmitItems.DataSource = Globals.OmitItems;
 
             //Set Intiial Values
-            RandomizeArmor = (RandomizationLevel)Properties.Settings.Default.RandomizeArmor;
-            RandomizeStims = (RandomizationLevel)Properties.Settings.Default.RandomizeStims;
-            RandomizeBelts = (RandomizationLevel)Properties.Settings.Default.RandomizeBelts;
-            RandomizeVarious = (RandomizationLevel)Properties.Settings.Default.RandomizeVarious;
-            RandomizeHides = (RandomizationLevel)Properties.Settings.Default.RandomizeHides;
             RandomizeArmbands = (RandomizationLevel)Properties.Settings.Default.RandomizeArmbands;
+            RandomizeArmor = (RandomizationLevel)Properties.Settings.Default.RandomizeArmor;
+            RandomizeBelts = (RandomizationLevel)Properties.Settings.Default.RandomizeBelts;
+            RandomizeBlasters = (RandomizationLevel)Properties.Settings.Default.RandomizeBlasters;
+            RandomizeHides = (RandomizationLevel)Properties.Settings.Default.RandomizeHides;
+            RandomizeCreature = (RandomizationLevel)Properties.Settings.Default.RandomizeCreature;
             RandomizeDroid = (RandomizationLevel)Properties.Settings.Default.RandomizeDroid;
             RandomizeGloves = (RandomizationLevel)Properties.Settings.Default.RandomizeGloves;
-            RandomizeImplants = (RandomizationLevel)Properties.Settings.Default.RandomizeImplants;
-            RandomizeMask = (RandomizationLevel)Properties.Settings.Default.RandomizeMask;
-            RandomizePaz = (RandomizationLevel)Properties.Settings.Default.RandomizePaz;
-            RandomizeMines = (RandomizationLevel)Properties.Settings.Default.RandomizeMines;
-            RandomizeUpgrade = (RandomizationLevel)Properties.Settings.Default.RandomizeUpgrade;
-            RandomizeBlasters = (RandomizationLevel)Properties.Settings.Default.RandomizeBlasters;
-            RandomizeCreature = (RandomizationLevel)Properties.Settings.Default.RandomizeCreature;
-            RandomizeLightsabers = (RandomizationLevel)Properties.Settings.Default.RandomizeLightsabers;
             RandomizeGrenades = (RandomizationLevel)Properties.Settings.Default.RandomizeGrenades;
+            RandomizeImplants = (RandomizationLevel)Properties.Settings.Default.RandomizeImplants;
+            RandomizeLightsabers = (RandomizationLevel)Properties.Settings.Default.RandomizeLightsabers;
+            RandomizeMask = (RandomizationLevel)Properties.Settings.Default.RandomizeMask;
             RandomizeMelee = (RandomizationLevel)Properties.Settings.Default.RandomizeMelee;
+            RandomizeMines = (RandomizationLevel)Properties.Settings.Default.RandomizeMines;
+            RandomizePaz = (RandomizationLevel)Properties.Settings.Default.RandomizePaz;
+            RandomizeStims = (RandomizationLevel)Properties.Settings.Default.RandomizeStims;
+            RandomizeUpgrade = (RandomizationLevel)Properties.Settings.Default.RandomizeUpgrade;
+            RandomizeVarious = (RandomizationLevel)Properties.Settings.Default.RandomizeVarious;
 
             // Create easy access lists.
             CheckBoxes.AddRange(new List<CheckBox>()

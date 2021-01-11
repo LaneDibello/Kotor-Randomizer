@@ -11,33 +11,39 @@ namespace kotor_Randomizer_2
 {
     public static class ItemRando
     {
+        /// <summary>
+        /// A lookup table used to know how the items are randomized.
+        /// </summary>
+        private static Dictionary<string, string> LookupTable { get; set; } = new Dictionary<string, string>();
+
         public static void item_rando(KPaths paths)
         {
             // Prepare lists for new randomization.
             Max_Rando.Clear();
             Type_Lists.Clear();
+            LookupTable.Clear();
 
             // Load KEY file.
             KEY k = new KEY(paths.chitin);
 
             // Handle categories
-            HandleCategory(k, ArmorRegs, Properties.Settings.Default.RandomizeArmor);
-            HandleCategory(k, StimsRegs, Properties.Settings.Default.RandomizeStims);
-            HandleCategory(k, BeltsRegs, Properties.Settings.Default.RandomizeBelts);
-            HandleCategory(k, HidesRegs, Properties.Settings.Default.RandomizeHides);
-            HandleCategory(k, DroidRegs, Properties.Settings.Default.RandomizeDroid);
             HandleCategory(k, ArmbandsRegs, Properties.Settings.Default.RandomizeArmbands);
-            HandleCategory(k, GlovesRegs, Properties.Settings.Default.RandomizeGloves);
-            HandleCategory(k, ImplantsRegs, Properties.Settings.Default.RandomizeImplants);
-            HandleCategory(k, MaskRegs, Properties.Settings.Default.RandomizeMask);
-            HandleCategory(k, PazRegs, Properties.Settings.Default.RandomizePaz);
-            HandleCategory(k, MinesRegs, Properties.Settings.Default.RandomizeMines);
-            HandleCategory(k, UpgradeRegs, Properties.Settings.Default.RandomizeUpgrade);
+            HandleCategory(k, ArmorRegs, Properties.Settings.Default.RandomizeArmor);
+            HandleCategory(k, BeltsRegs, Properties.Settings.Default.RandomizeBelts);
             HandleCategory(k, BlastersRegs, Properties.Settings.Default.RandomizeBlasters);
+            HandleCategory(k, HidesRegs, Properties.Settings.Default.RandomizeHides);
             HandleCategory(k, CreatureRegs, Properties.Settings.Default.RandomizeCreature);
-            HandleCategory(k, LightsabersRegs, Properties.Settings.Default.RandomizeLightsabers);
+            HandleCategory(k, DroidRegs, Properties.Settings.Default.RandomizeDroid);
+            HandleCategory(k, GlovesRegs, Properties.Settings.Default.RandomizeGloves);
             HandleCategory(k, GrenadesRegs, Properties.Settings.Default.RandomizeGrenades);
+            HandleCategory(k, ImplantsRegs, Properties.Settings.Default.RandomizeImplants);
+            HandleCategory(k, LightsabersRegs, Properties.Settings.Default.RandomizeLightsabers);
+            HandleCategory(k, MaskRegs, Properties.Settings.Default.RandomizeMask);
             HandleCategory(k, MeleeRegs, Properties.Settings.Default.RandomizeMelee);
+            HandleCategory(k, MinesRegs, Properties.Settings.Default.RandomizeMines);
+            HandleCategory(k, PazRegs, Properties.Settings.Default.RandomizePaz);
+            HandleCategory(k, StimsRegs, Properties.Settings.Default.RandomizeStims);
+            HandleCategory(k, UpgradeRegs, Properties.Settings.Default.RandomizeUpgrade);
 
             //handle Various
             switch ((RandomizationLevel)Properties.Settings.Default.RandomizeVarious)
@@ -60,6 +66,7 @@ namespace kotor_Randomizer_2
             int j = 0;
             foreach (KEY.KeyEntry ke in k.KeyTable.Where(x => Max_Rando_Iterator.Contains(x.ResRef)))
             {
+                LookupTable.Add(ke.ResRef, Max_Rando[j]);
                 ke.ResRef = Max_Rando[j];
                 j++;
             }
@@ -72,6 +79,7 @@ namespace kotor_Randomizer_2
                 j = 0;
                 foreach (KEY.KeyEntry ke in k.KeyTable.Where(x => li.Contains(x.ResRef)))
                 {
+                    LookupTable.Add(ke.ResRef, type_copy[j]);
                     ke.ResRef = type_copy[j];
                     j++;
                 }
@@ -136,6 +144,60 @@ namespace kotor_Randomizer_2
         private static List<string> Max_Rando = new List<string>();
 
         private static List<List<string>> Type_Lists = new List<List<string>>();
+
+        /// <summary>
+        /// Creates a CSV file containing a list of the changes made during randomization.
+        /// If the file already exists, this method will append the data.
+        /// If no randomization has been performed, no file will be created.
+        /// </summary>
+        /// <param name="path">Path to desired output file.</param>
+        public static void GenerateSpoilerLog(string path)
+        {
+            if (LookupTable.Count == 0) { return; }
+            var sortedLookup = LookupTable.OrderBy(kvp => kvp.Key);
+
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                //sw.WriteLine("Items,");
+                sw.WriteLine($"Seed,{Properties.Settings.Default.Seed}");
+                sw.WriteLine();
+
+                sw.WriteLine("Item Type,Rando Level");
+                sw.WriteLine($"Armbands,{(RandomizationLevel)Properties.Settings.Default.RandomizeArmbands}");
+                sw.WriteLine($"Armor,{(RandomizationLevel)Properties.Settings.Default.RandomizeArmor}");
+                sw.WriteLine($"Belts,{(RandomizationLevel)Properties.Settings.Default.RandomizeBelts}");
+                sw.WriteLine($"Blasters,{(RandomizationLevel)Properties.Settings.Default.RandomizeBlasters}");
+                sw.WriteLine($"Creature Hides,{(RandomizationLevel)Properties.Settings.Default.RandomizeHides}");
+                sw.WriteLine($"Creature Weapons,{(RandomizationLevel)Properties.Settings.Default.RandomizeCreature}");
+                sw.WriteLine($"Droid Equipment,{(RandomizationLevel)Properties.Settings.Default.RandomizeDroid}");
+                sw.WriteLine($"Gauntlets,{(RandomizationLevel)Properties.Settings.Default.RandomizeGloves}");
+                sw.WriteLine($"Grenades,{(RandomizationLevel)Properties.Settings.Default.RandomizeGrenades}");
+                sw.WriteLine($"Implants,{(RandomizationLevel)Properties.Settings.Default.RandomizeImplants}");
+                sw.WriteLine($"Lightsabers,{(RandomizationLevel)Properties.Settings.Default.RandomizeLightsabers}");
+                sw.WriteLine($"Masks,{(RandomizationLevel)Properties.Settings.Default.RandomizeMask}");
+                sw.WriteLine($"Melee Weapons,{(RandomizationLevel)Properties.Settings.Default.RandomizeMelee}");
+                sw.WriteLine($"Mines,{(RandomizationLevel)Properties.Settings.Default.RandomizeMines}");
+                sw.WriteLine($"Pazaak Cards,{(RandomizationLevel)Properties.Settings.Default.RandomizePaz}");
+                sw.WriteLine($"Stims/Medpacs,{(RandomizationLevel)Properties.Settings.Default.RandomizeStims}");
+                sw.WriteLine($"Upgrades/Crystals,{(RandomizationLevel)Properties.Settings.Default.RandomizeUpgrade}");
+                sw.WriteLine($"Various,{(RandomizationLevel)Properties.Settings.Default.RandomizeVarious}");
+                sw.WriteLine();
+
+                sw.WriteLine("Omitted Items");
+                foreach (var item in Globals.OmitItems)
+                {
+                    sw.WriteLine(item);
+                }
+                sw.WriteLine();
+
+                sw.WriteLine("Has Changed,Original,Randomized");
+                foreach (var kvp in sortedLookup)
+                {
+                    sw.WriteLine($"{(kvp.Key != kvp.Value).ToString()},{kvp.Key},{kvp.Value}");
+                }
+                sw.WriteLine();
+            }
+        }
 
         #region Regexes
         //Armor Regexes

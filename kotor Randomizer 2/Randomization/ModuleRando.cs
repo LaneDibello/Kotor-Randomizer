@@ -29,9 +29,16 @@ namespace kotor_Randomizer_2
         private const string FIXED_DREAM_OVERRIDE = "k_ren_visionland.ncs";
         private const string UNLOCK_MAP_OVERRIDE = "k_pebn_galaxy.ncs";
 
+        /// <summary>
+        /// A lookup table used to know how the modules are randomized.
+        /// </summary>
+        private static Dictionary<string, string> LookupTable { get; set; } = new Dictionary<string, string>();
+
         // Populates and shuffles the the modules flagged to be randomized. Returns true if override files should be added.
         public static void Module_rando(KPaths paths)
         {
+            LookupTable.Clear();
+
             // Set up the bound module collection if it hasn't been already.
             if (!Properties.Settings.Default.ModulesInitialized)
             {
@@ -57,7 +64,6 @@ namespace kotor_Randomizer_2
             Randomize.FisherYatesShuffle(ShuffledModules);
 
             // Copy shuffled modules into the base directory.
-            Dictionary<string, string> LookupTable = new Dictionary<string, string>();  // Create lookup table to find a given module's new "name".
             for (int i = 0; i < IncludedModules.Count; i++)
             {
                 LookupTable.Add(IncludedModules[i], ShuffledModules[i]);
@@ -359,6 +365,45 @@ namespace kotor_Randomizer_2
 
                     r_vul.WriteToFile(fi.FullName);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Creates a CSV file containing a list of the changes made during randomization.
+        /// If the file already exists, this method will append the data.
+        /// If no randomization has been performed, no file will be created.
+        /// </summary>
+        /// <param name="path">Path to desired output file.</param>
+        public static void GenerateSpoilerLog(string path)
+        {
+            if (LookupTable.Count == 0) { return; }
+            var sortedLookup = LookupTable.OrderBy(kvp => kvp.Key);
+
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                //sw.WriteLine($"Modules");
+                sw.WriteLine($"Seed,{Properties.Settings.Default.Seed}");
+                sw.WriteLine();
+
+                sw.WriteLine("Module Extra,Is Enabled");
+                sw.WriteLine($"Delete Milestone Save Data,{!Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete)}");
+                sw.WriteLine($"Include Minigames in Save,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames)}");
+                sw.WriteLine($"Include All Modules in Save,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules)}");
+                sw.WriteLine($"Fix Dream Sequence,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream)}");
+                sw.WriteLine($"Unlock Galaxy Map,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap)}");
+                sw.WriteLine($"Fix Module Coordinates,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates)}");
+                sw.WriteLine($"Fix Mind Prison,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison)}");
+                sw.WriteLine($"Unlock Various Doors,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors)}");
+                sw.WriteLine($"Fix Leviathan Elevators,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators)}");
+                sw.WriteLine($"Add Spice Lab Load Zone,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ)}");
+                sw.WriteLine();
+
+                sw.WriteLine("Has Changed,Original,Randomized");
+                foreach (var kvp in sortedLookup)
+                {
+                    sw.WriteLine($"{(kvp.Key != kvp.Value).ToString()},{kvp.Key},{kvp.Value}");
+                }
+                sw.WriteLine();
             }
         }
     }

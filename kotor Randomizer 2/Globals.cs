@@ -68,7 +68,7 @@ namespace kotor_Randomizer_2
         /// <summary> Allows Leviathan elevators to go to any of the other decks without prerequisites </summary>
         FixLevElevators = 0x100, // 0b01 00000000
         /// <summary> Adds a Load Zone leading the the Vulkar Spice in the rear of the Vulkar base main floor, next to the pool </summary>
-        VulkarSpiceLZ = 0x200, // 0b1000000000
+        VulkarSpiceLZ   = 0x200, // 0b10 00000000
     }
 
     [Flags]
