@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModuleForm));
             this.OmittedListBox = new System.Windows.Forms.ListBox();
             this.RandomizedListBox = new System.Windows.Forms.ListBox();
             this.PresetComboBox = new System.Windows.Forms.ComboBox();
@@ -44,6 +46,18 @@
             this.cbDoorFix = new System.Windows.Forms.CheckBox();
             this.cbFixLevElevators = new System.Windows.Forms.CheckBox();
             this.cbVulkSpiceLZ = new System.Windows.Forms.CheckBox();
+            this.cbReachability = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbGoalMalak = new System.Windows.Forms.CheckBox();
+            this.cbGoalStarMaps = new System.Windows.Forms.CheckBox();
+            this.cbGoalPazaak = new System.Windows.Forms.CheckBox();
+            this.cbGlitchDlz = new System.Windows.Forms.CheckBox();
+            this.cbGlitchFlu = new System.Windows.Forms.CheckBox();
+            this.cbGlitchGpw = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.ModulesToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.cbGlitchClip = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // OmittedListBox
@@ -98,6 +112,7 @@
             this.cbDeleteMilestones.Size = new System.Drawing.Size(159, 17);
             this.cbDeleteMilestones.TabIndex = 19;
             this.cbDeleteMilestones.Text = "Delete Milestone Save Data";
+            this.ModulesToolTip.SetToolTip(this.cbDeleteMilestones, resources.GetString("cbDeleteMilestones.ToolTip"));
             this.cbDeleteMilestones.UseVisualStyleBackColor = true;
             this.cbDeleteMilestones.CheckedChanged += new System.EventHandler(this.cbDeleteMilestones_CheckedChanged);
             // 
@@ -121,6 +136,8 @@
             this.cbSaveAllMods.Size = new System.Drawing.Size(157, 17);
             this.cbSaveAllMods.TabIndex = 21;
             this.cbSaveAllMods.Text = "Include All Modules in Save";
+            this.ModulesToolTip.SetToolTip(this.cbSaveAllMods, "This feature extends the minigame one to also include\r\nSTUNT cutscenes and variou" +
+        "s other odd modules in the\r\nsave file.");
             this.cbSaveAllMods.UseVisualStyleBackColor = true;
             this.cbSaveAllMods.CheckedChanged += new System.EventHandler(this.cbSaveAllMods_CheckedChanged);
             // 
@@ -133,6 +150,9 @@
             this.cbSaveMiniGame.Size = new System.Drawing.Size(153, 17);
             this.cbSaveMiniGame.TabIndex = 22;
             this.cbSaveMiniGame.Text = "Include Minigames in Save";
+            this.ModulesToolTip.SetToolTip(this.cbSaveMiniGame, "This feature makes the game commit the minigame module\r\ndata to the save when ent" +
+        "ering them, preventing possible\r\ngame crashes with randomized swoops or turrets." +
+        "");
             this.cbSaveMiniGame.UseVisualStyleBackColor = true;
             this.cbSaveMiniGame.CheckedChanged += new System.EventHandler(this.cbSaveMiniGame_CheckedChanged);
             // 
@@ -170,6 +190,7 @@
             this.cbFixDream.Size = new System.Drawing.Size(125, 17);
             this.cbFixDream.TabIndex = 25;
             this.cbFixDream.Text = "Fix Dream Sequence";
+            this.ModulesToolTip.SetToolTip(this.cbFixDream, "Fixes a rare instance in which a game crash could occur\r\nwith dream sequences.");
             this.cbFixDream.UseVisualStyleBackColor = true;
             this.cbFixDream.CheckedChanged += new System.EventHandler(this.cbFixDream_CheckedChanged);
             // 
@@ -182,6 +203,7 @@
             this.cbUnlockGalaxyMap.Size = new System.Drawing.Size(119, 17);
             this.cbUnlockGalaxyMap.TabIndex = 26;
             this.cbUnlockGalaxyMap.Text = "Unlock Galaxy Map";
+            this.ModulesToolTip.SetToolTip(this.cbUnlockGalaxyMap, "Unlock all destinations on the Ebon Hawk galaxy map from\r\nthe start of the game.");
             this.cbUnlockGalaxyMap.UseVisualStyleBackColor = true;
             this.cbUnlockGalaxyMap.CheckedChanged += new System.EventHandler(this.cbUnlockGalaxyMap_CheckedChanged);
             // 
@@ -194,6 +216,7 @@
             this.cbFixCoordinates.Size = new System.Drawing.Size(136, 17);
             this.cbFixCoordinates.TabIndex = 27;
             this.cbFixCoordinates.Text = "Fix Module Coordinates";
+            this.ModulesToolTip.SetToolTip(this.cbFixCoordinates, resources.GetString("cbFixCoordinates.ToolTip"));
             this.cbFixCoordinates.UseVisualStyleBackColor = true;
             this.cbFixCoordinates.CheckedChanged += new System.EventHandler(this.cbFixCoordinates_CheckedChanged);
             // 
@@ -206,6 +229,7 @@
             this.cbFixMindPrison.Size = new System.Drawing.Size(97, 17);
             this.cbFixMindPrison.TabIndex = 28;
             this.cbFixMindPrison.Text = "Fix Mind Prison";
+            this.ModulesToolTip.SetToolTip(this.cbFixMindPrison, "Updates the Mystery Box so it can be used multiple times.");
             this.cbFixMindPrison.UseVisualStyleBackColor = true;
             this.cbFixMindPrison.CheckedChanged += new System.EventHandler(this.cbFixMindPrison_CheckedChanged);
             // 
@@ -218,6 +242,8 @@
             this.cbDoorFix.Size = new System.Drawing.Size(129, 17);
             this.cbDoorFix.TabIndex = 29;
             this.cbDoorFix.Text = "Unlock Various Doors";
+            this.ModulesToolTip.SetToolTip(this.cbDoorFix, "Unlocks the door into the Dantooine Ruins and the door\r\nout of the Unknown World\'" +
+        "s Temple Summit.");
             this.cbDoorFix.UseVisualStyleBackColor = true;
             this.cbDoorFix.CheckedChanged += new System.EventHandler(this.cbDoorFix_CheckedChanged);
             // 
@@ -230,6 +256,8 @@
             this.cbFixLevElevators.Size = new System.Drawing.Size(136, 17);
             this.cbFixLevElevators.TabIndex = 30;
             this.cbFixLevElevators.Text = "Fix Leviathan Elevators";
+            this.ModulesToolTip.SetToolTip(this.cbFixLevElevators, "The Leviathan elevator will not restrict you from going to\r\nthe Hanger early, and" +
+        " the Hanger elevator is now usable.");
             this.cbFixLevElevators.UseVisualStyleBackColor = true;
             this.cbFixLevElevators.CheckedChanged += new System.EventHandler(this.cbFixLevElevators_CheckedChanged);
             // 
@@ -242,15 +270,172 @@
             this.cbVulkSpiceLZ.Size = new System.Drawing.Size(151, 17);
             this.cbVulkSpiceLZ.TabIndex = 31;
             this.cbVulkSpiceLZ.Text = "Add Spice Lab Load Zone";
+            this.ModulesToolTip.SetToolTip(this.cbVulkSpiceLZ, "A new loading zone to the unused Vulkar Spice Lab\r\nis added to the far west end o" +
+        "f the Vulkar Base.");
             this.cbVulkSpiceLZ.UseVisualStyleBackColor = true;
             this.cbVulkSpiceLZ.CheckedChanged += new System.EventHandler(this.cbVulkSpiceLZ_CheckedChanged);
+            // 
+            // cbReachability
+            // 
+            this.cbReachability.AutoSize = true;
+            this.cbReachability.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbReachability.Location = new System.Drawing.Point(20, 588);
+            this.cbReachability.Name = "cbReachability";
+            this.cbReachability.Size = new System.Drawing.Size(151, 17);
+            this.cbReachability.TabIndex = 32;
+            this.cbReachability.Text = "Verify Module Reachability";
+            this.ModulesToolTip.SetToolTip(this.cbReachability, "Reachability means that all modules leading up to\r\nand including the ones contain" +
+        "ing the goal(s) can\r\nbe found using either normal in-game logic or using\r\nthe gl" +
+        "itches enabled below.");
+            this.cbReachability.UseVisualStyleBackColor = true;
+            this.cbReachability.CheckedChanged += new System.EventHandler(this.cbReachability_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.label1.Location = new System.Drawing.Point(20, 612);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(132, 13);
+            this.label1.TabIndex = 33;
+            this.label1.Text = "Goal(s) of this playthrough:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.label2.Location = new System.Drawing.Point(20, 635);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(138, 13);
+            this.label2.TabIndex = 34;
+            this.label2.Text = "Potentially required glitches:";
+            // 
+            // cbGoalMalak
+            // 
+            this.cbGoalMalak.AutoSize = true;
+            this.cbGoalMalak.Checked = true;
+            this.cbGoalMalak.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbGoalMalak.Enabled = false;
+            this.cbGoalMalak.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbGoalMalak.Location = new System.Drawing.Point(164, 611);
+            this.cbGoalMalak.Name = "cbGoalMalak";
+            this.cbGoalMalak.Size = new System.Drawing.Size(131, 17);
+            this.cbGoalMalak.TabIndex = 35;
+            this.cbGoalMalak.Text = "Defeat Malak (default)";
+            this.ModulesToolTip.SetToolTip(this.cbGoalMalak, "Defeat Malak on the Viewing Platform\r\nof the Star Forge.");
+            this.cbGoalMalak.UseVisualStyleBackColor = true;
+            this.cbGoalMalak.CheckedChanged += new System.EventHandler(this.cbGoalMalak_CheckedChanged);
+            // 
+            // cbGoalStarMaps
+            // 
+            this.cbGoalStarMaps.AutoSize = true;
+            this.cbGoalStarMaps.Enabled = false;
+            this.cbGoalStarMaps.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbGoalStarMaps.Location = new System.Drawing.Point(301, 611);
+            this.cbGoalStarMaps.Name = "cbGoalStarMaps";
+            this.cbGoalStarMaps.Size = new System.Drawing.Size(109, 17);
+            this.cbGoalStarMaps.TabIndex = 36;
+            this.cbGoalStarMaps.Text = "Collect Star Maps";
+            this.ModulesToolTip.SetToolTip(this.cbGoalStarMaps, "Collect the 5 star maps from Dantooine,\r\nKashyyyk, Korriban, Manaan, and Tatooine" +
+        ".");
+            this.cbGoalStarMaps.UseVisualStyleBackColor = true;
+            this.cbGoalStarMaps.CheckedChanged += new System.EventHandler(this.cbGoalStarMaps_CheckedChanged);
+            // 
+            // cbGoalPazaak
+            // 
+            this.cbGoalPazaak.AutoSize = true;
+            this.cbGoalPazaak.Enabled = false;
+            this.cbGoalPazaak.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbGoalPazaak.Location = new System.Drawing.Point(416, 611);
+            this.cbGoalPazaak.Name = "cbGoalPazaak";
+            this.cbGoalPazaak.Size = new System.Drawing.Size(112, 17);
+            this.cbGoalPazaak.TabIndex = 37;
+            this.cbGoalPazaak.Text = "Pazaak Champion";
+            this.ModulesToolTip.SetToolTip(this.cbGoalPazaak, "Defeat all pazaak players across the galaxy.");
+            this.cbGoalPazaak.UseVisualStyleBackColor = true;
+            this.cbGoalPazaak.CheckedChanged += new System.EventHandler(this.cbGoalPazaak_CheckedChanged);
+            // 
+            // cbGlitchDlz
+            // 
+            this.cbGlitchDlz.AutoSize = true;
+            this.cbGlitchDlz.Enabled = false;
+            this.cbGlitchDlz.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbGlitchDlz.Location = new System.Drawing.Point(233, 634);
+            this.cbGlitchDlz.Name = "cbGlitchDlz";
+            this.cbGlitchDlz.Size = new System.Drawing.Size(47, 17);
+            this.cbGlitchDlz.TabIndex = 38;
+            this.cbGlitchDlz.Text = "DLZ";
+            this.ModulesToolTip.SetToolTip(this.cbGlitchDlz, "Displaced Loading Zone");
+            this.cbGlitchDlz.UseVisualStyleBackColor = true;
+            this.cbGlitchDlz.CheckedChanged += new System.EventHandler(this.cbGlitchDlz_CheckedChanged);
+            // 
+            // cbGlitchFlu
+            // 
+            this.cbGlitchFlu.AutoSize = true;
+            this.cbGlitchFlu.Enabled = false;
+            this.cbGlitchFlu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbGlitchFlu.Location = new System.Drawing.Point(286, 634);
+            this.cbGlitchFlu.Name = "cbGlitchFlu";
+            this.cbGlitchFlu.Size = new System.Drawing.Size(46, 17);
+            this.cbGlitchFlu.TabIndex = 39;
+            this.cbGlitchFlu.Text = "FLU";
+            this.ModulesToolTip.SetToolTip(this.cbGlitchFlu, "Fake Level Up");
+            this.cbGlitchFlu.UseVisualStyleBackColor = true;
+            this.cbGlitchFlu.CheckedChanged += new System.EventHandler(this.cbGlitchFlu_CheckedChanged);
+            // 
+            // cbGlitchGpw
+            // 
+            this.cbGlitchGpw.AutoSize = true;
+            this.cbGlitchGpw.Enabled = false;
+            this.cbGlitchGpw.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbGlitchGpw.Location = new System.Drawing.Point(338, 634);
+            this.cbGlitchGpw.Name = "cbGlitchGpw";
+            this.cbGlitchGpw.Size = new System.Drawing.Size(52, 17);
+            this.cbGlitchGpw.TabIndex = 40;
+            this.cbGlitchGpw.Text = "GPW";
+            this.ModulesToolTip.SetToolTip(this.cbGlitchGpw, "Gather Party Warp / Teleport");
+            this.cbGlitchGpw.UseVisualStyleBackColor = true;
+            this.cbGlitchGpw.CheckedChanged += new System.EventHandler(this.cbGlitchGpw_CheckedChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.panel1.Location = new System.Drawing.Point(20, 576);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(505, 2);
+            this.panel1.TabIndex = 41;
+            // 
+            // cbGlitchClip
+            // 
+            this.cbGlitchClip.AutoSize = true;
+            this.cbGlitchClip.Enabled = false;
+            this.cbGlitchClip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbGlitchClip.Location = new System.Drawing.Point(164, 634);
+            this.cbGlitchClip.Name = "cbGlitchClip";
+            this.cbGlitchClip.Size = new System.Drawing.Size(63, 17);
+            this.cbGlitchClip.TabIndex = 42;
+            this.cbGlitchClip.Text = "Clipping";
+            this.ModulesToolTip.SetToolTip(this.cbGlitchClip, "Clipping through doors, etc.");
+            this.cbGlitchClip.UseVisualStyleBackColor = true;
+            this.cbGlitchClip.CheckedChanged += new System.EventHandler(this.cbGlitchClip_CheckedChanged);
             // 
             // ModuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(541, 583);
+            this.ClientSize = new System.Drawing.Size(541, 667);
+            this.Controls.Add(this.cbGlitchClip);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.cbGlitchGpw);
+            this.Controls.Add(this.cbGlitchFlu);
+            this.Controls.Add(this.cbGlitchDlz);
+            this.Controls.Add(this.cbGoalPazaak);
+            this.Controls.Add(this.cbGoalStarMaps);
+            this.Controls.Add(this.cbGoalMalak);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.cbReachability);
             this.Controls.Add(this.cbVulkSpiceLZ);
             this.Controls.Add(this.cbFixLevElevators);
             this.Controls.Add(this.cbDoorFix);
@@ -297,5 +482,17 @@
         private System.Windows.Forms.CheckBox cbDoorFix;
         private System.Windows.Forms.CheckBox cbFixLevElevators;
         private System.Windows.Forms.CheckBox cbVulkSpiceLZ;
+        private System.Windows.Forms.CheckBox cbReachability;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox cbGoalMalak;
+        private System.Windows.Forms.CheckBox cbGoalStarMaps;
+        private System.Windows.Forms.CheckBox cbGoalPazaak;
+        private System.Windows.Forms.CheckBox cbGlitchDlz;
+        private System.Windows.Forms.CheckBox cbGlitchFlu;
+        private System.Windows.Forms.CheckBox cbGlitchGpw;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolTip ModulesToolTip;
+        private System.Windows.Forms.CheckBox cbGlitchClip;
     }
 }

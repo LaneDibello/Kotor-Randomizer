@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Modules Game="Kotor">
-  <!--Regular Modules-->
-  <Module WarpCode="danm13" CommonName="Jedi Enclave" Tags="Pazaak">
+<Modules Game="Kotor1">
+  <!--Dantooine-->
+  <Module WarpCode="danm13" CommonName="Jedi Enclave" Tags="Pazaak" LockedTag="Juhani" Unlock="danm14ac,danm15">
     <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
     <LeadsTo WarpCode="danm14aa"  CommonName="Courtyard" />
     <LeadsTo WarpCode="danm13"    CommonName="Jedi Enclave" Tags="Once" />
@@ -9,7 +9,7 @@
   <Module WarpCode="danm14aa" CommonName="Courtyard">
     <LeadsTo WarpCode="danm13"   CommonName="Jedi Enclave" />
     <LeadsTo WarpCode="danm14ab" CommonName="Matale Grounds" />
-    <LeadsTo WarpCode="danm15"   CommonName="Dantooine Ruins" Tags="Locked,DLZ" />
+    <LeadsTo WarpCode="danm15"   CommonName="Dantooine Ruins" Tags="Locked,DLZ,FixDoors" Unlock="danm13,danm14ac" />
   </Module>
   <Module WarpCode="danm14ab" CommonName="Matale Grounds">
     <LeadsTo WarpCode="danm14aa" CommonName="Courtyard" />
@@ -21,41 +21,57 @@
   </Module>
   <Module WarpCode="danm14ad" CommonName="Sandral Grounds">
     <LeadsTo WarpCode="danm14ac" CommonName="Grove" />
-    <LeadsTo WarpCode="danm16"   CommonName="Sandral Estate" Tags="Locked,DLZ" />
+    <LeadsTo WarpCode="danm16"   CommonName="Sandral Estate" Tags="Locked,DLZ" Unlock="danm13,danm14ac" />
     <LeadsTo WarpCode="danm14ae" CommonName="Crystal Caves" />
   </Module>
   <Module WarpCode="danm14ae" CommonName="Crystal Caves">
     <LeadsTo WarpCode="danm14ad" CommonName="Sandral Grounds" />
   </Module>
-  <Module WarpCode="danm15" CommonName="Dantooine Ruins" Tags="StarMap">
+  <Module WarpCode="danm15" CommonName="Dantooine Ruins" Tags="StarMap,Bastila">
     <LeadsTo WarpCode="danm14aa" CommonName="Courtyard" />
   </Module>
   <Module WarpCode="danm16" CommonName="Sandral Estate">
     <LeadsTo WarpCode="danm14ad" CommonName="Sandral Grounds" />
   </Module>
+
+  <!--Ebon Hawk-->
   <Module WarpCode="ebo_m12aa" CommonName="Ebon Hawk">
-    <LeadsTo WarpCode="tat_m17ab"  CommonName="Tatooine Docking Bay" Tags="FixMap" />
-    <LeadsTo WarpCode="manm26ad"   CommonName="Manaan Docking Bay" Tags="FixMap" />
-    <LeadsTo WarpCode="kas_m22aa"  CommonName="Czerka Landing Port" Tags="FixMap" />
-    <LeadsTo WarpCode="danm13"     CommonName="Jedi Enclave" Tags="FixMap" />
+    <!--TODO: Find a good way to handle the map accessibility. Extra locations should be locked.-->
+    <LeadsTo WarpCode="danm13" CommonName="Jedi Enclave" Tags="FixMap" />
+    <LeadsTo WarpCode="kas_m22aa" CommonName="Czerka Landing Port" Tags="FixMap" />
     <LeadsTo WarpCode="korr_m33aa" CommonName="Dreshdae" Tags="FixMap" />
-    <LeadsTo WarpCode="liv_m99aa"  CommonName="Yavin Station" Tags="FixMap" />
-    <LeadsTo WarpCode="unk_m41aa"  CommonName="Central Beach" Tags="FixMap" />
-    <LeadsTo WarpCode="sta_m45aa"  CommonName="Deck 1" Tags="FixMap" />
-    <LeadsTo WarpCode="ebo_m46ab"  CommonName="Mystery Box" Tags="Once,Locked,FixBox" />
+    <LeadsTo WarpCode="manm26ad" CommonName="Manaan Docking Bay" Tags="FixMap" />
+    <LeadsTo WarpCode="tat_m17ab" CommonName="Tatooine Docking Bay" Tags="FixMap" />
+    <LeadsTo WarpCode="liv_m99aa" CommonName="Yavin Station" Tags="FixMap" />
+    <LeadsTo WarpCode="unk_m41aa" CommonName="Central Beach" Tags="FixMap" />
+    <LeadsTo WarpCode="sta_m45aa" CommonName="Deck 1" Tags="Locked,FixMap" />
+    <LeadsTo WarpCode="ebo_m46ab" CommonName="Mystery Box" Tags="Once,Locked,FixBox" Unlock="korr_m33aa" />
+    <LeadsTo WarpCode="STUNT_12" CommonName="Calo Nord is Alive" Tags="Once" />
+    <LeadsTo WarpCode="STUNT_14" CommonName="Darth Bandon Recruited" Tags="Once" />
+    <LeadsTo WarpCode="STUNT_16" CommonName="Leviathan Captured (Old Mentor)" Tags="Once,Locked" Unlock="kas_m25aa,korr_m39aa,manm28ad,tat_m18ac" />
+    <!--<LeadsTo WarpCode="lev_m40aa"  CommonName="Prison Block" Tags="Once,Locked" Unlock="kas_m25aa,korr_m39aa,manm28ad,tat_m18ac" />-->
+    <LeadsTo WarpCode="STUNT_18" CommonName="Bastila is Tortured" Tags="Once,Locked" />
   </Module>
   <Module WarpCode="ebo_m41aa" CommonName="Lehon Hawk">
     <LeadsTo WarpCode="unk_m41aa" CommonName="Central Beach" />
+    <!--<LeadsTo WarpCode="sta_m45aa" CommonName="Deck 1" Tags="Locked" />-->
+    <!--TODO: Doesn't this take you to a cutscene? But that CS takes you to the Hawk... which leads to Deck 1 -->
+    <LeadsTo WarpCode="STUNT_42" CommonName="Pre-Star Forge Cutscene (Light Side)" Tags="Once,Locked" />
+    <LeadsTo WarpCode="STUNT_44" CommonName="Pre-Star Forge Cutscene (Dark Side)" Tags="Once,Locked" />
   </Module>
   <Module WarpCode="ebo_m46ab" CommonName="Mystery Box">
     <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" Tags="Once,FixBox" />
   </Module>
+
+  <!--Endar Spire-->
   <Module WarpCode="end_m01aa" CommonName="Command Module" Tags="Start">
     <LeadsTo WarpCode="end_m01ab" CommonName="Starboard Section" />
   </Module>
   <Module WarpCode="end_m01ab" CommonName="Starboard Section">
     <LeadsTo WarpCode="tar_m02af" CommonName="Hideout" />
   </Module>
+
+  <!--Kashyyyk-->
   <Module WarpCode="kas_m22aa" CommonName="Czerka Landing Port" Tags="Pazaak">
     <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
     <LeadsTo WarpCode="kas_m22ab" CommonName="Great Walkway" />
@@ -65,13 +81,13 @@
     <LeadsTo WarpCode="kas_m23aa" CommonName="Village of Rwookrrorro" />
     <LeadsTo WarpCode="kas_m24aa" CommonName="Upper Shadowlands" />
     <LeadsTo WarpCode="kas_m23ad" CommonName="Chieftain's Hall" Tags="Once" />
-    <LeadsTo WarpCode="kas_m23ad" CommonName="Chieftain's Hall" Tags="Once,Locked" />
+    <LeadsTo WarpCode="kas_m23ad" CommonName="Chieftain's Hall" Tags="Once,Locked" Unlock="kas_m25aa,kas_m23ad" />
   </Module>
   <Module WarpCode="kas_m23aa" CommonName="Village of Rwookrrorro">
     <LeadsTo WarpCode="kas_m22ab" CommonName="Great Walkway" />
     <LeadsTo WarpCode="kas_m23ab" CommonName="Woorwill's Home" />
     <LeadsTo WarpCode="kas_m23ac" CommonName="Worrroznor's Home" />
-    <LeadsTo WarpCode="kas_m23ad" CommonName="Chieftain's Hall" Tags="Locked" />
+    <LeadsTo WarpCode="kas_m23ad" CommonName="Chieftain's Hall" Tags="Locked" Unlock="kas_m25aa,kas_m23ad" />
   </Module>
   <Module WarpCode="kas_m23ab" CommonName="Woorwill's Home">
     <LeadsTo WarpCode="kas_m23aa" CommonName="Village of Rwookrrorro" />
@@ -82,22 +98,24 @@
   <Module WarpCode="kas_m23ad" CommonName="Chieftain's Hall">
     <LeadsTo WarpCode="kas_m23aa" CommonName="Village of Rwookrrorro" />
   </Module>
-  <Module WarpCode="kas_m24aa" CommonName="Upper Shadowlands">
+  <Module WarpCode="kas_m24aa" CommonName="Upper Shadowlands" Tags="Jolee">
     <LeadsTo WarpCode="kas_m22ab" CommonName="Great Walkway" />
     <LeadsTo WarpCode="kas_m25aa" CommonName="Lower Shadowlands" />
-    <LeadsTo WarpCode="kas_m23ad" CommonName="Chieftain's Hall" Tags="Once,Locked" />
+    <LeadsTo WarpCode="kas_m23ad" CommonName="Chieftain's Hall" Tags="Once,Locked" Unlock="kas_m25aa" />
   </Module>
   <Module WarpCode="kas_m25aa" CommonName="Lower Shadowlands" Tags="StarMap">
     <LeadsTo WarpCode="kas_m24aa" CommonName="Upper Shadowlands" />
   </Module>
+
+  <!--Korriban-->
   <Module WarpCode="korr_m33aa" CommonName="Dreshdae" Tags="Pazaak">
     <LeadsTo WarpCode="ebo_m12aa"  CommonName="Ebon Hawk" />
-    <LeadsTo WarpCode="korr_m35aa" CommonName="Sith Academy" Tags="Once,Locked" />
+    <LeadsTo WarpCode="korr_m35aa" CommonName="Sith Academy" Tags="Once,Locked" Unlock="korr_m33ab" />
     <LeadsTo WarpCode="korr_m33ab" CommonName="Sith Academy Entrance" />
   </Module>
   <Module WarpCode="korr_m33ab" CommonName="Sith Academy Entrance">
     <LeadsTo WarpCode="korr_m33aa" CommonName="Dreshdae" />
-    <LeadsTo WarpCode="korr_m35aa" CommonName="Sith Academy" Tags="Locked" />
+    <LeadsTo WarpCode="korr_m35aa" CommonName="Sith Academy" Tags="Locked" Unlock="korr_m33aa" />
   </Module>
   <Module WarpCode="korr_m34aa" CommonName="Shyrack Caves">
     <LeadsTo WarpCode="korr_m36aa" CommonName="Valley of the Dark Lords" />
@@ -105,7 +123,7 @@
   <Module WarpCode="korr_m35aa" CommonName="Sith Academy">
     <LeadsTo WarpCode="korr_m36aa" CommonName="Valley of the Dark Lords" />
     <LeadsTo WarpCode="korr_m33ab" CommonName="Sith Academy Entrance" />
-    <LeadsTo WarpCode="korr_m39aa" CommonName="Tomb of Naga Sadow" Tags="Once,Locked" />
+    <LeadsTo WarpCode="korr_m39aa" CommonName="Tomb of Naga Sadow" Tags="Once,Locked" Unlock="korr_m36aa" />
   </Module>
   <Module WarpCode="korr_m36aa" CommonName="Valley of the Dark Lords">
     <LeadsTo WarpCode="korr_m34aa" CommonName="Shyrack Caves" />
@@ -127,36 +145,44 @@
   <Module WarpCode="korr_m39aa" CommonName="Tomb of Naga Sadow" Tags="StarMap">
     <LeadsTo WarpCode="korr_m36aa" CommonName="Valley of the Dark Lords" />
   </Module>
+
+  <!--Leviathan-->
   <Module WarpCode="lev_m40aa" CommonName="Prison Block">
     <LeadsTo WarpCode="lev_m40ab" CommonName="Command Deck" />
-    <LeadsTo WarpCode="lev_m40ac" CommonName="Leviathan Hangar" Tags="Locked" />
+    <LeadsTo WarpCode="lev_m40ac" CommonName="Leviathan Hangar" Tags="Locked,FixElev" Unlock="lev_m40ad" />
   </Module>
   <Module WarpCode="lev_m40ab" CommonName="Command Deck">
     <LeadsTo WarpCode="lev_m40aa" CommonName="Prison Block" />
-    <LeadsTo WarpCode="lev_m40ac" CommonName="Leviathan Hangar" Tags="Locked" />
-    <LeadsTo WarpCode="lev_m40ad" CommonName="Leviathan Bridge" Tags="FLU" />
+    <LeadsTo WarpCode="lev_m40ac" CommonName="Leviathan Hangar" Tags="Locked,FixElev" Unlock="lev_m40ad" />
+    <LeadsTo WarpCode="lev_m40ad" CommonName="Leviathan Bridge" />
   </Module>
   <Module WarpCode="lev_m40ac" CommonName="Leviathan Hangar">
-    <LeadsTo WarpCode="lev_m40aa" CommonName="Prison Block" Tags="Fake,FixElev" />
-    <LeadsTo WarpCode="lev_m40ab" CommonName="Command Deck" Tags="Fake,FixElev" />
-    <LeadsTo WarpCode="lev_m40ac" CommonName="Leviathan Hangar" Tags="Once,Locked" />
-    <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" Tags="Once,Locked,FLU" />
+    <LeadsTo WarpCode="lev_m40aa" CommonName="Prison Block" Tags="Fake,Locked,FixElev" />
+    <LeadsTo WarpCode="lev_m40ab" CommonName="Command Deck" Tags="Fake,Locked,FixElev" />
+    <LeadsTo WarpCode="STUNT_31b" CommonName="Revan Reveal" Tags="Once,Locked" Unlock="Bastila,Carth" />
+    <!--<LeadsTo WarpCode="lev_m40ac" CommonName="Leviathan Hangar" Tags="Once,Locked" Unlock="Bastila,Carth" />-->
+    <LeadsTo WarpCode="ebo_m40ad" CommonName="Escaped The Leviathan" Tags="Once,Locked,FLU" Unlock="Bastila,Carth" FluReq="Carth" />
+    <!--<LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" Tags="Once,Locked,FLU" Unlock="Bastila,Carth" FluReq="Carth" />-->
     <!--Unsure about the tags...-->
   </Module>
   <Module WarpCode="lev_m40ad" CommonName="Leviathan Bridge">
     <LeadsTo WarpCode="lev_m40ab" CommonName="Command Deck" />
   </Module>
+
+  <!--Yavin IV-->
   <Module WarpCode="liv_m99aa" CommonName="Yavin Station" Tags="Pazaak">
     <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
   </Module>
+
+  <!--Manaan-->
   <Module WarpCode="manm26aa"  CommonName="Ahto West" Tags="Pazaak">
     <LeadsTo WarpCode="manm26ac"  CommonName="West Central" />
   </Module>
   <Module WarpCode="manm26ab" CommonName="Ahto East">
     <LeadsTo WarpCode="manm26ae" CommonName="East Central" />
     <LeadsTo WarpCode="manm26mg" CommonName="Manaan Swoops" />
-    <LeadsTo WarpCode="manm27aa" CommonName="Manaan Sith Base" Tags="Locked" />
-    <LeadsTo WarpCode="manm26aa" CommonName="Ahto West" Tags="Once,Locked" />
+    <LeadsTo WarpCode="manm27aa" CommonName="Manaan Sith Base" Tags="Locked" Unlock="manm26ae" />
+    <LeadsTo WarpCode="manm26aa" CommonName="Ahto West" Tags="Once,Locked" Unlock="manm27aa" />
   </Module>
   <Module WarpCode="manm26ac" CommonName="West Central" Tags="Pazaak">
     <LeadsTo WarpCode="manm26ae" CommonName="East Central" />
@@ -166,13 +192,13 @@
   <Module WarpCode="manm26ad" CommonName="Manaan Docking Bay">
     <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
     <LeadsTo WarpCode="manm26ac"  CommonName="West Central" />
-    <LeadsTo WarpCode="manm27aa"  CommonName="Manaan Sith Base" Tags="Locked,FLU" />
+    <LeadsTo WarpCode="manm27aa"  CommonName="Manaan Sith Base" Tags="Locked,FLU" Unlock="manm26ae" />
   </Module>
   <Module WarpCode="manm26ae" CommonName="East Central">
     <LeadsTo WarpCode="manm26ac" CommonName="West Central" />
     <LeadsTo WarpCode="manm26ab" CommonName="Ahto East" />
-    <LeadsTo WarpCode="manm28aa" CommonName="Hrakert Station" Tags="Locked" />
-    <LeadsTo WarpCode="manm26aa" CommonName="Ahto West" Tags="Once,Locked" />
+    <LeadsTo WarpCode="manm28aa" CommonName="Hrakert Station" Tags="Locked,Clip" Unlock="manm27aa" />
+    <LeadsTo WarpCode="manm26aa" CommonName="Ahto West" Tags="Once,Locked" Unlock="manm28ad" />
   </Module>
   <Module WarpCode="manm26mg" CommonName="Manaan Swoops">
     <LeadsTo WarpCode="manm26ab" CommonName="Ahto East" />
@@ -183,20 +209,22 @@
   <Module WarpCode="manm28aa" CommonName="Hrakert Station">
     <LeadsTo WarpCode="manm26ae" CommonName="East Central" />
     <LeadsTo WarpCode="manm28ab" CommonName="Sea Floor" />
-    <LeadsTo WarpCode="manm28ad" CommonName="Hrakert Rift" Tags="Locked" />
+    <LeadsTo WarpCode="manm28ad" CommonName="Hrakert Rift" Tags="Locked" Unlock="manm28ad" />
   </Module>
   <Module WarpCode="manm28ab" CommonName="Sea Floor">
     <LeadsTo WarpCode="manm28aa" CommonName="Hrakert Station" />
     <LeadsTo WarpCode="manm28ac" CommonName="Kolto Control" />
   </Module>
   <Module WarpCode="manm28ac" CommonName="Kolto Control">
-    <LeadsTo WarpCode="manm28ab" CommonName="Sea Floor" Tags="Locked" />
-    <LeadsTo WarpCode="manm28ad" CommonName="Hrakert Rift" Tags="Locked" />
+    <LeadsTo WarpCode="manm28ab" CommonName="Sea Floor" Tags="Locked" Unlock="manm28aa" />
+    <LeadsTo WarpCode="manm28ad" CommonName="Hrakert Rift" Tags="Locked" Unlock="manm28aa" />
   </Module>
   <Module WarpCode="manm28ad" CommonName="Hrakert Rift" Tags="StarMap">
     <LeadsTo WarpCode="manm28aa" CommonName="Hrakert Station" />
     <LeadsTo WarpCode="manm28ac" CommonName="Kolto Control" />
   </Module>
+
+  <!--Star Forge-->
   <Module WarpCode="sta_m45aa" CommonName="Deck 1">
     <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
     <LeadsTo WarpCode="sta_m45ab" CommonName="Deck 2" />
@@ -207,20 +235,26 @@
   </Module>
   <Module WarpCode="sta_m45ac" CommonName="Command Center">
     <LeadsTo WarpCode="sta_m45ab" CommonName="Deck 2" />
+    <LeadsTo WarpCode="STUNT_50a" CommonName="Green Squadron" Tags="Once" />
+    <LeadsTo WarpCode="STUNT_51a" CommonName="Bastila Destroys the Republic Fleet" Tags="Once" />
     <LeadsTo WarpCode="sta_m45ad" CommonName="Viewing Platform" />
   </Module>
-  <Module WarpCode="sta_m45ad" CommonName="Viewing Platform" Tags="Finish,Malak">
+  <Module WarpCode="sta_m45ad" CommonName="Viewing Platform" Tags="Malak">
     <LeadsTo WarpCode="sta_m45ac" CommonName="Command Center" />
+    <LeadsTo WarpCode="STUNT_54a" CommonName="The Republic is Doomed" Tags="Once" />
+    <LeadsTo WarpCode="STUNT_56a" CommonName="Star Forge Destroyed" Tags="Once" />
   </Module>
+
+  <!--Taris-->
   <Module WarpCode="tar_m02aa" CommonName="South Apartments">
     <LeadsTo WarpCode="tar_m02af" CommonName="Hideout" />
     <LeadsTo WarpCode="tar_m02ac" CommonName="Upper City South" />
   </Module>
-  <Module WarpCode="tar_m02ab" CommonName="Upper City North">
+  <Module WarpCode="tar_m02ab" CommonName="Upper City North" LockedTag="T3M4" Unlock="tar_m02ae,tar_m03ae,tar_m03af,tar_m03mg">
     <LeadsTo WarpCode="tar_m02ad" CommonName="North Apartments" />
     <LeadsTo WarpCode="tar_m02ac" CommonName="Upper City South" />
     <LeadsTo WarpCode="tar_m03aa" CommonName="Lower City" />
-    <LeadsTo WarpCode="tar_m09aa" CommonName="Taris Sith Base" Tags="Locked,FLU,DLZ" />
+    <LeadsTo WarpCode="tar_m09aa" CommonName="Taris Sith Base" Tags="Locked,FLU,DLZ" Unlock="T3M4" />
   </Module>
   <Module WarpCode="tar_m02ac" CommonName="Upper City South">
     <LeadsTo WarpCode="tar_m02aa" CommonName="South Apartments" />
@@ -230,21 +264,22 @@
   <Module WarpCode="tar_m02ad" CommonName="North Apartments">
     <LeadsTo WarpCode="tar_m02ab" CommonName="Upper City North" />
   </Module>
-  <Module WarpCode="tar_m02ae" CommonName="Upper City Cantina" Tags="Pazaak">
+  <Module WarpCode="tar_m02ae" CommonName="Upper City Cantina" Tags="Pazaak" LockedTag="Canderous" Unlock="tar_m09aa">
     <LeadsTo WarpCode="tar_m02ac" CommonName="Upper City South" />
-    <LeadsTo WarpCode="tar_m08aa" CommonName="Davik's Estate" Tags="Once,Locked" />
+    <LeadsTo WarpCode="STUNT_03a" CommonName="Malak Orders Taris Destroyed" Tags="Once,Locked" Unlock="tar_m09aa" />
+    <!--<LeadsTo WarpCode="tar_m08aa" CommonName="Davik's Estate" Tags="Once,Locked" Unlock="tar_m09aa" />-->
   </Module>
-  <Module WarpCode="tar_m02af" CommonName="Hideout">
+  <Module WarpCode="tar_m02af" CommonName="Hideout" Tags="Carth">
     <LeadsTo WarpCode="tar_m02aa" CommonName="South Apartments" />
   </Module>
   <Module WarpCode="tar_m03aa" CommonName="Lower City">
     <LeadsTo WarpCode="tar_m02ab" CommonName="Upper City North" />
     <LeadsTo WarpCode="tar_m03ab" CommonName="Lower City Apt West" />
     <LeadsTo WarpCode="tar_m03ad" CommonName="Lower City Apt East" />
-    <LeadsTo WarpCode="tar_m10aa" CommonName="Vulkar Base" Tags="Locked,FLU" />
+    <LeadsTo WarpCode="tar_m10aa" CommonName="Vulkar Base" Tags="Locked,FLU" Unlock="tar_m10aa" />
     <LeadsTo WarpCode="tar_m11aa" CommonName="Bek Base" />
     <LeadsTo WarpCode="tar_m03ae" CommonName="Javyar's Cantina" />
-    <LeadsTo WarpCode="tar_m04aa" CommonName="Undercity" Tags="Locked,FLU" />
+    <LeadsTo WarpCode="tar_m04aa" CommonName="Undercity" Tags="Locked,FLU" Unlock="tar_m11aa" />
   </Module>
   <Module WarpCode="tar_m03ab" CommonName="Lower City Apt West">
     <LeadsTo WarpCode="tar_m03aa" CommonName="Lower City" />
@@ -252,31 +287,33 @@
   <Module WarpCode="tar_m03ad" CommonName="Lower City Apt East">
     <LeadsTo WarpCode="tar_m03aa" CommonName="Lower City" />
   </Module>
-  <Module WarpCode="tar_m03ae" CommonName="Javyar's Cantina" Tags="Pazaak">
+  <Module WarpCode="tar_m03ae" CommonName="Javyar's Cantina" Tags="Pazaak" LockedTag="Canderous" Unlock="tar_m09aa">
     <LeadsTo WarpCode="tar_m03aa" CommonName="Lower City" />
-    <LeadsTo WarpCode="tar_m08aa" CommonName="Davik's Estate" Tags="Once,Locked" />
+    <LeadsTo WarpCode="STUNT_03a" CommonName="Malak Orders Taris Destroyed" Tags="Once,Locked" Unlock="tar_m09aa" />
+    <!--<LeadsTo WarpCode="tar_m08aa" CommonName="Davik's Estate" Tags="Once,Locked" Unlock="tar_m09aa" />-->
   </Module>
   <Module WarpCode="tar_m03af" CommonName="Swoop Platform">
     <LeadsTo WarpCode="tar_m03mg" CommonName="Taris Swoops" />
-    <LeadsTo WarpCode="tar_m02af" CommonName="Hideout" Tags="Locked" />
+    <LeadsTo WarpCode="tar_m02af" CommonName="Hideout" Tags="Locked" Unlock="tar_m03af,tar_m03mg" />
   </Module>
   <Module WarpCode="tar_m03mg" CommonName="Taris Swoops">
     <LeadsTo WarpCode="tar_m03af" CommonName="Swoop Platform" />
   </Module>
-  <Module WarpCode="tar_m04aa" CommonName="Undercity">
+  <Module WarpCode="tar_m04aa" CommonName="Undercity" Tags="Mission">
     <LeadsTo WarpCode="tar_m03aa" CommonName="Lower City" />
     <LeadsTo WarpCode="tar_m05aa" CommonName="Lower Sewers" />
   </Module>
-  <Module WarpCode="tar_m05aa" CommonName="Lower Sewers">
+  <Module WarpCode="tar_m05aa" CommonName="Lower Sewers" LockedTag="Zaalbar" Unlock="Mission">
     <LeadsTo WarpCode="tar_m04aa" CommonName="Undercity" />
-    <LeadsTo WarpCode="tar_m05ab" CommonName="Upper Sewers" Tags="Locked,DLZ" />
+    <LeadsTo WarpCode="tar_m05ab" CommonName="Upper Sewers" Tags="Locked,DLZ" Unlock="Mission" />
   </Module>
   <Module WarpCode="tar_m05ab" CommonName="Upper Sewers">
     <LeadsTo WarpCode="tar_m05aa" CommonName="Lower Sewers" />
     <LeadsTo WarpCode="tar_m10aa" CommonName="Vulkar Base" />
   </Module>
   <Module WarpCode="tar_m08aa" CommonName="Davik's Estate">
-    <LeadsTo WarpCode="danm13" CommonName="Jedi Enclave" />
+    <LeadsTo WarpCode="STUNT_06" CommonName="Taris Destruction Update" />
+    <!--<LeadsTo WarpCode="danm13" CommonName="Jedi Enclave" />-->
   </Module>
   <Module WarpCode="tar_m09aa" CommonName="Taris Sith Base">
     <LeadsTo WarpCode="tar_m09ab" CommonName="Governor Office" />
@@ -289,25 +326,27 @@
     <LeadsTo WarpCode="tar_m03aa" CommonName="Lower City" />
     <LeadsTo WarpCode="tar_m05ab" CommonName="Upper Sewers" />
     <LeadsTo WarpCode="tar_m10ac" CommonName="Vulkar Garage" />
-    <LeadsTo WarpCode="tar_m03af" CommonName="Swoop Platform" Tags="Once,Locked" />
-    <LeadsTo WarpCode="" CommonName="Vulkar Spice Lab" Tags="Fake" />
+    <LeadsTo WarpCode="tar_m03af" CommonName="Swoop Platform" Tags="Once,Locked" Unlock="tar_m11ab" />
+    <LeadsTo WarpCode="tar_m10ab" CommonName="Vulkar Spice Lab" Tags="Locked,FixSpice" />
   </Module>
-  <Module WarpCode="tar_m10ab" CommonName="Vulkar Spice Lab" Tags="Unreachable">
+  <Module WarpCode="tar_m10ab" CommonName="Vulkar Spice Lab">
     <LeadsTo WarpCode="tar_m10aa" CommonName="Vulkar Base" />
   </Module>
   <Module WarpCode="tar_m10ac" CommonName="Vulkar Garage">
     <LeadsTo WarpCode="tar_m03aa" CommonName="Lower City" Tags="Once" />
     <LeadsTo WarpCode="tar_m10aa" CommonName="Vulkar Base" />
-    <LeadsTo WarpCode="tar_m03af" CommonName="Swoop Platform" Tags="Locked" />
+    <LeadsTo WarpCode="tar_m03af" CommonName="Swoop Platform" Tags="Locked" Unlock="tar_m11ab" />
   </Module>
   <Module WarpCode="tar_m11aa" CommonName="Bek Base">
     <LeadsTo WarpCode="tar_m03aa" CommonName="Lower City" />
-    <LeadsTo WarpCode="tar_m11ab" CommonName="Gadon's Office" Tags="Locked,FLU,GPTP,DLZ" />
-    <LeadsTo WarpCode="tar_m03af" CommonName="Swoop Platform" Tags="Once,Locked" />
+    <LeadsTo WarpCode="tar_m11ab" CommonName="Gadon's Office" Tags="Locked,FLU,GPW,DLZ" Unlock="tar_m10ac" />
+    <LeadsTo WarpCode="tar_m03af" CommonName="Swoop Platform" Tags="Once,Locked" Unlock="tar_m10ac" />
   </Module>
   <Module WarpCode="tar_m11ab" CommonName="Gadon's Office">
     <LeadsTo WarpCode="tar_m11aa" CommonName="Bek Base" />
   </Module>
+
+  <!--Tatooine-->
   <Module WarpCode="tat_m17aa" CommonName="Anchorhead">
     <LeadsTo WarpCode="tat_m17ab" CommonName="Tatooine Docking Bay" />
     <LeadsTo WarpCode="tat_m17ad" CommonName="Hunting Lodge" />
@@ -315,13 +354,13 @@
     <LeadsTo WarpCode="tat_m17ae" CommonName="Swoop Registration" />
     <LeadsTo WarpCode="tat_m17af" CommonName="Tatooine Cantina" />
     <LeadsTo WarpCode="tat_m17ac" CommonName="Droid Shop" />
-    <LeadsTo WarpCode="tat_m18aa" CommonName="Dune Sea" Tags="Locked" />
+    <LeadsTo WarpCode="tat_m18aa" CommonName="Dune Sea" Tags="Locked" Unlock="tat_m17ag" />
   </Module>
   <Module WarpCode="tat_m17ab" CommonName="Tatooine Docking Bay">
     <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
     <LeadsTo WarpCode="tat_m17aa" CommonName="Anchorhead" />
   </Module>
-  <Module WarpCode="tat_m17ac" CommonName="Droid Shop">
+  <Module WarpCode="tat_m17ac" CommonName="Droid Shop" Tags="HK47">
     <LeadsTo WarpCode="tat_m17aa" CommonName="Anchorhead" />
   </Module>
   <Module WarpCode="tat_m17ad" CommonName="Hunting Lodge" Tags="Pazaak">
@@ -342,12 +381,12 @@
   </Module>
   <Module WarpCode="tat_m18aa" CommonName="Dune Sea">
     <LeadsTo WarpCode="tat_m17aa" CommonName="Anchorhead" />
-    <LeadsTo WarpCode="tat_m18ac" CommonName="Eastern Dune Sea" Tags="Locked" />
+    <LeadsTo WarpCode="tat_m18ac" CommonName="Eastern Dune Sea" Tags="Locked,STP" Unlock="tat_m17ac,tat_m20aa" />
     <LeadsTo WarpCode="tat_m18ab" CommonName="Sand People Territory" />
   </Module>
   <Module WarpCode="tat_m18ab" CommonName="Sand People Territory">
     <LeadsTo WarpCode="tat_m18aa" CommonName="Dune Sea" />
-    <LeadsTo WarpCode="tat_m18ac" CommonName="Eastern Dune Sea" Tags="Locked" />
+    <LeadsTo WarpCode="tat_m18ac" CommonName="Eastern Dune Sea" Tags="Locked,STP" Unlock="tat_m17ac,tat_m20aa" />
     <LeadsTo WarpCode="tat_m20aa" CommonName="Sand People Enclave" />
   </Module>
   <Module WarpCode="tat_m18ac" CommonName="Eastern Dune Sea" Tags="StarMap">
@@ -357,6 +396,8 @@
   <Module WarpCode="tat_m20aa" CommonName="Sand People Enclave">
     <LeadsTo WarpCode="tat_m18ab" CommonName="Sand People Territory" />
   </Module>
+
+  <!--Unknown World-->
   <Module WarpCode="unk_m41aa" CommonName="Central Beach">
     <LeadsTo WarpCode="ebo_m41aa" CommonName="Lehon Hawk" />
     <LeadsTo WarpCode="unk_m41ac" CommonName="North Beach" />
@@ -373,7 +414,8 @@
   <Module WarpCode="unk_m41ad" CommonName="Temple Exterior">
     <LeadsTo WarpCode="unk_m41aa" CommonName="Central Beach" />
     <LeadsTo WarpCode="unk_m41ab" CommonName="South Beach" />
-    <LeadsTo WarpCode="unk_m44aa" CommonName="Temple Main Floor" Tags="Locked,GPTP,DLZ" />
+    <LeadsTo WarpCode="STUNT_19" CommonName="Jaw Drop" Tags="Once,Locked" Unlock="unk_m42aa,unk_m43aa" />
+    <LeadsTo WarpCode="unk_m44aa" CommonName="Temple Main Floor" Tags="Locked,Clip,GPW,DLZ" Unlock="STUNT_19" />
   </Module>
   <Module WarpCode="unk_m42aa" CommonName="Elder Settlement">
     <LeadsTo WarpCode="unk_m41ab" CommonName="South Beach" />
@@ -382,81 +424,95 @@
     <LeadsTo WarpCode="unk_m41ac" CommonName="North Beach" />
   </Module>
   <Module WarpCode="unk_m44aa" CommonName="Temple Main Floor">
-    <LeadsTo WarpCode="unk_m41ad" CommonName="Temple Exterior" />
+    <LeadsTo WarpCode="unk_m41ad" CommonName="Temple Exterior" Tags="Locked" Unlock="unk_m44ac" />
     <LeadsTo WarpCode="unk_m44ab" CommonName="Temple Catacombs" />
-    <LeadsTo WarpCode="unk_m44ac" CommonName="Temple Summit" Tags="Locked,GPTP,DLZ" />
+    <LeadsTo WarpCode="unk_m44ac" CommonName="Temple Summit" Tags="Locked,GPW,DLZ" Unlock="unk_m44ab" />
   </Module>
   <Module WarpCode="unk_m44ab" CommonName="Temple Catacombs">
     <LeadsTo WarpCode="unk_m44aa" CommonName="Temple Main Floor" />
   </Module>
   <Module WarpCode="unk_m44ac" CommonName="Temple Summit">
-    <LeadsTo WarpCode="unk_m44aa" CommonName="Temple Main Floor" />
+    <LeadsTo WarpCode="unk_m44aa" CommonName="Temple Main Floor" Tags="Locked,FixDoors" Unlock="Jolee" />
   </Module>
-  
-  <!--Cutscene Modules-->
-  <Module WarpCode="ebo_m40aa" CommonName="Leviathan Game-Plan Cutscene">
-  </Module>
-  <Module WarpCode="ebo_m40ad" CommonName="Escaped The Leviathan">
-  </Module>
-  <Module WarpCode="M12ab"     CommonName="Fighter Skirmish">
-  </Module>
-  <Module WarpCode="STUNT_00"  CommonName="Dream Sequence">
-  </Module>
+
+  <!--Repeated Cutscenes-->
+  <Module WarpCode="M12ab" CommonName="Fighter Skirmish" />
+  <Module WarpCode="STUNT_00" CommonName="Dream Sequence" />
+
+  <!--Taris Cutscenes-->
   <Module WarpCode="STUNT_03a" CommonName="Malak Orders Taris Destroyed">
-    <!--Davik's Estate--> <!--works multiple times-->
+    <LeadsTo WarpCode="tar_m08aa" CommonName="Davik's Estate" />
   </Module>
-  <Module WarpCode="STUNT_06"  CommonName="Taris Destruction Update">
-    <!--Escaping Taris on the Ebon Hawk-->
+  <Module WarpCode="STUNT_06" CommonName="Taris Destruction Update">
+    <LeadsTo WarpCode="STUNT_07" CommonName="Escaping Taris on the Ebon Hawk" />
+    <!--LeadsTo danm13 (Return to EH)-->
   </Module>
-  <Module WarpCode="STUNT_07"  CommonName="Escaping Taris on the Ebon Hawk">
-    <!--Fighter Skirmish-->
+  <Module WarpCode="STUNT_07" CommonName="Escaping Taris on the Ebon Hawk">
+    <!--LeadsTo WarpCode="M12ab" CommonName="Fighter Skirmish"-->
+    <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
   </Module>
-  <Module WarpCode="STUNT_12"  CommonName="Calo Nord is Alive">
-    <!--Ebon Hawk (ebo_m12aa)-->
+
+  <!--Leviathan Cutscenes-->
+  <Module WarpCode="STUNT_16" CommonName="Leviathan Captured (Old Mentor)">
+    <LeadsTo WarpCode="ebo_m40aa" CommonName="Leviathan Game-Plan Cutscene" />
   </Module>
-  <Module WarpCode="STUNT_14"  CommonName="Darth Bandon Recruited">
-    <!--Ebon Hawk (ebo_m12aa)-->
-  </Module>
-  <Module WarpCode="STUNT_16"  CommonName="Leviathan Captured (Old Mentor)">
-    <!--Leviathan Game-Plan Cutscene (ebo_m40aa)-->
-  </Module>
-  <Module WarpCode="STUNT_18"  CommonName="Bastila is Tortured">
-    <!--STUNT_34-->
-  </Module>
-  <Module WarpCode="STUNT_19"  CommonName="Jaw Drop">
-    <!--Temple Main Floor (unk_m44aa)-->
+  <Module WarpCode="ebo_m40aa" CommonName="Leviathan Game-Plan Cutscene">
+    <LeadsTo WarpCode="lev_m40aa" CommonName="Prison Block" />
   </Module>
   <Module WarpCode="STUNT_31b" CommonName="Revan Reveal">
-    <!--Leviathan Hangar (lev_m40ac)-->
+    <LeadsTo WarpCode="lev_m40ac" CommonName="Leviathan Hangar" />
   </Module>
-  <Module WarpCode="STUNT_34"  CommonName="Star Forge Arrival">
-    <!--Fighter Encounter-->
+  <Module WarpCode="ebo_m40ad" CommonName="Escaped The Leviathan">
+    <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
   </Module>
-  <Module WarpCode="STUNT_35"  CommonName="Lehon Distruptor Field">
-    <!--Lehon Hawk (ebo_m41aa)-->
+
+  <!--Star Map Cutscenes-->
+  <Module WarpCode="STUNT_12" CommonName="Calo Nord is Alive">
+    <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
   </Module>
-  <Module WarpCode="STUNT_42"  CommonName="Pre-Star Forge Cutscene (Light Side)">
-    <!--Ebon Hawk-->
+  <Module WarpCode="STUNT_14" CommonName="Darth Bandon Recruited">
+    <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
   </Module>
-  <Module WarpCode="STUNT_44"  CommonName="Pre-Star Forge Cutscene (Dark Side)">
-    <!--Ebon Hawk-->
+
+  <!--Star Forge System Cutscenes-->
+  <Module WarpCode="STUNT_18" CommonName="Bastila is Tortured">
+    <LeadsTo WarpCode="STUNT_34" CommonName="Star Forge Arrival" />
+  </Module>
+  <Module WarpCode="STUNT_34" CommonName="Star Forge Arrival">
+    <LeadsTo WarpCode="STUNT_35" CommonName="Lehon Distruptor Field" />
+  </Module>
+  <Module WarpCode="STUNT_35" CommonName="Lehon Distruptor Field">
+    <LeadsTo WarpCode="ebo_m41aa" CommonName="Lehon Hawk" />
+  </Module>
+  <Module WarpCode="STUNT_19" CommonName="Jaw Drop">
+    <LeadsTo WarpCode="unk_m44aa" CommonName="Temple Main Floor" />
+  </Module>
+  <Module WarpCode="STUNT_42" CommonName="Pre-Star Forge Cutscene (Light Side)">
+    <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
+  </Module>
+  <Module WarpCode="STUNT_44" CommonName="Pre-Star Forge Cutscene (Dark Side)">
+    <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
   </Module>
   <Module WarpCode="STUNT_50a" CommonName="Green Squadron">
-    <!--SF - Command Center ()-->
+    <LeadsTo WarpCode="sta_m45ac" CommonName="Command Center" />
   </Module>
   <Module WarpCode="STUNT_51a" CommonName="Bastila Destroys the Republic Fleet">
-    <!--SF - Command Center ()-->
+    <LeadsTo WarpCode="sta_m45ac" CommonName="Command Center" />
   </Module>
+
+  <!--Dark Side Ending Cutscenes-->
   <Module WarpCode="STUNT_54a" CommonName="The Republic is Doomed">
-    <!--All Hail Lord Revan (STUNT_55a)-->
+    <LeadsTo WarpCode="STUNT_55a" CommonName="All Hail Lord Revan (Dark Credits)" />
   </Module>
   <Module WarpCode="STUNT_55a" CommonName="All Hail Lord Revan (Dark Credits)">
-    <!--End of game - Main Menu-->
+    <!--LeadsTo End of game - Main Menu-->
   </Module>
+
+  <!--Light Side Ending Cutscenes-->
   <Module WarpCode="STUNT_56a" CommonName="Star Forge Destroyed">
-    <!--The Sith are Defeated (STUNT_57)-->
+    <LeadsTo WarpCode="STUNT_57" CommonName="The Sith are Defeated (Light Credits)" />
   </Module>
-  <Module WarpCode="STUNT_57"  CommonName="The Sith are Defeated (Light Credits)">
-    <!--End of game - Main Menu-->
+  <Module WarpCode="STUNT_57" CommonName="The Sith are Defeated (Light Credits)">
+    <!--LeadsTo End of game - Main Menu-->
   </Module>
 </Modules>
