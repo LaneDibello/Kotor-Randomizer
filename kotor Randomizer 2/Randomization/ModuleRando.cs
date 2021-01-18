@@ -29,6 +29,8 @@ namespace kotor_Randomizer_2
         private const string FIXED_DREAM_OVERRIDE = "k_ren_visionland.ncs";
         private const string UNLOCK_MAP_OVERRIDE = "k_pebn_galaxy.ncs";
 
+        private const int MAX_ITERATIONS = 10;
+
         // Populates and shuffles the the modules flagged to be randomized. Returns true if override files should be added.
         public static void Module_rando(KPaths paths)
         {
@@ -51,29 +53,91 @@ namespace kotor_Randomizer_2
             // Split the Bound modules into their respective lists.
             List<string> ExcludedModules = Globals.BoundModules.Where(x => x.Omitted).Select(x => x.Name).ToList();
             List<string> IncludedModules = Globals.BoundModules.Where(x => !x.Omitted).Select(x => x.Name).ToList();
+            Dictionary<string, string> LookupTable = new Dictionary<string, string>();  // Create lookup table to find a given module's new "name".
+            bool reachable = true;
+            int iterations = 0;
 
-            // Shuffle the list of included modules.
-            List<string> ShuffledModules = IncludedModules.ToList();
-            Randomize.FisherYatesShuffle(ShuffledModules);
+            // ------------------------------------------------------------
+
+            if (Properties.Settings.Default.VerifyReachability)
+            {
+                // Construct digraph and initialize reachability settings.
+                ModuleDigraph digraph = new ModuleDigraph(Path.Combine(Environment.CurrentDirectory, "Xml", "KotorModules.xml"));
+
+                System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+                sw.Start();
+
+                do
+                {
+                    iterations++;
+
+                    // Shuffle the list of included modules.
+                    List<string> ShuffledModules = IncludedModules.ToList();
+                    Randomize.FisherYatesShuffle(ShuffledModules);
+                    LookupTable.Clear();
+
+                    for (int i = 0; i < IncludedModules.Count; i++)
+                    {
+                        LookupTable.Add(IncludedModules[i], ShuffledModules[i]);
+                    }
+
+                    foreach (string name in ExcludedModules)
+                    {
+                        LookupTable.Add(name, name);
+                    }
+
+                    digraph.SetRandomizationLookup(LookupTable);
+                    digraph.CheckReachability();
+                    reachable = digraph.IsGoalReachable();
+                } while (!reachable && iterations < MAX_ITERATIONS);
+
+                if (reachable) Console.WriteLine($"Reachable solution found after {iterations} shuffles. Time elapsed: {sw.Elapsed}");
+                else Console.WriteLine($"No reachable solution found over {iterations} shuffles. Time elapsed: {sw.Elapsed}");
+            }
+            else
+            {
+                // Shuffle the list of included modules.
+                List<string> ShuffledModules = IncludedModules.ToList();
+                Randomize.FisherYatesShuffle(ShuffledModules);
+                LookupTable.Clear();
+
+                for (int i = 0; i < IncludedModules.Count; i++)
+                {
+                    LookupTable.Add(IncludedModules[i], ShuffledModules[i]);
+                }
+
+                foreach (string name in ExcludedModules)
+                {
+                    LookupTable.Add(name, name);
+                }
+            }
+
+            // ------------------------------------------------------------
 
             // Copy shuffled modules into the base directory.
-            Dictionary<string, string> LookupTable = new Dictionary<string, string>();  // Create lookup table to find a given module's new "name".
-            for (int i = 0; i < IncludedModules.Count; i++)
+            foreach (var name in LookupTable)
             {
-                LookupTable.Add(IncludedModules[i], ShuffledModules[i]);
-                File.Copy($"{paths.modules_backup}{IncludedModules[i]}.rim",   $"{paths.modules}{ShuffledModules[i]}.rim",   true);
-                File.Copy($"{paths.modules_backup}{IncludedModules[i]}_s.rim", $"{paths.modules}{ShuffledModules[i]}_s.rim", true);
-                File.Copy($"{paths.lips_backup}{IncludedModules[i]}_loc.mod",  $"{paths.lips}{ShuffledModules[i]}_loc.mod",  true);
+                File.Copy($"{paths.modules_backup}{name.Key}.rim",   $"{paths.modules}{name.Value}.rim",   true);
+                File.Copy($"{paths.modules_backup}{name.Key}_s.rim", $"{paths.modules}{name.Value}_s.rim", true);
+                File.Copy($"{paths.lips_backup}{name.Key}_loc.mod",  $"{paths.lips}{name.Value}_loc.mod",  true);
             }
 
-            // Copy excluded, untouched modules into the base directory.
-            foreach (string name in ExcludedModules)
-            {
-                LookupTable.Add(name, name);
-                File.Copy($"{paths.modules_backup}{name}.rim",   $"{paths.modules}{name}.rim",   true);
-                File.Copy($"{paths.modules_backup}{name}_s.rim", $"{paths.modules}{name}_s.rim", true);
-                File.Copy($"{paths.lips_backup}{name}_loc.mod",  $"{paths.lips}{name}_loc.mod",  true);
-            }
+            //for (int i = 0; i < IncludedModules.Count; i++)
+            //{
+            //    //LookupTable.Add(IncludedModules[i], ShuffledModules[i]);
+            //    File.Copy($"{paths.modules_backup}{IncludedModules[i]}.rim",   $"{paths.modules}{ShuffledModules[i]}.rim",   true);
+            //    File.Copy($"{paths.modules_backup}{IncludedModules[i]}_s.rim", $"{paths.modules}{ShuffledModules[i]}_s.rim", true);
+            //    File.Copy($"{paths.lips_backup}{IncludedModules[i]}_loc.mod",  $"{paths.lips}{ShuffledModules[i]}_loc.mod",  true);
+            //}
+
+            //// Copy excluded, untouched modules into the base directory.
+            //foreach (string name in ExcludedModules)
+            //{
+            //    //LookupTable.Add(name, name);
+            //    File.Copy($"{paths.modules_backup}{name}.rim",   $"{paths.modules}{name}.rim",   true);
+            //    File.Copy($"{paths.modules_backup}{name}_s.rim", $"{paths.modules}{name}_s.rim", true);
+            //    File.Copy($"{paths.lips_backup}{name}_loc.mod",  $"{paths.lips}{name}_loc.mod",  true);
+            //}
 
             // Copy lips extras into the base directory.
             foreach (string name in Globals.lipXtras)
