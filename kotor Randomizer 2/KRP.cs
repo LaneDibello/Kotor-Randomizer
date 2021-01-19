@@ -89,6 +89,17 @@ namespace kotor_Randomizer_2
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockVarDoors; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.FixLevElevators; }
 
+                        // Load reachability settings
+                        Properties.Settings.Default.VerifyReachability = br.ReadBoolean();
+                        Properties.Settings.Default.IgnoreOnceEdges = br.ReadBoolean();
+                        Properties.Settings.Default.AllowGlitchClip = br.ReadBoolean();
+                        Properties.Settings.Default.AllowGlitchDlz = br.ReadBoolean();
+                        Properties.Settings.Default.AllowGlitchFlu = br.ReadBoolean();
+                        Properties.Settings.Default.AllowGlitchGpw = br.ReadBoolean();
+                        Properties.Settings.Default.GoalIsMalak = br.ReadBoolean();
+                        Properties.Settings.Default.GoalIsPazaak = br.ReadBoolean();
+                        Properties.Settings.Default.GoalIsStarMaps = br.ReadBoolean();
+
                         Properties.Settings.Default.LastPresetComboIndex = -2;
                         Properties.Settings.Default.ModulePresetSelected = false;
                     }
@@ -337,6 +348,15 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors));   // Unlock Problem Doors
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators));  // Fixed Leviathan Elevators
 
+                    bw.Write(Properties.Settings.Default.VerifyReachability);   // 
+                    bw.Write(Properties.Settings.Default.IgnoreOnceEdges);      // 
+                    bw.Write(Properties.Settings.Default.AllowGlitchClip);      // 
+                    bw.Write(Properties.Settings.Default.AllowGlitchDlz);       // 
+                    bw.Write(Properties.Settings.Default.AllowGlitchFlu);       // 
+                    bw.Write(Properties.Settings.Default.AllowGlitchGpw);       // 
+                    bw.Write(Properties.Settings.Default.GoalIsMalak);          // 
+                    bw.Write(Properties.Settings.Default.GoalIsPazaak);         // 
+                    bw.Write(Properties.Settings.Default.GoalIsStarMaps);       //
                 }
                 // Items
                 if (Properties.Settings.Default.DoRandomization_Item)
