@@ -36,9 +36,19 @@ namespace kotor_Randomizer_2
         /// </summary>
         private static Dictionary<string, string> LookupTable { get; set; } = new Dictionary<string, string>();
 
-        // Populates and shuffles the the modules flagged to be randomized. Returns true if override files should be added.
+        /// <summary>
+        /// A directional graph mapping the modules and loading zones throughout the game.
+        /// </summary>
+        private static ModuleDigraph Digraph { get; set; } = new ModuleDigraph(Path.Combine(Environment.CurrentDirectory, "Xml", "KotorModules.xml"));
+
+        /// <summary>
+        /// Populates and shuffles the the modules flagged to be randomized. Returns true if override files should be added.
+        /// </summary>
         public static void Module_rando(KPaths paths)
         {
+            // Construct digraph and initialize reachability settings.
+            //Digraph = new ModuleDigraph(Path.Combine(Environment.CurrentDirectory, "Xml", "KotorModules.xml"));
+
             LookupTable.Clear();
 
             // Set up the bound module collection if it hasn't been already.
@@ -58,16 +68,13 @@ namespace kotor_Randomizer_2
             //}
 
             // Split the Bound modules into their respective lists.
-            List<string> ExcludedModules = Globals.BoundModules.Where(x => x.Omitted).Select(x => x.Name).ToList();
-            List<string> IncludedModules = Globals.BoundModules.Where(x => !x.Omitted).Select(x => x.Name).ToList();
+            List<string> ExcludedModules = Globals.BoundModules.Where(x => x.Omitted).Select(x => x.Code).ToList();
+            List<string> IncludedModules = Globals.BoundModules.Where(x => !x.Omitted).Select(x => x.Code).ToList();
             bool reachable = false;
             int iterations = 0;
 
             if (Properties.Settings.Default.VerifyReachability)
             {
-                // Construct digraph and initialize reachability settings.
-                ModuleDigraph digraph = new ModuleDigraph(Path.Combine(Environment.CurrentDirectory, "Xml", "KotorModules.xml"));
-
                 System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
                 sw.Start();
 
@@ -90,9 +97,9 @@ namespace kotor_Randomizer_2
                         LookupTable.Add(name, name);
                     }
 
-                    digraph.SetRandomizationLookup(LookupTable);
-                    digraph.CheckReachability();
-                    reachable = digraph.IsGoalReachable();
+                    Digraph.SetRandomizationLookup(LookupTable);
+                    Digraph.CheckReachability();
+                    reachable = Digraph.IsGoalReachable();
                 }
 
                 if (reachable)
@@ -454,7 +461,7 @@ namespace kotor_Randomizer_2
                 sw.WriteLine($"Add Spice Lab Load Zone,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ)}");
                 sw.WriteLine();
 
-                sw.WriteLine($"Verify Reachability,{!Properties.Settings.Default.VerifyReachability}");
+                sw.WriteLine($"Verify Reachability,{Properties.Settings.Default.VerifyReachability}");
                 sw.WriteLine($"Ignore Single-Use Transitions,{Properties.Settings.Default.IgnoreOnceEdges}");
                 sw.WriteLine($"Goal Is Malak,{Properties.Settings.Default.GoalIsMalak}");
                 sw.WriteLine($"Goal Is Star Maps,{Properties.Settings.Default.GoalIsStarMaps}");
@@ -465,13 +472,25 @@ namespace kotor_Randomizer_2
                 sw.WriteLine($"Allow Glitch GPW,{Properties.Settings.Default.AllowGlitchGpw}");
                 sw.WriteLine();
 
-                sw.WriteLine("Has Changed,Original,Randomized");
+                sw.WriteLine("Has Changed,Default Code,Default Name,Randomized Code,Randomized Name");
                 foreach (var kvp in sortedLookup)
                 {
-                    sw.WriteLine($"{(kvp.Key != kvp.Value).ToString()},{kvp.Key},{kvp.Value}");
+                    var defaultName = Digraph.Modules.FirstOrDefault(m => m.WarpCode == kvp.Key)?.CommonName;
+                    var randomizedName = Digraph.Modules.FirstOrDefault(m => m.WarpCode == kvp.Value)?.CommonName;
+                    sw.WriteLine($"{(kvp.Key != kvp.Value).ToString()},{kvp.Key},{defaultName},{kvp.Value},{randomizedName}");
                 }
                 sw.WriteLine();
             }
+        }
+
+        /// <summary>
+        /// Returns the common name of the given module code. Returns null if the code isn't found.
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public static string GetModuleCommonName(string code)
+        {
+            return Digraph.Modules.FirstOrDefault(m => m.WarpCode == code)?.CommonName;
         }
     }
 }

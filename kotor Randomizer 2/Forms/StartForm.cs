@@ -277,7 +277,9 @@ namespace kotor_Randomizer_2
 
         private void openSpoilersFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(Path.Combine(Environment.CurrentDirectory, "Spoilers"));
+            var dir = Path.Combine(Environment.CurrentDirectory, "Spoilers");
+            Directory.CreateDirectory(dir); // Does nothing if directory exists.
+            System.Diagnostics.Process.Start(dir);
         }
         #endregion
     }

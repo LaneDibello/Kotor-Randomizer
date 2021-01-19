@@ -65,12 +65,13 @@
             // 
             this.OmittedListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.OmittedListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.OmittedListBox.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OmittedListBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.OmittedListBox.FormattingEnabled = true;
-            this.OmittedListBox.Location = new System.Drawing.Point(280, 50);
+            this.OmittedListBox.Location = new System.Drawing.Point(287, 50);
             this.OmittedListBox.Name = "OmittedListBox";
             this.OmittedListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.OmittedListBox.Size = new System.Drawing.Size(240, 379);
+            this.OmittedListBox.Size = new System.Drawing.Size(248, 379);
             this.OmittedListBox.TabIndex = 17;
             this.OmittedListBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OmittedListBox_KeyPress);
             this.OmittedListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OmittedListBox_MouseDoubleClick);
@@ -79,12 +80,13 @@
             // 
             this.RandomizedListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.RandomizedListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.RandomizedListBox.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RandomizedListBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.RandomizedListBox.FormattingEnabled = true;
             this.RandomizedListBox.Location = new System.Drawing.Point(20, 50);
             this.RandomizedListBox.Name = "RandomizedListBox";
             this.RandomizedListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.RandomizedListBox.Size = new System.Drawing.Size(240, 379);
+            this.RandomizedListBox.Size = new System.Drawing.Size(248, 379);
             this.RandomizedListBox.TabIndex = 16;
             this.RandomizedListBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RandomizedListBox_KeyPress);
             this.RandomizedListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.RandomizedListBox_MouseDoubleClick);
@@ -98,7 +100,7 @@
             this.PresetComboBox.FormattingEnabled = true;
             this.PresetComboBox.Location = new System.Drawing.Point(20, 460);
             this.PresetComboBox.Name = "PresetComboBox";
-            this.PresetComboBox.Size = new System.Drawing.Size(500, 21);
+            this.PresetComboBox.Size = new System.Drawing.Size(515, 21);
             this.PresetComboBox.TabIndex = 18;
             this.PresetComboBox.SelectedIndexChanged += new System.EventHandler(this.PresetComboBox_SelectedIndexChanged);
             // 
@@ -403,7 +405,7 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.panel1.Location = new System.Drawing.Point(20, 576);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(505, 2);
+            this.panel1.Size = new System.Drawing.Size(515, 2);
             this.panel1.TabIndex = 41;
             // 
             // cbGlitchClip
@@ -440,7 +442,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(541, 667);
+            this.ClientSize = new System.Drawing.Size(556, 667);
             this.Controls.Add(this.cbIgnoreOnceEdges);
             this.Controls.Add(this.cbGlitchClip);
             this.Controls.Add(this.panel1);

@@ -92,11 +92,11 @@ namespace kotor_Randomizer_2
         {
             for (int i = 0; i < Globals.BoundModules.Count; i++)
             {
-                Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, false);
+                Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, false);
 
-                if (Globals.OMIT_PRESETS[preset].Contains(Globals.BoundModules[i].Name))
+                if (Globals.OMIT_PRESETS[preset].Contains(Globals.BoundModules[i].Code))
                 {
-                    Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, true);
+                    Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, true);
                 }
             }
         }
@@ -121,11 +121,11 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.LastPresetComboIndex = PresetComboBox.SelectedIndex;
             for (int i = 0; i < Globals.BoundModules.Count; i++)
             {
-                Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, false);
+                Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, false);
 
-                if (Globals.OMIT_PRESETS[preset].Contains(Globals.BoundModules[i].Name))
+                if (Globals.OMIT_PRESETS[preset].Contains(Globals.BoundModules[i].Code))
                 {
-                    Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, true);
+                    Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, true);
                 }
             }
         }
@@ -141,7 +141,7 @@ namespace kotor_Randomizer_2
             {
                 if (RandomizedListBox.SelectedItems.Contains(Globals.BoundModules[i]))
                 {
-                    Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, true);
+                    Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, true);
                 }
             }
             UpdateListBoxes();
@@ -155,7 +155,7 @@ namespace kotor_Randomizer_2
             {
                 if (OmittedListBox.SelectedItems.Contains(Globals.BoundModules[i]))
                 {
-                    Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, false);
+                    Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, false);
                 }
             }
             UpdateListBoxes();
@@ -171,7 +171,7 @@ namespace kotor_Randomizer_2
                 {
                     if (RandomizedListBox.SelectedItems.Contains(Globals.BoundModules[i]))
                     {
-                        Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, true);
+                        Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, true);
                     }
                 }
                 UpdateListBoxes();
@@ -188,7 +188,7 @@ namespace kotor_Randomizer_2
                 {
                     if (OmittedListBox.SelectedItems.Contains(Globals.BoundModules[i]))
                     {
-                        Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, false);
+                        Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, false);
                     }
                 }
                 UpdateListBoxes();
