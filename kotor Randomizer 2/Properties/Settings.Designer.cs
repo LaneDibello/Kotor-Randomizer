@@ -926,5 +926,17 @@ namespace kotor_Randomizer_2.Properties {
                 this["AllowGlitchGpw"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IgnoreOnceEdges {
+            get {
+                return ((bool)(this["IgnoreOnceEdges"]));
+            }
+            set {
+                this["IgnoreOnceEdges"] = value;
+            }
+        }
     }
 }

@@ -53,6 +53,7 @@ namespace kotor_Randomizer_2
 
             // Initialize reachability settings
             cbReachability.Checked = settings.VerifyReachability;
+            cbIgnoreOnceEdges.Enabled = cbReachability.Checked;
             cbGoalMalak.Enabled = cbReachability.Checked;
             cbGoalStarMaps.Enabled = cbReachability.Checked;
             cbGoalPazaak.Enabled = cbReachability.Checked;
@@ -60,6 +61,7 @@ namespace kotor_Randomizer_2
             cbGlitchDlz.Enabled = cbReachability.Checked;
             cbGlitchFlu.Enabled = cbReachability.Checked;
             cbGlitchGpw.Enabled = cbReachability.Checked;
+            cbIgnoreOnceEdges.Checked = settings.IgnoreOnceEdges;
             cbGoalMalak.Checked = settings.GoalIsMalak;
             cbGoalStarMaps.Checked = settings.GoalIsStarMaps;
             cbGoalPazaak.Checked = settings.GoalIsPazaak;
@@ -293,6 +295,7 @@ namespace kotor_Randomizer_2
         {
             if (!Constructed) { return; }
             Properties.Settings.Default.VerifyReachability = cbReachability.Checked;
+            cbIgnoreOnceEdges.Enabled = cbReachability.Checked;
             cbGoalMalak.Enabled = cbReachability.Checked;
             cbGoalStarMaps.Enabled = cbReachability.Checked;
             cbGoalPazaak.Enabled = cbReachability.Checked;
@@ -342,6 +345,12 @@ namespace kotor_Randomizer_2
         {
             if (!Constructed) { return; }
             Properties.Settings.Default.AllowGlitchGpw = cbGlitchGpw.Checked;
+        }
+
+        private void cbAllowOnceEdges_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.IgnoreOnceEdges = cbIgnoreOnceEdges.Checked;
         }
 
         private void ModuleForm_Activated(object sender, EventArgs e)

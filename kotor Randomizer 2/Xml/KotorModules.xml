@@ -36,28 +36,32 @@
 
   <!--Ebon Hawk-->
   <Module WarpCode="ebo_m12aa" CommonName="Ebon Hawk">
-    <!--TODO: Find a good way to handle the map accessibility. Extra locations should be locked.-->
-    <LeadsTo WarpCode="danm13" CommonName="Jedi Enclave" Tags="FixMap" />
-    <LeadsTo WarpCode="kas_m22aa" CommonName="Czerka Landing Port" Tags="FixMap" />
-    <LeadsTo WarpCode="korr_m33aa" CommonName="Dreshdae" Tags="FixMap" />
-    <LeadsTo WarpCode="manm26ad" CommonName="Manaan Docking Bay" Tags="FixMap" />
-    <LeadsTo WarpCode="tat_m17ab" CommonName="Tatooine Docking Bay" Tags="FixMap" />
-    <LeadsTo WarpCode="liv_m99aa" CommonName="Yavin Station" Tags="FixMap" />
-    <LeadsTo WarpCode="unk_m41aa" CommonName="Central Beach" Tags="FixMap" />
-    <LeadsTo WarpCode="sta_m45aa" CommonName="Deck 1" Tags="Locked,FixMap" />
+    <!--General-->
+    <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" Tags="Locked,FixMap" Unlock="tar_m08aa;danm13,danm15" />
+    <!--Obtain Hawk-->
+    <LeadsTo WarpCode="danm13" CommonName="Jedi Enclave" Tags="Locked,FixMap" Unlock="tar_m08aa;danm13,danm15" />
+    <!--Dantooine Map-->
+    <LeadsTo WarpCode="kas_m22aa" CommonName="Czerka Landing Port" Tags="Locked,FixMap" Unlock="danm13,danm15" />
+    <LeadsTo WarpCode="korr_m33aa" CommonName="Dreshdae" Tags="Locked,FixMap" Unlock="danm13,danm15" />
     <LeadsTo WarpCode="ebo_m46ab" CommonName="Mystery Box" Tags="Once,Locked,FixBox" Unlock="korr_m33aa" />
-    <LeadsTo WarpCode="STUNT_12" CommonName="Calo Nord is Alive" Tags="Once" />
-    <LeadsTo WarpCode="STUNT_14" CommonName="Darth Bandon Recruited" Tags="Once" />
-    <LeadsTo WarpCode="STUNT_16" CommonName="Leviathan Captured (Old Mentor)" Tags="Once,Locked" Unlock="kas_m25aa,korr_m39aa,manm28ad,tat_m18ac" />
-    <!--<LeadsTo WarpCode="lev_m40aa"  CommonName="Prison Block" Tags="Once,Locked" Unlock="kas_m25aa,korr_m39aa,manm28ad,tat_m18ac" />-->
-    <LeadsTo WarpCode="STUNT_18" CommonName="Bastila is Tortured" Tags="Once,Locked" />
+    <LeadsTo WarpCode="manm26ad" CommonName="Manaan Docking Bay" Tags="Locked,FixMap" Unlock="danm13,danm15" />
+    <LeadsTo WarpCode="tat_m17ab" CommonName="Tatooine Docking Bay" Tags="Locked,FixMap" Unlock="danm13,danm15" />
+    <LeadsTo WarpCode="liv_m99aa" CommonName="Yavin Station" Tags="Locked,FixMap" Unlock="danm13,danm15" />
+    <LeadsTo WarpCode="STUNT_12" CommonName="Calo Nord is Alive" Tags="Once,Locked" Unlock="danm13,danm15" />
+    <!--Two Extra Maps-->
+    <LeadsTo WarpCode="STUNT_14" CommonName="Darth Bandon Recruited" Tags="Once,Locked" Unlock="kas_m25aa,korr_m39aa;kas_m25aa,manm28ad;kas_m25aa,tat_m18ac;korr_m39aa,manm28ad;korr_m39aa,tat_m18ac;manm28ad,tat_m18ac" />
+    <!--Three Extra Maps-->
+    <LeadsTo WarpCode="STUNT_16" CommonName="Leviathan Captured (Old Mentor)" Tags="Once,Locked" Unlock="kas_m25aa,korr_m39aa,manm28ad;kas_m25aa,korr_m39aa,tat_m18ac;kas_m25aa,manm28ad,tat_m18ac;korr_m39aa,manm28ad,tat_m18ac" />
+    <!--Four Extra Maps-->
+    <LeadsTo WarpCode="STUNT_18" CommonName="Bastila is Tortured" Tags="Once,Locked" Unlock="kas_m25aa,korr_m39aa,manm28ad,tat_m18ac" />
+    <!--<LeadsTo WarpCode="unk_m41aa" CommonName="Central Beach" Tags="Locked,FixMap" Unlock="kas_m25aa,korr_m39aa,manm28ad,tat_m18ac" />-->
+    <LeadsTo WarpCode="sta_m45aa" CommonName="Deck 1" Tags="Locked,FixMap" Unlock="kas_m25aa,korr_m39aa,manm28ad,tat_m18ac,unk_m44ac" />
   </Module>
   <Module WarpCode="ebo_m41aa" CommonName="Lehon Hawk">
     <LeadsTo WarpCode="unk_m41aa" CommonName="Central Beach" />
-    <!--<LeadsTo WarpCode="sta_m45aa" CommonName="Deck 1" Tags="Locked" />-->
-    <!--TODO: Doesn't this take you to a cutscene? But that CS takes you to the Hawk... which leads to Deck 1 -->
-    <LeadsTo WarpCode="STUNT_42" CommonName="Pre-Star Forge Cutscene (Light Side)" Tags="Once,Locked" />
-    <LeadsTo WarpCode="STUNT_44" CommonName="Pre-Star Forge Cutscene (Dark Side)" Tags="Once,Locked" />
+    <!--Find parts and disable force field-->
+    <LeadsTo WarpCode="STUNT_42" CommonName="Pre-Star Forge Cutscene (Light Side)" Tags="Once,Locked" Unlock="unk_m44aa,Parts" />
+    <LeadsTo WarpCode="STUNT_44" CommonName="Pre-Star Forge Cutscene (Dark Side)" Tags="Once,Locked" Unlock="unk_m44aa,Parts" />
   </Module>
   <Module WarpCode="ebo_m46ab" CommonName="Mystery Box">
     <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" Tags="Once,FixBox" />
@@ -160,10 +164,7 @@
     <LeadsTo WarpCode="lev_m40aa" CommonName="Prison Block" Tags="Fake,Locked,FixElev" />
     <LeadsTo WarpCode="lev_m40ab" CommonName="Command Deck" Tags="Fake,Locked,FixElev" />
     <LeadsTo WarpCode="STUNT_31b" CommonName="Revan Reveal" Tags="Once,Locked" Unlock="Bastila,Carth" />
-    <!--<LeadsTo WarpCode="lev_m40ac" CommonName="Leviathan Hangar" Tags="Once,Locked" Unlock="Bastila,Carth" />-->
-    <LeadsTo WarpCode="ebo_m40ad" CommonName="Escaped The Leviathan" Tags="Once,Locked,FLU" Unlock="Bastila,Carth" FluReq="Carth" />
-    <!--<LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" Tags="Once,Locked,FLU" Unlock="Bastila,Carth" FluReq="Carth" />-->
-    <!--Unsure about the tags...-->
+    <LeadsTo WarpCode="ebo_m40ad" CommonName="Escaped The Leviathan" Tags="Once,Locked" Unlock="Bastila,Carth" FluReq="Carth" />
   </Module>
   <Module WarpCode="lev_m40ad" CommonName="Leviathan Bridge">
     <LeadsTo WarpCode="lev_m40ab" CommonName="Command Deck" />
@@ -403,7 +404,7 @@
     <LeadsTo WarpCode="unk_m41ac" CommonName="North Beach" />
     <LeadsTo WarpCode="unk_m41ad" CommonName="Temple Exterior" />
   </Module>
-  <Module WarpCode="unk_m41ab" CommonName="South Beach">
+  <Module WarpCode="unk_m41ab" CommonName="South Beach" Tags="Parts">
     <LeadsTo WarpCode="unk_m42aa" CommonName="Elder Settlement" />
     <LeadsTo WarpCode="unk_m41ad" CommonName="Temple Exterior" />
   </Module>
@@ -420,7 +421,7 @@
   <Module WarpCode="unk_m42aa" CommonName="Elder Settlement">
     <LeadsTo WarpCode="unk_m41ab" CommonName="South Beach" />
   </Module>
-  <Module WarpCode="unk_m43aa" CommonName="Rakatan Settlement">
+  <Module WarpCode="unk_m43aa" CommonName="Rakatan Settlement" Tags="Parts">
     <LeadsTo WarpCode="unk_m41ac" CommonName="North Beach" />
   </Module>
   <Module WarpCode="unk_m44aa" CommonName="Temple Main Floor">

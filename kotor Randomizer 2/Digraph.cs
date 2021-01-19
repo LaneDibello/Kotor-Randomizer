@@ -31,7 +31,8 @@ namespace kotor_Randomizer_2
         public const string ATTR_UNLOCK     = "Unlock";     // Vertex, Edge
 
         // General
-        public const char   TAG_SEPARATOR = ',';
+        public const char   TAG_SEPARATOR_COMMA = ',';
+        public const char   TAG_SEPARATOR_SEMICOLON = ';';
 
         // Blocking Tags ... Edge (Tags)
         public const string TAG_FAKE      = "Fake";
@@ -104,8 +105,8 @@ namespace kotor_Randomizer_2
 
         /// <summary> Locked edges will be ignored until they are unlocked. </summary>
         public bool EnforceEdgeTagLocked { get; set; } = true;
-        /// <summary> Once edges will be ignored, as they are unreliable. </summary>
-        public bool EnforceEdgeTagOnce   { get; set; } = true;
+        /// <summary> Allow usage of Once edges. If false, they will be fully blocked as they can be unreliable. </summary>
+        public bool IgnoreOnceEdges      { get; set; } = true;
 
         /// <summary> FixBox is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
         public bool EnabledFixBox   { get; set; } = false;
@@ -145,7 +146,7 @@ namespace kotor_Randomizer_2
             EnabledFixMap = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
             EnabledFixSpice = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
             EnforceEdgeTagLocked = true;
-            EnforceEdgeTagOnce = true;
+            IgnoreOnceEdges = Properties.Settings.Default.IgnoreOnceEdges;
             GoalIsMalak = Properties.Settings.Default.GoalIsMalak;
             GoalIsPazaak = Properties.Settings.Default.GoalIsPazaak;
             GoalIsStarMap = Properties.Settings.Default.GoalIsStarMaps;
@@ -154,7 +155,7 @@ namespace kotor_Randomizer_2
         /// <summary>
         /// Writes all reachable modules and their (randomized) edges to the console for debugging purposes.
         /// </summary>
-        private void WriteReachableToConsole()
+        public void WriteReachableToConsole()
         {
             foreach (var vertex in Reachable.Where(kvp => kvp.Value == true))
             {
@@ -182,8 +183,13 @@ namespace kotor_Randomizer_2
                     if (edge.Tags.Count > 0)
                         sb.Append($" [{edge.Tags.Aggregate((i, j) => $"{i},{j}")}]");
 
-                    if (edge.Unlock.Count > 0)
-                        sb.Append($" =[{edge.Unlock.Aggregate((i, j) => $"{i},{j}")}]=");
+                    if (edge.UnlockSets.Count > 0)
+                    {
+                        sb.Append(" =[");
+                        foreach (var set in edge.UnlockSets)
+                            sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
+                        sb.Append("]=");
+                    }
 
                     sb.AppendLine();
                 }
@@ -210,9 +216,8 @@ namespace kotor_Randomizer_2
         /// </summary>
         public void CheckReachability()
         {
-            Console.WriteLine("Time used to create digraph and check reachability...");
-            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-            sw.Start();
+            //System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            //sw.Start();
 
             // Reset objects needed for reachability testing.
             Reachable = Modules.ToDictionary(m => m.WarpCode, b => false);
@@ -229,11 +234,7 @@ namespace kotor_Randomizer_2
                 CheckReachabilityDFS(touched);
             } while (ReachableUpdated);
 
-            Console.WriteLine(sw.Elapsed.ToString());
-            Console.WriteLine();
-
-            WriteReachableToConsole();
-            Console.WriteLine();
+            //Console.WriteLine($"Time used to create digraph and check reachability...{sw.Elapsed}");
         }
 
         /// <summary>
@@ -250,16 +251,23 @@ namespace kotor_Randomizer_2
             // since we may have no opportunity to return here.
             foreach (var w in randStart.LeadsTo)
             {
-                if (EnforceEdgeTagOnce && CanIgnoreOnceEdge(w))
+                // If this is a once edge, determine how to handle it.
+                if (IsOnceEdge(w))
                 {
-                    if (!Reachable[RandomLookup[w.WarpCode]] && !OnceQueue.Contains(w))
+                    // Ignore once edges if setting is enabled.
+                    if (!IgnoreOnceEdges)
                     {
-                        OnceQueue.Enqueue(w);
-                        ReachableUpdated = true;
+                        // If allowed, enqueue the once edge for checking at the end of this cycle.
+                        if (!Reachable[RandomLookup[w.WarpCode]] && !OnceQueue.Contains(w))
+                        {
+                            OnceQueue.Enqueue(w);
+                            ReachableUpdated = true;
+                        }
                     }
                     continue;
                 }
-                if (EnforceEdgeTagLocked && CanIgnoreLockedEdge(w)) { continue; }
+                // If this is a locked edge, determine if it is still locked.
+                if (EnforceEdgeTagLocked && IsLockedEdge(w)) { continue; }
                 DepthFirstSearch(touched, Modules.Find(m => m.WarpCode == RandomLookup[w.WarpCode]));
             }
 
@@ -272,7 +280,7 @@ namespace kotor_Randomizer_2
                 if (Reachable[RandomLookup[once.WarpCode]]) continue;
 
                 // Send to back if still locked.
-                if (EnforceEdgeTagLocked && CanIgnoreLockedEdge(once))
+                if (EnforceEdgeTagLocked && IsLockedEdge(once))
                 {
                     OnceQueue.Enqueue(once);
                     //ReachableUpdated = true;
@@ -329,16 +337,23 @@ namespace kotor_Randomizer_2
             // Check each edge that hasn't been reached already.
             foreach (var w in v.LeadsTo)
             {
-                if (EnforceEdgeTagOnce && CanIgnoreOnceEdge(w))
+                // If this is a once edge, determine how to handle it.
+                if (IsOnceEdge(w))
                 {
-                    if (!Reachable[RandomLookup[w.WarpCode]] && !OnceQueue.Contains(w))
+                    // Ignore once edges if setting is enabled.
+                    if (!IgnoreOnceEdges)
                     {
-                        OnceQueue.Enqueue(w);
-                        ReachableUpdated = true;
+                        // If allowed, enqueue the once edge for checking at the end of this cycle.
+                        if (!Reachable[RandomLookup[w.WarpCode]] && !OnceQueue.Contains(w))
+                        {
+                            OnceQueue.Enqueue(w);
+                            ReachableUpdated = true;
+                        }
                     }
                     continue;
                 }
-                if (EnforceEdgeTagLocked && CanIgnoreLockedEdge(w)) continue;
+                // If this is a locked edge, determine if it is still locked.
+                if (EnforceEdgeTagLocked && IsLockedEdge(w)) continue;
                 if (!touched[RandomLookup[w.WarpCode]]) DepthFirstSearch(touched, Modules.Find(m => m.WarpCode == RandomLookup[w.WarpCode]));
             }
         }
@@ -348,7 +363,7 @@ namespace kotor_Randomizer_2
         /// </summary>
         /// <param name="edge">Edge to check.</param>
         /// <returns>True if the edge can be skipped.</returns>
-        private bool CanIgnoreOnceEdge(ModuleEdge edge)
+        private bool IsOnceEdge(ModuleEdge edge)
         {
             bool isOnce = false;
             if (edge.IsOnce)
@@ -379,7 +394,7 @@ namespace kotor_Randomizer_2
         /// </summary>
         /// <param name="edge">Edge to check.</param>
         /// <returns>True if the edge can be skipped.</returns>
-        private bool CanIgnoreLockedEdge(ModuleEdge edge)
+        private bool IsLockedEdge(ModuleEdge edge)
         {
             bool isLocked = false;
             if (edge.IsLocked)
@@ -399,36 +414,38 @@ namespace kotor_Randomizer_2
                 }
                 else
                 {
-                    // Check to see if the edge can be unlocked. ALL vertices need to be reachable.
+                    // Check to see if the edge can be unlocked by any of the possible sets.
                     var unlocked = true;
-                    foreach (var target in edge.Unlock)
+                    foreach (var set in edge.UnlockSets)
                     {
-                        // If not in Reachable, then it's a new tag that we haven't seen.
-                        if (!Reachable.ContainsKey(target))
+                        // Reset assumption to true, as we're just looking for one false in each set.
+                        unlocked = true;
+
+                        // ALL vertices within a set need to be reachable.
+                        foreach (var target in set)
                         {
-                            // Find the vertices that contain the tag, and see if we've reached ANY of them.
-                            // If not found, look for a LockedTag. Then check the Unlock for this tag.
-                            Reachable.Add(target, false);
-                            unlocked = false;
-                            break;
+                            // If the tag is not in Reachable, then it's a one that we haven't seen and the edge is still locked.
+                            if (!Reachable.ContainsKey(target))
+                            {
+                                Reachable.Add(target, false);
+                                unlocked = false;
+                                break;
+                            }
+
+                            // If not Reachable, then the edge is still locked.
+                            if (!Reachable[target])
+                            {
+                                unlocked = false;
+                                break;
+                            }
                         }
 
-                        // If not Reachable, then the edge is still locked.
-                        if (!Reachable[target])
-                        {
-                            unlocked = false;
-                            break;
-                        }
+                        // If a reachable set has been found, break out of the loop.
+                        if (unlocked) break;
                     }
 
-                    if (unlocked)
-                    {
-                        isLocked = false;
-                    }
-                    else
-                    {
-                        isLocked = true;
-                    }
+                    // Set return value.
+                    isLocked = !unlocked;
                 }
             }
             else
@@ -547,7 +564,7 @@ namespace kotor_Randomizer_2
             var tags = element.Attribute(XmlConsts.ATTR_TAGS);
             if (tags != null && !string.IsNullOrWhiteSpace(tags.Value))
             {
-                foreach (var tag in tags.Value.Split(XmlConsts.TAG_SEPARATOR))
+                foreach (var tag in tags.Value.Split(XmlConsts.TAG_SEPARATOR_COMMA))
                     Tags.Add(tag);
             }
 
@@ -574,7 +591,7 @@ namespace kotor_Randomizer_2
             var unlocks = element.Attribute(XmlConsts.ATTR_UNLOCK);
             if (unlocks != null && !string.IsNullOrWhiteSpace(unlocks.Value))
             {
-                foreach (var unlock in unlocks.Value.Split(XmlConsts.TAG_SEPARATOR))
+                foreach (var unlock in unlocks.Value.Split(XmlConsts.TAG_SEPARATOR_COMMA))
                     Unlock.Add(unlock);
             }
 
@@ -650,8 +667,11 @@ namespace kotor_Randomizer_2
         public bool IsFixSpice { get; } = false;
 
         public List<string> Tags { get; } = new List<string>();
-        //public bool HasTags() { return Tags.Count > 0; }
-        public List<string> Unlock { get; } = new List<string>();
+
+        // List of sets: Unlock="A,B,C; C,D,E; E,F,G".
+        //  , is AND within the set
+        //  ; is OR between sets
+        public List<List<string>> UnlockSets { get; } = new List<List<string>>();
         #endregion
 
         public ModuleEdge(XElement element)
@@ -678,15 +698,22 @@ namespace kotor_Randomizer_2
             var tags = element.Attribute(XmlConsts.ATTR_TAGS);
             if (tags != null && !string.IsNullOrWhiteSpace(tags.Value))
             {
-                foreach (var tag in tags.Value.Split(XmlConsts.TAG_SEPARATOR))
+                foreach (var tag in tags.Value.Split(XmlConsts.TAG_SEPARATOR_COMMA))
                     Tags.Add(tag);
             }
 
             var unlocks = element.Attribute(XmlConsts.ATTR_UNLOCK);
             if (unlocks != null && !string.IsNullOrWhiteSpace(unlocks.Value))
             {
-                foreach (var unlock in unlocks.Value.Split(XmlConsts.TAG_SEPARATOR))
-                    Unlock.Add(unlock);
+                foreach (var set in unlocks.Value.Split(XmlConsts.TAG_SEPARATOR_SEMICOLON))
+                {
+                    var unlockSet = new List<string>();
+                    foreach (var unlock in set.Split(XmlConsts.TAG_SEPARATOR_COMMA))
+                    {
+                        unlockSet.Add(unlock);
+                    }
+                    UnlockSets.Add(unlockSet);
+                }
             }
 
             // Parse list of Tags
@@ -719,9 +746,14 @@ namespace kotor_Randomizer_2
                 sb.Append(", Tags: []");
             }
 
-            if (Unlock.Count > 0)
+            if (UnlockSets.Count > 0)
             {
-                sb.Append($", Unlock: [{Unlock.Aggregate((i, j) => $"{i},{j}")}]");
+                sb.Append($", Unlock: [");
+                foreach (var set in UnlockSets)
+                {
+                    sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
+                }
+                sb.Append("]");
             }
 
             return sb.ToString();
