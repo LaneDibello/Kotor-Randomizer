@@ -68,11 +68,11 @@ namespace kotor_Randomizer_2
                         // Load the omitted preset into BoundModules
                         for (int i = 0; i < Globals.BoundModules.Count; i++)
                         {
-                            Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, false);
+                            Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, false);
 
-                            if (omit_mods.Contains(Globals.BoundModules[i].Name))
+                            if (omit_mods.Contains(Globals.BoundModules[i].Code))
                             {
-                                Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Name, true);
+                                Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, true);
                             }
                         }
                         Properties.Settings.Default.ModulesInitialized = true;
@@ -334,7 +334,7 @@ namespace kotor_Randomizer_2
                     // FIX LATER - Possibility that BoundModules is empty if Module Form never opened.
                     foreach (Globals.Mod_Entry me in Globals.BoundModules.Where(x => x.Omitted))
                     {
-                        bw.Write(me.Name.ToCharArray());
+                        bw.Write(me.Code.ToCharArray());
                         bw.Write('\0');
                     }
                     bw.Write('\n');

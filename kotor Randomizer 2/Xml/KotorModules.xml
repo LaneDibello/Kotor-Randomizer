@@ -51,7 +51,7 @@
     <!--Two Extra Maps-->
     <LeadsTo WarpCode="STUNT_14" CommonName="Darth Bandon Recruited" Tags="Once,Locked" Unlock="kas_m25aa,korr_m39aa;kas_m25aa,manm28ad;kas_m25aa,tat_m18ac;korr_m39aa,manm28ad;korr_m39aa,tat_m18ac;manm28ad,tat_m18ac" />
     <!--Three Extra Maps-->
-    <LeadsTo WarpCode="STUNT_16" CommonName="Leviathan Captured (Old Mentor)" Tags="Once,Locked" Unlock="kas_m25aa,korr_m39aa,manm28ad;kas_m25aa,korr_m39aa,tat_m18ac;kas_m25aa,manm28ad,tat_m18ac;korr_m39aa,manm28ad,tat_m18ac" />
+    <LeadsTo WarpCode="STUNT_16" CommonName="Lev. My Old Mentor" Tags="Once,Locked" Unlock="kas_m25aa,korr_m39aa,manm28ad;kas_m25aa,korr_m39aa,tat_m18ac;kas_m25aa,manm28ad,tat_m18ac;korr_m39aa,manm28ad,tat_m18ac" />
     <!--Four Extra Maps-->
     <LeadsTo WarpCode="STUNT_18" CommonName="Bastila is Tortured" Tags="Once,Locked" Unlock="kas_m25aa,korr_m39aa,manm28ad,tat_m18ac" />
     <!--<LeadsTo WarpCode="unk_m41aa" CommonName="Central Beach" Tags="Locked,FixMap" Unlock="kas_m25aa,korr_m39aa,manm28ad,tat_m18ac" />-->
@@ -60,8 +60,8 @@
   <Module WarpCode="ebo_m41aa" CommonName="Lehon Hawk">
     <LeadsTo WarpCode="unk_m41aa" CommonName="Central Beach" />
     <!--Find parts and disable force field-->
-    <LeadsTo WarpCode="STUNT_42" CommonName="Pre-Star Forge Cutscene (Light Side)" Tags="Once,Locked" Unlock="unk_m44aa,Parts" />
-    <LeadsTo WarpCode="STUNT_44" CommonName="Pre-Star Forge Cutscene (Dark Side)" Tags="Once,Locked" Unlock="unk_m44aa,Parts" />
+    <LeadsTo WarpCode="STUNT_42" CommonName="Star Forge Planning LS" Tags="Once,Locked" Unlock="unk_m44aa,Parts" />
+    <LeadsTo WarpCode="STUNT_44" CommonName="Star Forge Planning DS" Tags="Once,Locked" Unlock="unk_m44aa,Parts" />
   </Module>
   <Module WarpCode="ebo_m46ab" CommonName="Mystery Box">
     <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" Tags="Once,FixBox" />
@@ -164,7 +164,7 @@
     <LeadsTo WarpCode="lev_m40aa" CommonName="Prison Block" Tags="Fake,Locked,FixElev" />
     <LeadsTo WarpCode="lev_m40ab" CommonName="Command Deck" Tags="Fake,Locked,FixElev" />
     <LeadsTo WarpCode="STUNT_31b" CommonName="Revan Reveal" Tags="Once,Locked" Unlock="Bastila,Carth" />
-    <LeadsTo WarpCode="ebo_m40ad" CommonName="Escaped The Leviathan" Tags="Once,Locked" Unlock="Bastila,Carth" FluReq="Carth" />
+    <LeadsTo WarpCode="ebo_m40ad" CommonName="Escape from Leviathan" Tags="Once,Locked" Unlock="Bastila,Carth" FluReq="Carth" />
   </Module>
   <Module WarpCode="lev_m40ad" CommonName="Leviathan Bridge">
     <LeadsTo WarpCode="lev_m40ab" CommonName="Command Deck" />
@@ -237,7 +237,7 @@
   <Module WarpCode="sta_m45ac" CommonName="Command Center">
     <LeadsTo WarpCode="sta_m45ab" CommonName="Deck 2" />
     <LeadsTo WarpCode="STUNT_50a" CommonName="Green Squadron" Tags="Once" />
-    <LeadsTo WarpCode="STUNT_51a" CommonName="Bastila Destroys the Republic Fleet" Tags="Once" />
+    <LeadsTo WarpCode="STUNT_51a" CommonName="Bastila Destroys the Fleet" Tags="Once" />
     <LeadsTo WarpCode="sta_m45ad" CommonName="Viewing Platform" />
   </Module>
   <Module WarpCode="sta_m45ad" CommonName="Viewing Platform" Tags="Malak">
@@ -267,7 +267,7 @@
   </Module>
   <Module WarpCode="tar_m02ae" CommonName="Upper City Cantina" Tags="Pazaak" LockedTag="Canderous" Unlock="tar_m09aa">
     <LeadsTo WarpCode="tar_m02ac" CommonName="Upper City South" />
-    <LeadsTo WarpCode="STUNT_03a" CommonName="Malak Orders Taris Destroyed" Tags="Once,Locked" Unlock="tar_m09aa" />
+    <LeadsTo WarpCode="STUNT_03a" CommonName="Taris Destruction Order" Tags="Once,Locked" Unlock="tar_m09aa" />
     <!--<LeadsTo WarpCode="tar_m08aa" CommonName="Davik's Estate" Tags="Once,Locked" Unlock="tar_m09aa" />-->
   </Module>
   <Module WarpCode="tar_m02af" CommonName="Hideout" Tags="Carth">
@@ -290,7 +290,7 @@
   </Module>
   <Module WarpCode="tar_m03ae" CommonName="Javyar's Cantina" Tags="Pazaak" LockedTag="Canderous" Unlock="tar_m09aa">
     <LeadsTo WarpCode="tar_m03aa" CommonName="Lower City" />
-    <LeadsTo WarpCode="STUNT_03a" CommonName="Malak Orders Taris Destroyed" Tags="Once,Locked" Unlock="tar_m09aa" />
+    <LeadsTo WarpCode="STUNT_03a" CommonName="Taris Destruction Order" Tags="Once,Locked" Unlock="tar_m09aa" />
     <!--<LeadsTo WarpCode="tar_m08aa" CommonName="Davik's Estate" Tags="Once,Locked" Unlock="tar_m09aa" />-->
   </Module>
   <Module WarpCode="tar_m03af" CommonName="Swoop Platform">
@@ -441,29 +441,29 @@
   <Module WarpCode="STUNT_00" CommonName="Dream Sequence" />
 
   <!--Taris Cutscenes-->
-  <Module WarpCode="STUNT_03a" CommonName="Malak Orders Taris Destroyed">
+  <Module WarpCode="STUNT_03a" CommonName="Taris Destruction Order">
     <LeadsTo WarpCode="tar_m08aa" CommonName="Davik's Estate" />
   </Module>
   <Module WarpCode="STUNT_06" CommonName="Taris Destruction Update">
-    <LeadsTo WarpCode="STUNT_07" CommonName="Escaping Taris on the Ebon Hawk" />
+    <LeadsTo WarpCode="STUNT_07" CommonName="Escape from Taris" />
     <!--LeadsTo danm13 (Return to EH)-->
   </Module>
-  <Module WarpCode="STUNT_07" CommonName="Escaping Taris on the Ebon Hawk">
+  <Module WarpCode="STUNT_07" CommonName="Escape from Taris">
     <!--LeadsTo WarpCode="M12ab" CommonName="Fighter Skirmish"-->
     <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
   </Module>
 
   <!--Leviathan Cutscenes-->
-  <Module WarpCode="STUNT_16" CommonName="Leviathan Captured (Old Mentor)">
-    <LeadsTo WarpCode="ebo_m40aa" CommonName="Leviathan Game-Plan Cutscene" />
+  <Module WarpCode="STUNT_16" CommonName="Lev. My Old Mentor">
+    <LeadsTo WarpCode="ebo_m40aa" CommonName="Lev. Game-Plan CS" />
   </Module>
-  <Module WarpCode="ebo_m40aa" CommonName="Leviathan Game-Plan Cutscene">
+  <Module WarpCode="ebo_m40aa" CommonName="Lev. Game-Plan CS">
     <LeadsTo WarpCode="lev_m40aa" CommonName="Prison Block" />
   </Module>
   <Module WarpCode="STUNT_31b" CommonName="Revan Reveal">
     <LeadsTo WarpCode="lev_m40ac" CommonName="Leviathan Hangar" />
   </Module>
-  <Module WarpCode="ebo_m40ad" CommonName="Escaped The Leviathan">
+  <Module WarpCode="ebo_m40ad" CommonName="Escape from Leviathan">
     <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
   </Module>
 
@@ -488,32 +488,32 @@
   <Module WarpCode="STUNT_19" CommonName="Jaw Drop">
     <LeadsTo WarpCode="unk_m44aa" CommonName="Temple Main Floor" />
   </Module>
-  <Module WarpCode="STUNT_42" CommonName="Pre-Star Forge Cutscene (Light Side)">
+  <Module WarpCode="STUNT_42" CommonName="Star Forge Planning LS">
     <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
   </Module>
-  <Module WarpCode="STUNT_44" CommonName="Pre-Star Forge Cutscene (Dark Side)">
+  <Module WarpCode="STUNT_44" CommonName="Star Forge Planning DS">
     <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
   </Module>
   <Module WarpCode="STUNT_50a" CommonName="Green Squadron">
     <LeadsTo WarpCode="sta_m45ac" CommonName="Command Center" />
   </Module>
-  <Module WarpCode="STUNT_51a" CommonName="Bastila Destroys the Republic Fleet">
+  <Module WarpCode="STUNT_51a" CommonName="Bastila Destroys the Fleet">
     <LeadsTo WarpCode="sta_m45ac" CommonName="Command Center" />
   </Module>
 
   <!--Dark Side Ending Cutscenes-->
   <Module WarpCode="STUNT_54a" CommonName="The Republic is Doomed">
-    <LeadsTo WarpCode="STUNT_55a" CommonName="All Hail Lord Revan (Dark Credits)" />
+    <LeadsTo WarpCode="STUNT_55a" CommonName="All Hail Lord Revan" />
   </Module>
-  <Module WarpCode="STUNT_55a" CommonName="All Hail Lord Revan (Dark Credits)">
+  <Module WarpCode="STUNT_55a" CommonName="All Hail Lord Revan">
     <!--LeadsTo End of game - Main Menu-->
   </Module>
 
   <!--Light Side Ending Cutscenes-->
   <Module WarpCode="STUNT_56a" CommonName="Star Forge Destroyed">
-    <LeadsTo WarpCode="STUNT_57" CommonName="The Sith are Defeated (Light Credits)" />
+    <LeadsTo WarpCode="STUNT_57" CommonName="The Sith Are Defeated" />
   </Module>
-  <Module WarpCode="STUNT_57" CommonName="The Sith are Defeated (Light Credits)">
+  <Module WarpCode="STUNT_57" CommonName="The Sith Are Defeated">
     <!--LeadsTo End of game - Main Menu-->
   </Module>
 </Modules>

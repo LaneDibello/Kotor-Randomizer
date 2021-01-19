@@ -525,19 +525,23 @@ namespace kotor_Randomizer_2
         /// </summary>
         public struct Mod_Entry
         {
-            public string Name { get; }
+            public string Code { get; }
+            public string Common { get; }
             public bool Omitted { get; set; }
 
-            public Mod_Entry(string name, bool omitted)
+            public Mod_Entry(string code, bool omitted)
             {
-                Name = name;
+                Code = code;
+                Common = ModuleRando.GetModuleCommonName(code) ?? code;
                 Omitted = omitted;
             }
 
             public override string ToString()
             {
-                StringBuilder sb = new StringBuilder(Omitted ? "X:" : "I:");
-                sb.Append(Name);
+                StringBuilder sb = new StringBuilder(/*Omitted ? "X:" : "I:"*/);
+                sb.Append(Code);
+                sb.Append(": ".PadRight(12 - Code.Length));
+                sb.Append(Common);
                 return sb.ToString();
             }
         }
