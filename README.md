@@ -3,10 +3,11 @@ The much anticipated sequel to the original Kotor Randomizer. This program allow
 
 # Credit
 The Kotor Randomizer was created by Lane and Glasnonck, with help from the kotor speedrunning community.
-[Lane’s Twitch](https://www.twitch.tv/lane_m)
-[Glasnonck’s Twitch](https://www.twitch.tv/glasnonck)
-[Kotor Speedrunning Community Discord](http://discord.gg/Q2uPRVu)
-[Kotor Speedruns SRC page](https://www.speedrun.com/kotor1)
+
+* [Lane’s Twitch](https://www.twitch.tv/lane_m)
+* [Glasnonck’s Twitch](https://www.twitch.tv/glasnonck)
+* [Kotor Speedrunning Community Discord](http://discord.gg/Q2uPRVu)
+* [Kotor Speedruns SRC page](https://www.speedrun.com/kotor1)
 
 # Features
 **Module Randomization**
