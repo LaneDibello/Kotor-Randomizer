@@ -29,7 +29,7 @@ namespace kotor_Randomizer_2
         private const string FIXED_DREAM_OVERRIDE = "k_ren_visionland.ncs";
         private const string UNLOCK_MAP_OVERRIDE = "k_pebn_galaxy.ncs";
 
-        private const int MAX_ITERATIONS = 10;
+        private const int MAX_ITERATIONS = 10000; // Just a random large number to give enough chances to find a valid shuffle.
 
         /// <summary>
         /// A lookup table used to know how the modules are randomized.
@@ -61,10 +61,8 @@ namespace kotor_Randomizer_2
             List<string> ExcludedModules = Globals.BoundModules.Where(x => x.Omitted).Select(x => x.Name).ToList();
             List<string> IncludedModules = Globals.BoundModules.Where(x => !x.Omitted).Select(x => x.Name).ToList();
             Dictionary<string, string> LookupTable = new Dictionary<string, string>();  // Create lookup table to find a given module's new "name".
-            bool reachable = true;
+            bool reachable = false;
             int iterations = 0;
-
-            // ------------------------------------------------------------
 
             if (Properties.Settings.Default.VerifyReachability)
             {
@@ -74,7 +72,7 @@ namespace kotor_Randomizer_2
                 System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
                 sw.Start();
 
-                do
+                while (!reachable && iterations < MAX_ITERATIONS)
                 {
                     iterations++;
 
@@ -96,10 +94,23 @@ namespace kotor_Randomizer_2
                     digraph.SetRandomizationLookup(LookupTable);
                     digraph.CheckReachability();
                     reachable = digraph.IsGoalReachable();
-                } while (!reachable && iterations < MAX_ITERATIONS);
+                }
 
-                if (reachable) Console.WriteLine($"Reachable solution found after {iterations} shuffles. Time elapsed: {sw.Elapsed}");
-                else Console.WriteLine($"No reachable solution found over {iterations} shuffles. Time elapsed: {sw.Elapsed}");
+                if (reachable)
+                {
+                    var message = $"Reachable solution found after {iterations} shuffles. Time elapsed: {sw.Elapsed}";
+                    Console.WriteLine(message);
+                }
+                else
+                {
+                    // Throw an exception if not reachable.
+                    var message = $"No reachable solution found over {iterations} shuffles. Time elapsed: {sw.Elapsed}";
+                    Console.WriteLine(message);
+                    throw new TimeoutException(message);
+                }
+
+                //digraph.WriteReachableToConsole();
+                Console.WriteLine();
             }
             else
             {
@@ -119,8 +130,6 @@ namespace kotor_Randomizer_2
                 }
             }
 
-            // ------------------------------------------------------------
-
             // Copy shuffled modules into the base directory.
             foreach (var name in LookupTable)
             {
@@ -128,23 +137,6 @@ namespace kotor_Randomizer_2
                 File.Copy($"{paths.modules_backup}{name.Key}_s.rim", $"{paths.modules}{name.Value}_s.rim", true);
                 File.Copy($"{paths.lips_backup}{name.Key}_loc.mod",  $"{paths.lips}{name.Value}_loc.mod",  true);
             }
-
-            //for (int i = 0; i < IncludedModules.Count; i++)
-            //{
-            //    //LookupTable.Add(IncludedModules[i], ShuffledModules[i]);
-            //    File.Copy($"{paths.modules_backup}{IncludedModules[i]}.rim",   $"{paths.modules}{ShuffledModules[i]}.rim",   true);
-            //    File.Copy($"{paths.modules_backup}{IncludedModules[i]}_s.rim", $"{paths.modules}{ShuffledModules[i]}_s.rim", true);
-            //    File.Copy($"{paths.lips_backup}{IncludedModules[i]}_loc.mod",  $"{paths.lips}{ShuffledModules[i]}_loc.mod",  true);
-            //}
-
-            //// Copy excluded, untouched modules into the base directory.
-            //foreach (string name in ExcludedModules)
-            //{
-            //    //LookupTable.Add(name, name);
-            //    File.Copy($"{paths.modules_backup}{name}.rim",   $"{paths.modules}{name}.rim",   true);
-            //    File.Copy($"{paths.modules_backup}{name}_s.rim", $"{paths.modules}{name}_s.rim", true);
-            //    File.Copy($"{paths.lips_backup}{name}_loc.mod",  $"{paths.lips}{name}_loc.mod",  true);
-            //}
 
             // Copy lips extras into the base directory.
             foreach (string name in Globals.lipXtras)

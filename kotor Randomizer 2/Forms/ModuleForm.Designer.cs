@@ -58,6 +58,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.ModulesToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.cbGlitchClip = new System.Windows.Forms.CheckBox();
+            this.cbIgnoreOnceEdges = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // OmittedListBox
@@ -419,12 +420,28 @@
             this.cbGlitchClip.UseVisualStyleBackColor = true;
             this.cbGlitchClip.CheckedChanged += new System.EventHandler(this.cbGlitchClip_CheckedChanged);
             // 
+            // cbIgnoreOnceEdges
+            // 
+            this.cbIgnoreOnceEdges.AutoSize = true;
+            this.cbIgnoreOnceEdges.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbIgnoreOnceEdges.Location = new System.Drawing.Point(180, 588);
+            this.cbIgnoreOnceEdges.Name = "cbIgnoreOnceEdges";
+            this.cbIgnoreOnceEdges.Size = new System.Drawing.Size(164, 17);
+            this.cbIgnoreOnceEdges.TabIndex = 43;
+            this.cbIgnoreOnceEdges.Text = "Ignore Single-Use Transitions";
+            this.ModulesToolTip.SetToolTip(this.cbIgnoreOnceEdges, "The reachability algorithm will ignore one-time use loading\r\nzones or transitions" +
+        " to fulfill the reachability condition.\r\n*Enable this option for a more stable r" +
+        "andomization.*");
+            this.cbIgnoreOnceEdges.UseVisualStyleBackColor = true;
+            this.cbIgnoreOnceEdges.CheckedChanged += new System.EventHandler(this.cbAllowOnceEdges_CheckedChanged);
+            // 
             // ModuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.ClientSize = new System.Drawing.Size(541, 667);
+            this.Controls.Add(this.cbIgnoreOnceEdges);
             this.Controls.Add(this.cbGlitchClip);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.cbGlitchGpw);
@@ -494,5 +511,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolTip ModulesToolTip;
         private System.Windows.Forms.CheckBox cbGlitchClip;
+        private System.Windows.Forms.CheckBox cbIgnoreOnceEdges;
     }
 }
