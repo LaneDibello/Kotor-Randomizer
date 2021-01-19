@@ -60,7 +60,6 @@ namespace kotor_Randomizer_2
             // Split the Bound modules into their respective lists.
             List<string> ExcludedModules = Globals.BoundModules.Where(x => x.Omitted).Select(x => x.Name).ToList();
             List<string> IncludedModules = Globals.BoundModules.Where(x => !x.Omitted).Select(x => x.Name).ToList();
-            Dictionary<string, string> LookupTable = new Dictionary<string, string>();  // Create lookup table to find a given module's new "name".
             bool reachable = false;
             int iterations = 0;
 
@@ -453,6 +452,17 @@ namespace kotor_Randomizer_2
                 sw.WriteLine($"Unlock Various Doors,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors)}");
                 sw.WriteLine($"Fix Leviathan Elevators,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators)}");
                 sw.WriteLine($"Add Spice Lab Load Zone,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ)}");
+                sw.WriteLine();
+
+                sw.WriteLine($"Verify Reachability,{!Properties.Settings.Default.VerifyReachability}");
+                sw.WriteLine($"Ignore Single-Use Transitions,{Properties.Settings.Default.IgnoreOnceEdges}");
+                sw.WriteLine($"Goal Is Malak,{Properties.Settings.Default.GoalIsMalak}");
+                sw.WriteLine($"Goal Is Star Maps,{Properties.Settings.Default.GoalIsStarMaps}");
+                sw.WriteLine($"Goal Is Pazaak,{Properties.Settings.Default.GoalIsPazaak}");
+                sw.WriteLine($"Allow Glitch Clipping,{Properties.Settings.Default.AllowGlitchClip}");
+                sw.WriteLine($"Allow Glitch DLZ,{Properties.Settings.Default.AllowGlitchDlz}");
+                sw.WriteLine($"Allow Glitch FLU,{Properties.Settings.Default.AllowGlitchFlu}");
+                sw.WriteLine($"Allow Glitch GPW,{Properties.Settings.Default.AllowGlitchGpw}");
                 sw.WriteLine();
 
                 sw.WriteLine("Has Changed,Original,Randomized");
