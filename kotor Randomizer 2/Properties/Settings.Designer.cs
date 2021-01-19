@@ -12,7 +12,7 @@ namespace kotor_Randomizer_2.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -828,6 +828,114 @@ namespace kotor_Randomizer_2.Properties {
             }
             set {
                 this["RandomizePartyMembers"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool VerifyReachability {
+            get {
+                return ((bool)(this["VerifyReachability"]));
+            }
+            set {
+                this["VerifyReachability"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GoalIsMalak {
+            get {
+                return ((bool)(this["GoalIsMalak"]));
+            }
+            set {
+                this["GoalIsMalak"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GoalIsPazaak {
+            get {
+                return ((bool)(this["GoalIsPazaak"]));
+            }
+            set {
+                this["GoalIsPazaak"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GoalIsStarMaps {
+            get {
+                return ((bool)(this["GoalIsStarMaps"]));
+            }
+            set {
+                this["GoalIsStarMaps"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AllowGlitchClip {
+            get {
+                return ((bool)(this["AllowGlitchClip"]));
+            }
+            set {
+                this["AllowGlitchClip"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AllowGlitchDlz {
+            get {
+                return ((bool)(this["AllowGlitchDlz"]));
+            }
+            set {
+                this["AllowGlitchDlz"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AllowGlitchFlu {
+            get {
+                return ((bool)(this["AllowGlitchFlu"]));
+            }
+            set {
+                this["AllowGlitchFlu"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AllowGlitchGpw {
+            get {
+                return ((bool)(this["AllowGlitchGpw"]));
+            }
+            set {
+                this["AllowGlitchGpw"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IgnoreOnceEdges {
+            get {
+                return ((bool)(this["IgnoreOnceEdges"]));
+            }
+            set {
+                this["IgnoreOnceEdges"] = value;
             }
         }
     }

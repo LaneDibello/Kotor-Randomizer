@@ -29,6 +29,8 @@ namespace kotor_Randomizer_2
         private const string FIXED_DREAM_OVERRIDE = "k_ren_visionland.ncs";
         private const string UNLOCK_MAP_OVERRIDE = "k_pebn_galaxy.ncs";
 
+        private const int MAX_ITERATIONS = 10000; // Just a random large number to give enough chances to find a valid shuffle.
+
         /// <summary>
         /// A lookup table used to know how the modules are randomized.
         /// </summary>
@@ -58,27 +60,81 @@ namespace kotor_Randomizer_2
             // Split the Bound modules into their respective lists.
             List<string> ExcludedModules = Globals.BoundModules.Where(x => x.Omitted).Select(x => x.Name).ToList();
             List<string> IncludedModules = Globals.BoundModules.Where(x => !x.Omitted).Select(x => x.Name).ToList();
+            bool reachable = false;
+            int iterations = 0;
 
-            // Shuffle the list of included modules.
-            List<string> ShuffledModules = IncludedModules.ToList();
-            Randomize.FisherYatesShuffle(ShuffledModules);
-
-            // Copy shuffled modules into the base directory.
-            for (int i = 0; i < IncludedModules.Count; i++)
+            if (Properties.Settings.Default.VerifyReachability)
             {
-                LookupTable.Add(IncludedModules[i], ShuffledModules[i]);
-                File.Copy($"{paths.modules_backup}{IncludedModules[i]}.rim",   $"{paths.modules}{ShuffledModules[i]}.rim",   true);
-                File.Copy($"{paths.modules_backup}{IncludedModules[i]}_s.rim", $"{paths.modules}{ShuffledModules[i]}_s.rim", true);
-                File.Copy($"{paths.lips_backup}{IncludedModules[i]}_loc.mod",  $"{paths.lips}{ShuffledModules[i]}_loc.mod",  true);
+                // Construct digraph and initialize reachability settings.
+                ModuleDigraph digraph = new ModuleDigraph(Path.Combine(Environment.CurrentDirectory, "Xml", "KotorModules.xml"));
+
+                System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+                sw.Start();
+
+                while (!reachable && iterations < MAX_ITERATIONS)
+                {
+                    iterations++;
+
+                    // Shuffle the list of included modules.
+                    List<string> ShuffledModules = IncludedModules.ToList();
+                    Randomize.FisherYatesShuffle(ShuffledModules);
+                    LookupTable.Clear();
+
+                    for (int i = 0; i < IncludedModules.Count; i++)
+                    {
+                        LookupTable.Add(IncludedModules[i], ShuffledModules[i]);
+                    }
+
+                    foreach (string name in ExcludedModules)
+                    {
+                        LookupTable.Add(name, name);
+                    }
+
+                    digraph.SetRandomizationLookup(LookupTable);
+                    digraph.CheckReachability();
+                    reachable = digraph.IsGoalReachable();
+                }
+
+                if (reachable)
+                {
+                    var message = $"Reachable solution found after {iterations} shuffles. Time elapsed: {sw.Elapsed}";
+                    Console.WriteLine(message);
+                }
+                else
+                {
+                    // Throw an exception if not reachable.
+                    var message = $"No reachable solution found over {iterations} shuffles. Time elapsed: {sw.Elapsed}";
+                    Console.WriteLine(message);
+                    throw new TimeoutException(message);
+                }
+
+                //digraph.WriteReachableToConsole();
+                Console.WriteLine();
+            }
+            else
+            {
+                // Shuffle the list of included modules.
+                List<string> ShuffledModules = IncludedModules.ToList();
+                Randomize.FisherYatesShuffle(ShuffledModules);
+                LookupTable.Clear();
+
+                for (int i = 0; i < IncludedModules.Count; i++)
+                {
+                    LookupTable.Add(IncludedModules[i], ShuffledModules[i]);
+                }
+
+                foreach (string name in ExcludedModules)
+                {
+                    LookupTable.Add(name, name);
+                }
             }
 
-            // Copy excluded, untouched modules into the base directory.
-            foreach (string name in ExcludedModules)
+            // Copy shuffled modules into the base directory.
+            foreach (var name in LookupTable)
             {
-                LookupTable.Add(name, name);
-                File.Copy($"{paths.modules_backup}{name}.rim",   $"{paths.modules}{name}.rim",   true);
-                File.Copy($"{paths.modules_backup}{name}_s.rim", $"{paths.modules}{name}_s.rim", true);
-                File.Copy($"{paths.lips_backup}{name}_loc.mod",  $"{paths.lips}{name}_loc.mod",  true);
+                File.Copy($"{paths.modules_backup}{name.Key}.rim",   $"{paths.modules}{name.Value}.rim",   true);
+                File.Copy($"{paths.modules_backup}{name.Key}_s.rim", $"{paths.modules}{name.Value}_s.rim", true);
+                File.Copy($"{paths.lips_backup}{name.Key}_loc.mod",  $"{paths.lips}{name.Value}_loc.mod",  true);
             }
 
             // Copy lips extras into the base directory.
@@ -396,6 +452,17 @@ namespace kotor_Randomizer_2
                 sw.WriteLine($"Unlock Various Doors,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors)}");
                 sw.WriteLine($"Fix Leviathan Elevators,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators)}");
                 sw.WriteLine($"Add Spice Lab Load Zone,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ)}");
+                sw.WriteLine();
+
+                sw.WriteLine($"Verify Reachability,{!Properties.Settings.Default.VerifyReachability}");
+                sw.WriteLine($"Ignore Single-Use Transitions,{Properties.Settings.Default.IgnoreOnceEdges}");
+                sw.WriteLine($"Goal Is Malak,{Properties.Settings.Default.GoalIsMalak}");
+                sw.WriteLine($"Goal Is Star Maps,{Properties.Settings.Default.GoalIsStarMaps}");
+                sw.WriteLine($"Goal Is Pazaak,{Properties.Settings.Default.GoalIsPazaak}");
+                sw.WriteLine($"Allow Glitch Clipping,{Properties.Settings.Default.AllowGlitchClip}");
+                sw.WriteLine($"Allow Glitch DLZ,{Properties.Settings.Default.AllowGlitchDlz}");
+                sw.WriteLine($"Allow Glitch FLU,{Properties.Settings.Default.AllowGlitchFlu}");
+                sw.WriteLine($"Allow Glitch GPW,{Properties.Settings.Default.AllowGlitchGpw}");
                 sw.WriteLine();
 
                 sw.WriteLine("Has Changed,Original,Randomized");

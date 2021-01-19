@@ -7,7 +7,7 @@ Omitted - This list box contains the resource reference codes for all of the mod
 Presets - This combo box contains a few hard coded presets for module randomization.
 
 Delete Module Save Data - This is enabled by default in the base game. Unchecking this will prevent the game of clearing the save file of presumably "unreachable" modules, such as Taris upon reaching Dantooine or the mid-game upon reaching Lehon. Disabling this can help prevent loss of progress.
-	Include Minigames in Save - This feature makes the game commit the minigame module data to the save when entering them, preventing possible game scrashes with randomized swoops or turrets.
+	Include Minigames in Save - This feature makes the game commit the minigame module data to the save when entering them, preventing possible game crashes with randomized swoops or turrets.
 
 Include All Modules in Save - This feature extends the previous one to also include STUNT cutscenes and various other odd modules in the save file.
 

@@ -55,92 +55,102 @@ namespace kotor_Randomizer_2
                 Randomize.SetSeed(Properties.Settings.Default.Seed);    // Not sure when is the best time to set the seed.
 
                 // Randomize the categories.
-                if (Properties.Settings.Default.DoRandomization_Module)
+                try
                 {
-                    Randomize.RestartRng();
-                    curr_task = Properties.Resources.RandomizingModules;
-                    bwRandomizing.ReportProgress(curr_progress);
-                    CreateModuleBackups();
-                    ModuleRando.Module_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine(Properties.Resources.LogModulesDone);
-                    curr_progress += step_size;
+                    if (Properties.Settings.Default.DoRandomization_Module)
+                    {
+                        Randomize.RestartRng();
+                        curr_task = Properties.Resources.RandomizingModules;
+                        bwRandomizing.ReportProgress(curr_progress);
+                        CreateModuleBackups();
+                        ModuleRando.Module_rando(paths); // Run appropriate rando script.
+                        sw.WriteLine(Properties.Resources.LogModulesDone);
+                        curr_progress += step_size;
+                    }
+                    if (Properties.Settings.Default.DoRandomization_Item)
+                    {
+                        Randomize.RestartRng();
+                        curr_task = Properties.Resources.RandomizingItems;
+                        bwRandomizing.ReportProgress(curr_progress);
+                        CreateItemBackups();
+                        ItemRando.item_rando(paths); // Run appropriate rando script.
+                        sw.WriteLine(Properties.Resources.LogItemsDone);
+                        curr_progress += step_size;
+                    }
+                    if (Properties.Settings.Default.DoRandomization_Sound)
+                    {
+                        Randomize.RestartRng();
+                        curr_task = Properties.Resources.RandomizingMusicSound;
+                        bwRandomizing.ReportProgress(curr_progress);
+                        CreateSoundBackups();
+                        SoundRando.sound_rando(paths); // Run appropriate rando script.
+                        sw.WriteLine(Properties.Resources.LogMusicSoundDone);
+                        curr_progress += step_size;
+                    }
+                    if (Properties.Settings.Default.DoRandomization_Model)
+                    {
+                        Randomize.RestartRng();
+                        curr_task = Properties.Resources.RandomizingModels;
+                        bwRandomizing.ReportProgress(curr_progress);
+                        CreateModelBackups();
+                        ModelRando.model_rando(paths); // Run appropriate rando script.
+                        sw.WriteLine(Properties.Resources.LogModelsDone);
+                        curr_progress += step_size;
+                    }
+                    if (Properties.Settings.Default.DoRandomization_Texture)
+                    {
+                        Randomize.RestartRng();
+                        curr_task = Properties.Resources.RandomizingTextures;
+                        bwRandomizing.ReportProgress(curr_progress);
+                        CreateTextureBackups();
+                        TextureRando.texture_rando(paths); // Run appropriate rando script.
+                        sw.WriteLine(Properties.Resources.LogTexturesDone);
+                        curr_progress += step_size;
+                    }
+                    if (Properties.Settings.Default.DoRandomization_TwoDA)
+                    {
+                        Randomize.RestartRng();
+                        curr_task = Properties.Resources.Randomizing2DA;
+                        bwRandomizing.ReportProgress(curr_progress);
+                        CreateTwoDABackups();
+                        TwodaRandom.Twoda_rando(paths); // Run appropriate rando script.
+                        sw.WriteLine(Properties.Resources.Log2DADone);
+                        curr_progress += step_size;
+                    }
+                    if (Properties.Settings.Default.DoRandomization_Text)
+                    {
+                        Randomize.RestartRng();
+                        curr_task = Properties.Resources.RandomizingText;
+                        bwRandomizing.ReportProgress(curr_progress);
+                        CreateTextBackups();
+                        TextRando.text_rando(paths); // Run appropriate rando script.
+                        sw.WriteLine(Properties.Resources.LogTextDone);
+                        curr_progress += step_size;
+                    }
+                    if (Properties.Settings.Default.DoRandomization_Other)
+                    {
+                        Randomize.RestartRng();
+                        curr_task = Properties.Resources.RandomizingOther;
+                        bwRandomizing.ReportProgress(curr_progress);
+                        CreateOtherBackups();
+                        OtherRando.other_rando(paths); // Run appropriate rando script.
+                        sw.WriteLine(Properties.Resources.LogOtherDone);
+                        curr_progress += step_size;
+                    }
                 }
-                if (Properties.Settings.Default.DoRandomization_Item)
+                catch (Exception e)
                 {
-                    Randomize.RestartRng();
-                    curr_task = Properties.Resources.RandomizingItems;
-                    bwRandomizing.ReportProgress(curr_progress);
-                    CreateItemBackups();
-                    ItemRando.item_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine(Properties.Resources.LogItemsDone);
-                    curr_progress += step_size;
+                    // Catch any randomization errors (e.g., reachability failure) and print a message.
+                    MessageBox.Show($"Error encountered during randomization: {Environment.NewLine}{e.Message}", "Randomization Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                if (Properties.Settings.Default.DoRandomization_Sound)
+                finally
                 {
-                    Randomize.RestartRng();
-                    curr_task = Properties.Resources.RandomizingMusicSound;
+                    // Creates a basic log file with a date, version, and things done.
+                    curr_task = Properties.Resources.TaskFinishing;
                     bwRandomizing.ReportProgress(curr_progress);
-                    CreateSoundBackups();
-                    SoundRando.sound_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine(Properties.Resources.LogMusicSoundDone);
-                    curr_progress += step_size;
+                    sw.WriteLine("\nThe Kotor Randomizer was created by Lane Dibello, with help from Glasnonck, and the greater Kotor Speedrunning community.");
+                    sw.WriteLine("If you encounter any issues please try to contact me @Lane#5847 on Discord");
                 }
-                if (Properties.Settings.Default.DoRandomization_Model)
-                {
-                    Randomize.RestartRng();
-                    curr_task = Properties.Resources.RandomizingModels;
-                    bwRandomizing.ReportProgress(curr_progress);
-                    CreateModelBackups();
-                    ModelRando.model_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine(Properties.Resources.LogModelsDone);
-                    curr_progress += step_size;
-                }
-                if (Properties.Settings.Default.DoRandomization_Texture)
-                {
-                    Randomize.RestartRng();
-                    curr_task = Properties.Resources.RandomizingTextures;
-                    bwRandomizing.ReportProgress(curr_progress);
-                    CreateTextureBackups();
-                    TextureRando.texture_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine(Properties.Resources.LogTexturesDone);
-                    curr_progress += step_size;
-                }
-                if (Properties.Settings.Default.DoRandomization_TwoDA)
-                {
-                    Randomize.RestartRng();
-                    curr_task = Properties.Resources.Randomizing2DA;
-                    bwRandomizing.ReportProgress(curr_progress);
-                    CreateTwoDABackups();
-                    TwodaRandom.Twoda_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine(Properties.Resources.Log2DADone);
-                    curr_progress += step_size;
-                }
-                if (Properties.Settings.Default.DoRandomization_Text)
-                {
-                    Randomize.RestartRng();
-                    curr_task = Properties.Resources.RandomizingText;
-                    bwRandomizing.ReportProgress(curr_progress);
-                    CreateTextBackups();
-                    TextRando.text_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine(Properties.Resources.LogTextDone);
-                    curr_progress += step_size;
-                }
-                if (Properties.Settings.Default.DoRandomization_Other)
-                {
-                    Randomize.RestartRng();
-                    curr_task = Properties.Resources.RandomizingOther;
-                    bwRandomizing.ReportProgress(curr_progress);
-                    CreateOtherBackups();
-                    OtherRando.other_rando(paths); // Run appropriate rando script.
-                    sw.WriteLine(Properties.Resources.LogOtherDone);
-                    curr_progress += step_size;
-                }
-
-                // Creates a basic log file with a date, version, and things done.
-                curr_task = Properties.Resources.TaskFinishing;
-                bwRandomizing.ReportProgress(curr_progress);
-                sw.WriteLine("\nThe Kotor Randomizer was created by Lane Dibello, with help from Glasnonck, and the greater Kotor Speedrunning community.");
-                sw.WriteLine("If you encounter any issues please try to contact me @Lane#5847 on Discord");
             }
             curr_progress += step_size;
         }

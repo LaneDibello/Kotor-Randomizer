@@ -51,6 +51,25 @@ namespace kotor_Randomizer_2
             cbFixLevElevators.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators);
             cbVulkSpiceLZ.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
 
+            // Initialize reachability settings
+            cbReachability.Checked = settings.VerifyReachability;
+            cbIgnoreOnceEdges.Enabled = cbReachability.Checked;
+            cbGoalMalak.Enabled = cbReachability.Checked;
+            cbGoalStarMaps.Enabled = cbReachability.Checked;
+            cbGoalPazaak.Enabled = cbReachability.Checked;
+            cbGlitchClip.Enabled = cbReachability.Checked;
+            cbGlitchDlz.Enabled = cbReachability.Checked;
+            cbGlitchFlu.Enabled = cbReachability.Checked;
+            cbGlitchGpw.Enabled = cbReachability.Checked;
+            cbIgnoreOnceEdges.Checked = settings.IgnoreOnceEdges;
+            cbGoalMalak.Checked = settings.GoalIsMalak;
+            cbGoalStarMaps.Checked = settings.GoalIsStarMaps;
+            cbGoalPazaak.Checked = settings.GoalIsPazaak;
+            cbGlitchClip.Checked = settings.AllowGlitchClip;
+            cbGlitchDlz.Checked = settings.AllowGlitchDlz;
+            cbGlitchFlu.Checked = settings.AllowGlitchFlu;
+            cbGlitchGpw.Checked = settings.AllowGlitchGpw;
+
             PresetComboBox.DataSource = Globals.OMIT_PRESETS.Keys.ToList();
             Constructed = true;
 
@@ -272,6 +291,68 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.VulkarSpiceLZ;
         }
 
+        private void cbReachability_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.VerifyReachability = cbReachability.Checked;
+            cbIgnoreOnceEdges.Enabled = cbReachability.Checked;
+            cbGoalMalak.Enabled = cbReachability.Checked;
+            cbGoalStarMaps.Enabled = cbReachability.Checked;
+            cbGoalPazaak.Enabled = cbReachability.Checked;
+            cbGlitchClip.Enabled = cbReachability.Checked;
+            cbGlitchDlz.Enabled = cbReachability.Checked;
+            cbGlitchFlu.Enabled = cbReachability.Checked;
+            cbGlitchGpw.Enabled = cbReachability.Checked;
+        }
+
+        private void cbGoalMalak_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.GoalIsMalak = cbGoalMalak.Checked;
+        }
+
+        private void cbGoalStarMaps_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.GoalIsStarMaps = cbGoalStarMaps.Checked;
+        }
+
+        private void cbGoalPazaak_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.GoalIsPazaak = cbGoalPazaak.Checked;
+        }
+
+        private void cbGlitchClip_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.AllowGlitchClip = cbGlitchClip.Checked;
+        }
+
+        private void cbGlitchDlz_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.AllowGlitchDlz = cbGlitchDlz.Checked;
+        }
+
+        private void cbGlitchFlu_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.AllowGlitchFlu = cbGlitchFlu.Checked;
+        }
+
+        private void cbGlitchGpw_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.AllowGlitchGpw = cbGlitchGpw.Checked;
+        }
+
+        private void cbAllowOnceEdges_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.IgnoreOnceEdges = cbIgnoreOnceEdges.Checked;
+        }
+
         private void ModuleForm_Activated(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.LastPresetComboIndex == -2)
@@ -279,8 +360,9 @@ namespace kotor_Randomizer_2
                 Properties.Settings.Default.LastPresetComboIndex = -1;
                 PresetComboBox.SelectedIndex = -1;
                 UpdateListBoxes();
-
                 Constructed = false;
+
+                // Load new fix settings.
                 cbDeleteMilestones.Checked = !Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete);
                 cbSaveMiniGame.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames);
                 cbSaveAllMods.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules);
@@ -290,13 +372,32 @@ namespace kotor_Randomizer_2
                 cbUnlockGalaxyMap.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
                 cbFixCoordinates.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates);
                 cbFixMindPrison.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
+                cbDoorFix.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors);
+                cbFixLevElevators.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators);
+
+                // Load new reachability settings.
+                cbReachability.Checked = Properties.Settings.Default.VerifyReachability;
+                cbIgnoreOnceEdges.Checked = Properties.Settings.Default.IgnoreOnceEdges;
+                cbGoalMalak.Checked = Properties.Settings.Default.GoalIsMalak;
+                cbGoalStarMaps.Checked = Properties.Settings.Default.GoalIsStarMaps;
+                cbGoalPazaak.Checked = Properties.Settings.Default.GoalIsPazaak;
+                cbGlitchClip.Checked = Properties.Settings.Default.AllowGlitchClip;
+                cbGlitchDlz.Checked = Properties.Settings.Default.AllowGlitchDlz;
+                cbGlitchFlu.Checked = Properties.Settings.Default.AllowGlitchFlu;
+                cbGlitchGpw.Checked = Properties.Settings.Default.AllowGlitchGpw;
+                cbIgnoreOnceEdges.Enabled = cbReachability.Checked;
+                cbGoalMalak.Enabled = cbReachability.Checked;
+                cbGoalStarMaps.Enabled = cbReachability.Checked;
+                cbGoalPazaak.Enabled = cbReachability.Checked;
+                cbGlitchClip.Enabled = cbReachability.Checked;
+                cbGlitchDlz.Enabled = cbReachability.Checked;
+                cbGlitchFlu.Enabled = cbReachability.Checked;
+                cbGlitchGpw.Enabled = cbReachability.Checked;
+
                 Constructed = true;
             }
         }
 
-
-
         #endregion
-
     }
 }

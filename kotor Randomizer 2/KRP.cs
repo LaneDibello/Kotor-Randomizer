@@ -90,6 +90,17 @@ namespace kotor_Randomizer_2
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.FixLevElevators; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.VulkarSpiceLZ; }
 
+                        // Load reachability settings
+                        Properties.Settings.Default.VerifyReachability = br.ReadBoolean();
+                        Properties.Settings.Default.IgnoreOnceEdges = br.ReadBoolean();
+                        Properties.Settings.Default.AllowGlitchClip = br.ReadBoolean();
+                        Properties.Settings.Default.AllowGlitchDlz = br.ReadBoolean();
+                        Properties.Settings.Default.AllowGlitchFlu = br.ReadBoolean();
+                        Properties.Settings.Default.AllowGlitchGpw = br.ReadBoolean();
+                        Properties.Settings.Default.GoalIsMalak = br.ReadBoolean();
+                        Properties.Settings.Default.GoalIsPazaak = br.ReadBoolean();
+                        Properties.Settings.Default.GoalIsStarMaps = br.ReadBoolean();
+
                         Properties.Settings.Default.LastPresetComboIndex = -2;
                         Properties.Settings.Default.ModulePresetSelected = false;
                     }
@@ -338,6 +349,7 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors));   // Unlock Problem Doors
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators));  // Fixed Leviathan Elevators
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ));    // Add Vulkar Spice Loading Zone
+
                 }
                 // Items
                 if (Properties.Settings.Default.DoRandomization_Item)
