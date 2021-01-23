@@ -49,7 +49,7 @@ namespace kotor_Randomizer_2
                             if ((S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString).StringRef != -1) //Avoid averwriting dialogue end indicators, and animation nodes
                             {
                                 int str_ref = 0; //Find valid string
-                                while (t.String_Data_Table[str_ref].SoundResRef == "") //Ensure the string we have has a sound to go with it
+                                while (t.String_Data_Table[str_ref].SoundResRef == "" || t.String_Data_Table[str_ref].SoundResRef[0] == '_' || t.String_Data_Table[str_ref].SoundResRef.ToLower().Contains("comp")) //Ensure the string we have has a sound to go with it, starting with undescord means it's player dialogue, which doesn't have audio in this game
                                 {
                                     str_ref = Randomize.Rng.Next(TLK_STRING_COUNT);
                                 }
