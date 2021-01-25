@@ -598,7 +598,7 @@ namespace kotor_Randomizer_2.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Text randomization can randomize some or most of the text appearing in the game. In its current state it has two main settings: Dialogue randomization and Additional Text Randomization. Dialogue randomization allows you to shuffle the entries (words spoken by NPCs), replies (options given to the MC), and match the entry sounds to the shuffled entries (So the new dialogue matches its text). 
         ///
-        ///This process is not yet foolproof. The “TalkTable” file being used for these randomizations doesn&apos;t always accurate [rest of string was truncated]&quot;;.
+        ///	This process is not yet foolproof. The “TalkTable” file being used for these randomizations doesn&apos;t always accurat [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TextHelp {
             get {
