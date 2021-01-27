@@ -25,6 +25,11 @@ namespace kotor_Randomizer_2
                 areaMusic.AddRange(musicFiles.Where(f => f.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)));
             }
 
+            //if (false)
+            //{
+            //    areaMusic.RemoveAll(f => DmcaAreaMusic.Contains(f.Name));
+            //}
+
             switch ((RandomizationLevel)Properties.Settings.Default.RandomizeAreaMusic)
             {
                 case RandomizationLevel.Max:
@@ -188,13 +193,26 @@ namespace kotor_Randomizer_2
                 {
                     "mus_area_",
                     "mus_theme_",
-                    "57.",
-                    "credits.",
-                    "evil_ending.",
+                    "57.",          // LS ending BGM, Star Wars main theme
+                    "credits.",     // Star Wars main theme
+                    "evil_ending.", // DS ending BGM, Star Wars main theme
                 };
             }
         }
-        
+
+        public static List<string> DmcaAreaMusic
+        {
+            get
+            {
+                return new List<string>()
+                {
+                    "57.wav",
+                    "credits.wav",
+                    "evil_ending.wav",
+                };
+            }
+        }
+
         public static Regex RegexBattleMusic { get { return new Regex("mus_s?bat_", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
 
         public static List<string> PrefixListBattleMusic
