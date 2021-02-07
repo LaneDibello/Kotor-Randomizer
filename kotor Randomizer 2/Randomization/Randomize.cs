@@ -70,5 +70,11 @@ namespace kotor_Randomizer_2
                 }
             }
         }
+
+        public static double GetRandomDouble(double min, double max)
+        {
+            if (min == max) return 0.0; // Handle 0 range without advancing the seed.
+            return Rng.NextDouble() * (max - min) + min;
+        }
     }
 }

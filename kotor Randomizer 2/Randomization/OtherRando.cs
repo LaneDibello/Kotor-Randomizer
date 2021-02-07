@@ -13,6 +13,19 @@ namespace kotor_Randomizer_2
         private const string PAZAAKDECKS_RESREF = "pazaakdecks";
         private const string DECKNAME_COLUMN = "deckname";
 
+        private const string BIF_LAYOUT = "layouts.bif";
+        private const string LYT_SWOOP_TARIS    = "m03mg";
+        private const string LYT_SWOOP_TATOOINE = "m17mg";
+        private const string LYT_SWOOP_MANAAN   = "m26mg";
+
+        // The ResRefs of the swoop races.
+        private static readonly List<string> swoopLayouts = new List<string>()
+        {
+            LYT_SWOOP_TARIS,
+            LYT_SWOOP_TATOOINE,
+            LYT_SWOOP_MANAAN,
+        };
+
         //List of Tuples matching each party member's various identifying data (item1 : dialogue file, item2 : file name/ResRef, item3 : Scripting Tag)
         private static readonly List<Tuple<string, string, string>> Party_IDs = new List<Tuple<string, string, string>>()
         {
@@ -132,7 +145,7 @@ namespace kotor_Randomizer_2
                 t.WriteToDirectory(paths.Override);
             }
 
-            //Party Rando
+            // Party Rando
             if (Properties.Settings.Default.RandomizePartyMembers) //ADD SETTING
             {
                 BIF b = new BIF(paths.data + "templates.bif");
@@ -176,6 +189,239 @@ namespace kotor_Randomizer_2
 
                 }
 
+            }
+
+            // Swoop Rando
+            if (Properties.Settings.Default.RandomizeSwoopBoosters ||
+                Properties.Settings.Default.RandomizeSwoopObstacles)
+            {
+                // Get the bif containing layout files.
+                BIF b = new BIF(Path.Combine(paths.data, BIF_LAYOUT));
+                KEY k = new KEY(paths.chitin_backup);
+                b.AttachKey(k, $"data\\{BIF_LAYOUT}");
+
+                // Limit search to just the swoop layouts.
+                var VRT = b.VariableResourceTable.Where(x => swoopLayouts.Contains(x.ResRef));
+
+                // Parse each swoop layout, randomize the requested elements, and write to the Override folder.
+                foreach (BIF.VariableResourceEntry vre in VRT)
+                {
+                    Layout lyt = new Layout(vre.EntryData);
+                    lyt.RandomizeLayout(
+                        doTracks:    Properties.Settings.Default.RandomizeSwoopBoosters,
+                        doObstacles: Properties.Settings.Default.RandomizeSwoopObstacles
+                    );
+                    lyt.WriteToFile(Path.Combine(paths.Override, $"{vre.ResRef}.lyt"));
+                }
+            }
+        }
+    }
+
+    public class Layout
+    {
+        // Parsed elements within the layout file.
+        public string FileDependancy { get; set; }
+        public List<Tuple<string, double, double, double>> Rooms     { get; set; } = new List<Tuple<string, double, double, double>>();
+        public List<Tuple<string, double, double, double>> Tracks    { get; set; } = new List<Tuple<string, double, double, double>>();
+        public List<Tuple<string, double, double, double>> Obstacles { get; set; } = new List<Tuple<string, double, double, double>>();
+        public List<Tuple<string, double, double, double>> DoorHooks { get; set; } = new List<Tuple<string, double, double, double>>();
+
+        /// <summary>
+        /// Parse raw byte data as a layout file.
+        /// </summary>
+        /// <param name="rawData">Byte array to parse.</param>
+        public Layout(byte[] rawData)
+            : this(new MemoryStream(rawData))
+        { }
+
+        /// <summary>
+        /// Parse layout file from stream.
+        /// </summary>
+        /// <param name="s">Stream to parse.</param>
+        public Layout(Stream s)
+        {
+            using (StreamReader sr = new StreamReader(s))
+            {
+                // Read stream as plain text, then split it into individual lines of text.
+                string content = sr.ReadToEnd();
+                var lines = content.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+                bool isRoom = false;
+                bool isTrack = false;
+                bool isObstacle = false;
+                bool isDoorHook = false;
+
+                // Parse each line.
+                foreach (var line in lines)
+                {
+                    var split = line.Trim().Split(' ');
+
+                    switch (split[0])
+                    {
+                        case "#MAXLAYOUT":
+                        case "beginlayout":
+                        case "donelayout":
+                            continue;   // Skip these lines.
+                        case "filedependancy":
+                            FileDependancy = split.Last();
+                            continue;
+                        case "roomcount":
+                            isRoom  = true;
+                            isTrack = false;
+                            isObstacle = false;
+                            isDoorHook = false;
+                            continue;   // Set default action to add to rooms.
+                        case "trackcount":
+                            isRoom  = false;
+                            isTrack = true;
+                            isObstacle = false;
+                            isDoorHook = false;
+                            continue;   // Set default action to add to tracks.
+                        case "obstaclecount":
+                            isRoom  = false;
+                            isTrack = false;
+                            isObstacle = true;
+                            isDoorHook = false;
+                            continue;   // Set default action to add to obstacles.
+                        case "doorhookcount":
+                            isRoom  = false;
+                            isTrack = false;
+                            isObstacle = false;
+                            isDoorHook = true;
+                            continue;   // Set default action to add to doorhooks.
+                        default:
+                            break;
+                    }
+
+                    // Line should consist of a name and 3 doubles representing the object's position in space.
+                    if (split.Count() < 4)
+                    {
+                        continue; // Not enough values, so skip.
+                    }
+
+                    // Parse the available doubles.
+                    double.TryParse(split[1], out double x);
+                    double.TryParse(split[2], out double y);
+                    double.TryParse(split[3], out double z);
+                    Tuple<string, double, double, double> obj = new Tuple<string, double, double, double>(split[0], x, y, z);
+
+                    // Add to the appropriate list, and continue to the next line.
+                    if (isRoom)     { Rooms.Add(obj);     continue; }
+                    if (isTrack)    { Tracks.Add(obj);    continue; }
+                    if (isObstacle) { Obstacles.Add(obj); continue; }
+                    if (isDoorHook) { DoorHooks.Add(obj); continue; }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Randomize the position of the objects in each requested list.
+        /// </summary>
+        public void RandomizeLayout(bool doRooms = false, bool doTracks = false, bool doObstacles = false, bool doDoorHooks = false)
+        {
+            if (doRooms)
+            {
+                // Not yet implemented.
+            }
+
+            if (doTracks)
+            {
+                // Use the standard min and max for all swoop tracks.
+                var minimum = new Tuple<double, double, double>( 80.796, 170.042, 0.0);
+                var maximum = new Tuple<double, double, double>(123.842, 3778.61, 0.0);
+
+                // Skip the first item, which is the track itself.
+                var boosters = Tracks.Where(x => !x.Item1.EndsWith("01")).ToList();
+                RandomizeCoordinates(boosters, minimum, maximum);
+
+                // Assign randomized values back to the full list.
+                var count = boosters.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    Tracks[i + 1] = boosters[i];
+                }
+            }
+
+            if (doObstacles)
+            {
+                // Use the standard min and max for all swoop tracks.
+                var minimum = new Tuple<double, double, double>( 80.796, 170.042, 0.0);
+                var maximum = new Tuple<double, double, double>(123.842, 3778.61, 0.0);
+                RandomizeCoordinates(Obstacles, minimum, maximum);
+            }
+
+            if (doDoorHooks)
+            {
+                // Not yet implemented.
+            }
+        }
+
+        /// <summary>
+        /// Generates new coordinates for each object in the list between the min and max given.
+        /// </summary>
+        private void RandomizeCoordinates(List<Tuple<string, double, double, double>> objs,
+                                          Tuple<double, double, double> min,
+                                          Tuple<double, double, double> max)
+        {
+            var count = objs.Count;
+            for (int i = 0; i < count; i++)
+            {
+                objs[i] = new Tuple<string, double, double, double>(
+                    objs[i].Item1,
+                    Randomize.GetRandomDouble(min.Item1, max.Item1),
+                    Randomize.GetRandomDouble(min.Item2, max.Item2),
+                    Randomize.GetRandomDouble(min.Item3, max.Item3));
+            }
+        }
+
+        /// <summary>
+        /// Write layout data to stream.
+        /// </summary>
+        public void Write(Stream s)
+        {
+            using (StreamWriter sw = new StreamWriter(s))
+            {
+                sw.WriteLine("#MAXLAYOUT ASCII");
+                sw.WriteLine($"filedependancy {FileDependancy}");
+                sw.WriteLine("beginlayout");
+
+                sw.WriteLine($"   roomcount {Rooms.Count}");
+                foreach (var room in Rooms)
+                    sw.WriteLine($"      {room.Item1} {room.Item2} {room.Item3} {room.Item4}");
+
+                sw.WriteLine($"   trackcount {Tracks.Count}");
+                foreach (var track in Tracks)
+                    sw.WriteLine($"      {track.Item1} {track.Item2} {track.Item3} {track.Item4}");
+
+                sw.WriteLine($"   obstaclecount {Obstacles.Count}");
+                foreach (var obstacle in Obstacles)
+                    sw.WriteLine($"      {obstacle.Item1} {obstacle.Item2} {obstacle.Item3} {obstacle.Item4}");
+
+                sw.WriteLine($"   doorhookcount {DoorHooks.Count}");
+                foreach (var doorhook in DoorHooks)
+                    sw.WriteLine($"      {doorhook.Item1} {doorhook.Item2} {doorhook.Item3} {doorhook.Item4}");
+
+                sw.WriteLine("donelayout");
+            }
+        }
+
+        /// <summary>
+        /// Write layout data to file.
+        /// </summary>
+        public void WriteToFile(string path)
+        {
+            Write(File.OpenWrite(path));
+        }
+
+        /// <summary>
+        /// Get layout data as a byte array.
+        /// </summary>
+        public byte[] ToRawData()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                Write(ms);
+                return ms.ToArray();
             }
         }
     }
