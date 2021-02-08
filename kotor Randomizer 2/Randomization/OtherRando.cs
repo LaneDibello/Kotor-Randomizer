@@ -334,11 +334,19 @@ namespace kotor_Randomizer_2
                 var boosters = Tracks.Where(x => !x.Item1.EndsWith("01")).ToList();
                 RandomizeCoordinates(boosters, minimum, maximum);
 
-                // Assign randomized values back to the full list.
-                var count = boosters.Count;
-                for (int i = 0; i < count; i++)
+                // Assign randomized values back to the full list, skipping any whose name ends in 01.
+                var trackCount = Tracks.Count;
+                int j = 0;
+                for (int i = 0; i < trackCount; i++)
                 {
-                    Tracks[i + 1] = boosters[i];
+                    if (Tracks[i].Item1.EndsWith("01"))
+                    {
+                        //j--; // Don't change j.
+                        continue;
+                    }
+
+                    Tracks[i] = boosters[j];
+                    j++;
                 }
             }
 
