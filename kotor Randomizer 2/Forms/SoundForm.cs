@@ -25,6 +25,7 @@ namespace kotor_Randomizer_2
             //RandomizeNpcSounds = Properties.Settings.Default.RandomizeNpcSounds;
             RandomizeNpcSounds = RandomizationLevel.None; // Functionality Disabled
             RandomizePartySounds = (RandomizationLevel)Properties.Settings.Default.RandomizePartySounds;
+            cbRemoveDmca.Checked = Properties.Settings.Default.RemoveDmcaMusic;
 
             //MixNpcAndParty = Properties.Settings.Default.MixNpcAndPartySounds;
             MixNpcAndParty = false; // Functionality Disabled
@@ -439,6 +440,11 @@ namespace kotor_Randomizer_2
             {
                 rb.Checked = true;
             }
+        }
+
+        private void cbRemoveDmca_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.RemoveDmcaMusic = cbRemoveDmca.Checked;
         }
 
         #endregion

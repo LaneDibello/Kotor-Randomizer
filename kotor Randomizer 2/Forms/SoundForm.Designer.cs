@@ -77,7 +77,7 @@
             // 
             this.cbMixNpcParty.AutoSize = true;
             this.cbMixNpcParty.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbMixNpcParty.Location = new System.Drawing.Point(45, 190);
+            this.cbMixNpcParty.Location = new System.Drawing.Point(45, 214);
             this.cbMixNpcParty.Name = "cbMixNpcParty";
             this.cbMixNpcParty.Size = new System.Drawing.Size(200, 17);
             this.cbMixNpcParty.TabIndex = 8;
@@ -489,12 +489,13 @@
             // cbRemoveDmca
             // 
             this.cbRemoveDmca.AutoSize = true;
-            this.cbRemoveDmca.Location = new System.Drawing.Point(45, 213);
+            this.cbRemoveDmca.Location = new System.Drawing.Point(45, 191);
             this.cbRemoveDmca.Name = "cbRemoveDmca";
             this.cbRemoveDmca.Size = new System.Drawing.Size(161, 17);
             this.cbRemoveDmca.TabIndex = 22;
             this.cbRemoveDmca.Text = "Overwrite likely DMCA music";
             this.cbRemoveDmca.UseVisualStyleBackColor = true;
+            this.cbRemoveDmca.CheckedChanged += new System.EventHandler(this.cbRemoveDmca_CheckedChanged);
             // 
             // SoundForm
             // 

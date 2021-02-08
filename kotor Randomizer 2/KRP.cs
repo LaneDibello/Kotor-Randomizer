@@ -163,6 +163,7 @@ namespace kotor_Randomizer_2
                         Properties.Settings.Default.RandomizePartySounds = br.ReadInt32();
 
                         // Bools
+                        Properties.Settings.Default.RemoveDmcaMusic = br.ReadBoolean();
                         Properties.Settings.Default.MixNpcAndPartySounds = br.ReadBoolean();
                     }
                     #endregion
@@ -394,6 +395,7 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.RandomizeNpcSounds);
                     bw.Write(Properties.Settings.Default.RandomizePartySounds);
 
+                    bw.Write(Properties.Settings.Default.RemoveDmcaMusic);
                     bw.Write(Properties.Settings.Default.MixNpcAndPartySounds);
 
                 }

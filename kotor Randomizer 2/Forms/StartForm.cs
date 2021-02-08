@@ -62,6 +62,7 @@ namespace kotor_Randomizer_2
             ItemRando.GenerateSpoilerLog(Path.Combine(spoilersPath, $"{timestamp}_items.csv"));
             ModelRando.GenerateSpoilerLog(Path.Combine(spoilersPath, $"{timestamp}_models.csv"));
             ModuleRando.GenerateSpoilerLog(Path.Combine(spoilersPath, $"{timestamp}_modules.csv"));
+            SoundRando.GenerateSpoilerLog(Path.Combine(spoilersPath, $"{timestamp}_music_sounds.csv"));
 
             MessageBox.Show("Spoiler logs created.");
         }
