@@ -49,6 +49,7 @@ The Kotor Randomizer was created by Lane and Glasnonck, with help from the kotor
 * Cause torso equipment to randomly polymorph the character equipping it.
 * Randomize the cards found in NPC pazaak decks.
 * Randomize which NPCs and Creatures are your party members.
+* Alter swoop races by randomizing the placement of booster pads and/or obstacles.
 ---
 **Presets and Seeding**
 * Save your wild randomizer settings to a file that can be pulled up later
