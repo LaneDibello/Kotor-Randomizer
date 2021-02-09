@@ -46,9 +46,8 @@ namespace kotor_Randomizer_2
         /// </summary>
         public static void Module_rando(KPaths paths)
         {
-            // Construct digraph and initialize reachability settings.
-            //Digraph = new ModuleDigraph(Path.Combine(Environment.CurrentDirectory, "Xml", "KotorModules.xml"));
-
+            // Reset digraph reachability settings.
+            Digraph.ResetSettings();
             LookupTable.Clear();
 
             // Set up the bound module collection if it hasn't been already.

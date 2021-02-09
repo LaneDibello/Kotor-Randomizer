@@ -334,6 +334,456 @@ namespace kotor_Randomizer_2
             "unk_m42aa","unk_m43aa","unk_m44aa","unk_m44ab","unk_m44ac" };              // Elder Settlement, Rakatan Settlement, Temple Main Floor, Temple Catacombs, Temple Summit
 
         /// <summary>
+        /// If a module has one exit, it cannot be in its parent's location.
+        /// Prevents binary infinite loops that you can't escape from.
+        /// <para/>Key cannot replace any listed value.
+        /// </summary>
+        public static readonly Dictionary<string, List<string>> RULE1 = new Dictionary<string, List<string>>()
+        {
+            // Tatooine
+            { "tat_m17ag", new List<string>()    // Czerka Office
+                {
+                    "tat_m17aa", // Anchorhead
+                }
+            },
+            { "tat_m17ac", new List<string>()    // Droid Shop
+                {
+                    "tat_m17aa", // Anchorhead
+                }
+            },
+            { "tat_m17ad", new List<string>()    // Hunting Lodge
+                {
+                    "tat_m17aa", // Anchorhead
+                }
+            },
+            { "tat_m17af", new List<string>()    // Tatooine Cantina
+                {
+                    "tat_m17aa", // Anchorhead
+                }
+            },
+            { "tat_m17mg", new List<string>()    // Tatooine Swoops
+                {
+                    "tat_m17ae", // Swoop Registration
+                }
+            },
+            { "tat_m20aa", new List<string>()    // Sand People Enclave
+                {
+                    "tat_m18ab", // Sand People Territory
+                }
+            },
+            // Unknown World
+            { "unk_m42aa", new List<string>()    // Elder Settlement
+                {
+                    "unk_m41ab", // South Beach
+                }
+            },
+            { "unk_m43aa", new List<string>()    // Rakatan Settlement
+                {
+                    "unk_m41ac", // North Beach
+                }
+            },
+            { "unk_m44ab", new List<string>()    // Temple Catacombs
+                {
+                    "unk_m44aa", // Temple Main Floor
+                }
+            },
+            { "unk_m44ac", new List<string>()    // Temple Summit
+                {
+                    "unk_m44aa", // Temple Main Floor
+                }
+            },
+            // Taris
+            { "tar_m11ab", new List<string>()    // Gadon's Office
+                {
+                    "tar_m11aa", // Bek Base
+                }
+            },
+            { "tar_m08aa", new List<string>()    // Davik's Estate
+                {
+                    "danm13", // Jedi Enclave
+                }
+            },
+            { "tar_m09ab", new List<string>()    // Governor Office
+                {
+                    "tar_m09aa", // Taris Sith Base
+                }
+            },
+            { "tar_m02af", new List<string>()    // Hideout
+                {
+                    "tar_m02aa", // South Apartments
+                }
+            },
+            { "tar_m03ad", new List<string>()    // Lower City Apt East
+                {
+                    "tar_m03aa", // Lower City
+                }
+            },
+            { "tar_m03ab", new List<string>()    // Lower City Apt West
+                {
+                    "tar_m03aa", // Lower City
+                }
+            },
+            { "tar_m02ad", new List<string>()    // North Apartments
+                {
+                    "tar_m02ab", // Upper City North
+                }
+            },
+            { "tar_m03mg", new List<string>()    // Taris Swoops
+                {
+                    "tar_m03af", // Swoop Platform
+                }
+            },
+            { "tar_m10ac", new List<string>()    // Vulkar Garage
+                {
+                    "tar_m10aa", // Vulkar Base
+                }
+            },
+            { "tar_m10ab", new List<string>()    // Vulkar Spice Lab
+                {
+                    "tar_m10aa", // Vulkar Base
+                }
+            },
+            // Star Forge
+            { "sta_m45ad", new List<string>()    // Viewing Platform
+                {
+                    "sta_m45ac", // Command Center
+                }
+            },
+            // Leviathan
+            { "lev_m40ad", new List<string>()    // Leviathan Bridge
+                {
+                    "lev_m40ab", // Command Deck
+                }
+            },
+            { "lev_m40ac", new List<string>()    // Leviathan Hangar
+                {
+                    "ebo_m12aa", // Ebon Hawk
+                }
+            },
+            // Kashyyyk
+            { "kas_m23ad", new List<string>()    // Chieftain's Hall
+                {
+                    "kas_m23aa", // Village of Rwookrrorro
+                }
+            },
+            { "kas_m25aa", new List<string>()    // Lower Shadowlands
+                {
+                    "kas_m24aa", // Upper Shadowlands
+                }
+            },
+            { "kas_m23ab", new List<string>()    // Woorwill's Home
+                {
+                    "kas_m23aa", // Village of Rwookrrorro
+                }
+            },
+            { "kas_m23ac", new List<string>()    // Worrroznor's Home
+                {
+                    "kas_m23aa", // Village of Rwookrrorro
+                }
+            },
+            // Korriban
+            { "korr_m34aa", new List<string>()    // Shyrack Caves
+                {
+                    "korr_m36aa", // Valley of the Dark Lords
+                }
+            },
+            { "korr_m37aa", new List<string>()    // Tomb of Ajunta Pall
+                {
+                    "korr_m36aa", // Valley of the Dark Lords
+                }
+            },
+            { "korr_m38aa", new List<string>()    // Tomb of Marka Ragnos
+                {
+                    "korr_m36aa", // Valley of the Dark Lords
+                }
+            },
+            { "korr_m39aa", new List<string>()    // Tomb of Naga Sadow
+                {
+                    "korr_m36aa", // Valley of the Dark Lords
+                }
+            },
+            { "korr_m38ab", new List<string>()    // Tomb of Tulak Hord
+                {
+                    "korr_m36aa", // Valley of the Dark Lords
+                }
+            },
+            // Endar Spire
+            { "end_m01aa", new List<string>()    // Command Module
+                {
+                    "end_m01ab", // Starboard Section
+                }
+            },
+            { "end_m01ab", new List<string>()    // Starboard Section
+                {
+                    "STUNT_00",  // leads to dream sequence
+                    "tar_m02af", // Hideout
+                }
+            },
+            // Dantooine
+            { "danm14ae", new List<string>()    // Crystal Caves
+                {
+                    "danm14ad", // Sandral Grounds
+                }
+            },
+            { "danm15", new List<string>()    // Dantooine Ruins
+                {
+                    "danm14aa", // Courtyard
+                }
+            },
+            { "danm16", new List<string>()    // Sandral Estate
+                {
+                    "danm14ad", // Sandral Grounds
+                }
+            },
+            // Manaan
+            { "manm26aa", new List<string>()    // Ahto West
+                {
+                    "manm26ac", // West Central
+                }
+            },
+            { "manm27aa", new List<string>()    // Manaan Sith Base
+                {
+                    "manm26ab", // Ahto East
+                }
+            },
+            { "manm26mg", new List<string>()    // Manaan Swoops
+                {
+                    "manm26ab", // Ahto East
+                }
+            },
+            // Ebon Hawk
+            { "ebo_m41aa", new List<string>()    // Lehon Hawk
+                {
+                    "unk_m41aa", // Central Beach
+                }
+            },
+            { "ebo_m46ab", new List<string>()    // Mystery Box
+                {
+                    "ebo_m12aa", // Ebon Hawk
+                }
+            },
+            { "liv_m99aa", new List<string>()    // Yavin Station
+                {
+                    "ebo_m12aa", // Ebon Hawk
+                }
+            },
+        };
+        /// <summary>
+        /// The parent of a module with only one entrance cannot be inside that child.
+        /// Prevents some modules from becoming completely unreachable.
+        /// <para/>Key cannot replace any listed value.
+        /// </summary>
+        public static readonly Dictionary<string, List<string>> RULE2 = new Dictionary<string, List<string>>()
+        {
+            // Tatooine
+            { "tat_m17aa", new List<string>()    // Anchorhead
+                {
+                    "tat_m17ac", // Droid Shop
+                    "tat_m17ad", // Hunting Lodge
+                    "tat_m17af", // Tatooine Cantina
+                    "tat_m17ag", // Czerka Office
+                }
+            },
+            { "tat_m18ab", new List<string>()    // Sand People Territory
+                {
+                    "tat_m20aa", // Sand People Enclave
+                }
+            },
+            { "tat_m17ae", new List<string>()    // Swoop Registration
+                {
+                    "tat_m17mg", // Tatooine Swoops
+                }
+            },
+            // Unknown World
+            { "unk_m41aa", new List<string>()    // Central Beach
+                {
+                    "ebo_m41aa", // Lehon Hawk
+                }
+            },
+            { "unk_m41ab", new List<string>()    // South Beach
+                {
+                    "unk_m42aa", // Elder Settlement
+                }
+            },
+            { "unk_m41ac", new List<string>()    // North Beach
+                {
+                    "unk_m43aa", // Rakatan Settlement
+                }
+            },
+            { "unk_m44aa", new List<string>()    // Temple Main Floor
+                {
+                    "unk_m44ab", // Temple Catacombs
+                    "unk_m44ac", // Temple Summit
+                }
+            },
+            // Taris
+            { "tar_m11aa", new List<string>()    // Bek Base
+                {
+                    "tar_m11ab", // Gadon's Office
+                }
+            },
+            { "tar_m03ae", new List<string>()    // Javyar's Cantina
+                {
+                    "tar_m08aa", // Davik's Estate
+                }
+            },
+            { "tar_m03aa", new List<string>()    // Lower City
+                {
+                    "tar_m03ae", // Javyar's Cantina
+                    "tar_m03ad", // Lower City Apt East
+                    "tar_m03ab", // Lower City Apt West
+                }
+            },
+            { "tar_m02aa", new List<string>()    // South Apartments
+                {
+                    "tar_m02af", // Hideout
+                }
+            },
+            { "tar_m03af", new List<string>()    // Swoop Platform
+                {
+                    "tar_m03mg", // Taris Swoops
+                }
+            },
+            { "tar_m09aa", new List<string>()    // Taris Sith Base
+                {
+                    "tar_m09ab", // Governor's Office
+                }
+            },
+            { "tar_m02ab", new List<string>()    // Upper City North
+                {
+                    "tar_m02ad", // North Apartments
+                }
+            },
+            { "tar_m02ac", new List<string>()    // Upper City South
+                {
+                    "tar_m02ae", // Upper City Cantina
+                }
+            },
+            { "tar_m10aa", new List<string>()    // Vulkar Base
+                {
+                    "tar_m10ac", // Vulkar Garage
+                    "tar_m10ab", // Vulkar Spice Lab
+                    "tar_m05ab", // Upper Sewers (?? -- the only other entrance is locked)
+                }
+            },
+            // Star Forge
+            { "sta_m45ac", new List<string>()    // Command Center
+                {
+                    "sta_m45ad", // Viewing Platform
+                }
+            },
+            // Leviathan
+            { "lev_m40ab", new List<string>()    // Command Deck
+                {
+                    "lev_m40ad", // Leviathan Bridge
+                    "lev_m40aa", // Prison Block
+                }
+            },
+            // Kashyyyk
+            { "kas_m24aa", new List<string>()    // Upper Shadowlands
+                {
+                    "kas_m25aa", // Lower Shadowlands
+                }
+            },
+            { "kas_m23aa", new List<string>()    // Village of Rwookrrorro
+                {
+                    "kas_m23ab", // Woorwill's Home
+                    "kas_m23ac", // Worrroznor's Home
+                    "kas_m23ad", // Chieftain's Hall
+                }
+            },
+            // Korriban
+            { "korr_m36aa", new List<string>()    // Valley of the Dark Lords
+                {
+                    "korr_m37aa", // Tomb of Ajunta Pall
+                    "korr_m38aa", // Tomb of Marka Ragnos
+                    "korr_m39aa", // Tomb of Naga Sadow
+                    "korr_m38ab", // Tomb of Tulka Hord
+                    "korr_m34aa", // Shyrack Caves
+                    "korr_m35aa", // Sith Academy (?? - the other two entrances are locked and/or once)
+                }
+            },
+            // Endar Spire
+            { "end_m01ab", new List<string>()    // Starboard Section
+                {
+                    "end_m01aa", // Command Module
+                }
+            },
+            // Dantooine
+            { "danm14aa", new List<string>()    // Courtyard
+                {
+                    "danm15", // Dantooine Ruins
+                }
+            },
+            { "danm14ad", new List<string>()    // Sandral Grounds
+                {
+                    "danm16", // Sandral Estate
+                    "danm14ae", // Crystal Caves
+                }
+            },
+            // Manaan
+            { "manm26ab", new List<string>()    // Ahto East
+                {
+                    "manm26mg", // Manaan Swoops
+                }
+            },
+            //{ "manm28ad", new List<string>()    // Hrakert Rift
+            //    {
+            //        "manm28ac", // Kolto Control (?? - not sure why)
+            //    }
+            //},
+            { "manm26ac", new List<string>()    // West Central
+                {
+                    "manm26aa", // Ahto West
+                }
+            },
+            // Ebon Hawk
+            { "ebo_m12aa", new List<string>()    // Ebon Hawk
+                {
+                    "ebo_m46ab", // Mystery Box
+                    "lev_m40ac", // Leviathan Hangar
+                    "liv_m99aa", // Yavin Station
+                }
+            },
+        };
+        /// <summary>
+        /// If a module has multiple exits but only one is unlocked, it cannot be in the unlocked location.
+        /// Prevents binary infinite loops that you can't escape from, unless the other door is unlocked.
+        /// <para/>Key cannot replace any listed value.
+        /// </summary>
+        public static readonly Dictionary<string, List<string>> RULE3 = new Dictionary<string, List<string>>()
+        {
+            // Taris
+            { "tar_m03ae", new List<string>()    // Javyar's Cantina
+                {
+                    "tar_m03aa", // Lower City
+                }
+            },
+            { "tar_m05aa", new List<string>()    // Lower Sewers
+                {
+                    "tar_m04aa", // Undercity
+                }
+            },
+            { "tar_m02ae", new List<string>()    // Upper City Cantina
+                {
+                    "tar_m02ac", // Upper City South
+                }
+            },
+            // Leviathan
+            { "lev_m40aa", new List<string>()    // Prison Block
+                {
+                    "lev_m40ab", // Command Deck
+                }
+            },
+            // Korriban
+            { "korr_m33ab", new List<string>()    // Sith Academy Entrance
+                {
+                    "korr_m33aa", // Dreshdae
+                }
+            },
+        };
+
+        /// <summary>
         /// Built-in module omission presets. The key being the preset name, and the value being a string list of modules to omit. Not to be confused with user-defined presets.
         /// </summary>
         public static readonly Dictionary<string, List<string>> OMIT_PRESETS = new Dictionary<string, List<string>>()
