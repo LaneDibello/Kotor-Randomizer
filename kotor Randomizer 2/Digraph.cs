@@ -87,6 +87,13 @@ namespace kotor_Randomizer_2
         /// <summary> Lookup table for the randomization. RandomLookup[Original.WarpCode] = Randomized.WarpCode; </summary>
         public Dictionary<string, string> RandomLookup  { get; set; }
 
+        /// <summary> Enforce rule 1 regarding how modules can be randomized. </summary>
+        public bool UseRandoRule1 { get; set; } = false;
+        /// <summary> Enforce rule 2 regarding how modules can be randomized. </summary>
+        public bool UseRandoRule2 { get; set; } = false;
+        /// <summary> Enforce rule 3 regarding how modules can be randomized. </summary>
+        public bool UseRandoRule3 { get; set; } = false;
+
         /// <summary> Reaching the tag(s) Malak is a goal for this randomization. </summary>
         public bool GoalIsMalak   { get; set; } = true;
         /// <summary> Reaching the tag(s) Pazaak is a goal for this randomization. </summary>
@@ -150,6 +157,31 @@ namespace kotor_Randomizer_2
             GoalIsMalak = Properties.Settings.Default.GoalIsMalak;
             GoalIsPazaak = Properties.Settings.Default.GoalIsPazaak;
             GoalIsStarMap = Properties.Settings.Default.GoalIsStarMaps;
+            UseRandoRule1 = Properties.Settings.Default.UseRandoRule1;
+            UseRandoRule2 = Properties.Settings.Default.UseRandoRule2;
+            UseRandoRule3 = Properties.Settings.Default.UseRandoRule3;
+        }
+
+        public void ResetSettings()
+        {
+            // Get currently enabled settings.
+            AllowGlitchClip = Properties.Settings.Default.AllowGlitchClip;
+            AllowGlitchDlz = Properties.Settings.Default.AllowGlitchDlz;
+            AllowGlitchFlu = Properties.Settings.Default.AllowGlitchFlu;
+            AllowGlitchGpw = Properties.Settings.Default.AllowGlitchGpw;
+            EnabledFixBox = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
+            EnabledFixDoors = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors);
+            EnabledFixElev = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators);
+            EnabledFixMap = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
+            EnabledFixSpice = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
+            EnforceEdgeTagLocked = true;
+            IgnoreOnceEdges = Properties.Settings.Default.IgnoreOnceEdges;
+            GoalIsMalak = Properties.Settings.Default.GoalIsMalak;
+            GoalIsPazaak = Properties.Settings.Default.GoalIsPazaak;
+            GoalIsStarMap = Properties.Settings.Default.GoalIsStarMaps;
+            UseRandoRule1 = Properties.Settings.Default.UseRandoRule1;
+            UseRandoRule2 = Properties.Settings.Default.UseRandoRule2;
+            UseRandoRule3 = Properties.Settings.Default.UseRandoRule3;
         }
 
         /// <summary>
@@ -223,6 +255,13 @@ namespace kotor_Randomizer_2
             Reachable = Modules.ToDictionary(m => m.WarpCode, b => false);
             OnceQueue.Clear();
 
+            // If rules are violated, end reachability search before anything is marked reachable.
+            if ((UseRandoRule1 || UseRandoRule2 || UseRandoRule3)
+                && AreRulesViolated())
+            {
+                return;
+            }
+
             // Check reachability again to find unlocked edges.
             CheckReachabilityDFS(Reachable);
 
@@ -235,6 +274,64 @@ namespace kotor_Randomizer_2
             } while (ReachableUpdated);
 
             //Console.WriteLine($"Time used to create digraph and check reachability...{sw.Elapsed}");
+        }
+
+        /// <summary>
+        /// Check to see if the rules are violated.
+        /// If a module's list of bad randomizations contains what replaces it now, the rule is violated.
+        /// </summary>
+        /// <returns></returns>
+        private bool AreRulesViolated()
+        {
+            // Rule key cannot replace any of the listed values.
+            // So, the key of the random lookup table can't be in the rule list if the lookup value is the rule key.
+            // RuleKVP.Key = LookupKVP.Value
+            // LookupKVP.Key != RuleKVP.Value.Contains()
+
+            // Check rule 1
+            if (UseRandoRule1)
+            {
+                foreach (var ruleKVP in Globals.RULE1)
+                {
+                    var lookupKVP = RandomLookup.First(kvp => kvp.Value == ruleKVP.Key);
+                    if (ruleKVP.Value.Contains(lookupKVP.Key))
+                    {
+                        Console.WriteLine($"Rule 1 violated: {ruleKVP.Key} replaces {lookupKVP.Key} => {lookupKVP.Value}");
+                        return true;
+                    }
+                }
+            }
+
+            // Check rule 2
+            if (UseRandoRule2)
+            {
+                foreach (var ruleKVP in Globals.RULE2)
+                {
+                    var lookupKVP = RandomLookup.First(kvp => kvp.Value == ruleKVP.Key);
+                    if (ruleKVP.Value.Contains(lookupKVP.Key))
+                    {
+                        Console.WriteLine($"Rule 2 violated: {ruleKVP.Key} replaces {lookupKVP.Key} => {lookupKVP.Value}");
+                        return true;
+                    }
+                }
+            }
+
+            // Check rule 3
+            if (UseRandoRule3)
+            {
+                foreach (var ruleKVP in Globals.RULE3)
+                {
+                    var lookupKVP = RandomLookup.First(kvp => kvp.Value == ruleKVP.Key);
+                    if (ruleKVP.Value.Contains(lookupKVP.Key))
+                    {
+                        Console.WriteLine($"Rule 3 violated: {ruleKVP.Key} replaces {lookupKVP.Key} => {lookupKVP.Value}");
+                        return true;
+                    }
+                }
+            }
+
+            Console.WriteLine("No rules violated.");
+            return false;
         }
 
         /// <summary>

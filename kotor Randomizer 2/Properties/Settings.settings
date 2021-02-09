@@ -234,6 +234,15 @@
     <Setting Name="IgnoreOnceEdges" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="UseRandoRule1" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UseRandoRule2" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UseRandoRule3" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="RandomizeSwoopBoosters" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>

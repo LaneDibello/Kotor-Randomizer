@@ -254,7 +254,7 @@
   <Module WarpCode="tar_m02ab" CommonName="Upper City North" LockedTag="T3M4" Unlock="tar_m02ae,tar_m03ae,tar_m03af,tar_m03mg">
     <LeadsTo WarpCode="tar_m02ad" CommonName="North Apartments" />
     <LeadsTo WarpCode="tar_m02ac" CommonName="Upper City South" />
-    <LeadsTo WarpCode="tar_m03aa" CommonName="Lower City" />
+    <LeadsTo WarpCode="tar_m03aa" CommonName="Lower City" Tags="Locked,FLU,DLZ" Unlock="tar_m02ad" />
     <LeadsTo WarpCode="tar_m09aa" CommonName="Taris Sith Base" Tags="Locked,FLU,DLZ" Unlock="T3M4" />
   </Module>
   <Module WarpCode="tar_m02ac" CommonName="Upper City South">
