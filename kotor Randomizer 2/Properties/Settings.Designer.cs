@@ -938,5 +938,29 @@ namespace kotor_Randomizer_2.Properties {
                 this["IgnoreOnceEdges"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RandomizeSwoopBoosters {
+            get {
+                return ((bool)(this["RandomizeSwoopBoosters"]));
+            }
+            set {
+                this["RandomizeSwoopBoosters"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RandomizeSwoopObstacles {
+            get {
+                return ((bool)(this["RandomizeSwoopObstacles"]));
+            }
+            set {
+                this["RandomizeSwoopObstacles"] = value;
+            }
+        }
     }
 }
