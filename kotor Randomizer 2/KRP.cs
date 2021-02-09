@@ -300,6 +300,9 @@ namespace kotor_Randomizer_2
 
                         Properties.Settings.Default.PolymorphMode = br.ReadBoolean();
                         Properties.Settings.Default.RandomizePazaakDecks = br.ReadBoolean();
+                        Properties.Settings.Default.RandomizePartyMembers = br.ReadBoolean();
+                        Properties.Settings.Default.RandomizeSwoopBoosters = br.ReadBoolean();
+                        Properties.Settings.Default.RandomizeSwoopObstacles = br.ReadBoolean();
                     }
                     #endregion
 
@@ -327,7 +330,7 @@ namespace kotor_Randomizer_2
                 bw.Write(Properties.Settings.Default.DoRandomization_Other);
 
                 // Categories
-                // Modules
+                #region Modules
                 if (Properties.Settings.Default.DoRandomization_Module)
                 {
                     bw.Write("MODU".ToCharArray());
@@ -352,7 +355,8 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ));    // Add Vulkar Spice Loading Zone
 
                 }
-                // Items
+                #endregion
+                #region Items
                 if (Properties.Settings.Default.DoRandomization_Item)
                 {
                     bw.Write("ITEM".ToCharArray());
@@ -383,7 +387,8 @@ namespace kotor_Randomizer_2
                     }
                     bw.Write('\n');
                 }
-                // Sounds
+                #endregion
+                #region Sounds
                 if (Properties.Settings.Default.DoRandomization_Sound)
                 {
                     bw.Write("SOUN".ToCharArray());
@@ -399,7 +404,8 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.MixNpcAndPartySounds);
 
                 }
-                // Models
+                #endregion
+                #region Models
                 if (Properties.Settings.Default.DoRandomization_Model)
                 {
                     bw.Write("MODE".ToCharArray());
@@ -408,7 +414,8 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.RandomizePlaceModels);
                     bw.Write(Properties.Settings.Default.RandomizeDoorModels);
                 }
-                // Textures
+                #endregion
+                #region Textures
                 if (Properties.Settings.Default.DoRandomization_Texture)
                 {
                     bw.Write("TEXU".ToCharArray());
@@ -431,7 +438,8 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.TexturePack);
 
                 }
-                // 2DAs
+                #endregion
+                #region 2DAs
                 if (Properties.Settings.Default.DoRandomization_TwoDA)
                 {
                     bw.Write("TWDA".ToCharArray());
@@ -451,7 +459,8 @@ namespace kotor_Randomizer_2
                     bw.Write('\x3');
 
                 }
-                // Text
+                #endregion
+                #region Text
                 if (Properties.Settings.Default.DoRandomization_Text)
                 {
                     bw.Write("TEXT".ToCharArray());
@@ -460,7 +469,8 @@ namespace kotor_Randomizer_2
                     bw.Write((int)Properties.Settings.Default.TextSettingsValue);
 
                 }
-                // Other
+                #endregion
+                #region Other
                 if (Properties.Settings.Default.DoRandomization_Other)
                 {
                     bw.Write("OTHR".ToCharArray());
@@ -490,7 +500,11 @@ namespace kotor_Randomizer_2
 
                     bw.Write(Properties.Settings.Default.PolymorphMode);
                     bw.Write(Properties.Settings.Default.RandomizePazaakDecks);
+                    bw.Write(Properties.Settings.Default.RandomizePartyMembers);
+                    bw.Write(Properties.Settings.Default.RandomizeSwoopBoosters);
+                    bw.Write(Properties.Settings.Default.RandomizeSwoopObstacles);
                 }
+                #endregion
             }
         }
         #endregion
