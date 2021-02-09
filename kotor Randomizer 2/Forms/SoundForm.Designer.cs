@@ -64,6 +64,7 @@
             this.bToggleAll = new System.Windows.Forms.Button();
             this.bTypeAll = new System.Windows.Forms.Button();
             this.bMaxAll = new System.Windows.Forms.Button();
+            this.cbRemoveDmca = new System.Windows.Forms.CheckBox();
             this.flpAreaMusic.SuspendLayout();
             this.flpCutsceneNoise.SuspendLayout();
             this.flpAmbientNoise.SuspendLayout();
@@ -76,7 +77,7 @@
             // 
             this.cbMixNpcParty.AutoSize = true;
             this.cbMixNpcParty.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbMixNpcParty.Location = new System.Drawing.Point(45, 190);
+            this.cbMixNpcParty.Location = new System.Drawing.Point(45, 214);
             this.cbMixNpcParty.Name = "cbMixNpcParty";
             this.cbMixNpcParty.Size = new System.Drawing.Size(200, 17);
             this.cbMixNpcParty.TabIndex = 8;
@@ -485,12 +486,24 @@
             this.bMaxAll.UseVisualStyleBackColor = false;
             this.bMaxAll.Click += new System.EventHandler(this.bMaxAll_Click);
             // 
+            // cbRemoveDmca
+            // 
+            this.cbRemoveDmca.AutoSize = true;
+            this.cbRemoveDmca.Location = new System.Drawing.Point(45, 191);
+            this.cbRemoveDmca.Name = "cbRemoveDmca";
+            this.cbRemoveDmca.Size = new System.Drawing.Size(161, 17);
+            this.cbRemoveDmca.TabIndex = 22;
+            this.cbRemoveDmca.Text = "Overwrite likely DMCA music";
+            this.cbRemoveDmca.UseVisualStyleBackColor = true;
+            this.cbRemoveDmca.CheckedChanged += new System.EventHandler(this.cbRemoveDmca_CheckedChanged);
+            // 
             // SoundForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(331, 222);
+            this.ClientSize = new System.Drawing.Size(331, 243);
+            this.Controls.Add(this.cbRemoveDmca);
             this.Controls.Add(this.bMaxAll);
             this.Controls.Add(this.bTypeAll);
             this.Controls.Add(this.bToggleAll);
@@ -570,5 +583,6 @@
         private System.Windows.Forms.Button bToggleAll;
         private System.Windows.Forms.Button bTypeAll;
         private System.Windows.Forms.Button bMaxAll;
+        private System.Windows.Forms.CheckBox cbRemoveDmca;
     }
 }

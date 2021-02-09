@@ -9,14 +9,22 @@ namespace kotor_Randomizer_2
     //This has absically been copied verbatim from what Glasnonck coded in the last rando, could probably be cleaned up, but I cannot be bothered 
     class SoundRando
     {
+        private static Dictionary<string, string> MusicLookupTable { get; set; } = new Dictionary<string, string>();
+        private static Dictionary<string, string> SoundLookupTable { get; set; } = new Dictionary<string, string>();
+
         public static void sound_rando(KPaths paths)
         {
-            var musicFiles = paths.FilesInMusicBackup;
-            var soundFiles = paths.FilesInSoundsBackup;
+            // Prepare lists for new randomization.
+            MusicLookupTable.Clear();
+            SoundLookupTable.Clear();
 
             // Get file collections
             List<FileInfo> maxMusic = new List<FileInfo>();
             List<FileInfo> maxSound = new List<FileInfo>();
+            List<FileInfo> musicFiles = new List<FileInfo>();
+            List<FileInfo> soundFiles = new List<FileInfo>();
+            if (Directory.Exists(paths.music_backup))  musicFiles = paths.FilesInMusicBackup.ToList();
+            if (Directory.Exists(paths.sounds_backup)) soundFiles = paths.FilesInSoundsBackup.ToList();
 
             // Area Music
             List<FileInfo> areaMusic = new List<FileInfo>();
@@ -25,13 +33,19 @@ namespace kotor_Randomizer_2
                 areaMusic.AddRange(musicFiles.Where(f => f.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)));
             }
 
+            if (Properties.Settings.Default.RemoveDmcaMusic)
+            {
+                areaMusic.RemoveAll(f => DmcaAreaMusic.Contains(f.Name));   // Remove DMCA music from the area list.
+            }
+
             switch ((RandomizationLevel)Properties.Settings.Default.RandomizeAreaMusic)
             {
                 case RandomizationLevel.Max:
                     maxMusic.AddRange(areaMusic);
                     break;
                 case RandomizationLevel.Type:
-                    Randomize.RandomizeFiles(areaMusic, paths.music);
+                    var randList = Randomize.RandomizeFiles(areaMusic, paths.music);
+                    AddToMusicLookup(areaMusic, randList);
                     break;
                 case RandomizationLevel.Subtype:
                 case RandomizationLevel.None:
@@ -59,8 +73,11 @@ namespace kotor_Randomizer_2
                     maxSound.AddRange(ambientNoiseSound);
                     break;
                 case RandomizationLevel.Type:
-                    Randomize.RandomizeFiles(ambientNoiseMusic, paths.music);
-                    Randomize.RandomizeFiles(ambientNoiseSound, paths.sounds);
+                    var randList = Randomize.RandomizeFiles(ambientNoiseMusic, paths.music);
+                    AddToMusicLookup(ambientNoiseMusic, randList);
+
+                    randList = Randomize.RandomizeFiles(ambientNoiseSound, paths.sounds);
+                    AddToSoundLookup(ambientNoiseSound, randList);
                     break;
                 case RandomizationLevel.Subtype:
                 case RandomizationLevel.None:
@@ -79,8 +96,11 @@ namespace kotor_Randomizer_2
                     maxSound.AddRange(battleMusicEnd);
                     break;
                 case RandomizationLevel.Type:
-                    Randomize.RandomizeFiles(battleMusic, paths.music);
-                    Randomize.RandomizeFiles(battleMusicEnd, paths.sounds);
+                    var randList = Randomize.RandomizeFiles(battleMusic, paths.music);
+                    AddToMusicLookup(battleMusic, randList);
+
+                    randList = Randomize.RandomizeFiles(battleMusicEnd, paths.sounds);
+                    AddToSoundLookup(battleMusicEnd, randList);
                     break;
                 case RandomizationLevel.Subtype:
                 case RandomizationLevel.None:
@@ -98,7 +118,8 @@ namespace kotor_Randomizer_2
                     maxMusic.AddRange(cutsceneNoise);
                     break;
                 case RandomizationLevel.Type:
-                    Randomize.RandomizeFiles(cutsceneNoise, paths.music);
+                    var randList = Randomize.RandomizeFiles(cutsceneNoise, paths.music);
+                    AddToMusicLookup(cutsceneNoise, randList);
                     break;
                 case RandomizationLevel.Subtype:
                 case RandomizationLevel.None:
@@ -123,7 +144,8 @@ namespace kotor_Randomizer_2
                         maxSound.AddRange(partySounds);
                         break;
                     case RandomizationLevel.Type:
-                        Randomize.RandomizeFiles(partySounds, paths.sounds);
+                        var randList = Randomize.RandomizeFiles(partySounds, paths.sounds);
+                        AddToSoundLookup(partySounds, randList);
                         break;
                     case RandomizationLevel.Subtype:
                         RandomizeSoundActions(partySounds, paths.sounds);
@@ -152,31 +174,192 @@ namespace kotor_Randomizer_2
             //}
 
             // Max Randomizations
-            if (maxMusic.Any()) { Randomize.RandomizeFiles(maxMusic, paths.music); }
-            if (maxSound.Any()) { Randomize.RandomizeFiles(maxSound, paths.sounds); }
+            if (maxMusic.Any())
+            {
+                var randList = Randomize.RandomizeFiles(maxMusic, paths.music);
+                AddToMusicLookup(maxMusic, randList);
+            }
+            if (maxSound.Any())
+            {
+                var randList = Randomize.RandomizeFiles(maxSound, paths.sounds);
+                AddToSoundLookup(maxSound, randList);
+            }
+
+            // Overwrite DMCA music with alternatives
+            if (Properties.Settings.Default.RemoveDmcaMusic)
+            {
+                var orig = new List<FileInfo>();
+                var rand = new List<FileInfo>();
+                foreach (var fi in musicFiles.Where(f => DmcaAreaMusic.Contains(f.Name)))
+                {
+                    var replacement = areaMusic[Randomize.Rng.Next(areaMusic.Count)];
+                    File.Copy(replacement.FullName, Path.Combine(paths.music, fi.Name), true);
+
+                    orig.Add(fi);
+                    rand.Add(replacement);
+                }
+                AddToMusicLookup(orig, rand);
+            }
+        }
+
+        private static void AddToMusicLookup(List<FileInfo> original, List<FileInfo> randomized)
+        {
+            for (int i = 0; i < original.Count; i++)
+            {
+                if (MusicLookupTable.ContainsKey(original[i].Name))
+                {
+                    MusicLookupTable[original[i].Name] = randomized[i].Name;
+                }
+                else
+                {
+                    MusicLookupTable.Add(original[i].Name, randomized[i].Name);
+                }
+            }
+        }
+
+        private static void AddToSoundLookup(List<FileInfo> original, List<FileInfo> randomized)
+        {
+            for (int i = 0; i < original.Count; i++)
+            {
+                if (SoundLookupTable.ContainsKey(original[i].Name))
+                {
+                    SoundLookupTable[original[i].Name] = randomized[i].Name;
+                }
+                else
+                {
+                    SoundLookupTable.Add(original[i].Name, randomized[i].Name);
+                }
+            }
         }
 
         private static void RandomizeSoundActions(List<FileInfo> files, string outPath)
         {
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundAttack.IsMatch(f.Name)), outPath);       // ATK
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundBattle.IsMatch(f.Name)), outPath);       // BAT
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundLockAttempt.IsMatch(f.Name)), outPath);  // BLOCK
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundCriticalHit.IsMatch(f.Name)), outPath);  // CRIT
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundDead.IsMatch(f.Name)), outPath);         // DEAD
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundMineFound.IsMatch(f.Name)), outPath);    // DMIN
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundLockFailure.IsMatch(f.Name)), outPath);  // FLOCK
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundHit.IsMatch(f.Name)), outPath);          // HIT
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundMineSet.IsMatch(f.Name)), outPath);      // LMIN
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundLowHealth.IsMatch(f.Name)), outPath);    // LOW
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundMedicine.IsMatch(f.Name)), outPath);     // MED
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundPoison.IsMatch(f.Name)), outPath);       // POIS
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundSoloOff.IsMatch(f.Name)), outPath);      // RPRTY
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundSelect.IsMatch(f.Name)), outPath);       // SLCT
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundLockSuccess.IsMatch(f.Name)), outPath);  // SLOCK
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundSoloOn.IsMatch(f.Name)), outPath);       // SPRTY
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundSearch.IsMatch(f.Name)), outPath);       // SRCH
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundStealth.IsMatch(f.Name)), outPath);      // STLH
-            Randomize.RandomizeFiles(files.Where(f => SuffixSoundIneffective.IsMatch(f.Name)), outPath);  // TIA
+            var actionList = files.Where(f => SuffixSoundAttack.IsMatch(f.Name)).ToList();
+            var randList = Randomize.RandomizeFiles(actionList, outPath);   // ATK
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundBattle.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // BAT
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundLockAttempt.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // BLOCK
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundCriticalHit.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // CRIT
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundDead.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // DEAD
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundMineFound.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // DMIN
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundLockFailure.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // FLOCK
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundHit.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // HIT
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundMineSet.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // LMIN
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundLowHealth.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // LOW
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundMedicine.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // MED
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundPoison.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // POIS
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundSoloOff.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // RPRTY
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundSelect.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // SLCT
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundLockSuccess.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // SLOCK
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundSoloOn.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // SPRTY
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundSearch.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // SRCH
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundStealth.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // STLH
+            AddToSoundLookup(actionList, randList);
+
+            actionList = files.Where(f => SuffixSoundIneffective.IsMatch(f.Name)).ToList();
+            randList = Randomize.RandomizeFiles(actionList, outPath);       // TIA
+            AddToSoundLookup(actionList, randList);
+        }
+
+        public static void GenerateSpoilerLog(string path)
+        {
+            if (MusicLookupTable.Count == 0 &&
+                SoundLookupTable.Count == 0)
+            { return; }
+
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                sw.WriteLine($"Seed,{Properties.Settings.Default.Seed}");
+                sw.WriteLine();
+
+                sw.WriteLine($"Area Music,{(RandomizationLevel)Properties.Settings.Default.RandomizeAreaMusic}");
+                sw.WriteLine($"Battle Music,{(RandomizationLevel)Properties.Settings.Default.RandomizeBattleMusic}");
+                sw.WriteLine($"Ambient Noise,{(RandomizationLevel)Properties.Settings.Default.RandomizeAmbientNoise}");
+                sw.WriteLine($"Cutscene Noise,{(RandomizationLevel)Properties.Settings.Default.RandomizeCutsceneNoise}");
+                sw.WriteLine($"NPC Sounds,{(RandomizationLevel)Properties.Settings.Default.RandomizeNpcSounds}");
+                sw.WriteLine($"Party Sounds,{(RandomizationLevel)Properties.Settings.Default.RandomizePartySounds}");
+                sw.WriteLine($"Remove DMCA,{Properties.Settings.Default.RemoveDmcaMusic}");
+                sw.WriteLine($"Mix NPC and Party,{Properties.Settings.Default.MixNpcAndPartySounds}");
+                sw.WriteLine();
+
+                if (MusicLookupTable.Any())
+                {
+                    var sortedLookup = MusicLookupTable.OrderBy(kvp => kvp.Key);
+                    sw.WriteLine("Music");
+                    sw.WriteLine("Original,Randomized");
+
+                    foreach (var kvp in sortedLookup)
+                    {
+                        sw.WriteLine($"{kvp.Key},{kvp.Value}");
+                    }
+
+                    sw.WriteLine();
+                }
+
+                if (SoundLookupTable.Any())
+                {
+                    var sortedLookup = SoundLookupTable.OrderBy(kvp => kvp.Key);
+                    sw.WriteLine("Sound");
+                    sw.WriteLine("Original,Randomized");
+
+                    foreach (var kvp in sortedLookup)
+                    {
+                        sw.WriteLine($"{kvp.Key},{kvp.Value}");
+                    }
+
+                    sw.WriteLine();
+                }
+            }
         }
 
         //public static Regex PrefixAreaMusic { get { return new Regex("", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
@@ -188,13 +371,26 @@ namespace kotor_Randomizer_2
                 {
                     "mus_area_",
                     "mus_theme_",
-                    "57.",
-                    "credits.",
-                    "evil_ending.",
+                    "57.",          // LS ending BGM, Star Wars main theme
+                    "credits.",     // Star Wars main theme
+                    "evil_ending.", // DS ending BGM, Star Wars main theme
                 };
             }
         }
-        
+
+        public static List<string> DmcaAreaMusic
+        {
+            get
+            {
+                return new List<string>()
+                {
+                    "57.wav",
+                    "credits.wav",
+                    "evil_ending.wav",
+                };
+            }
+        }
+
         public static Regex RegexBattleMusic { get { return new Regex("mus_s?bat_", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
 
         public static List<string> PrefixListBattleMusic

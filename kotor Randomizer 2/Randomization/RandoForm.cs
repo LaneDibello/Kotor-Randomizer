@@ -82,7 +82,26 @@ namespace kotor_Randomizer_2
                         Randomize.RestartRng();
                         curr_task = Properties.Resources.RandomizingMusicSound;
                         bwRandomizing.ReportProgress(curr_progress);
-                        CreateSoundBackups();
+
+                        // If music files are to be randomized, create backups.
+                        if (Properties.Settings.Default.RandomizeAreaMusic     != (int)RandomizationLevel.None ||
+                            Properties.Settings.Default.RandomizeAmbientNoise  != (int)RandomizationLevel.None ||
+                            Properties.Settings.Default.RandomizeBattleMusic   != (int)RandomizationLevel.None ||
+                            Properties.Settings.Default.RandomizeCutsceneNoise != (int)RandomizationLevel.None ||
+                            Properties.Settings.Default.RemoveDmcaMusic)
+                        {
+                            CreateMusicBackups();
+                        }
+
+                        // If sound files are to be randomized, create backups.
+                        if (Properties.Settings.Default.RandomizeAmbientNoise != (int)RandomizationLevel.None ||
+                            Properties.Settings.Default.RandomizeBattleMusic  != (int)RandomizationLevel.None ||
+                            Properties.Settings.Default.RandomizeNpcSounds    != (int)RandomizationLevel.None ||
+                            Properties.Settings.Default.RandomizePartySounds  != (int)RandomizationLevel.None)
+                        {
+                            CreateSoundBackups();
+                        }
+
                         SoundRando.sound_rando(paths); // Run appropriate rando script.
                         sw.WriteLine(Properties.Resources.LogMusicSoundDone);
                         curr_progress += step_size;
@@ -263,9 +282,13 @@ namespace kotor_Randomizer_2
             paths.BackUpChitinFile();
         }
 
-        private void CreateSoundBackups()
+        private void CreateMusicBackups()
         {
             paths.BackUpMusicDirectory();
+        }
+
+        private void CreateSoundBackups()
+        {
             paths.BackUpSoundDirectory();
         }
 

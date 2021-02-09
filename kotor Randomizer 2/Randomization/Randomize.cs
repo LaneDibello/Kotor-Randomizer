@@ -55,11 +55,12 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public static void RandomizeFiles(IEnumerable<FileInfo> files, string outPath)
+        public static List<FileInfo> RandomizeFiles(IEnumerable<FileInfo> files, string outPath)
         {
-            if (files.Any())
+            var randList = files?.ToList() ?? new List<FileInfo>();
+
+            if (files?.Any() ?? false)
             {
-                var randList = files.ToList();
                 FisherYatesShuffle(randList);
 
                 int i = 0;
@@ -69,6 +70,8 @@ namespace kotor_Randomizer_2
                     ++i;
                 }
             }
+
+            return randList;
         }
 
         public static double GetRandomDouble(double min, double max)

@@ -962,5 +962,17 @@ namespace kotor_Randomizer_2.Properties {
                 this["RandomizeSwoopObstacles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RemoveDmcaMusic {
+            get {
+                return ((bool)(this["RemoveDmcaMusic"]));
+            }
+            set {
+                this["RemoveDmcaMusic"] = value;
+            }
+        }
     }
 }
