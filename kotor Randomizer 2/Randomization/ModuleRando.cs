@@ -72,7 +72,8 @@ namespace kotor_Randomizer_2
             bool reachable = false;
             int iterations = 0;
 
-            if (Properties.Settings.Default.VerifyReachability)
+            if (Properties.Settings.Default.UseRandoRules ||
+                Properties.Settings.Default.VerifyReachability)
             {
                 System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
                 sw.Start();
@@ -97,21 +98,38 @@ namespace kotor_Randomizer_2
                     }
 
                     Digraph.SetRandomizationLookup(LookupTable);
-                    Digraph.CheckReachability();
-                    reachable = Digraph.IsGoalReachable();
+
+                    if (Properties.Settings.Default.UseRandoRules)
+                    {
+                        // Skip to the next iteration if the rules are violated.
+                        if (AreRulesViolated()) continue;
+                    }
+
+                    if (Properties.Settings.Default.VerifyReachability)
+                    {
+                        Digraph.CheckReachability();
+                        reachable = Digraph.IsGoalReachable();
+                    }
+                    else
+                    {
+                        reachable = true;
+                    }
                 }
 
-                if (reachable)
+                if (Properties.Settings.Default.VerifyReachability)
                 {
-                    var message = $"Reachable solution found after {iterations} shuffles. Time elapsed: {sw.Elapsed}";
-                    Console.WriteLine(message);
-                }
-                else
-                {
-                    // Throw an exception if not reachable.
-                    var message = $"No reachable solution found over {iterations} shuffles. Time elapsed: {sw.Elapsed}";
-                    Console.WriteLine(message);
-                    throw new TimeoutException(message);
+                    if (reachable)
+                    {
+                        var message = $"Reachable solution found after {iterations} shuffles. Time elapsed: {sw.Elapsed}";
+                        Console.WriteLine(message);
+                    }
+                    else
+                    {
+                        // Throw an exception if not reachable.
+                        var message = $"No reachable solution found over {iterations} shuffles. Time elapsed: {sw.Elapsed}";
+                        Console.WriteLine(message);
+                        throw new TimeoutException(message);
+                    }
                 }
 
                 //digraph.WriteReachableToConsole();
@@ -428,6 +446,58 @@ namespace kotor_Randomizer_2
                     r_vul.WriteToFile(fi.FullName);
                 }
             }
+        }
+
+        /// <summary>
+        /// Check to see if the rules are violated.
+        /// If a module's list of bad randomizations contains what replaces it now, the rule is violated.
+        /// </summary>
+        /// <returns></returns>
+        private static bool AreRulesViolated()
+        {
+            // Rule key cannot replace any of the listed values.
+            // LookupTable[Original] = Randomized;
+            //    Pseudocode:
+            // Original = RuleKey;
+            // Randomized = LookupTable[Original];
+            // If RuleList.Contains(Randomized),
+            //    Rule is violated.
+
+            // Check rule 1
+            foreach (var ruleKVP in Globals.RULE1)
+            {
+                var lookup = LookupTable[ruleKVP.Key];
+                if (ruleKVP.Value.Contains(lookup))
+                {
+                    Console.WriteLine($"Rule 1 violated: {ruleKVP.Key} replaces {lookup}");
+                    return true;
+                }
+            }
+
+            // Check rule 2
+            foreach (var ruleKVP in Globals.RULE2)
+            {
+                var lookup = LookupTable[ruleKVP.Key];
+                if (ruleKVP.Value.Contains(lookup))
+                {
+                    Console.WriteLine($"Rule 2 violated: {ruleKVP.Key} replaces {lookup}");
+                    return true;
+                }
+            }
+
+            // Check rule 3
+            foreach (var ruleKVP in Globals.RULE3)
+            {
+                var lookup = LookupTable[ruleKVP.Key];
+                if (ruleKVP.Value.Contains(lookup))
+                {
+                    Console.WriteLine($"Rule 3 violated: {ruleKVP.Key} replaces {lookup}");
+                    return true;
+                }
+            }
+
+            Console.WriteLine("No rules violated.");
+            return false;
         }
 
         /// <summary>

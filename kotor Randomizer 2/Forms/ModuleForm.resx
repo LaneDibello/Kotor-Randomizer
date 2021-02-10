@@ -132,7 +132,7 @@ lead to potential softlocks otherwise: Undercity, Tulak Horde,
 Leviathan Hangar, Ahto West, Manaan Sith Base, Rakatan
 Settlement, and Temple Main Floor.</value>
   </data>
-  <data name="cbRandoRule3.ToolTip" xml:space="preserve">
+  <data name="lblRule3.ToolTip" xml:space="preserve">
     <value>If a module has multiple exits, but only one is unlocked, it
 cannot be in the unlocked location. (Sith Academy Entrance
 cannot replace Dreshdae)

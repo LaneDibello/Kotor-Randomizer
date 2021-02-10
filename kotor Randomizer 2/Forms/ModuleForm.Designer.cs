@@ -59,10 +59,10 @@
             this.ModulesToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.cbGlitchClip = new System.Windows.Forms.CheckBox();
             this.cbIgnoreOnceEdges = new System.Windows.Forms.CheckBox();
-            this.cbRandoRule1 = new System.Windows.Forms.CheckBox();
-            this.cbRandoRule2 = new System.Windows.Forms.CheckBox();
-            this.cbRandoRule3 = new System.Windows.Forms.CheckBox();
-            this.lblRules = new System.Windows.Forms.Label();
+            this.cbUseRandoRules = new System.Windows.Forms.CheckBox();
+            this.lblRule1 = new System.Windows.Forms.Label();
+            this.lblRule2 = new System.Windows.Forms.Label();
+            this.lblRule3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // OmittedListBox
@@ -286,7 +286,7 @@
             // 
             this.cbReachability.AutoSize = true;
             this.cbReachability.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbReachability.Location = new System.Drawing.Point(20, 588);
+            this.cbReachability.Location = new System.Drawing.Point(20, 611);
             this.cbReachability.Name = "cbReachability";
             this.cbReachability.Size = new System.Drawing.Size(151, 17);
             this.cbReachability.TabIndex = 32;
@@ -430,7 +430,7 @@
             // 
             this.cbIgnoreOnceEdges.AutoSize = true;
             this.cbIgnoreOnceEdges.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbIgnoreOnceEdges.Location = new System.Drawing.Point(180, 588);
+            this.cbIgnoreOnceEdges.Location = new System.Drawing.Point(180, 611);
             this.cbIgnoreOnceEdges.Name = "cbIgnoreOnceEdges";
             this.cbIgnoreOnceEdges.Size = new System.Drawing.Size(164, 17);
             this.cbIgnoreOnceEdges.TabIndex = 43;
@@ -441,58 +441,54 @@
             this.cbIgnoreOnceEdges.UseVisualStyleBackColor = true;
             this.cbIgnoreOnceEdges.CheckedChanged += new System.EventHandler(this.cbAllowOnceEdges_CheckedChanged);
             // 
-            // cbRandoRule1
+            // cbUseRandoRules
             // 
-            this.cbRandoRule1.AutoSize = true;
-            this.cbRandoRule1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbRandoRule1.Location = new System.Drawing.Point(164, 611);
-            this.cbRandoRule1.Name = "cbRandoRule1";
-            this.cbRandoRule1.Size = new System.Drawing.Size(57, 17);
-            this.cbRandoRule1.TabIndex = 46;
-            this.cbRandoRule1.Text = "Rule 1";
-            this.ModulesToolTip.SetToolTip(this.cbRandoRule1, "If a module has one exit, the module cannot replace its only\r\ndestination. (e.g.," +
+            this.cbUseRandoRules.AutoSize = true;
+            this.cbUseRandoRules.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUseRandoRules.Location = new System.Drawing.Point(20, 588);
+            this.cbUseRandoRules.Name = "cbUseRandoRules";
+            this.cbUseRandoRules.Size = new System.Drawing.Size(196, 17);
+            this.cbUseRandoRules.TabIndex = 49;
+            this.cbUseRandoRules.Text = "Use Randomization Exclusion Rules";
+            this.cbUseRandoRules.UseVisualStyleBackColor = true;
+            this.cbUseRandoRules.CheckedChanged += new System.EventHandler(this.cbUseRandoRules_CheckedChanged);
+            // 
+            // lblRule1
+            // 
+            this.lblRule1.AutoSize = true;
+            this.lblRule1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.lblRule1.Location = new System.Drawing.Point(222, 589);
+            this.lblRule1.Name = "lblRule1";
+            this.lblRule1.Size = new System.Drawing.Size(44, 13);
+            this.lblRule1.TabIndex = 50;
+            this.lblRule1.Text = "(Rule 1,";
+            this.ModulesToolTip.SetToolTip(this.lblRule1, "If a module has one exit, the module cannot replace its only\r\ndestination. (e.g.," +
         " Czerka Office cannot replace Anchorhead)\r\nThis prevents binary infinite loops t" +
         "hat you can\'t escape from.");
-            this.cbRandoRule1.UseVisualStyleBackColor = true;
-            this.cbRandoRule1.CheckedChanged += new System.EventHandler(this.cbRandoRule1_CheckedChanged);
             // 
-            // cbRandoRule2
+            // lblRule2
             // 
-            this.cbRandoRule2.AutoSize = true;
-            this.cbRandoRule2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbRandoRule2.Location = new System.Drawing.Point(233, 611);
-            this.cbRandoRule2.Name = "cbRandoRule2";
-            this.cbRandoRule2.Size = new System.Drawing.Size(57, 17);
-            this.cbRandoRule2.TabIndex = 47;
-            this.cbRandoRule2.Text = "Rule 2";
-            this.ModulesToolTip.SetToolTip(this.cbRandoRule2, "The parent of a module with only one entrance cannot\r\nreplace that module. (e.g.," +
+            this.lblRule2.AutoSize = true;
+            this.lblRule2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.lblRule2.Location = new System.Drawing.Point(272, 589);
+            this.lblRule2.Name = "lblRule2";
+            this.lblRule2.Size = new System.Drawing.Size(41, 13);
+            this.lblRule2.TabIndex = 51;
+            this.lblRule2.Text = "Rule 2,";
+            this.ModulesToolTip.SetToolTip(this.lblRule2, "The parent of a module with only one entrance cannot\r\nreplace that module. (e.g.," +
         " Anchorhead cannot replace\r\nCzerka Office)\r\nThis prevents some modules from beco" +
         "ming completely\r\nunreachable.");
-            this.cbRandoRule2.UseVisualStyleBackColor = true;
-            this.cbRandoRule2.CheckedChanged += new System.EventHandler(this.cbRandoRule2_CheckedChanged);
             // 
-            // cbRandoRule3
+            // lblRule3
             // 
-            this.cbRandoRule3.AutoSize = true;
-            this.cbRandoRule3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbRandoRule3.Location = new System.Drawing.Point(302, 611);
-            this.cbRandoRule3.Name = "cbRandoRule3";
-            this.cbRandoRule3.Size = new System.Drawing.Size(57, 17);
-            this.cbRandoRule3.TabIndex = 48;
-            this.cbRandoRule3.Text = "Rule 3";
-            this.ModulesToolTip.SetToolTip(this.cbRandoRule3, resources.GetString("cbRandoRule3.ToolTip"));
-            this.cbRandoRule3.UseVisualStyleBackColor = true;
-            this.cbRandoRule3.CheckedChanged += new System.EventHandler(this.cbRandoRule3_CheckedChanged);
-            // 
-            // lblRules
-            // 
-            this.lblRules.AutoSize = true;
-            this.lblRules.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblRules.Location = new System.Drawing.Point(20, 612);
-            this.lblRules.Name = "lblRules";
-            this.lblRules.Size = new System.Drawing.Size(105, 13);
-            this.lblRules.TabIndex = 45;
-            this.lblRules.Text = "Randomization rules:";
+            this.lblRule3.AutoSize = true;
+            this.lblRule3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.lblRule3.Location = new System.Drawing.Point(319, 589);
+            this.lblRule3.Name = "lblRule3";
+            this.lblRule3.Size = new System.Drawing.Size(41, 13);
+            this.lblRule3.TabIndex = 52;
+            this.lblRule3.Text = "Rule 3)";
+            this.ModulesToolTip.SetToolTip(this.lblRule3, resources.GetString("lblRule3.ToolTip"));
             // 
             // ModuleForm
             // 
@@ -500,10 +496,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.ClientSize = new System.Drawing.Size(556, 688);
-            this.Controls.Add(this.cbRandoRule3);
-            this.Controls.Add(this.cbRandoRule2);
-            this.Controls.Add(this.cbRandoRule1);
-            this.Controls.Add(this.lblRules);
+            this.Controls.Add(this.lblRule3);
+            this.Controls.Add(this.lblRule2);
+            this.Controls.Add(this.lblRule1);
+            this.Controls.Add(this.cbUseRandoRules);
             this.Controls.Add(this.cbIgnoreOnceEdges);
             this.Controls.Add(this.cbGlitchClip);
             this.Controls.Add(this.panel1);
@@ -575,9 +571,9 @@
         private System.Windows.Forms.ToolTip ModulesToolTip;
         private System.Windows.Forms.CheckBox cbGlitchClip;
         private System.Windows.Forms.CheckBox cbIgnoreOnceEdges;
-        private System.Windows.Forms.Label lblRules;
-        private System.Windows.Forms.CheckBox cbRandoRule1;
-        private System.Windows.Forms.CheckBox cbRandoRule2;
-        private System.Windows.Forms.CheckBox cbRandoRule3;
+        private System.Windows.Forms.CheckBox cbUseRandoRules;
+        private System.Windows.Forms.Label lblRule1;
+        private System.Windows.Forms.Label lblRule2;
+        private System.Windows.Forms.Label lblRule3;
     }
 }

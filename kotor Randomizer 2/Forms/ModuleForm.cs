@@ -52,11 +52,9 @@ namespace kotor_Randomizer_2
             cbVulkSpiceLZ.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
 
             // Initialize reachability settings
+            cbUseRandoRules.Checked = settings.UseRandoRules;
             cbReachability.Checked = settings.VerifyReachability;
             cbIgnoreOnceEdges.Enabled = cbReachability.Checked;
-            cbRandoRule1.Enabled = cbReachability.Checked;
-            cbRandoRule2.Enabled = cbReachability.Checked;
-            cbRandoRule3.Enabled = cbReachability.Checked;
             cbGoalMalak.Enabled = cbReachability.Checked;
             cbGoalStarMaps.Enabled = cbReachability.Checked;
             cbGoalPazaak.Enabled = cbReachability.Checked;
@@ -65,9 +63,6 @@ namespace kotor_Randomizer_2
             cbGlitchFlu.Enabled = cbReachability.Checked;
             cbGlitchGpw.Enabled = cbReachability.Checked;
             cbIgnoreOnceEdges.Checked = settings.IgnoreOnceEdges;
-            cbRandoRule1.Checked = settings.UseRandoRule1;
-            cbRandoRule2.Checked = settings.UseRandoRule2;
-            cbRandoRule3.Checked = settings.UseRandoRule3;
             cbGoalMalak.Checked = settings.GoalIsMalak;
             cbGoalStarMaps.Checked = settings.GoalIsStarMaps;
             cbGoalPazaak.Checked = settings.GoalIsPazaak;
@@ -359,22 +354,10 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.IgnoreOnceEdges = cbIgnoreOnceEdges.Checked;
         }
 
-        private void cbRandoRule1_CheckedChanged(object sender, EventArgs e)
+        private void cbUseRandoRules_CheckedChanged(object sender, EventArgs e)
         {
             if (!Constructed) { return; }
-            Properties.Settings.Default.UseRandoRule1 = cbRandoRule1.Checked;
-        }
-
-        private void cbRandoRule2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!Constructed) { return; }
-            Properties.Settings.Default.UseRandoRule2 = cbRandoRule2.Checked;
-        }
-
-        private void cbRandoRule3_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!Constructed) { return; }
-            Properties.Settings.Default.UseRandoRule3 = cbRandoRule3.Checked;
+            Properties.Settings.Default.UseRandoRules = cbUseRandoRules.Checked;
         }
 
         private void ModuleForm_Activated(object sender, EventArgs e)
@@ -400,11 +383,9 @@ namespace kotor_Randomizer_2
                 cbFixLevElevators.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators);
 
                 // Load new reachability settings.
+                cbUseRandoRules.Checked = Properties.Settings.Default.UseRandoRules;
                 cbReachability.Checked = Properties.Settings.Default.VerifyReachability;
                 cbIgnoreOnceEdges.Checked = Properties.Settings.Default.IgnoreOnceEdges;
-                cbRandoRule1.Checked = Properties.Settings.Default.UseRandoRule1;
-                cbRandoRule2.Checked = Properties.Settings.Default.UseRandoRule2;
-                cbRandoRule3.Checked = Properties.Settings.Default.UseRandoRule3;
                 cbGoalMalak.Checked = Properties.Settings.Default.GoalIsMalak;
                 cbGoalStarMaps.Checked = Properties.Settings.Default.GoalIsStarMaps;
                 cbGoalPazaak.Checked = Properties.Settings.Default.GoalIsPazaak;
@@ -413,9 +394,6 @@ namespace kotor_Randomizer_2
                 cbGlitchFlu.Checked = Properties.Settings.Default.AllowGlitchFlu;
                 cbGlitchGpw.Checked = Properties.Settings.Default.AllowGlitchGpw;
                 cbIgnoreOnceEdges.Enabled = cbReachability.Checked;
-                cbRandoRule1.Enabled = cbReachability.Checked;
-                cbRandoRule2.Enabled = cbReachability.Checked;
-                cbRandoRule3.Enabled = cbReachability.Checked;
                 cbGoalMalak.Enabled = cbReachability.Checked;
                 cbGoalStarMaps.Enabled = cbReachability.Checked;
                 cbGoalPazaak.Enabled = cbReachability.Checked;
