@@ -942,36 +942,12 @@ namespace kotor_Randomizer_2.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool UseRandoRule1 {
+        public bool UseRandoRules {
             get {
-                return ((bool)(this["UseRandoRule1"]));
+                return ((bool)(this["UseRandoRules"]));
             }
             set {
-                this["UseRandoRule1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool UseRandoRule2 {
-            get {
-                return ((bool)(this["UseRandoRule2"]));
-            }
-            set {
-                this["UseRandoRule2"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool UseRandoRule3 {
-            get {
-                return ((bool)(this["UseRandoRule3"]));
-            }
-            set {
-                this["UseRandoRule3"] = value;
+                this["UseRandoRules"] = value;
             }
         }
     }
