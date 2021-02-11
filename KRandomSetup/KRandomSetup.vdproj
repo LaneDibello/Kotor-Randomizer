@@ -15,13 +15,19 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_04FF249B1558D0B909E7709EDAB2B811"
+        "MsmKey" = "8:_1D87768B857FF7C07003A3D8F3DA39F0"
         "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_59C8CE5B47C74F4FBD029E6F580DEEC6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -46,7 +52,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_04FF249B1558D0B909E7709EDAB2B811"
+        "OwnerKey" = "8:_1D87768B857FF7C07003A3D8F3DA39F0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -80,6 +86,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -104,6 +118,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -134,14 +156,14 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_04FF249B1558D0B909E7709EDAB2B811"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1D87768B857FF7C07003A3D8F3DA39F0"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_04FF249B1558D0B909E7709EDAB2B811"
+                    "_1D87768B857FF7C07003A3D8F3DA39F0"
                     {
                     "Name" = "8:KotOR_IO.dll"
                     "Attributes" = "3:512"
@@ -171,6 +193,26 @@
             "TargetName" = "8:krandomsmall_aJB_icon.ico"
             "Tag" = "8:"
             "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_59C8CE5B47C74F4FBD029E6F580DEEC6"
+            {
+            "SourcePath" = "8:..\\kotor Randomizer 2\\Xml\\KotorModules.xml"
+            "TargetName" = "8:KotorModules.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_6E15F2DF9DCF4A7D9DA840DB5EF35665"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -277,6 +319,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_6E15F2DF9DCF4A7D9DA840DB5EF35665"
+                    {
+                    "Name" = "8:Xml"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_6878A197570D47A3B9EE345A6EBCFDE7"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
         }
