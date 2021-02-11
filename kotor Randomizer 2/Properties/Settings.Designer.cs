@@ -942,6 +942,18 @@ namespace kotor_Randomizer_2.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseRandoRules {
+            get {
+                return ((bool)(this["UseRandoRules"]));
+            }
+            set {
+                this["UseRandoRules"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool RandomizeSwoopBoosters {
             get {
                 return ((bool)(this["RandomizeSwoopBoosters"]));

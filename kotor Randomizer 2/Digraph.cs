@@ -152,6 +152,25 @@ namespace kotor_Randomizer_2
             GoalIsStarMap = Properties.Settings.Default.GoalIsStarMaps;
         }
 
+        public void ResetSettings()
+        {
+            // Get currently enabled settings.
+            AllowGlitchClip = Properties.Settings.Default.AllowGlitchClip;
+            AllowGlitchDlz = Properties.Settings.Default.AllowGlitchDlz;
+            AllowGlitchFlu = Properties.Settings.Default.AllowGlitchFlu;
+            AllowGlitchGpw = Properties.Settings.Default.AllowGlitchGpw;
+            EnabledFixBox = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
+            EnabledFixDoors = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors);
+            EnabledFixElev = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators);
+            EnabledFixMap = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
+            EnabledFixSpice = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
+            EnforceEdgeTagLocked = true;
+            IgnoreOnceEdges = Properties.Settings.Default.IgnoreOnceEdges;
+            GoalIsMalak = Properties.Settings.Default.GoalIsMalak;
+            GoalIsPazaak = Properties.Settings.Default.GoalIsPazaak;
+            GoalIsStarMap = Properties.Settings.Default.GoalIsStarMaps;
+        }
+
         /// <summary>
         /// Writes all reachable modules and their (randomized) edges to the console for debugging purposes.
         /// </summary>
@@ -216,8 +235,8 @@ namespace kotor_Randomizer_2
         /// </summary>
         public void CheckReachability()
         {
-            //System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-            //sw.Start();
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
 
             // Reset objects needed for reachability testing.
             Reachable = Modules.ToDictionary(m => m.WarpCode, b => false);
@@ -234,7 +253,7 @@ namespace kotor_Randomizer_2
                 CheckReachabilityDFS(touched);
             } while (ReachableUpdated);
 
-            //Console.WriteLine($"Time used to create digraph and check reachability...{sw.Elapsed}");
+            Console.WriteLine($"Time used to create digraph and check reachability...{sw.Elapsed}");
         }
 
         /// <summary>

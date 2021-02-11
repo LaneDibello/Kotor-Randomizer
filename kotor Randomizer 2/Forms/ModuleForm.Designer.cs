@@ -47,8 +47,8 @@
             this.cbFixLevElevators = new System.Windows.Forms.CheckBox();
             this.cbVulkSpiceLZ = new System.Windows.Forms.CheckBox();
             this.cbReachability = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblGoals = new System.Windows.Forms.Label();
+            this.lblGlitches = new System.Windows.Forms.Label();
             this.cbGoalMalak = new System.Windows.Forms.CheckBox();
             this.cbGoalStarMaps = new System.Windows.Forms.CheckBox();
             this.cbGoalPazaak = new System.Windows.Forms.CheckBox();
@@ -59,6 +59,10 @@
             this.ModulesToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.cbGlitchClip = new System.Windows.Forms.CheckBox();
             this.cbIgnoreOnceEdges = new System.Windows.Forms.CheckBox();
+            this.cbUseRandoRules = new System.Windows.Forms.CheckBox();
+            this.lblRule1 = new System.Windows.Forms.Label();
+            this.lblRule2 = new System.Windows.Forms.Label();
+            this.lblRule3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // OmittedListBox
@@ -282,7 +286,7 @@
             // 
             this.cbReachability.AutoSize = true;
             this.cbReachability.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbReachability.Location = new System.Drawing.Point(20, 588);
+            this.cbReachability.Location = new System.Drawing.Point(20, 611);
             this.cbReachability.Name = "cbReachability";
             this.cbReachability.Size = new System.Drawing.Size(151, 17);
             this.cbReachability.TabIndex = 32;
@@ -293,25 +297,25 @@
             this.cbReachability.UseVisualStyleBackColor = true;
             this.cbReachability.CheckedChanged += new System.EventHandler(this.cbReachability_CheckedChanged);
             // 
-            // label1
+            // lblGoals
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.label1.Location = new System.Drawing.Point(20, 612);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(132, 13);
-            this.label1.TabIndex = 33;
-            this.label1.Text = "Goal(s) of this playthrough:";
+            this.lblGoals.AutoSize = true;
+            this.lblGoals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.lblGoals.Location = new System.Drawing.Point(20, 635);
+            this.lblGoals.Name = "lblGoals";
+            this.lblGoals.Size = new System.Drawing.Size(132, 13);
+            this.lblGoals.TabIndex = 33;
+            this.lblGoals.Text = "Goal(s) of this playthrough:";
             // 
-            // label2
+            // lblGlitches
             // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.label2.Location = new System.Drawing.Point(20, 635);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(138, 13);
-            this.label2.TabIndex = 34;
-            this.label2.Text = "Potentially required glitches:";
+            this.lblGlitches.AutoSize = true;
+            this.lblGlitches.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.lblGlitches.Location = new System.Drawing.Point(20, 658);
+            this.lblGlitches.Name = "lblGlitches";
+            this.lblGlitches.Size = new System.Drawing.Size(138, 13);
+            this.lblGlitches.TabIndex = 34;
+            this.lblGlitches.Text = "Potentially required glitches:";
             // 
             // cbGoalMalak
             // 
@@ -320,7 +324,7 @@
             this.cbGoalMalak.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbGoalMalak.Enabled = false;
             this.cbGoalMalak.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGoalMalak.Location = new System.Drawing.Point(164, 611);
+            this.cbGoalMalak.Location = new System.Drawing.Point(164, 634);
             this.cbGoalMalak.Name = "cbGoalMalak";
             this.cbGoalMalak.Size = new System.Drawing.Size(131, 17);
             this.cbGoalMalak.TabIndex = 35;
@@ -334,7 +338,7 @@
             this.cbGoalStarMaps.AutoSize = true;
             this.cbGoalStarMaps.Enabled = false;
             this.cbGoalStarMaps.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGoalStarMaps.Location = new System.Drawing.Point(301, 611);
+            this.cbGoalStarMaps.Location = new System.Drawing.Point(302, 634);
             this.cbGoalStarMaps.Name = "cbGoalStarMaps";
             this.cbGoalStarMaps.Size = new System.Drawing.Size(109, 17);
             this.cbGoalStarMaps.TabIndex = 36;
@@ -349,7 +353,7 @@
             this.cbGoalPazaak.AutoSize = true;
             this.cbGoalPazaak.Enabled = false;
             this.cbGoalPazaak.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGoalPazaak.Location = new System.Drawing.Point(416, 611);
+            this.cbGoalPazaak.Location = new System.Drawing.Point(417, 634);
             this.cbGoalPazaak.Name = "cbGoalPazaak";
             this.cbGoalPazaak.Size = new System.Drawing.Size(112, 17);
             this.cbGoalPazaak.TabIndex = 37;
@@ -363,7 +367,7 @@
             this.cbGlitchDlz.AutoSize = true;
             this.cbGlitchDlz.Enabled = false;
             this.cbGlitchDlz.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGlitchDlz.Location = new System.Drawing.Point(233, 634);
+            this.cbGlitchDlz.Location = new System.Drawing.Point(233, 657);
             this.cbGlitchDlz.Name = "cbGlitchDlz";
             this.cbGlitchDlz.Size = new System.Drawing.Size(47, 17);
             this.cbGlitchDlz.TabIndex = 38;
@@ -377,7 +381,7 @@
             this.cbGlitchFlu.AutoSize = true;
             this.cbGlitchFlu.Enabled = false;
             this.cbGlitchFlu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGlitchFlu.Location = new System.Drawing.Point(286, 634);
+            this.cbGlitchFlu.Location = new System.Drawing.Point(286, 657);
             this.cbGlitchFlu.Name = "cbGlitchFlu";
             this.cbGlitchFlu.Size = new System.Drawing.Size(46, 17);
             this.cbGlitchFlu.TabIndex = 39;
@@ -391,7 +395,7 @@
             this.cbGlitchGpw.AutoSize = true;
             this.cbGlitchGpw.Enabled = false;
             this.cbGlitchGpw.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGlitchGpw.Location = new System.Drawing.Point(338, 634);
+            this.cbGlitchGpw.Location = new System.Drawing.Point(338, 657);
             this.cbGlitchGpw.Name = "cbGlitchGpw";
             this.cbGlitchGpw.Size = new System.Drawing.Size(52, 17);
             this.cbGlitchGpw.TabIndex = 40;
@@ -413,7 +417,7 @@
             this.cbGlitchClip.AutoSize = true;
             this.cbGlitchClip.Enabled = false;
             this.cbGlitchClip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGlitchClip.Location = new System.Drawing.Point(164, 634);
+            this.cbGlitchClip.Location = new System.Drawing.Point(164, 657);
             this.cbGlitchClip.Name = "cbGlitchClip";
             this.cbGlitchClip.Size = new System.Drawing.Size(63, 17);
             this.cbGlitchClip.TabIndex = 42;
@@ -426,7 +430,7 @@
             // 
             this.cbIgnoreOnceEdges.AutoSize = true;
             this.cbIgnoreOnceEdges.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbIgnoreOnceEdges.Location = new System.Drawing.Point(180, 588);
+            this.cbIgnoreOnceEdges.Location = new System.Drawing.Point(180, 611);
             this.cbIgnoreOnceEdges.Name = "cbIgnoreOnceEdges";
             this.cbIgnoreOnceEdges.Size = new System.Drawing.Size(164, 17);
             this.cbIgnoreOnceEdges.TabIndex = 43;
@@ -437,12 +441,65 @@
             this.cbIgnoreOnceEdges.UseVisualStyleBackColor = true;
             this.cbIgnoreOnceEdges.CheckedChanged += new System.EventHandler(this.cbAllowOnceEdges_CheckedChanged);
             // 
+            // cbUseRandoRules
+            // 
+            this.cbUseRandoRules.AutoSize = true;
+            this.cbUseRandoRules.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUseRandoRules.Location = new System.Drawing.Point(20, 588);
+            this.cbUseRandoRules.Name = "cbUseRandoRules";
+            this.cbUseRandoRules.Size = new System.Drawing.Size(196, 17);
+            this.cbUseRandoRules.TabIndex = 49;
+            this.cbUseRandoRules.Text = "Use Randomization Exclusion Rules";
+            this.cbUseRandoRules.UseVisualStyleBackColor = true;
+            this.cbUseRandoRules.CheckedChanged += new System.EventHandler(this.cbUseRandoRules_CheckedChanged);
+            // 
+            // lblRule1
+            // 
+            this.lblRule1.AutoSize = true;
+            this.lblRule1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.lblRule1.Location = new System.Drawing.Point(222, 589);
+            this.lblRule1.Name = "lblRule1";
+            this.lblRule1.Size = new System.Drawing.Size(44, 13);
+            this.lblRule1.TabIndex = 50;
+            this.lblRule1.Text = "(Rule 1,";
+            this.ModulesToolTip.SetToolTip(this.lblRule1, "If a module has one exit, the module cannot replace its only\r\ndestination. (e.g.," +
+        " Czerka Office cannot replace Anchorhead)\r\nThis prevents binary infinite loops t" +
+        "hat you can\'t escape from.");
+            // 
+            // lblRule2
+            // 
+            this.lblRule2.AutoSize = true;
+            this.lblRule2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.lblRule2.Location = new System.Drawing.Point(272, 589);
+            this.lblRule2.Name = "lblRule2";
+            this.lblRule2.Size = new System.Drawing.Size(41, 13);
+            this.lblRule2.TabIndex = 51;
+            this.lblRule2.Text = "Rule 2,";
+            this.ModulesToolTip.SetToolTip(this.lblRule2, "The parent of a module with only one entrance cannot\r\nreplace that module. (e.g.," +
+        " Anchorhead cannot replace\r\nCzerka Office)\r\nThis prevents some modules from beco" +
+        "ming completely\r\nunreachable.");
+            // 
+            // lblRule3
+            // 
+            this.lblRule3.AutoSize = true;
+            this.lblRule3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.lblRule3.Location = new System.Drawing.Point(319, 589);
+            this.lblRule3.Name = "lblRule3";
+            this.lblRule3.Size = new System.Drawing.Size(41, 13);
+            this.lblRule3.TabIndex = 52;
+            this.lblRule3.Text = "Rule 3)";
+            this.ModulesToolTip.SetToolTip(this.lblRule3, resources.GetString("lblRule3.ToolTip"));
+            // 
             // ModuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(556, 667);
+            this.ClientSize = new System.Drawing.Size(556, 688);
+            this.Controls.Add(this.lblRule3);
+            this.Controls.Add(this.lblRule2);
+            this.Controls.Add(this.lblRule1);
+            this.Controls.Add(this.cbUseRandoRules);
             this.Controls.Add(this.cbIgnoreOnceEdges);
             this.Controls.Add(this.cbGlitchClip);
             this.Controls.Add(this.panel1);
@@ -452,8 +509,8 @@
             this.Controls.Add(this.cbGoalPazaak);
             this.Controls.Add(this.cbGoalStarMaps);
             this.Controls.Add(this.cbGoalMalak);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblGlitches);
+            this.Controls.Add(this.lblGoals);
             this.Controls.Add(this.cbReachability);
             this.Controls.Add(this.cbVulkSpiceLZ);
             this.Controls.Add(this.cbFixLevElevators);
@@ -502,8 +559,8 @@
         private System.Windows.Forms.CheckBox cbFixLevElevators;
         private System.Windows.Forms.CheckBox cbVulkSpiceLZ;
         private System.Windows.Forms.CheckBox cbReachability;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblGoals;
+        private System.Windows.Forms.Label lblGlitches;
         private System.Windows.Forms.CheckBox cbGoalMalak;
         private System.Windows.Forms.CheckBox cbGoalStarMaps;
         private System.Windows.Forms.CheckBox cbGoalPazaak;
@@ -514,5 +571,9 @@
         private System.Windows.Forms.ToolTip ModulesToolTip;
         private System.Windows.Forms.CheckBox cbGlitchClip;
         private System.Windows.Forms.CheckBox cbIgnoreOnceEdges;
+        private System.Windows.Forms.CheckBox cbUseRandoRules;
+        private System.Windows.Forms.Label lblRule1;
+        private System.Windows.Forms.Label lblRule2;
+        private System.Windows.Forms.Label lblRule3;
     }
 }

@@ -52,6 +52,7 @@ namespace kotor_Randomizer_2
             cbVulkSpiceLZ.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
 
             // Initialize reachability settings
+            cbUseRandoRules.Checked = settings.UseRandoRules;
             cbReachability.Checked = settings.VerifyReachability;
             cbIgnoreOnceEdges.Enabled = cbReachability.Checked;
             cbGoalMalak.Enabled = cbReachability.Checked;
@@ -353,6 +354,12 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.IgnoreOnceEdges = cbIgnoreOnceEdges.Checked;
         }
 
+        private void cbUseRandoRules_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.UseRandoRules = cbUseRandoRules.Checked;
+        }
+
         private void ModuleForm_Activated(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.LastPresetComboIndex == -2)
@@ -376,6 +383,7 @@ namespace kotor_Randomizer_2
                 cbFixLevElevators.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators);
 
                 // Load new reachability settings.
+                cbUseRandoRules.Checked = Properties.Settings.Default.UseRandoRules;
                 cbReachability.Checked = Properties.Settings.Default.VerifyReachability;
                 cbIgnoreOnceEdges.Checked = Properties.Settings.Default.IgnoreOnceEdges;
                 cbGoalMalak.Checked = Properties.Settings.Default.GoalIsMalak;
