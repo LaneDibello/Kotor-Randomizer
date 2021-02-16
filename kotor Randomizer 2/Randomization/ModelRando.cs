@@ -195,7 +195,7 @@ namespace kotor_Randomizer_2
         public static void GenerateSpoilerLog(XLWorkbook workbook)
         {
             if (LookupTable.Count == 0) { return; }
-            var ws = workbook.Worksheets.Add("Models");
+            var ws = workbook.Worksheets.Add("Model");
 
             int i = 1;
             ws.Cell(i, 1).Value = "Seed";
@@ -209,6 +209,10 @@ namespace kotor_Randomizer_2
             ws.Cell(i, 2).Value = "Is Active";
             ws.Cell(i, 3).Value = "Omit Large";
             ws.Cell(i, 4).Value = "Omit Broken";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 1).Style.Font.Bold = true;
             ws.Cell(i, 2).Style.Font.Bold = true;
             ws.Cell(i, 3).Style.Font.Bold = true;
@@ -246,6 +250,10 @@ namespace kotor_Randomizer_2
             ws.Cell(i, 2).Value = "Is Active";
             ws.Cell(i, 3).Value = "Omit Airlocks";
             ws.Cell(i, 4).Value = "Omit Broken";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 1).Style.Font.Bold = true;
             ws.Cell(i, 2).Style.Font.Bold = true;
             ws.Cell(i, 3).Style.Font.Bold = true;
@@ -280,6 +288,12 @@ namespace kotor_Randomizer_2
             ws.Cell(i, 4).Value = "Has Changed";
             ws.Cell(i, 5).Value = "Original ID";
             ws.Cell(i, 6).Value = "Randomized ID";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 5).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 6).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 1).Style.Font.Bold = true;
             ws.Cell(i, 2).Style.Font.Bold = true;
             ws.Cell(i, 3).Style.Font.Bold = true;
@@ -288,8 +302,6 @@ namespace kotor_Randomizer_2
             ws.Cell(i, 6).Style.Font.Bold = true;
             i++;
 
-            string prevMap = string.Empty;
-            int j = 0;
             List<XLColor> colors = new List<XLColor>()
             {
                 XLColor.Red,
@@ -299,6 +311,8 @@ namespace kotor_Randomizer_2
                 XLColor.Blue,
                 XLColor.Purple,
             };
+            string prevMap = string.Empty;
+            int j = colors.Count - 1;
 
             foreach (var map in LookupTable)
             {

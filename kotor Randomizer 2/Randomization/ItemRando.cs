@@ -211,7 +211,7 @@ namespace kotor_Randomizer_2
         public static void GenerateSpoilerLog(XLWorkbook workbook)
         {
             if (LookupTable.Count == 0) { return; }
-            var ws = workbook.Worksheets.Add("Items");
+            var ws = workbook.Worksheets.Add("Item");
 
             int i = 1;
             ws.Cell(i, 1).Value = "Seed";
@@ -222,6 +222,8 @@ namespace kotor_Randomizer_2
             // Item Randomization Settings
             ws.Cell(i, 1).Value = "Item Type";
             ws.Cell(i, 2).Value = "Rando Level";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 1).Style.Font.Bold = true;
             ws.Cell(i, 2).Style.Font.Bold = true;
             i++;
@@ -260,6 +262,7 @@ namespace kotor_Randomizer_2
 
             // Omitted Items
             ws.Cell(i, 1).Value = "Omitted Items";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 1).Style.Font.Bold = true;
             i++;
 
@@ -274,6 +277,9 @@ namespace kotor_Randomizer_2
             ws.Cell(i, 1).Value = "Has Changed";
             ws.Cell(i, 2).Value = "Original";
             ws.Cell(i, 3).Value = "Randomized";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 1).Style.Font.Bold = true;
             ws.Cell(i, 2).Style.Font.Bold = true;
             ws.Cell(i, 3).Style.Font.Bold = true;

@@ -61,7 +61,7 @@ namespace kotor_Randomizer_2
         internal static void GenerateSpoilerLog(XLWorkbook workbook)
         {
             if (LookupTable.Count == 0) { return; }
-            var ws = workbook.Worksheets.Add("TwoDAs");
+            var ws = workbook.Worksheets.Add("TwoDA");
 
             int i = 1;
             ws.Cell(i, 1).Value = "Seed";
