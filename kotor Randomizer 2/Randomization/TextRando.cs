@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using KotOR_IO;
 using System.IO;
+using ClosedXML.Excel;
 
 namespace kotor_Randomizer_2
 {
@@ -141,5 +142,14 @@ namespace kotor_Randomizer_2
             t.WriteToFile(paths.dialog);
         }
 
+        internal static void Reset()
+        {
+            // method stub
+        }
+
+        internal static void GenerateSpoilerLog(XLWorkbook workbook)
+        {
+            return;
+        }
     }
 }

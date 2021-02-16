@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using KotOR_IO;
+using ClosedXML.Excel;
 
 namespace kotor_Randomizer_2
 {
@@ -17,6 +18,10 @@ namespace kotor_Randomizer_2
         private const string LYT_SWOOP_TARIS    = "m03mg";
         private const string LYT_SWOOP_TATOOINE = "m17mg";
         private const string LYT_SWOOP_MANAAN   = "m26mg";
+
+        private const string NAME_GEN_MALE = "male";
+        private const string NAME_GEN_FEMALE = "female";
+        private const string NAME_GEN_LAST = "last";
 
         // The ResRefs of the swoop races.
         private static readonly List<string> swoopLayouts = new List<string>()
@@ -40,6 +45,36 @@ namespace kotor_Randomizer_2
             new Tuple<string, string, string>("k_hzaa_dialog", "p_zaalbar", "Zaalbar"),
         };
 
+        /// <summary>
+        /// Lookup table for the male, female, and last names used.
+        /// Usage: NameGenLookup[Type] = List(Names)
+        /// </summary>
+        private static Dictionary<string, List<string>> NameGenLookup { get; set; } = new Dictionary<string, List<string>>();
+
+        /// <summary>
+        /// Lookup table for how polymorph items are randomized.
+        /// Usage: PolymorphLookupTable[ItemName] = Disguise;
+        /// </summary>
+        private static Dictionary<string, string> PolymorphLookupTable { get; set; } = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Lookup table for how NPC pazaak decks are randomized.
+        /// Usage: NpcPazaakLookupTable[CardColumn] = List(OriginalCard, RandomizedCard);
+        /// </summary>
+        private static Dictionary<string, List<Tuple<string, string>>> NpcPazaakLookupTable { get; set; } = new Dictionary<string, List<Tuple<string, string>>>();
+
+        /// <summary>
+        /// Lookup table for how party members are randomized.
+        /// Usage: PartyLookupTable[PartyShortName] = RandomizedResRef;
+        /// </summary>
+        private static Dictionary<string, string> PartyLookupTable { get; set; } = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Lookup table for how swoops are randomized.
+        /// Usage: SwoopLookupTable[TrackName] = (OriginalLayout, RandomizedLayout);
+        /// </summary>
+        private static Dictionary<string, Tuple<Layout, Layout>> SwoopLookupTable { get; set; } = new Dictionary<string, Tuple<Layout, Layout>>();
+
         public static void other_rando(KPaths paths)
         {
             // NameGen
@@ -54,14 +89,17 @@ namespace kotor_Randomizer_2
 
                 if (male_names.Any())
                 {
+                    NameGenLookup.Add(NAME_GEN_MALE, male_names);
                     ltr_male_names.WriteToFile(paths.Override + "humanm.ltr");
                 }
                 if (female_names.Any())
                 {
+                    NameGenLookup.Add(NAME_GEN_FEMALE, female_names);
                     ltr_female_names.WriteToFile(paths.Override + "humanf.ltr");
                 }
                 if (last_names.Any())
                 {
+                    NameGenLookup.Add(NAME_GEN_LAST, last_names);
                     ltr_last_names.WriteToFile(paths.Override + "humanl.ltr");
                 }
             }
@@ -108,6 +146,10 @@ namespace kotor_Randomizer_2
                     //Adds the disguise property to the UTI's property list
                     (g.Top_Level.Fields.Where(x => x.Label == "PropertiesList").FirstOrDefault() as GFF.LIST).Structs.Add(disguise_prop);
 
+                    //GFF.ResRef resref = g.Top_Level.Fields.Where(x => x.Label == "TemplateResRef")?.FirstOrDefault() as GFF.ResRef;
+                    //if (resref != null && !PolymorphLookupTable.ContainsKey(resref.Reference)) PolymorphLookupTable.Add(resref.Reference, rando_appearance.ToString());
+                    PolymorphLookupTable.Add(res.ResRef, rando_appearance.ToString());
+
                     g.WriteToFile(paths.Override + res.ResRef + ".uti");
                     
                 }
@@ -132,14 +174,35 @@ namespace kotor_Randomizer_2
 
                 foreach (string c in t.Columns)
                 {
-                    if (c == DECKNAME_COLUMN) { continue; }
+                    if (c == DECKNAME_COLUMN)
+                    {
+                        NpcPazaakLookupTable.Add(c, new List<Tuple<string, string>>()
+                        {
+                            new Tuple<string, string>(t.Data[c][0], t.Data[c][0]),
+                            new Tuple<string, string>(t.Data[c][1], t.Data[c][1]),
+                            new Tuple<string, string>(t.Data[c][2], t.Data[c][2]),
+                            new Tuple<string, string>(t.Data[c][3], t.Data[c][3]),
+                        });
+                        continue;
+                    }
+                    NpcPazaakLookupTable.Add(c, new List<Tuple<string, string>>());
 
                     // [+-*][1-6]
                     // "" + ops[Randomize.Rng.Next(0, 3)] + Convert.ToString(Randomize.Rng.Next(1, 7));
-                    t.Data[c][0] = $"{ops[Randomize.Rng.Next(0, 3)]}{Convert.ToString(Randomize.Rng.Next(1, 7))}";
-                    t.Data[c][1] = $"{ops[Randomize.Rng.Next(0, 3)]}{Convert.ToString(Randomize.Rng.Next(1, 7))}";
-                    t.Data[c][2] = $"{ops[Randomize.Rng.Next(0, 3)]}{Convert.ToString(Randomize.Rng.Next(1, 7))}";
-                    t.Data[c][3] = $"{ops[Randomize.Rng.Next(0, 3)]}{Convert.ToString(Randomize.Rng.Next(1, 7))}";
+                    var card0 = $"{ops[Randomize.Rng.Next(0, 3)]}{Convert.ToString(Randomize.Rng.Next(1, 7))}";
+                    var card1 = $"{ops[Randomize.Rng.Next(0, 3)]}{Convert.ToString(Randomize.Rng.Next(1, 7))}";
+                    var card2 = $"{ops[Randomize.Rng.Next(0, 3)]}{Convert.ToString(Randomize.Rng.Next(1, 7))}";
+                    var card3 = $"{ops[Randomize.Rng.Next(0, 3)]}{Convert.ToString(Randomize.Rng.Next(1, 7))}";
+
+                    NpcPazaakLookupTable[c].Add(new Tuple<string, string>(t.Data[c][0], card0));
+                    NpcPazaakLookupTable[c].Add(new Tuple<string, string>(t.Data[c][1], card1));
+                    NpcPazaakLookupTable[c].Add(new Tuple<string, string>(t.Data[c][2], card2));
+                    NpcPazaakLookupTable[c].Add(new Tuple<string, string>(t.Data[c][3], card3));
+
+                    t.Data[c][0] = card0;
+                    t.Data[c][1] = card1;
+                    t.Data[c][2] = card2;
+                    t.Data[c][3] = card3;
                 }
 
                 t.WriteToDirectory(paths.Override);
@@ -156,6 +219,7 @@ namespace kotor_Randomizer_2
                 {
                     //Find a creature that isn't the party member
                     var resource = b.VariableResourceTable.Where(x => x.ResRef != ID.Item2 && x.ResourceType == ResourceType.UTC).ToList()[Randomize.Rng.Next(155)];
+                    PartyLookupTable.Add(ID.Item3, resource.ResRef);
 
                     GFF g = new GFF(resource.EntryData);
 
@@ -207,13 +271,376 @@ namespace kotor_Randomizer_2
                 foreach (BIF.VariableResourceEntry vre in VRT)
                 {
                     Layout lyt = new Layout(vre.EntryData);
+                    Layout lytOrig = new Layout(lyt);
+
                     lyt.RandomizeLayout(
                         doTracks:    Properties.Settings.Default.RandomizeSwoopBoosters,
                         doObstacles: Properties.Settings.Default.RandomizeSwoopObstacles
                     );
+
+                    string trackName = "";
+                    switch (vre.ResRef)
+                    {
+                        default:
+                            break;
+                        case LYT_SWOOP_TARIS:
+                            trackName = "Taris";
+                            break;
+                        case LYT_SWOOP_TATOOINE:
+                            trackName = "Tatooine";
+                            break;
+                        case LYT_SWOOP_MANAAN:
+                            trackName = "Manaan";
+                            break;
+                    }
+
+                    SwoopLookupTable.Add(trackName, new Tuple<Layout, Layout>(lytOrig, lyt));
                     lyt.WriteToFile(Path.Combine(paths.Override, $"{vre.ResRef}.lyt"));
                 }
             }
+        }
+
+        internal static void GenerateSpoilerLog(XLWorkbook workbook)
+        {
+            if (NameGenLookup.Count == 0        &&
+                PolymorphLookupTable.Count == 0 &&
+                NpcPazaakLookupTable.Count == 0 &&
+                PartyLookupTable.Count == 0     &&
+                SwoopLookupTable.Count == 0     )
+            { return; }
+            var ws = workbook.Worksheets.Add("Other");
+
+            int i = 1;
+            ws.Cell(i, 1).Value = "Seed";
+            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            i += 2;     // Skip a row.
+
+            int jMax = 2;   // Remember the widest table.
+
+            // Other Randomization Settings
+            ws.Cell(i, 1).Value = "Rando Type";
+            ws.Cell(i, 2).Value = "Is Enabled";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Font.Bold = true;
+            i++;
+
+            var settings = new List<Tuple<string, bool>>()
+            {
+                new Tuple<string, bool>("Name Gen Rando",   Properties.Settings.Default.RandomizeNameGen),
+                new Tuple<string, bool>("Polymorph Mode",   Properties.Settings.Default.PolymorphMode),
+                new Tuple<string, bool>("NPC Pazaak Decks", Properties.Settings.Default.RandomizePazaakDecks),
+                new Tuple<string, bool>("Party Members",    Properties.Settings.Default.RandomizePartyMembers),
+                new Tuple<string, bool>("Swoop Boosters",   Properties.Settings.Default.RandomizeSwoopBoosters),
+                new Tuple<string, bool>("Swoop Obstacles",  Properties.Settings.Default.RandomizeSwoopObstacles),
+            };
+
+            foreach (var setting in settings)
+            {
+                ws.Cell(i, 1).Value = setting.Item1;
+                ws.Cell(i, 2).Value = setting.Item2;
+                ws.Cell(i, 1).Style.Font.Italic = true;
+                i++;
+            }
+
+            i++;    // Skip a row.
+
+            // Name Gen Randomization
+            if (NameGenLookup.Any())
+            {
+                ws.Cell(i, 1).Value = "Name Generator Rando";
+                ws.Cell(i, 1).Style.Font.Bold = true;
+                ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Range(i, 1, i, 3).Merge();
+                i++;
+
+                int iStart = i;
+                int iDone = i;
+                int j = 1;
+
+                foreach (var type in NameGenLookup)
+                {
+                    if (jMax < j) jMax = j + 1;     // Remember the width of the widest table.
+
+                    // Column Header
+                    i = iStart;
+                    ws.Cell(i, j).Value = type.Key;
+                    ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                    ws.Cell(i, j).Style.Font.Italic = true;
+                    i++;
+
+                    foreach (var row in type.Value)
+                    {
+                        ws.Cell(i, j).Value = row;
+                        i++;
+                    }
+
+                    j++;    // Move to the next column.
+                    if (iDone < i) iDone = i;   // Remember the length of this table.
+                }
+
+                i = iDone + 1;  // Skip a row.
+            }
+
+            // Polymorph Equipment
+            if (PolymorphLookupTable.Any())
+            {
+                ws.Cell(i, 1).Value = "Equipment Polymorph Mode";
+                ws.Cell(i, 1).Style.Font.Bold = true;
+                ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Range(i, 1, i, 2).Merge();
+                i++;
+
+                // Column Headers
+                ws.Cell(i, 1).Value = "Item";
+                ws.Cell(i, 2).Value = "Model ID";
+                ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                ws.Cell(i, 1).Style.Font.Italic = true;
+                ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                ws.Cell(i, 2).Style.Font.Italic = true;
+                i++;
+
+                foreach (var kvp in PolymorphLookupTable)
+                {
+                    ws.Cell(i, 1).Value = kvp.Key;
+                    ws.Cell(i, 2).Value = kvp.Value;
+                    i++;
+                }
+
+                i++;    // Skip a row.
+            }
+
+            // NPC Pazaak Deck Randomization
+            if (NpcPazaakLookupTable.Any())
+            {
+                const string ORIGINAL = "Orig";
+                const string RANDOM = "Rand";
+
+                ws.Cell(i, 1).Value = "NPC Pazaak Deck Rando";
+                ws.Cell(i, 1).Style.Font.Bold = true;
+                ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Range(i, 1, i, 2).Merge();
+                i++;
+
+                int iStart = i;
+                int iDone = i;
+                int j = 1;
+
+                if (NpcPazaakLookupTable.ContainsKey(DECKNAME_COLUMN))
+                {
+                    ws.Cell(i, 1).Value = DECKNAME_COLUMN;
+                    ws.Cell(i, 1).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                    ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                    ws.Cell(i, 1).Style.Font.Italic = true;
+                    i++;
+
+                    foreach (var name in NpcPazaakLookupTable[DECKNAME_COLUMN])
+                    {
+                        ws.Cell(i, 1).Value = name.Item1;
+                        ws.Cell(i, 1).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                        i++;
+                    }
+
+                    j++;
+                    iDone = i;
+                }
+
+                foreach (var col in NpcPazaakLookupTable)
+                {
+                    if (col.Key == DECKNAME_COLUMN) { continue; }
+                    if (jMax < j) jMax = j + 1;     // Remember the width of the widest table.
+
+                    // Column Header
+                    i = iStart;
+                    ws.Cell(i, j).Value = $"{col.Key}";
+                    ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                    ws.Cell(i, j).Style.Font.Italic = true;
+                    ws.Cell(i, j+1).Value = $"{RANDOM}";
+                    ws.Cell(i, j+1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                    ws.Cell(i, j+1).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                    ws.Cell(i, j+1).Style.Font.Italic = true;
+                    i++;
+
+                    foreach (var row in col.Value)
+                    {
+                        // Row Data
+                        ws.Cell(i, j).Value = $"'{row.Item1}";
+                        ws.Cell(i, j+1).Value = $"'{row.Item2}";
+                        ws.Cell(i, j+1).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                        i++;
+                    }
+
+                    j += 2;     // Move to the next pair of columns.
+                    if (iDone < i) iDone = i;   // Remember the length of this table.
+                }
+
+                i = iDone + 1;  // Skip a row.
+            }
+
+            // Party Randomization
+            if (PartyLookupTable.Any())
+            {
+                ws.Cell(i, 1).Value = "Party Member Rando";
+                ws.Cell(i, 1).Style.Font.Bold = true;
+                ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Range(i, 1, i, 2).Merge();
+                i++;
+
+                ws.Cell(i, 1).Value = "Party Member";
+                ws.Cell(i, 2).Value = "Rando ResRef";
+                ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                ws.Cell(i, 1).Style.Font.Italic = true;
+                ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                ws.Cell(i, 2).Style.Font.Italic = true;
+                i++;
+
+                foreach (var kvp in PartyLookupTable)
+                {
+                    ws.Cell(i, 1).Value = kvp.Key;
+                    ws.Cell(i, 2).Value = kvp.Value;
+                    i++;
+                }
+
+                i++;    // Skip a row.
+            }
+
+            // Swoop Layout Randomization
+            if (SwoopLookupTable.Any())
+            {
+                ws.Cell(i, 1).Value = "Swoop Layout Rando";
+                ws.Cell(i, 1).Style.Font.Bold = true;
+                ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Range(i, 1, i, 2).Merge();
+                i++;
+
+                foreach (var track in SwoopLookupTable)
+                {
+                    ws.Cell(i, 1).Value = track.Key;
+                    ws.Cell(i, 1).Style.Font.Italic = true;
+                    ws.Cell(i, 1).Style.Font.Underline = XLFontUnderlineValues.Single;
+                    ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    ws.Range(i, 1, i, 2).Merge();
+                    i++;
+
+                    var iStart = i;
+                    int iDone = i;
+                    int j = 1;
+
+                    if (Properties.Settings.Default.RandomizeSwoopBoosters)
+                    {
+                        // Column Headers
+                        ws.Cell(i, j).Value = "Boosters";
+                        ws.Cell(i, j).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                        ws.Cell(i, j).Style.Font.Bold = true;
+                        ws.Range(i, j, i, j+4).Merge().Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                        i++;
+
+                        ws.Cell(i, j).Value = "Name";
+                        ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j).Style.Font.Italic = true;
+
+                        ws.Cell(i, j+1).Value = "x Orig";
+                        ws.Cell(i, j+1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j+1).Style.Font.Italic = true;
+
+                        ws.Cell(i, j+2).Value = "x Rand";
+                        ws.Cell(i, j+2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j+2).Style.Font.Italic = true;
+
+                        ws.Cell(i, j+3).Value = "y Orig";
+                        ws.Cell(i, j+3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j+3).Style.Font.Italic = true;
+
+                        ws.Cell(i, j+4).Value = "y Rand";
+                        ws.Cell(i, j+4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j+4).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j+4).Style.Font.Italic = true;
+                        i++;
+
+                        for (int t = 0; t < track.Value.Item1.Tracks.Count; t++)
+                        {
+                            ws.Cell(i, j+0).Value = track.Value.Item1.Tracks[t].Item1;
+                            ws.Cell(i, j+1).Value = track.Value.Item1.Tracks[t].Item2;
+                            ws.Cell(i, j+2).Value = track.Value.Item2.Tracks[t].Item2;
+                            ws.Cell(i, j+3).Value = track.Value.Item1.Tracks[t].Item3;
+                            ws.Cell(i, j+4).Value = track.Value.Item2.Tracks[t].Item3;
+                            ws.Cell(i, j+4).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                            i++;
+                        }
+
+                        j += 5;     // Move to the next set of columns.
+                        if (iDone < i) iDone = i;   // Remember the length of this table.
+                    }
+
+                    if (Properties.Settings.Default.RandomizeSwoopObstacles)
+                    {
+                        i = iStart;
+
+                        // Column Headers
+                        ws.Cell(i, j).Value = "Obstacles";
+                        ws.Cell(i, j).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                        ws.Cell(i, j).Style.Font.Bold = true;
+                        ws.Range(i, j, i, j+4).Merge().Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                        i++;
+
+                        ws.Cell(i, j).Value = "Name";
+                        ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j).Style.Font.Italic = true;
+
+                        ws.Cell(i, j+1).Value = "x Orig";
+                        ws.Cell(i, j+1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j+1).Style.Font.Italic = true;
+
+                        ws.Cell(i, j+2).Value = "x Rand";
+                        ws.Cell(i, j+2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j+2).Style.Font.Italic = true;
+
+                        ws.Cell(i, j+3).Value = "y Orig";
+                        ws.Cell(i, j+3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j+3).Style.Font.Italic = true;
+
+                        ws.Cell(i, j+4).Value = "y Rand";
+                        ws.Cell(i, j+4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j+4).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j+4).Style.Font.Italic = true;
+                        i++;
+
+                        for (int t = 0; t < track.Value.Item1.Obstacles.Count; t++)
+                        {
+                            ws.Cell(i, j+0).Value = track.Value.Item1.Obstacles[t].Item1;
+                            ws.Cell(i, j+1).Value = track.Value.Item1.Obstacles[t].Item2;
+                            ws.Cell(i, j+2).Value = track.Value.Item2.Obstacles[t].Item2;
+                            ws.Cell(i, j+3).Value = track.Value.Item1.Obstacles[t].Item3;
+                            ws.Cell(i, j+4).Value = track.Value.Item2.Obstacles[t].Item3;
+                            ws.Cell(i, j+4).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                            i++;
+                        }
+
+                        if (iDone < i) iDone = i;   // Remember the length of this table.
+                    }
+
+                    i = iDone + 1;  // Skip a row.
+                    if (jMax < j) jMax = j + 4;     // Remember the width of the widest table.
+                    j = 1;          // Reset to column A.
+                }
+            }
+
+            // Adjust columns.
+            for (int c = 1; c <= jMax; c++)
+            {
+                ws.Column(c).AdjustToContents();
+            }
+        }
+
+        internal static void Reset()
+        {
+            NameGenLookup.Clear();
+            PolymorphLookupTable.Clear();
+            NpcPazaakLookupTable.Clear();
+            PartyLookupTable.Clear();
+            SwoopLookupTable.Clear();
         }
     }
 
@@ -312,6 +739,24 @@ namespace kotor_Randomizer_2
                     if (isDoorHook) { DoorHooks.Add(obj); continue; }
                 }
             }
+        }
+
+        /// <summary>
+        /// Creates a copy of the given layout.
+        /// </summary>
+        public Layout(Layout l)
+        {
+            foreach (var room in l.Rooms)
+                Rooms.Add(new Tuple<string, double, double, double>(room.Item1, room.Item2, room.Item3, room.Item4));
+
+            foreach (var track in l.Tracks)
+                Tracks.Add(new Tuple<string, double, double, double>(track.Item1, track.Item2, track.Item3, track.Item4));
+
+            foreach (var obstacle in l.Obstacles)
+                Obstacles.Add(new Tuple<string, double, double, double>(obstacle.Item1, obstacle.Item2, obstacle.Item3, obstacle.Item4));
+
+            foreach (var doorhook in l.DoorHooks)
+                DoorHooks.Add(new Tuple<string, double, double, double>(doorhook.Item1, doorhook.Item2, doorhook.Item3, doorhook.Item4));
         }
 
         /// <summary>

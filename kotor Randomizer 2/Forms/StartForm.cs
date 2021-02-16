@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
+using ClosedXML.Excel;
 
 namespace kotor_Randomizer_2
 {
@@ -58,13 +59,42 @@ namespace kotor_Randomizer_2
             //if (Directory.Exists(spoilersPath)) { Directory.Delete(spoilersPath, true); }
             Directory.CreateDirectory(spoilersPath);
 
-            var timestamp = DateTime.Now.ToString("yy-MM-dd_HH-mm-ss");
-            ItemRando.GenerateSpoilerLog(Path.Combine(spoilersPath, $"{timestamp}_items.csv"));
-            ModelRando.GenerateSpoilerLog(Path.Combine(spoilersPath, $"{timestamp}_models.csv"));
-            ModuleRando.GenerateSpoilerLog(Path.Combine(spoilersPath, $"{timestamp}_modules.csv"));
-            SoundRando.GenerateSpoilerLog(Path.Combine(spoilersPath, $"{timestamp}_music_sounds.csv"));
+            //var timestamp = DateTime.Now.ToString("yy-MM-dd_HH-mm-ss");
+            var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
+            var filename = $"{timestamp}, Seed={Properties.Settings.Default.Seed}.xlsx";
+            var path = Path.Combine(spoilersPath, filename);
 
-            MessageBox.Show("Spoiler logs created.");
+            if (File.Exists(path)) { File.Delete(path); }
+
+            using (var workbook = new XLWorkbook())
+            {
+                ItemRando.GenerateSpoilerLog(workbook);
+                ModelRando.GenerateSpoilerLog(workbook);
+                ModuleRando.GenerateSpoilerLog(workbook);
+                SoundRando.GenerateSpoilerLog(workbook);
+                OtherRando.GenerateSpoilerLog(workbook);
+                TextRando.GenerateSpoilerLog(workbook);
+                TextureRando.GenerateSpoilerLog(workbook);
+                TwodaRandom.GenerateSpoilerLog(workbook);
+
+                // If any worksheets have been added, save the spoiler log.
+                if (workbook.Worksheets.Count > 0)
+                {
+                    System.Text.StringBuilder wsList = new System.Text.StringBuilder();
+                    foreach (var sheet in workbook.Worksheets)
+                    {
+                        wsList.Append($"{sheet.Name}, ");
+                    }
+                    wsList.Remove(wsList.Length - 2, 2);
+
+                    workbook.SaveAs(path);
+                    MessageBox.Show($"Spoiler logs created: {wsList.ToString()}");
+                }
+                else
+                {
+                    MessageBox.Show($"No spoiler logs created. Either the game has not been randomized, or the selected randomizations do not generate spoilers.");
+                }
+            }
         }
 
         #region  Events

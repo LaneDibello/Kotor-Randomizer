@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data;
 using KotOR_IO;
+using ClosedXML.Excel;
 
 namespace kotor_Randomizer_2
 {
@@ -33,8 +34,9 @@ namespace kotor_Randomizer_2
 
         /// <summary>
         /// A lookup table used to know how the modules are randomized.
+        /// Usage: LookupTable[Original] = Randomized;
         /// </summary>
-        private static Dictionary<string, string> LookupTable { get; set; } = new Dictionary<string, string>();
+        internal static Dictionary<string, string> LookupTable { get; private set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// A directional graph mapping the modules and loading zones throughout the game.
@@ -448,6 +450,14 @@ namespace kotor_Randomizer_2
             }
         }
 
+        internal static void Reset()
+        {
+            // Reset digraph reachability settings.
+            Digraph.ResetSettings();
+            // Prepare lists for new randomization.
+            LookupTable.Clear();
+        }
+
         /// <summary>
         /// Check to see if the rules are violated.
         /// If a module's list of bad randomizations contains what replaces it now, the rule is violated.
@@ -550,6 +560,95 @@ namespace kotor_Randomizer_2
                 }
                 sw.WriteLine();
             }
+        }
+
+        public static void GenerateSpoilerLog(XLWorkbook workbook)
+        {
+            if (LookupTable.Count == 0) { return; }
+            var ws = workbook.Worksheets.Add("Modules");
+
+            int i = 1;
+            ws.Cell(i, 1).Value = "Seed";
+            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            i += 2;     // Skip a row.
+
+            // Module Randomization Settings
+            ws.Cell(i, 1).Value = "Module Extra";
+            ws.Cell(i, 2).Value = "Is Enabled";
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Style.Font.Bold = true;
+            i++;
+
+            var settings = new List<Tuple<string, string>>()
+            {
+                new Tuple<string, string>("Delete Milestone Save Data", (!Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete)).ToString()),
+                new Tuple<string, string>("Include Minigames in Save", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames).ToString()),
+                new Tuple<string, string>("Include All Modules in Save", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules).ToString()),
+                new Tuple<string, string>("Fix Dream Sequence", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream).ToString()),
+                new Tuple<string, string>("Unlock Galaxy Map", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap).ToString()),
+                new Tuple<string, string>("Fix Module Coordinates", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates).ToString()),
+                new Tuple<string, string>("Fix Mind Prison", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison).ToString()),
+                new Tuple<string, string>("Unlock Various Doors", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors).ToString()),
+                new Tuple<string, string>("Fix Leviathan Elevators", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators).ToString()),
+                new Tuple<string, string>("Add Spice Lab Load Zone", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ).ToString()),
+                new Tuple<string, string>("", ""),  // Skip a row.
+                new Tuple<string, string>("Use Rando Exclusion Rules", Properties.Settings.Default.UseRandoRules.ToString()),
+                new Tuple<string, string>("Verify Reachability", Properties.Settings.Default.VerifyReachability.ToString()),
+                new Tuple<string, string>("Ignore Single-Use Transitions", Properties.Settings.Default.IgnoreOnceEdges.ToString()),
+                new Tuple<string, string>("Goal Is Malak", Properties.Settings.Default.GoalIsMalak.ToString()),
+                new Tuple<string, string>("Goal Is Star Maps", Properties.Settings.Default.GoalIsStarMaps.ToString()),
+                new Tuple<string, string>("Goal Is Pazaak", Properties.Settings.Default.GoalIsPazaak.ToString()),
+                new Tuple<string, string>("Allow Glitch Clipping", Properties.Settings.Default.AllowGlitchClip.ToString()),
+                new Tuple<string, string>("Allow Glitch DLZ", Properties.Settings.Default.AllowGlitchDlz.ToString()),
+                new Tuple<string, string>("Allow Glitch FLU", Properties.Settings.Default.AllowGlitchFlu.ToString()),
+                new Tuple<string, string>("Allow Glitch GPW", Properties.Settings.Default.AllowGlitchGpw.ToString()),
+                new Tuple<string, string>("", ""),  // Skip a row.
+            };
+
+            foreach (var setting in settings)
+            {
+                ws.Cell(i, 1).Value = setting.Item1;
+                ws.Cell(i, 2).Value = setting.Item2;
+                ws.Cell(i, 1).Style.Font.Italic = true;
+                i++;
+            }
+
+            // Module Shuffle
+            ws.Cell(i, 1).Value = "Has Changed";
+            ws.Cell(i, 2).Value = "Default Code";
+            ws.Cell(i, 3).Value = "Default Name";
+            ws.Cell(i, 4).Value = "Randomized Code";
+            ws.Cell(i, 5).Value = "Randomized Name";
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Style.Font.Bold = true;
+            ws.Cell(i, 3).Style.Font.Bold = true;
+            ws.Cell(i, 4).Style.Font.Bold = true;
+            ws.Cell(i, 5).Style.Font.Bold = true;
+            i++;
+
+            var sortedLookup = LookupTable.OrderBy(kvp => kvp.Key);
+            foreach (var kvp in sortedLookup)
+            {
+                var defaultName = Digraph.Modules.FirstOrDefault(m => m.WarpCode == kvp.Key)?.CommonName;
+                var randomizedName = Digraph.Modules.FirstOrDefault(m => m.WarpCode == kvp.Value)?.CommonName;
+
+                ws.Cell(i, 1).Value = (kvp.Key != kvp.Value).ToString();
+                ws.Cell(i, 2).Value = kvp.Key;
+                ws.Cell(i, 3).Value = defaultName;
+                ws.Cell(i, 4).Value = kvp.Value;
+                ws.Cell(i, 5).Value = randomizedName;
+                if (kvp.Key != kvp.Value) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
+                else ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
+                i++;
+            }
+
+            // Resize Columns
+            ws.Column(1).AdjustToContents();
+            ws.Column(2).AdjustToContents();
+            ws.Column(3).AdjustToContents();
+            ws.Column(4).AdjustToContents();
+            ws.Column(5).AdjustToContents();
         }
 
         /// <summary>

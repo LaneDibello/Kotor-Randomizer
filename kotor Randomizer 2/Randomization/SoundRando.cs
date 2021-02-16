@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Text.RegularExpressions;
+using ClosedXML.Excel;
 
 namespace kotor_Randomizer_2
 {
@@ -202,6 +203,13 @@ namespace kotor_Randomizer_2
             }
         }
 
+        internal static void Reset()
+        {
+            // Prepare lists for new randomization.
+            MusicLookupTable.Clear();
+            SoundLookupTable.Clear();
+        }
+
         private static void AddToMusicLookup(List<FileInfo> original, List<FileInfo> randomized)
         {
             for (int i = 0; i < original.Count; i++)
@@ -360,6 +368,115 @@ namespace kotor_Randomizer_2
                     sw.WriteLine();
                 }
             }
+        }
+
+        public static void GenerateSpoilerLog(XLWorkbook workbook)
+        {
+            if (MusicLookupTable.Count == 0 &&
+                SoundLookupTable.Count == 0)
+            { return; }
+            var ws = workbook.Worksheets.Add("MusicSounds");
+
+            int i = 1;
+            ws.Cell(i, 1).Value = "Seed";
+            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            i += 2;     // Skip a row.
+
+            // Music and Sound Randomization Settings
+            ws.Cell(i, 1).Value = "Music/Sound Type";
+            ws.Cell(i, 2).Value = "Rando Level";
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Style.Font.Bold = true;
+            i++;
+
+            var settings = new List<Tuple<string, string>>()
+            {
+                new Tuple<string, string>("Area Music", ((RandomizationLevel)Properties.Settings.Default.RandomizeAreaMusic).ToString()),
+                new Tuple<string, string>("Battle Music", ((RandomizationLevel)Properties.Settings.Default.RandomizeBattleMusic).ToString()),
+                new Tuple<string, string>("Ambient Noise", ((RandomizationLevel)Properties.Settings.Default.RandomizeAmbientNoise).ToString()),
+                new Tuple<string, string>("Cutscene Noise", ((RandomizationLevel)Properties.Settings.Default.RandomizeCutsceneNoise).ToString()),
+                new Tuple<string, string>("NPC Sounds", ((RandomizationLevel)Properties.Settings.Default.RandomizeNpcSounds).ToString()),
+                new Tuple<string, string>("Party Sounds", ((RandomizationLevel)Properties.Settings.Default.RandomizePartySounds).ToString()),
+                new Tuple<string, string>("Remove DMCA", Properties.Settings.Default.RemoveDmcaMusic.ToString()),
+                new Tuple<string, string>("Mix NPC and Party", Properties.Settings.Default.MixNpcAndPartySounds.ToString()),
+                new Tuple<string, string>("", ""),  // Skip a row.
+            };
+
+            foreach (var setting in settings)
+            {
+                ws.Cell(i, 1).Value = setting.Item1;
+                ws.Cell(i, 2).Value = setting.Item2;
+                ws.Cell(i, 1).Style.Font.Italic = true;
+                i++;
+            }
+
+            // Music Shuffle
+            if (MusicLookupTable.Any())
+            {
+                var sortedLookup = MusicLookupTable.OrderBy(kvp => kvp.Key);
+                ws.Cell(i, 1).Value = "Music";
+                ws.Cell(i, 1).Style.Font.Bold = true;
+                ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Range(i, 1, i, 3).Merge();
+                i++;
+
+                ws.Cell(i, 1).Value = "Has Changed";
+                ws.Cell(i, 2).Value = "Original";
+                ws.Cell(i, 3).Value = "Randomized";
+                ws.Cell(i, 1).Style.Font.Bold = true;
+                ws.Cell(i, 2).Style.Font.Bold = true;
+                ws.Cell(i, 3).Style.Font.Bold = true;
+                i++;
+
+                foreach (var kvp in sortedLookup)
+                {
+                    var hasChanged = kvp.Key != kvp.Value;
+                    ws.Cell(i, 1).Value = hasChanged;
+                    ws.Cell(i, 2).Value = kvp.Key;
+                    ws.Cell(i, 3).Value = kvp.Value;
+                    if (hasChanged) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
+                    else            ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
+                    i++;
+                }
+
+                i++;    // Skip a row.
+            }
+
+            // Sound Shuffle
+            if (SoundLookupTable.Any())
+            {
+                var sortedLookup = SoundLookupTable.OrderBy(kvp => kvp.Key);
+                ws.Cell(i, 1).Value = "Sound";
+                ws.Cell(i, 1).Style.Font.Bold = true;
+                ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Range(i, 1, i, 3).Merge();
+                i++;
+
+                ws.Cell(i, 1).Value = "Has Changed";
+                ws.Cell(i, 2).Value = "Original";
+                ws.Cell(i, 3).Value = "Randomized";
+                ws.Cell(i, 1).Style.Font.Bold = true;
+                ws.Cell(i, 2).Style.Font.Bold = true;
+                ws.Cell(i, 3).Style.Font.Bold = true;
+                i++;
+
+                foreach (var kvp in sortedLookup)
+                {
+                    var hasChanged = kvp.Key != kvp.Value;
+                    ws.Cell(i, 1).Value = hasChanged;
+                    ws.Cell(i, 2).Value = kvp.Key;
+                    ws.Cell(i, 3).Value = kvp.Value;
+                    if (hasChanged) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
+                    else            ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
+                    i++;
+                }
+            }
+
+            // Resize Columns
+            ws.Column(1).AdjustToContents();
+            ws.Column(2).AdjustToContents();
+            ws.Column(3).AdjustToContents();
         }
 
         //public static Regex PrefixAreaMusic { get { return new Regex("", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }

@@ -53,6 +53,7 @@ namespace kotor_Randomizer_2
                 sw.WriteLine(Properties.Resources.LogHeader);
                 Properties.Settings.Default.KotorIsRandomized = true;
                 Randomize.SetSeed(Properties.Settings.Default.Seed);    // Not sure when is the best time to set the seed.
+                ResetRandomizationCategories();
 
                 // Randomize the categories.
                 try
@@ -174,6 +175,18 @@ namespace kotor_Randomizer_2
             curr_progress += step_size;
         }
 
+        private void ResetRandomizationCategories()
+        {
+            ModuleRando.Reset();
+            ItemRando.Reset();
+            SoundRando.Reset();
+            ModelRando.Reset();
+            TextureRando.Reset();
+            TwodaRandom.Reset();
+            TextRando.Reset();
+            OtherRando.Reset();
+        }
+
         // Unused - I'm keeping this around In case I try to tackle the release config issues again.
         private void UnRando_new()
         {
@@ -249,6 +262,8 @@ namespace kotor_Randomizer_2
                 curr_task = Properties.Resources.TaskFinishing;
                 File.Delete(paths.RANDOMIZED_LOG);
                 Properties.Settings.Default.KotorIsRandomized = false;
+
+                ResetRandomizationCategories();
             }
             catch (Exception e)
             {
