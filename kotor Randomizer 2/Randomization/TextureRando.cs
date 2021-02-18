@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using KotOR_IO;
 using System.IO;
+using ClosedXML.Excel;
 
 namespace kotor_Randomizer_2
 {
@@ -14,6 +15,17 @@ namespace kotor_Randomizer_2
         private static List<int> MaxRando { get; } = new List<int>();
 
         private static List<List<int>> TypeLists { get; } = new List<List<int>>();
+
+        /// <summary>
+        /// Lookup table for how models are randomized.
+        /// Usage: LookupTable[OriginalID] = RandomizedID;
+        /// </summary>
+        private static Dictionary<int, int> LookupTable { get; set; } = new Dictionary<int, int>();
+
+        /// <summary>
+        /// Lookup table for the name of each Texture ID.
+        /// </summary>
+        private static Dictionary<int, string> NameLookup { get; set; } = new Dictionary<int, string>();
 
         #region Regexes
         private static readonly Regex RegexCubeMaps = new Regex("^CM_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -55,6 +67,12 @@ namespace kotor_Randomizer_2
 
             ERF e = new ERF(paths.TexturePacks + pack_name);
 
+            foreach (var key in e.Key_List)
+            {
+                if (!NameLookup.ContainsKey(key.ResID))
+                    NameLookup.Add(key.ResID, key.ResRef);
+            }
+
             // Handle categories.
             HandleCategory(e, RegexCubeMaps, Properties.Settings.Default.TextureRandomizeCubeMaps);
             HandleCategory(e, RegexCreatures, Properties.Settings.Default.TextureRandomizeCreatures);
@@ -91,6 +109,7 @@ namespace kotor_Randomizer_2
             int j = 0;
             foreach (ERF.Key k in e.Key_List.Where(x => Max_Rando_Iterator.Contains(x.ResID)))
             {
+                LookupTable.Add(k.ResID, MaxRando[j]);
                 k.ResID = MaxRando[j];
                 j++;
             }
@@ -103,6 +122,7 @@ namespace kotor_Randomizer_2
                 j = 0;
                 foreach (ERF.Key k in e.Key_List.Where(x => li.Contains(x.ResID)))
                 {
+                    LookupTable.Add(k.ResID, type_copy[j]);
                     k.ResID = type_copy[j];
                     j++;
                 }
@@ -157,6 +177,126 @@ namespace kotor_Randomizer_2
                     MaxRando.AddRange(e.Key_List.Where(x => r.IsMatch(x.ResRef) && !Is_Forbidden(x.ResRef)).Select(x => x.ResID));
                     break;
             }
+        }
+
+        internal static void Reset()
+        {
+            // Prepare lists for new randomization.
+            MaxRando.Clear();
+            TypeLists.Clear();
+            LookupTable.Clear();
+            NameLookup.Clear();
+        }
+
+        internal static void GenerateSpoilerLog(XLWorkbook workbook)
+        {
+            if (LookupTable.Count == 0) { return; }
+            var ws = workbook.Worksheets.Add("Texture");
+
+            int i = 1;
+            ws.Cell(i, 1).Value = "Seed";
+            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            i++;
+
+            // Texture Randomization Settings
+            string texturePack = "";
+            switch (Properties.Settings.Default.TexturePack)
+            {
+                default:
+                case 0:
+                    texturePack = "High Quality";
+                    break;
+                case 1:
+                    texturePack = "Med Quality";
+                    break;
+                case 2:
+                    texturePack = "Low Quality";
+                    break;
+            }
+
+            ws.Cell(i, 1).Value = "Texture Pack";
+            ws.Cell(i, 2).Value = texturePack;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            i += 2;     // Skip a row.
+
+            ws.Cell(i, 1).Value = "Texture Type";
+            ws.Cell(i, 2).Value = "Rando Level";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Font.Bold = true;
+            i++;
+
+            var settings = new List<Tuple<string, string>>()
+            {
+                new Tuple<string, string>("Cube Maps", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeCubeMaps).ToString()),
+                new Tuple<string, string>("Creatures", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeCreatures).ToString()),
+                new Tuple<string, string>("Effects", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeEffects).ToString()),
+                new Tuple<string, string>("Items", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeItems).ToString()),
+                new Tuple<string, string>("Planetary", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizePlanetary).ToString()),
+                new Tuple<string, string>("NPC", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeNPC).ToString()),
+                new Tuple<string, string>("Player Heads", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizePlayHeads).ToString()),
+                new Tuple<string, string>("Player Bodies", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizePlayBodies).ToString()),
+                new Tuple<string, string>("Placeables", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizePlaceables).ToString()),
+                new Tuple<string, string>("Party", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeParty).ToString()),
+                new Tuple<string, string>("Stunt", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeStunt).ToString()),
+                new Tuple<string, string>("Vehicles", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeVehicles).ToString()),
+                new Tuple<string, string>("Weapons", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeWeapons).ToString()),
+                new Tuple<string, string>("Other", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeOther).ToString()),
+                new Tuple<string, string>("", ""),  // Skip a row.
+            };
+
+            foreach (var setting in settings)
+            {
+                ws.Cell(i, 1).Value = setting.Item1;
+                ws.Cell(i, 2).Value = setting.Item2;
+                ws.Cell(i, 1).Style.Font.Italic = true;
+                i++;
+            }
+
+            i++;    // Skip a row.
+
+            // Texture Shuffle
+            ws.Cell(i, 1).Value = "Has Changed";
+            ws.Cell(i, 2).Value = "Orig ID";
+            ws.Cell(i, 3).Value = "Orig Ref";
+            ws.Cell(i, 4).Value = "Rand ID";
+            ws.Cell(i, 5).Value = "Rand Ref";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 5).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Style.Font.Bold = true;
+            ws.Cell(i, 3).Style.Font.Bold = true;
+            ws.Cell(i, 4).Style.Font.Bold = true;
+            ws.Cell(i, 5).Style.Font.Bold = true;
+            i++;
+
+            foreach (var kvp in LookupTable)
+            {
+                var hasChanged = kvp.Key != kvp.Value;
+                ws.Cell(i, 1).Value = hasChanged;
+                ws.Cell(i, 2).Value = kvp.Key;
+                if (NameLookup.ContainsKey(kvp.Key))
+                    ws.Cell(i, 3).Value = NameLookup[kvp.Key];
+                ws.Cell(i, 4).Value = kvp.Value;
+                if (NameLookup.ContainsKey(kvp.Value))
+                    ws.Cell(i, 5).Value = NameLookup[kvp.Value];
+
+                if (hasChanged) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
+                else            ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
+                i++;
+            }
+
+            // Resize Columns
+            ws.Column(1).AdjustToContents();
+            ws.Column(2).AdjustToContents();
+            ws.Column(3).AdjustToContents();
+            ws.Column(4).AdjustToContents();
+            ws.Column(5).AdjustToContents();
         }
     }
 }

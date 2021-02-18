@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using KotOR_IO;
 using System.Text.RegularExpressions;
+using ClosedXML.Excel;
 
 namespace kotor_Randomizer_2
 {
@@ -197,6 +198,108 @@ namespace kotor_Randomizer_2
                 }
                 sw.WriteLine();
             }
+        }
+
+        internal static void Reset()
+        {
+            // Prepare lists for new randomization.
+            Max_Rando.Clear();
+            Type_Lists.Clear();
+            LookupTable.Clear();
+        }
+
+        public static void GenerateSpoilerLog(XLWorkbook workbook)
+        {
+            if (LookupTable.Count == 0) { return; }
+            var ws = workbook.Worksheets.Add("Item");
+
+            int i = 1;
+            ws.Cell(i, 1).Value = "Seed";
+            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            i += 2;     // Skip a row.
+
+            // Item Randomization Settings
+            ws.Cell(i, 1).Value = "Item Type";
+            ws.Cell(i, 2).Value = "Rando Level";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Style.Font.Bold = true;
+            i++;
+
+            var settings = new List<Tuple<string, string>>()
+            {
+                new Tuple<string, string>("Armbands", ((RandomizationLevel)Properties.Settings.Default.RandomizeArmbands).ToString()),
+                new Tuple<string, string>("Armor", ((RandomizationLevel)Properties.Settings.Default.RandomizeArmor).ToString()),
+                new Tuple<string, string>("Belts", ((RandomizationLevel)Properties.Settings.Default.RandomizeBelts).ToString()),
+                new Tuple<string, string>("Blasters", ((RandomizationLevel)Properties.Settings.Default.RandomizeBlasters).ToString()),
+                new Tuple<string, string>("Creature Hides", ((RandomizationLevel)Properties.Settings.Default.RandomizeHides).ToString()),
+                new Tuple<string, string>("Creature Weapons", ((RandomizationLevel)Properties.Settings.Default.RandomizeCreature).ToString()),
+                new Tuple<string, string>("Droid Equipment", ((RandomizationLevel)Properties.Settings.Default.RandomizeDroid).ToString()),
+                new Tuple<string, string>("Gauntlets", ((RandomizationLevel)Properties.Settings.Default.RandomizeGloves).ToString()),
+                new Tuple<string, string>("Grenades", ((RandomizationLevel)Properties.Settings.Default.RandomizeGrenades).ToString()),
+                new Tuple<string, string>("Implants", ((RandomizationLevel)Properties.Settings.Default.RandomizeImplants).ToString()),
+                new Tuple<string, string>("Lightsabers", ((RandomizationLevel)Properties.Settings.Default.RandomizeLightsabers).ToString()),
+                new Tuple<string, string>("Masks", ((RandomizationLevel)Properties.Settings.Default.RandomizeMask).ToString()),
+                new Tuple<string, string>("Melee Weapons", ((RandomizationLevel)Properties.Settings.Default.RandomizeMelee).ToString()),
+                new Tuple<string, string>("Mines", ((RandomizationLevel)Properties.Settings.Default.RandomizeMines).ToString()),
+                new Tuple<string, string>("Pazaak Cards", ((RandomizationLevel)Properties.Settings.Default.RandomizePaz).ToString()),
+                new Tuple<string, string>("Stims/Medpacs", ((RandomizationLevel)Properties.Settings.Default.RandomizeStims).ToString()),
+                new Tuple<string, string>("Upgrades/Crystals", ((RandomizationLevel)Properties.Settings.Default.RandomizeUpgrade).ToString()),
+                new Tuple<string, string>("Various", ((RandomizationLevel)Properties.Settings.Default.RandomizeVarious).ToString()),
+            };
+
+            foreach (var setting in settings)
+            {
+                ws.Cell(i, 1).Value = setting.Item1;
+                ws.Cell(i, 2).Value = setting.Item2;
+                ws.Cell(i, 1).Style.Font.Italic = true;
+                i++;
+            }
+
+            i++;    // Skip a row.
+
+            // Omitted Items
+            ws.Cell(i, 1).Value = "Omitted Items";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            i++;
+
+            foreach (var item in Globals.OmitItems)
+            {
+                ws.Cell(i, 1).Value = item;
+                i++;
+            }
+            i++;    // Skip a row.
+
+            // Randomized Items
+            ws.Cell(i, 1).Value = "Has Changed";
+            ws.Cell(i, 2).Value = "Original";
+            ws.Cell(i, 3).Value = "Randomized";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Style.Font.Bold = true;
+            ws.Cell(i, 3).Style.Font.Bold = true;
+            i++;
+
+            var sortedLookup = LookupTable.OrderBy(kvp => kvp.Key);
+            foreach (var kvp in sortedLookup)
+            {
+                ws.Cell(i, 1).Value = (kvp.Key != kvp.Value).ToString();
+                ws.Cell(i, 2).Value = kvp.Key;
+                ws.Cell(i, 3).Value = kvp.Value;
+                if (kvp.Key != kvp.Value) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
+                else ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
+                i++;
+            }
+
+            // Resize Columns
+            ws.Column(1).AdjustToContents();
+            ws.Column(2).AdjustToContents();
+            ws.Column(3).AdjustToContents();
         }
 
         #region Regexes

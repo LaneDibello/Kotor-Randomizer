@@ -3,6 +3,7 @@ using System.IO;
 using KotOR_IO;
 using System.Collections.Generic;
 using System;
+using ClosedXML.Excel;
 
 namespace kotor_Randomizer_2
 {
@@ -183,6 +184,175 @@ namespace kotor_Randomizer_2
                 }
                 sw.WriteLine();
             }
+        }
+
+        internal static void Reset()
+        {
+            // Prepare lists for new randomization.
+            LookupTable.Clear();
+        }
+
+        public static void GenerateSpoilerLog(XLWorkbook workbook)
+        {
+            if (LookupTable.Count == 0) { return; }
+            var ws = workbook.Worksheets.Add("Model");
+
+            int i = 1;
+            ws.Cell(i, 1).Value = "Seed";
+            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            i += 2;     // Skip a row.
+
+            // Model Randomization Settings
+            //   Settings A
+            ws.Cell(i, 1).Value = "Model Type";
+            ws.Cell(i, 2).Value = "Is Active";
+            ws.Cell(i, 3).Value = "Omit Large";
+            ws.Cell(i, 4).Value = "Omit Broken";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Style.Font.Bold = true;
+            ws.Cell(i, 3).Style.Font.Bold = true;
+            ws.Cell(i, 4).Style.Font.Bold = true;
+            i++;
+
+            string charIsActive = ((Properties.Settings.Default.RandomizeCharModels & 1) > 0).ToString();
+            string charOmitFirst = ((Properties.Settings.Default.RandomizeCharModels & 2) > 0).ToString();
+            string charOmitSecond = ((Properties.Settings.Default.RandomizeCharModels & 4) > 0).ToString();
+
+            string modelIsActive = ((Properties.Settings.Default.RandomizePlaceModels & 1) > 0).ToString();
+            string modelOmitFirst = ((Properties.Settings.Default.RandomizePlaceModels & 2) > 0).ToString();
+            string modelOmitSecond = ((Properties.Settings.Default.RandomizePlaceModels & 4) > 0).ToString();
+
+            var settings = new List<Tuple<string, string, string, string>>()
+            {
+                new Tuple<string, string, string, string>("Character Models", charIsActive, charOmitFirst, charOmitSecond),
+                new Tuple<string, string, string, string>("Placeable Models", modelIsActive, modelOmitFirst, modelOmitSecond),
+            };
+
+            foreach (var setting in settings)
+            {
+                ws.Cell(i, 1).Value = setting.Item1;
+                ws.Cell(i, 2).Value = setting.Item2;
+                ws.Cell(i, 3).Value = setting.Item3;
+                ws.Cell(i, 4).Value = setting.Item4;
+                ws.Cell(i, 1).Style.Font.Italic = true;
+                i++;
+            }
+
+            i++;    // Skip a row.
+
+            //   Settings B
+            ws.Cell(i, 1).Value = "Model Type";
+            ws.Cell(i, 2).Value = "Is Active";
+            ws.Cell(i, 3).Value = "Omit Airlocks";
+            ws.Cell(i, 4).Value = "Omit Broken";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Style.Font.Bold = true;
+            ws.Cell(i, 3).Style.Font.Bold = true;
+            ws.Cell(i, 4).Style.Font.Bold = true;
+            i++;
+
+            string doorIsActive = ((Properties.Settings.Default.RandomizeDoorModels & 1) > 0).ToString();
+            string doorOmitFirst = ((Properties.Settings.Default.RandomizeDoorModels & 2) > 0).ToString();
+            string doorOmitSecond = ((Properties.Settings.Default.RandomizeDoorModels & 4) > 0).ToString();
+
+            settings = new List<Tuple<string, string, string, string>>()
+            {
+                new Tuple<string, string, string, string>("Door Models", doorIsActive, doorOmitFirst, doorOmitSecond),
+            };
+
+            foreach (var setting in settings)
+            {
+                ws.Cell(i, 1).Value = setting.Item1;
+                ws.Cell(i, 2).Value = setting.Item2;
+                ws.Cell(i, 3).Value = setting.Item3;
+                ws.Cell(i, 4).Value = setting.Item4;
+                ws.Cell(i, 1).Style.Font.Italic = true;
+                i++;
+            }
+
+            i++;    // Skip a row.
+
+            // Model Shuffle
+            ws.Cell(i, 1).Value = "Map Filename";
+            ws.Cell(i, 2).Value = "Model Type";
+            ws.Cell(i, 3).Value = "Model Label";
+            ws.Cell(i, 4).Value = "Has Changed";
+            ws.Cell(i, 5).Value = "Original ID";
+            ws.Cell(i, 6).Value = "Randomized ID";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 5).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 6).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Style.Font.Bold = true;
+            ws.Cell(i, 3).Style.Font.Bold = true;
+            ws.Cell(i, 4).Style.Font.Bold = true;
+            ws.Cell(i, 5).Style.Font.Bold = true;
+            ws.Cell(i, 6).Style.Font.Bold = true;
+            i++;
+
+            List<XLColor> colors = new List<XLColor>()
+            {
+                XLColor.Red,
+                XLColor.OrangePeel,
+                XLColor.Green,
+                XLColor.DeepSkyBlue,
+                XLColor.Blue,
+                XLColor.Purple,
+            };
+            string prevMap = string.Empty;
+            int j = colors.Count - 1;
+
+            foreach (var map in LookupTable)
+            {
+                foreach (var type in map.Value)
+                {
+                    foreach (var kvp in type.Value)
+                    {
+                        var hasChanged = kvp.Value.Item1 != kvp.Value.Item2;
+                        ws.Cell(i, 1).Value = map.Key;
+                        ws.Cell(i, 2).Value = type.Key;
+                        ws.Cell(i, 3).Value = kvp.Key;
+                        ws.Cell(i, 4).Value = hasChanged;
+                        ws.Cell(i, 5).Value = kvp.Value.Item1;
+                        ws.Cell(i, 6).Value = kvp.Value.Item2;
+
+                        if (prevMap != map.Key)
+                        {
+                            prevMap = map.Key;
+                            j = (j + 1) % colors.Count;
+                        }
+                        ws.Cell(i, 1).Style.Font.FontColor = colors[j];
+
+                        if (type.Key == "Door")      ws.Cell(i, 2).Style.Font.FontColor = XLColor.Blue;
+                        if (type.Key == "Character") ws.Cell(i, 2).Style.Font.FontColor = XLColor.Green;
+                        if (type.Key == "Placeable") ws.Cell(i, 2).Style.Font.FontColor = XLColor.Red;
+
+                        if (hasChanged) ws.Cell(i, 4).Style.Font.FontColor = XLColor.Green;
+                        else            ws.Cell(i, 4).Style.Font.FontColor = XLColor.Red;
+
+                        i++;
+                    }
+                }
+            }
+
+            // Resize Columns
+            ws.Column(1).AdjustToContents();
+            ws.Column(2).AdjustToContents();
+            ws.Column(3).AdjustToContents();
+            ws.Column(4).AdjustToContents();
+            ws.Column(5).AdjustToContents();
         }
     }
 }
