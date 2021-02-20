@@ -14,8 +14,10 @@ namespace kotor_Randomizer_2
     {
         /// <summary>
         /// A lookup table used to know how the items are randomized.
+        /// Usage: List(Old ID, Old Label, New ID, New Label)
         /// </summary>
-        private static Dictionary<string, string> LookupTable { get; set; } = new Dictionary<string, string>();
+        //private static Dictionary<string, string> LookupTable { get; set; } = new Dictionary<string, string>();
+        private static List<Tuple<string, string>> LookupTable { get; set; } = new List<Tuple<string, string>>();
 
         public static void item_rando(KPaths paths)
         {
@@ -67,7 +69,7 @@ namespace kotor_Randomizer_2
             int j = 0;
             foreach (KEY.KeyEntry ke in k.KeyTable.Where(x => Max_Rando_Iterator.Contains(x.ResRef)))
             {
-                LookupTable.Add(ke.ResRef, Max_Rando[j]);
+                LookupTable.Add(new Tuple<string, string>(ke.ResRef, Max_Rando[j]));
                 ke.ResRef = Max_Rando[j];
                 j++;
             }
@@ -80,7 +82,7 @@ namespace kotor_Randomizer_2
                 j = 0;
                 foreach (KEY.KeyEntry ke in k.KeyTable.Where(x => li.Contains(x.ResRef)))
                 {
-                    LookupTable.Add(ke.ResRef, type_copy[j]);
+                    LookupTable.Add(new Tuple<string, string>(ke.ResRef, Max_Rando[j]));
                     ke.ResRef = type_copy[j];
                     j++;
                 }
@@ -155,7 +157,7 @@ namespace kotor_Randomizer_2
         public static void GenerateSpoilerLog(string path)
         {
             if (LookupTable.Count == 0) { return; }
-            var sortedLookup = LookupTable.OrderBy(kvp => kvp.Key);
+            var sortedLookup = LookupTable.OrderBy(x => x.Item1);
 
             using (StreamWriter sw = new StreamWriter(path))
             {
@@ -192,9 +194,9 @@ namespace kotor_Randomizer_2
                 sw.WriteLine();
 
                 sw.WriteLine("Has Changed,Original,Randomized");
-                foreach (var kvp in sortedLookup)
+                foreach (var tpl in sortedLookup)
                 {
-                    sw.WriteLine($"{(kvp.Key != kvp.Value).ToString()},{kvp.Key},{kvp.Value}");
+                    sw.WriteLine($"{(tpl.Item1 != tpl.Item2).ToString()},{tpl.Item1},{tpl.Item2}");
                 }
                 sw.WriteLine();
             }
@@ -212,6 +214,13 @@ namespace kotor_Randomizer_2
         {
             if (LookupTable.Count == 0) { return; }
             var ws = workbook.Worksheets.Add("Item");
+
+            var paths = new KPaths(Properties.Settings.Default.Kotor1Path);
+            KEY k = new KEY(paths.chitin_backup);
+            BIF b = new BIF(Path.Combine(paths.data, "templates.bif"));
+            b.AttachKey(k, "data\\templates.bif");
+            var items = b.VariableResourceTable.Where(x => x.ResourceType == ResourceType.UTI);
+            TLK t = new TLK(File.Exists(paths.dialog_backup) ? paths.dialog_backup : paths.dialog);
 
             int i = 1;
             ws.Cell(i, 1).Value = "Seed";
@@ -271,28 +280,64 @@ namespace kotor_Randomizer_2
                 ws.Cell(i, 1).Value = item;
                 i++;
             }
-            i++;    // Skip a row.
+            i += 2;     // Skip a couple row.
 
             // Randomized Items
             ws.Cell(i, 1).Value = "Has Changed";
-            ws.Cell(i, 2).Value = "Original";
-            ws.Cell(i, 3).Value = "Randomized";
+            ws.Cell(i-1, 2).Value = "Original";
+            ws.Cell(i, 2).Value = "ID";
+            ws.Cell(i, 3).Value = "Label";
+            ws.Cell(i-1, 4).Value = "Randomized";
+            ws.Cell(i, 4).Value = "ID";
+            ws.Cell(i, 5).Value = "Label";
+            ws.Cell(i-1, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i-1, 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 5).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Style.Font.Bold = true;
-            ws.Cell(i, 3).Style.Font.Bold = true;
+            ws.Cell(i-1, 2).Style.Font.Bold = true;
+            ws.Cell(i, 2).Style.Font.Italic = true;
+            ws.Cell(i, 3).Style.Font.Italic = true;
+            ws.Cell(i-1, 4).Style.Font.Bold = true;
+            ws.Cell(i, 4).Style.Font.Italic = true;
+            ws.Cell(i, 5).Style.Font.Italic = true;
+            ws.Range(i-1, 2, i-1, 3).Merge();
+            ws.Range(i-1, 4, i-1, 5).Merge();
             i++;
 
-            var sortedLookup = LookupTable.OrderBy(kvp => kvp.Key);
-            foreach (var kvp in sortedLookup)
+            var sortedLookup = LookupTable.OrderBy(tpl => tpl.Item1);
+            foreach (var tpl in sortedLookup)
             {
-                ws.Cell(i, 1).Value = (kvp.Key != kvp.Value).ToString();
-                ws.Cell(i, 2).Value = kvp.Key;
-                ws.Cell(i, 3).Value = kvp.Value;
-                if (kvp.Key != kvp.Value) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
-                else ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
+                string origItemName = "";
+                string randItemName = "";
+
+                var origItemVre = items.FirstOrDefault(x => x.ResRef == tpl.Item1);
+                if (origItemVre != null)
+                {
+                    GFF origItem = new GFF(origItemVre.EntryData);
+                    if (origItem.Top_Level.Fields.FirstOrDefault(x => x.Label == "LocalizedName") is GFF.CExoLocString field)
+                        origItemName = t.String_Data_Table[field.StringRef].StringText;
+                }
+
+                var randItemVre = items.FirstOrDefault(x => x.ResRef == tpl.Item2);
+                if (randItemVre != null)
+                {
+                    GFF randItem = new GFF(randItemVre.EntryData);
+                    if (randItem.Top_Level.Fields.FirstOrDefault(x => x.Label == "LocalizedName") is GFF.CExoLocString field)
+                        randItemName = t.String_Data_Table[field.StringRef].StringText;
+                }
+
+                var hasChanged = tpl.Item1 != tpl.Item2;
+                ws.Cell(i, 1).Value = hasChanged.ToString();
+                ws.Cell(i, 2).Value = tpl.Item1;
+                ws.Cell(i, 3).Value = origItemName;
+                ws.Cell(i, 4).Value = tpl.Item2;
+                ws.Cell(i, 5).Value = randItemName;
+                if (hasChanged) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
+                else            ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
                 i++;
             }
 
@@ -300,6 +345,8 @@ namespace kotor_Randomizer_2
             ws.Column(1).AdjustToContents();
             ws.Column(2).AdjustToContents();
             ws.Column(3).AdjustToContents();
+            ws.Column(4).AdjustToContents();
+            ws.Column(5).AdjustToContents();
         }
 
         #region Regexes
