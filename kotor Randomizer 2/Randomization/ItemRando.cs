@@ -14,10 +14,9 @@ namespace kotor_Randomizer_2
     {
         /// <summary>
         /// A lookup table used to know how the items are randomized.
-        /// Usage: List(Old ID, Old Label, New ID, New Label)
+        /// Usage: List(Old ID, New ID)
         /// </summary>
-        //private static Dictionary<string, string> LookupTable { get; set; } = new Dictionary<string, string>();
-        private static List<Tuple<string, string>> LookupTable { get; set; } = new List<Tuple<string, string>>();
+        internal static List<Tuple<string, string>> LookupTable { get; set; } = new List<Tuple<string, string>>();
 
         public static void item_rando(KPaths paths)
         {
