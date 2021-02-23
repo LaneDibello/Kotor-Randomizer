@@ -116,7 +116,7 @@ namespace kotor_Randomizer_2
                 foreach (var res in b.VariableResourceTable.Where(x => x.ResourceType == ResourceType.UTI))
                 {
                     GFF g = new GFF(res.EntryData);
-                    int item_basetype = (g.Top_Level.Fields.Where(x => x.Label == "BaseItem").FirstOrDefault() as GFF.INT).value;
+                    int item_basetype = (g.Top_Level.Fields.Where(x => x.Label == "BaseItem").FirstOrDefault() as GFF.INT).Value;
                     //ignore items that can't be equipped in the chest slot
                     if ((item_basetype < 35 || item_basetype > 43) && (item_basetype < 66 || item_basetype > 68) && item_basetype != 85 && item_basetype != 89)
                     {
@@ -146,9 +146,7 @@ namespace kotor_Randomizer_2
                     //Adds the disguise property to the UTI's property list
                     (g.Top_Level.Fields.Where(x => x.Label == "PropertiesList").FirstOrDefault() as GFF.LIST).Structs.Add(disguise_prop);
 
-                    //GFF.ResRef resref = g.Top_Level.Fields.Where(x => x.Label == "TemplateResRef")?.FirstOrDefault() as GFF.ResRef;
-                    //if (resref != null && !PolymorphLookupTable.ContainsKey(resref.Reference)) PolymorphLookupTable.Add(resref.Reference, rando_appearance.ToString());
-                    PolymorphLookupTable.Add(res.ResRef, rando_appearance);
+                    PolymorphLookupTable.Add(res.ResRef, rando_appearance.ToString());
 
                     g.WriteToFile(paths.Override + res.ResRef + ".uti");
                     
@@ -227,8 +225,8 @@ namespace kotor_Randomizer_2
                     (g.Top_Level.Fields.Where(x => x.Label == "Conversation").FirstOrDefault() as GFF.ResRef).Reference = ID.Item1;
                     (g.Top_Level.Fields.Where(x => x.Label == "Tag").FirstOrDefault() as GFF.CExoString).CEString = ID.Item3;
                     (g.Top_Level.Fields.Where(x => x.Label == "TemplateResRef").FirstOrDefault() as GFF.ResRef).Reference = ID.Item2;
-                    (g.Top_Level.Fields.Where(x => x.Label == "NoPermDeath").FirstOrDefault() as GFF.BYTE).value = 1;
-                    (g.Top_Level.Fields.Where(x => x.Label == "FactionID").FirstOrDefault() as GFF.WORD).value = 2;
+                    (g.Top_Level.Fields.Where(x => x.Label == "NoPermDeath").FirstOrDefault() as GFF.BYTE).Value = 1;
+                    (g.Top_Level.Fields.Where(x => x.Label == "FactionID").FirstOrDefault() as GFF.WORD).Value = 2;
 
                     //Henchmen Script suite
                     (g.Top_Level.Fields.Where(x => x.Label == "ScriptHeartbeat").FirstOrDefault() as GFF.ResRef).Reference = "k_hen_heartbt01";

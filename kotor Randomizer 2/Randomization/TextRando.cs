@@ -54,7 +54,7 @@ namespace kotor_Randomizer_2
 
                 RIM r = new RIM(fi.FullName);
 
-                foreach (RIM.rFile RF in r.File_Table.Where(x => x.TypeID == Reference_Tables.TypeCodes["DLG "]))
+                foreach (RIM.rFile RF in r.File_Table.Where(x => x.TypeID == (int)ResourceType.DLG))
                 {
                     GFF g = new GFF(RF.File_Data);
 
@@ -138,7 +138,7 @@ namespace kotor_Randomizer_2
                                 if (!RepliesLookupTable[fi.Name].ContainsKey(RF.Label))
                                     RepliesLookupTable[fi.Name].Add(RF.Label, new List<Tuple<int, int>>());
 
-                                int str_ref = Randomize.Rng.Next(49264);
+                                int str_ref = Randomize.Rng.Next(TLK_STRING_COUNT);
                                 var text = S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString;
                                 RepliesLookupTable[fi.Name][RF.Label].Add(new Tuple<int, int>(text.StringRef, str_ref));
                                 text.StringRef = str_ref;
