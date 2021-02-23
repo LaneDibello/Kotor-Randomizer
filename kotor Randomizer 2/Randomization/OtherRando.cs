@@ -55,7 +55,7 @@ namespace kotor_Randomizer_2
         /// Lookup table for how polymorph items are randomized.
         /// Usage: PolymorphLookupTable[ItemName] = Disguise;
         /// </summary>
-        private static Dictionary<string, string> PolymorphLookupTable { get; set; } = new Dictionary<string, string>();
+        private static Dictionary<string, int> PolymorphLookupTable { get; set; } = new Dictionary<string, int>();
 
         /// <summary>
         /// Lookup table for how NPC pazaak decks are randomized.
@@ -146,7 +146,7 @@ namespace kotor_Randomizer_2
                     //Adds the disguise property to the UTI's property list
                     (g.Top_Level.Fields.Where(x => x.Label == "PropertiesList").FirstOrDefault() as GFF.LIST).Structs.Add(disguise_prop);
 
-                    PolymorphLookupTable.Add(res.ResRef, rando_appearance.ToString());
+                    PolymorphLookupTable.Add(res.ResRef, rando_appearance);
 
                     g.WriteToFile(paths.Override + res.ResRef + ".uti");
                     
@@ -308,6 +308,12 @@ namespace kotor_Randomizer_2
             { return; }
             var ws = workbook.Worksheets.Add("Other");
 
+            var paths = new KPaths(Properties.Settings.Default.Kotor1Path);
+            TLK tlk = new TLK(File.Exists(paths.dialog_backup) ? paths.dialog_backup : paths.dialog);
+            KEY key = new KEY(paths.chitin_backup);
+            BIF bifTmp = new BIF(Path.Combine(paths.data, "templates.bif"));
+            bifTmp.AttachKey(key, "data\\templates.bif");
+
             int i = 1;
             ws.Cell(i, 1).Value = "Seed";
             ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
@@ -382,39 +388,10 @@ namespace kotor_Randomizer_2
                 i = iDone + 1;  // Skip a row.
             }
 
-            // Polymorph Equipment
-            if (PolymorphLookupTable.Any())
-            {
-                ws.Cell(i, 1).Value = "Equipment Polymorph Mode";
-                ws.Cell(i, 1).Style.Font.Bold = true;
-                ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                ws.Range(i, 1, i, 2).Merge();
-                i++;
-
-                // Column Headers
-                ws.Cell(i, 1).Value = "Item";
-                ws.Cell(i, 2).Value = "Model ID";
-                ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                ws.Cell(i, 1).Style.Font.Italic = true;
-                ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                ws.Cell(i, 2).Style.Font.Italic = true;
-                i++;
-
-                foreach (var kvp in PolymorphLookupTable)
-                {
-                    ws.Cell(i, 1).Value = kvp.Key;
-                    ws.Cell(i, 2).Value = kvp.Value;
-                    i++;
-                }
-
-                i++;    // Skip a row.
-            }
-
             // NPC Pazaak Deck Randomization
             if (NpcPazaakLookupTable.Any())
             {
-                const string ORIGINAL = "Orig";
-                const string RANDOM = "Rand";
+                const string RANDOM = "randomized";
 
                 ws.Cell(i, 1).Value = "NPC Pazaak Deck Rando";
                 ws.Cell(i, 1).Style.Font.Bold = true;
@@ -438,7 +415,13 @@ namespace kotor_Randomizer_2
                     {
                         ws.Cell(i, 1).Value = name.Item1;
                         ws.Cell(i, 1).Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                        i++;
+
+                        ws.Cell(i + 1, j).Value = RANDOM;
+                        ws.Cell(i + 1, j).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+                        ws.Cell(i + 1, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i + 1, j).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i + 1, j).Style.Font.Italic = true;
+                        i += 2;
                     }
 
                     j++;
@@ -455,22 +438,18 @@ namespace kotor_Randomizer_2
                     ws.Cell(i, j).Value = $"{col.Key}";
                     ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
                     ws.Cell(i, j).Style.Font.Italic = true;
-                    ws.Cell(i, j+1).Value = $"{RANDOM}";
-                    ws.Cell(i, j+1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                    ws.Cell(i, j+1).Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                    ws.Cell(i, j+1).Style.Font.Italic = true;
                     i++;
 
                     foreach (var row in col.Value)
                     {
                         // Row Data
                         ws.Cell(i, j).Value = $"'{row.Item1}";
-                        ws.Cell(i, j+1).Value = $"'{row.Item2}";
-                        ws.Cell(i, j+1).Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                        i++;
+                        ws.Cell(i + 1, j).Value = $"'{row.Item2}";
+                        ws.Cell(i + 1, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        i += 2;
                     }
 
-                    j += 2;     // Move to the next pair of columns.
+                    j++;
                     if (iDone < i) iDone = i;   // Remember the length of this table.
                 }
 
@@ -480,6 +459,8 @@ namespace kotor_Randomizer_2
             // Party Randomization
             if (PartyLookupTable.Any())
             {
+                var chars = bifTmp.VariableResourceTable.Where(x => x.ResourceType == ResourceType.UTC);
+
                 ws.Cell(i, 1).Value = "Party Member Rando";
                 ws.Cell(i, 1).Style.Font.Bold = true;
                 ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
@@ -488,16 +469,88 @@ namespace kotor_Randomizer_2
 
                 ws.Cell(i, 1).Value = "Party Member";
                 ws.Cell(i, 2).Value = "Rando ResRef";
+                ws.Cell(i, 3).Value = "Rando Name";
+
                 ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                ws.Cell(i, 1).Style.Font.Italic = true;
                 ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+
+                ws.Cell(i, 1).Style.Font.Italic = true;
                 ws.Cell(i, 2).Style.Font.Italic = true;
+                ws.Cell(i, 3).Style.Font.Italic = true;
                 i++;
 
                 foreach (var kvp in PartyLookupTable)
                 {
+                    string randName = "";
+                    var randCharVre = chars.FirstOrDefault(x => x.ResRef == kvp.Value);
+                    if (randCharVre != null)
+                    {
+                        GFF randChar = new GFF(randCharVre.EntryData);
+                        if (randChar.Top_Level.Fields.FirstOrDefault(x => x.Label == "FirstName") is GFF.CExoLocString field)
+                            randName = tlk.String_Data_Table[field.StringRef].StringText;
+                    }
+
                     ws.Cell(i, 1).Value = kvp.Key;
                     ws.Cell(i, 2).Value = kvp.Value;
+                    ws.Cell(i, 3).Value = randName;
+                    i++;
+                }
+
+                i++;    // Skip a row.
+            }
+
+            // Polymorph Equipment
+            if (PolymorphLookupTable.Any())
+            {
+                const string CHAR_2DA = "appearance";
+                const string COL_LABEL = "label";
+
+                BIF bif2da = new BIF(Path.Combine(paths.data, "2da.bif"));
+                bif2da.AttachKey(key, "data\\2da.bif");
+
+                var items = bifTmp.VariableResourceTable.Where(x => x.ResourceType == ResourceType.UTI);
+                var charVRE = bif2da.VariableResourceTable.Where(x => x.ResRef == CHAR_2DA).FirstOrDefault();
+                TwoDA char2DA = new TwoDA(charVRE.EntryData, charVRE.ResRef);
+
+                ws.Cell(i, 1).Value = "Equipment Polymorph Mode";
+                ws.Cell(i, 1).Style.Font.Bold = true;
+                ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Range(i, 1, i, 2).Merge();
+                i++;
+
+                // Column Headers
+                ws.Cell(i, 1).Value = "Item Code";
+                ws.Cell(i, 2).Value = "Real Item Name";
+                ws.Cell(i, 3).Value = "Model ID";
+                ws.Cell(i, 4).Value = "Model Name";
+                ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                ws.Cell(i, 1).Style.Font.Italic = true;
+                ws.Cell(i, 2).Style.Font.Italic = true;
+                ws.Cell(i, 3).Style.Font.Italic = true;
+                ws.Cell(i, 4).Style.Font.Italic = true;
+                i++;
+
+                foreach (var kvp in PolymorphLookupTable)
+                {
+                    string origItemName = "";
+                    var itemCode = ItemRando.LookupTable.FirstOrDefault(x => x.Item2 == kvp.Key)?.Item1 ?? kvp.Key;
+                    var randItemVre = items.FirstOrDefault(x => x.ResRef == itemCode);
+
+                    if (randItemVre != null)
+                    {
+                        GFF randItem = new GFF(randItemVre.EntryData);
+                        if (randItem.Top_Level.Fields.FirstOrDefault(x => x.Label == "LocalizedName") is GFF.CExoLocString field)
+                            origItemName = tlk.String_Data_Table[field.StringRef].StringText;
+                    }
+
+                    ws.Cell(i, 1).Value = kvp.Key;
+                    ws.Cell(i, 2).Value = origItemName;
+                    ws.Cell(i, 3).Value = kvp.Value;
+                    ws.Cell(i, 4).Value = char2DA.Data[COL_LABEL][kvp.Value];
                     i++;
                 }
 

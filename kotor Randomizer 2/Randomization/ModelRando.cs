@@ -13,24 +13,42 @@ namespace kotor_Randomizer_2
         /// Lookup table for how models are randomized.
         /// Usage: LookupTable[MapName][ModelType][Label] = (OriginalID, RandomizedID);
         /// </summary>
-        private static Dictionary<string, Dictionary<string, Dictionary<string, Tuple<int, int>>>> LookupTable { get; set; } = new Dictionary<string, Dictionary<string, Dictionary<string, Tuple<int, int>>>>();
+        private static Dictionary<string, Dictionary<string, Dictionary<string, Tuple<int, string, int, string>>>> LookupTable { get; set; } = new Dictionary<string, Dictionary<string, Dictionary<string, Tuple<int, string, int, string>>>>();
 
         public static void model_rando(KPaths paths)
         {
             const string CHARACTER = "Character";
             const string DOOR = "Door";
             const string PLACEABLE = "Placeable";
+
+            const string CHAR_2DA = "appearance";
+            const string DOOR_2DA = "genericdoors";
+            const string PLAC_2DA = "placeables";
+            const string COL_LABEL = "label";
+
             LookupTable.Clear();
+
+            BIF bif = new BIF(Path.Combine(paths.data, "2da.bif"));
+            KEY key = new KEY(paths.chitin);
+            bif.AttachKey(key, "data\\2da.bif");
+
+            var charVRE = bif.VariableResourceTable.Where(x => x.ResRef == CHAR_2DA).FirstOrDefault();
+            var doorVRE = bif.VariableResourceTable.Where(x => x.ResRef == DOOR_2DA).FirstOrDefault();
+            var placVRE = bif.VariableResourceTable.Where(x => x.ResRef == PLAC_2DA).FirstOrDefault();
+
+            TwoDA char2DA = new TwoDA(charVRE.EntryData, charVRE.ResRef);
+            TwoDA door2DA = new TwoDA(doorVRE.EntryData, doorVRE.ResRef);
+            TwoDA plac2DA = new TwoDA(placVRE.EntryData, placVRE.ResRef);
 
             foreach (FileInfo fi in paths.FilesInModules)
             {
                 RIM r = new RIM(fi.FullName);
-                LookupTable.Add(fi.Name, new Dictionary<string, Dictionary<string, Tuple<int, int>>>());
+                LookupTable.Add(fi.Name, new Dictionary<string, Dictionary<string, Tuple<int, string, int, string>>>());
 
                 // Doors
                 if ((Properties.Settings.Default.RandomizeDoorModels & 1) > 0)
                 {
-                    LookupTable[fi.Name].Add(DOOR, new Dictionary<string, Tuple<int, int>>());
+                    LookupTable[fi.Name].Add(DOOR, new Dictionary<string, Tuple<int, string, int, string>>());
 
                     foreach (RIM.rFile rf in r.File_Table.Where(x => x.TypeID == (int)ResourceType.UTD))
                     {
@@ -54,8 +72,13 @@ namespace kotor_Randomizer_2
                             continue;
                         }
 
-                        var id = BitConverter.ToInt32((byte[])g.Field_Array.Where(k => k.Label == "GenericType").FirstOrDefault().Field_Data, 0);
-                        LookupTable[fi.Name][DOOR].Add(rf.Label, new Tuple<int, int>(id, temp));
+                        var field = g.Field_Array.Where(k => k.Label == "GenericType").FirstOrDefault();
+                        var id = BitConverter.ToInt32((byte[])field.Field_Data, 0);
+
+                        var label_old = door2DA.Data[COL_LABEL][id];
+                        var label_new = door2DA.Data[COL_LABEL][temp];
+
+                        LookupTable[fi.Name][DOOR].Add(rf.Label, new Tuple<int, string, int, string>(id, label_old, temp, label_new));
 
                         g.Field_Array.Where(k => k.Label == "GenericType").FirstOrDefault().Field_Data = temp;
                         g.Field_Array.Where(k => k.Label == "GenericType").FirstOrDefault().DataOrDataOffset = temp;
@@ -67,7 +90,7 @@ namespace kotor_Randomizer_2
                 // Placeables
                 if ((Properties.Settings.Default.RandomizePlaceModels & 1) > 0)
                 {
-                    LookupTable[fi.Name].Add(PLACEABLE, new Dictionary<string, Tuple<int, int>>());
+                    LookupTable[fi.Name].Add(PLACEABLE, new Dictionary<string, Tuple<int, string, int, string>>());
 
                     foreach (RIM.rFile rf in r.File_Table.Where(k => k.TypeID == (int)ResourceType.UTP))
                     {
@@ -88,8 +111,13 @@ namespace kotor_Randomizer_2
 
                         }
 
-                        var id = Convert.ToInt32(g.Field_Array.Where(k => k.Label == "Appearance").FirstOrDefault().Field_Data);
-                        LookupTable[fi.Name][PLACEABLE].Add(rf.Label, new Tuple<int, int>(id, temp));
+                        var field = g.Field_Array.Where(k => k.Label == "Appearance").FirstOrDefault();
+                        var id = Convert.ToInt32(field.Field_Data);
+
+                        var label_old = plac2DA.Data[COL_LABEL][id];
+                        var label_new = plac2DA.Data[COL_LABEL][temp];
+
+                        LookupTable[fi.Name][PLACEABLE].Add(rf.Label, new Tuple<int, string, int, string>(id, label_old, temp, label_new));
 
                         g.Field_Array.Where(k => k.Label == "Appearance").FirstOrDefault().Field_Data = temp;
                         g.Field_Array.Where(k => k.Label == "Appearance").FirstOrDefault().DataOrDataOffset = temp;
@@ -101,7 +129,7 @@ namespace kotor_Randomizer_2
                 // Characters
                 if ((Properties.Settings.Default.RandomizeCharModels & 1) > 0)
                 {
-                    LookupTable[fi.Name].Add(CHARACTER, new Dictionary<string, Tuple<int, int>>());
+                    LookupTable[fi.Name].Add(CHARACTER, new Dictionary<string, Tuple<int, string, int, string>>());
 
                     foreach (RIM.rFile rf in r.File_Table.Where(k => k.TypeID == (int)ResourceType.UTC))
                     {
@@ -119,8 +147,13 @@ namespace kotor_Randomizer_2
                             large_satisfied = !((Properties.Settings.Default.RandomizeCharModels & 2) > 0) || !Globals.LARGE_CHARS.Contains(temp);//Always satisifed if Large omission disabled
                         }
 
-                        var id = Convert.ToInt32(g.Field_Array.Where(k => k.Label == "Appearance_Type").FirstOrDefault().Field_Data);
-                        LookupTable[fi.Name][CHARACTER].Add(rf.Label, new Tuple<int, int>(id, temp));
+                        var field = g.Field_Array.Where(k => k.Label == "Appearance_Type").FirstOrDefault();
+                        var id = Convert.ToInt32(field.Field_Data);
+
+                        var label_old = char2DA.Data[COL_LABEL][id];
+                        var label_new = char2DA.Data[COL_LABEL][temp];
+
+                        LookupTable[fi.Name][CHARACTER].Add(rf.Label, new Tuple<int, string, int, string>(id, label_old, temp, label_new));
 
                         g.Field_Array.Where(k => k.Label == "Appearance_Type").FirstOrDefault().Field_Data = temp;
                         g.Field_Array.Where(k => k.Label == "Appearance_Type").FirstOrDefault().DataOrDataOffset = temp;
@@ -279,29 +312,77 @@ namespace kotor_Randomizer_2
                 i++;
             }
 
-            i++;    // Skip a row.
+            i += 2;     // Skip two rows.
+            int j = 1;  // Start at column A.
+            var jMax = 1;   // Remember max table width.
+            var areModulesRandomized = ModuleRando.LookupTable.Any();
 
-            // Model Shuffle
-            ws.Cell(i, 1).Value = "Map Filename";
-            ws.Cell(i, 2).Value = "Model Type";
-            ws.Cell(i, 3).Value = "Model Label";
-            ws.Cell(i, 4).Value = "Has Changed";
-            ws.Cell(i, 5).Value = "Original ID";
-            ws.Cell(i, 6).Value = "Randomized ID";
-            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 5).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 6).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Style.Font.Bold = true;
-            ws.Cell(i, 3).Style.Font.Bold = true;
-            ws.Cell(i, 4).Style.Font.Bold = true;
-            ws.Cell(i, 5).Style.Font.Bold = true;
-            ws.Cell(i, 6).Style.Font.Bold = true;
+            // Model Shuffle Headings
+            ws.Cell(i, j).Value = "Map Filename";
+            ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, j).Style.Font.Bold = true;
+            j++;
+
+            if (areModulesRandomized)
+            {
+                ws.Cell(i, j).Value = "Randomized Map";
+                ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                ws.Cell(i, j).Style.Font.Bold = true;
+                j++;
+            }
+
+            ws.Cell(i, j).Value = "Model Type";
+            ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, j).Style.Font.Bold = true;
+            j++;
+
+            ws.Cell(i, j).Value = "Model Label";
+            ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, j).Style.Font.Bold = true;
+            j++;
+
+            ws.Cell(i-1, j).Value = "Original";
+            ws.Cell(i-1, j).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i-1, j).Style.Font.Bold = true;
+            ws.Range(i-1, j, i-1, j+1).Merge().Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+
+            ws.Cell(i, j).Value = "ID";
+            ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, j).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, j).Style.Font.Italic = true;
+            j++;
+
+            ws.Cell(i, j).Value = "Label";
+            ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, j).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, j).Style.Font.Italic = true;
+            j++;
+
+            ws.Cell(i, j).Value = "Changed";
+            ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, j).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, j).Style.Font.Bold = true;
+            j++;
+
+            ws.Cell(i-1, j).Value = "Randomized";
+            ws.Cell(i-1, j).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i-1, j).Style.Font.Bold = true;
+            ws.Range(i-1, j, i-1, j+1).Merge().Style.Border.RightBorder = XLBorderStyleValues.Thin;
+
+            ws.Cell(i, j).Value = "ID";
+            ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, j).Style.Font.Italic = true;
+            j++;
+
+            ws.Cell(i, j).Value = "Label";
+            ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, j).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, j).Style.Font.Italic = true;
+
+            if (jMax < j) jMax = j;
             i++;
 
+            // Set up color rotation.
             List<XLColor> colors = new List<XLColor>()
             {
                 XLColor.Red,
@@ -312,47 +393,59 @@ namespace kotor_Randomizer_2
                 XLColor.Purple,
             };
             string prevMap = string.Empty;
-            int j = colors.Count - 1;
+            int c = colors.Count - 1;
 
+            // Model Shuffle Contents
             foreach (var map in LookupTable)
             {
                 foreach (var type in map.Value)
                 {
                     foreach (var kvp in type.Value)
                     {
-                        var hasChanged = kvp.Value.Item1 != kvp.Value.Item2;
-                        ws.Cell(i, 1).Value = map.Key;
-                        ws.Cell(i, 2).Value = type.Key;
-                        ws.Cell(i, 3).Value = kvp.Key;
-                        ws.Cell(i, 4).Value = hasChanged;
-                        ws.Cell(i, 5).Value = kvp.Value.Item1;
-                        ws.Cell(i, 6).Value = kvp.Value.Item2;
+                        j = 1;  // Reset column counter.
+                        var hasChanged = kvp.Value.Item1 != kvp.Value.Item3;
 
-                        if (prevMap != map.Key)
+                        ws.Cell(i, j).Value = map.Key;
+                        if (prevMap != map.Key) { prevMap = map.Key; c = (c + 1) % colors.Count; }
+                        ws.Cell(i, j++).Style.Font.FontColor = colors[c];
+
+                        // If modules are randomized, look up the shuffle.
+                        if (areModulesRandomized)
                         {
-                            prevMap = map.Key;
-                            j = (j + 1) % colors.Count;
+                            ws.Cell(i, j++).Value = ModuleRando.LookupTable.FirstOrDefault(x => x.Value == map.Key.Remove(map.Key.LastIndexOf('_'))).Key;
                         }
-                        ws.Cell(i, 1).Style.Font.FontColor = colors[j];
 
-                        if (type.Key == "Door")      ws.Cell(i, 2).Style.Font.FontColor = XLColor.Blue;
-                        if (type.Key == "Character") ws.Cell(i, 2).Style.Font.FontColor = XLColor.Green;
-                        if (type.Key == "Placeable") ws.Cell(i, 2).Style.Font.FontColor = XLColor.Red;
+                        ws.Cell(i, j).Value = type.Key;
+                        if (type.Key == "Door")      ws.Cell(i, j++).Style.Font.FontColor = XLColor.Blue;
+                        if (type.Key == "Character") ws.Cell(i, j++).Style.Font.FontColor = XLColor.Green;
+                        if (type.Key == "Placeable") ws.Cell(i, j++).Style.Font.FontColor = XLColor.Red;
 
-                        if (hasChanged) ws.Cell(i, 4).Style.Font.FontColor = XLColor.Green;
-                        else            ws.Cell(i, 4).Style.Font.FontColor = XLColor.Red;
+                        ws.Cell(i, j++).Value = kvp.Key;
+
+                        ws.Cell(i, j).Value = kvp.Value.Item1;
+                        ws.Cell(i, j++).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j++).Value = kvp.Value.Item2;
+
+                        ws.Cell(i, j).Value = hasChanged;
+                        ws.Cell(i, j).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                        if (hasChanged) ws.Cell(i, j++).Style.Font.FontColor = XLColor.Green;
+                        else            ws.Cell(i, j++).Style.Font.FontColor = XLColor.Red;
+
+                        ws.Cell(i, j++).Value = kvp.Value.Item3;
+                        ws.Cell(i, j).Value = kvp.Value.Item4;
+                        ws.Cell(i, j++).Style.Border.RightBorder = XLBorderStyleValues.Thin;
 
                         i++;
                     }
                 }
             }
 
-            // Resize Columns
-            ws.Column(1).AdjustToContents();
-            ws.Column(2).AdjustToContents();
-            ws.Column(3).AdjustToContents();
-            ws.Column(4).AdjustToContents();
-            ws.Column(5).AdjustToContents();
+            // Resize columns.
+            for (int col = 1; col <= jMax; col++)
+            {
+                ws.Column(col).AdjustToContents();
+            }
         }
     }
 }
