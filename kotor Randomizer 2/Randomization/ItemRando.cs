@@ -81,7 +81,7 @@ namespace kotor_Randomizer_2
                 j = 0;
                 foreach (KEY.KeyEntry ke in k.KeyTable.Where(x => li.Contains(x.ResRef)))
                 {
-                    LookupTable.Add(new Tuple<string, string>(ke.ResRef, Max_Rando[j]));
+                    LookupTable.Add(new Tuple<string, string>(ke.ResRef, type_copy[j]));
                     ke.ResRef = type_copy[j];
                     j++;
                 }
