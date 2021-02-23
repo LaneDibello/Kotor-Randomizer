@@ -146,7 +146,7 @@ namespace kotor_Randomizer_2
                     //Adds the disguise property to the UTI's property list
                     (g.Top_Level.Fields.Where(x => x.Label == "PropertiesList").FirstOrDefault() as GFF.LIST).Structs.Add(disguise_prop);
 
-                    PolymorphLookupTable.Add(res.ResRef, rando_appearance.ToString());
+                    PolymorphLookupTable.Add(res.ResRef, rando_appearance);
 
                     g.WriteToFile(paths.Override + res.ResRef + ".uti");
                     
