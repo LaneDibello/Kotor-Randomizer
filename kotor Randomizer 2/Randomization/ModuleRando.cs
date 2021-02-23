@@ -244,17 +244,9 @@ namespace kotor_Randomizer_2
                     GFF g = new GFF(rf.File_Data);
 
                     //Update coordinate data.
-                    (g.Top_Level.Fields.Where(x => x.Label == Properties.Resources.ModuleEntryX).FirstOrDefault() as GFF.FLOAT).value = Globals.FIXED_COORDINATES[kvp.Key].Item1;
-                    (g.Top_Level.Fields.Where(x => x.Label == Properties.Resources.ModuleEntryY).FirstOrDefault() as GFF.FLOAT).value = Globals.FIXED_COORDINATES[kvp.Key].Item2;
-                    (g.Top_Level.Fields.Where(x => x.Label == Properties.Resources.ModuleEntryZ).FirstOrDefault() as GFF.FLOAT).value = Globals.FIXED_COORDINATES[kvp.Key].Item3;
-
-                    //OLD IMPLEMENTATION:
-                    //GFF_old g = new GFF_old(rf.File_Data);
-
-                    //// Update coordinate data.
-                    //g.Field_Array.Where(x => x.Label == Properties.Resources.ModuleEntryX).FirstOrDefault().DataOrDataOffset = Globals.FIXED_COORDINATES[kvp.Key].Item1;
-                    //g.Field_Array.Where(x => x.Label == Properties.Resources.ModuleEntryY).FirstOrDefault().DataOrDataOffset = Globals.FIXED_COORDINATES[kvp.Key].Item2;
-                    //g.Field_Array.Where(x => x.Label == Properties.Resources.ModuleEntryZ).FirstOrDefault().DataOrDataOffset = Globals.FIXED_COORDINATES[kvp.Key].Item3;
+                    (g.Top_Level.Fields.Where(x => x.Label == Properties.Resources.ModuleEntryX).FirstOrDefault() as GFF.FLOAT).Value = Globals.FIXED_COORDINATES[kvp.Key].Item1;
+                    (g.Top_Level.Fields.Where(x => x.Label == Properties.Resources.ModuleEntryY).FirstOrDefault() as GFF.FLOAT).Value = Globals.FIXED_COORDINATES[kvp.Key].Item2;
+                    (g.Top_Level.Fields.Where(x => x.Label == Properties.Resources.ModuleEntryZ).FirstOrDefault() as GFF.FLOAT).Value = Globals.FIXED_COORDINATES[kvp.Key].Item3;
 
                     // Write updated data to RIM file.
                     rf.File_Data = g.ToRawData();
@@ -334,7 +326,7 @@ namespace kotor_Randomizer_2
                     GFF g_dan = new GFF(r_dan.File_Table.Where(x => x.Label == LABEL_DANTOOINE_DOOR).FirstOrDefault().File_Data); //Grab the door out of there
 
                     //Set the "Locked" field to 0 (false)
-                    (g_dan.Top_Level.Fields.Where(x => x.Label == "Locked").FirstOrDefault() as GFF.BYTE).value = 0;
+                    (g_dan.Top_Level.Fields.Where(x => x.Label == "Locked").FirstOrDefault() as GFF.BYTE).Value = 0;
 
                     r_dan.File_Table.Where(x => x.Label == LABEL_DANTOOINE_DOOR).FirstOrDefault().File_Data = g_dan.ToRawData();
 
@@ -352,7 +344,7 @@ namespace kotor_Randomizer_2
                     GFF g_unk = new GFF(r_unk.File_Table.Where(x => x.Label == LABEL_LEHON_DOOR).FirstOrDefault().File_Data); //Grab the door out of there
 
                     //Set the "Locked" field to 0 (false)
-                    (g_unk.Top_Level.Fields.Where(x => x.Label == "Locked").FirstOrDefault() as GFF.BYTE).value = 0;
+                    (g_unk.Top_Level.Fields.Where(x => x.Label == "Locked").FirstOrDefault() as GFF.BYTE).Value = 0;
 
                     r_unk.File_Table.Where(x => x.Label == LABEL_LEHON_DOOR).FirstOrDefault().File_Data = g_unk.ToRawData();
 
@@ -377,7 +369,7 @@ namespace kotor_Randomizer_2
                     GFF g_lev = new GFF(r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_A).FirstOrDefault().File_Data);
 
                     //Change Entry connecting for bridge option Index to 3, which will transition to the command deck
-                    (((g_lev.Top_Level.Fields.Where(x => x.Label == "ReplyList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 3).FirstOrDefault().Fields.Where(x => x.Label == "EntriesList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 0).FirstOrDefault().Fields.Where(x => x.Label == "Index").FirstOrDefault() as GFF.DWORD).value = 3;
+                    (((g_lev.Top_Level.Fields.Where(x => x.Label == "ReplyList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 3).FirstOrDefault().Fields.Where(x => x.Label == "EntriesList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 0).FirstOrDefault().Fields.Where(x => x.Label == "Index").FirstOrDefault() as GFF.DWORD).Value = 3;
                     //Sets the active reference for the hanger option to nothing, meaning there is no requirement to transition to the hanger
                     (((g_lev.Top_Level.Fields.Where(x => x.Label == "ReplyList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 1).FirstOrDefault().Fields.Where(x => x.Label == "EntriesList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 0).FirstOrDefault().Fields.Where(x => x.Label == "Active").FirstOrDefault() as GFF.ResRef).Reference = "";
 
@@ -415,15 +407,19 @@ namespace kotor_Randomizer_2
                     r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_C).FirstOrDefault().File_Data = Properties.Resources.lev40_accntl_dlg;
                     //Adding module transition scripts to RIM
                     //Prison Block
-                    RIM.rFile to40aa = new RIM.rFile();
-                    to40aa.TypeID = Reference_Tables.TypeCodes["NCS "];
-                    to40aa.Label = "k_plev_goto40aa";
-                    to40aa.File_Data = Properties.Resources.k_plev_goto40aa;
+                    RIM.rFile to40aa = new RIM.rFile
+                    {
+                        TypeID = (int)ResourceType.NCS,
+                        Label = "k_plev_goto40aa",
+                        File_Data = Properties.Resources.k_plev_goto40aa
+                    };
                     //Command Deck
-                    RIM.rFile to40ab = new RIM.rFile();
-                    to40ab.TypeID = Reference_Tables.TypeCodes["NCS "];
-                    to40ab.Label = "k_plev_goto40ab";
-                    to40ab.File_Data = Properties.Resources.k_plev_goto40ab;
+                    RIM.rFile to40ab = new RIM.rFile
+                    {
+                        TypeID = (int)ResourceType.NCS,
+                        Label = "k_plev_goto40ab",
+                        File_Data = Properties.Resources.k_plev_goto40ab
+                    };
                     //adding scripts
                     r_lev.File_Table.Add(to40aa);
                     r_lev.File_Table.Add(to40ab);
@@ -443,7 +439,7 @@ namespace kotor_Randomizer_2
                     if (fi.Name[fi.Name.Length - 5] == 's') { continue; }
 
                     RIM r_vul = new RIM(fi.FullName);
-                    r_vul.File_Table.Where(x => x.Label == LABEL_VULK_GIT && x.TypeID == Reference_Tables.TypeCodes["GIT "]).FirstOrDefault().File_Data = Properties.Resources.m10aa;
+                    r_vul.File_Table.Where(x => x.Label == LABEL_VULK_GIT && x.TypeID == (int)ResourceType.GIT).FirstOrDefault().File_Data = Properties.Resources.m10aa;
 
                     r_vul.WriteToFile(fi.FullName);
                 }
