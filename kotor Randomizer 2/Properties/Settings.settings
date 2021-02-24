@@ -62,59 +62,59 @@
     <Setting Name="DoRandomization_Other" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="RandomizeArmor" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeArmor" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeStims" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeStims" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeBelts" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeBelts" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeVarious" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeVarious" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeHides" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeHides" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeArmbands" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeArmbands" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeDroid" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeDroid" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeGloves" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeGloves" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeImplants" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeImplants" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeMask" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeMask" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizePaz" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizePaz" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeMines" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeMines" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeUpgrade" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeUpgrade" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeBlasters" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeBlasters" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeCreature" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeCreature" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeLightsabers" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeLightsabers" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeGrenades" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeGrenades" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeMelee" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeMelee" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
     <Setting Name="RandomizeDoorModels" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>

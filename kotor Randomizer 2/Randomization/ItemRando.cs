@@ -48,7 +48,7 @@ namespace kotor_Randomizer_2
             HandleCategory(k, UpgradeRegs, Properties.Settings.Default.RandomizeUpgrade);
 
             //handle Various
-            switch ((RandomizationLevel)Properties.Settings.Default.RandomizeVarious)
+            switch (Properties.Settings.Default.RandomizeVarious)
             {
                 default:
                 case RandomizationLevel.None:
@@ -90,9 +90,9 @@ namespace kotor_Randomizer_2
             k.WriteToFile(paths.chitin);
         }
 
-        private static void HandleCategory(KEY k, List<Regex> r, int randomizationLevel)
+        private static void HandleCategory(KEY k, List<Regex> r, RandomizationLevel randomizationLevel)
         {
-            switch ((RandomizationLevel)randomizationLevel)
+            switch (randomizationLevel)
             {
                 case RandomizationLevel.None:
                 default:
@@ -165,24 +165,24 @@ namespace kotor_Randomizer_2
                 sw.WriteLine();
 
                 sw.WriteLine("Item Type,Rando Level");
-                sw.WriteLine($"Armbands,{(RandomizationLevel)Properties.Settings.Default.RandomizeArmbands}");
-                sw.WriteLine($"Armor,{(RandomizationLevel)Properties.Settings.Default.RandomizeArmor}");
-                sw.WriteLine($"Belts,{(RandomizationLevel)Properties.Settings.Default.RandomizeBelts}");
-                sw.WriteLine($"Blasters,{(RandomizationLevel)Properties.Settings.Default.RandomizeBlasters}");
-                sw.WriteLine($"Creature Hides,{(RandomizationLevel)Properties.Settings.Default.RandomizeHides}");
-                sw.WriteLine($"Creature Weapons,{(RandomizationLevel)Properties.Settings.Default.RandomizeCreature}");
-                sw.WriteLine($"Droid Equipment,{(RandomizationLevel)Properties.Settings.Default.RandomizeDroid}");
-                sw.WriteLine($"Gauntlets,{(RandomizationLevel)Properties.Settings.Default.RandomizeGloves}");
-                sw.WriteLine($"Grenades,{(RandomizationLevel)Properties.Settings.Default.RandomizeGrenades}");
-                sw.WriteLine($"Implants,{(RandomizationLevel)Properties.Settings.Default.RandomizeImplants}");
-                sw.WriteLine($"Lightsabers,{(RandomizationLevel)Properties.Settings.Default.RandomizeLightsabers}");
-                sw.WriteLine($"Masks,{(RandomizationLevel)Properties.Settings.Default.RandomizeMask}");
-                sw.WriteLine($"Melee Weapons,{(RandomizationLevel)Properties.Settings.Default.RandomizeMelee}");
-                sw.WriteLine($"Mines,{(RandomizationLevel)Properties.Settings.Default.RandomizeMines}");
-                sw.WriteLine($"Pazaak Cards,{(RandomizationLevel)Properties.Settings.Default.RandomizePaz}");
-                sw.WriteLine($"Stims/Medpacs,{(RandomizationLevel)Properties.Settings.Default.RandomizeStims}");
-                sw.WriteLine($"Upgrades/Crystals,{(RandomizationLevel)Properties.Settings.Default.RandomizeUpgrade}");
-                sw.WriteLine($"Various,{(RandomizationLevel)Properties.Settings.Default.RandomizeVarious}");
+                sw.WriteLine($"Armbands,{Properties.Settings.Default.RandomizeArmbands}");
+                sw.WriteLine($"Armor,{Properties.Settings.Default.RandomizeArmor}");
+                sw.WriteLine($"Belts,{Properties.Settings.Default.RandomizeBelts}");
+                sw.WriteLine($"Blasters,{Properties.Settings.Default.RandomizeBlasters}");
+                sw.WriteLine($"Creature Hides,{Properties.Settings.Default.RandomizeHides}");
+                sw.WriteLine($"Creature Weapons,{Properties.Settings.Default.RandomizeCreature}");
+                sw.WriteLine($"Droid Equipment,{Properties.Settings.Default.RandomizeDroid}");
+                sw.WriteLine($"Gauntlets,{Properties.Settings.Default.RandomizeGloves}");
+                sw.WriteLine($"Grenades,{Properties.Settings.Default.RandomizeGrenades}");
+                sw.WriteLine($"Implants,{Properties.Settings.Default.RandomizeImplants}");
+                sw.WriteLine($"Lightsabers,{Properties.Settings.Default.RandomizeLightsabers}");
+                sw.WriteLine($"Masks,{Properties.Settings.Default.RandomizeMask}");
+                sw.WriteLine($"Melee Weapons,{Properties.Settings.Default.RandomizeMelee}");
+                sw.WriteLine($"Mines,{Properties.Settings.Default.RandomizeMines}");
+                sw.WriteLine($"Pazaak Cards,{Properties.Settings.Default.RandomizePaz}");
+                sw.WriteLine($"Stims/Medpacs,{Properties.Settings.Default.RandomizeStims}");
+                sw.WriteLine($"Upgrades/Crystals,{Properties.Settings.Default.RandomizeUpgrade}");
+                sw.WriteLine($"Various,{Properties.Settings.Default.RandomizeVarious}");
                 sw.WriteLine();
 
                 sw.WriteLine("Omitted Items");
@@ -238,24 +238,24 @@ namespace kotor_Randomizer_2
 
             var settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Armbands", ((RandomizationLevel)Properties.Settings.Default.RandomizeArmbands).ToString()),
-                new Tuple<string, string>("Armor", ((RandomizationLevel)Properties.Settings.Default.RandomizeArmor).ToString()),
-                new Tuple<string, string>("Belts", ((RandomizationLevel)Properties.Settings.Default.RandomizeBelts).ToString()),
-                new Tuple<string, string>("Blasters", ((RandomizationLevel)Properties.Settings.Default.RandomizeBlasters).ToString()),
-                new Tuple<string, string>("Creature Hides", ((RandomizationLevel)Properties.Settings.Default.RandomizeHides).ToString()),
-                new Tuple<string, string>("Creature Weapons", ((RandomizationLevel)Properties.Settings.Default.RandomizeCreature).ToString()),
-                new Tuple<string, string>("Droid Equipment", ((RandomizationLevel)Properties.Settings.Default.RandomizeDroid).ToString()),
-                new Tuple<string, string>("Gauntlets", ((RandomizationLevel)Properties.Settings.Default.RandomizeGloves).ToString()),
-                new Tuple<string, string>("Grenades", ((RandomizationLevel)Properties.Settings.Default.RandomizeGrenades).ToString()),
-                new Tuple<string, string>("Implants", ((RandomizationLevel)Properties.Settings.Default.RandomizeImplants).ToString()),
-                new Tuple<string, string>("Lightsabers", ((RandomizationLevel)Properties.Settings.Default.RandomizeLightsabers).ToString()),
-                new Tuple<string, string>("Masks", ((RandomizationLevel)Properties.Settings.Default.RandomizeMask).ToString()),
-                new Tuple<string, string>("Melee Weapons", ((RandomizationLevel)Properties.Settings.Default.RandomizeMelee).ToString()),
-                new Tuple<string, string>("Mines", ((RandomizationLevel)Properties.Settings.Default.RandomizeMines).ToString()),
-                new Tuple<string, string>("Pazaak Cards", ((RandomizationLevel)Properties.Settings.Default.RandomizePaz).ToString()),
-                new Tuple<string, string>("Stims/Medpacs", ((RandomizationLevel)Properties.Settings.Default.RandomizeStims).ToString()),
-                new Tuple<string, string>("Upgrades/Crystals", ((RandomizationLevel)Properties.Settings.Default.RandomizeUpgrade).ToString()),
-                new Tuple<string, string>("Various", ((RandomizationLevel)Properties.Settings.Default.RandomizeVarious).ToString()),
+                new Tuple<string, string>("Armbands", Properties.Settings.Default.RandomizeArmbands.ToString()),
+                new Tuple<string, string>("Armor", Properties.Settings.Default.RandomizeArmor.ToString()),
+                new Tuple<string, string>("Belts", Properties.Settings.Default.RandomizeBelts.ToString()),
+                new Tuple<string, string>("Blasters", Properties.Settings.Default.RandomizeBlasters.ToString()),
+                new Tuple<string, string>("Creature Hides", Properties.Settings.Default.RandomizeHides.ToString()),
+                new Tuple<string, string>("Creature Weapons", Properties.Settings.Default.RandomizeCreature.ToString()),
+                new Tuple<string, string>("Droid Equipment", Properties.Settings.Default.RandomizeDroid.ToString()),
+                new Tuple<string, string>("Gauntlets", Properties.Settings.Default.RandomizeGloves.ToString()),
+                new Tuple<string, string>("Grenades", Properties.Settings.Default.RandomizeGrenades.ToString()),
+                new Tuple<string, string>("Implants", Properties.Settings.Default.RandomizeImplants.ToString()),
+                new Tuple<string, string>("Lightsabers", Properties.Settings.Default.RandomizeLightsabers.ToString()),
+                new Tuple<string, string>("Masks", Properties.Settings.Default.RandomizeMask.ToString()),
+                new Tuple<string, string>("Melee Weapons", Properties.Settings.Default.RandomizeMelee.ToString()),
+                new Tuple<string, string>("Mines", Properties.Settings.Default.RandomizeMines.ToString()),
+                new Tuple<string, string>("Pazaak Cards", Properties.Settings.Default.RandomizePaz.ToString()),
+                new Tuple<string, string>("Stims/Medpacs", Properties.Settings.Default.RandomizeStims.ToString()),
+                new Tuple<string, string>("Upgrades/Crystals", Properties.Settings.Default.RandomizeUpgrade.ToString()),
+                new Tuple<string, string>("Various", Properties.Settings.Default.RandomizeVarious.ToString()),
             };
 
             foreach (var setting in settings)

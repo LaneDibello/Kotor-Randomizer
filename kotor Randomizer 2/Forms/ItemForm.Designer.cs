@@ -393,6 +393,7 @@
             this.rbArmorSType.TabStop = true;
             this.rbArmorSType.Text = "Subtype";
             this.rbArmorSType.UseVisualStyleBackColor = true;
+            this.rbArmorSType.CheckedChanged += new System.EventHandler(this.rbArmorSType_CheckedChanged);
             // 
             // rbArmorType
             // 
@@ -403,6 +404,7 @@
             this.rbArmorType.TabIndex = 0;
             this.rbArmorType.Text = "Type";
             this.rbArmorType.UseVisualStyleBackColor = true;
+            this.rbArmorType.CheckedChanged += new System.EventHandler(this.rbArmorType_CheckedChanged);
             // 
             // rbArmorMax
             // 
@@ -415,6 +417,7 @@
             this.rbArmorMax.TabStop = true;
             this.rbArmorMax.Text = "Max";
             this.rbArmorMax.UseVisualStyleBackColor = true;
+            this.rbArmorMax.CheckedChanged += new System.EventHandler(this.rbArmorMax_CheckedChanged);
             // 
             // flpStims
             // 
@@ -442,6 +445,7 @@
             this.rbStimSType.TabStop = true;
             this.rbStimSType.Text = "Subtype";
             this.rbStimSType.UseVisualStyleBackColor = true;
+            this.rbStimSType.CheckedChanged += new System.EventHandler(this.rbStimSType_CheckedChanged);
             // 
             // rbStimulantType
             // 
@@ -452,6 +456,7 @@
             this.rbStimulantType.TabIndex = 0;
             this.rbStimulantType.Text = "Type";
             this.rbStimulantType.UseVisualStyleBackColor = true;
+            this.rbStimulantType.CheckedChanged += new System.EventHandler(this.rbStimulantType_CheckedChanged);
             // 
             // rbStimulantMax
             // 
@@ -464,6 +469,7 @@
             this.rbStimulantMax.TabStop = true;
             this.rbStimulantMax.Text = "Max";
             this.rbStimulantMax.UseVisualStyleBackColor = true;
+            this.rbStimulantMax.CheckedChanged += new System.EventHandler(this.rbStimulantMax_CheckedChanged);
             // 
             // flpBelts
             // 
@@ -500,6 +506,7 @@
             this.rbBeltType.TabIndex = 0;
             this.rbBeltType.Text = "Type";
             this.rbBeltType.UseVisualStyleBackColor = true;
+            this.rbBeltType.CheckedChanged += new System.EventHandler(this.rbBeltType_CheckedChanged);
             // 
             // rbBeltMax
             // 
@@ -512,6 +519,7 @@
             this.rbBeltMax.TabStop = true;
             this.rbBeltMax.Text = "Max";
             this.rbBeltMax.UseVisualStyleBackColor = true;
+            this.rbBeltMax.CheckedChanged += new System.EventHandler(this.rbBeltMax_CheckedChanged);
             // 
             // flpVarious
             // 
@@ -548,6 +556,7 @@
             this.rbVariousType.TabIndex = 0;
             this.rbVariousType.Text = "Type";
             this.rbVariousType.UseVisualStyleBackColor = true;
+            this.rbVariousType.CheckedChanged += new System.EventHandler(this.rbVariousType_CheckedChanged);
             // 
             // rbVariousMax
             // 
@@ -560,6 +569,7 @@
             this.rbVariousMax.TabStop = true;
             this.rbVariousMax.Text = "Max";
             this.rbVariousMax.UseVisualStyleBackColor = true;
+            this.rbVariousMax.CheckedChanged += new System.EventHandler(this.rbVariousMax_CheckedChanged);
             // 
             // flpDroid
             // 
@@ -587,6 +597,7 @@
             this.rbDroidSType.TabStop = true;
             this.rbDroidSType.Text = "Subtype";
             this.rbDroidSType.UseVisualStyleBackColor = true;
+            this.rbDroidSType.CheckedChanged += new System.EventHandler(this.rbDroidSType_CheckedChanged);
             // 
             // rbDroidType
             // 
@@ -597,6 +608,7 @@
             this.rbDroidType.TabIndex = 0;
             this.rbDroidType.Text = "Type";
             this.rbDroidType.UseVisualStyleBackColor = true;
+            this.rbDroidType.CheckedChanged += new System.EventHandler(this.rbDroidType_CheckedChanged);
             // 
             // rbDroidMax
             // 
@@ -609,6 +621,7 @@
             this.rbDroidMax.TabStop = true;
             this.rbDroidMax.Text = "Max";
             this.rbDroidMax.UseVisualStyleBackColor = true;
+            this.rbDroidMax.CheckedChanged += new System.EventHandler(this.rbDroidMax_CheckedChanged);
             // 
             // flpArmbands
             // 
@@ -636,6 +649,7 @@
             this.rbArmbandSType.TabStop = true;
             this.rbArmbandSType.Text = "Subtype";
             this.rbArmbandSType.UseVisualStyleBackColor = true;
+            this.rbArmbandSType.CheckedChanged += new System.EventHandler(this.rbArmbandSType_CheckedChanged);
             // 
             // rbArmbandType
             // 
@@ -648,6 +662,7 @@
             this.rbArmbandType.TabStop = true;
             this.rbArmbandType.Text = "Type";
             this.rbArmbandType.UseVisualStyleBackColor = true;
+            this.rbArmbandType.CheckedChanged += new System.EventHandler(this.rbArmbandType_CheckedChanged);
             // 
             // rbArmbandMax
             // 
@@ -658,6 +673,7 @@
             this.rbArmbandMax.TabIndex = 1;
             this.rbArmbandMax.Text = "Max";
             this.rbArmbandMax.UseVisualStyleBackColor = true;
+            this.rbArmbandMax.CheckedChanged += new System.EventHandler(this.rbArmbandMax_CheckedChanged);
             // 
             // flpGloves
             // 
@@ -694,6 +710,7 @@
             this.rbGloveType.TabIndex = 0;
             this.rbGloveType.Text = "Type";
             this.rbGloveType.UseVisualStyleBackColor = true;
+            this.rbGloveType.CheckedChanged += new System.EventHandler(this.rbGloveType_CheckedChanged);
             // 
             // rbGloveMax
             // 
@@ -706,6 +723,7 @@
             this.rbGloveMax.TabStop = true;
             this.rbGloveMax.Text = "Max";
             this.rbGloveMax.UseVisualStyleBackColor = true;
+            this.rbGloveMax.CheckedChanged += new System.EventHandler(this.rbGloveMax_CheckedChanged);
             // 
             // flpImplants
             // 
@@ -733,6 +751,7 @@
             this.rbImplantSType.TabStop = true;
             this.rbImplantSType.Text = "Subtype";
             this.rbImplantSType.UseVisualStyleBackColor = true;
+            this.rbImplantSType.CheckedChanged += new System.EventHandler(this.rbImplantSType_CheckedChanged);
             // 
             // rbImplantType
             // 
@@ -743,6 +762,7 @@
             this.rbImplantType.TabIndex = 0;
             this.rbImplantType.Text = "Type";
             this.rbImplantType.UseVisualStyleBackColor = true;
+            this.rbImplantType.CheckedChanged += new System.EventHandler(this.rbImplantType_CheckedChanged);
             // 
             // rbImplantMax
             // 
@@ -755,6 +775,7 @@
             this.rbImplantMax.TabStop = true;
             this.rbImplantMax.Text = "Max";
             this.rbImplantMax.UseVisualStyleBackColor = true;
+            this.rbImplantMax.CheckedChanged += new System.EventHandler(this.rbImplantMax_CheckedChanged);
             // 
             // flpMasks
             // 
@@ -782,6 +803,7 @@
             this.rbMaskSType.TabStop = true;
             this.rbMaskSType.Text = "Subtype";
             this.rbMaskSType.UseVisualStyleBackColor = true;
+            this.rbMaskSType.CheckedChanged += new System.EventHandler(this.rbMaskSType_CheckedChanged);
             // 
             // rbMaskType
             // 
@@ -792,6 +814,7 @@
             this.rbMaskType.TabIndex = 0;
             this.rbMaskType.Text = "Type";
             this.rbMaskType.UseVisualStyleBackColor = true;
+            this.rbMaskType.CheckedChanged += new System.EventHandler(this.rbMaskType_CheckedChanged);
             // 
             // rbMaskMax
             // 
@@ -804,6 +827,7 @@
             this.rbMaskMax.TabStop = true;
             this.rbMaskMax.Text = "Max";
             this.rbMaskMax.UseVisualStyleBackColor = true;
+            this.rbMaskMax.CheckedChanged += new System.EventHandler(this.rbMaskMax_CheckedChanged);
             // 
             // flpPaz
             // 
@@ -840,6 +864,7 @@
             this.rbPazaakType.TabIndex = 0;
             this.rbPazaakType.Text = "Type";
             this.rbPazaakType.UseVisualStyleBackColor = true;
+            this.rbPazaakType.CheckedChanged += new System.EventHandler(this.rbPazaakType_CheckedChanged);
             // 
             // rbPazaakMax
             // 
@@ -852,6 +877,7 @@
             this.rbPazaakMax.TabStop = true;
             this.rbPazaakMax.Text = "Max";
             this.rbPazaakMax.UseVisualStyleBackColor = true;
+            this.rbPazaakMax.CheckedChanged += new System.EventHandler(this.rbPazaakMax_CheckedChanged);
             // 
             // flpMines
             // 
@@ -879,6 +905,7 @@
             this.rbMineSType.TabStop = true;
             this.rbMineSType.Text = "Subtype";
             this.rbMineSType.UseVisualStyleBackColor = true;
+            this.rbMineSType.CheckedChanged += new System.EventHandler(this.rbMineSType_CheckedChanged);
             // 
             // rbMineType
             // 
@@ -889,6 +916,7 @@
             this.rbMineType.TabIndex = 0;
             this.rbMineType.Text = "Type";
             this.rbMineType.UseVisualStyleBackColor = true;
+            this.rbMineType.CheckedChanged += new System.EventHandler(this.rbMineType_CheckedChanged);
             // 
             // rbMineMax
             // 
@@ -901,6 +929,7 @@
             this.rbMineMax.TabStop = true;
             this.rbMineMax.Text = "Max";
             this.rbMineMax.UseVisualStyleBackColor = true;
+            this.rbMineMax.CheckedChanged += new System.EventHandler(this.rbMineMax_CheckedChanged);
             // 
             // flpUpgrades
             // 
@@ -928,6 +957,7 @@
             this.rbUpgradeSType.TabStop = true;
             this.rbUpgradeSType.Text = "Subtype";
             this.rbUpgradeSType.UseVisualStyleBackColor = true;
+            this.rbUpgradeSType.CheckedChanged += new System.EventHandler(this.rbUpgradeSType_CheckedChanged);
             // 
             // rbUpgradeType
             // 
@@ -938,6 +968,7 @@
             this.rbUpgradeType.TabIndex = 0;
             this.rbUpgradeType.Text = "Type";
             this.rbUpgradeType.UseVisualStyleBackColor = true;
+            this.rbUpgradeType.CheckedChanged += new System.EventHandler(this.rbUpgradeType_CheckedChanged);
             // 
             // rbUpgradeMax
             // 
@@ -950,6 +981,7 @@
             this.rbUpgradeMax.TabStop = true;
             this.rbUpgradeMax.Text = "Max";
             this.rbUpgradeMax.UseVisualStyleBackColor = true;
+            this.rbUpgradeMax.CheckedChanged += new System.EventHandler(this.rbUpgradeMax_CheckedChanged);
             // 
             // flpBlasters
             // 
@@ -977,6 +1009,7 @@
             this.rbBlasterSType.TabStop = true;
             this.rbBlasterSType.Text = "Subtype";
             this.rbBlasterSType.UseVisualStyleBackColor = true;
+            this.rbBlasterSType.CheckedChanged += new System.EventHandler(this.rbBlasterSType_CheckedChanged);
             // 
             // rbBlasterType
             // 
@@ -987,6 +1020,7 @@
             this.rbBlasterType.TabIndex = 0;
             this.rbBlasterType.Text = "Type";
             this.rbBlasterType.UseVisualStyleBackColor = true;
+            this.rbBlasterType.CheckedChanged += new System.EventHandler(this.rbBlasterType_CheckedChanged);
             // 
             // rbBlasterMax
             // 
@@ -999,6 +1033,7 @@
             this.rbBlasterMax.TabStop = true;
             this.rbBlasterMax.Text = "Max";
             this.rbBlasterMax.UseVisualStyleBackColor = true;
+            this.rbBlasterMax.CheckedChanged += new System.EventHandler(this.rbBlasterMax_CheckedChanged);
             // 
             // flpCreature
             // 
@@ -1026,6 +1061,7 @@
             this.rbCreatureWeaponSType.TabStop = true;
             this.rbCreatureWeaponSType.Text = "Subtype";
             this.rbCreatureWeaponSType.UseVisualStyleBackColor = true;
+            this.rbCreatureWeaponSType.CheckedChanged += new System.EventHandler(this.rbCreatureWeaponSType_CheckedChanged);
             // 
             // rbCreatureWeaponType
             // 
@@ -1036,6 +1072,7 @@
             this.rbCreatureWeaponType.TabIndex = 0;
             this.rbCreatureWeaponType.Text = "Type";
             this.rbCreatureWeaponType.UseVisualStyleBackColor = true;
+            this.rbCreatureWeaponType.CheckedChanged += new System.EventHandler(this.rbCreatureWeaponType_CheckedChanged);
             // 
             // rbCreatureWeaponMax
             // 
@@ -1048,6 +1085,7 @@
             this.rbCreatureWeaponMax.TabStop = true;
             this.rbCreatureWeaponMax.Text = "Max";
             this.rbCreatureWeaponMax.UseVisualStyleBackColor = true;
+            this.rbCreatureWeaponMax.CheckedChanged += new System.EventHandler(this.rbCreatureWeaponMax_CheckedChanged);
             // 
             // flpLightsabers
             // 
@@ -1075,6 +1113,7 @@
             this.rbLightsaberSType.TabStop = true;
             this.rbLightsaberSType.Text = "Subtype";
             this.rbLightsaberSType.UseVisualStyleBackColor = true;
+            this.rbLightsaberSType.CheckedChanged += new System.EventHandler(this.rbLightsaberSType_CheckedChanged);
             // 
             // rbLightsaberType
             // 
@@ -1085,6 +1124,7 @@
             this.rbLightsaberType.TabIndex = 0;
             this.rbLightsaberType.Text = "Type";
             this.rbLightsaberType.UseVisualStyleBackColor = true;
+            this.rbLightsaberType.CheckedChanged += new System.EventHandler(this.rbLightsaberType_CheckedChanged);
             // 
             // rbLightsaberMax
             // 
@@ -1097,6 +1137,7 @@
             this.rbLightsaberMax.TabStop = true;
             this.rbLightsaberMax.Text = "Max";
             this.rbLightsaberMax.UseVisualStyleBackColor = true;
+            this.rbLightsaberMax.CheckedChanged += new System.EventHandler(this.rbLightsaberMax_CheckedChanged);
             // 
             // flpGrenades
             // 
@@ -1133,6 +1174,7 @@
             this.rbGrenadeType.TabIndex = 0;
             this.rbGrenadeType.Text = "Type";
             this.rbGrenadeType.UseVisualStyleBackColor = true;
+            this.rbGrenadeType.CheckedChanged += new System.EventHandler(this.rbGrenadeType_CheckedChanged);
             // 
             // rbGrenadeMax
             // 
@@ -1145,6 +1187,7 @@
             this.rbGrenadeMax.TabStop = true;
             this.rbGrenadeMax.Text = "Max";
             this.rbGrenadeMax.UseVisualStyleBackColor = true;
+            this.rbGrenadeMax.CheckedChanged += new System.EventHandler(this.rbGrenadeMax_CheckedChanged);
             // 
             // flpMelee
             // 
@@ -1172,6 +1215,7 @@
             this.rbMeleeSType.TabStop = true;
             this.rbMeleeSType.Text = "Subtype";
             this.rbMeleeSType.UseVisualStyleBackColor = true;
+            this.rbMeleeSType.CheckedChanged += new System.EventHandler(this.rbMeleeSType_CheckedChanged);
             // 
             // rbMeleeType
             // 
@@ -1182,6 +1226,7 @@
             this.rbMeleeType.TabIndex = 0;
             this.rbMeleeType.Text = "Type";
             this.rbMeleeType.UseVisualStyleBackColor = true;
+            this.rbMeleeType.CheckedChanged += new System.EventHandler(this.rbMeleeType_CheckedChanged);
             // 
             // rbMeleeMax
             // 
@@ -1194,6 +1239,7 @@
             this.rbMeleeMax.TabStop = true;
             this.rbMeleeMax.Text = "Max";
             this.rbMeleeMax.UseVisualStyleBackColor = true;
+            this.rbMeleeMax.CheckedChanged += new System.EventHandler(this.rbMeleeMax_CheckedChanged);
             // 
             // cbCreatureHide
             // 
@@ -1243,6 +1289,7 @@
             this.rbCreatureHideType.TabIndex = 0;
             this.rbCreatureHideType.Text = "Type";
             this.rbCreatureHideType.UseVisualStyleBackColor = true;
+            this.rbCreatureHideType.CheckedChanged += new System.EventHandler(this.rbCreatureHideType_CheckedChanged);
             // 
             // rbCreatureHideMax
             // 
@@ -1255,6 +1302,7 @@
             this.rbCreatureHideMax.TabStop = true;
             this.rbCreatureHideMax.Text = "Max";
             this.rbCreatureHideMax.UseVisualStyleBackColor = true;
+            this.rbCreatureHideMax.CheckedChanged += new System.EventHandler(this.rbCreatureHideMax_CheckedChanged);
             // 
             // lblOmitted
             // 

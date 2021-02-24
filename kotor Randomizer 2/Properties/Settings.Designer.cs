@@ -265,10 +265,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeArmor {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeArmor {
             get {
-                return ((int)(this["RandomizeArmor"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeArmor"]));
             }
             set {
                 this["RandomizeArmor"] = value;
@@ -277,10 +277,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeStims {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeStims {
             get {
-                return ((int)(this["RandomizeStims"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeStims"]));
             }
             set {
                 this["RandomizeStims"] = value;
@@ -289,10 +289,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeBelts {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeBelts {
             get {
-                return ((int)(this["RandomizeBelts"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeBelts"]));
             }
             set {
                 this["RandomizeBelts"] = value;
@@ -301,10 +301,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeVarious {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeVarious {
             get {
-                return ((int)(this["RandomizeVarious"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeVarious"]));
             }
             set {
                 this["RandomizeVarious"] = value;
@@ -313,10 +313,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeHides {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeHides {
             get {
-                return ((int)(this["RandomizeHides"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeHides"]));
             }
             set {
                 this["RandomizeHides"] = value;
@@ -325,10 +325,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeArmbands {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeArmbands {
             get {
-                return ((int)(this["RandomizeArmbands"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeArmbands"]));
             }
             set {
                 this["RandomizeArmbands"] = value;
@@ -337,10 +337,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeDroid {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeDroid {
             get {
-                return ((int)(this["RandomizeDroid"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeDroid"]));
             }
             set {
                 this["RandomizeDroid"] = value;
@@ -349,10 +349,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeGloves {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeGloves {
             get {
-                return ((int)(this["RandomizeGloves"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeGloves"]));
             }
             set {
                 this["RandomizeGloves"] = value;
@@ -361,10 +361,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeImplants {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeImplants {
             get {
-                return ((int)(this["RandomizeImplants"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeImplants"]));
             }
             set {
                 this["RandomizeImplants"] = value;
@@ -373,10 +373,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeMask {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeMask {
             get {
-                return ((int)(this["RandomizeMask"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeMask"]));
             }
             set {
                 this["RandomizeMask"] = value;
@@ -385,10 +385,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizePaz {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizePaz {
             get {
-                return ((int)(this["RandomizePaz"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizePaz"]));
             }
             set {
                 this["RandomizePaz"] = value;
@@ -397,10 +397,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeMines {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeMines {
             get {
-                return ((int)(this["RandomizeMines"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeMines"]));
             }
             set {
                 this["RandomizeMines"] = value;
@@ -409,10 +409,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeUpgrade {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeUpgrade {
             get {
-                return ((int)(this["RandomizeUpgrade"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeUpgrade"]));
             }
             set {
                 this["RandomizeUpgrade"] = value;
@@ -421,10 +421,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeBlasters {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeBlasters {
             get {
-                return ((int)(this["RandomizeBlasters"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeBlasters"]));
             }
             set {
                 this["RandomizeBlasters"] = value;
@@ -433,10 +433,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeCreature {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeCreature {
             get {
-                return ((int)(this["RandomizeCreature"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeCreature"]));
             }
             set {
                 this["RandomizeCreature"] = value;
@@ -445,10 +445,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeLightsabers {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeLightsabers {
             get {
-                return ((int)(this["RandomizeLightsabers"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeLightsabers"]));
             }
             set {
                 this["RandomizeLightsabers"] = value;
@@ -457,10 +457,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeGrenades {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeGrenades {
             get {
-                return ((int)(this["RandomizeGrenades"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeGrenades"]));
             }
             set {
                 this["RandomizeGrenades"] = value;
@@ -469,10 +469,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeMelee {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeMelee {
             get {
-                return ((int)(this["RandomizeMelee"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeMelee"]));
             }
             set {
                 this["RandomizeMelee"] = value;

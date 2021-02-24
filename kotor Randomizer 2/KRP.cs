@@ -112,24 +112,24 @@ namespace kotor_Randomizer_2
                         if (new string(br.ReadChars(4)) != "ITEM") { throw new IOException("Item Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
 
                         // Load in randolevels
-                        Properties.Settings.Default.RandomizeArmor = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeStims = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeBelts = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeVarious = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeHides = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeArmbands = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeDroid = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeGloves = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeImplants = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeMask = br.ReadInt32();
-                        Properties.Settings.Default.RandomizePaz = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeMines = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeUpgrade = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeBlasters = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeCreature = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeLightsabers = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeGrenades = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeMelee = br.ReadInt32();
+                        Properties.Settings.Default.RandomizeArmor       = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeStims       = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeBelts       = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeVarious     = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeHides       = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeArmbands    = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeDroid       = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeGloves      = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeImplants    = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeMask        = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizePaz         = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeMines       = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeUpgrade     = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeBlasters    = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeCreature    = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeLightsabers = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeGrenades    = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeMelee       = (RandomizationLevel)br.ReadInt32();
 
                         // Load Omit Items
                         Globals.OmitItems.Clear();
@@ -361,24 +361,24 @@ namespace kotor_Randomizer_2
                 {
                     bw.Write("ITEM".ToCharArray());
 
-                    bw.Write(Properties.Settings.Default.RandomizeArmor);
-                    bw.Write(Properties.Settings.Default.RandomizeStims);
-                    bw.Write(Properties.Settings.Default.RandomizeBelts);
-                    bw.Write(Properties.Settings.Default.RandomizeVarious);
-                    bw.Write(Properties.Settings.Default.RandomizeHides);
-                    bw.Write(Properties.Settings.Default.RandomizeArmbands);
-                    bw.Write(Properties.Settings.Default.RandomizeDroid);
-                    bw.Write(Properties.Settings.Default.RandomizeGloves);
-                    bw.Write(Properties.Settings.Default.RandomizeImplants);
-                    bw.Write(Properties.Settings.Default.RandomizeMask);
-                    bw.Write(Properties.Settings.Default.RandomizePaz);
-                    bw.Write(Properties.Settings.Default.RandomizeMines);
-                    bw.Write(Properties.Settings.Default.RandomizeUpgrade);
-                    bw.Write(Properties.Settings.Default.RandomizeBlasters);
-                    bw.Write(Properties.Settings.Default.RandomizeCreature);
-                    bw.Write(Properties.Settings.Default.RandomizeLightsabers);
-                    bw.Write(Properties.Settings.Default.RandomizeGrenades);
-                    bw.Write(Properties.Settings.Default.RandomizeMelee);
+                    bw.Write((int)Properties.Settings.Default.RandomizeArmor);
+                    bw.Write((int)Properties.Settings.Default.RandomizeStims);
+                    bw.Write((int)Properties.Settings.Default.RandomizeBelts);
+                    bw.Write((int)Properties.Settings.Default.RandomizeVarious);
+                    bw.Write((int)Properties.Settings.Default.RandomizeHides);
+                    bw.Write((int)Properties.Settings.Default.RandomizeArmbands);
+                    bw.Write((int)Properties.Settings.Default.RandomizeDroid);
+                    bw.Write((int)Properties.Settings.Default.RandomizeGloves);
+                    bw.Write((int)Properties.Settings.Default.RandomizeImplants);
+                    bw.Write((int)Properties.Settings.Default.RandomizeMask);
+                    bw.Write((int)Properties.Settings.Default.RandomizePaz);
+                    bw.Write((int)Properties.Settings.Default.RandomizeMines);
+                    bw.Write((int)Properties.Settings.Default.RandomizeUpgrade);
+                    bw.Write((int)Properties.Settings.Default.RandomizeBlasters);
+                    bw.Write((int)Properties.Settings.Default.RandomizeCreature);
+                    bw.Write((int)Properties.Settings.Default.RandomizeLightsabers);
+                    bw.Write((int)Properties.Settings.Default.RandomizeGrenades);
+                    bw.Write((int)Properties.Settings.Default.RandomizeMelee);
 
                     foreach (string st in Globals.OmitItems)
                     {
