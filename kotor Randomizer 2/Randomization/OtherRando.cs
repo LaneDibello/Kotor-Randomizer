@@ -23,7 +23,20 @@ namespace kotor_Randomizer_2
         private const string NAME_GEN_FEMALE = "female";
         private const string NAME_GEN_LAST = "last";
 
-        // The ResRefs of the swoop races.
+        /// <summary>
+        /// The ResRefs of UTC files that are invalid as party members.
+        /// </summary>
+        private static readonly List<string> InvalidPartyMembers = new List<string>()
+        {
+            "c_drdg",
+            "c_sebulba",
+            "g_cheatbot",
+            "partymember",
+        };
+
+        /// <summary>
+        /// The ResRefs of the swoop races.
+        /// </summary>
         private static readonly List<string> swoopLayouts = new List<string>()
         {
             LYT_SWOOP_TARIS,
@@ -31,7 +44,9 @@ namespace kotor_Randomizer_2
             LYT_SWOOP_MANAAN,
         };
 
-        //List of Tuples matching each party member's various identifying data (item1 : dialogue file, item2 : file name/ResRef, item3 : Scripting Tag)
+        /// <summary>
+        /// List of Tuples matching each party member's various identifying data (item1 : dialogue file, item2 : file name/ResRef, item3 : Scripting Tag)
+        /// </summary>
         private static readonly List<Tuple<string, string, string>> Party_IDs = new List<Tuple<string, string, string>>()
         {
             new Tuple<string, string, string>("k_hbas_dialog", "p_bastilla", "Bastila"),
@@ -207,7 +222,7 @@ namespace kotor_Randomizer_2
             }
 
             // Party Rando
-            if (Properties.Settings.Default.RandomizePartyMembers) //ADD SETTING
+            if (Properties.Settings.Default.RandomizePartyMembers)
             {
                 BIF b = new BIF(paths.data + "templates.bif");
                 KEY k = new KEY(paths.chitin_backup);
@@ -215,20 +230,47 @@ namespace kotor_Randomizer_2
 
                 foreach (var ID in Party_IDs)
                 {
-                    //Find a creature that isn't the party member
-                    var resource = b.VariableResourceTable.Where(x => x.ResRef != ID.Item2 && x.ResourceType == ResourceType.UTC).ToList()[Randomize.Rng.Next(155)];
+                    // Find a creature that isn't this party member
+                    var charsList = b.VariableResourceTable.Where(x => x.ResourceType == ResourceType.UTC).ToList();
+                    var character = charsList.First(x => x.ResRef == ID.Item2);
+                    BIF.VariableResourceEntry resource;
+                    GFF g;
+
+                    do
+                    {
+                        int randoIndex = Randomize.Rng.Next(charsList.Count);
+                        resource = charsList[randoIndex];
+                        if (resource.ResRef != character.ResRef && !InvalidPartyMembers.Contains(resource.ResRef))
+                        {
+                            // Potentially valid party member. Check against broken and large characters.
+                            g = new GFF(resource.EntryData);
+                            var appearance = g.Top_Level.Fields.First(x => x.Label == ModelRando.LBL_APPEARANCE_TYPE) as GFF.WORD;
+
+                            if (!Globals.BROKEN_CHARS.Contains(appearance.Value) && !Globals.LARGE_CHARS.Contains(appearance.Value))
+                                break; // Character is valid.
+                        }
+
+                        // Character is invalid, broken, or large. Skip it.
+                        Console.WriteLine($"Skipped invalid party member ({resource.ResRef}) when randomizing {ID.Item2}.");
+                    }
+                    while (true);
+
                     PartyLookupTable.Add(ID.Item3, resource.ResRef);
 
-                    GFF g = new GFF(resource.EntryData);
+                    GFF gOld = new GFF(character.EntryData);
+                    ushort portraitId = (gOld.Top_Level.Fields.Where(x => x.Label == "PortraitId").FirstOrDefault() as GFF.WORD)?.Value ?? 0;
 
-                    //Turns Creature File into a playable companion replacing the current party member
+                    // Turns creature file into a playable companion replacing the current party member.
                     (g.Top_Level.Fields.Where(x => x.Label == "Conversation").FirstOrDefault() as GFF.ResRef).Reference = ID.Item1;
                     (g.Top_Level.Fields.Where(x => x.Label == "Tag").FirstOrDefault() as GFF.CExoString).CEString = ID.Item3;
                     (g.Top_Level.Fields.Where(x => x.Label == "TemplateResRef").FirstOrDefault() as GFF.ResRef).Reference = ID.Item2;
                     (g.Top_Level.Fields.Where(x => x.Label == "NoPermDeath").FirstOrDefault() as GFF.BYTE).Value = 1;
                     (g.Top_Level.Fields.Where(x => x.Label == "FactionID").FirstOrDefault() as GFF.WORD).Value = 2;
 
-                    //Henchmen Script suite
+                    // Give new companion the old companion's portrait.
+                    if (g.Top_Level.Fields.Where(x => x.Label == "PortraitId").FirstOrDefault() is GFF.WORD field) field.Value = portraitId;
+
+                    // Henchmen script suite.
                     (g.Top_Level.Fields.Where(x => x.Label == "ScriptHeartbeat").FirstOrDefault() as GFF.ResRef).Reference = "k_hen_heartbt01";
                     (g.Top_Level.Fields.Where(x => x.Label == "ScriptOnNotice").FirstOrDefault() as GFF.ResRef).Reference = "k_hen_percept01";
                     (g.Top_Level.Fields.Where(x => x.Label == "ScriptSpellAt").FirstOrDefault() as GFF.ResRef).Reference = "";
@@ -244,11 +286,10 @@ namespace kotor_Randomizer_2
                     (g.Top_Level.Fields.Where(x => x.Label == "ScriptOnBlocked").FirstOrDefault() as GFF.ResRef).Reference = "k_hen_blocked01";
                     (g.Top_Level.Fields.Where(x => x.Label == "ScriptUserDefine").FirstOrDefault() as GFF.ResRef).Reference = "";
 
-                    //Add a Dummy Feat to prevent the feats menu from crashing
+                    // Add a Dummy Feat to prevent the feats menu from crashing.
                     (g.Top_Level.Fields.Where(x => x.Label == "FeatList").FirstOrDefault() as GFF.LIST).Structs.Add(new GFF.STRUCT("", 1, new List<GFF.FIELD>() {new GFF.WORD("Feat", 27) }));
 
                     g.WriteToFile(paths.Override + ID.Item2 + ".utc");
-
                 }
 
             }

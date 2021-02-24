@@ -15,15 +15,26 @@ namespace kotor_Randomizer_2
         /// </summary>
         private static Dictionary<string, Dictionary<string, Dictionary<string, Tuple<int, string, int, string>>>> LookupTable { get; set; } = new Dictionary<string, Dictionary<string, Dictionary<string, Tuple<int, string, int, string>>>>();
 
+        private const string CHARACTER = "Character";
+        private const string DOOR = "Door";
+        private const string PLACEABLE = "Placeable";
+
+        public const string LBL_LOC_NAME = "LocName";
+        public const string LBL_GENERIC_TYPE = "GenericType";
+        public const string LBL_APPEARANCE = "Appearance";
+        public const string LBL_APPEARANCE_TYPE = "Appearance_Type";
+
         public static void model_rando(KPaths paths)
         {
-            const string CHARACTER = "Character";
-            const string DOOR = "Door";
-            const string PLACEABLE = "Placeable";
+            const int MAX_CHAR_INDEX = 509;
+            const int MIN_DOOR_INDEX_BROKEN = 13;
+            const int MAX_DOOR_INDEX = 65;
+            const int MAX_PLAC_INDEX = 232;
 
             const string CHAR_2DA = "appearance";
             const string DOOR_2DA = "genericdoors";
             const string PLAC_2DA = "placeables";
+
             const string COL_LABEL = "label";
 
             LookupTable.Clear();
@@ -58,21 +69,21 @@ namespace kotor_Randomizer_2
 
                         if ((Properties.Settings.Default.RandomizeDoorModels & 4) > 0) // Broken Doors
                         {
-                            temp = Randomize.Rng.Next(13, 64); // First 12 doors are open so this is easier
+                            temp = Randomize.Rng.Next(MIN_DOOR_INDEX_BROKEN, MAX_DOOR_INDEX); // First 12 doors are open so this is easier
                         }
                         else
                         {
-                            temp = Randomize.Rng.Next(0, 64);
+                            temp = Randomize.Rng.Next(0, MAX_DOOR_INDEX);
                         }
 
                         // Airlock
                         if ((Properties.Settings.Default.RandomizeDoorModels & 2) > 0 &&
-                            (g.Field_Array.Where(x => x.Label == "LocName").FirstOrDefault().Field_Data as GFF_old.CExoLocString).StringRef == 21080)
+                            (g.Field_Array.Where(x => x.Label == LBL_LOC_NAME).FirstOrDefault().Field_Data as GFF_old.CExoLocString).StringRef == 21080)
                         {
                             continue;
                         }
 
-                        var field = g.Field_Array.Where(k => k.Label == "GenericType").FirstOrDefault();
+                        var field = g.Field_Array.Where(k => k.Label == LBL_GENERIC_TYPE).FirstOrDefault();
                         var id = BitConverter.ToInt32((byte[])field.Field_Data, 0);
 
                         var label_old = door2DA.Data[COL_LABEL][id];
@@ -80,8 +91,8 @@ namespace kotor_Randomizer_2
 
                         LookupTable[fi.Name][DOOR].Add(rf.Label, new Tuple<int, string, int, string>(id, label_old, temp, label_new));
 
-                        g.Field_Array.Where(k => k.Label == "GenericType").FirstOrDefault().Field_Data = temp;
-                        g.Field_Array.Where(k => k.Label == "GenericType").FirstOrDefault().DataOrDataOffset = temp;
+                        g.Field_Array.Where(k => k.Label == LBL_GENERIC_TYPE).FirstOrDefault().Field_Data = temp;
+                        g.Field_Array.Where(k => k.Label == LBL_GENERIC_TYPE).FirstOrDefault().DataOrDataOffset = temp;
 
                         rf.File_Data = g.ToRawData();
                     }
@@ -96,22 +107,21 @@ namespace kotor_Randomizer_2
                     {
                         GFF_old g = new GFF_old(rf.File_Data);
 
-                        if (Globals.BROKEN_PLACE.Contains(g.Field_Array.Where(k => k.Label == "Appearance").FirstOrDefault().DataOrDataOffset)) { continue; }
+                        if (Globals.BROKEN_PLACE.Contains(g.Field_Array.Where(k => k.Label == LBL_APPEARANCE).FirstOrDefault().DataOrDataOffset)) { continue; }
 
-                        int temp = Randomize.Rng.Next(0, 231);
+                        int temp = 0;
+                        bool isBroken = false;
+                        bool isLarge = false;
 
-                        bool broken_satisfied = !((Properties.Settings.Default.RandomizePlaceModels & 4) > 0) || !Globals.BROKEN_PLACE.Contains(temp);//Always Satisfied if Broken omission disbaled
-                        bool large_satisfied = !((Properties.Settings.Default.RandomizePlaceModels & 2) > 0) || !Globals.LARGE_PLACE.Contains(temp);//Always satisifed if Large omission disabled
-
-                        while (!(broken_satisfied && large_satisfied))
+                        do
                         {
-                            temp = Randomize.Rng.Next(0, 231);
-                            broken_satisfied = !((Properties.Settings.Default.RandomizePlaceModels & 4) > 0) || !Globals.BROKEN_PLACE.Contains(temp);//Always Satisfied if Broken omission disbaled
-                            large_satisfied = !((Properties.Settings.Default.RandomizePlaceModels & 2) > 0) || !Globals.LARGE_PLACE.Contains(temp);//Always satisifed if Large omission disabled
-
+                            temp = Randomize.Rng.Next(0, MAX_PLAC_INDEX);
+                            isBroken = ((Properties.Settings.Default.RandomizePlaceModels & 4) > 0) && Globals.BROKEN_PLACE.Contains(temp); // Always Satisfied if Broken omission disbaled
+                            isLarge  = ((Properties.Settings.Default.RandomizePlaceModels & 2) > 0) && Globals.LARGE_PLACE.Contains(temp);  // Always satisifed if Large omission disabled
                         }
+                        while (isBroken || isLarge);
 
-                        var field = g.Field_Array.Where(k => k.Label == "Appearance").FirstOrDefault();
+                        var field = g.Field_Array.Where(k => k.Label == LBL_APPEARANCE).FirstOrDefault();
                         var id = Convert.ToInt32(field.Field_Data);
 
                         var label_old = plac2DA.Data[COL_LABEL][id];
@@ -119,8 +129,8 @@ namespace kotor_Randomizer_2
 
                         LookupTable[fi.Name][PLACEABLE].Add(rf.Label, new Tuple<int, string, int, string>(id, label_old, temp, label_new));
 
-                        g.Field_Array.Where(k => k.Label == "Appearance").FirstOrDefault().Field_Data = temp;
-                        g.Field_Array.Where(k => k.Label == "Appearance").FirstOrDefault().DataOrDataOffset = temp;
+                        g.Field_Array.Where(k => k.Label == LBL_APPEARANCE).FirstOrDefault().Field_Data = temp;
+                        g.Field_Array.Where(k => k.Label == LBL_APPEARANCE).FirstOrDefault().DataOrDataOffset = temp;
 
                         rf.File_Data = g.ToRawData();
                     }
@@ -135,19 +145,19 @@ namespace kotor_Randomizer_2
                     {
                         GFF_old g = new GFF_old(rf.File_Data);
 
-                        int temp = Randomize.Rng.Next(0, 508);
+                        int temp = 0;
+                        bool isBroken = false;
+                        bool isLarge = false;
 
-                        bool broken_satisfied = !((Properties.Settings.Default.RandomizeCharModels & 4) > 0) || !Globals.BROKEN_CHARS.Contains(temp);//Always Satisfied if Broken omission disbaled
-                        bool large_satisfied = !((Properties.Settings.Default.RandomizeCharModels & 2) > 0) || !Globals.LARGE_CHARS.Contains(temp);//Always satisifed if Large omission disabled
-
-                        while(!(broken_satisfied && large_satisfied))
+                        do
                         {
-                            temp = Randomize.Rng.Next(0, 508);
-                            broken_satisfied = !((Properties.Settings.Default.RandomizeCharModels & 4) > 0) || !Globals.BROKEN_CHARS.Contains(temp);//Always Satisfied if Broken omission disbaled
-                            large_satisfied = !((Properties.Settings.Default.RandomizeCharModels & 2) > 0) || !Globals.LARGE_CHARS.Contains(temp);//Always satisifed if Large omission disabled
+                            temp = Randomize.Rng.Next(0, MAX_CHAR_INDEX);
+                            isBroken = ((Properties.Settings.Default.RandomizeCharModels & 4) > 0) && Globals.BROKEN_CHARS.Contains(temp);  // Always Satisfied if Broken omission disabled
+                            isLarge  = ((Properties.Settings.Default.RandomizeCharModels & 2) > 0) && Globals.LARGE_CHARS.Contains(temp);   // Always satisifed if Large omission disabled
                         }
+                        while (isBroken || isLarge);
 
-                        var field = g.Field_Array.Where(k => k.Label == "Appearance_Type").FirstOrDefault();
+                        var field = g.Field_Array.Where(k => k.Label == LBL_APPEARANCE_TYPE).FirstOrDefault();
                         var id = Convert.ToInt32(field.Field_Data);
 
                         var label_old = char2DA.Data[COL_LABEL][id];
@@ -155,8 +165,8 @@ namespace kotor_Randomizer_2
 
                         LookupTable[fi.Name][CHARACTER].Add(rf.Label, new Tuple<int, string, int, string>(id, label_old, temp, label_new));
 
-                        g.Field_Array.Where(k => k.Label == "Appearance_Type").FirstOrDefault().Field_Data = temp;
-                        g.Field_Array.Where(k => k.Label == "Appearance_Type").FirstOrDefault().DataOrDataOffset = temp;
+                        g.Field_Array.Where(k => k.Label == LBL_APPEARANCE_TYPE).FirstOrDefault().Field_Data = temp;
+                        g.Field_Array.Where(k => k.Label == LBL_APPEARANCE_TYPE).FirstOrDefault().DataOrDataOffset = temp;
 
                         rf.File_Data = g.ToRawData();
                     }
@@ -416,9 +426,9 @@ namespace kotor_Randomizer_2
                         }
 
                         ws.Cell(i, j).Value = type.Key;
-                        if (type.Key == "Door")      ws.Cell(i, j++).Style.Font.FontColor = XLColor.Blue;
-                        if (type.Key == "Character") ws.Cell(i, j++).Style.Font.FontColor = XLColor.Green;
-                        if (type.Key == "Placeable") ws.Cell(i, j++).Style.Font.FontColor = XLColor.Red;
+                        if (type.Key == DOOR)      ws.Cell(i, j++).Style.Font.FontColor = XLColor.Blue;
+                        if (type.Key == CHARACTER) ws.Cell(i, j++).Style.Font.FontColor = XLColor.Green;
+                        if (type.Key == PLACEABLE) ws.Cell(i, j++).Style.Font.FontColor = XLColor.Red;
 
                         ws.Cell(i, j++).Value = kvp.Key;
 
