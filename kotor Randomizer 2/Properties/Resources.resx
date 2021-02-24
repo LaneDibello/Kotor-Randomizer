@@ -337,4 +337,10 @@
   <data name="k_ren_visionland" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\k_ren_visionland.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="GenerateSpoilerLogs" xml:space="preserve">
+    <value>Generate Spoiler Logs</value>
+  </data>
+  <data name="RandomizationError" xml:space="preserve">
+    <value>Randomization Error</value>
+  </data>
 </root>

@@ -61,10 +61,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeAreaMusic {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeAreaMusic {
             get {
-                return ((int)(this["RandomizeAreaMusic"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeAreaMusic"]));
             }
             set {
                 this["RandomizeAreaMusic"] = value;
@@ -73,10 +73,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeAmbientNoise {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeAmbientNoise {
             get {
-                return ((int)(this["RandomizeAmbientNoise"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeAmbientNoise"]));
             }
             set {
                 this["RandomizeAmbientNoise"] = value;
@@ -85,10 +85,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeCutsceneNoise {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeCutsceneNoise {
             get {
-                return ((int)(this["RandomizeCutsceneNoise"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeCutsceneNoise"]));
             }
             set {
                 this["RandomizeCutsceneNoise"] = value;
@@ -97,10 +97,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeNpcSounds {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeNpcSounds {
             get {
-                return ((int)(this["RandomizeNpcSounds"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeNpcSounds"]));
             }
             set {
                 this["RandomizeNpcSounds"] = value;
@@ -109,10 +109,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizePartySounds {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizePartySounds {
             get {
-                return ((int)(this["RandomizePartySounds"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizePartySounds"]));
             }
             set {
                 this["RandomizePartySounds"] = value;
@@ -121,10 +121,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int RandomizeBattleMusic {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel RandomizeBattleMusic {
             get {
-                return ((int)(this["RandomizeBattleMusic"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["RandomizeBattleMusic"]));
             }
             set {
                 this["RandomizeBattleMusic"] = value;

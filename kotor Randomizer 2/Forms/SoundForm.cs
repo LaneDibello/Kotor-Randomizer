@@ -18,14 +18,14 @@ namespace kotor_Randomizer_2
             cbMixNpcParty.Enabled = false;
             cbMixNpcParty.Visible = false;
 
-            RandomizeAreaMusic = (RandomizationLevel)Properties.Settings.Default.RandomizeAreaMusic;
-            RandomizeBattleMusic = (RandomizationLevel)Properties.Settings.Default.RandomizeBattleMusic;
-            RandomizeAmbientNoise = (RandomizationLevel)Properties.Settings.Default.RandomizeAmbientNoise;
-            RandomizeCutsceneNoise = (RandomizationLevel)Properties.Settings.Default.RandomizeCutsceneNoise;
-            //RandomizeNpcSounds = Properties.Settings.Default.RandomizeNpcSounds;
-            RandomizeNpcSounds = RandomizationLevel.None; // Functionality Disabled
-            RandomizePartySounds = (RandomizationLevel)Properties.Settings.Default.RandomizePartySounds;
-            cbRemoveDmca.Checked = Properties.Settings.Default.RemoveDmcaMusic;
+            RandomizeAreaMusic     = Properties.Settings.Default.RandomizeAreaMusic;
+            RandomizeBattleMusic   = Properties.Settings.Default.RandomizeBattleMusic;
+            RandomizeAmbientNoise  = Properties.Settings.Default.RandomizeAmbientNoise;
+            RandomizeCutsceneNoise = Properties.Settings.Default.RandomizeCutsceneNoise;
+            //RandomizeNpcSounds     = Properties.Settings.Default.RandomizeNpcSounds;
+            RandomizeNpcSounds     = RandomizationLevel.None;   // Functionality Disabled
+            RandomizePartySounds   = Properties.Settings.Default.RandomizePartySounds;
+            cbRemoveDmca.Checked   = Properties.Settings.Default.RemoveDmcaMusic;
 
             //MixNpcAndParty = Properties.Settings.Default.MixNpcAndPartySounds;
             MixNpcAndParty = false; // Functionality Disabled
@@ -322,37 +322,46 @@ namespace kotor_Randomizer_2
         private List<RadioButton> TypeRadioButtons = new List<RadioButton>();
         private List<RadioButton> MaxRadioButtons = new List<RadioButton>();
 
+        // Checkbox handlers
         private void cbAreaMusic_CheckedChanged(object sender, EventArgs e)
         {
             flpAreaMusic.Enabled = cbAreaMusic.Checked;
-        }
-
-        private void cbBattleMusic_CheckedChanged(object sender, EventArgs e)
-        {
-            flpBattleMusic.Enabled = cbBattleMusic.Checked;
+            Properties.Settings.Default.RandomizeAreaMusic = RandomizeAreaMusic;
         }
 
         private void cbAmbientNoise_CheckedChanged(object sender, EventArgs e)
         {
             flpAmbientNoise.Enabled = cbAmbientNoise.Checked;
+            Properties.Settings.Default.RandomizeAmbientNoise = RandomizeAmbientNoise;
+        }
+
+        private void cbBattleMusic_CheckedChanged(object sender, EventArgs e)
+        {
+            flpBattleMusic.Enabled = cbBattleMusic.Checked;
+            Properties.Settings.Default.RandomizeBattleMusic = RandomizeBattleMusic;
         }
 
         private void cbCutsceneNoise_CheckedChanged(object sender, EventArgs e)
         {
             flpCutsceneNoise.Enabled = cbCutsceneNoise.Checked;
+            Properties.Settings.Default.RandomizeCutsceneNoise = RandomizeCutsceneNoise;
         }
 
         private void cbNpcSounds_CheckedChanged(object sender, EventArgs e)
         {
             flpNpcSounds.Enabled = cbNpcSounds.Checked;
+            Properties.Settings.Default.RandomizeNpcSounds = RandomizeNpcSounds;
         }
 
         private void cbPartySounds_CheckedChanged(object sender, EventArgs e)
         {
-            if (!MixNpcAndParty)
-            {
-                flpPartySounds.Enabled = cbPartySounds.Checked;
-            }
+            flpPartySounds.Enabled = cbPartySounds.Checked;
+            Properties.Settings.Default.RandomizePartySounds = RandomizePartySounds;
+        }
+
+        private void cbRemoveDmca_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.RemoveDmcaMusic = cbRemoveDmca.Checked;
         }
 
         private void cbMixNpcParty_CheckedChanged(object sender, EventArgs e)
@@ -366,43 +375,25 @@ namespace kotor_Randomizer_2
             flpPartySounds.Visible = !isChecked;
         }
 
-        //I dont think these do anything, but glasnonck had them so i'm leaving em in
-        private void rbNpcSoundsActions_CheckedChanged(object sender, EventArgs e)
-        {
-            if (MixNpcAndParty)
-            {
-                rbPartySoundsActions.Checked = rbNpcSoundsActions.Checked;
-            }
-        }
-
-        private void rbNpcSoundsType_CheckedChanged(object sender, EventArgs e)
-        {
-            if (MixNpcAndParty)
-            {
-                rbPartySoundsType.Checked = rbNpcSoundsType.Checked;
-            }
-        }
-
-        private void rbNpcSoundsMax_CheckedChanged(object sender, EventArgs e)
-        {
-            if (MixNpcAndParty)
-            {
-                rbPartySoundsMax.Checked = rbNpcSoundsMax.Checked;
-            }
-        }
+        // Radio button handlers
+        private void rbAreaMusicType_CheckedChanged(object sender, EventArgs e)      { Properties.Settings.Default.RandomizeAreaMusic     = RandomizeAreaMusic;     }
+        private void rbAreaMusicMax_CheckedChanged(object sender, EventArgs e)       { Properties.Settings.Default.RandomizeAreaMusic     = RandomizeAreaMusic;     }
+        private void rbAmbientNoiseType_CheckedChanged(object sender, EventArgs e)   { Properties.Settings.Default.RandomizeAmbientNoise  = RandomizeAmbientNoise;  }
+        private void rbAmbientNoiseMax_CheckedChanged(object sender, EventArgs e)    { Properties.Settings.Default.RandomizeAmbientNoise  = RandomizeAmbientNoise;  }
+        private void rbBattleMusicType_CheckedChanged(object sender, EventArgs e)    { Properties.Settings.Default.RandomizeBattleMusic   = RandomizeBattleMusic;   }
+        private void rbBattleMusicMax_CheckedChanged(object sender, EventArgs e)     { Properties.Settings.Default.RandomizeBattleMusic   = RandomizeBattleMusic;   }
+        private void rbCutsceneNoiseType_CheckedChanged(object sender, EventArgs e)  { Properties.Settings.Default.RandomizeCutsceneNoise = RandomizeCutsceneNoise; }
+        private void rbCutsceneNoiseMax_CheckedChanged(object sender, EventArgs e)   { Properties.Settings.Default.RandomizeCutsceneNoise = RandomizeCutsceneNoise; }
+        private void rbPartySoundsActions_CheckedChanged(object sender, EventArgs e) { Properties.Settings.Default.RandomizePartySounds   = RandomizePartySounds;   }
+        private void rbPartySoundsType_CheckedChanged(object sender, EventArgs e)    { Properties.Settings.Default.RandomizePartySounds   = RandomizePartySounds;   }
+        private void rbPartySoundsMax_CheckedChanged(object sender, EventArgs e)     { Properties.Settings.Default.RandomizePartySounds   = RandomizePartySounds;   }
 
         private void SoundForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Properties.Settings.Default.RandomizeAreaMusic = (int)RandomizeAreaMusic;
-            Properties.Settings.Default.RandomizeAmbientNoise = (int)RandomizeAmbientNoise;
-            Properties.Settings.Default.RandomizeBattleMusic = (int)RandomizeBattleMusic;
-            Properties.Settings.Default.RandomizeCutsceneNoise = (int)RandomizeCutsceneNoise;
-            Properties.Settings.Default.RandomizeNpcSounds = (int)RandomizeNpcSounds;
-            Properties.Settings.Default.RandomizePartySounds = (int)RandomizePartySounds;
-            Properties.Settings.Default.MixNpcAndPartySounds = MixNpcAndParty;
             Properties.Settings.Default.Save();
         }
 
+        // Toggle all handlers
         private void bToggleAll_Click(object sender, EventArgs e)
         {
             // If all checkboxes are checked, uncheck all of them. If any are unchecked, check all of them.
@@ -440,11 +431,6 @@ namespace kotor_Randomizer_2
             {
                 rb.Checked = true;
             }
-        }
-
-        private void cbRemoveDmca_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.RemoveDmcaMusic = cbRemoveDmca.Checked;
         }
 
         #endregion

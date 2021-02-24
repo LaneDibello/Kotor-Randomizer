@@ -39,7 +39,7 @@ namespace kotor_Randomizer_2
                 areaMusic.RemoveAll(f => DmcaAreaMusic.Contains(f.Name));   // Remove DMCA music from the area list.
             }
 
-            switch ((RandomizationLevel)Properties.Settings.Default.RandomizeAreaMusic)
+            switch (Properties.Settings.Default.RandomizeAreaMusic)
             {
                 case RandomizationLevel.Max:
                     maxMusic.AddRange(areaMusic);
@@ -67,7 +67,7 @@ namespace kotor_Randomizer_2
                 ambientNoiseSound.AddRange(soundFiles.Where(f => f.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)));
             }
 
-            switch ((RandomizationLevel)Properties.Settings.Default.RandomizeAmbientNoise)
+            switch (Properties.Settings.Default.RandomizeAmbientNoise)
             {
                 case RandomizationLevel.Max:
                     maxMusic.AddRange(ambientNoiseMusic);
@@ -90,7 +90,7 @@ namespace kotor_Randomizer_2
             List<FileInfo> battleMusic = new List<FileInfo>(musicFiles.Where(f => RegexBattleMusic.IsMatch(f.Name)));
             List<FileInfo> battleMusicEnd = new List<FileInfo>(soundFiles.Where(f => RegexBattleMusic.IsMatch(f.Name)));
 
-            switch ((RandomizationLevel)Properties.Settings.Default.RandomizeBattleMusic)
+            switch (Properties.Settings.Default.RandomizeBattleMusic)
             {
                 case RandomizationLevel.Max:
                     maxMusic.AddRange(battleMusic);
@@ -113,7 +113,7 @@ namespace kotor_Randomizer_2
             List<FileInfo> cutsceneNoise = new List<FileInfo>(musicFiles.Where(f => RegexCutscene.IsMatch(f.Name)));
             cutsceneNoise.RemoveAll(f => f.Name.StartsWith("57.")); // Remove specific exception
 
-            switch ((RandomizationLevel)Properties.Settings.Default.RandomizeCutsceneNoise)
+            switch (Properties.Settings.Default.RandomizeCutsceneNoise)
             {
                 case RandomizationLevel.Max:
                     maxMusic.AddRange(cutsceneNoise);
@@ -139,7 +139,7 @@ namespace kotor_Randomizer_2
             //else
             {
                 // Party Sounds (if not mixing)
-                switch ((RandomizationLevel)Properties.Settings.Default.RandomizePartySounds)
+                switch (Properties.Settings.Default.RandomizePartySounds)
                 {
                     case RandomizationLevel.Max:
                         maxSound.AddRange(partySounds);
@@ -330,12 +330,12 @@ namespace kotor_Randomizer_2
                 sw.WriteLine($"Seed,{Properties.Settings.Default.Seed}");
                 sw.WriteLine();
 
-                sw.WriteLine($"Area Music,{(RandomizationLevel)Properties.Settings.Default.RandomizeAreaMusic}");
-                sw.WriteLine($"Battle Music,{(RandomizationLevel)Properties.Settings.Default.RandomizeBattleMusic}");
-                sw.WriteLine($"Ambient Noise,{(RandomizationLevel)Properties.Settings.Default.RandomizeAmbientNoise}");
-                sw.WriteLine($"Cutscene Noise,{(RandomizationLevel)Properties.Settings.Default.RandomizeCutsceneNoise}");
-                sw.WriteLine($"NPC Sounds,{(RandomizationLevel)Properties.Settings.Default.RandomizeNpcSounds}");
-                sw.WriteLine($"Party Sounds,{(RandomizationLevel)Properties.Settings.Default.RandomizePartySounds}");
+                sw.WriteLine($"Area Music,{Properties.Settings.Default.RandomizeAreaMusic}");
+                sw.WriteLine($"Battle Music,{Properties.Settings.Default.RandomizeBattleMusic}");
+                sw.WriteLine($"Ambient Noise,{Properties.Settings.Default.RandomizeAmbientNoise}");
+                sw.WriteLine($"Cutscene Noise,{Properties.Settings.Default.RandomizeCutsceneNoise}");
+                sw.WriteLine($"NPC Sounds,{Properties.Settings.Default.RandomizeNpcSounds}");
+                sw.WriteLine($"Party Sounds,{Properties.Settings.Default.RandomizePartySounds}");
                 sw.WriteLine($"Remove DMCA,{Properties.Settings.Default.RemoveDmcaMusic}");
                 sw.WriteLine($"Mix NPC and Party,{Properties.Settings.Default.MixNpcAndPartySounds}");
                 sw.WriteLine();
@@ -394,12 +394,12 @@ namespace kotor_Randomizer_2
 
             var settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Area Music", ((RandomizationLevel)Properties.Settings.Default.RandomizeAreaMusic).ToString()),
-                new Tuple<string, string>("Battle Music", ((RandomizationLevel)Properties.Settings.Default.RandomizeBattleMusic).ToString()),
-                new Tuple<string, string>("Ambient Noise", ((RandomizationLevel)Properties.Settings.Default.RandomizeAmbientNoise).ToString()),
-                new Tuple<string, string>("Cutscene Noise", ((RandomizationLevel)Properties.Settings.Default.RandomizeCutsceneNoise).ToString()),
-                new Tuple<string, string>("NPC Sounds", ((RandomizationLevel)Properties.Settings.Default.RandomizeNpcSounds).ToString()),
-                new Tuple<string, string>("Party Sounds", ((RandomizationLevel)Properties.Settings.Default.RandomizePartySounds).ToString()),
+                new Tuple<string, string>("Area Music", Properties.Settings.Default.RandomizeAreaMusic.ToString()),
+                new Tuple<string, string>("Battle Music", Properties.Settings.Default.RandomizeBattleMusic.ToString()),
+                new Tuple<string, string>("Ambient Noise", Properties.Settings.Default.RandomizeAmbientNoise.ToString()),
+                new Tuple<string, string>("Cutscene Noise", Properties.Settings.Default.RandomizeCutsceneNoise.ToString()),
+                new Tuple<string, string>("NPC Sounds", Properties.Settings.Default.RandomizeNpcSounds.ToString()),
+                new Tuple<string, string>("Party Sounds", Properties.Settings.Default.RandomizePartySounds.ToString()),
                 new Tuple<string, string>("Remove DMCA", Properties.Settings.Default.RemoveDmcaMusic.ToString()),
                 new Tuple<string, string>("Mix NPC and Party", Properties.Settings.Default.MixNpcAndPartySounds.ToString()),
                 new Tuple<string, string>("", ""),  // Skip a row.

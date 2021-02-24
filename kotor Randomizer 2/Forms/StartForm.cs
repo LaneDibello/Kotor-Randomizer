@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.IO;
 using ClosedXML.Excel;
+using System.Collections.Generic;
 
 namespace kotor_Randomizer_2
 {
@@ -88,11 +89,11 @@ namespace kotor_Randomizer_2
                     wsList.Remove(wsList.Length - 2, 2);
 
                     workbook.SaveAs(path);
-                    MessageBox.Show($"Spoiler logs created: {wsList.ToString()}");
+                    MessageBox.Show($"Spoiler logs created: {wsList.ToString()}", Properties.Resources.GenerateSpoilerLogs);
                 }
                 else
                 {
-                    MessageBox.Show($"No spoiler logs created. Either the game has not been randomized, or the selected randomizations do not generate spoilers.");
+                    MessageBox.Show($"No spoiler logs created. Either the game has not been randomized, or the selected randomizations do not generate spoilers.", Properties.Resources.GenerateSpoilerLogs);
                 }
             }
         }
@@ -311,6 +312,24 @@ namespace kotor_Randomizer_2
             var dir = Path.Combine(Environment.CurrentDirectory, "Spoilers");
             Directory.CreateDirectory(dir); // Does nothing if directory exists.
             System.Diagnostics.Process.Start(dir);
+        }
+
+        private void closeAllOtherWindowsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var formsToClose = new List<Form>();
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is StartForm)
+                {
+                    continue;
+                }
+                formsToClose.Add(f);
+            }
+
+            for (int i = 0; i < formsToClose.Count; i++)
+            {
+                formsToClose[i].Close();
+            }
         }
         #endregion
     }

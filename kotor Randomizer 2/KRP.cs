@@ -155,15 +155,15 @@ namespace kotor_Randomizer_2
                         if (new string(br.ReadChars(4)) != "SOUN") { throw new IOException("Sound Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
 
                         // Rando Levels
-                        Properties.Settings.Default.RandomizeAreaMusic = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeBattleMusic = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeAmbientNoise = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeCutsceneNoise = br.ReadInt32();
-                        Properties.Settings.Default.RandomizeNpcSounds = br.ReadInt32();
-                        Properties.Settings.Default.RandomizePartySounds = br.ReadInt32();
+                        Properties.Settings.Default.RandomizeAreaMusic     = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeBattleMusic   = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeAmbientNoise  = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeCutsceneNoise = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizeNpcSounds     = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.RandomizePartySounds   = (RandomizationLevel)br.ReadInt32();
 
                         // Bools
-                        Properties.Settings.Default.RemoveDmcaMusic = br.ReadBoolean();
+                        Properties.Settings.Default.RemoveDmcaMusic      = br.ReadBoolean();
                         Properties.Settings.Default.MixNpcAndPartySounds = br.ReadBoolean();
                     }
                     #endregion
@@ -393,12 +393,12 @@ namespace kotor_Randomizer_2
                 {
                     bw.Write("SOUN".ToCharArray());
 
-                    bw.Write(Properties.Settings.Default.RandomizeAreaMusic);
-                    bw.Write(Properties.Settings.Default.RandomizeBattleMusic);
-                    bw.Write(Properties.Settings.Default.RandomizeAmbientNoise);
-                    bw.Write(Properties.Settings.Default.RandomizeCutsceneNoise);
-                    bw.Write(Properties.Settings.Default.RandomizeNpcSounds);
-                    bw.Write(Properties.Settings.Default.RandomizePartySounds);
+                    bw.Write((int)Properties.Settings.Default.RandomizeAreaMusic);
+                    bw.Write((int)Properties.Settings.Default.RandomizeBattleMusic);
+                    bw.Write((int)Properties.Settings.Default.RandomizeAmbientNoise);
+                    bw.Write((int)Properties.Settings.Default.RandomizeCutsceneNoise);
+                    bw.Write((int)Properties.Settings.Default.RandomizeNpcSounds);
+                    bw.Write((int)Properties.Settings.Default.RandomizePartySounds);
 
                     bw.Write(Properties.Settings.Default.RemoveDmcaMusic);
                     bw.Write(Properties.Settings.Default.MixNpcAndPartySounds);

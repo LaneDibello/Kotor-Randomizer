@@ -39,7 +39,7 @@ namespace kotor_Randomizer_2
 
             if (ActiveCategories == 0)
             {
-                MessageBox.Show(Properties.Resources.ErrorNoRandomization);
+                MessageBox.Show(Properties.Resources.ErrorNoRandomization, Properties.Resources.RandomizationError);
                 return;
             }
             ActiveCategories++;
@@ -161,7 +161,7 @@ namespace kotor_Randomizer_2
                 catch (Exception e)
                 {
                     // Catch any randomization errors (e.g., reachability failure) and print a message.
-                    MessageBox.Show($"Error encountered during randomization: {Environment.NewLine}{e.Message}", "Randomization Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($"Error encountered during randomization: {Environment.NewLine}{e.Message}", Properties.Resources.RandomizationError, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 finally
                 {
@@ -192,7 +192,7 @@ namespace kotor_Randomizer_2
         {
             if (!File.Exists(paths.RANDOMIZED_LOG))
             {
-                MessageBox.Show(Properties.Resources.ErrorNotRandomized);
+                MessageBox.Show(Properties.Resources.ErrorNotRandomized, Properties.Resources.RandomizationError);
                 return;
             }
 
@@ -215,7 +215,7 @@ namespace kotor_Randomizer_2
         {
             if (!File.Exists(paths.RANDOMIZED_LOG))
             {
-                MessageBox.Show(Properties.Resources.ErrorNotRandomized);
+                MessageBox.Show(Properties.Resources.ErrorNotRandomized, Properties.Resources.RandomizationError);
                 return;
             }
 
@@ -267,7 +267,7 @@ namespace kotor_Randomizer_2
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Exception caught while {curr_task}. {e.Message}");
+                MessageBox.Show($"Exception caught while {curr_task}. {e.Message}", Properties.Resources.RandomizationError);
             }
         }
 

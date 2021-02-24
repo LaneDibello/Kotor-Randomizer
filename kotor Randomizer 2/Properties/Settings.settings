@@ -11,23 +11,23 @@
     <Setting Name="MixNpcAndPartySounds" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="RandomizeAreaMusic" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeAreaMusic" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeAmbientNoise" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeAmbientNoise" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeCutsceneNoise" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeCutsceneNoise" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeNpcSounds" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeNpcSounds" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizePartySounds" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizePartySounds" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
-    <Setting Name="RandomizeBattleMusic" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="RandomizeBattleMusic" Type="kotor_Randomizer_2.RandomizationLevel" Scope="User">
+      <Value Profile="(Default)">None</Value>
     </Setting>
     <Setting Name="ModulesInitialized" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

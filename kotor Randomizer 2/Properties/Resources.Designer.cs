@@ -19,7 +19,7 @@ namespace kotor_Randomizer_2.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -155,6 +155,15 @@ namespace kotor_Randomizer_2.Properties {
         internal static string GeneralHelp {
             get {
                 return ResourceManager.GetString("GeneralHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate Spoiler Logs.
+        /// </summary>
+        internal static string GenerateSpoilerLogs {
+            get {
+                return ResourceManager.GetString("GenerateSpoilerLogs", resourceCulture);
             }
         }
         
@@ -487,6 +496,15 @@ namespace kotor_Randomizer_2.Properties {
         internal static string RandoHelp {
             get {
                 return ResourceManager.GetString("RandoHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomization Error.
+        /// </summary>
+        internal static string RandomizationError {
+            get {
+                return ResourceManager.GetString("RandomizationError", resourceCulture);
             }
         }
         
