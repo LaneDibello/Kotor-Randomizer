@@ -126,6 +126,8 @@
             this.bSubtypeAll = new System.Windows.Forms.Button();
             this.bTypeAll = new System.Windows.Forms.Button();
             this.bMaxAll = new System.Windows.Forms.Button();
+            this.bResetOmittedItems = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.flpArmor.SuspendLayout();
             this.flpStims.SuspendLayout();
             this.flpBelts.SuspendLayout();
@@ -379,7 +381,7 @@
             this.flpArmor.Location = new System.Drawing.Point(150, 81);
             this.flpArmor.Name = "flpArmor";
             this.flpArmor.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpArmor.Size = new System.Drawing.Size(180, 24);
+            this.flpArmor.Size = new System.Drawing.Size(183, 24);
             this.flpArmor.TabIndex = 17;
             // 
             // rbArmorSType
@@ -431,7 +433,7 @@
             this.flpStims.Location = new System.Drawing.Point(150, 501);
             this.flpStims.Name = "flpStims";
             this.flpStims.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpStims.Size = new System.Drawing.Size(180, 24);
+            this.flpStims.Size = new System.Drawing.Size(183, 24);
             this.flpStims.TabIndex = 18;
             // 
             // rbStimSType
@@ -483,7 +485,7 @@
             this.flpBelts.Location = new System.Drawing.Point(150, 111);
             this.flpBelts.Name = "flpBelts";
             this.flpBelts.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpBelts.Size = new System.Drawing.Size(180, 24);
+            this.flpBelts.Size = new System.Drawing.Size(183, 24);
             this.flpBelts.TabIndex = 18;
             // 
             // labelSpacer1
@@ -533,7 +535,7 @@
             this.flpVarious.Location = new System.Drawing.Point(150, 561);
             this.flpVarious.Name = "flpVarious";
             this.flpVarious.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpVarious.Size = new System.Drawing.Size(180, 24);
+            this.flpVarious.Size = new System.Drawing.Size(183, 24);
             this.flpVarious.TabIndex = 18;
             // 
             // labelSpacer6
@@ -583,7 +585,7 @@
             this.flpDroid.Location = new System.Drawing.Point(150, 231);
             this.flpDroid.Name = "flpDroid";
             this.flpDroid.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpDroid.Size = new System.Drawing.Size(180, 24);
+            this.flpDroid.Size = new System.Drawing.Size(183, 24);
             this.flpDroid.TabIndex = 18;
             // 
             // rbDroidSType
@@ -635,7 +637,7 @@
             this.flpArmbands.Location = new System.Drawing.Point(150, 51);
             this.flpArmbands.Name = "flpArmbands";
             this.flpArmbands.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpArmbands.Size = new System.Drawing.Size(180, 24);
+            this.flpArmbands.Size = new System.Drawing.Size(183, 24);
             this.flpArmbands.TabIndex = 18;
             // 
             // rbArmbandSType
@@ -687,7 +689,7 @@
             this.flpGloves.Location = new System.Drawing.Point(150, 261);
             this.flpGloves.Name = "flpGloves";
             this.flpGloves.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpGloves.Size = new System.Drawing.Size(180, 24);
+            this.flpGloves.Size = new System.Drawing.Size(183, 24);
             this.flpGloves.TabIndex = 18;
             // 
             // labelSpacer3
@@ -737,7 +739,7 @@
             this.flpImplants.Location = new System.Drawing.Point(150, 321);
             this.flpImplants.Name = "flpImplants";
             this.flpImplants.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpImplants.Size = new System.Drawing.Size(180, 24);
+            this.flpImplants.Size = new System.Drawing.Size(183, 24);
             this.flpImplants.TabIndex = 18;
             // 
             // rbImplantSType
@@ -789,7 +791,7 @@
             this.flpMasks.Location = new System.Drawing.Point(150, 381);
             this.flpMasks.Name = "flpMasks";
             this.flpMasks.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpMasks.Size = new System.Drawing.Size(180, 24);
+            this.flpMasks.Size = new System.Drawing.Size(183, 24);
             this.flpMasks.TabIndex = 18;
             // 
             // rbMaskSType
@@ -841,7 +843,7 @@
             this.flpPaz.Location = new System.Drawing.Point(150, 471);
             this.flpPaz.Name = "flpPaz";
             this.flpPaz.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpPaz.Size = new System.Drawing.Size(180, 24);
+            this.flpPaz.Size = new System.Drawing.Size(183, 24);
             this.flpPaz.TabIndex = 18;
             // 
             // labelSpacer5
@@ -891,7 +893,7 @@
             this.flpMines.Location = new System.Drawing.Point(150, 441);
             this.flpMines.Name = "flpMines";
             this.flpMines.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpMines.Size = new System.Drawing.Size(180, 24);
+            this.flpMines.Size = new System.Drawing.Size(183, 24);
             this.flpMines.TabIndex = 18;
             // 
             // rbMineSType
@@ -943,7 +945,7 @@
             this.flpUpgrades.Location = new System.Drawing.Point(150, 531);
             this.flpUpgrades.Name = "flpUpgrades";
             this.flpUpgrades.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpUpgrades.Size = new System.Drawing.Size(180, 24);
+            this.flpUpgrades.Size = new System.Drawing.Size(183, 24);
             this.flpUpgrades.TabIndex = 18;
             // 
             // rbUpgradeSType
@@ -995,7 +997,7 @@
             this.flpBlasters.Location = new System.Drawing.Point(150, 141);
             this.flpBlasters.Name = "flpBlasters";
             this.flpBlasters.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpBlasters.Size = new System.Drawing.Size(180, 24);
+            this.flpBlasters.Size = new System.Drawing.Size(183, 24);
             this.flpBlasters.TabIndex = 18;
             // 
             // rbBlasterSType
@@ -1047,7 +1049,7 @@
             this.flpCreature.Location = new System.Drawing.Point(150, 201);
             this.flpCreature.Name = "flpCreature";
             this.flpCreature.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpCreature.Size = new System.Drawing.Size(180, 24);
+            this.flpCreature.Size = new System.Drawing.Size(183, 24);
             this.flpCreature.TabIndex = 18;
             // 
             // rbCreatureWeaponSType
@@ -1099,7 +1101,7 @@
             this.flpLightsabers.Location = new System.Drawing.Point(150, 351);
             this.flpLightsabers.Name = "flpLightsabers";
             this.flpLightsabers.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpLightsabers.Size = new System.Drawing.Size(180, 24);
+            this.flpLightsabers.Size = new System.Drawing.Size(183, 24);
             this.flpLightsabers.TabIndex = 18;
             // 
             // rbLightsaberSType
@@ -1151,7 +1153,7 @@
             this.flpGrenades.Location = new System.Drawing.Point(150, 291);
             this.flpGrenades.Name = "flpGrenades";
             this.flpGrenades.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpGrenades.Size = new System.Drawing.Size(180, 24);
+            this.flpGrenades.Size = new System.Drawing.Size(183, 24);
             this.flpGrenades.TabIndex = 18;
             // 
             // labelSpacer4
@@ -1201,7 +1203,7 @@
             this.flpMelee.Location = new System.Drawing.Point(150, 411);
             this.flpMelee.Name = "flpMelee";
             this.flpMelee.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpMelee.Size = new System.Drawing.Size(180, 24);
+            this.flpMelee.Size = new System.Drawing.Size(183, 24);
             this.flpMelee.TabIndex = 18;
             // 
             // rbMeleeSType
@@ -1266,7 +1268,7 @@
             this.flpHides.Location = new System.Drawing.Point(150, 171);
             this.flpHides.Name = "flpHides";
             this.flpHides.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
-            this.flpHides.Size = new System.Drawing.Size(180, 24);
+            this.flpHides.Size = new System.Drawing.Size(183, 24);
             this.flpHides.TabIndex = 19;
             // 
             // labelSpacer2
@@ -1308,11 +1310,11 @@
             // 
             this.lblOmitted.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOmitted.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblOmitted.Location = new System.Drawing.Point(340, 17);
+            this.lblOmitted.Location = new System.Drawing.Point(349, 17);
             this.lblOmitted.Name = "lblOmitted";
-            this.lblOmitted.Size = new System.Drawing.Size(200, 20);
+            this.lblOmitted.Size = new System.Drawing.Size(140, 20);
             this.lblOmitted.TabIndex = 24;
-            this.lblOmitted.Text = "Omitted";
+            this.lblOmitted.Text = "Omitted Items";
             this.lblOmitted.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lbOmitItems
@@ -1321,7 +1323,7 @@
             this.lbOmitItems.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lbOmitItems.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.lbOmitItems.FormattingEnabled = true;
-            this.lbOmitItems.Location = new System.Drawing.Point(340, 45);
+            this.lbOmitItems.Location = new System.Drawing.Point(349, 45);
             this.lbOmitItems.Name = "lbOmitItems";
             this.lbOmitItems.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbOmitItems.Size = new System.Drawing.Size(200, 509);
@@ -1334,12 +1336,14 @@
             this.tbItemOmitAdd.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.tbItemOmitAdd.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.tbItemOmitAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
+            this.tbItemOmitAdd.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
             this.tbItemOmitAdd.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.tbItemOmitAdd.Location = new System.Drawing.Point(340, 564);
+            this.tbItemOmitAdd.Location = new System.Drawing.Point(349, 564);
+            this.tbItemOmitAdd.MaxLength = 50;
             this.tbItemOmitAdd.Name = "tbItemOmitAdd";
             this.tbItemOmitAdd.Size = new System.Drawing.Size(140, 20);
             this.tbItemOmitAdd.TabIndex = 26;
-            this.tbItemOmitAdd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbItemOmitAdd_KeyPress);
+            this.tbItemOmitAdd.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tbItemOmitAdd_KeyUp);
             // 
             // bAddOmitItem
             // 
@@ -1351,7 +1355,7 @@
             this.bAddOmitItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bAddOmitItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.bAddOmitItem.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.bAddOmitItem.Location = new System.Drawing.Point(490, 564);
+            this.bAddOmitItem.Location = new System.Drawing.Point(499, 564);
             this.bAddOmitItem.Name = "bAddOmitItem";
             this.bAddOmitItem.Size = new System.Drawing.Size(50, 20);
             this.bAddOmitItem.TabIndex = 27;
@@ -1407,12 +1411,34 @@
             this.bMaxAll.UseVisualStyleBackColor = false;
             this.bMaxAll.Click += new System.EventHandler(this.bMaxAll_Click);
             // 
+            // bResetOmittedItems
+            // 
+            this.bResetOmittedItems.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bResetOmittedItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.bResetOmittedItems.Location = new System.Drawing.Point(496, 17);
+            this.bResetOmittedItems.Name = "bResetOmittedItems";
+            this.bResetOmittedItems.Size = new System.Drawing.Size(53, 23);
+            this.bResetOmittedItems.TabIndex = 34;
+            this.bResetOmittedItems.Text = "Reset";
+            this.bResetOmittedItems.UseVisualStyleBackColor = false;
+            this.bResetOmittedItems.Click += new System.EventHandler(this.bResetOmittedItems_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.panel1.Location = new System.Drawing.Point(338, 17);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(2, 567);
+            this.panel1.TabIndex = 35;
+            // 
             // ItemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(561, 599);
+            this.ClientSize = new System.Drawing.Size(564, 599);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.bResetOmittedItems);
             this.Controls.Add(this.bMaxAll);
             this.Controls.Add(this.bTypeAll);
             this.Controls.Add(this.bSubtypeAll);
@@ -1607,5 +1633,7 @@
         private System.Windows.Forms.Button bSubtypeAll;
         private System.Windows.Forms.Button bTypeAll;
         private System.Windows.Forms.Button bMaxAll;
+        private System.Windows.Forms.Button bResetOmittedItems;
+        private System.Windows.Forms.Panel panel1;
     }
 }

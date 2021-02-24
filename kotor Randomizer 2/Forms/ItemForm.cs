@@ -14,24 +14,24 @@ namespace kotor_Randomizer_2
             lbOmitItems.DataSource = Globals.OmitItems;
 
             //Set Intiial Values
-            RandomizeArmbands = (RandomizationLevel)Properties.Settings.Default.RandomizeArmbands;
-            RandomizeArmor = (RandomizationLevel)Properties.Settings.Default.RandomizeArmor;
-            RandomizeBelts = (RandomizationLevel)Properties.Settings.Default.RandomizeBelts;
-            RandomizeBlasters = (RandomizationLevel)Properties.Settings.Default.RandomizeBlasters;
-            RandomizeHides = (RandomizationLevel)Properties.Settings.Default.RandomizeHides;
-            RandomizeCreature = (RandomizationLevel)Properties.Settings.Default.RandomizeCreature;
-            RandomizeDroid = (RandomizationLevel)Properties.Settings.Default.RandomizeDroid;
-            RandomizeGloves = (RandomizationLevel)Properties.Settings.Default.RandomizeGloves;
-            RandomizeGrenades = (RandomizationLevel)Properties.Settings.Default.RandomizeGrenades;
-            RandomizeImplants = (RandomizationLevel)Properties.Settings.Default.RandomizeImplants;
-            RandomizeLightsabers = (RandomizationLevel)Properties.Settings.Default.RandomizeLightsabers;
-            RandomizeMask = (RandomizationLevel)Properties.Settings.Default.RandomizeMask;
-            RandomizeMelee = (RandomizationLevel)Properties.Settings.Default.RandomizeMelee;
-            RandomizeMines = (RandomizationLevel)Properties.Settings.Default.RandomizeMines;
-            RandomizePaz = (RandomizationLevel)Properties.Settings.Default.RandomizePaz;
-            RandomizeStims = (RandomizationLevel)Properties.Settings.Default.RandomizeStims;
-            RandomizeUpgrade = (RandomizationLevel)Properties.Settings.Default.RandomizeUpgrade;
-            RandomizeVarious = (RandomizationLevel)Properties.Settings.Default.RandomizeVarious;
+            RandomizeArmbands = Properties.Settings.Default.RandomizeArmbands;
+            RandomizeArmor = Properties.Settings.Default.RandomizeArmor;
+            RandomizeBelts = Properties.Settings.Default.RandomizeBelts;
+            RandomizeBlasters = Properties.Settings.Default.RandomizeBlasters;
+            RandomizeHides = Properties.Settings.Default.RandomizeHides;
+            RandomizeCreature = Properties.Settings.Default.RandomizeCreature;
+            RandomizeDroid = Properties.Settings.Default.RandomizeDroid;
+            RandomizeGloves = Properties.Settings.Default.RandomizeGloves;
+            RandomizeGrenades = Properties.Settings.Default.RandomizeGrenades;
+            RandomizeImplants = Properties.Settings.Default.RandomizeImplants;
+            RandomizeLightsabers = Properties.Settings.Default.RandomizeLightsabers;
+            RandomizeMask = Properties.Settings.Default.RandomizeMask;
+            RandomizeMelee = Properties.Settings.Default.RandomizeMelee;
+            RandomizeMines = Properties.Settings.Default.RandomizeMines;
+            RandomizePaz = Properties.Settings.Default.RandomizePaz;
+            RandomizeStims = Properties.Settings.Default.RandomizeStims;
+            RandomizeUpgrade = Properties.Settings.Default.RandomizeUpgrade;
+            RandomizeVarious = Properties.Settings.Default.RandomizeVarious;
 
             // Create easy access lists.
             CheckBoxes.AddRange(new List<CheckBox>()
@@ -1029,15 +1029,32 @@ namespace kotor_Randomizer_2
         }
 
         // Omitted item handlers
-        private void bAddOmitItem_Click(object sender, EventArgs e)
+        private void bResetOmittedItems_Click(object sender, EventArgs e)
         {
-            Globals.OmitItems.Add(tbItemOmitAdd.Text);
-            lbOmitItems.DataSource = Globals.OmitItems;
+            Globals.OmitItems.Clear();
+            foreach (var item in Globals.DEFAULT_OMIT_ITEMS)
+            {
+                Globals.OmitItems.Add(item);
+            }
+            System.Media.SystemSounds.Exclamation.Play();
         }
 
-        private void tbItemOmitAdd_KeyPress(object sender, KeyPressEventArgs e)
+        private void bAddOmitItem_Click(object sender, EventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (string.IsNullOrWhiteSpace(tbItemOmitAdd.Text) || Globals.OmitItems.Contains(tbItemOmitAdd.Text))
+            {
+                System.Media.SystemSounds.Asterisk.Play();
+            }
+            else
+            {
+                Globals.OmitItems.Add(tbItemOmitAdd.Text);
+            }
+            tbItemOmitAdd.Text = string.Empty;
+        }
+
+        private void tbItemOmitAdd_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
             {
                 bAddOmitItem_Click(sender, e);
             }
@@ -1055,7 +1072,6 @@ namespace kotor_Randomizer_2
             {
                 Globals.OmitItems.Remove(s);
             }
-            lbOmitItems.DataSource = Globals.OmitItems;
         }
 
         private void lbOmitItems_KeyPress(object sender, KeyPressEventArgs e)

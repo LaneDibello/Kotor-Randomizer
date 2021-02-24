@@ -308,6 +308,21 @@ namespace kotor_Randomizer_2
             "ptar_sbpasscrd", "ptar_sitharmor", "tat17_sandperdis", "tat18_dragonprl",
             "w_blhvy001", "w_bstrcrbn", "w_lghtsbr001", "w_null" };
 
+
+        /// <summary>
+        /// Bound list of items to be omitted from randomization. This is necessary because certain items can result in soft locks if randomized.
+        /// </summary>
+        public static readonly List<string> DEFAULT_OMIT_ITEMS = new List<string>()
+        {
+            "g_i_collarlgt001",     // (broken item)
+            "g_i_glowrod01",        // Glow Rod
+            "g_i_torch01",          // (broken item)
+            "ptar_sitharmor",       // Sith Armor
+            "tat17_sandperdis",     // Sand People Disguise
+            "g_i_progspike02",      // Single-Use Programming Spikes
+            "g_i_implant104",       // Stamina Boost Implant
+        };
+
         /// <summary>
         /// All modules in the game
         /// </summary>
