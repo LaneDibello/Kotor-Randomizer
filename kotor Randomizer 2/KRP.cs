@@ -187,23 +187,23 @@ namespace kotor_Randomizer_2
                         if (new string(br.ReadChars(4)) != "TEXU") { throw new IOException("Texture Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
 
                         // Settings
-                        Properties.Settings.Default.TextureRandomizeCubeMaps = br.ReadInt32();
-                        Properties.Settings.Default.TextureRandomizeCreatures = br.ReadInt32();
-                        Properties.Settings.Default.TextureRandomizeEffects = br.ReadInt32();
-                        Properties.Settings.Default.TextureRandomizeItems = br.ReadInt32();
-                        Properties.Settings.Default.TextureRandomizePlanetary = br.ReadInt32();
-                        Properties.Settings.Default.TextureRandomizeNPC = br.ReadInt32();
-                        Properties.Settings.Default.TextureRandomizePlayHeads = br.ReadInt32();
-                        Properties.Settings.Default.TextureRandomizePlayBodies = br.ReadInt32();
-                        Properties.Settings.Default.TextureRandomizePlaceables = br.ReadInt32();
-                        Properties.Settings.Default.TextureRandomizeParty = br.ReadInt32();
-                        Properties.Settings.Default.TextureRandomizeStunt = br.ReadInt32();
-                        Properties.Settings.Default.TextureRandomizeVehicles = br.ReadInt32();
-                        Properties.Settings.Default.TextureRandomizeWeapons = br.ReadInt32();
-                        Properties.Settings.Default.TextureRandomizeOther = br.ReadInt32();
+                        Properties.Settings.Default.TextureRandomizeCubeMaps   = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.TextureRandomizeCreatures  = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.TextureRandomizeEffects    = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.TextureRandomizeItems      = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.TextureRandomizePlanetary  = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.TextureRandomizeNPC        = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.TextureRandomizePlayHeads  = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.TextureRandomizePlayBodies = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.TextureRandomizePlaceables = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.TextureRandomizeParty      = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.TextureRandomizeStunt      = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.TextureRandomizeVehicles   = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.TextureRandomizeWeapons    = (RandomizationLevel)br.ReadInt32();
+                        Properties.Settings.Default.TextureRandomizeOther      = (RandomizationLevel)br.ReadInt32();
 
                         // Texture Pack
-                        Properties.Settings.Default.TexturePack = br.ReadInt32();
+                        Properties.Settings.Default.TexturePack = (TexturePack)br.ReadInt32();
                     }
                     #endregion
                     #region 2DAs
@@ -420,22 +420,22 @@ namespace kotor_Randomizer_2
                 {
                     bw.Write("TEXU".ToCharArray());
 
-                    bw.Write(Properties.Settings.Default.TextureRandomizeCubeMaps);
-                    bw.Write(Properties.Settings.Default.TextureRandomizeCreatures);
-                    bw.Write(Properties.Settings.Default.TextureRandomizeEffects);
-                    bw.Write(Properties.Settings.Default.TextureRandomizeItems);
-                    bw.Write(Properties.Settings.Default.TextureRandomizePlanetary);
-                    bw.Write(Properties.Settings.Default.TextureRandomizeNPC);
-                    bw.Write(Properties.Settings.Default.TextureRandomizePlayHeads);
-                    bw.Write(Properties.Settings.Default.TextureRandomizePlayBodies);
-                    bw.Write(Properties.Settings.Default.TextureRandomizePlaceables);
-                    bw.Write(Properties.Settings.Default.TextureRandomizeParty);
-                    bw.Write(Properties.Settings.Default.TextureRandomizeStunt);
-                    bw.Write(Properties.Settings.Default.TextureRandomizeVehicles);
-                    bw.Write(Properties.Settings.Default.TextureRandomizeWeapons);
-                    bw.Write(Properties.Settings.Default.TextureRandomizeOther);
+                    bw.Write((int)Properties.Settings.Default.TextureRandomizeCubeMaps);
+                    bw.Write((int)Properties.Settings.Default.TextureRandomizeCreatures);
+                    bw.Write((int)Properties.Settings.Default.TextureRandomizeEffects);
+                    bw.Write((int)Properties.Settings.Default.TextureRandomizeItems);
+                    bw.Write((int)Properties.Settings.Default.TextureRandomizePlanetary);
+                    bw.Write((int)Properties.Settings.Default.TextureRandomizeNPC);
+                    bw.Write((int)Properties.Settings.Default.TextureRandomizePlayHeads);
+                    bw.Write((int)Properties.Settings.Default.TextureRandomizePlayBodies);
+                    bw.Write((int)Properties.Settings.Default.TextureRandomizePlaceables);
+                    bw.Write((int)Properties.Settings.Default.TextureRandomizeParty);
+                    bw.Write((int)Properties.Settings.Default.TextureRandomizeStunt);
+                    bw.Write((int)Properties.Settings.Default.TextureRandomizeVehicles);
+                    bw.Write((int)Properties.Settings.Default.TextureRandomizeWeapons);
+                    bw.Write((int)Properties.Settings.Default.TextureRandomizeOther);
 
-                    bw.Write(Properties.Settings.Default.TexturePack);
+                    bw.Write((int)Properties.Settings.Default.TexturePack);
 
                 }
                 #endregion

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TextureForm));
             this.cbCubeMaps = new System.Windows.Forms.CheckBox();
             this.flpCubeMaps = new System.Windows.Forms.FlowLayoutPanel();
@@ -95,6 +96,7 @@
             this.bToggleAll = new System.Windows.Forms.Button();
             this.bAllMax = new System.Windows.Forms.Button();
             this.bTypeAll = new System.Windows.Forms.Button();
+            this.TexturesToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.flpCubeMaps.SuspendLayout();
             this.flpCreatures.SuspendLayout();
             this.flpEffects.SuspendLayout();
@@ -122,6 +124,8 @@
             this.cbCubeMaps.Size = new System.Drawing.Size(120, 20);
             this.cbCubeMaps.TabIndex = 1;
             this.cbCubeMaps.Text = "Cube Maps";
+            this.TexturesToolTip.SetToolTip(this.cbCubeMaps, "A simple texture used to generate the faint image seen\r\nin the reflection of shin" +
+        "y objects.");
             this.cbCubeMaps.UseVisualStyleBackColor = true;
             this.cbCubeMaps.CheckedChanged += new System.EventHandler(this.cbCubeMaps_CheckedChanged);
             // 
@@ -149,6 +153,7 @@
             this.rbCubeMapsType.TabStop = true;
             this.rbCubeMapsType.Text = "Type";
             this.rbCubeMapsType.UseVisualStyleBackColor = true;
+            this.rbCubeMapsType.CheckedChanged += new System.EventHandler(this.rbCubeMapsType_CheckedChanged);
             // 
             // rbCubeMapsMax
             // 
@@ -160,6 +165,7 @@
             this.rbCubeMapsMax.Tag = "";
             this.rbCubeMapsMax.Text = "Max";
             this.rbCubeMapsMax.UseVisualStyleBackColor = true;
+            this.rbCubeMapsMax.CheckedChanged += new System.EventHandler(this.rbCubeMapsMax_CheckedChanged);
             // 
             // flpCreatures
             // 
@@ -185,6 +191,7 @@
             this.rbCreaturesType.TabStop = true;
             this.rbCreaturesType.Text = "Type";
             this.rbCreaturesType.UseVisualStyleBackColor = true;
+            this.rbCreaturesType.CheckedChanged += new System.EventHandler(this.rbCreaturesType_CheckedChanged);
             // 
             // rbCreaturesMax
             // 
@@ -195,6 +202,7 @@
             this.rbCreaturesMax.TabIndex = 1;
             this.rbCreaturesMax.Text = "Max";
             this.rbCreaturesMax.UseVisualStyleBackColor = true;
+            this.rbCreaturesMax.CheckedChanged += new System.EventHandler(this.rbCreaturesMax_CheckedChanged);
             // 
             // cbCreatures
             // 
@@ -206,6 +214,7 @@
             this.cbCreatures.Size = new System.Drawing.Size(120, 20);
             this.cbCreatures.TabIndex = 20;
             this.cbCreatures.Text = "Creatures";
+            this.TexturesToolTip.SetToolTip(this.cbCreatures, "The maps used to texture creatures.");
             this.cbCreatures.UseVisualStyleBackColor = true;
             this.cbCreatures.CheckedChanged += new System.EventHandler(this.cbCreatures_CheckedChanged);
             // 
@@ -233,6 +242,7 @@
             this.rbEffectsType.TabStop = true;
             this.rbEffectsType.Text = "Type";
             this.rbEffectsType.UseVisualStyleBackColor = true;
+            this.rbEffectsType.CheckedChanged += new System.EventHandler(this.rbEffectsType_CheckedChanged);
             // 
             // rbEffectsMax
             // 
@@ -243,6 +253,7 @@
             this.rbEffectsMax.TabIndex = 1;
             this.rbEffectsMax.Text = "Max";
             this.rbEffectsMax.UseVisualStyleBackColor = true;
+            this.rbEffectsMax.CheckedChanged += new System.EventHandler(this.rbEffectsMax_CheckedChanged);
             // 
             // cbEffects
             // 
@@ -254,6 +265,7 @@
             this.cbEffects.Size = new System.Drawing.Size(120, 20);
             this.cbEffects.TabIndex = 22;
             this.cbEffects.Text = "Effects";
+            this.TexturesToolTip.SetToolTip(this.cbEffects, "All files prefixed with FX, usually rays of light and other\r\nspecial events.");
             this.cbEffects.UseVisualStyleBackColor = true;
             this.cbEffects.CheckedChanged += new System.EventHandler(this.cbEffects_CheckedChanged);
             // 
@@ -281,6 +293,7 @@
             this.rbItemsType.TabStop = true;
             this.rbItemsType.Text = "Type";
             this.rbItemsType.UseVisualStyleBackColor = true;
+            this.rbItemsType.CheckedChanged += new System.EventHandler(this.rbItemsType_CheckedChanged);
             // 
             // rbItemsMax
             // 
@@ -291,6 +304,7 @@
             this.rbItemsMax.TabIndex = 1;
             this.rbItemsMax.Text = "Max";
             this.rbItemsMax.UseVisualStyleBackColor = true;
+            this.rbItemsMax.CheckedChanged += new System.EventHandler(this.rbItemsMax_CheckedChanged);
             // 
             // cbItems
             // 
@@ -302,6 +316,8 @@
             this.cbItems.Size = new System.Drawing.Size(120, 20);
             this.cbItems.TabIndex = 20;
             this.cbItems.Text = "Items";
+            this.TexturesToolTip.SetToolTip(this.cbItems, "The 3D rendered image of items. Most of these go unused\r\nin the game as the 3D va" +
+        "riants of many items never see\r\nuse.");
             this.cbItems.UseVisualStyleBackColor = true;
             this.cbItems.CheckedChanged += new System.EventHandler(this.cbItems_CheckedChanged);
             // 
@@ -329,6 +345,7 @@
             this.rbPlanetaryType.TabStop = true;
             this.rbPlanetaryType.Text = "Type";
             this.rbPlanetaryType.UseVisualStyleBackColor = true;
+            this.rbPlanetaryType.CheckedChanged += new System.EventHandler(this.rbPlanetaryType_CheckedChanged);
             // 
             // rbPlanetaryMax
             // 
@@ -339,6 +356,7 @@
             this.rbPlanetaryMax.TabIndex = 1;
             this.rbPlanetaryMax.Text = "Max";
             this.rbPlanetaryMax.UseVisualStyleBackColor = true;
+            this.rbPlanetaryMax.CheckedChanged += new System.EventHandler(this.rbPlanetaryMax_CheckedChanged);
             // 
             // cbPlanetary
             // 
@@ -350,6 +368,7 @@
             this.cbPlanetary.Size = new System.Drawing.Size(120, 20);
             this.cbPlanetary.TabIndex = 24;
             this.cbPlanetary.Text = "Planetary";
+            this.TexturesToolTip.SetToolTip(this.cbPlanetary, "Textures that are tied to a specific planet.");
             this.cbPlanetary.UseVisualStyleBackColor = true;
             this.cbPlanetary.CheckedChanged += new System.EventHandler(this.cbPlanetary_CheckedChanged);
             // 
@@ -377,6 +396,7 @@
             this.rbNPCType.TabStop = true;
             this.rbNPCType.Text = "Type";
             this.rbNPCType.UseVisualStyleBackColor = true;
+            this.rbNPCType.CheckedChanged += new System.EventHandler(this.rbNPCType_CheckedChanged);
             // 
             // rbNPCMax
             // 
@@ -387,6 +407,7 @@
             this.rbNPCMax.TabIndex = 1;
             this.rbNPCMax.Text = "Max";
             this.rbNPCMax.UseVisualStyleBackColor = true;
+            this.rbNPCMax.CheckedChanged += new System.EventHandler(this.rbNPCMax_CheckedChanged);
             // 
             // cbNPC
             // 
@@ -398,6 +419,7 @@
             this.cbNPC.Size = new System.Drawing.Size(120, 20);
             this.cbNPC.TabIndex = 26;
             this.cbNPC.Text = "NPC";
+            this.TexturesToolTip.SetToolTip(this.cbNPC, "Textures used by NPCs.");
             this.cbNPC.UseVisualStyleBackColor = true;
             this.cbNPC.CheckedChanged += new System.EventHandler(this.cbNPC_CheckedChanged);
             // 
@@ -425,6 +447,7 @@
             this.rbPlayHeadsType.TabStop = true;
             this.rbPlayHeadsType.Text = "Type";
             this.rbPlayHeadsType.UseVisualStyleBackColor = true;
+            this.rbPlayHeadsType.CheckedChanged += new System.EventHandler(this.rbPlayHeadsType_CheckedChanged);
             // 
             // rbPlayHeadsMax
             // 
@@ -435,6 +458,7 @@
             this.rbPlayHeadsMax.TabIndex = 1;
             this.rbPlayHeadsMax.Text = "Max";
             this.rbPlayHeadsMax.UseVisualStyleBackColor = true;
+            this.rbPlayHeadsMax.CheckedChanged += new System.EventHandler(this.rbPlayHeadsMax_CheckedChanged);
             // 
             // cbPlayHeads
             // 
@@ -446,6 +470,7 @@
             this.cbPlayHeads.Size = new System.Drawing.Size(120, 20);
             this.cbPlayHeads.TabIndex = 28;
             this.cbPlayHeads.Text = "Player Heads";
+            this.TexturesToolTip.SetToolTip(this.cbPlayHeads, "Textures for the heads of all the player models.");
             this.cbPlayHeads.UseVisualStyleBackColor = true;
             this.cbPlayHeads.CheckedChanged += new System.EventHandler(this.cbPlayHeads_CheckedChanged);
             // 
@@ -473,6 +498,7 @@
             this.rbPlayBodiesType.TabStop = true;
             this.rbPlayBodiesType.Text = "Type";
             this.rbPlayBodiesType.UseVisualStyleBackColor = true;
+            this.rbPlayBodiesType.CheckedChanged += new System.EventHandler(this.rbPlayBodiesType_CheckedChanged);
             // 
             // rbPlayBodiesMax
             // 
@@ -483,6 +509,7 @@
             this.rbPlayBodiesMax.TabIndex = 1;
             this.rbPlayBodiesMax.Text = "Max";
             this.rbPlayBodiesMax.UseVisualStyleBackColor = true;
+            this.rbPlayBodiesMax.CheckedChanged += new System.EventHandler(this.rbPlayBodiesMax_CheckedChanged);
             // 
             // cbPlayBodies
             // 
@@ -494,6 +521,7 @@
             this.cbPlayBodies.Size = new System.Drawing.Size(120, 20);
             this.cbPlayBodies.TabIndex = 30;
             this.cbPlayBodies.Text = "Player Bodies";
+            this.TexturesToolTip.SetToolTip(this.cbPlayBodies, "Textures for the bodies of all the player models.");
             this.cbPlayBodies.UseVisualStyleBackColor = true;
             this.cbPlayBodies.CheckedChanged += new System.EventHandler(this.cbPlayBodies_CheckedChanged);
             // 
@@ -521,6 +549,7 @@
             this.rbPlaceablesType.TabStop = true;
             this.rbPlaceablesType.Text = "Type";
             this.rbPlaceablesType.UseVisualStyleBackColor = true;
+            this.rbPlaceablesType.CheckedChanged += new System.EventHandler(this.rbPlaceablesType_CheckedChanged);
             // 
             // rbPlaceablesMax
             // 
@@ -531,6 +560,7 @@
             this.rbPlaceablesMax.TabIndex = 1;
             this.rbPlaceablesMax.Text = "Max";
             this.rbPlaceablesMax.UseVisualStyleBackColor = true;
+            this.rbPlaceablesMax.CheckedChanged += new System.EventHandler(this.rbPlaceablesMax_CheckedChanged);
             // 
             // cbPlaceables
             // 
@@ -542,6 +572,8 @@
             this.cbPlaceables.Size = new System.Drawing.Size(120, 20);
             this.cbPlaceables.TabIndex = 32;
             this.cbPlaceables.Text = "Placeables";
+            this.TexturesToolTip.SetToolTip(this.cbPlaceables, "Textures of placeable objects such as footlockers, computer\r\nconsoles, marker pos" +
+        "ts, etc.");
             this.cbPlaceables.UseVisualStyleBackColor = true;
             this.cbPlaceables.CheckedChanged += new System.EventHandler(this.cbPlaceables_CheckedChanged);
             // 
@@ -569,6 +601,7 @@
             this.rbPartyType.TabStop = true;
             this.rbPartyType.Text = "Type";
             this.rbPartyType.UseVisualStyleBackColor = true;
+            this.rbPartyType.CheckedChanged += new System.EventHandler(this.rbPartyType_CheckedChanged);
             // 
             // rbPartyMax
             // 
@@ -579,6 +612,7 @@
             this.rbPartyMax.TabIndex = 1;
             this.rbPartyMax.Text = "Max";
             this.rbPartyMax.UseVisualStyleBackColor = true;
+            this.rbPartyMax.CheckedChanged += new System.EventHandler(this.rbPartyMax_CheckedChanged);
             // 
             // cbParty
             // 
@@ -590,6 +624,7 @@
             this.cbParty.Size = new System.Drawing.Size(120, 20);
             this.cbParty.TabIndex = 34;
             this.cbParty.Text = "Party";
+            this.TexturesToolTip.SetToolTip(this.cbParty, "Textures used by party members.");
             this.cbParty.UseVisualStyleBackColor = true;
             this.cbParty.CheckedChanged += new System.EventHandler(this.cbParty_CheckedChanged);
             // 
@@ -617,6 +652,7 @@
             this.rbStuntType.TabStop = true;
             this.rbStuntType.Text = "Type";
             this.rbStuntType.UseVisualStyleBackColor = true;
+            this.rbStuntType.CheckedChanged += new System.EventHandler(this.rbStuntType_CheckedChanged);
             // 
             // rbStuntMax
             // 
@@ -627,6 +663,7 @@
             this.rbStuntMax.TabIndex = 1;
             this.rbStuntMax.Text = "Max";
             this.rbStuntMax.UseVisualStyleBackColor = true;
+            this.rbStuntMax.CheckedChanged += new System.EventHandler(this.rbStuntMax_CheckedChanged);
             // 
             // cbStunt
             // 
@@ -638,6 +675,7 @@
             this.cbStunt.Size = new System.Drawing.Size(120, 20);
             this.cbStunt.TabIndex = 36;
             this.cbStunt.Text = "Stunt";
+            this.TexturesToolTip.SetToolTip(this.cbStunt, "Textures used in STUNT (cutscene) modules.");
             this.cbStunt.UseVisualStyleBackColor = true;
             this.cbStunt.CheckedChanged += new System.EventHandler(this.cbStunt_CheckedChanged);
             // 
@@ -665,6 +703,7 @@
             this.rbVehiclesType.TabStop = true;
             this.rbVehiclesType.Text = "Type";
             this.rbVehiclesType.UseVisualStyleBackColor = true;
+            this.rbVehiclesType.CheckedChanged += new System.EventHandler(this.rbVehiclesType_CheckedChanged);
             // 
             // rbVehiclesMax
             // 
@@ -675,6 +714,7 @@
             this.rbVehiclesMax.TabIndex = 1;
             this.rbVehiclesMax.Text = "Max";
             this.rbVehiclesMax.UseVisualStyleBackColor = true;
+            this.rbVehiclesMax.CheckedChanged += new System.EventHandler(this.rbVehiclesMax_CheckedChanged);
             // 
             // cbVehicles
             // 
@@ -686,6 +726,7 @@
             this.cbVehicles.Size = new System.Drawing.Size(120, 20);
             this.cbVehicles.TabIndex = 38;
             this.cbVehicles.Text = "Vehicles";
+            this.TexturesToolTip.SetToolTip(this.cbVehicles, "Textures used by vehicles.");
             this.cbVehicles.UseVisualStyleBackColor = true;
             this.cbVehicles.CheckedChanged += new System.EventHandler(this.cbVehicles_CheckedChanged);
             // 
@@ -713,6 +754,7 @@
             this.rbWeaponsType.TabStop = true;
             this.rbWeaponsType.Text = "Type";
             this.rbWeaponsType.UseVisualStyleBackColor = true;
+            this.rbWeaponsType.CheckedChanged += new System.EventHandler(this.rbWeaponsType_CheckedChanged);
             // 
             // rbWeaponsMax
             // 
@@ -723,6 +765,7 @@
             this.rbWeaponsMax.TabIndex = 1;
             this.rbWeaponsMax.Text = "Max";
             this.rbWeaponsMax.UseVisualStyleBackColor = true;
+            this.rbWeaponsMax.CheckedChanged += new System.EventHandler(this.rbWeaponsMax_CheckedChanged);
             // 
             // cbWeapons
             // 
@@ -734,6 +777,7 @@
             this.cbWeapons.Size = new System.Drawing.Size(120, 20);
             this.cbWeapons.TabIndex = 40;
             this.cbWeapons.Text = "Weapons";
+            this.TexturesToolTip.SetToolTip(this.cbWeapons, "Textures used in the 3D rendering of weapons.");
             this.cbWeapons.UseVisualStyleBackColor = true;
             this.cbWeapons.CheckedChanged += new System.EventHandler(this.cbWeapons_CheckedChanged);
             // 
@@ -761,6 +805,7 @@
             this.rbOtherType.TabStop = true;
             this.rbOtherType.Text = "Type";
             this.rbOtherType.UseVisualStyleBackColor = true;
+            this.rbOtherType.CheckedChanged += new System.EventHandler(this.rbOtherType_CheckedChanged);
             // 
             // rbOtherMax
             // 
@@ -771,6 +816,7 @@
             this.rbOtherMax.TabIndex = 1;
             this.rbOtherMax.Text = "Max";
             this.rbOtherMax.UseVisualStyleBackColor = true;
+            this.rbOtherMax.CheckedChanged += new System.EventHandler(this.rbOtherMax_CheckedChanged);
             // 
             // cbOther
             // 
@@ -782,6 +828,8 @@
             this.cbOther.Size = new System.Drawing.Size(120, 20);
             this.cbOther.TabIndex = 42;
             this.cbOther.Text = "Other";
+            this.TexturesToolTip.SetToolTip(this.cbOther, "Anything that does not fall into one of the other categories\r\n(there are quite a " +
+        "few, actually).");
             this.cbOther.UseVisualStyleBackColor = true;
             this.cbOther.CheckedChanged += new System.EventHandler(this.cbOther_CheckedChanged);
             // 
@@ -806,6 +854,7 @@
             this.rbTextLow.TabStop = true;
             this.rbTextLow.Text = "Low Quality";
             this.rbTextLow.UseVisualStyleBackColor = true;
+            this.rbTextLow.CheckedChanged += new System.EventHandler(this.rbTextLow_CheckedChanged);
             // 
             // rbTextMed
             // 
@@ -817,6 +866,7 @@
             this.rbTextMed.TabStop = true;
             this.rbTextMed.Text = "Med Quality";
             this.rbTextMed.UseVisualStyleBackColor = true;
+            this.rbTextMed.CheckedChanged += new System.EventHandler(this.rbTextMed_CheckedChanged);
             // 
             // rbTextHigh
             // 
@@ -829,6 +879,7 @@
             this.rbTextHigh.TabStop = true;
             this.rbTextHigh.Text = "High Quality";
             this.rbTextHigh.UseVisualStyleBackColor = true;
+            this.rbTextHigh.CheckedChanged += new System.EventHandler(this.rbTextHigh_CheckedChanged);
             // 
             // label1
             // 
@@ -842,6 +893,7 @@
             // 
             // lWarning
             // 
+            this.lWarning.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lWarning.Location = new System.Drawing.Point(280, 360);
             this.lWarning.Name = "lWarning";
             this.lWarning.Size = new System.Drawing.Size(110, 110);
@@ -851,6 +903,7 @@
             // 
             // label2
             // 
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label2.Location = new System.Drawing.Point(280, 150);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(110, 200);
@@ -1050,5 +1103,6 @@
         private System.Windows.Forms.Button bToggleAll;
         private System.Windows.Forms.Button bAllMax;
         private System.Windows.Forms.Button bTypeAll;
+        private System.Windows.Forms.ToolTip TexturesToolTip;
     }
 }

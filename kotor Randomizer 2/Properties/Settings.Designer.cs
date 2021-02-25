@@ -517,10 +517,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextureRandomizeCubeMaps {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel TextureRandomizeCubeMaps {
             get {
-                return ((int)(this["TextureRandomizeCubeMaps"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["TextureRandomizeCubeMaps"]));
             }
             set {
                 this["TextureRandomizeCubeMaps"] = value;
@@ -529,10 +529,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextureRandomizeCreatures {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel TextureRandomizeCreatures {
             get {
-                return ((int)(this["TextureRandomizeCreatures"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["TextureRandomizeCreatures"]));
             }
             set {
                 this["TextureRandomizeCreatures"] = value;
@@ -541,10 +541,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextureRandomizeEffects {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel TextureRandomizeEffects {
             get {
-                return ((int)(this["TextureRandomizeEffects"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["TextureRandomizeEffects"]));
             }
             set {
                 this["TextureRandomizeEffects"] = value;
@@ -553,10 +553,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextureRandomizeItems {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel TextureRandomizeItems {
             get {
-                return ((int)(this["TextureRandomizeItems"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["TextureRandomizeItems"]));
             }
             set {
                 this["TextureRandomizeItems"] = value;
@@ -565,10 +565,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextureRandomizePlanetary {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel TextureRandomizePlanetary {
             get {
-                return ((int)(this["TextureRandomizePlanetary"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["TextureRandomizePlanetary"]));
             }
             set {
                 this["TextureRandomizePlanetary"] = value;
@@ -577,10 +577,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextureRandomizeNPC {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel TextureRandomizeNPC {
             get {
-                return ((int)(this["TextureRandomizeNPC"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["TextureRandomizeNPC"]));
             }
             set {
                 this["TextureRandomizeNPC"] = value;
@@ -589,10 +589,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextureRandomizePlayHeads {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel TextureRandomizePlayHeads {
             get {
-                return ((int)(this["TextureRandomizePlayHeads"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["TextureRandomizePlayHeads"]));
             }
             set {
                 this["TextureRandomizePlayHeads"] = value;
@@ -601,10 +601,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextureRandomizePlayBodies {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel TextureRandomizePlayBodies {
             get {
-                return ((int)(this["TextureRandomizePlayBodies"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["TextureRandomizePlayBodies"]));
             }
             set {
                 this["TextureRandomizePlayBodies"] = value;
@@ -613,10 +613,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextureRandomizePlaceables {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel TextureRandomizePlaceables {
             get {
-                return ((int)(this["TextureRandomizePlaceables"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["TextureRandomizePlaceables"]));
             }
             set {
                 this["TextureRandomizePlaceables"] = value;
@@ -625,10 +625,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextureRandomizeParty {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel TextureRandomizeParty {
             get {
-                return ((int)(this["TextureRandomizeParty"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["TextureRandomizeParty"]));
             }
             set {
                 this["TextureRandomizeParty"] = value;
@@ -637,10 +637,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextureRandomizeStunt {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel TextureRandomizeStunt {
             get {
-                return ((int)(this["TextureRandomizeStunt"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["TextureRandomizeStunt"]));
             }
             set {
                 this["TextureRandomizeStunt"] = value;
@@ -649,10 +649,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextureRandomizeVehicles {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel TextureRandomizeVehicles {
             get {
-                return ((int)(this["TextureRandomizeVehicles"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["TextureRandomizeVehicles"]));
             }
             set {
                 this["TextureRandomizeVehicles"] = value;
@@ -661,10 +661,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextureRandomizeWeapons {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel TextureRandomizeWeapons {
             get {
-                return ((int)(this["TextureRandomizeWeapons"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["TextureRandomizeWeapons"]));
             }
             set {
                 this["TextureRandomizeWeapons"] = value;
@@ -673,10 +673,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TextureRandomizeOther {
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::kotor_Randomizer_2.RandomizationLevel TextureRandomizeOther {
             get {
-                return ((int)(this["TextureRandomizeOther"]));
+                return ((global::kotor_Randomizer_2.RandomizationLevel)(this["TextureRandomizeOther"]));
             }
             set {
                 this["TextureRandomizeOther"] = value;
@@ -760,10 +760,10 @@ namespace kotor_Randomizer_2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TexturePack {
+        [global::System.Configuration.DefaultSettingValueAttribute("HighQuality")]
+        public global::kotor_Randomizer_2.TexturePack TexturePack {
             get {
-                return ((int)(this["TexturePack"]));
+                return ((global::kotor_Randomizer_2.TexturePack)(this["TexturePack"]));
             }
             set {
                 this["TexturePack"] = value;

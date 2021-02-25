@@ -89,6 +89,20 @@ namespace kotor_Randomizer_2
         MatchSimLengthStrings = 0x10, // 0b00010000
     }
 
+    [Serializable]
+    public enum TexturePack
+    {
+        /// <summary> High Quality </summary>
+        [Description("High Quality")]
+        HighQuality = 0,
+        /// <summary> Medium Quality </summary>
+        [Description("Medium Quality")]
+        MedQuality = 1,
+        /// <summary> Low Quality </summary>
+        [Description("Low Quality")]
+        LowQuality = 2,
+    }
+
     public class Globals
     {
         #region Constants
