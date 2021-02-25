@@ -271,6 +271,19 @@ namespace kotor_Randomizer_2
         {
             if (false == FocusOpenForm<RandoForm>())
             {
+                if (!Directory.Exists(Properties.Settings.Default.Kotor1Path))
+                {
+                    // Kotor1Path directory doesn't exist.
+                    MessageBox.Show(this, "Kotor 1 path does not exist. Please update your path settings.", "Path Error");
+                    return;
+                }
+                else if (!File.Exists(Path.Combine(Properties.Settings.Default.Kotor1Path, "swkotor.exe")))
+                {
+                    // Kotor1Path directory doesn't contain swkotor.exe.
+                    MessageBox.Show(this, "Kotor 1 path does not contain 'swkotor.exe' and is therefore an invalid directory. Please update your path settings.", "Path Error");
+                    return;
+                }
+
                 if (Properties.Settings.Default.KotorIsRandomized)
                 {
                     randomize_button.Text = "Randomize!";

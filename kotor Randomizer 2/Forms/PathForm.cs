@@ -18,7 +18,7 @@ namespace kotor_Randomizer_2
             InitializeComponent();
 
             // Set up initial state from the previously saved settings.
-            tbKotor1Path.Text = Properties.Settings.Default.Kotor1Path;
+            Kotor1Path = Properties.Settings.Default.Kotor1Path;
         }
 
         public string Kotor1Path
@@ -27,21 +27,24 @@ namespace kotor_Randomizer_2
             set { tbKotor1Path.Text = value; }
         }
 
-        //I have my doubts that I will expand this to kotor II, but just in case.
+        // I have my doubts that I will expand this to kotor II, but just in case.
         public string Kotor2Path
         {
             get { return tbKotor2Path.Text; }
             set { tbKotor2Path.Text = value; }
         }
 
-
+        private void tbKotor1Path_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Kotor1Path = Kotor1Path;
+        }
 
         private void bKotor1PathBrowse_Click(object sender, EventArgs e)
         {
-            fbdKotor1.SelectedPath = tbKotor1Path.Text;
+            fbdKotor1.SelectedPath = Kotor1Path;
             if (fbdKotor1.ShowDialog() == DialogResult.OK)
             {
-                tbKotor1Path.Text = fbdKotor1.SelectedPath;
+                Kotor1Path = fbdKotor1.SelectedPath;
             }
         }
 
@@ -62,7 +65,7 @@ namespace kotor_Randomizer_2
                 DirectoryInfo di = new DirectoryInfo(path);
                 if (di.Exists)
                 {
-                    tbKotor1Path.Text = path;
+                    Kotor1Path = path;
                     K1PathFound = true;
                     break;
                 }
@@ -74,13 +77,12 @@ namespace kotor_Randomizer_2
             }
             else
             {
-                MessageBox.Show(this, "KotOR 1 path not found. Please enter it manually.");
+                MessageBox.Show(this, "KotOR 1 path not found. Please search for it manually.");
             }
         }
 
         private void PathForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Properties.Settings.Default.Kotor1Path = Kotor1Path;
             Properties.Settings.Default.Save();
         }
     }
