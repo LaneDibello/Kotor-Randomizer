@@ -289,9 +289,40 @@ namespace kotor_Randomizer_2
                     // Add a Dummy Feat to prevent the feats menu from crashing.
                     (g.Top_Level.Fields.Where(x => x.Label == "FeatList").FirstOrDefault() as GFF.LIST).Structs.Add(new GFF.STRUCT("", 1, new List<GFF.FIELD>() {new GFF.WORD("Feat", 27) }));
 
+                    // If they are a Jedi class, add a Power to prevent powers menu from crashing.
+                    var charClassList = g.Top_Level.Fields.First(x => x.Label == "ClassList") as GFF.LIST;
+                    foreach (var classStruct in charClassList.Structs)
+                    {
+                        var charClassValue = (classStruct.Fields.First(x => x.Label == "Class") as GFF.INT).Value;
+                        if (charClassValue == 3 ||  // Jedi Guardian
+                            charClassValue == 4 ||  // Jedi Consular
+                            charClassValue == 5)    // Jedi Sentinel
+                        {
+                            // Build a power to add to the list.
+                            GFF.STRUCT affectMind = new GFF.STRUCT("", 3, new List<GFF.FIELD>()
+                            {
+                                new GFF.WORD("Spell", 6),
+                                new GFF.BYTE("SpellMetaMagic", 0),
+                                new GFF.BYTE("SpellFlags", 1),
+                            });
+
+                            if (!(classStruct.Fields.FirstOrDefault(x => x.Label == "KnownList0") is GFF.LIST knownList))
+                            {
+                                // KnownList0 doesn't exist. Create it and add Affect Mind.
+                                classStruct.Fields.Add(new GFF.LIST("KnownList0", new List<GFF.STRUCT>() { affectMind }));
+                            }
+                            else if (knownList.Structs.Count == 0)
+                            {
+                                // KnownList0 exists but is empty. Add affect Mind.
+                                knownList.Structs.Add(affectMind);
+                            }
+
+                            break;
+                        }
+                    }
+
                     g.WriteToFile(paths.Override + ID.Item2 + ".utc");
                 }
-
             }
 
             // Swoop Rando
