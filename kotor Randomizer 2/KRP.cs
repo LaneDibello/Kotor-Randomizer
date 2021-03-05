@@ -19,7 +19,6 @@ namespace kotor_Randomizer_2
             {
                 string versionText = new string(br.ReadChars(VERSION.Length));
 
-
                 if (versionText == VERSION)    // Version Check
                 {
                     // Category Booleans
@@ -39,21 +38,14 @@ namespace kotor_Randomizer_2
                         // Check that Module data is present
                         if (new string(br.ReadChars(4)) != "MODU") { throw new IOException("Module Randomization is Active, but no such preset data is found. Is the file corrupt?"); }
 
-                        // Initialize the BoundModules global if it hasn't been already
-                        if (!Properties.Settings.Default.ModulesInitialized)
-                        {
-                            foreach (string st in Globals.MODULES)
-                            {
-                                Globals.BoundModules.Add(new Globals.Mod_Entry(st, true));
-                            }
-                            Properties.Settings.Default.ModulesInitialized = true;
-                        }
-
                         // Pull the list of omitted modules from the save
-                        List<string> omit_mods = new List<string>();
+                        System.Collections.Specialized.StringCollection omittedMods = Properties.Settings.Default.OmittedModules;
+                        omittedMods.Clear();
+
+                        StringBuilder sb = new StringBuilder();
                         while (br.PeekChar() != '\n')
                         {
-                            StringBuilder sb = new StringBuilder();
+                            sb.Clear();
 
                             while (br.PeekChar() != '\0')
                             {
@@ -61,21 +53,17 @@ namespace kotor_Randomizer_2
                             }
                             br.ReadChar();
 
-                            omit_mods.Add(sb.ToString());
+                            omittedMods.Add(sb.ToString());
                         }
                         br.ReadChar();
 
-                        // Load the omitted preset into BoundModules
                         for (int i = 0; i < Globals.BoundModules.Count; i++)
                         {
-                            Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, false);
-
-                            if (omit_mods.Contains(Globals.BoundModules[i].Code))
-                            {
-                                Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, true);
-                            }
+                            Globals.BoundModules[i] = new Globals.Mod_Entry(
+                                Globals.BoundModules[i].Code,
+                                omittedMods.Contains(Globals.BoundModules[i].Code)
+                                );
                         }
-                        Properties.Settings.Default.ModulesInitialized = true;
 
                         // Load bool settings
                         Properties.Settings.Default.ModuleExtrasValue = 0;
@@ -91,6 +79,7 @@ namespace kotor_Randomizer_2
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.VulkarSpiceLZ; }
 
                         // Load reachability settings
+                        Properties.Settings.Default.UseRandoRules = br.ReadBoolean();
                         Properties.Settings.Default.VerifyReachability = br.ReadBoolean();
                         Properties.Settings.Default.IgnoreOnceEdges = br.ReadBoolean();
                         Properties.Settings.Default.AllowGlitchClip = br.ReadBoolean();
@@ -335,7 +324,6 @@ namespace kotor_Randomizer_2
                 {
                     bw.Write("MODU".ToCharArray());
 
-                    // FIX LATER - Possibility that BoundModules is empty if Module Form never opened.
                     foreach (Globals.Mod_Entry me in Globals.BoundModules.Where(x => x.Omitted))
                     {
                         bw.Write(me.Code.ToCharArray());
@@ -354,6 +342,16 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators));  // Fixed Leviathan Elevators
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ));    // Add Vulkar Spice Loading Zone
 
+                    bw.Write(Properties.Settings.Default.UseRandoRules);
+                    bw.Write(Properties.Settings.Default.VerifyReachability);
+                    bw.Write(Properties.Settings.Default.IgnoreOnceEdges);
+                    bw.Write(Properties.Settings.Default.AllowGlitchClip);
+                    bw.Write(Properties.Settings.Default.AllowGlitchDlz);
+                    bw.Write(Properties.Settings.Default.AllowGlitchFlu);
+                    bw.Write(Properties.Settings.Default.AllowGlitchGpw);
+                    bw.Write(Properties.Settings.Default.GoalIsMalak);
+                    bw.Write(Properties.Settings.Default.GoalIsPazaak);
+                    bw.Write(Properties.Settings.Default.GoalIsStarMaps);
                 }
                 #endregion
                 #region Items

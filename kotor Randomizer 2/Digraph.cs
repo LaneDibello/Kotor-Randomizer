@@ -253,7 +253,7 @@ namespace kotor_Randomizer_2
                 CheckReachabilityDFS(touched);
             } while (ReachableUpdated);
 
-            Console.WriteLine($"Time used to create digraph and check reachability...{sw.Elapsed}");
+            Console.WriteLine($" > Time used to create digraph and check reachability...{sw.Elapsed}");
         }
 
         /// <summary>
@@ -521,9 +521,21 @@ namespace kotor_Randomizer_2
         public bool IsGoalReachable()
         {
             bool goal = true;
-            if (GoalIsMalak) goal &= IsMalakReachable();
-            if (GoalIsPazaak) goal &= IsPazaakReachable();
-            if (GoalIsStarMap) goal &= IsStarMapReachable();
+            if (GoalIsMalak)
+            {
+                goal &= IsMalakReachable();
+                if (!goal) Console.WriteLine(" - Goal unreachable: Malak");
+            }
+            if (goal && GoalIsPazaak)
+            {
+                goal &= IsPazaakReachable();
+                if (!goal) Console.WriteLine(" - Goal unreachable: Pazaak");
+            }
+            if (goal && GoalIsStarMap)
+            {
+                goal &= IsStarMapReachable();
+                if (!goal) Console.WriteLine(" - Goal unreachable: Star Map");
+            }
             return goal;
         }
         #endregion
