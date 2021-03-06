@@ -55,6 +55,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateSpoilersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openSpoilersFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeAllOtherWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.module_radio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.item_radio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sound_radio)).BeginInit();
@@ -423,14 +424,15 @@
             this.cms1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.helpToolStripMenuItem,
             this.generateSpoilersToolStripMenuItem,
-            this.openSpoilersFolderToolStripMenuItem});
+            this.openSpoilersFolderToolStripMenuItem,
+            this.closeAllOtherWindowsToolStripMenuItem});
             this.cms1.Name = "contextMenuStrip1";
-            this.cms1.Size = new System.Drawing.Size(181, 92);
+            this.cms1.Size = new System.Drawing.Size(192, 114);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.helpToolStripMenuItem.Text = "Help";
             this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
@@ -438,16 +440,23 @@
             // 
             this.generateSpoilersToolStripMenuItem.Enabled = false;
             this.generateSpoilersToolStripMenuItem.Name = "generateSpoilersToolStripMenuItem";
-            this.generateSpoilersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.generateSpoilersToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.generateSpoilersToolStripMenuItem.Text = "Generate Spoilers";
             this.generateSpoilersToolStripMenuItem.Click += new System.EventHandler(this.generateSpoilersToolStripMenuItem_Click);
             // 
             // openSpoilersFolderToolStripMenuItem
             // 
             this.openSpoilersFolderToolStripMenuItem.Name = "openSpoilersFolderToolStripMenuItem";
-            this.openSpoilersFolderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openSpoilersFolderToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.openSpoilersFolderToolStripMenuItem.Text = "Open Spoilers Folder";
             this.openSpoilersFolderToolStripMenuItem.Click += new System.EventHandler(this.openSpoilersFolderToolStripMenuItem_Click);
+            // 
+            // closeAllOtherWindowsToolStripMenuItem
+            // 
+            this.closeAllOtherWindowsToolStripMenuItem.Name = "closeAllOtherWindowsToolStripMenuItem";
+            this.closeAllOtherWindowsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.closeAllOtherWindowsToolStripMenuItem.Text = "Close All Other Windows";
+            this.closeAllOtherWindowsToolStripMenuItem.Click += new System.EventHandler(this.closeAllOtherWindowsToolStripMenuItem_Click);
             // 
             // StartForm
             // 
@@ -527,6 +536,7 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateSpoilersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openSpoilersFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeAllOtherWindowsToolStripMenuItem;
     }
 }
 

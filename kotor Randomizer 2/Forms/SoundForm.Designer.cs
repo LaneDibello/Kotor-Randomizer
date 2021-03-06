@@ -214,6 +214,7 @@
             this.rbAreaMusicType.TabStop = true;
             this.rbAreaMusicType.Text = "Type";
             this.rbAreaMusicType.UseVisualStyleBackColor = true;
+            this.rbAreaMusicType.CheckedChanged += new System.EventHandler(this.rbAreaMusicType_CheckedChanged);
             // 
             // rbAreaMusicMax
             // 
@@ -224,6 +225,7 @@
             this.rbAreaMusicMax.TabIndex = 1;
             this.rbAreaMusicMax.Text = "Max";
             this.rbAreaMusicMax.UseVisualStyleBackColor = true;
+            this.rbAreaMusicMax.CheckedChanged += new System.EventHandler(this.rbAreaMusicMax_CheckedChanged);
             // 
             // flpCutsceneNoise
             // 
@@ -259,6 +261,7 @@
             this.rbCutsceneNoiseType.TabStop = true;
             this.rbCutsceneNoiseType.Text = "Type";
             this.rbCutsceneNoiseType.UseVisualStyleBackColor = true;
+            this.rbCutsceneNoiseType.CheckedChanged += new System.EventHandler(this.rbCutsceneNoiseType_CheckedChanged);
             // 
             // rbCutsceneNoiseMax
             // 
@@ -269,6 +272,7 @@
             this.rbCutsceneNoiseMax.TabIndex = 1;
             this.rbCutsceneNoiseMax.Text = "Max";
             this.rbCutsceneNoiseMax.UseVisualStyleBackColor = true;
+            this.rbCutsceneNoiseMax.CheckedChanged += new System.EventHandler(this.rbCutsceneNoiseMax_CheckedChanged);
             // 
             // flpAmbientNoise
             // 
@@ -304,6 +308,7 @@
             this.rbAmbientNoiseType.TabStop = true;
             this.rbAmbientNoiseType.Text = "Type";
             this.rbAmbientNoiseType.UseVisualStyleBackColor = true;
+            this.rbAmbientNoiseType.CheckedChanged += new System.EventHandler(this.rbAmbientNoiseType_CheckedChanged);
             // 
             // rbAmbientNoiseMax
             // 
@@ -314,6 +319,7 @@
             this.rbAmbientNoiseMax.TabIndex = 1;
             this.rbAmbientNoiseMax.Text = "Max";
             this.rbAmbientNoiseMax.UseVisualStyleBackColor = true;
+            this.rbAmbientNoiseMax.CheckedChanged += new System.EventHandler(this.rbAmbientNoiseMax_CheckedChanged);
             // 
             // flpBattleMusic
             // 
@@ -349,6 +355,7 @@
             this.rbBattleMusicType.TabStop = true;
             this.rbBattleMusicType.Text = "Type";
             this.rbBattleMusicType.UseVisualStyleBackColor = true;
+            this.rbBattleMusicType.CheckedChanged += new System.EventHandler(this.rbBattleMusicType_CheckedChanged);
             // 
             // rbBattleMusicMax
             // 
@@ -359,6 +366,7 @@
             this.rbBattleMusicMax.TabIndex = 1;
             this.rbBattleMusicMax.Text = "Max";
             this.rbBattleMusicMax.UseVisualStyleBackColor = true;
+            this.rbBattleMusicMax.CheckedChanged += new System.EventHandler(this.rbBattleMusicMax_CheckedChanged);
             // 
             // flpPartySounds
             // 
@@ -384,6 +392,7 @@
             this.rbPartySoundsActions.TabStop = true;
             this.rbPartySoundsActions.Text = "Actions";
             this.rbPartySoundsActions.UseVisualStyleBackColor = true;
+            this.rbPartySoundsActions.CheckedChanged += new System.EventHandler(this.rbPartySoundsActions_CheckedChanged);
             // 
             // rbPartySoundsType
             // 
@@ -394,6 +403,7 @@
             this.rbPartySoundsType.TabIndex = 0;
             this.rbPartySoundsType.Text = "Type";
             this.rbPartySoundsType.UseVisualStyleBackColor = true;
+            this.rbPartySoundsType.CheckedChanged += new System.EventHandler(this.rbPartySoundsType_CheckedChanged);
             // 
             // rbPartySoundsMax
             // 
@@ -404,6 +414,7 @@
             this.rbPartySoundsMax.TabIndex = 1;
             this.rbPartySoundsMax.Text = "Max";
             this.rbPartySoundsMax.UseVisualStyleBackColor = true;
+            this.rbPartySoundsMax.CheckedChanged += new System.EventHandler(this.rbPartySoundsMax_CheckedChanged);
             // 
             // flpNpcSounds
             // 

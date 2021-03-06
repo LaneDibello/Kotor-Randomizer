@@ -54,13 +54,13 @@ namespace kotor_Randomizer_2
             switch (Properties.Settings.Default.TexturePack)
             {
                 default:
-                case 0: // High quality
+                case TexturePack.HighQuality:
                     pack_name = "\\swpc_tex_tpa.erf";
                     break;
-                case 1: // Medium quality
+                case TexturePack.MedQuality:
                     pack_name = "\\swpc_tex_tpb.erf";
                     break;
-                case 2: // Low quality
+                case TexturePack.LowQuality:
                     pack_name = "\\swpc_tex_tpc.erf";
                     break;
             }
@@ -74,22 +74,22 @@ namespace kotor_Randomizer_2
             }
 
             // Handle categories.
-            HandleCategory(e, RegexCubeMaps, Properties.Settings.Default.TextureRandomizeCubeMaps);
-            HandleCategory(e, RegexCreatures, Properties.Settings.Default.TextureRandomizeCreatures);
-            HandleCategory(e, RegexEffects, Properties.Settings.Default.TextureRandomizeEffects);
-            HandleCategory(e, RegexItems, Properties.Settings.Default.TextureRandomizeItems);
-            HandleCategory(e, RegexPlanetary, Properties.Settings.Default.TextureRandomizePlanetary);
-            HandleCategory(e, RegexNPC, Properties.Settings.Default.TextureRandomizeNPC);
-            HandleCategory(e, RegexPlayHeads, Properties.Settings.Default.TextureRandomizePlayHeads);
+            HandleCategory(e, RegexCubeMaps,   Properties.Settings.Default.TextureRandomizeCubeMaps);
+            HandleCategory(e, RegexCreatures,  Properties.Settings.Default.TextureRandomizeCreatures);
+            HandleCategory(e, RegexEffects,    Properties.Settings.Default.TextureRandomizeEffects);
+            HandleCategory(e, RegexItems,      Properties.Settings.Default.TextureRandomizeItems);
+            HandleCategory(e, RegexPlanetary,  Properties.Settings.Default.TextureRandomizePlanetary);
+            HandleCategory(e, RegexNPC,        Properties.Settings.Default.TextureRandomizeNPC);
+            HandleCategory(e, RegexPlayHeads,  Properties.Settings.Default.TextureRandomizePlayHeads);
             HandleCategory(e, RegexPlayBodies, Properties.Settings.Default.TextureRandomizePlayBodies);
             HandleCategory(e, RegexPlaceables, Properties.Settings.Default.TextureRandomizePlaceables);
-            HandleCategory(e, RegexParty, Properties.Settings.Default.TextureRandomizeParty);
-            HandleCategory(e, RegexStunt, Properties.Settings.Default.TextureRandomizeStunt);
-            HandleCategory(e, RegexVehicles, Properties.Settings.Default.TextureRandomizeVehicles);
-            HandleCategory(e, RegexWeapons, Properties.Settings.Default.TextureRandomizeWeapons);
+            HandleCategory(e, RegexParty,      Properties.Settings.Default.TextureRandomizeParty);
+            HandleCategory(e, RegexStunt,      Properties.Settings.Default.TextureRandomizeStunt);
+            HandleCategory(e, RegexVehicles,   Properties.Settings.Default.TextureRandomizeVehicles);
+            HandleCategory(e, RegexWeapons,    Properties.Settings.Default.TextureRandomizeWeapons);
 
             // Handle other.
-            switch ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeOther)
+            switch (Properties.Settings.Default.TextureRandomizeOther)
             {
                 default:
                 case RandomizationLevel.None:
@@ -162,9 +162,9 @@ namespace kotor_Randomizer_2
             );
         }
 
-        private static void HandleCategory(ERF e, Regex r, int randomizationlevel)
+        private static void HandleCategory(ERF e, Regex r, RandomizationLevel randomizationlevel)
         {
-            switch ((RandomizationLevel)randomizationlevel)
+            switch (randomizationlevel)
             {
                 default:
                 case RandomizationLevel.None:
@@ -200,23 +200,8 @@ namespace kotor_Randomizer_2
             i++;
 
             // Texture Randomization Settings
-            string texturePack = "";
-            switch (Properties.Settings.Default.TexturePack)
-            {
-                default:
-                case 0:
-                    texturePack = "High Quality";
-                    break;
-                case 1:
-                    texturePack = "Med Quality";
-                    break;
-                case 2:
-                    texturePack = "Low Quality";
-                    break;
-            }
-
             ws.Cell(i, 1).Value = "Texture Pack";
-            ws.Cell(i, 2).Value = texturePack;
+            ws.Cell(i, 2).Value = Properties.Settings.Default.TexturePack.ToDescription();
             ws.Cell(i, 1).Style.Font.Bold = true;
             i += 2;     // Skip a row.
 
@@ -230,20 +215,20 @@ namespace kotor_Randomizer_2
 
             var settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Cube Maps", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeCubeMaps).ToString()),
-                new Tuple<string, string>("Creatures", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeCreatures).ToString()),
-                new Tuple<string, string>("Effects", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeEffects).ToString()),
-                new Tuple<string, string>("Items", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeItems).ToString()),
-                new Tuple<string, string>("Planetary", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizePlanetary).ToString()),
-                new Tuple<string, string>("NPC", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeNPC).ToString()),
-                new Tuple<string, string>("Player Heads", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizePlayHeads).ToString()),
-                new Tuple<string, string>("Player Bodies", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizePlayBodies).ToString()),
-                new Tuple<string, string>("Placeables", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizePlaceables).ToString()),
-                new Tuple<string, string>("Party", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeParty).ToString()),
-                new Tuple<string, string>("Stunt", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeStunt).ToString()),
-                new Tuple<string, string>("Vehicles", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeVehicles).ToString()),
-                new Tuple<string, string>("Weapons", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeWeapons).ToString()),
-                new Tuple<string, string>("Other", ((RandomizationLevel)Properties.Settings.Default.TextureRandomizeOther).ToString()),
+                new Tuple<string, string>("Cube Maps", Properties.Settings.Default.TextureRandomizeCubeMaps.ToString()),
+                new Tuple<string, string>("Creatures", Properties.Settings.Default.TextureRandomizeCreatures.ToString()),
+                new Tuple<string, string>("Effects", Properties.Settings.Default.TextureRandomizeEffects.ToString()),
+                new Tuple<string, string>("Items", Properties.Settings.Default.TextureRandomizeItems.ToString()),
+                new Tuple<string, string>("Planetary", Properties.Settings.Default.TextureRandomizePlanetary.ToString()),
+                new Tuple<string, string>("NPC", Properties.Settings.Default.TextureRandomizeNPC.ToString()),
+                new Tuple<string, string>("Player Heads", Properties.Settings.Default.TextureRandomizePlayHeads.ToString()),
+                new Tuple<string, string>("Player Bodies", Properties.Settings.Default.TextureRandomizePlayBodies.ToString()),
+                new Tuple<string, string>("Placeables", Properties.Settings.Default.TextureRandomizePlaceables.ToString()),
+                new Tuple<string, string>("Party", Properties.Settings.Default.TextureRandomizeParty.ToString()),
+                new Tuple<string, string>("Stunt", Properties.Settings.Default.TextureRandomizeStunt.ToString()),
+                new Tuple<string, string>("Vehicles", Properties.Settings.Default.TextureRandomizeVehicles.ToString()),
+                new Tuple<string, string>("Weapons", Properties.Settings.Default.TextureRandomizeWeapons.ToString()),
+                new Tuple<string, string>("Other", Properties.Settings.Default.TextureRandomizeOther.ToString()),
                 new Tuple<string, string>("", ""),  // Skip a row.
             };
 

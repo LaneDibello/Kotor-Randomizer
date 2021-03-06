@@ -20,6 +20,22 @@ namespace kotor_Randomizer_2
             InitializeComponent();
         }
 
+        public bool IsInProgress
+        {
+            get { return bwRandomizing.IsBusy || bwUnrandomizing.IsBusy; }
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int PARAM_NOCLOSE = 0x200;
+                CreateParams param = base.CreateParams;
+                param.ClassStyle = param.ClassStyle | PARAM_NOCLOSE;
+                return param;
+            }
+        }
+
         #region Private Properties
 
         private string curr_task = "";
@@ -39,7 +55,7 @@ namespace kotor_Randomizer_2
 
             if (ActiveCategories == 0)
             {
-                MessageBox.Show(Properties.Resources.ErrorNoRandomization);
+                MessageBox.Show(Properties.Resources.ErrorNoRandomization, Properties.Resources.RandomizationError);
                 return;
             }
             ActiveCategories++;
@@ -161,7 +177,7 @@ namespace kotor_Randomizer_2
                 catch (Exception e)
                 {
                     // Catch any randomization errors (e.g., reachability failure) and print a message.
-                    MessageBox.Show($"Error encountered during randomization: {Environment.NewLine}{e.Message}", "Randomization Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($"Error encountered during randomization: {Environment.NewLine}{e.Message}", Properties.Resources.RandomizationError, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 finally
                 {
@@ -192,7 +208,7 @@ namespace kotor_Randomizer_2
         {
             if (!File.Exists(paths.RANDOMIZED_LOG))
             {
-                MessageBox.Show(Properties.Resources.ErrorNotRandomized);
+                MessageBox.Show(Properties.Resources.ErrorNotRandomized, Properties.Resources.RandomizationError);
                 return;
             }
 
@@ -215,7 +231,7 @@ namespace kotor_Randomizer_2
         {
             if (!File.Exists(paths.RANDOMIZED_LOG))
             {
-                MessageBox.Show(Properties.Resources.ErrorNotRandomized);
+                MessageBox.Show(Properties.Resources.ErrorNotRandomized, Properties.Resources.RandomizationError);
                 return;
             }
 
@@ -267,7 +283,7 @@ namespace kotor_Randomizer_2
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Exception caught while {curr_task}. {e.Message}");
+                MessageBox.Show($"Exception caught while {curr_task}. {e.Message}", Properties.Resources.RandomizationError);
             }
         }
 
@@ -341,7 +357,8 @@ namespace kotor_Randomizer_2
 
         private void bDone_Click(object sender, EventArgs e)
         {
-            Close();
+            // Avoid closing the window if background workers are still running.
+            if (!IsInProgress) Close();
         }
 
         private void bwRandomizing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

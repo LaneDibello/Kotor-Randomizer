@@ -29,6 +29,8 @@ The 'Texture Packs' refer the the three quality settings (low, medium, and high)
 
 > Party - The textures used by party members.
 
+> Stunt - The textures used by STUNT (cutscene) modules.
+
 > Vehicles - Vehicle textures.
 
 > Weapons - The textures used in the 3D rendering of weapons.

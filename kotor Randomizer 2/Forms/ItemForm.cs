@@ -14,24 +14,24 @@ namespace kotor_Randomizer_2
             lbOmitItems.DataSource = Globals.OmitItems;
 
             //Set Intiial Values
-            RandomizeArmbands = (RandomizationLevel)Properties.Settings.Default.RandomizeArmbands;
-            RandomizeArmor = (RandomizationLevel)Properties.Settings.Default.RandomizeArmor;
-            RandomizeBelts = (RandomizationLevel)Properties.Settings.Default.RandomizeBelts;
-            RandomizeBlasters = (RandomizationLevel)Properties.Settings.Default.RandomizeBlasters;
-            RandomizeHides = (RandomizationLevel)Properties.Settings.Default.RandomizeHides;
-            RandomizeCreature = (RandomizationLevel)Properties.Settings.Default.RandomizeCreature;
-            RandomizeDroid = (RandomizationLevel)Properties.Settings.Default.RandomizeDroid;
-            RandomizeGloves = (RandomizationLevel)Properties.Settings.Default.RandomizeGloves;
-            RandomizeGrenades = (RandomizationLevel)Properties.Settings.Default.RandomizeGrenades;
-            RandomizeImplants = (RandomizationLevel)Properties.Settings.Default.RandomizeImplants;
-            RandomizeLightsabers = (RandomizationLevel)Properties.Settings.Default.RandomizeLightsabers;
-            RandomizeMask = (RandomizationLevel)Properties.Settings.Default.RandomizeMask;
-            RandomizeMelee = (RandomizationLevel)Properties.Settings.Default.RandomizeMelee;
-            RandomizeMines = (RandomizationLevel)Properties.Settings.Default.RandomizeMines;
-            RandomizePaz = (RandomizationLevel)Properties.Settings.Default.RandomizePaz;
-            RandomizeStims = (RandomizationLevel)Properties.Settings.Default.RandomizeStims;
-            RandomizeUpgrade = (RandomizationLevel)Properties.Settings.Default.RandomizeUpgrade;
-            RandomizeVarious = (RandomizationLevel)Properties.Settings.Default.RandomizeVarious;
+            RandomizeArmbands = Properties.Settings.Default.RandomizeArmbands;
+            RandomizeArmor = Properties.Settings.Default.RandomizeArmor;
+            RandomizeBelts = Properties.Settings.Default.RandomizeBelts;
+            RandomizeBlasters = Properties.Settings.Default.RandomizeBlasters;
+            RandomizeHides = Properties.Settings.Default.RandomizeHides;
+            RandomizeCreature = Properties.Settings.Default.RandomizeCreature;
+            RandomizeDroid = Properties.Settings.Default.RandomizeDroid;
+            RandomizeGloves = Properties.Settings.Default.RandomizeGloves;
+            RandomizeGrenades = Properties.Settings.Default.RandomizeGrenades;
+            RandomizeImplants = Properties.Settings.Default.RandomizeImplants;
+            RandomizeLightsabers = Properties.Settings.Default.RandomizeLightsabers;
+            RandomizeMask = Properties.Settings.Default.RandomizeMask;
+            RandomizeMelee = Properties.Settings.Default.RandomizeMelee;
+            RandomizeMines = Properties.Settings.Default.RandomizeMines;
+            RandomizePaz = Properties.Settings.Default.RandomizePaz;
+            RandomizeStims = Properties.Settings.Default.RandomizeStims;
+            RandomizeUpgrade = Properties.Settings.Default.RandomizeUpgrade;
+            RandomizeVarious = Properties.Settings.Default.RandomizeVarious;
 
             // Create easy access lists.
             CheckBoxes.AddRange(new List<CheckBox>()
@@ -903,143 +903,167 @@ namespace kotor_Randomizer_2
         private List<RadioButton> TypeRadioButtons = new List<RadioButton>();
         private List<RadioButton> MaxRadioButtons = new List<RadioButton>();
 
-        //Check boxes Mostly
+        // Checkbox handlers
+        private void cbArmbands_CheckedChanged(object sender, EventArgs e)
+        {
+            flpArmbands.Enabled = cbArmband.Checked;
+            Properties.Settings.Default.RandomizeArmbands = RandomizeArmbands;
+        }
+
         private void cbArmor_CheckedChanged(object sender, EventArgs e)
         {
             flpArmor.Enabled = cbArmor.Checked;
-        }
-
-        private void cbStims_CheckedChanged(object sender, EventArgs e)
-        {
-            flpStims.Enabled = cbStimulant.Checked;
+            Properties.Settings.Default.RandomizeArmor = RandomizeArmor;
         }
 
         private void cbBelts_CheckedChanged(object sender, EventArgs e)
         {
             flpBelts.Enabled = cbBelt.Checked;
-        }
-
-        private void cbVarious_CheckedChanged(object sender, EventArgs e)
-        {
-            flpVarious.Enabled = cbVarious.Checked;
-        }
-
-        private void cbHides_CheckedChanged(object sender, EventArgs e)
-        {
-            flpHides.Enabled = cbCreatureHide.Checked;
-        }
-
-        private void cbDroid_CheckedChanged(object sender, EventArgs e)
-        {
-            flpDroid.Enabled = cbDroid.Checked;
-        }
-
-        private void cbArmbands_CheckedChanged(object sender, EventArgs e)
-        {
-            flpArmbands.Enabled = cbArmband.Checked;
-        }
-
-        private void cbGloves_CheckedChanged(object sender, EventArgs e)
-        {
-            flpGloves.Enabled = cbGlove.Checked;
-        }
-
-        private void cbImplants_CheckedChanged(object sender, EventArgs e)
-        {
-            flpImplants.Enabled = cbImplant.Checked;
-        }
-
-        private void cbMask_CheckedChanged(object sender, EventArgs e)
-        {
-            flpMasks.Enabled = cbMask.Checked;
-        }
-
-        private void cbPaz_CheckedChanged(object sender, EventArgs e)
-        {
-            flpPaz.Enabled = cbPazaak.Checked;
-        }
-
-        private void cbMines_CheckedChanged(object sender, EventArgs e)
-        {
-            flpMines.Enabled = cbMine.Checked;
-        }
-
-        private void cbUpgrade_CheckedChanged(object sender, EventArgs e)
-        {
-            flpUpgrades.Enabled = cbUpgrade.Checked;
+            Properties.Settings.Default.RandomizeBelts = RandomizeBelts;
         }
 
         private void cbBlasters_CheckedChanged(object sender, EventArgs e)
         {
             flpBlasters.Enabled = cbBlaster.Checked;
+            Properties.Settings.Default.RandomizeBlasters = RandomizeBlasters;
         }
 
         private void cbCreature_CheckedChanged(object sender, EventArgs e)
         {
             flpCreature.Enabled = cbCreatureWeapon.Checked;
+            Properties.Settings.Default.RandomizeCreature = RandomizeCreature;
         }
 
-        private void cbLightsabers_CheckedChanged(object sender, EventArgs e)
+        private void cbDroid_CheckedChanged(object sender, EventArgs e)
         {
-            flpLightsabers.Enabled = cbLightsaber.Checked;
+            flpDroid.Enabled = cbDroid.Checked;
+            Properties.Settings.Default.RandomizeDroid = RandomizeDroid;
+        }
+
+        private void cbGloves_CheckedChanged(object sender, EventArgs e)
+        {
+            flpGloves.Enabled = cbGlove.Checked;
+            Properties.Settings.Default.RandomizeGloves = RandomizeGloves;
         }
 
         private void cbGrenades_CheckedChanged(object sender, EventArgs e)
         {
             flpGrenades.Enabled = cbGrenade.Checked;
+            Properties.Settings.Default.RandomizeGrenades = RandomizeGrenades;
+        }
+
+        private void cbHides_CheckedChanged(object sender, EventArgs e)
+        {
+            flpHides.Enabled = cbCreatureHide.Checked;
+            Properties.Settings.Default.RandomizeHides = RandomizeHides;
+        }
+
+        private void cbImplants_CheckedChanged(object sender, EventArgs e)
+        {
+            flpImplants.Enabled = cbImplant.Checked;
+            Properties.Settings.Default.RandomizeImplants = RandomizeImplants;
+        }
+
+        private void cbLightsabers_CheckedChanged(object sender, EventArgs e)
+        {
+            flpLightsabers.Enabled = cbLightsaber.Checked;
+            Properties.Settings.Default.RandomizeLightsabers = RandomizeLightsabers;
+        }
+
+        private void cbMask_CheckedChanged(object sender, EventArgs e)
+        {
+            flpMasks.Enabled = cbMask.Checked;
+            Properties.Settings.Default.RandomizeMask = RandomizeMask;
         }
 
         private void cbMelee_CheckedChanged(object sender, EventArgs e)
         {
             flpMelee.Enabled = cbMelee.Checked;
+            Properties.Settings.Default.RandomizeMelee = RandomizeMelee;
         }
 
-        //Save appdata on form close. (Now that I think about it, we only really need to save this once when the program closes.... oh well)
+        private void cbMines_CheckedChanged(object sender, EventArgs e)
+        {
+            flpMines.Enabled = cbMine.Checked;
+            Properties.Settings.Default.RandomizeMines = RandomizeMines;
+        }
+
+        private void cbPaz_CheckedChanged(object sender, EventArgs e)
+        {
+            flpPaz.Enabled = cbPazaak.Checked;
+            Properties.Settings.Default.RandomizePaz = RandomizePaz;
+        }
+
+        private void cbStims_CheckedChanged(object sender, EventArgs e)
+        {
+            flpStims.Enabled = cbStimulant.Checked;
+            Properties.Settings.Default.RandomizeStims = RandomizeStims;
+        }
+
+        private void cbUpgrade_CheckedChanged(object sender, EventArgs e)
+        {
+            flpUpgrades.Enabled = cbUpgrade.Checked;
+            Properties.Settings.Default.RandomizeUpgrade = RandomizeUpgrade;
+        }
+
+        private void cbVarious_CheckedChanged(object sender, EventArgs e)
+        {
+            flpVarious.Enabled = cbVarious.Checked;
+            Properties.Settings.Default.RandomizeVarious = RandomizeVarious;
+        }
+
+        // Form handlers
+        /// <summary>
+        /// Save appdata on form close. <para/>
+        /// (Now that I think about it, we only really need to save this once when the program closes.... oh well)
+        /// </summary>
         private void ItemForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Properties.Settings.Default.RandomizeArmor = (int)RandomizeArmor;
-            Properties.Settings.Default.RandomizeStims = (int)RandomizeStims;
-            Properties.Settings.Default.RandomizeBelts = (int)RandomizeBelts;
-            Properties.Settings.Default.RandomizeVarious = (int)RandomizeVarious;
-            Properties.Settings.Default.RandomizeHides = (int)RandomizeHides;
-            Properties.Settings.Default.RandomizeArmbands = (int)RandomizeArmbands;
-            Properties.Settings.Default.RandomizeDroid = (int)RandomizeDroid;
-            Properties.Settings.Default.RandomizeGloves = (int)RandomizeGloves;
-            Properties.Settings.Default.RandomizeImplants = (int)RandomizeImplants;
-            Properties.Settings.Default.RandomizeMask = (int)RandomizeMask;
-            Properties.Settings.Default.RandomizePaz = (int)RandomizePaz;
-            Properties.Settings.Default.RandomizeMines = (int)RandomizeMines;
-            Properties.Settings.Default.RandomizeUpgrade = (int)RandomizeUpgrade;
-            Properties.Settings.Default.RandomizeBlasters = (int)RandomizeBlasters;
-            Properties.Settings.Default.RandomizeCreature = (int)RandomizeCreature;
-            Properties.Settings.Default.RandomizeLightsabers = (int)RandomizeLightsabers;
-            Properties.Settings.Default.RandomizeGrenades = (int)RandomizeGrenades;
-            Properties.Settings.Default.RandomizeMelee = (int)RandomizeMelee;
-
             Properties.Settings.Default.Save();
         }
 
         private void ItemForm_Load(object sender, EventArgs e)
         {
-            //Auto-complete is cool
+            // Auto-complete is cool
             tbItemOmitAdd.AutoCompleteCustomSource.AddRange(Globals.ITEMS.ToArray());
+        }
+
+        // Omitted item handlers
+        private void bResetOmittedItems_Click(object sender, EventArgs e)
+        {
+            Globals.OmitItems.Clear();
+            foreach (var item in Globals.DEFAULT_OMIT_ITEMS)
+            {
+                Globals.OmitItems.Add(item);
+            }
+            System.Media.SystemSounds.Exclamation.Play();
         }
 
         private void bAddOmitItem_Click(object sender, EventArgs e)
         {
-            Globals.OmitItems.Add(tbItemOmitAdd.Text);
-            lbOmitItems.DataSource = Globals.OmitItems;
+            if (string.IsNullOrWhiteSpace(tbItemOmitAdd.Text) || Globals.OmitItems.Contains(tbItemOmitAdd.Text))
+            {
+                System.Media.SystemSounds.Asterisk.Play();
+            }
+            else
+            {
+                Globals.OmitItems.Add(tbItemOmitAdd.Text);
+            }
+            tbItemOmitAdd.Text = string.Empty;
         }
 
-        private void tbItemOmitAdd_KeyPress(object sender, KeyPressEventArgs e)
+        private void tbItemOmitAdd_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 bAddOmitItem_Click(sender, e);
             }
         }
 
-        //Remove items from omit list. (Consider adding a restore default button in case they remove items that they didn't intend to.)
+        /// <summary>
+        /// Remove items from omit list. <para/>
+        /// (Consider adding a restore default button in case they remove items that they didn't intend to.)
+        /// </summary>
         private void lbOmitItems_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             string[] to_remove = new string[lbOmitItems.SelectedItems.Count];
@@ -1048,7 +1072,6 @@ namespace kotor_Randomizer_2
             {
                 Globals.OmitItems.Remove(s);
             }
-            lbOmitItems.DataSource = Globals.OmitItems;
         }
 
         private void lbOmitItems_KeyPress(object sender, KeyPressEventArgs e)
@@ -1059,6 +1082,7 @@ namespace kotor_Randomizer_2
             }
         }
 
+        // Toggle all handlers
         private void bToggleAll_Click(object sender, EventArgs e)
         {
             // If all checkboxes are checked, uncheck all of them. If any are unchecked, check all of them.
@@ -1109,6 +1133,72 @@ namespace kotor_Randomizer_2
                 rb.Checked = true;
             }
         }
+
+        // Radio button handlers
+        private void rbArmbandSType_CheckedChanged(object sender, EventArgs e)        { Properties.Settings.Default.RandomizeArmbands    = RandomizeArmbands; }
+        private void rbArmbandType_CheckedChanged(object sender, EventArgs e)         { Properties.Settings.Default.RandomizeArmbands    = RandomizeArmbands; }
+        private void rbArmbandMax_CheckedChanged(object sender, EventArgs e)          { Properties.Settings.Default.RandomizeArmbands    = RandomizeArmbands; }
+
+        private void rbArmorSType_CheckedChanged(object sender, EventArgs e)          { Properties.Settings.Default.RandomizeArmor       = RandomizeArmor; }
+        private void rbArmorType_CheckedChanged(object sender, EventArgs e)           { Properties.Settings.Default.RandomizeArmor       = RandomizeArmor; }
+        private void rbArmorMax_CheckedChanged(object sender, EventArgs e)            { Properties.Settings.Default.RandomizeArmor       = RandomizeArmor; }
+
+        private void rbBeltType_CheckedChanged(object sender, EventArgs e)            { Properties.Settings.Default.RandomizeBelts       = RandomizeBelts; }
+        private void rbBeltMax_CheckedChanged(object sender, EventArgs e)             { Properties.Settings.Default.RandomizeBelts       = RandomizeBelts; }
+
+        private void rbBlasterSType_CheckedChanged(object sender, EventArgs e)        { Properties.Settings.Default.RandomizeBlasters    = RandomizeBlasters; }
+        private void rbBlasterType_CheckedChanged(object sender, EventArgs e)         { Properties.Settings.Default.RandomizeBlasters    = RandomizeBlasters; }
+        private void rbBlasterMax_CheckedChanged(object sender, EventArgs e)          { Properties.Settings.Default.RandomizeBlasters    = RandomizeBlasters; }
+
+        private void rbCreatureHideType_CheckedChanged(object sender, EventArgs e)    { Properties.Settings.Default.RandomizeHides       = RandomizeHides; }
+        private void rbCreatureHideMax_CheckedChanged(object sender, EventArgs e)     { Properties.Settings.Default.RandomizeHides       = RandomizeHides; }
+
+        private void rbCreatureWeaponSType_CheckedChanged(object sender, EventArgs e) { Properties.Settings.Default.RandomizeCreature    = RandomizeCreature; }
+        private void rbCreatureWeaponType_CheckedChanged(object sender, EventArgs e)  { Properties.Settings.Default.RandomizeCreature    = RandomizeCreature; }
+        private void rbCreatureWeaponMax_CheckedChanged(object sender, EventArgs e)   { Properties.Settings.Default.RandomizeCreature    = RandomizeCreature; }
+
+        private void rbDroidSType_CheckedChanged(object sender, EventArgs e)          { Properties.Settings.Default.RandomizeDroid       = RandomizeDroid; }
+        private void rbDroidType_CheckedChanged(object sender, EventArgs e)           { Properties.Settings.Default.RandomizeDroid       = RandomizeDroid; }
+        private void rbDroidMax_CheckedChanged(object sender, EventArgs e)            { Properties.Settings.Default.RandomizeDroid       = RandomizeDroid; }
+
+        private void rbGloveType_CheckedChanged(object sender, EventArgs e)           { Properties.Settings.Default.RandomizeGloves      = RandomizeGloves; }
+        private void rbGloveMax_CheckedChanged(object sender, EventArgs e)            { Properties.Settings.Default.RandomizeGloves      = RandomizeGloves; }
+
+        private void rbGrenadeType_CheckedChanged(object sender, EventArgs e)         { Properties.Settings.Default.RandomizeGrenades    = RandomizeGrenades; }
+        private void rbGrenadeMax_CheckedChanged(object sender, EventArgs e)          { Properties.Settings.Default.RandomizeGrenades    = RandomizeGrenades; }
+
+        private void rbImplantSType_CheckedChanged(object sender, EventArgs e)        { Properties.Settings.Default.RandomizeImplants    = RandomizeImplants; }
+        private void rbImplantType_CheckedChanged(object sender, EventArgs e)         { Properties.Settings.Default.RandomizeImplants    = RandomizeImplants; }
+        private void rbImplantMax_CheckedChanged(object sender, EventArgs e)          { Properties.Settings.Default.RandomizeImplants    = RandomizeImplants; }
+
+        private void rbLightsaberSType_CheckedChanged(object sender, EventArgs e)     { Properties.Settings.Default.RandomizeLightsabers = RandomizeLightsabers; }
+        private void rbLightsaberType_CheckedChanged(object sender, EventArgs e)      { Properties.Settings.Default.RandomizeLightsabers = RandomizeLightsabers; }
+        private void rbLightsaberMax_CheckedChanged(object sender, EventArgs e)       { Properties.Settings.Default.RandomizeLightsabers = RandomizeLightsabers; }
+
+        private void rbMaskSType_CheckedChanged(object sender, EventArgs e)           { Properties.Settings.Default.RandomizeMask        = RandomizeMask; }
+        private void rbMaskType_CheckedChanged(object sender, EventArgs e)            { Properties.Settings.Default.RandomizeMask        = RandomizeMask; }
+        private void rbMaskMax_CheckedChanged(object sender, EventArgs e)             { Properties.Settings.Default.RandomizeMask        = RandomizeMask; }
+
+        private void rbMeleeSType_CheckedChanged(object sender, EventArgs e)          { Properties.Settings.Default.RandomizeMelee       = RandomizeMelee; }
+        private void rbMeleeType_CheckedChanged(object sender, EventArgs e)           { Properties.Settings.Default.RandomizeMelee       = RandomizeMelee; }
+        private void rbMeleeMax_CheckedChanged(object sender, EventArgs e)            { Properties.Settings.Default.RandomizeMelee       = RandomizeMelee; }
+
+        private void rbMineSType_CheckedChanged(object sender, EventArgs e)           { Properties.Settings.Default.RandomizeMines       = RandomizeMines; }
+        private void rbMineType_CheckedChanged(object sender, EventArgs e)            { Properties.Settings.Default.RandomizeMines       = RandomizeMines; }
+        private void rbMineMax_CheckedChanged(object sender, EventArgs e)             { Properties.Settings.Default.RandomizeMines       = RandomizeMines; }
+        private void rbPazaakType_CheckedChanged(object sender, EventArgs e)          { Properties.Settings.Default.RandomizePaz         = RandomizePaz; }
+        private void rbPazaakMax_CheckedChanged(object sender, EventArgs e)           { Properties.Settings.Default.RandomizePaz         = RandomizePaz; }
+
+        private void rbStimSType_CheckedChanged(object sender, EventArgs e)           { Properties.Settings.Default.RandomizeStims       = RandomizeStims; }
+        private void rbStimulantType_CheckedChanged(object sender, EventArgs e)       { Properties.Settings.Default.RandomizeStims       = RandomizeStims; }
+        private void rbStimulantMax_CheckedChanged(object sender, EventArgs e)        { Properties.Settings.Default.RandomizeStims       = RandomizeStims; }
+
+        private void rbUpgradeSType_CheckedChanged(object sender, EventArgs e)        { Properties.Settings.Default.RandomizeUpgrade     = RandomizeUpgrade; }
+        private void rbUpgradeType_CheckedChanged(object sender, EventArgs e)         { Properties.Settings.Default.RandomizeUpgrade     = RandomizeUpgrade; }
+        private void rbUpgradeMax_CheckedChanged(object sender, EventArgs e)          { Properties.Settings.Default.RandomizeUpgrade     = RandomizeUpgrade; }
+
+        private void rbVariousType_CheckedChanged(object sender, EventArgs e)         { Properties.Settings.Default.RandomizeVarious     = RandomizeVarious; }
+        private void rbVariousMax_CheckedChanged(object sender, EventArgs e)          { Properties.Settings.Default.RandomizeVarious     = RandomizeVarious; }
 
         #endregion
     }

@@ -11,37 +11,37 @@ namespace kotor_Randomizer_2
         {
             InitializeComponent();
 
-            //Set Initial Values
-            RandomizeCubeMaps = (RandomizationLevel)Properties.Settings.Default.TextureRandomizeCubeMaps;
-            RandomizeCreatures = (RandomizationLevel)Properties.Settings.Default.TextureRandomizeCreatures;
-            RandomizeEffects = (RandomizationLevel)Properties.Settings.Default.TextureRandomizeEffects;
-            RandomizeItems = (RandomizationLevel)Properties.Settings.Default.TextureRandomizeItems;
-            RandomizePlanetary = (RandomizationLevel)Properties.Settings.Default.TextureRandomizePlanetary;
-            RandomizeNPC = (RandomizationLevel)Properties.Settings.Default.TextureRandomizeNPC;
-            RandomizePlayHeads = (RandomizationLevel)Properties.Settings.Default.TextureRandomizePlayHeads;
-            RandomizePlayBodies = (RandomizationLevel)Properties.Settings.Default.TextureRandomizePlayBodies;
-            RandomizePlaceables = (RandomizationLevel)Properties.Settings.Default.TextureRandomizePlaceables;
-            RandomizeParty = (RandomizationLevel)Properties.Settings.Default.TextureRandomizeParty;
-            RandomizeStunt = (RandomizationLevel)Properties.Settings.Default.TextureRandomizeStunt;
-            RandomizeVehicles = (RandomizationLevel)Properties.Settings.Default.TextureRandomizeVehicles;
-            RandomizeWeapons = (RandomizationLevel)Properties.Settings.Default.TextureRandomizeWeapons;
-            RandomizeOther = (RandomizationLevel)Properties.Settings.Default.TextureRandomizeOther;
+            // Set Initial Values
+            RandomizeCubeMaps = Properties.Settings.Default.TextureRandomizeCubeMaps;
+            RandomizeCreatures = Properties.Settings.Default.TextureRandomizeCreatures;
+            RandomizeEffects = Properties.Settings.Default.TextureRandomizeEffects;
+            RandomizeItems = Properties.Settings.Default.TextureRandomizeItems;
+            RandomizePlanetary = Properties.Settings.Default.TextureRandomizePlanetary;
+            RandomizeNPC = Properties.Settings.Default.TextureRandomizeNPC;
+            RandomizePlayHeads = Properties.Settings.Default.TextureRandomizePlayHeads;
+            RandomizePlayBodies = Properties.Settings.Default.TextureRandomizePlayBodies;
+            RandomizePlaceables = Properties.Settings.Default.TextureRandomizePlaceables;
+            RandomizeParty = Properties.Settings.Default.TextureRandomizeParty;
+            RandomizeStunt = Properties.Settings.Default.TextureRandomizeStunt;
+            RandomizeVehicles = Properties.Settings.Default.TextureRandomizeVehicles;
+            RandomizeWeapons = Properties.Settings.Default.TextureRandomizeWeapons;
+            RandomizeOther = Properties.Settings.Default.TextureRandomizeOther;
 
-            //Radio switch for which texture pack is to be randomized.
-            //Right now its set up to only allow the user to randomize one of the 3 texture packs in the game. Primariliy because most
-            //people only use the high quality pack, and also if there are stability issues this allows them to switch to a stable pack
-            //in-game, without opening this program up.
+            // Radio switch for which texture pack is to be randomized.
+            // Right now its set up to only allow the user to randomize one of the 3 texture packs in the game. Primarily because most
+            // people only use the high quality pack, and also if there are stability issues this allows them to switch to a stable pack
+            // in-game, without opening this program up.
             switch (Properties.Settings.Default.TexturePack)
             {
-                case 1:
+                default:
+                case TexturePack.HighQuality:
+                    rbTextHigh.Checked = true;
+                    break;
+                case TexturePack.MedQuality:
                     rbTextMed.Checked = true;
                     break;
-                case 2:
+                case TexturePack.LowQuality:
                     rbTextLow.Checked = true;
-                    break;
-                default:
-                case 0:
-                    rbTextHigh.Checked = true;
                     break;
             }
 
@@ -655,100 +655,145 @@ namespace kotor_Randomizer_2
         private List<RadioButton> TypeRadioButtons = new List<RadioButton>();
         private List<RadioButton> MaxRadioButtons = new List<RadioButton>();
 
+        // Checkbox event handlers
         private void cbCubeMaps_CheckedChanged(object sender, EventArgs e)
         {
             flpCubeMaps.Enabled = cbCubeMaps.Checked;
+            Properties.Settings.Default.TextureRandomizeCubeMaps = RandomizeCubeMaps;
         }
 
         private void cbCreatures_CheckedChanged(object sender, EventArgs e)
         {
             flpCreatures.Enabled = cbCreatures.Checked;
+            Properties.Settings.Default.TextureRandomizeCreatures = RandomizeCreatures;
         }
 
         private void cbEffects_CheckedChanged(object sender, EventArgs e)
         {
             flpEffects.Enabled = cbEffects.Checked;
+            Properties.Settings.Default.TextureRandomizeEffects = RandomizeEffects;
         }
 
         private void cbItems_CheckedChanged(object sender, EventArgs e)
         {
             flpItems.Enabled = cbItems.Checked;
+            Properties.Settings.Default.TextureRandomizeItems = RandomizeItems;
         }
 
         private void cbPlanetary_CheckedChanged(object sender, EventArgs e)
         {
             flpPlanetary.Enabled = cbPlanetary.Checked;
+            Properties.Settings.Default.TextureRandomizePlanetary = RandomizePlanetary;
         }
 
         private void cbNPC_CheckedChanged(object sender, EventArgs e)
         {
             flpNPC.Enabled = cbNPC.Checked;
+            Properties.Settings.Default.TextureRandomizeNPC = RandomizeNPC;
         }
 
         private void cbPlayHeads_CheckedChanged(object sender, EventArgs e)
         {
             flpPlayHeads.Enabled = cbPlayHeads.Checked;
+            Properties.Settings.Default.TextureRandomizePlayHeads = RandomizePlayHeads;
         }
 
         private void cbPlayBodies_CheckedChanged(object sender, EventArgs e)
         {
             flpPlayBodies.Enabled = cbPlayBodies.Checked;
+            Properties.Settings.Default.TextureRandomizePlayBodies = RandomizePlayBodies;
         }
 
         private void cbPlaceables_CheckedChanged(object sender, EventArgs e)
         {
             flpPlaceables.Enabled = cbPlaceables.Checked;
+            Properties.Settings.Default.TextureRandomizePlaceables = RandomizePlaceables;
         }
 
         private void cbParty_CheckedChanged(object sender, EventArgs e)
         {
             flpParty.Enabled = cbParty.Checked;
+            Properties.Settings.Default.TextureRandomizeParty = RandomizeParty;
         }
 
         private void cbStunt_CheckedChanged(object sender, EventArgs e)
         {
             flpStunt.Enabled = cbStunt.Checked;
+            Properties.Settings.Default.TextureRandomizeStunt = RandomizeStunt;
         }
 
         private void cbVehicles_CheckedChanged(object sender, EventArgs e)
         {
             flpVehicles.Enabled = cbVehicles.Checked;
+            Properties.Settings.Default.TextureRandomizeVehicles = RandomizeVehicles;
         }
 
         private void cbWeapons_CheckedChanged(object sender, EventArgs e)
         {
             flpWeapons.Enabled = cbWeapons.Checked;
+            Properties.Settings.Default.TextureRandomizeWeapons = RandomizeWeapons;
         }
 
         private void cbOther_CheckedChanged(object sender, EventArgs e)
         {
             flpOther.Enabled = cbOther.Checked;
+            Properties.Settings.Default.TextureRandomizeOther = RandomizeOther;
         }
 
+        // Radio button event handlers
+        private void rbCubeMapsType_CheckedChanged(object sender, EventArgs e)   { Properties.Settings.Default.TextureRandomizeCubeMaps   = RandomizeCubeMaps; }
+        private void rbCubeMapsMax_CheckedChanged(object sender, EventArgs e)    { Properties.Settings.Default.TextureRandomizeCubeMaps   = RandomizeCubeMaps; }
+
+        private void rbCreaturesType_CheckedChanged(object sender, EventArgs e)  { Properties.Settings.Default.TextureRandomizeCreatures  = RandomizeCreatures; }
+        private void rbCreaturesMax_CheckedChanged(object sender, EventArgs e)   { Properties.Settings.Default.TextureRandomizeCreatures  = RandomizeCreatures; }
+
+        private void rbEffectsType_CheckedChanged(object sender, EventArgs e)    { Properties.Settings.Default.TextureRandomizeEffects    = RandomizeEffects; }
+        private void rbEffectsMax_CheckedChanged(object sender, EventArgs e)     { Properties.Settings.Default.TextureRandomizeEffects    = RandomizeEffects; }
+
+        private void rbItemsType_CheckedChanged(object sender, EventArgs e)      { Properties.Settings.Default.TextureRandomizeItems      = RandomizeItems; }
+        private void rbItemsMax_CheckedChanged(object sender, EventArgs e)       { Properties.Settings.Default.TextureRandomizeItems      = RandomizeItems; }
+
+        private void rbPlanetaryType_CheckedChanged(object sender, EventArgs e)  { Properties.Settings.Default.TextureRandomizePlanetary  = RandomizePlanetary; }
+        private void rbPlanetaryMax_CheckedChanged(object sender, EventArgs e)   { Properties.Settings.Default.TextureRandomizePlanetary  = RandomizePlanetary; }
+
+        private void rbNPCType_CheckedChanged(object sender, EventArgs e)        { Properties.Settings.Default.TextureRandomizeNPC        = RandomizeNPC; }
+        private void rbNPCMax_CheckedChanged(object sender, EventArgs e)         { Properties.Settings.Default.TextureRandomizeNPC        = RandomizeNPC; }
+
+        private void rbPlayHeadsType_CheckedChanged(object sender, EventArgs e)  { Properties.Settings.Default.TextureRandomizePlayHeads  = RandomizePlayHeads; }
+        private void rbPlayHeadsMax_CheckedChanged(object sender, EventArgs e)   { Properties.Settings.Default.TextureRandomizePlayHeads  = RandomizePlayHeads; }
+
+        private void rbPlayBodiesType_CheckedChanged(object sender, EventArgs e) { Properties.Settings.Default.TextureRandomizePlayBodies = RandomizePlayBodies; }
+        private void rbPlayBodiesMax_CheckedChanged(object sender, EventArgs e)  { Properties.Settings.Default.TextureRandomizePlayBodies = RandomizePlayBodies; }
+
+        private void rbPlaceablesType_CheckedChanged(object sender, EventArgs e) { Properties.Settings.Default.TextureRandomizePlaceables = RandomizePlaceables; }
+        private void rbPlaceablesMax_CheckedChanged(object sender, EventArgs e)  { Properties.Settings.Default.TextureRandomizePlaceables = RandomizePlaceables; }
+
+        private void rbPartyType_CheckedChanged(object sender, EventArgs e)      { Properties.Settings.Default.TextureRandomizeParty      = RandomizeParty; }
+        private void rbPartyMax_CheckedChanged(object sender, EventArgs e)       { Properties.Settings.Default.TextureRandomizeParty      = RandomizeParty; }
+
+        private void rbStuntType_CheckedChanged(object sender, EventArgs e)      { Properties.Settings.Default.TextureRandomizeStunt      = RandomizeStunt; }
+        private void rbStuntMax_CheckedChanged(object sender, EventArgs e)       { Properties.Settings.Default.TextureRandomizeStunt      = RandomizeStunt; }
+
+        private void rbVehiclesType_CheckedChanged(object sender, EventArgs e)   { Properties.Settings.Default.TextureRandomizeVehicles   = RandomizeVehicles; }
+        private void rbVehiclesMax_CheckedChanged(object sender, EventArgs e)    { Properties.Settings.Default.TextureRandomizeVehicles   = RandomizeVehicles; }
+
+        private void rbWeaponsType_CheckedChanged(object sender, EventArgs e)    { Properties.Settings.Default.TextureRandomizeWeapons    = RandomizeWeapons; }
+        private void rbWeaponsMax_CheckedChanged(object sender, EventArgs e)     { Properties.Settings.Default.TextureRandomizeWeapons    = RandomizeWeapons; }
+
+        private void rbOtherType_CheckedChanged(object sender, EventArgs e)      { Properties.Settings.Default.TextureRandomizeOther      = RandomizeOther; }
+        private void rbOtherMax_CheckedChanged(object sender, EventArgs e)       { Properties.Settings.Default.TextureRandomizeOther      = RandomizeOther; }
+
+        private void rbTextHigh_CheckedChanged(object sender, EventArgs e) { Properties.Settings.Default.TexturePack = TexturePack.HighQuality; }
+        private void rbTextMed_CheckedChanged(object sender, EventArgs e)  { Properties.Settings.Default.TexturePack = TexturePack.MedQuality; }
+        private void rbTextLow_CheckedChanged(object sender, EventArgs e)  { Properties.Settings.Default.TexturePack = TexturePack.LowQuality; }
+
+        // Form event handlers
         private void TextureForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Properties.Settings.Default.TextureRandomizeCubeMaps = (int)RandomizeCubeMaps;
-            Properties.Settings.Default.TextureRandomizeCreatures = (int)RandomizeCreatures;
-            Properties.Settings.Default.TextureRandomizeEffects = (int)RandomizeEffects;
-            Properties.Settings.Default.TextureRandomizeItems = (int)RandomizeItems;
-            Properties.Settings.Default.TextureRandomizePlanetary = (int)RandomizePlanetary;
-            Properties.Settings.Default.TextureRandomizeNPC = (int)RandomizeNPC;
-            Properties.Settings.Default.TextureRandomizePlayHeads = (int)RandomizePlayHeads;
-            Properties.Settings.Default.TextureRandomizePlayBodies = (int)RandomizePlayBodies;
-            Properties.Settings.Default.TextureRandomizePlaceables = (int)RandomizePlaceables;
-            Properties.Settings.Default.TextureRandomizeParty = (int)RandomizeParty;
-            Properties.Settings.Default.TextureRandomizeStunt = (int)RandomizeStunt;
-            Properties.Settings.Default.TextureRandomizeVehicles = (int)RandomizeVehicles;
-            Properties.Settings.Default.TextureRandomizeWeapons = (int)RandomizeWeapons;
-            Properties.Settings.Default.TextureRandomizeOther = (int)RandomizeOther;
-
-            if (rbTextHigh.Checked) { Properties.Settings.Default.TexturePack = 0; }
-            if (rbTextMed.Checked) { Properties.Settings.Default.TexturePack = 1; }
-            if (rbTextLow.Checked) { Properties.Settings.Default.TexturePack = 2; }
-
             Properties.Settings.Default.Save();
         }
 
+        // Toggle all button event handlers
         private void bToggleAll_Click(object sender, EventArgs e)
         {
             bool CheckAllBoxes = false;
