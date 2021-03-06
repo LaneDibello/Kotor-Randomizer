@@ -332,10 +332,8 @@ namespace kotor_Randomizer_2
             var formsToClose = new List<Form>();
             foreach (Form f in Application.OpenForms)
             {
-                if (f is StartForm)
-                {
-                    continue;
-                }
+                if (f is StartForm) continue;
+                if (f is RandoForm && (f as RandoForm).IsInProgress) continue;
                 formsToClose.Add(f);
             }
 

@@ -20,6 +20,11 @@ namespace kotor_Randomizer_2
             InitializeComponent();
         }
 
+        public bool IsInProgress
+        {
+            get { return bwRandomizing.IsBusy || bwUnrandomizing.IsBusy; }
+        }
+
         #region Private Properties
 
         private string curr_task = "";
