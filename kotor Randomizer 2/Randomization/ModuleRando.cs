@@ -52,22 +52,6 @@ namespace kotor_Randomizer_2
             Digraph.ResetSettings();
             LookupTable.Clear();
 
-            // Set up the bound module collection if it hasn't been already.
-            if (!Properties.Settings.Default.ModulesInitialized)
-            {
-                Globals.BoundModules.Clear();
-                foreach (string s in Globals.MODULES)
-                {
-                    Globals.BoundModules.Add(new Globals.Mod_Entry(s, true));
-                }
-                Properties.Settings.Default.ModulesInitialized = true;
-            }
-
-            //if (!Properties.Settings.Default.ModulePresetSelected)
-            //{
-            //    //Figure something out here
-            //}
-
             // Split the Bound modules into their respective lists.
             List<string> ExcludedModules = Globals.BoundModules.Where(x => x.Omitted).Select(x => x.Code).ToList();
             List<string> IncludedModules = Globals.BoundModules.Where(x => !x.Omitted).Select(x => x.Code).ToList();
@@ -83,6 +67,8 @@ namespace kotor_Randomizer_2
                 while (!reachable && iterations < MAX_ITERATIONS)
                 {
                     iterations++;
+
+                    Console.WriteLine($"Iteration {iterations}:");
 
                     // Shuffle the list of included modules.
                     List<string> ShuffledModules = IncludedModules.ToList();
@@ -475,7 +461,7 @@ namespace kotor_Randomizer_2
                 var lookup = LookupTable[ruleKVP.Key];
                 if (ruleKVP.Value.Contains(lookup))
                 {
-                    Console.WriteLine($"Rule 1 violated: {ruleKVP.Key} replaces {lookup}");
+                    Console.WriteLine($" - Rule 1 violated: {ruleKVP.Key} replaces {lookup}");
                     return true;
                 }
             }
@@ -486,7 +472,7 @@ namespace kotor_Randomizer_2
                 var lookup = LookupTable[ruleKVP.Key];
                 if (ruleKVP.Value.Contains(lookup))
                 {
-                    Console.WriteLine($"Rule 2 violated: {ruleKVP.Key} replaces {lookup}");
+                    Console.WriteLine($" - Rule 2 violated: {ruleKVP.Key} replaces {lookup}");
                     return true;
                 }
             }
@@ -497,12 +483,12 @@ namespace kotor_Randomizer_2
                 var lookup = LookupTable[ruleKVP.Key];
                 if (ruleKVP.Value.Contains(lookup))
                 {
-                    Console.WriteLine($"Rule 3 violated: {ruleKVP.Key} replaces {lookup}");
+                    Console.WriteLine($" - Rule 3 violated: {ruleKVP.Key} replaces {lookup}");
                     return true;
                 }
             }
 
-            Console.WriteLine("No rules violated.");
+            //Console.WriteLine("No rules violated.");
             return false;
         }
 

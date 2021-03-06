@@ -12,7 +12,14 @@ namespace kotor_Randomizer_2
         {
             InitializeComponent();
 
-            Properties.Settings.Default.ModulesInitialized = false; // Might need to change this
+            Properties.Settings settings = Properties.Settings.Default;
+
+            // Initialize the bound modules list.
+            Globals.BoundModules.Clear();
+            foreach (string s in Globals.MODULES)
+            {
+                Globals.BoundModules.Add(new Globals.Mod_Entry(s, settings.OmittedModules.Contains(s)));
+            }
 
             // Checks if a path is saved
             if (Properties.Settings.Default.Kotor1Path == "")
@@ -21,23 +28,23 @@ namespace kotor_Randomizer_2
             }
 
             //Active Rando Categories (start false)
-            Properties.Settings.Default.DoRandomization_Module = false;
-            Properties.Settings.Default.DoRandomization_Sound = false;
-            Properties.Settings.Default.DoRandomization_Model = false;
-            Properties.Settings.Default.DoRandomization_Item = false;
-            Properties.Settings.Default.DoRandomization_Texture = false;
-            Properties.Settings.Default.DoRandomization_TwoDA = false;
-            Properties.Settings.Default.DoRandomization_Text = false;
-            Properties.Settings.Default.DoRandomization_Other = false;
+            settings.DoRandomization_Module = false;
+            settings.DoRandomization_Sound = false;
+            settings.DoRandomization_Model = false;
+            settings.DoRandomization_Item = false;
+            settings.DoRandomization_Texture = false;
+            settings.DoRandomization_TwoDA = false;
+            settings.DoRandomization_Text = false;
+            settings.DoRandomization_Other = false;
 
-            if (File.Exists(Properties.Settings.Default.Kotor1Path + "\\RANDOMIZED.log"))
+            if (File.Exists(settings.Kotor1Path + "\\RANDOMIZED.log"))
             {
-                Properties.Settings.Default.KotorIsRandomized = true;
+                settings.KotorIsRandomized = true;
                 randomize_button.Text = "Unrandomize!";
             }
             else
             {
-                Properties.Settings.Default.KotorIsRandomized = false;
+                settings.KotorIsRandomized = false;
                 randomize_button.Text = "Randomize!";
             }
 
@@ -144,16 +151,12 @@ namespace kotor_Randomizer_2
         /// </summary>
         private void StartForm_Load(object sender, EventArgs e)
         {
-            //Randomize.GenerateSeed();
-            //Properties.Settings.Default.Seed = Randomize.Rng.Next();
-            //Properties.Settings.Default.Seed = Randomize.Seed;
             Properties.Settings.Default.Seed = Randomize.GenerateSeed();
             Randomize.RestartRng();
         }
 
         private void StartForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Properties.Settings.Default.ModulesInitialized = false;
             Properties.Settings.Default.Save();
         }
 

@@ -22,17 +22,6 @@ namespace kotor_Randomizer_2
             InitializeComponent();
             var settings = Properties.Settings.Default;
 
-            // Set up the bound module collection if it hasn't been already
-            if (!Properties.Settings.Default.ModulesInitialized)
-            {
-                Globals.BoundModules.Clear();
-                foreach (string s in Globals.MODULES)
-                {
-                    Globals.BoundModules.Add(new Globals.Mod_Entry(s, true));
-                }
-                Properties.Settings.Default.ModulesInitialized = true;
-            }
-
             // Set up the controls
             RandomizedListBox.DisplayMember = "name";
             OmittedListBox.DisplayMember = "name";
@@ -89,21 +78,15 @@ namespace kotor_Randomizer_2
             UpdateListBoxes();
         }
 
-        public static void static_loadPreset(string preset)
-        {
-            for (int i = 0; i < Globals.BoundModules.Count; i++)
-            {
-                Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, false);
-
-                if (Globals.OMIT_PRESETS[preset].Contains(Globals.BoundModules[i].Code))
-                {
-                    Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, true);
-                }
-            }
-        }
-
         #endregion
         #region Private Members
+
+        // Stores omitted modules
+        private void UpdateOmittedModulesSetting()
+        {
+            Properties.Settings.Default.OmittedModules.Clear();
+            Properties.Settings.Default.OmittedModules.AddRange(Globals.BoundModules.Where(x => x.Omitted).Select(x => x.Code).ToArray());
+        }
 
         // Makes list work
         private void UpdateListBoxes()
@@ -112,6 +95,7 @@ namespace kotor_Randomizer_2
             RandomizedListBox.Update();
             OmittedListBox.DataSource = Globals.BoundModules.Where(x => x.Omitted).ToList();
             OmittedListBox.Update();
+            UpdateOmittedModulesSetting();
         }
 
         // How we load the built in presets. (May be subject to change if I change my mind about how I want User-presets to work.)
