@@ -25,6 +25,17 @@ namespace kotor_Randomizer_2
             get { return bwRandomizing.IsBusy || bwUnrandomizing.IsBusy; }
         }
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int PARAM_NOCLOSE = 0x200;
+                CreateParams param = base.CreateParams;
+                param.ClassStyle = param.ClassStyle | PARAM_NOCLOSE;
+                return param;
+            }
+        }
+
         #region Private Properties
 
         private string curr_task = "";
@@ -346,7 +357,8 @@ namespace kotor_Randomizer_2
 
         private void bDone_Click(object sender, EventArgs e)
         {
-            Close();
+            // Avoid closing the window if background workers are still running.
+            if (!IsInProgress) Close();
         }
 
         private void bwRandomizing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
