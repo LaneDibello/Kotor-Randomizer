@@ -162,7 +162,7 @@ namespace kotor_Randomizer_2
         /// <summary>
         /// Large Placeable Models
         /// </summary>
-        public static readonly List<int> LARGE_PLACE = new List<int>() { 1, 2, 55, 56, 57, 58, 65, 66, 110, 111, 142, 172, 176, 217, 218, 226 }; // NEED TO RESEARCH
+        public static readonly List<int> LARGE_PLACE = new List<int>() { 1, 2, 55, 56, 57, 58, 65, 66, 110, 111, 142, 172, 176, 194, 217, 218, 226 }; // NEED TO RESEARCH
 
         /// <summary>
         /// Broken Placeable Models
