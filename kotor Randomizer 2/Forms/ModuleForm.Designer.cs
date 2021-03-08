@@ -59,10 +59,11 @@
             this.ModulesToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.cbGlitchClip = new System.Windows.Forms.CheckBox();
             this.cbIgnoreOnceEdges = new System.Windows.Forms.CheckBox();
-            this.cbUseRandoRules = new System.Windows.Forms.CheckBox();
             this.lblRule1 = new System.Windows.Forms.Label();
             this.lblRule2 = new System.Windows.Forms.Label();
             this.lblRule3 = new System.Windows.Forms.Label();
+            this.cbUseRandoRules = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // OmittedListBox
@@ -286,7 +287,7 @@
             // 
             this.cbReachability.AutoSize = true;
             this.cbReachability.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbReachability.Location = new System.Drawing.Point(20, 611);
+            this.cbReachability.Location = new System.Drawing.Point(20, 634);
             this.cbReachability.Name = "cbReachability";
             this.cbReachability.Size = new System.Drawing.Size(151, 17);
             this.cbReachability.TabIndex = 32;
@@ -301,7 +302,7 @@
             // 
             this.lblGoals.AutoSize = true;
             this.lblGoals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblGoals.Location = new System.Drawing.Point(20, 635);
+            this.lblGoals.Location = new System.Drawing.Point(20, 658);
             this.lblGoals.Name = "lblGoals";
             this.lblGoals.Size = new System.Drawing.Size(132, 13);
             this.lblGoals.TabIndex = 33;
@@ -311,7 +312,7 @@
             // 
             this.lblGlitches.AutoSize = true;
             this.lblGlitches.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblGlitches.Location = new System.Drawing.Point(20, 658);
+            this.lblGlitches.Location = new System.Drawing.Point(20, 681);
             this.lblGlitches.Name = "lblGlitches";
             this.lblGlitches.Size = new System.Drawing.Size(138, 13);
             this.lblGlitches.TabIndex = 34;
@@ -324,7 +325,7 @@
             this.cbGoalMalak.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbGoalMalak.Enabled = false;
             this.cbGoalMalak.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGoalMalak.Location = new System.Drawing.Point(164, 634);
+            this.cbGoalMalak.Location = new System.Drawing.Point(164, 657);
             this.cbGoalMalak.Name = "cbGoalMalak";
             this.cbGoalMalak.Size = new System.Drawing.Size(131, 17);
             this.cbGoalMalak.TabIndex = 35;
@@ -338,7 +339,7 @@
             this.cbGoalStarMaps.AutoSize = true;
             this.cbGoalStarMaps.Enabled = false;
             this.cbGoalStarMaps.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGoalStarMaps.Location = new System.Drawing.Point(302, 634);
+            this.cbGoalStarMaps.Location = new System.Drawing.Point(302, 657);
             this.cbGoalStarMaps.Name = "cbGoalStarMaps";
             this.cbGoalStarMaps.Size = new System.Drawing.Size(109, 17);
             this.cbGoalStarMaps.TabIndex = 36;
@@ -353,7 +354,7 @@
             this.cbGoalPazaak.AutoSize = true;
             this.cbGoalPazaak.Enabled = false;
             this.cbGoalPazaak.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGoalPazaak.Location = new System.Drawing.Point(417, 634);
+            this.cbGoalPazaak.Location = new System.Drawing.Point(417, 657);
             this.cbGoalPazaak.Name = "cbGoalPazaak";
             this.cbGoalPazaak.Size = new System.Drawing.Size(112, 17);
             this.cbGoalPazaak.TabIndex = 37;
@@ -367,7 +368,7 @@
             this.cbGlitchDlz.AutoSize = true;
             this.cbGlitchDlz.Enabled = false;
             this.cbGlitchDlz.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGlitchDlz.Location = new System.Drawing.Point(233, 657);
+            this.cbGlitchDlz.Location = new System.Drawing.Point(233, 680);
             this.cbGlitchDlz.Name = "cbGlitchDlz";
             this.cbGlitchDlz.Size = new System.Drawing.Size(47, 17);
             this.cbGlitchDlz.TabIndex = 38;
@@ -381,7 +382,7 @@
             this.cbGlitchFlu.AutoSize = true;
             this.cbGlitchFlu.Enabled = false;
             this.cbGlitchFlu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGlitchFlu.Location = new System.Drawing.Point(286, 657);
+            this.cbGlitchFlu.Location = new System.Drawing.Point(286, 680);
             this.cbGlitchFlu.Name = "cbGlitchFlu";
             this.cbGlitchFlu.Size = new System.Drawing.Size(46, 17);
             this.cbGlitchFlu.TabIndex = 39;
@@ -395,7 +396,7 @@
             this.cbGlitchGpw.AutoSize = true;
             this.cbGlitchGpw.Enabled = false;
             this.cbGlitchGpw.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGlitchGpw.Location = new System.Drawing.Point(338, 657);
+            this.cbGlitchGpw.Location = new System.Drawing.Point(338, 680);
             this.cbGlitchGpw.Name = "cbGlitchGpw";
             this.cbGlitchGpw.Size = new System.Drawing.Size(52, 17);
             this.cbGlitchGpw.TabIndex = 40;
@@ -417,7 +418,7 @@
             this.cbGlitchClip.AutoSize = true;
             this.cbGlitchClip.Enabled = false;
             this.cbGlitchClip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGlitchClip.Location = new System.Drawing.Point(164, 657);
+            this.cbGlitchClip.Location = new System.Drawing.Point(164, 680);
             this.cbGlitchClip.Name = "cbGlitchClip";
             this.cbGlitchClip.Size = new System.Drawing.Size(63, 17);
             this.cbGlitchClip.TabIndex = 42;
@@ -430,7 +431,7 @@
             // 
             this.cbIgnoreOnceEdges.AutoSize = true;
             this.cbIgnoreOnceEdges.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbIgnoreOnceEdges.Location = new System.Drawing.Point(180, 611);
+            this.cbIgnoreOnceEdges.Location = new System.Drawing.Point(180, 634);
             this.cbIgnoreOnceEdges.Name = "cbIgnoreOnceEdges";
             this.cbIgnoreOnceEdges.Size = new System.Drawing.Size(164, 17);
             this.cbIgnoreOnceEdges.TabIndex = 43;
@@ -440,18 +441,6 @@
         "andomization.*");
             this.cbIgnoreOnceEdges.UseVisualStyleBackColor = true;
             this.cbIgnoreOnceEdges.CheckedChanged += new System.EventHandler(this.cbAllowOnceEdges_CheckedChanged);
-            // 
-            // cbUseRandoRules
-            // 
-            this.cbUseRandoRules.AutoSize = true;
-            this.cbUseRandoRules.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUseRandoRules.Location = new System.Drawing.Point(20, 588);
-            this.cbUseRandoRules.Name = "cbUseRandoRules";
-            this.cbUseRandoRules.Size = new System.Drawing.Size(196, 17);
-            this.cbUseRandoRules.TabIndex = 49;
-            this.cbUseRandoRules.Text = "Use Randomization Exclusion Rules";
-            this.cbUseRandoRules.UseVisualStyleBackColor = true;
-            this.cbUseRandoRules.CheckedChanged += new System.EventHandler(this.cbUseRandoRules_CheckedChanged);
             // 
             // lblRule1
             // 
@@ -490,12 +479,38 @@
             this.lblRule3.Text = "Rule 3)";
             this.ModulesToolTip.SetToolTip(this.lblRule3, resources.GetString("lblRule3.ToolTip"));
             // 
+            // cbUseRandoRules
+            // 
+            this.cbUseRandoRules.AutoSize = true;
+            this.cbUseRandoRules.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUseRandoRules.Location = new System.Drawing.Point(20, 588);
+            this.cbUseRandoRules.Name = "cbUseRandoRules";
+            this.cbUseRandoRules.Size = new System.Drawing.Size(196, 17);
+            this.cbUseRandoRules.TabIndex = 49;
+            this.cbUseRandoRules.Text = "Use Randomization Exclusion Rules";
+            this.ModulesToolTip.SetToolTip(this.cbUseRandoRules, "These rules prevent certain modules from replacing others\r\nwhen that replacement " +
+        "would cause problems - inescapable\r\nor inaccessible rooms.");
+            this.cbUseRandoRules.UseVisualStyleBackColor = true;
+            this.cbUseRandoRules.CheckedChanged += new System.EventHandler(this.cbUseRandoRules_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.label1.Location = new System.Drawing.Point(20, 612);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(514, 13);
+            this.label1.TabIndex = 53;
+            this.label1.Text = "-- Work in progress... reachability does not yet ensure the seed is beatable, but" +
+    " it improves those chances. --";
+            // 
             // ModuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(556, 688);
+            this.ClientSize = new System.Drawing.Size(556, 711);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblRule3);
             this.Controls.Add(this.lblRule2);
             this.Controls.Add(this.lblRule1);
@@ -575,5 +590,6 @@
         private System.Windows.Forms.Label lblRule1;
         private System.Windows.Forms.Label lblRule2;
         private System.Windows.Forms.Label lblRule3;
+        private System.Windows.Forms.Label label1;
     }
 }

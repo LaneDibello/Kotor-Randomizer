@@ -12,6 +12,9 @@ namespace kotor_Randomizer_2
         {
             InitializeComponent();
 
+            Version version = typeof(StartForm).Assembly.GetName().Version;
+            this.Text = $"{this.Text} v{version.Major}.{version.Minor}";
+
             Properties.Settings settings = Properties.Settings.Default;
 
             // Initialize the bound modules list.
@@ -96,13 +99,21 @@ namespace kotor_Randomizer_2
                     wsList.Remove(wsList.Length - 2, 2);
 
                     workbook.SaveAs(path);
-                    MessageBox.Show($"Spoiler logs created: {wsList.ToString()}", Properties.Resources.GenerateSpoilerLogs);
+                    var result = MessageBox.Show($"Spoiler logs created: {wsList.ToString()}{Environment.NewLine}Open the spoilers folder?", Properties.Resources.GenerateSpoilerLogs, MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes) { OpenSpoilersFolder(); }
                 }
                 else
                 {
                     MessageBox.Show($"No spoiler logs created. Either the game has not been randomized, or the selected randomizations do not generate spoilers.", Properties.Resources.GenerateSpoilerLogs);
                 }
             }
+        }
+
+        private static void OpenSpoilersFolder()
+        {
+            var dir = Path.Combine(Environment.CurrentDirectory, "Spoilers");
+            Directory.CreateDirectory(dir); // Does nothing if directory exists.
+            System.Diagnostics.Process.Start(dir);
         }
 
         #region  Events
@@ -290,6 +301,7 @@ namespace kotor_Randomizer_2
                 if (Properties.Settings.Default.KotorIsRandomized)
                 {
                     randomize_button.Text = "Randomize!";
+                    generateSpoilersToolStripMenuItem.Enabled = false;
                 }
                 else
                 {
@@ -325,9 +337,7 @@ namespace kotor_Randomizer_2
 
         private void openSpoilersFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var dir = Path.Combine(Environment.CurrentDirectory, "Spoilers");
-            Directory.CreateDirectory(dir); // Does nothing if directory exists.
-            System.Diagnostics.Process.Start(dir);
+            OpenSpoilersFolder();
         }
 
         private void closeAllOtherWindowsToolStripMenuItem_Click(object sender, EventArgs e)
