@@ -139,6 +139,10 @@ namespace kotor_Randomizer_2
                                     RepliesLookupTable[fi.Name].Add(RF.Label, new List<Tuple<int, int>>());
 
                                 int str_ref = Randomize.Rng.Next(TLK_STRING_COUNT);
+                                while (t.String_Data_Table[str_ref].StringText == "")
+                                {
+                                    str_ref = Randomize.Rng.Next(TLK_STRING_COUNT);
+                                }
                                 var text = S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString;
                                 RepliesLookupTable[fi.Name][RF.Label].Add(new Tuple<int, int>(text.StringRef, str_ref));
                                 text.StringRef = str_ref;
