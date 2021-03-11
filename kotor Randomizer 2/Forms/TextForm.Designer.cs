@@ -30,12 +30,12 @@
         {
             this.cbDialogRando = new System.Windows.Forms.CheckBox();
             this.pDialogRando = new System.Windows.Forms.Panel();
+            this.cbMatchEntrySound = new System.Windows.Forms.CheckBox();
             this.cbReplies = new System.Windows.Forms.CheckBox();
             this.cbEntries = new System.Windows.Forms.CheckBox();
-            this.cbMatchEntrySound = new System.Windows.Forms.CheckBox();
             this.pTLK = new System.Windows.Forms.Panel();
-            this.cbTLKRando = new System.Windows.Forms.CheckBox();
             this.cbMatchStringLen = new System.Windows.Forms.CheckBox();
+            this.cbTLKRando = new System.Windows.Forms.CheckBox();
             this.pDialogRando.SuspendLayout();
             this.pTLK.SuspendLayout();
             this.SuspendLayout();
@@ -62,6 +62,17 @@
             this.pDialogRando.Size = new System.Drawing.Size(400, 40);
             this.pDialogRando.TabIndex = 4;
             // 
+            // cbMatchEntrySound
+            // 
+            this.cbMatchEntrySound.Enabled = false;
+            this.cbMatchEntrySound.Location = new System.Drawing.Point(270, 10);
+            this.cbMatchEntrySound.Name = "cbMatchEntrySound";
+            this.cbMatchEntrySound.Size = new System.Drawing.Size(130, 20);
+            this.cbMatchEntrySound.TabIndex = 2;
+            this.cbMatchEntrySound.Text = "Match Entry Sounds";
+            this.cbMatchEntrySound.UseVisualStyleBackColor = true;
+            this.cbMatchEntrySound.CheckedChanged += new System.EventHandler(this.cbMatchEntrySound_CheckedChanged);
+            // 
             // cbReplies
             // 
             this.cbReplies.Location = new System.Drawing.Point(140, 10);
@@ -82,17 +93,6 @@
             this.cbEntries.UseVisualStyleBackColor = true;
             this.cbEntries.CheckedChanged += new System.EventHandler(this.cbEntries_CheckedChanged);
             // 
-            // cbMatchEntrySound
-            // 
-            this.cbMatchEntrySound.Enabled = false;
-            this.cbMatchEntrySound.Location = new System.Drawing.Point(270, 10);
-            this.cbMatchEntrySound.Name = "cbMatchEntrySound";
-            this.cbMatchEntrySound.Size = new System.Drawing.Size(130, 20);
-            this.cbMatchEntrySound.TabIndex = 2;
-            this.cbMatchEntrySound.Text = "Match Entry Sounds";
-            this.cbMatchEntrySound.UseVisualStyleBackColor = true;
-            this.cbMatchEntrySound.CheckedChanged += new System.EventHandler(this.cbMatchEntrySound_CheckedChanged);
-            // 
             // pTLK
             // 
             this.pTLK.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -103,6 +103,16 @@
             this.pTLK.Size = new System.Drawing.Size(400, 40);
             this.pTLK.TabIndex = 5;
             // 
+            // cbMatchStringLen
+            // 
+            this.cbMatchStringLen.Location = new System.Drawing.Point(10, 10);
+            this.cbMatchStringLen.Name = "cbMatchStringLen";
+            this.cbMatchStringLen.Size = new System.Drawing.Size(170, 20);
+            this.cbMatchStringLen.TabIndex = 2;
+            this.cbMatchStringLen.Text = "Match Similar String Length";
+            this.cbMatchStringLen.UseVisualStyleBackColor = true;
+            this.cbMatchStringLen.CheckedChanged += new System.EventHandler(this.cbMatchStringLen_CheckedChanged);
+            // 
             // cbTLKRando
             // 
             this.cbTLKRando.Location = new System.Drawing.Point(20, 80);
@@ -112,16 +122,6 @@
             this.cbTLKRando.Text = "Randomize Additional Text";
             this.cbTLKRando.UseVisualStyleBackColor = true;
             this.cbTLKRando.CheckedChanged += new System.EventHandler(this.cbTLKRando_CheckedChanged);
-            // 
-            // cbMatchStringLen
-            // 
-            this.cbMatchStringLen.Location = new System.Drawing.Point(10, 10);
-            this.cbMatchStringLen.Name = "cbMatchStringLen";
-            this.cbMatchStringLen.Size = new System.Drawing.Size(170, 20);
-            this.cbMatchStringLen.TabIndex = 2;
-            this.cbMatchStringLen.Text = "Match Similair String Length";
-            this.cbMatchStringLen.UseVisualStyleBackColor = true;
-            this.cbMatchStringLen.CheckedChanged += new System.EventHandler(this.cbMatchStringLen_CheckedChanged);
             // 
             // TextF
             // 

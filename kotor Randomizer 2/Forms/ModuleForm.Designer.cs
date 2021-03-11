@@ -264,8 +264,8 @@
             this.cbFixLevElevators.Size = new System.Drawing.Size(136, 17);
             this.cbFixLevElevators.TabIndex = 30;
             this.cbFixLevElevators.Text = "Fix Leviathan Elevators";
-            this.ModulesToolTip.SetToolTip(this.cbFixLevElevators, "The Leviathan elevator will not restrict you from going to\r\nthe Hanger early, and" +
-        " the Hanger elevator is now usable.");
+            this.ModulesToolTip.SetToolTip(this.cbFixLevElevators, "The Leviathan elevator will not restrict you from going to\r\nthe Hangar early, and" +
+        " the Hangar elevator is now usable.");
             this.cbFixLevElevators.UseVisualStyleBackColor = true;
             this.cbFixLevElevators.CheckedChanged += new System.EventHandler(this.cbFixLevElevators_CheckedChanged);
             // 

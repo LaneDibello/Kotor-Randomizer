@@ -13,7 +13,7 @@ namespace kotor_Randomizer_2
             InitializeComponent();
 
             Version version = typeof(StartForm).Assembly.GetName().Version;
-            this.Text = $"{this.Text} v{version.Major}.{version.Minor}";
+            this.Text = $"{this.Text} v{version.Major}.{version.Minor}.{version.Build}";
 
             Properties.Settings settings = Properties.Settings.Default;
 
