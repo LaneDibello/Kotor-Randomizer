@@ -20,6 +20,15 @@ namespace kotor_Randomizer_2
         public ModuleForm()
         {
             InitializeComponent();
+            SetBorder(pnlSaveData, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
+            SetBorder(pnlTimeSavers, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
+            SetBorder(RandomizedListBox, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
+            SetBorder(OmittedListBox, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
+            SetBorder(lblWIP, Color.FromArgb(211, 216, 8), 1, BorderStyle.None);
+            SetBorder(pnlGoals, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
+            SetBorder(pnlGlitches, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
+            SetBorder(pnlOther, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
+
             var settings = Properties.Settings.Default;
 
             // Set up the controls
@@ -113,6 +122,22 @@ namespace kotor_Randomizer_2
                     Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, true);
                 }
             }
+        }
+
+        /// <summary>
+        /// Adds a border to the given control by adding a panel that contains it.
+        /// </summary>
+        private void SetBorder(Control ctl, Color col, int width, BorderStyle style)
+        {
+            Panel pnl = new Panel();
+            pnl.BorderStyle = style;
+            pnl.Size = new Size(ctl.Width + width * 2, ctl.Height + width * 2);
+            pnl.Location = new Point(ctl.Left - width, ctl.Top - width);
+            pnl.BackColor = col;
+            pnl.Visible = true;
+            pnl.Parent = ctl.Parent;
+            ctl.Parent = pnl;
+            ctl.Location = new Point(width, width);
         }
 
         #endregion
@@ -249,7 +274,7 @@ namespace kotor_Randomizer_2
 
         private void lblRandomized_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Convert.ToString(Properties.Settings.Default.ModuleExtrasValue));
+            MessageBox.Show(Convert.ToString(Properties.Settings.Default.ModuleExtrasValue), "Active Settings");
         }
 
         private void cbFixMindPrison_CheckedChanged(object sender, EventArgs e)

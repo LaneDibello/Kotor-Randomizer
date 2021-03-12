@@ -818,6 +818,26 @@ namespace kotor_Randomizer_2
         public static readonly Dictionary<string, List<string>> OMIT_PRESETS = new Dictionary<string, List<string>>()
         {
             //{ "<Custom>", null },
+            { "Off", new List<string>()
+                {
+                "danm13","danm14aa","danm14ab","danm14ac","danm14ad","danm14ae","danm15","danm16",
+                "ebo_m12aa","ebo_m40aa","ebo_m40ad","ebo_m41aa","ebo_m46ab",
+                "end_m01aa","end_m01ab",
+                "kas_m22aa","kas_m22ab","kas_m23aa","kas_m23ab","kas_m23ac","kas_m23ad","kas_m24aa","kas_m25aa",
+                "korr_m33aa","korr_m33ab","korr_m34aa","korr_m35aa","korr_m36aa","korr_m37aa","korr_m38aa","korr_m38ab","korr_m39aa",
+                "lev_m40aa","lev_m40ab","lev_m40ac","lev_m40ad",
+                "liv_m99aa",
+                "M12ab",
+                "manm26aa","manm26ab","manm26ac","manm26ad","manm26ae","manm26mg","manm27aa","manm28aa","manm28ab","manm28ac","manm28ad",
+                "sta_m45aa","sta_m45ab","sta_m45ac","sta_m45ad",
+                "STUNT_00","STUNT_03a","STUNT_06","STUNT_07","STUNT_12","STUNT_14","STUNT_16","STUNT_18","STUNT_19","STUNT_31b","STUNT_34","STUNT_35","STUNT_42",
+                "STUNT_44","STUNT_50a","STUNT_51a","STUNT_54a","STUNT_55a","STUNT_56a","STUNT_57",
+                "tar_m02aa","tar_m02ab","tar_m02ac","tar_m02ad","tar_m02ae","tar_m02af","tar_m03aa","tar_m03ab","tar_m03ad","tar_m03ae","tar_m03af","tar_m03mg",
+                "tar_m04aa","tar_m05aa","tar_m05ab","tar_m08aa","tar_m09aa","tar_m09ab","tar_m10aa","tar_m10ab","tar_m10ac","tar_m11aa","tar_m11ab",
+                "tat_m17aa","tat_m17ab","tat_m17ac","tat_m17ad","tat_m17ae","tat_m17af","tat_m17ag","tat_m17mg","tat_m18aa","tat_m18ab","tat_m18ac","tat_m20aa",
+                "unk_m41aa","unk_m41ab","unk_m41ac","unk_m41ad","unk_m42aa","unk_m43aa","unk_m44aa","unk_m44ab","unk_m44ac"
+                }
+            },
             { "Default", new List<string>()
                 {
                 "M12ab", "end_m01aa", "end_m01ab", "ebo_m40aa", "ebo_m12aa",
@@ -840,11 +860,71 @@ namespace kotor_Randomizer_2
                 "STUNT_56a", "STUNT_57"
                 }
             },
-            { "Max Random", new List<string>()
-                {
-                }
-            }
+            { "Max Random", new List<string>() { } }
+        };
 
+        /// <summary>
+        /// Built-in module omission presets. Same as OMIT_PRESETS, but excluding any "cutscene" modules.
+        /// </summary>
+        public static readonly Dictionary<string, List<string>> OMIT_MODULE_PRESETS = new Dictionary<string, List<string>>()
+        {
+            //{ "<Custom>", null },
+            { "Off", new List<string>()
+                {
+                "danm13","danm14aa","danm14ab","danm14ac","danm14ad","danm14ae","danm15","danm16",
+                "ebo_m12aa","ebo_m40aa","ebo_m40ad","ebo_m41aa","ebo_m46ab",
+                "end_m01aa","end_m01ab",
+                "kas_m22aa","kas_m22ab","kas_m23aa","kas_m23ab","kas_m23ac","kas_m23ad","kas_m24aa","kas_m25aa",
+                "korr_m33aa","korr_m33ab","korr_m34aa","korr_m35aa","korr_m36aa","korr_m37aa","korr_m38aa","korr_m38ab","korr_m39aa",
+                "lev_m40aa","lev_m40ab","lev_m40ac","lev_m40ad",
+                "liv_m99aa",
+                "manm26aa","manm26ab","manm26ac","manm26ad","manm26ae","manm26mg","manm27aa","manm28aa","manm28ab","manm28ac","manm28ad",
+                "sta_m45aa","sta_m45ab","sta_m45ac","sta_m45ad",
+                "tar_m02aa","tar_m02ab","tar_m02ac","tar_m02ad","tar_m02ae","tar_m02af","tar_m03aa","tar_m03ab","tar_m03ad","tar_m03ae","tar_m03af","tar_m03mg",
+                "tar_m04aa","tar_m05aa","tar_m05ab","tar_m08aa","tar_m09aa","tar_m09ab","tar_m10aa","tar_m10ab","tar_m10ac","tar_m11aa","tar_m11ab",
+                "tat_m17aa","tat_m17ab","tat_m17ac","tat_m17ad","tat_m17ae","tat_m17af","tat_m17ag","tat_m17mg","tat_m18aa","tat_m18ab","tat_m18ac","tat_m20aa",
+                "unk_m41aa","unk_m41ab","unk_m41ac","unk_m41ad","unk_m42aa","unk_m43aa","unk_m44aa","unk_m44ab","unk_m44ac"
+                }
+            },
+            { "Default", new List<string>()
+                {
+                "end_m01aa", "end_m01ab",   // Endar Spire
+                "ebo_m40aa", "ebo_m12aa", "ebo_m40ad"   // Ebon Hawk + Lev Hawks
+                }
+            },
+            { "No Major Hubs", new List<string>()
+                {
+                "liv_m99aa",    // Yavin IV
+                "tar_m10ab",    // Vulkar Spice Lab
+                "unk_m43aa",    // Rakatan Settlement
+                "unk_m44ac",    // Temple Summit
+                "manm26mg", "tar_m03mg", "tat_m17mg",   // Swoops
+                "tar_m03aa",    // Lower City (hub)
+                "tat_m17aa",    // Anchorhead (hub)
+                "korr_m36aa",   // Valley of the Dark Lords (hub)
+                "end_m01aa", "end_m01ab",   // Endar Spire (default)
+                "ebo_m40aa", "ebo_m12aa", "ebo_m40ad", "ebo_m46ab", // Ebon Hawk (default) + Mystery Box
+                }
+            },
+            { "All Modules", new List<string>() { } }
+        };
+
+        /// <summary>
+        /// Built-in cutscene omission presets. Same as OMIT_PRESETS, but only containing any "cutscene" modules.
+        /// </summary>
+        public static readonly Dictionary<string, List<string>> OMIT_CUTSCENE_PRESETS = new Dictionary<string, List<string>>()
+        {
+            //{ "<Custom>", null },
+            { "Off", new List<string>()
+                {
+                "M12ab",
+                "STUNT_00",  "STUNT_03a", "STUNT_06",  "STUNT_07",  "STUNT_12",
+                "STUNT_14",  "STUNT_16",  "STUNT_18",  "STUNT_19",  "STUNT_31b",
+                "STUNT_34",  "STUNT_35",  "STUNT_42",  "STUNT_44",  "STUNT_50a",
+                "STUNT_51a", "STUNT_54a", "STUNT_55a", "STUNT_56a", "STUNT_57",
+                }
+            },
+            { "All Cutscenes", new List<string>() { } }
         };
 
         /// <summary>

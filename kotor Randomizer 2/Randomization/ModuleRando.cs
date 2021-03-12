@@ -16,7 +16,7 @@ namespace kotor_Randomizer_2
         private const string AREA_TEMPLE_ROOF = "unk_m44ac";
         private const string AREA_LEVI_PRISON = "lev_m40aa";
         private const string AREA_LEVI_COMMAND = "lev_m40ab";
-        private const string AREA_LEVI_HANGER = "lev_m40ac";
+        private const string AREA_LEVI_HANGAR = "lev_m40ac";
         private const string AREA_VULKAR_BASE = "tar_m10aa";
         private const string LABEL_MIND_PRISON = "g_brakatan003";
         private const string LABEL_MYSTERY_BOX = "pebn_mystery";
@@ -58,18 +58,76 @@ namespace kotor_Randomizer_2
             bool reachable = false;
             int iterations = 0;
 
-            if (Properties.Settings.Default.UseRandoRules ||
-                Properties.Settings.Default.VerifyReachability)
+            // Only shuffle if there is more than 1 module in the shuffle.
+            if (IncludedModules.Count > 1)
             {
-                System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-                sw.Start();
-
-                while (!reachable && iterations < MAX_ITERATIONS)
+                if (Properties.Settings.Default.UseRandoRules ||
+                    Properties.Settings.Default.VerifyReachability)
                 {
-                    iterations++;
+                    System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+                    sw.Start();
 
-                    Console.WriteLine($"Iteration {iterations}:");
+                    while (!reachable && iterations < MAX_ITERATIONS)
+                    {
+                        iterations++;
 
+                        Console.WriteLine($"Iteration {iterations}:");
+
+                        // Shuffle the list of included modules.
+                        List<string> ShuffledModules = IncludedModules.ToList();
+                        Randomize.FisherYatesShuffle(ShuffledModules);
+                        LookupTable.Clear();
+
+                        for (int i = 0; i < IncludedModules.Count; i++)
+                        {
+                            LookupTable.Add(IncludedModules[i], ShuffledModules[i]);
+                        }
+
+                        foreach (string name in ExcludedModules)
+                        {
+                            LookupTable.Add(name, name);
+                        }
+
+                        Digraph.SetRandomizationLookup(LookupTable);
+
+                        if (Properties.Settings.Default.UseRandoRules)
+                        {
+                            // Skip to the next iteration if the rules are violated.
+                            if (AreRulesViolated()) continue;
+                        }
+
+                        if (Properties.Settings.Default.VerifyReachability)
+                        {
+                            Digraph.CheckReachability();
+                            reachable = Digraph.IsGoalReachable();
+                        }
+                        else
+                        {
+                            reachable = true;
+                        }
+                    }
+
+                    if (Properties.Settings.Default.VerifyReachability)
+                    {
+                        if (reachable)
+                        {
+                            var message = $"Reachable solution found after {iterations} shuffles. Time elapsed: {sw.Elapsed}";
+                            Console.WriteLine(message);
+                        }
+                        else
+                        {
+                            // Throw an exception if not reachable.
+                            var message = $"No reachable solution found over {iterations} shuffles. Time elapsed: {sw.Elapsed}";
+                            Console.WriteLine(message);
+                            throw new TimeoutException(message);
+                        }
+                    }
+
+                    //digraph.WriteReachableToConsole();
+                    Console.WriteLine();
+                }
+                else
+                {
                     // Shuffle the list of included modules.
                     List<string> ShuffledModules = IncludedModules.ToList();
                     Randomize.FisherYatesShuffle(ShuffledModules);
@@ -84,55 +142,16 @@ namespace kotor_Randomizer_2
                     {
                         LookupTable.Add(name, name);
                     }
-
-                    Digraph.SetRandomizationLookup(LookupTable);
-
-                    if (Properties.Settings.Default.UseRandoRules)
-                    {
-                        // Skip to the next iteration if the rules are violated.
-                        if (AreRulesViolated()) continue;
-                    }
-
-                    if (Properties.Settings.Default.VerifyReachability)
-                    {
-                        Digraph.CheckReachability();
-                        reachable = Digraph.IsGoalReachable();
-                    }
-                    else
-                    {
-                        reachable = true;
-                    }
                 }
-
-                if (Properties.Settings.Default.VerifyReachability)
-                {
-                    if (reachable)
-                    {
-                        var message = $"Reachable solution found after {iterations} shuffles. Time elapsed: {sw.Elapsed}";
-                        Console.WriteLine(message);
-                    }
-                    else
-                    {
-                        // Throw an exception if not reachable.
-                        var message = $"No reachable solution found over {iterations} shuffles. Time elapsed: {sw.Elapsed}";
-                        Console.WriteLine(message);
-                        throw new TimeoutException(message);
-                    }
-                }
-
-                //digraph.WriteReachableToConsole();
-                Console.WriteLine();
             }
             else
             {
-                // Shuffle the list of included modules.
-                List<string> ShuffledModules = IncludedModules.ToList();
-                Randomize.FisherYatesShuffle(ShuffledModules);
+                // Create lookup table for later features.
                 LookupTable.Clear();
 
                 for (int i = 0; i < IncludedModules.Count; i++)
                 {
-                    LookupTable.Add(IncludedModules[i], ShuffledModules[i]);
+                    LookupTable.Add(IncludedModules[i], IncludedModules[i]);
                 }
 
                 foreach (string name in ExcludedModules)
@@ -229,7 +248,7 @@ namespace kotor_Randomizer_2
 
                     GFF g = new GFF(rf.File_Data);
 
-                    //Update coordinate data.
+                    // Update coordinate data.
                     (g.Top_Level.Fields.Where(x => x.Label == Properties.Resources.ModuleEntryX).FirstOrDefault() as GFF.FLOAT).Value = Globals.FIXED_COORDINATES[kvp.Key].Item1;
                     (g.Top_Level.Fields.Where(x => x.Label == Properties.Resources.ModuleEntryY).FirstOrDefault() as GFF.FLOAT).Value = Globals.FIXED_COORDINATES[kvp.Key].Item2;
                     (g.Top_Level.Fields.Where(x => x.Label == Properties.Resources.ModuleEntryZ).FirstOrDefault() as GFF.FLOAT).Value = Globals.FIXED_COORDINATES[kvp.Key].Item3;
@@ -243,7 +262,7 @@ namespace kotor_Randomizer_2
             // Fixed Rakata riddle Man in Mind Prison.
             if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison))
             {
-                //Allowing Mystery Box to be accessed multiple times
+                // Allowing Mystery Box to be accessed multiple times...
                 // Find the files associated with AREA_EBON_HAWK.
                 var hawk_files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_EBON_HAWK]));
                 foreach (FileInfo fi in hawk_files)
@@ -270,7 +289,7 @@ namespace kotor_Randomizer_2
                     }
                 }
 
-                //Allowing Riddles to be done more than once
+                // Allowing Riddles to be done more than once...
                 // Find the files associated with AREA_MYSTERY_BOX.
                 var files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_MYSTERY_BOX]));
                 foreach (FileInfo fi in files)
@@ -298,20 +317,20 @@ namespace kotor_Randomizer_2
                 }
             }
 
-            //Unlock doors to dantooine ruins and on Lehon Temple Roof
+            // Unlock doors to dantooine ruins and on Lehon Temple Roof
             if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors))
             {
-                //Dantooine Ruins
+                // Dantooine Ruins
                 var dan_files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_DANTOOINE_COURTYARD]));
                 foreach (FileInfo fi in dan_files)
                 {
                     // Skip any files that don't end in "s.rim".
                     if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
 
-                    RIM r_dan = new RIM(fi.FullName); //Open what replaced danm14aa_s.rim
-                    GFF g_dan = new GFF(r_dan.File_Table.Where(x => x.Label == LABEL_DANTOOINE_DOOR).FirstOrDefault().File_Data); //Grab the door out of there
+                    RIM r_dan = new RIM(fi.FullName); // Open what replaced danm14aa_s.rim
+                    GFF g_dan = new GFF(r_dan.File_Table.Where(x => x.Label == LABEL_DANTOOINE_DOOR).FirstOrDefault().File_Data); // Grab the door out of there
 
-                    //Set the "Locked" field to 0 (false)
+                    // Set the "Locked" field to 0 (false)
                     (g_dan.Top_Level.Fields.Where(x => x.Label == "Locked").FirstOrDefault() as GFF.BYTE).Value = 0;
 
                     r_dan.File_Table.Where(x => x.Label == LABEL_DANTOOINE_DOOR).FirstOrDefault().File_Data = g_dan.ToRawData();
@@ -319,17 +338,17 @@ namespace kotor_Randomizer_2
                     r_dan.WriteToFile(fi.FullName);
                 }
 
-                //Lehon Temple Roof
+                // Lehon Temple Roof
                 var unk_files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_TEMPLE_ROOF]));
                 foreach (FileInfo fi in unk_files)
                 {
                     // Skip any files that don't end in "s.rim".
                     if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
 
-                    RIM r_unk = new RIM(fi.FullName); //Open what replaced unk_m44aa_s.rim
-                    GFF g_unk = new GFF(r_unk.File_Table.Where(x => x.Label == LABEL_LEHON_DOOR).FirstOrDefault().File_Data); //Grab the door out of there
+                    RIM r_unk = new RIM(fi.FullName); // Open what replaced unk_m44aa_s.rim
+                    GFF g_unk = new GFF(r_unk.File_Table.Where(x => x.Label == LABEL_LEHON_DOOR).FirstOrDefault().File_Data); // Grab the door out of there
 
-                    //Set the "Locked" field to 0 (false)
+                    // Set the "Locked" field to 0 (false)
                     (g_unk.Top_Level.Fields.Where(x => x.Label == "Locked").FirstOrDefault() as GFF.BYTE).Value = 0;
 
                     r_unk.File_Table.Where(x => x.Label == LABEL_LEHON_DOOR).FirstOrDefault().File_Data = g_unk.ToRawData();
@@ -338,14 +357,14 @@ namespace kotor_Randomizer_2
                 }
             }
 
-            //Leviathan Elevators
+            // Leviathan Elevators
             if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators))
             {
                 var lev_files_a = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_LEVI_PRISON]));
                 var lev_files_b = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_LEVI_COMMAND]));
-                var lev_files_c = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_LEVI_HANGER]));
+                var lev_files_c = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_LEVI_HANGAR]));
 
-                //Prison Block Fix
+                // Prison Block Fix
                 foreach (FileInfo fi in lev_files_a)
                 {
                     // Skip any files that don't end in "s.rim".
@@ -354,9 +373,10 @@ namespace kotor_Randomizer_2
                     RIM r_lev = new RIM(fi.FullName);
                     GFF g_lev = new GFF(r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_A).FirstOrDefault().File_Data);
 
-                    //Change Entry connecting for bridge option Index to 3, which will transition to the command deck
+                    // Change Entry connecting for bridge option Index to 3, which will transition to the command deck
                     (((g_lev.Top_Level.Fields.Where(x => x.Label == "ReplyList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 3).FirstOrDefault().Fields.Where(x => x.Label == "EntriesList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 0).FirstOrDefault().Fields.Where(x => x.Label == "Index").FirstOrDefault() as GFF.DWORD).Value = 3;
-                    //Sets the active reference for the hanger option to nothing, meaning there is no requirement to transition to the hanger
+
+                    // Sets the active reference for the hangar option to nothing, meaning there is no requirement to transition to the hangar
                     (((g_lev.Top_Level.Fields.Where(x => x.Label == "ReplyList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 1).FirstOrDefault().Fields.Where(x => x.Label == "EntriesList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 0).FirstOrDefault().Fields.Where(x => x.Label == "Active").FirstOrDefault() as GFF.ResRef).Reference = "";
 
                     r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_A).FirstOrDefault().File_Data = g_lev.ToRawData();
@@ -364,7 +384,7 @@ namespace kotor_Randomizer_2
                     r_lev.WriteToFile(fi.FullName);
                 }
 
-                //Commadn Deck Fix
+                // Command Deck Fix
                 foreach (FileInfo fi in lev_files_b)
                 {
                     // Skip any files that don't end in "s.rim".
@@ -373,7 +393,7 @@ namespace kotor_Randomizer_2
                     RIM r_lev = new RIM(fi.FullName);
                     GFF g_lev = new GFF(r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_B).FirstOrDefault().File_Data);
 
-                    //Sets the active reference for the hanger option to nothing, meaning there is no requirement to transition to the hanger
+                    // Sets the active reference for the hangar option to nothing, meaning there is no requirement to transition to the hangar
                     (((g_lev.Top_Level.Fields.Where(x => x.Label == "ReplyList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 1).FirstOrDefault().Fields.Where(x => x.Label == "EntriesList").FirstOrDefault() as GFF.LIST).Structs.Where(x => x.Struct_Type == 1).FirstOrDefault().Fields.Where(x => x.Label == "Active").FirstOrDefault() as GFF.ResRef).Reference = "";
 
                     r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_B).FirstOrDefault().File_Data = g_lev.ToRawData();
@@ -381,7 +401,7 @@ namespace kotor_Randomizer_2
                     r_lev.WriteToFile(fi.FullName);
                 }
 
-                //Hanger Fix
+                // Hangar Fix
                 foreach (FileInfo fi in lev_files_c)
                 {
                     // Skip any files that don't end in "s.rim".
@@ -389,24 +409,25 @@ namespace kotor_Randomizer_2
 
                     RIM r_lev = new RIM(fi.FullName);
 
-                    //While I possess the ability to edit this file programmatically, due to the complexity I have opted to just load the modded file into resources.
+                    // While I possess the ability to edit this file programmatically, due to the complexity I have opted to just load the modded file into resources.
                     r_lev.File_Table.Where(x => x.Label == LABEL_LEVI_ELEVATOR_C).FirstOrDefault().File_Data = Properties.Resources.lev40_accntl_dlg;
-                    //Adding module transition scripts to RIM
-                    //Prison Block
+
+                    // Adding module transition scripts to RIM...
+                    // Prison Block
                     RIM.rFile to40aa = new RIM.rFile
                     {
                         TypeID = (int)ResourceType.NCS,
                         Label = "k_plev_goto40aa",
                         File_Data = Properties.Resources.k_plev_goto40aa
                     };
-                    //Command Deck
+                    // Command Deck
                     RIM.rFile to40ab = new RIM.rFile
                     {
                         TypeID = (int)ResourceType.NCS,
                         Label = "k_plev_goto40ab",
                         File_Data = Properties.Resources.k_plev_goto40ab
                     };
-                    //adding scripts
+                    // Adding scripts
                     r_lev.File_Table.Add(to40aa);
                     r_lev.File_Table.Add(to40ab);
 
@@ -415,7 +436,7 @@ namespace kotor_Randomizer_2
                 }
             }
 
-            //Vulkar Spice Lab Transition
+            // Vulkar Spice Lab Transition
             if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ))
             {
                 var vulk_files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_VULKAR_BASE]));
