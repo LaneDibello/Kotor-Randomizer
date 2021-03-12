@@ -585,18 +585,30 @@ namespace kotor_Randomizer_2
             ws.Cell(i, 2).Style.Font.Bold = true;
             i++;
 
+            string presetName;
+            bool isCustomPreset = false;
+            if (Properties.Settings.Default.LastPresetComboIndex >= 0)
+            {
+                presetName = Globals.OMIT_PRESETS.Keys.ToList()[Properties.Settings.Default.LastPresetComboIndex];
+            }
+            else
+            {
+                presetName = "Custom";
+                isCustomPreset = true;
+            }
+
             var settings = new List<Tuple<string, string>>()
             {
                 new Tuple<string, string>("Delete Milestone Save Data", (!Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete)).ToString()),
                 new Tuple<string, string>("Include Minigames in Save", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames).ToString()),
                 new Tuple<string, string>("Include All Modules in Save", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules).ToString()),
                 new Tuple<string, string>("Fix Dream Sequence", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream).ToString()),
-                new Tuple<string, string>("Unlock Galaxy Map", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap).ToString()),
-                new Tuple<string, string>("Fix Module Coordinates", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates).ToString()),
                 new Tuple<string, string>("Fix Mind Prison", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison).ToString()),
-                new Tuple<string, string>("Unlock Various Doors", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors).ToString()),
+                new Tuple<string, string>("Fix Module Coordinates", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates).ToString()),
                 new Tuple<string, string>("Fix Leviathan Elevators", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators).ToString()),
                 new Tuple<string, string>("Add Spice Lab Load Zone", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ).ToString()),
+                new Tuple<string, string>("Unlock Galaxy Map", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap).ToString()),
+                new Tuple<string, string>("Unlock Various Doors", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors).ToString()),
                 new Tuple<string, string>("", ""),  // Skip a row.
                 new Tuple<string, string>("Use Rando Exclusion Rules", Properties.Settings.Default.UseRandoRules.ToString()),
                 new Tuple<string, string>("Verify Reachability", Properties.Settings.Default.VerifyReachability.ToString()),
@@ -609,6 +621,8 @@ namespace kotor_Randomizer_2
                 new Tuple<string, string>("Allow Glitch FLU", Properties.Settings.Default.AllowGlitchFlu.ToString()),
                 new Tuple<string, string>("Allow Glitch GPW", Properties.Settings.Default.AllowGlitchGpw.ToString()),
                 new Tuple<string, string>("", ""),  // Skip a row.
+                new Tuple<string, string>("Shuffle Preset", presetName),
+                new Tuple<string, string>("", ""),  // Skip a row.
             };
 
             foreach (var setting in settings)
@@ -619,7 +633,50 @@ namespace kotor_Randomizer_2
                 i++;
             }
 
+            // Custom Omitted Modules
+            int iMax = i;
+            var omittedModules = Globals.BoundModules.Where(x => x.Omitted);
+
+            if (isCustomPreset)
+            {
+                i = 3;
+
+                ws.Cell(i, 4).Value = "Omitted Modules";
+                ws.Cell(i, 4).Style.Font.Bold = true;
+                ws.Range(i, 4, i, 5).Merge().Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                i++;
+
+                ws.Cell(i, 4).Value = "Warp Code";
+                ws.Cell(i, 5).Value = "Common Name";
+                ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                ws.Cell(i, 5).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                ws.Cell(i, 4).Style.Font.Italic = true;
+                ws.Cell(i, 5).Style.Font.Italic = true;
+                i++;
+
+                foreach (var mod in omittedModules)
+                {
+                    ws.Cell(i, 4).Value = mod.Code;
+                    ws.Cell(i, 5).Value = mod.Common;
+                    i++;
+                }
+
+                if (iMax > i)
+                {
+                    i = iMax;   // Return to bottom of settings list.
+                }
+                else
+                {
+                    i++;    // Skip a row.
+                }
+            }
+
             // Module Shuffle
+            ws.Cell(i, 1).Value = "Module Shuffle";
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Range(i, 1, i, 5).Merge().Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            i++;
+
             ws.Cell(i, 1).Value = "Has Changed";
             ws.Cell(i, 2).Value = "Default Code";
             ws.Cell(i, 3).Value = "Default Name";
@@ -642,14 +699,28 @@ namespace kotor_Randomizer_2
             {
                 var defaultName = Digraph.Modules.FirstOrDefault(m => m.WarpCode == kvp.Key)?.CommonName;
                 var randomizedName = Digraph.Modules.FirstOrDefault(m => m.WarpCode == kvp.Value)?.CommonName;
+                var omitted = omittedModules.Any(x => x.Code == kvp.Key);   // Was the module omitted from the shuffle?
+                var changed = kvp.Key != kvp.Value; // Has the shuffle changed this module?
 
-                ws.Cell(i, 1).Value = (kvp.Key != kvp.Value).ToString();
+                ws.Cell(i, 1).Value = omitted ? "OMITTED" : changed.ToString();
                 ws.Cell(i, 2).Value = kvp.Key;
                 ws.Cell(i, 3).Value = defaultName;
                 ws.Cell(i, 4).Value = kvp.Value;
                 ws.Cell(i, 5).Value = randomizedName;
-                if (kvp.Key != kvp.Value) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
-                else ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
+
+                if (omitted)
+                {
+                    // Center "OMITTED" text.
+                    ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                }
+                else
+                {
+                    // Set color of "Has Changed" column. Booleans are automatically centered.
+                    if (changed)
+                        ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
+                    else
+                        ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
+                }
                 i++;
             }
 

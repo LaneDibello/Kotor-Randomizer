@@ -93,6 +93,7 @@ namespace kotor_Randomizer_2
         // Stores omitted modules
         private void UpdateOmittedModulesSetting()
         {
+            Properties.Settings.Default.LastPresetComboIndex = PresetComboBox.SelectedIndex;
             Properties.Settings.Default.OmittedModules.Clear();
             Properties.Settings.Default.OmittedModules.AddRange(Globals.BoundModules.Where(x => x.Omitted).Select(x => x.Code).ToArray());
         }
