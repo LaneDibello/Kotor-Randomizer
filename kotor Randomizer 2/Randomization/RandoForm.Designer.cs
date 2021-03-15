@@ -69,7 +69,7 @@
             this.bDone.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bDone.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bDone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.bDone.Location = new System.Drawing.Point(380, 95);
+            this.bDone.Location = new System.Drawing.Point(204, 95);
             this.bDone.Name = "bDone";
             this.bDone.Size = new System.Drawing.Size(120, 30);
             this.bDone.TabIndex = 3;
@@ -109,7 +109,7 @@
             this.bSpoilers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bSpoilers.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bSpoilers.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.bSpoilers.Location = new System.Drawing.Point(204, 95);
+            this.bSpoilers.Location = new System.Drawing.Point(344, 95);
             this.bSpoilers.Name = "bSpoilers";
             this.bSpoilers.Size = new System.Drawing.Size(160, 30);
             this.bSpoilers.TabIndex = 4;
