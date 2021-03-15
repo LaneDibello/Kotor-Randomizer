@@ -120,6 +120,17 @@
   <metadata name="ModulesToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="PresetComboBox.ToolTip" xml:space="preserve">
+    <value>"Off" - Modules will not be shuffled.
+
+"Default" - Cutscenes, Endar Spire, and Ebon Hawk will
+not be shuffled.
+
+"No Major Hubs" - Default + modules with 6 or more links
+will not be shuffled.
+
+"Max Random" - All modules and cutscenes will be shuffled.</value>
+  </data>
   <data name="cbDeleteMilestones.ToolTip" xml:space="preserve">
     <value>Enabled by default in the base game. Unchecking will prevent
 the game clearing your save of presumed "unreachable" modules,
@@ -139,4 +150,7 @@ cannot replace Dreshdae)
 Similar to rule 1, this prevents binary loops that you can't
 escape from unless the other door is unlocked.</value>
   </data>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>73</value>
+  </metadata>
 </root>

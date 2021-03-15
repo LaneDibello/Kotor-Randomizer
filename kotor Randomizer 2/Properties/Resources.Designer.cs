@@ -71,6 +71,15 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Game is already randomized!.
+        /// </summary>
+        internal static string AlreadyRandomized {
+            get {
+                return ResourceManager.GetString("AlreadyRandomized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap BoxActive {
@@ -107,6 +116,24 @@ namespace kotor_Randomizer_2.Properties {
             get {
                 object obj = ResourceManager.GetObject("BoxUnslected", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Spoiler Log.
+        /// </summary>
+        internal static string CreateSpoilerLog {
+            get {
+                return ResourceManager.GetString("CreateSpoilerLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Would you like to create a spoiler log?.
+        /// </summary>
+        internal static string CreateSpoilerLogQuestion {
+            get {
+                return ResourceManager.GetString("CreateSpoilerLogQuestion", resourceCulture);
             }
         }
         
@@ -155,15 +182,6 @@ namespace kotor_Randomizer_2.Properties {
         internal static string GeneralHelp {
             get {
                 return ResourceManager.GetString("GeneralHelp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Generate Spoiler Logs.
-        /// </summary>
-        internal static string GenerateSpoilerLogs {
-            get {
-                return ResourceManager.GetString("GenerateSpoilerLogs", resourceCulture);
             }
         }
         
@@ -509,6 +527,24 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Randomized!.
+        /// </summary>
+        internal static string Randomized {
+            get {
+                return ResourceManager.GetString("Randomized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Randomized with Spoilers!.
+        /// </summary>
+        internal static string RandomizedWithSpoilers {
+            get {
+                return ResourceManager.GetString("RandomizedWithSpoilers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Randomizing 2-D Arrays.
         /// </summary>
         internal static string Randomizing2DA {
@@ -651,6 +687,15 @@ namespace kotor_Randomizer_2.Properties {
         internal static string TwoDAHelp {
             get {
                 return ResourceManager.GetString("TwoDAHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unrandomized!.
+        /// </summary>
+        internal static string Unrandomized {
+            get {
+                return ResourceManager.GetString("Unrandomized", resourceCulture);
             }
         }
         

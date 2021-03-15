@@ -47,7 +47,7 @@ namespace kotor_Randomizer_2
             HandleCategory(k, StimsRegs, Properties.Settings.Default.RandomizeStims);
             HandleCategory(k, UpgradeRegs, Properties.Settings.Default.RandomizeUpgrade);
 
-            //handle Various
+            // Handle Various
             switch (Properties.Settings.Default.RandomizeVarious)
             {
                 default:
@@ -62,7 +62,13 @@ namespace kotor_Randomizer_2
                     break;
             }
 
-            //Max Rando
+            // Omitted Items
+            foreach (var item in Globals.OmitItems)
+            {
+                LookupTable.Add(new Tuple<string, string>(item, item));
+            }
+
+            // Max Rando
             List<string> Max_Rando_Iterator = new List<string>(Max_Rando);
             Randomize.FisherYatesShuffle(Max_Rando);
             int j = 0;
@@ -73,7 +79,7 @@ namespace kotor_Randomizer_2
                 j++;
             }
 
-            //Type Rando
+            // Type Rando
             foreach (List<string> li in Type_Lists)
             {
                 List<string> type_copy = new List<string>(li);
@@ -209,7 +215,7 @@ namespace kotor_Randomizer_2
             LookupTable.Clear();
         }
 
-        public static void GenerateSpoilerLog(XLWorkbook workbook)
+        public static void CreateSpoilerLog(XLWorkbook workbook)
         {
             if (LookupTable.Count == 0) { return; }
             var ws = workbook.Worksheets.Add("Item");
@@ -269,40 +275,77 @@ namespace kotor_Randomizer_2
             i++;    // Skip a row.
 
             // Omitted Items
-            ws.Cell(i, 1).Value = "Omitted Items";
-            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 1).Style.Font.Bold = true;
+            int iMax = i;
+            i = 3;  // Restart at the top of the settings list.
+
+            ws.Cell(i, 4).Value = "Omitted Items";
+            ws.Cell(i, 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i, 4).Style.Font.Bold = true;
+            ws.Range(i, 4, i, 5).Merge();
             i++;
 
-            foreach (var item in Globals.OmitItems)
-            {
-                ws.Cell(i, 1).Value = item;
-                i++;
-            }
-            i += 2;     // Skip a couple row.
-
-            // Randomized Items
-            ws.Cell(i, 1).Value = "Has Changed";
-            ws.Cell(i-1, 2).Value = "Original";
-            ws.Cell(i, 2).Value = "ID";
-            ws.Cell(i, 3).Value = "Label";
-            ws.Cell(i-1, 4).Value = "Randomized";
             ws.Cell(i, 4).Value = "ID";
             ws.Cell(i, 5).Value = "Label";
-            ws.Cell(i-1, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-            ws.Cell(i-1, 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 5).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i-1, 2).Style.Font.Bold = true;
-            ws.Cell(i, 2).Style.Font.Italic = true;
-            ws.Cell(i, 3).Style.Font.Italic = true;
-            ws.Cell(i-1, 4).Style.Font.Bold = true;
             ws.Cell(i, 4).Style.Font.Italic = true;
             ws.Cell(i, 5).Style.Font.Italic = true;
+            i++;
+
+            var sortedList = Globals.OmitItems.ToList();
+            sortedList.Sort();
+
+            foreach (var item in sortedList)
+            {
+                ws.Cell(i, 4).Value = item;
+                var origItemName = "";
+
+                var origItemVre = items.FirstOrDefault(x => x.ResRef == item);
+                if (origItemVre != null)
+                {
+                    GFF origItem = new GFF(origItemVre.EntryData);
+                    if (origItem.Top_Level.Fields.FirstOrDefault(x => x.Label == "LocalizedName") is GFF.CExoLocString field)
+                        origItemName = t.String_Data_Table[field.StringRef].StringText;
+                }
+
+                ws.Cell(i, 5).Value = origItemName;
+                i++;
+            }
+
+            // Handle variable length of omitted items list.
+            if (iMax > i) i = iMax; // Return to the bottom of the settings list.
+            else          i++;      // Skip a row.
+
+            i++;    // Skip an additional row.
+
+            // Randomized Items
+            ws.Cell(i,   1).Value = "Has Changed";
+            ws.Cell(i-1, 2).Value = "Original";
+            ws.Cell(i,   2).Value = "ID";
+            ws.Cell(i,   3).Value = "Label";
+            ws.Cell(i-1, 4).Value = "Randomized";
+            ws.Cell(i,   4).Value = "ID";
+            ws.Cell(i,   5).Value = "Label";
+            ws.Cell(i-1, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i-1, 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i,   1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i,   2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i,   3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i,   4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i,   5).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i-1, 2).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i,   2).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i-1, 4).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i,   4).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i-1, 6).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i,   6).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i,   1).Style.Font.Bold = true;
+            ws.Cell(i-1, 2).Style.Font.Bold = true;
+            ws.Cell(i,   2).Style.Font.Italic = true;
+            ws.Cell(i,   3).Style.Font.Italic = true;
+            ws.Cell(i-1, 4).Style.Font.Bold = true;
+            ws.Cell(i,   4).Style.Font.Italic = true;
+            ws.Cell(i,   5).Style.Font.Italic = true;
             ws.Range(i-1, 2, i-1, 3).Merge();
             ws.Range(i-1, 4, i-1, 5).Merge();
             i++;
@@ -312,6 +355,8 @@ namespace kotor_Randomizer_2
             {
                 string origItemName = "";
                 string randItemName = "";
+                var omitted = Globals.OmitItems.Any(x => x == tpl.Item1);
+                var changed = tpl.Item1 != tpl.Item2;   // Has the shuffle changed this item?
 
                 var origItemVre = items.FirstOrDefault(x => x.ResRef == tpl.Item1);
                 if (origItemVre != null)
@@ -321,22 +366,40 @@ namespace kotor_Randomizer_2
                         origItemName = t.String_Data_Table[field.StringRef].StringText;
                 }
 
-                var randItemVre = items.FirstOrDefault(x => x.ResRef == tpl.Item2);
-                if (randItemVre != null)
+                if (changed)
                 {
-                    GFF randItem = new GFF(randItemVre.EntryData);
-                    if (randItem.Top_Level.Fields.FirstOrDefault(x => x.Label == "LocalizedName") is GFF.CExoLocString field)
-                        randItemName = t.String_Data_Table[field.StringRef].StringText;
+                    var randItemVre = items.FirstOrDefault(x => x.ResRef == tpl.Item2);
+                    if (randItemVre != null)
+                    {
+                        GFF randItem = new GFF(randItemVre.EntryData);
+                        if (randItem.Top_Level.Fields.FirstOrDefault(x => x.Label == "LocalizedName") is GFF.CExoLocString field)
+                            randItemName = t.String_Data_Table[field.StringRef].StringText;
+                    }
+                }
+                else
+                {
+                    randItemName = origItemName;
                 }
 
-                var hasChanged = tpl.Item1 != tpl.Item2;
-                ws.Cell(i, 1).Value = hasChanged.ToString();
+                ws.Cell(i, 1).Value = omitted ? "OMITTED" : changed.ToString();
+                ws.Cell(i, 2).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                 ws.Cell(i, 2).Value = tpl.Item1;
                 ws.Cell(i, 3).Value = origItemName;
+                ws.Cell(i, 4).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                 ws.Cell(i, 4).Value = tpl.Item2;
                 ws.Cell(i, 5).Value = randItemName;
-                if (hasChanged) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
-                else            ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
+                ws.Cell(i, 6).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                if (omitted)
+                {
+                    // Center "OMITTED" text.
+                    ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                }
+                else
+                {
+                    // Set color of "Has Changed" column. Booleans are automatically centered.
+                    if (changed) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
+                    else         ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
+                }
                 i++;
             }
 

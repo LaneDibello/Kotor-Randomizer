@@ -188,7 +188,7 @@ namespace kotor_Randomizer_2
             NameLookup.Clear();
         }
 
-        internal static void GenerateSpoilerLog(XLWorkbook workbook)
+        internal static void CreateSpoilerLog(XLWorkbook workbook)
         {
             if (LookupTable.Count == 0) { return; }
             var ws = workbook.Worksheets.Add("Texture");

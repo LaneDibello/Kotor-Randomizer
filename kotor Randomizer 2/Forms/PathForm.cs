@@ -19,7 +19,10 @@ namespace kotor_Randomizer_2
 
             // Set up initial state from the previously saved settings.
             Kotor1Path = Properties.Settings.Default.Kotor1Path;
+            Constructed = true;
         }
+
+        private bool Constructed = false;
 
         public string Kotor1Path
         {
@@ -36,7 +39,7 @@ namespace kotor_Randomizer_2
 
         private void tbKotor1Path_TextChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.Kotor1Path = Kotor1Path;
+            if (Constructed) Properties.Settings.Default.Kotor1Path = Kotor1Path;
         }
 
         private void bKotor1PathBrowse_Click(object sender, EventArgs e)
