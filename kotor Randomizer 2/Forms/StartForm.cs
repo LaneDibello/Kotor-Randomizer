@@ -29,7 +29,7 @@ namespace kotor_Randomizer_2
                 path_button_Click(0, new EventArgs());
             }
 
-            //Active Rando Categories (start false)
+            // Active Rando Categories (start false)
             settings.DoRandomization_Module = false;
             settings.DoRandomization_Sound = false;
             settings.DoRandomization_Model = false;
@@ -51,6 +51,7 @@ namespace kotor_Randomizer_2
             }
 
             autoCreateSpoilersToolStripMenuItem.Checked = settings.AutoGenerateSpoilers;
+            settings.PropertyChanged += Default_PropertyChanged;
 
             if (fn != "")
             {
@@ -124,7 +125,16 @@ namespace kotor_Randomizer_2
 
         private void StartForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Properties.Settings.Default.Save();
+            // Don't allow the form to close if randomization is in progress!
+            if (FindOpenForm<RandoForm>()?.IsInProgress ?? false)
+            {
+                FocusOpenForm<RandoForm>();
+                e.Cancel = true;
+            }
+            else
+            {
+                Properties.Settings.Default.Save();
+            }
         }
 
         private void StartForm_Activated(object sender, EventArgs e)
@@ -309,6 +319,24 @@ namespace kotor_Randomizer_2
                 formsToClose[i].Close();
             }
         }
+
+        private void Default_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Kotor1Path")
+            {
+                if (File.Exists(Properties.Settings.Default.Kotor1Path + "\\RANDOMIZED.log"))
+                {
+                    Properties.Settings.Default.KotorIsRandomized = true;
+                    randomize_button.Text = "Unrandomize!";
+                }
+                else
+                {
+                    Properties.Settings.Default.KotorIsRandomized = false;
+                    randomize_button.Text = "Randomize!";
+                }
+            }
+        }
+
         #endregion
     }
 }

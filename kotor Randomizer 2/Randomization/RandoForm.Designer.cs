@@ -129,7 +129,9 @@
             this.Controls.Add(this.currentRandoTask_label);
             this.Controls.Add(this.RandomizationProgress);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "RandoForm";
             this.ShowIcon = false;
             this.Text = "Randomizing";

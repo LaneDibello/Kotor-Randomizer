@@ -505,6 +505,10 @@ namespace kotor_Randomizer_2
                     else bDone.Enabled = true;
                 }
             }
+            else
+            {
+                bDone.Enabled = true;
+            }
         }
 
         // BW Unrandomizing Events
