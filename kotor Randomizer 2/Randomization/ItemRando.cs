@@ -47,7 +47,7 @@ namespace kotor_Randomizer_2
             HandleCategory(k, StimsRegs, Properties.Settings.Default.RandomizeStims);
             HandleCategory(k, UpgradeRegs, Properties.Settings.Default.RandomizeUpgrade);
 
-            //handle Various
+            // Handle Various
             switch (Properties.Settings.Default.RandomizeVarious)
             {
                 default:
@@ -62,7 +62,13 @@ namespace kotor_Randomizer_2
                     break;
             }
 
-            //Max Rando
+            // Omitted Items
+            foreach (var item in Globals.OmitItems)
+            {
+                LookupTable.Add(new Tuple<string, string>(item, item));
+            }
+
+            // Max Rando
             List<string> Max_Rando_Iterator = new List<string>(Max_Rando);
             Randomize.FisherYatesShuffle(Max_Rando);
             int j = 0;
@@ -73,7 +79,7 @@ namespace kotor_Randomizer_2
                 j++;
             }
 
-            //Type Rando
+            // Type Rando
             foreach (List<string> li in Type_Lists)
             {
                 List<string> type_copy = new List<string>(li);
@@ -209,7 +215,7 @@ namespace kotor_Randomizer_2
             LookupTable.Clear();
         }
 
-        public static void GenerateSpoilerLog(XLWorkbook workbook)
+        public static void CreateSpoilerLog(XLWorkbook workbook)
         {
             if (LookupTable.Count == 0) { return; }
             var ws = workbook.Worksheets.Add("Item");
@@ -349,6 +355,7 @@ namespace kotor_Randomizer_2
             {
                 string origItemName = "";
                 string randItemName = "";
+                var omitted = Globals.OmitItems.Any(x => x == tpl.Item1);
                 var changed = tpl.Item1 != tpl.Item2;   // Has the shuffle changed this item?
 
                 var origItemVre = items.FirstOrDefault(x => x.ResRef == tpl.Item1);
@@ -374,7 +381,7 @@ namespace kotor_Randomizer_2
                     randItemName = origItemName;
                 }
 
-                ws.Cell(i, 1).Value = changed.ToString();
+                ws.Cell(i, 1).Value = omitted ? "OMITTED" : changed.ToString();
                 ws.Cell(i, 2).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                 ws.Cell(i, 2).Value = tpl.Item1;
                 ws.Cell(i, 3).Value = origItemName;
@@ -382,8 +389,17 @@ namespace kotor_Randomizer_2
                 ws.Cell(i, 4).Value = tpl.Item2;
                 ws.Cell(i, 5).Value = randItemName;
                 ws.Cell(i, 6).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
-                if (changed) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
-                else         ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
+                if (omitted)
+                {
+                    // Center "OMITTED" text.
+                    ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                }
+                else
+                {
+                    // Set color of "Has Changed" column. Booleans are automatically centered.
+                    if (changed) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
+                    else         ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
+                }
                 i++;
             }
 

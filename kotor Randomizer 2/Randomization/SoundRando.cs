@@ -370,7 +370,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public static void GenerateSpoilerLog(XLWorkbook workbook)
+        public static void CreateSpoilerLog(XLWorkbook workbook)
         {
             if (MusicLookupTable.Count == 0 &&
                 SoundLookupTable.Count == 0)

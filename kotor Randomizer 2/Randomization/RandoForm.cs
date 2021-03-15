@@ -311,35 +311,35 @@ namespace kotor_Randomizer_2
                 {
                     curr_task = "Creating Spoilers - Item";
                     bwSpoilers.ReportProgress(curr_progress);
-                    ItemRando.GenerateSpoilerLog(workbook);
+                    ItemRando.CreateSpoilerLog(workbook);
 
                     curr_task = "Creating Spoilers - Model";
                     bwSpoilers.ReportProgress(curr_progress += step_size);
-                    ModelRando.GenerateSpoilerLog(workbook);
+                    ModelRando.CreateSpoilerLog(workbook);
 
                     curr_task = "Creating Spoilers - Module";
                     bwSpoilers.ReportProgress(curr_progress += step_size);
-                    ModuleRando.GenerateSpoilerLog(workbook);
+                    ModuleRando.CreateSpoilerLog(workbook);
 
                     curr_task = "Creating Spoilers - Music / Sound";
                     bwSpoilers.ReportProgress(curr_progress += step_size);
-                    SoundRando.GenerateSpoilerLog(workbook);
+                    SoundRando.CreateSpoilerLog(workbook);
 
                     curr_task = "Creating Spoilers - Other";
                     bwSpoilers.ReportProgress(curr_progress += step_size);
-                    OtherRando.GenerateSpoilerLog(workbook);
+                    OtherRando.CreateSpoilerLog(workbook);
 
                     curr_task = "Creating Spoilers - Text";
                     bwSpoilers.ReportProgress(curr_progress += step_size);
-                    TextRando.GenerateSpoilerLog(workbook);
+                    TextRando.CreateSpoilerLog(workbook);
 
                     curr_task = "Creating Spoilers - Texture";
                     bwSpoilers.ReportProgress(curr_progress += step_size);
-                    TextureRando.GenerateSpoilerLog(workbook);
+                    TextureRando.CreateSpoilerLog(workbook);
 
                     curr_task = "Creating Spoilers - 2DA";
                     bwSpoilers.ReportProgress(curr_progress += step_size);
-                    TwodaRandom.GenerateSpoilerLog(workbook);
+                    TwodaRandom.CreateSpoilerLog(workbook);
 
                     curr_task = "Creating Spoilers - Saving File";
                     bwSpoilers.ReportProgress(curr_progress += step_size);
@@ -370,7 +370,6 @@ namespace kotor_Randomizer_2
                 SpoilerCreated = false;
                 SpoilerMessage = $"Exception caught while creating spoilers: {e.ToString()}";
             }
-
         }
 
         private void ResetRandomizationCategories()

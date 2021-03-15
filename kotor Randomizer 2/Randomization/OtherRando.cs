@@ -370,7 +370,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        internal static void GenerateSpoilerLog(XLWorkbook workbook)
+        internal static void CreateSpoilerLog(XLWorkbook workbook)
         {
             if (NameGenLookup.Count == 0        &&
                 PolymorphLookupTable.Count == 0 &&

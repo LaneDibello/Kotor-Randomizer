@@ -1069,7 +1069,14 @@ namespace kotor_Randomizer_2
         /// </summary>
         public static BindingList<string> OmitItems = new BindingList<string>()
         {
-            "g_i_collarlgt001", "g_i_glowrod01", "g_i_torch01", "ptar_sitharmor", "tat17_sandperdis", "g_i_progspike02", "g_i_implant104"
+            "g_a_clothes04",    // Clothing Variant 4
+            "g_i_collarlgt001", // Collar Light
+            "g_i_glowrod01",    // Glow Rod
+            "g_i_implant104",   // Done
+            "g_i_progspike02",  // Programming Spike
+            "g_i_torch01",      // Torch
+            "ptar_sitharmor",   // Sith Armor
+            "tat17_sandperdis", // Sand People Clothing
         };
 
         /// <summary>

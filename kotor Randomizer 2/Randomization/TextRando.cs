@@ -218,7 +218,7 @@ namespace kotor_Randomizer_2
             RepliesLookupTable.Clear();
         }
 
-        internal static void GenerateSpoilerLog(XLWorkbook workbook)
+        internal static void CreateSpoilerLog(XLWorkbook workbook)
         {
             if (TlkLookupTable.Count == 0     &&
                 EntriesLookupTable.Count == 0 &&

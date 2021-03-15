@@ -235,7 +235,7 @@ namespace kotor_Randomizer_2
             LookupTable.Clear();
         }
 
-        public static void GenerateSpoilerLog(XLWorkbook workbook)
+        public static void CreateSpoilerLog(XLWorkbook workbook)
         {
             if (LookupTable.Count == 0) { return; }
             var ws = workbook.Worksheets.Add("Model");

@@ -519,7 +519,7 @@ namespace kotor_Randomizer_2
         /// If no randomization has been performed, no file will be created.
         /// </summary>
         /// <param name="path">Path to desired output file.</param>
-        public static void GenerateSpoilerLog(string path)
+        public static void CreateSpoilerLog(string path)
         {
             if (LookupTable.Count == 0) { return; }
             var sortedLookup = LookupTable.OrderBy(kvp => kvp.Key);
@@ -565,7 +565,7 @@ namespace kotor_Randomizer_2
             }
         }
 
-        public static void GenerateSpoilerLog(XLWorkbook workbook)
+        public static void CreateSpoilerLog(XLWorkbook workbook)
         {
             if (LookupTable.Count == 0) { return; }
             var ws = workbook.Worksheets.Add("Module");
@@ -711,10 +711,8 @@ namespace kotor_Randomizer_2
                 else
                 {
                     // Set color of "Has Changed" column. Booleans are automatically centered.
-                    if (changed)
-                        ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
-                    else
-                        ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
+                    if (changed) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
+                    else         ws.Cell(i, 1).Style.Font.FontColor = XLColor.Red;
                 }
                 i++;
             }
