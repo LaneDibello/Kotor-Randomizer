@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
-using ClosedXML.Excel;
 using System.Collections.Generic;
 
 namespace kotor_Randomizer_2
@@ -51,6 +50,8 @@ namespace kotor_Randomizer_2
                 randomize_button.Text = "Randomize!";
             }
 
+            autoCreateSpoilersToolStripMenuItem.Checked = settings.AutoGenerateSpoilers;
+
             if (fn != "")
             {
                 new PresetForm(fn).Show();
@@ -64,52 +65,7 @@ namespace kotor_Randomizer_2
             KRP.WriteKRP(File.OpenWrite(path));
         }
 
-        private void CreateSpoilerLogs()
-        {
-            string spoilersPath = Path.Combine(Environment.CurrentDirectory, "Spoilers");
-            //if (Directory.Exists(spoilersPath)) { Directory.Delete(spoilersPath, true); }
-            Directory.CreateDirectory(spoilersPath);
-
-            //var timestamp = DateTime.Now.ToString("yy-MM-dd_HH-mm-ss");
-            var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
-            var filename = $"{timestamp}, Seed={Properties.Settings.Default.Seed}.xlsx";
-            var path = Path.Combine(spoilersPath, filename);
-
-            if (File.Exists(path)) { File.Delete(path); }
-
-            using (var workbook = new XLWorkbook())
-            {
-                ItemRando.GenerateSpoilerLog(workbook);
-                ModelRando.GenerateSpoilerLog(workbook);
-                ModuleRando.GenerateSpoilerLog(workbook);
-                SoundRando.GenerateSpoilerLog(workbook);
-                OtherRando.GenerateSpoilerLog(workbook);
-                TextRando.GenerateSpoilerLog(workbook);
-                TextureRando.GenerateSpoilerLog(workbook);
-                TwodaRandom.GenerateSpoilerLog(workbook);
-
-                // If any worksheets have been added, save the spoiler log.
-                if (workbook.Worksheets.Count > 0)
-                {
-                    System.Text.StringBuilder wsList = new System.Text.StringBuilder();
-                    foreach (var sheet in workbook.Worksheets)
-                    {
-                        wsList.Append($"{sheet.Name}, ");
-                    }
-                    wsList.Remove(wsList.Length - 2, 2);
-
-                    workbook.SaveAs(path);
-                    var result = MessageBox.Show($"Spoiler logs created: {wsList.ToString()}{Environment.NewLine}Open the spoilers folder?", Properties.Resources.GenerateSpoilerLogs, MessageBoxButtons.YesNo);
-                    if (result == DialogResult.Yes) { OpenSpoilersFolder(); }
-                }
-                else
-                {
-                    MessageBox.Show($"No spoiler logs created. Either the game has not been randomized, or the selected randomizations do not generate spoilers.", Properties.Resources.GenerateSpoilerLogs);
-                }
-            }
-        }
-
-        private static void OpenSpoilersFolder()
+        internal static void OpenSpoilersFolder()
         {
             var dir = Path.Combine(Environment.CurrentDirectory, "Spoilers");
             Directory.CreateDirectory(dir); // Does nothing if directory exists.
@@ -301,13 +257,11 @@ namespace kotor_Randomizer_2
                 if (Properties.Settings.Default.KotorIsRandomized)
                 {
                     randomize_button.Text = "Randomize!";
-                    generateSpoilersToolStripMenuItem.Enabled = false;
                 }
                 else
                 {
                     randomize_button.Text = "Unrandomize!";
                     LogCurrentSettings();
-                    generateSpoilersToolStripMenuItem.Enabled = true;
                 }
 
                 new RandoForm().Show();
@@ -330,9 +284,9 @@ namespace kotor_Randomizer_2
             }
         }
 
-        private void generateSpoilersToolStripMenuItem_Click(object sender, EventArgs e)
+        private void autoGenerateSpoilersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CreateSpoilerLogs();
+            Properties.Settings.Default.AutoGenerateSpoilers = autoCreateSpoilersToolStripMenuItem.Checked;
         }
 
         private void openSpoilersFolderToolStripMenuItem_Click(object sender, EventArgs e)

@@ -634,12 +634,12 @@ namespace kotor_Randomizer_2
             }
 
             // Custom Omitted Modules
-            int iMax = i;
             var omittedModules = Globals.BoundModules.Where(x => x.Omitted);
 
             if (isCustomPreset)
             {
-                i = 3;
+                int iMax = i;
+                i = 3;  // Restart at the top of the settings list.
 
                 ws.Cell(i, 4).Value = "Omitted Modules";
                 ws.Cell(i, 4).Style.Font.Bold = true;
@@ -661,14 +661,9 @@ namespace kotor_Randomizer_2
                     i++;
                 }
 
-                if (iMax > i)
-                {
-                    i = iMax;   // Return to bottom of settings list.
-                }
-                else
-                {
-                    i++;    // Skip a row.
-                }
+                // Handle variable length omitted modules list.
+                if (iMax > i) i = iMax; // Return to bottom of settings list.
+                else          i++;      // Skip a row.
             }
 
             // Module Shuffle

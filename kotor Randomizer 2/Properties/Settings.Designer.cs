@@ -987,5 +987,17 @@ namespace kotor_Randomizer_2.Properties {
                 this["OmittedModules"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoGenerateSpoilers {
+            get {
+                return ((bool)(this["AutoGenerateSpoilers"]));
+            }
+            set {
+                this["AutoGenerateSpoilers"] = value;
+            }
+        }
     }
 }

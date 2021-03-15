@@ -337,10 +337,25 @@
   <data name="k_ren_visionland" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\k_ren_visionland.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="GenerateSpoilerLogs" xml:space="preserve">
-    <value>Generate Spoiler Logs</value>
+  <data name="CreateSpoilerLog" xml:space="preserve">
+    <value>Create Spoiler Log</value>
   </data>
   <data name="RandomizationError" xml:space="preserve">
     <value>Randomization Error</value>
+  </data>
+  <data name="AlreadyRandomized" xml:space="preserve">
+    <value>Game is already randomized!</value>
+  </data>
+  <data name="CreateSpoilerLogQuestion" xml:space="preserve">
+    <value>Would you like to create a spoiler log?</value>
+  </data>
+  <data name="Randomized" xml:space="preserve">
+    <value>Randomized!</value>
+  </data>
+  <data name="RandomizedWithSpoilers" xml:space="preserve">
+    <value>Randomized with Spoilers!</value>
+  </data>
+  <data name="Unrandomized" xml:space="preserve">
+    <value>Unrandomized!</value>
   </data>
 </root>

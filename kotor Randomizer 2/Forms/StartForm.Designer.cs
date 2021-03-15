@@ -54,7 +54,7 @@
             this.cms1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spoilersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.generateSpoilersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.autoCreateSpoilersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openSpoilersFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeAllOtherWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.module_radio)).BeginInit();
@@ -414,7 +414,7 @@
             this.bPresets.Name = "bPresets";
             this.bPresets.Size = new System.Drawing.Size(290, 30);
             this.bPresets.TabIndex = 19;
-            this.bPresets.Text = "Presets";
+            this.bPresets.Text = "Setting Presets";
             this.bPresets.UseVisualStyleBackColor = false;
             this.bPresets.Click += new System.EventHandler(this.bPresets_Click);
             this.bPresets.MouseEnter += new System.EventHandler(this.bPresets_button_MouseEnter);
@@ -439,19 +439,21 @@
             // spoilersToolStripMenuItem
             // 
             this.spoilersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.generateSpoilersToolStripMenuItem,
+            this.autoCreateSpoilersToolStripMenuItem,
             this.openSpoilersFolderToolStripMenuItem});
             this.spoilersToolStripMenuItem.Name = "spoilersToolStripMenuItem";
             this.spoilersToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.spoilersToolStripMenuItem.Text = "Spoiler Logs";
             // 
-            // generateSpoilersToolStripMenuItem
+            // autoCreateSpoilersToolStripMenuItem
             // 
-            this.generateSpoilersToolStripMenuItem.Enabled = false;
-            this.generateSpoilersToolStripMenuItem.Name = "generateSpoilersToolStripMenuItem";
-            this.generateSpoilersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.generateSpoilersToolStripMenuItem.Text = "Generate Spoilers";
-            this.generateSpoilersToolStripMenuItem.Click += new System.EventHandler(this.generateSpoilersToolStripMenuItem_Click);
+            this.autoCreateSpoilersToolStripMenuItem.AutoToolTip = true;
+            this.autoCreateSpoilersToolStripMenuItem.CheckOnClick = true;
+            this.autoCreateSpoilersToolStripMenuItem.Name = "autoCreateSpoilersToolStripMenuItem";
+            this.autoCreateSpoilersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.autoCreateSpoilersToolStripMenuItem.Text = "Auto Create Spoilers";
+            this.autoCreateSpoilersToolStripMenuItem.ToolTipText = "A spoiler log will be created automatically after the game\r\nis randomized.";
+            this.autoCreateSpoilersToolStripMenuItem.Click += new System.EventHandler(this.autoGenerateSpoilersToolStripMenuItem_Click);
             // 
             // openSpoilersFolderToolStripMenuItem
             // 
@@ -545,8 +547,8 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeAllOtherWindowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem spoilersToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem generateSpoilersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openSpoilersFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem autoCreateSpoilersToolStripMenuItem;
     }
 }
 

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
+using ClosedXML.Excel;
 
 namespace kotor_Randomizer_2
 {
@@ -22,7 +23,7 @@ namespace kotor_Randomizer_2
 
         public bool IsInProgress
         {
-            get { return bwRandomizing.IsBusy || bwUnrandomizing.IsBusy; }
+            get { return bwRandomizing.IsBusy || bwUnrandomizing.IsBusy || bwSpoilers.IsBusy; }
         }
 
         protected override CreateParams CreateParams
@@ -39,6 +40,9 @@ namespace kotor_Randomizer_2
         #region Private Properties
 
         private string curr_task = "";
+        private bool RandomizationError = false;
+        private bool SpoilerCreated = false;
+        private string SpoilerMessage;
 
         // Class for easy access and auto-generation of Paths.
         private KPaths paths = new KPaths(Properties.Settings.Default.Kotor1Path);
@@ -50,11 +54,20 @@ namespace kotor_Randomizer_2
         // Runs the necessary Randomization Scripts
         private void RunRando()
         {
+            // Final check for already randomized game before randomizing.
+            if (File.Exists(paths.RANDOMIZED_LOG))
+            {
+                RandomizationError = true;
+                MessageBox.Show(Properties.Resources.AlreadyRandomized, Properties.Resources.RandomizationError);
+                return;
+            }
+
             // Determine Step size and throw error if no categories are selected.
             int ActiveCategories = CountActiveCategories();
 
             if (ActiveCategories == 0)
             {
+                RandomizationError = true;
                 MessageBox.Show(Properties.Resources.ErrorNoRandomization, Properties.Resources.RandomizationError);
                 return;
             }
@@ -177,6 +190,7 @@ namespace kotor_Randomizer_2
                 catch (Exception e)
                 {
                     // Catch any randomization errors (e.g., reachability failure) and print a message.
+                    RandomizationError = true;
                     MessageBox.Show($"Error encountered during randomization: {Environment.NewLine}{e.Message}", Properties.Resources.RandomizationError, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 finally
@@ -189,18 +203,6 @@ namespace kotor_Randomizer_2
                 }
             }
             curr_progress += step_size;
-        }
-
-        private void ResetRandomizationCategories()
-        {
-            ModuleRando.Reset();
-            ItemRando.Reset();
-            SoundRando.Reset();
-            ModelRando.Reset();
-            TextureRando.Reset();
-            TwodaRandom.Reset();
-            TextRando.Reset();
-            OtherRando.Reset();
         }
 
         // Unused - I'm keeping this around In case I try to tackle the release config issues again.
@@ -226,7 +228,7 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.KotorIsRandomized = false;
         }
 
-        // Unrandomizes Things **CURRENTLY BROKEN IN RELEASE BUILDS**
+        // Unrandomizes Things
         private void UnRando()
         {
             if (!File.Exists(paths.RANDOMIZED_LOG))
@@ -285,6 +287,102 @@ namespace kotor_Randomizer_2
             {
                 MessageBox.Show($"Exception caught while {curr_task}. {e.Message}", Properties.Resources.RandomizationError);
             }
+        }
+
+        public void CreateSpoilerLogs()
+        {
+            int step_size = 11;     // Calculation: 100 / (8 categories + savepath)
+            int curr_progress = 0;  // 
+
+            string spoilersPath = Path.Combine(Environment.CurrentDirectory, "Spoilers");
+            //if (Directory.Exists(spoilersPath)) { Directory.Delete(spoilersPath, true); }
+            Directory.CreateDirectory(spoilersPath);
+
+            //var timestamp = DateTime.Now.ToString("yy-MM-dd_HH-mm-ss");
+            var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
+            var filename = $"{timestamp}, Seed {Properties.Settings.Default.Seed}.xlsx";
+            var path = Path.Combine(spoilersPath, filename);
+
+            if (File.Exists(path)) { File.Delete(path); }
+
+            try
+            {
+                using (var workbook = new XLWorkbook())
+                {
+                    curr_task = "Creating Spoilers - Item";
+                    bwSpoilers.ReportProgress(curr_progress);
+                    ItemRando.GenerateSpoilerLog(workbook);
+
+                    curr_task = "Creating Spoilers - Model";
+                    bwSpoilers.ReportProgress(curr_progress += step_size);
+                    ModelRando.GenerateSpoilerLog(workbook);
+
+                    curr_task = "Creating Spoilers - Module";
+                    bwSpoilers.ReportProgress(curr_progress += step_size);
+                    ModuleRando.GenerateSpoilerLog(workbook);
+
+                    curr_task = "Creating Spoilers - Music / Sound";
+                    bwSpoilers.ReportProgress(curr_progress += step_size);
+                    SoundRando.GenerateSpoilerLog(workbook);
+
+                    curr_task = "Creating Spoilers - Other";
+                    bwSpoilers.ReportProgress(curr_progress += step_size);
+                    OtherRando.GenerateSpoilerLog(workbook);
+
+                    curr_task = "Creating Spoilers - Text";
+                    bwSpoilers.ReportProgress(curr_progress += step_size);
+                    TextRando.GenerateSpoilerLog(workbook);
+
+                    curr_task = "Creating Spoilers - Texture";
+                    bwSpoilers.ReportProgress(curr_progress += step_size);
+                    TextureRando.GenerateSpoilerLog(workbook);
+
+                    curr_task = "Creating Spoilers - 2DA";
+                    bwSpoilers.ReportProgress(curr_progress += step_size);
+                    TwodaRandom.GenerateSpoilerLog(workbook);
+
+                    curr_task = "Creating Spoilers - Saving File";
+                    bwSpoilers.ReportProgress(curr_progress += step_size);
+
+                    // If any worksheets have been added, save the spoiler log.
+                    if (workbook.Worksheets.Count > 0)
+                    {
+                        StringBuilder wsList = new StringBuilder();
+                        foreach (var sheet in workbook.Worksheets)
+                        {
+                            wsList.Append($"{sheet.Name}, ");
+                        }
+
+                        wsList.Remove(wsList.Length - 2, 2);
+                        workbook.SaveAs(path);
+
+                        SpoilerCreated = true;
+                    }
+                    else
+                    {
+                        SpoilerCreated = false;
+                        SpoilerMessage = $"No spoilers created. Either the game has not been randomized, or the selected randomizations do not generate spoilers.";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                SpoilerCreated = false;
+                SpoilerMessage = $"Exception caught while creating spoilers: {e.ToString()}";
+            }
+
+        }
+
+        private void ResetRandomizationCategories()
+        {
+            ModuleRando.Reset();
+            ItemRando.Reset();
+            SoundRando.Reset();
+            ModelRando.Reset();
+            TextureRando.Reset();
+            TwodaRandom.Reset();
+            TextRando.Reset();
+            OtherRando.Reset();
         }
 
         private int CountActiveCategories()
@@ -355,19 +453,26 @@ namespace kotor_Randomizer_2
 
         #region Events
 
+        // Form Events
+        private void RandoForm_Shown(object sender, EventArgs e)
+        {
+            if (!Properties.Settings.Default.KotorIsRandomized) { bwRandomizing.RunWorkerAsync(); }
+            else { bwUnrandomizing.RunWorkerAsync(); }
+        }
+
+        // Button Events
         private void bDone_Click(object sender, EventArgs e)
         {
             // Avoid closing the window if background workers are still running.
             if (!IsInProgress) Close();
         }
 
-        private void bwRandomizing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void bSpoilers_Click(object sender, EventArgs e)
         {
-            bDone.Enabled = true;
-            currentRandoTask_label.Text = Properties.Resources.Done;
-            RandomizationProgress.Value = 100;
+            StartForm.OpenSpoilersFolder();
         }
 
+        // BW Randomizing Events
         private void bwRandomizing_DoWork(object sender, DoWorkEventArgs e)
         {
             RunRando();
@@ -379,23 +484,30 @@ namespace kotor_Randomizer_2
             currentRandoTask_label.Text = curr_task;
         }
 
-        private void RandoForm_Shown(object sender, EventArgs e)
+        private void bwRandomizing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (!Properties.Settings.Default.KotorIsRandomized) { bwRandomizing.RunWorkerAsync(); }
-            else
-            {
-                bwUnrandomizing.RunWorkerAsync();
+            currentRandoTask_label.Text = Properties.Resources.Randomized;
+            RandomizationProgress.Value = 100;
 
-                //TEMPORARY
-                //RandomizationProgress.Style = ProgressBarStyle.Marquee;
-                //UnRando_new(); //Until I figure out what the hell is wrong with the other one.
-                //RandomizationProgress.Style = ProgressBarStyle.Continuous;
-                //bDone.Enabled = true;
-                //currentRandoTask_label.Text = "Done!";
-                //RandomizationProgress.Value = 100;
+            // Don't create spoilers if there was an error during randomization.
+            if (!RandomizationError)
+            {
+                // Automatically create spoilers if desired.
+                if (Properties.Settings.Default.AutoGenerateSpoilers)
+                {
+                    bwSpoilers.RunWorkerAsync();
+                }
+                else
+                {
+                    // Ask about creating spoilers. If no, enabled the "Close" button.
+                    var result = MessageBox.Show(Properties.Resources.CreateSpoilerLogQuestion, Properties.Resources.CreateSpoilerLog, MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes) bwSpoilers.RunWorkerAsync();
+                    else bDone.Enabled = true;
+                }
             }
         }
 
+        // BW Unrandomizing Events
         private void bwUnrandomizing_DoWork(object sender, DoWorkEventArgs e)
         {
             UnRando();
@@ -410,8 +522,42 @@ namespace kotor_Randomizer_2
         private void bwUnrandomizing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             bDone.Enabled = true;
-            currentRandoTask_label.Text = Properties.Resources.Done;
+            currentRandoTask_label.Text = Properties.Resources.Unrandomized;
             RandomizationProgress.Value = 100;
+        }
+
+        // BW Spoilers Events
+        private void bwSpoilers_DoWork(object sender, DoWorkEventArgs e)
+        {
+            // Ensure the "Close" button is disabled, then create the spoiler logs.
+            bDone.Invoke((MethodInvoker) delegate { bDone.Enabled = false; });
+            CreateSpoilerLogs();
+        }
+
+        private void bwSpoilers_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            RandomizationProgress.Value = e.ProgressPercentage;
+            currentRandoTask_label.Text = curr_task;
+        }
+
+        private void bwSpoilers_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            RandomizationProgress.Value = 100;
+            bSpoilers.Enabled = true;
+            bSpoilers.Visible = true;
+
+            if (SpoilerCreated)
+            {
+                currentRandoTask_label.Text = Properties.Resources.RandomizedWithSpoilers;
+            }
+            else
+            {
+                // If spoilers weren't generated, then an error occurred. Display the message to the user.
+                currentRandoTask_label.Text = Properties.Resources.Randomized;
+                var result = MessageBox.Show(SpoilerMessage, Properties.Resources.CreateSpoilerLog, MessageBoxButtons.OK);
+            }
+
+            bDone.Enabled = true;
         }
 
         #endregion
