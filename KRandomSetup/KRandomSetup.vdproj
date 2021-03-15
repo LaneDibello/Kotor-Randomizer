@@ -15,7 +15,19 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_1D87768B857FF7C07003A3D8F3DA39F0"
+        "MsmKey" = "8:_0C3D844B42415BE3EF904BEC49FBED85"
+        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0C52F55CB3440D9CF58ECCA24E8C20F3"
+        "OwnerKey" = "8:_0C3D844B42415BE3EF904BEC49FBED85"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0C52F55CB3440D9CF58ECCA24E8C20F3"
         "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -33,26 +45,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
+        "OwnerKey" = "8:_0C3D844B42415BE3EF904BEC49FBED85"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
+        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AE11FD62F84D8E2927A283852617010A"
-        "OwnerKey" = "8:_C6FD9376B81B4F785D81E43293A77FB8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AE11FD62F84D8E2927A283852617010A"
-        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C6FD9376B81B4F785D81E43293A77FB8"
-        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,13 +69,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_CC0F536C30AB2880CCB81253AE02C9DC"
-        "OwnerKey" = "8:_C6FD9376B81B4F785D81E43293A77FB8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CC0F536C30AB2880CCB81253AE02C9DC"
+        "MsmKey" = "8:_E09C5AED8BBFCFAB6139F897DD0BBD05"
         "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -82,25 +82,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1D87768B857FF7C07003A3D8F3DA39F0"
+        "OwnerKey" = "8:_E09C5AED8BBFCFAB6139F897DD0BBD05"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C6FD9376B81B4F785D81E43293A77FB8"
+        "OwnerKey" = "8:_0C3D844B42415BE3EF904BEC49FBED85"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AE11FD62F84D8E2927A283852617010A"
+        "OwnerKey" = "8:_0C52F55CB3440D9CF58ECCA24E8C20F3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CC0F536C30AB2880CCB81253AE02C9DC"
+        "OwnerKey" = "8:_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -204,20 +204,51 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1D87768B857FF7C07003A3D8F3DA39F0"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0C3D844B42415BE3EF904BEC49FBED85"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_1D87768B857FF7C07003A3D8F3DA39F0"
+                    "_0C3D844B42415BE3EF904BEC49FBED85"
                     {
-                    "Name" = "8:KotOR_IO.dll"
+                    "Name" = "8:ClosedXML.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:KotOR_IO.dll"
+            "SourcePath" = "8:ClosedXML.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0C52F55CB3440D9CF58ECCA24E8C20F3"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_0C52F55CB3440D9CF58ECCA24E8C20F3"
+                    {
+                    "Name" = "8:ExcelNumberFormat.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:ExcelNumberFormat.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
@@ -275,51 +306,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AE11FD62F84D8E2927A283852617010A"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_AE11FD62F84D8E2927A283852617010A"
+                    "_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
                     {
-                    "Name" = "8:ExcelNumberFormat.dll"
+                    "Name" = "8:DocumentFormat.OpenXml.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:ExcelNumberFormat.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C6FD9376B81B4F785D81E43293A77FB8"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_C6FD9376B81B4F785D81E43293A77FB8"
-                    {
-                    "Name" = "8:ClosedXML.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:ClosedXML.dll"
+            "SourcePath" = "8:DocumentFormat.OpenXml.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
@@ -368,20 +368,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CC0F536C30AB2880CCB81253AE02C9DC"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E09C5AED8BBFCFAB6139F897DD0BBD05"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_CC0F536C30AB2880CCB81253AE02C9DC"
+                    "_E09C5AED8BBFCFAB6139F897DD0BBD05"
                     {
-                    "Name" = "8:DocumentFormat.OpenXml.dll"
+                    "Name" = "8:KotOR_IO.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:DocumentFormat.OpenXml.dll"
+            "SourcePath" = "8:KotOR_IO.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
@@ -489,15 +489,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Kotor Randomizer"
-        "ProductCode" = "8:{305E2CCE-24AC-4643-BF77-80E759F37D8B}"
-        "PackageCode" = "8:{64084B0A-8A57-45E5-BDD2-A8D75E52E0F6}"
+        "ProductCode" = "8:{7B77A5BC-9622-4A4A-96F6-33C6DA3CEFE4}"
+        "PackageCode" = "8:{07B002E2-0EAD-4710-B128-E037C6980D2E}"
         "UpgradeCode" = "8:{3DA44908-725D-48AE-860D-C34768CFA05C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.5.1"
+        "ProductVersion" = "8:2.5.2"
         "Manufacturer" = "8:Kotor Speedrun Community"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1039,7 +1039,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AA9D070ACAB14309A8AAA185C080E7C1"
             {
-            "SourcePath" = "8:..\\kotor Randomizer 2\\obj\\Debug\\kotor Randomizer 2.exe"
+            "SourcePath" = "8:..\\kotor Randomizer 2\\obj\\Release\\kotor Randomizer 2.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
