@@ -157,7 +157,7 @@ namespace kotor_Randomizer_2
         /// <summary>
         /// Broken Creature Models
         /// </summary>
-        public static readonly List<int> BROKEN_CHARS = new List<int>() { 0, 29, 82 };
+        public static readonly List<int> BROKEN_CHARS = new List<int>() { 0, 29, 82, 184 };
 
         /// <summary>
         /// Large Placeable Models
@@ -328,13 +328,14 @@ namespace kotor_Randomizer_2
         /// </summary>
         public static readonly List<string> DEFAULT_OMIT_ITEMS = new List<string>()
         {
-            "g_i_collarlgt001",     // (broken item)
+            "g_a_clothes04",        // Clothing Variant 4
+            "g_i_collarlgt001",     // Collar Light (broken item)
             "g_i_glowrod01",        // Glow Rod
-            "g_i_torch01",          // (broken item)
+            "g_i_implant104",       // Stamina Boost Implant
+            "g_i_progspike02",      // Single-Use Programming Spikes
+            "g_i_torch01",          // Torch (broken item)
             "ptar_sitharmor",       // Sith Armor
             "tat17_sandperdis",     // Sand People Disguise
-            "g_i_progspike02",      // Single-Use Programming Spikes
-            "g_i_implant104",       // Stamina Boost Implant
         };
 
         /// <summary>
