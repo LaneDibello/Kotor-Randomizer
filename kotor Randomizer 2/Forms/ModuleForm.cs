@@ -20,8 +20,8 @@ namespace kotor_Randomizer_2
         public ModuleForm()
         {
             InitializeComponent();
-            SetBorder(pnlSaveData, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
-            SetBorder(pnlTimeSavers, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
+            SetBorder(flpSaveData, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
+            SetBorder(flpTimeSavers, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
             SetBorder(RandomizedListBox, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
             SetBorder(OmittedListBox, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
             SetBorder(lblWIP, Color.FromArgb(211, 216, 8), 1, BorderStyle.None);
