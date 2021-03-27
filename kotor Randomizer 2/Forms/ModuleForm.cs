@@ -20,8 +20,8 @@ namespace kotor_Randomizer_2
         public ModuleForm()
         {
             InitializeComponent();
-            SetBorder(pnlSaveData, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
-            SetBorder(pnlTimeSavers, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
+            SetBorder(flpSaveData, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
+            SetBorder(flpTimeSavers, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
             SetBorder(RandomizedListBox, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
             SetBorder(OmittedListBox, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
             SetBorder(lblWIP, Color.FromArgb(211, 216, 8), 1, BorderStyle.None);
@@ -40,14 +40,17 @@ namespace kotor_Randomizer_2
             cbSaveAllMods.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules);
             cbSaveMiniGame.Enabled = !cbSaveAllMods.Checked; // If all save checked, disable mg save checkbox.
 
-            cbFixDream.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream);
-            cbUnlockGalaxyMap.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
-            cbFixCoordinates.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates);
-            cbFixMindPrison.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
-
-            cbDoorFix.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors);
-            cbFixLevElevators.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators);
             cbVulkSpiceLZ.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
+            cbFixDream.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream);
+            cbFixMindPrison.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
+            cbFixCoordinates.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates);
+
+            cbUnlockDanRuins.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
+            cbUnlockGalaxyMap.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
+            cbUnlockLevElevators.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+            cbUnlockManSub.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManSub);
+            cbUnlockStaBastila.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
+            cbUnlockUnkSummit.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
 
             // Initialize reachability settings
             cbUseRandoRules.Checked = settings.UseRandoRules;
@@ -284,16 +287,34 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.FixMindPrison;
         }
 
-        private void cbDoorFix_CheckedChanged(object sender, EventArgs e)
+        private void cbUnlockDanRuins_CheckedChanged(object sender, EventArgs e)
         {
             if (!Constructed) { return; }
-            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockVarDoors;
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockDanRuins;
         }
 
-        private void cbFixLevElevators_CheckedChanged(object sender, EventArgs e)
+        private void cbUnlockLevElevators_CheckedChanged(object sender, EventArgs e)
         {
             if (!Constructed) { return; }
-            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.FixLevElevators;
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockLevElev;
+        }
+
+        private void cbUnlockManSub_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockManSub;
+        }
+
+        private void cbUnlockStaBastila_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockStaBastila;
+        }
+
+        private void cbUnlockUnkSummit_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockUnkSummit;
         }
 
         private void cbVulkSpiceLZ_CheckedChanged(object sender, EventArgs e)
@@ -389,8 +410,8 @@ namespace kotor_Randomizer_2
                 cbUnlockGalaxyMap.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
                 cbFixCoordinates.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates);
                 cbFixMindPrison.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
-                cbDoorFix.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors);
-                cbFixLevElevators.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators);
+                cbUnlockDanRuins.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
+                cbUnlockLevElevators.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
 
                 // Load new reachability settings.
                 cbUseRandoRules.Checked = Properties.Settings.Default.UseRandoRules;
