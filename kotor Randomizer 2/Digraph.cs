@@ -64,10 +64,15 @@ namespace kotor_Randomizer_2
 
         // Fix Tags ... Edge (Tags)
         public const string TAG_FIX_BOX   = "FixBox";
-        public const string TAG_FIX_DOORS = "FixDoors";
         public const string TAG_FIX_ELEV  = "FixElev";
         public const string TAG_FIX_MAP   = "FixMap";
         public const string TAG_FIX_SPICE = "FixSpice";
+
+        // Unlock Tags ... Edge (Tags)
+        public const string TAG_UNLOCK_DAN_RUINS   = "UL_Ruins";
+        public const string TAG_UNLOCK_MAN_SUB     = "UL_Sub";
+        public const string TAG_UNLOCK_STA_BASTILA = "UL_Deck3";
+        public const string TAG_UNLOCK_UNK_SUMMIT  = "UL_Summit";
     }
 
     /// <summary>
@@ -110,14 +115,21 @@ namespace kotor_Randomizer_2
 
         /// <summary> FixBox is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
         public bool EnabledFixBox   { get; set; } = false;
-        /// <summary> FixDoors is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledFixDoors { get; set; } = false;
         /// <summary> FixElev is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
         public bool EnabledFixElev  { get; set; } = false;
         /// <summary> FixMap is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
         public bool EnabledFixMap   { get; set; } = false;
         /// <summary> FixSpice is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
         public bool EnabledFixSpice { get; set; } = false;
+
+        /// <summary> UnlockDanRuins is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
+        public bool EnabledUnlockDanRuins   { get; set; } = false;
+        /// <summary> UnlockManSub is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
+        public bool EnabledUnlockManSub     { get; set; } = false;
+        /// <summary> UnlockStaBastila is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
+        public bool EnabledUnlockStaBastila { get; set; } = false;
+        /// <summary> UnlockUnkSummit is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
+        public bool EnabledUnlockUnkSummit  { get; set; } = false;
         #endregion
 
         /// <summary>
@@ -136,20 +148,7 @@ namespace kotor_Randomizer_2
             RandomLookup = Modules.ToDictionary(m => m.WarpCode, m => m.WarpCode);
 
             // Get currently enabled settings.
-            AllowGlitchClip = Properties.Settings.Default.AllowGlitchClip;
-            AllowGlitchDlz = Properties.Settings.Default.AllowGlitchDlz;
-            AllowGlitchFlu = Properties.Settings.Default.AllowGlitchFlu;
-            AllowGlitchGpw = Properties.Settings.Default.AllowGlitchGpw;
-            EnabledFixBox = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
-            EnabledFixDoors = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors);
-            EnabledFixElev = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators);
-            EnabledFixMap = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
-            EnabledFixSpice = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
-            EnforceEdgeTagLocked = true;
-            IgnoreOnceEdges = Properties.Settings.Default.IgnoreOnceEdges;
-            GoalIsMalak = Properties.Settings.Default.GoalIsMalak;
-            GoalIsPazaak = Properties.Settings.Default.GoalIsPazaak;
-            GoalIsStarMap = Properties.Settings.Default.GoalIsStarMaps;
+            ResetSettings();
         }
 
         public void ResetSettings()
@@ -160,10 +159,13 @@ namespace kotor_Randomizer_2
             AllowGlitchFlu = Properties.Settings.Default.AllowGlitchFlu;
             AllowGlitchGpw = Properties.Settings.Default.AllowGlitchGpw;
             EnabledFixBox = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
-            EnabledFixDoors = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors);
-            EnabledFixElev = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators);
+            EnabledFixElev = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
             EnabledFixMap = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
             EnabledFixSpice = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
+            EnabledUnlockDanRuins = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
+            EnabledUnlockManSub = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManSub);
+            EnabledUnlockStaBastila = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
+            EnabledUnlockUnkSummit = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
             EnforceEdgeTagLocked = true;
             IgnoreOnceEdges = Properties.Settings.Default.IgnoreOnceEdges;
             GoalIsMalak = Properties.Settings.Default.GoalIsMalak;
@@ -387,11 +389,14 @@ namespace kotor_Randomizer_2
             bool isOnce = false;
             if (edge.IsOnce)
             {
-                if ((EnabledFixBox && edge.IsFixBox    ) ||
-                    (EnabledFixDoors && edge.IsFixDoors) ||
-                    (EnabledFixElev && edge.IsFixElev  ) ||
-                    (EnabledFixMap && edge.IsFixMap    ) ||
-                    (EnabledFixSpice && edge.IsFixSpice))
+                if ((EnabledFixBox           && edge.IsFixBox          ) ||
+                    (EnabledFixElev          && edge.IsFixElev         ) ||
+                    (EnabledFixMap           && edge.IsFixMap          ) ||
+                    (EnabledFixSpice         && edge.IsFixSpice        ) ||
+                    (EnabledUnlockDanRuins   && edge.IsUnlockDanRuins  ) ||
+                    (EnabledUnlockManSub     && edge.IsUnlockManSub    ) ||
+                    (EnabledUnlockStaBastila && edge.IsUnlockStaBastila) ||
+                    (EnabledUnlockUnkSummit  && edge.IsUnlockUnkSummit ))
                 {
                     isOnce = false;
                 }
@@ -419,15 +424,18 @@ namespace kotor_Randomizer_2
             if (edge.IsLocked)
             {
                 // Check to see if we can bypass this lock with an allowed glitch or enabled fix.
-                if ((AllowGlitchClip && edge.IsClip    ) ||
-                    (AllowGlitchDlz && edge.IsDlz      ) ||
-                    (AllowGlitchFlu && edge.IsFlu      ) || // How to handle FluReq? One FLU still requires Carth...
-                    (AllowGlitchGpw && edge.IsGpw      ) ||
-                    (EnabledFixBox && edge.IsFixBox    ) ||
-                    (EnabledFixDoors && edge.IsFixDoors) ||
-                    (EnabledFixElev && edge.IsFixElev  ) ||
-                    (EnabledFixMap && edge.IsFixMap    ) ||
-                    (EnabledFixSpice && edge.IsFixSpice))
+                if ((AllowGlitchClip         && edge.IsClip            ) ||
+                    (AllowGlitchDlz          && edge.IsDlz             ) ||
+                    (AllowGlitchFlu          && edge.IsFlu             ) || // How to handle FluReq? One FLU still requires Carth...
+                    (AllowGlitchGpw          && edge.IsGpw             ) ||
+                    (EnabledFixBox           && edge.IsFixBox          ) ||
+                    (EnabledFixElev          && edge.IsFixElev         ) ||
+                    (EnabledFixMap           && edge.IsFixMap          ) ||
+                    (EnabledFixSpice         && edge.IsFixSpice        ) ||
+                    (EnabledUnlockDanRuins   && edge.IsUnlockDanRuins  ) ||
+                    (EnabledUnlockManSub     && edge.IsUnlockManSub    ) ||
+                    (EnabledUnlockStaBastila && edge.IsUnlockStaBastila) ||
+                    (EnabledUnlockUnkSummit  && edge.IsUnlockUnkSummit ))
                 {
                     isLocked = false;
                 }
@@ -692,10 +700,14 @@ namespace kotor_Randomizer_2
         public bool IsGpw { get; } = false;
 
         public bool IsFixBox   { get; } = false;
-        public bool IsFixDoors { get; } = false;
         public bool IsFixElev  { get; } = false;
         public bool IsFixMap   { get; } = false;
         public bool IsFixSpice { get; } = false;
+
+        public bool IsUnlockDanRuins   { get; } = false;
+        public bool IsUnlockManSub     { get; } = false;
+        public bool IsUnlockStaBastila { get; } = false;
+        public bool IsUnlockUnkSummit  { get; } = false;
 
         public List<string> Tags { get; } = new List<string>();
 
@@ -758,10 +770,14 @@ namespace kotor_Randomizer_2
             IsGpw = Tags.Contains(XmlConsts.TAG_GPW);
 
             IsFixBox   = Tags.Contains(XmlConsts.TAG_FIX_BOX);
-            IsFixDoors = Tags.Contains(XmlConsts.TAG_FIX_DOORS);
             IsFixElev  = Tags.Contains(XmlConsts.TAG_FIX_ELEV);
             IsFixMap   = Tags.Contains(XmlConsts.TAG_FIX_MAP);
             IsFixSpice = Tags.Contains(XmlConsts.TAG_FIX_SPICE);
+
+            IsUnlockDanRuins   = Tags.Contains(XmlConsts.TAG_UNLOCK_DAN_RUINS);
+            IsUnlockManSub     = Tags.Contains(XmlConsts.TAG_UNLOCK_MAN_SUB);
+            IsUnlockStaBastila = Tags.Contains(XmlConsts.TAG_UNLOCK_STA_BASTILA);
+            IsUnlockUnkSummit  = Tags.Contains(XmlConsts.TAG_UNLOCK_UNK_SUMMIT);
         }
 
         public override string ToString()

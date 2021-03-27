@@ -74,8 +74,8 @@ namespace kotor_Randomizer_2
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockGalaxyMap; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.FixCoordinates; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.FixMindPrison; }
-                        if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockVarDoors; }
-                        if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.FixLevElevators; }
+                        if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockDanRuins; }
+                        if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockLevElev; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.VulkarSpiceLZ; }
 
                         // Load reachability settings
@@ -338,8 +338,8 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap));  // Unlocked Galaxy Map
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates));   // Fixed Module Coordinates
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison));    // Fixed Rakatan Riddles
-                    bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors));   // Unlock Problem Doors
-                    bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators));  // Fixed Leviathan Elevators
+                    bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins));   // Unlock Problem Doors
+                    bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev));  // Fixed Leviathan Elevators
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ));    // Add Vulkar Spice Loading Zone
 
                     bw.Write(Properties.Settings.Default.UseRandoRules);

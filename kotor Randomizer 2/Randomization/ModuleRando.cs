@@ -18,6 +18,8 @@ namespace kotor_Randomizer_2
         private const string AREA_LEV_COMMAND = "lev_m40ab";
         private const string AREA_LEV_HANGAR = "lev_m40ac";
         private const string AREA_LEV_PRISON = "lev_m40aa";
+        private const string AREA_MAN_EAST_CENTRAL = "manm26ae";
+        private const string AREA_STA_DECK3 = "sta_m45ac";
         private const string AREA_TAR_VULK_BASE = "tar_m10aa";
         private const string AREA_UNK_SUMMIT = "unk_m44ac";
         private const string FIXED_DREAM_OVERRIDE = "k_ren_visionland.ncs";
@@ -27,6 +29,8 @@ namespace kotor_Randomizer_2
         private const string LABEL_LEV_ELEVATOR_A = "plev_elev_dlg";
         private const string LABEL_LEV_ELEVATOR_B = "plev_elev_dlg";
         private const string LABEL_LEV_ELEVATOR_C = "lev40_accntl_dlg";
+        private const string LABEL_MAN_SUB_DOOR = "man26ac_door05";
+        private const string LABEL_STA_BAST_DOOR = "k45_door_bast1";
         private const string LABEL_TAR_VULK_GIT = "m10aa";
         private const string LABEL_UNK_DOOR = "unk44_tpllckdoor";
 
@@ -79,8 +83,8 @@ namespace kotor_Randomizer_2
                 sw.WriteLine($"Unlock Galaxy Map,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap)}");
                 sw.WriteLine($"Fix Module Coordinates,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates)}");
                 sw.WriteLine($"Fix Mind Prison,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison)}");
-                sw.WriteLine($"Unlock Various Doors,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors)}");
-                sw.WriteLine($"Fix Leviathan Elevators,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators)}");
+                sw.WriteLine($"Unlock Various Doors,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins)}");
+                sw.WriteLine($"Fix Leviathan Elevators,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev)}");
                 sw.WriteLine($"Add Spice Lab Load Zone,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ)}");
                 sw.WriteLine();
 
@@ -150,10 +154,10 @@ namespace kotor_Randomizer_2
                 new Tuple<string, string>("Fix Dream Sequence", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream).ToString()),
                 new Tuple<string, string>("Fix Mind Prison", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison).ToString()),
                 new Tuple<string, string>("Fix Module Coordinates", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates).ToString()),
-                new Tuple<string, string>("Fix Leviathan Elevators", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators).ToString()),
+                new Tuple<string, string>("Fix Leviathan Elevators", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev).ToString()),
                 new Tuple<string, string>("Add Spice Lab Load Zone", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ).ToString()),
                 new Tuple<string, string>("Unlock Galaxy Map", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap).ToString()),
-                new Tuple<string, string>("Unlock Various Doors", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors).ToString()),
+                new Tuple<string, string>("Unlock Various Doors", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins).ToString()),
                 new Tuple<string, string>("", ""),  // Skip a row.
                 new Tuple<string, string>("Use Rando Exclusion Rules", Properties.Settings.Default.UseRandoRules.ToString()),
                 new Tuple<string, string>("Verify Reachability", Properties.Settings.Default.VerifyReachability.ToString()),
@@ -351,7 +355,7 @@ namespace kotor_Randomizer_2
 
             WriteFilesToModulesDirectory(paths);
 
-            // Write additional override files.
+            // Write additional override files (and unlock galaxy map).
             WriteOverrideFiles(paths);
 
             // Fix warp coordinates.
@@ -366,18 +370,8 @@ namespace kotor_Randomizer_2
                 FixMindPrison(paths);
             }
 
-            // Unlock doors to dantooine ruins and on Lehon Temple Roof
-            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockVarDoors))
-            {
-                UnlockDoorInFile(paths, AREA_DAN_COURTYARD, LABEL_DANT_DOOR);   // Dantooine Ruins
-                UnlockDoorInFile(paths, AREA_UNK_SUMMIT, LABEL_UNK_DOOR);       // Lehon Temple Roof
-            }
-
-            // Leviathan Elevators
-            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixLevElevators))
-            {
-                FixLeviathanElevators(paths);
-            }
+            // Unlock locked doors or elevators.
+            UnlockDoors(paths);
 
             // Vulkar Spice Lab Transition
             if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ))
@@ -686,12 +680,60 @@ namespace kotor_Randomizer_2
                 RIM.rFile rf = r.File_Table.FirstOrDefault(x => x.Label == label);
                 GFF g = new GFF(rf.File_Data);  // Grab the door out of the file.
 
-                // Set the "Locked" field to 0 (false).
+                // Set fields related to opening and unlocking.
+                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "KeyRequired") as GFF.BYTE).Value = 0;
                 (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Locked") as GFF.BYTE).Value = 0;
+                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "OpenLockDC") as GFF.BYTE).Value = 0;
+                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Plot") as GFF.BYTE).Value = 0;
+
+                // Set fields related to bashing open.
+                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Hardness") as GFF.BYTE).Value = 0;
+                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "HP") as GFF.SHORT).Value = 1;
+                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "CurrentHP") as GFF.SHORT).Value = 1;
+                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Min1HP") as GFF.BYTE).Value = 0;
 
                 // Write change(s) to file.
                 rf.File_Data = g.ToRawData();
                 r.WriteToFile(fi.FullName);
+            }
+        }
+
+        /// <summary>
+        /// Unlock the doors requested by the user.
+        /// </summary>
+        /// <param name="paths">KPaths object for this game.</param>
+        private static void UnlockDoors(KPaths paths)
+        {
+            var extrasValue = Properties.Settings.Default.ModuleExtrasValue;
+
+            // Dantooine Ruins
+            if (extrasValue.HasFlag(ModuleExtras.UnlockDanRuins))
+            {
+                UnlockDoorInFile(paths, AREA_DAN_COURTYARD, LABEL_DANT_DOOR);
+            }
+
+            // Leviathan Elevators
+            if (extrasValue.HasFlag(ModuleExtras.UnlockLevElev))
+            {
+                FixLeviathanElevators(paths);
+            }
+
+            // Manaan Embassy Door to Submersible
+            if (extrasValue.HasFlag(ModuleExtras.UnlockManSub))
+            {
+                UnlockDoorInFile(paths, AREA_MAN_EAST_CENTRAL, LABEL_MAN_SUB_DOOR);
+            }
+
+            // Star Forge Door to Bastila
+            if (extrasValue.HasFlag(ModuleExtras.UnlockStaBastila))
+            {
+                UnlockDoorInFile(paths, AREA_STA_DECK3, LABEL_STA_BAST_DOOR);
+            }
+
+            // Lehon Temple Roof
+            if (extrasValue.HasFlag(ModuleExtras.UnlockUnkSummit))
+            {
+                UnlockDoorInFile(paths, AREA_UNK_SUMMIT, LABEL_UNK_DOOR);
             }
         }
 

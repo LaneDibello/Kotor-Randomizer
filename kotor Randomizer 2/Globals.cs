@@ -48,27 +48,33 @@ namespace kotor_Randomizer_2
     public enum ModuleExtras
     {
         /// <summary> (Default Behavior) Delete milestone save data. </summary>
-        Default         = 0x000, // 0b00 00000000
+        Default          = 0x0000, // 0b00000 00000000
         /// <summary> Do not delete milestone save data. </summary>
-        NoSaveDelete    = 0x001, // 0b00 00000001
+        NoSaveDelete     = 0x0001, // 0b00000 00000001
         /// <summary> Include minigame data in the save file. </summary>
-        SaveMiniGames   = 0x002, // 0b00 00000010
+        SaveMiniGames    = 0x0002, // 0b00000 00000010
         /// <summary> Include all module data in the save file. </summary>
-        SaveAllModules  = 0x004, // 0b00 00000100
+        SaveAllModules   = 0x0004, // 0b00000 00000100
         /// <summary> Fix dream cutscenes. </summary>
-        FixDream        = 0x008, // 0b00 00001000
+        FixDream         = 0x0008, // 0b00000 00001000
         /// <summary> Unlock all destinations on the galaxy map. </summary>
-        UnlockGalaxyMap = 0x010, // 0b00 00010000
+        UnlockGalaxyMap  = 0x0010, // 0b00000 00010000
         /// <summary> Fix warp spawn coordinates in certain modules. </summary>
-        FixCoordinates  = 0x020, // 0b00 00100000
+        FixCoordinates   = 0x0020, // 0b00000 00100000
         /// <summary> Fix Rakatan mind prison to prevent soft-locks. </summary>
-        FixMindPrison   = 0x040, // 0b00 01000000
+        FixMindPrison    = 0x0040, // 0b00000 01000000
         /// <summary> Unlock ancient doors to Dantooine ruins, and on the Lehon Temple roof. </summary>
-        UnlockVarDoors  = 0x080, // 0b00 10000000
-        /// <summary> Allows Leviathan elevators to go to any of the other decks without prerequisites </summary>
-        FixLevElevators = 0x100, // 0b01 00000000
-        /// <summary> Adds a Load Zone leading the the Vulkar Spice in the rear of the Vulkar base main floor, next to the pool </summary>
-        VulkarSpiceLZ   = 0x200, // 0b10 00000000
+        UnlockDanRuins   = 0x0080, // 0b00000 10000000
+        /// <summary> Allows Leviathan elevators to go to any of the other decks without prerequisites. </summary>
+        UnlockLevElev    = 0x0100, // 0b00001 00000000
+        /// <summary> Adds a Load Zone leading the the Vulkar Spice in the rear of the Vulkar base main floor, next to the pool. </summary>
+        VulkarSpiceLZ    = 0x0200, // 0b00010 00000000
+        /// <summary> Unlock the door to the submersible in Manaan's republic embassy. </summary>
+        UnlockManSub     = 0x0400, // 0b00100 00000000
+        /// <summary> Keep the door to Bastila on the Command Center (Deck 3) of the Star Forge unlocked, even after fighting her. </summary>
+        UnlockStaBastila = 0x0800, // 0b01000 00000000
+        /// <summary> Unlock the door that exits from the Temple Summit on the Unknown World. </summary>
+        UnlockUnkSummit  = 0x1000, // 0b10000 00000000
     }
 
     [Flags]

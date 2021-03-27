@@ -9,7 +9,7 @@
   <Module WarpCode="danm14aa" CommonName="Courtyard">
     <LeadsTo WarpCode="danm13"   CommonName="Jedi Enclave" />
     <LeadsTo WarpCode="danm14ab" CommonName="Matale Grounds" />
-    <LeadsTo WarpCode="danm15"   CommonName="Dantooine Ruins" Tags="Locked,DLZ,FixDoors" Unlock="danm13,danm14ac" />
+    <LeadsTo WarpCode="danm15"   CommonName="Dantooine Ruins" Tags="Locked,DLZ,UL_Ruins" Unlock="danm13,danm14ac" />
   </Module>
   <Module WarpCode="danm14ab" CommonName="Matale Grounds">
     <LeadsTo WarpCode="danm14aa" CommonName="Courtyard" />
@@ -433,7 +433,7 @@
     <LeadsTo WarpCode="unk_m44aa" CommonName="Temple Main Floor" />
   </Module>
   <Module WarpCode="unk_m44ac" CommonName="Temple Summit">
-    <LeadsTo WarpCode="unk_m44aa" CommonName="Temple Main Floor" Tags="Locked,FixDoors" Unlock="Jolee" />
+    <LeadsTo WarpCode="unk_m44aa" CommonName="Temple Main Floor" Tags="Locked,UL_Summit" Unlock="Jolee" />
   </Module>
 
   <!--Repeated Cutscenes-->
