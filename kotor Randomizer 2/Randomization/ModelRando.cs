@@ -63,36 +63,39 @@ namespace kotor_Randomizer_2
 
                     foreach (RIM.rFile rf in r.File_Table.Where(x => x.TypeID == (int)ResourceType.UTD))
                     {
-                        GFF_old g = new GFF_old(rf.File_Data);
 
-                        int temp = 0;
+                        GFF g = new GFF(rf.File_Data);
 
+                        int randAppear = 0; //The randomly generated Appearance ID
+
+                        //Generate the random appearacne values before ommitting airlock, to create more seed consistancy
                         if ((Properties.Settings.Default.RandomizeDoorModels & 4) > 0) // Broken Doors
                         {
-                            temp = Randomize.Rng.Next(MIN_DOOR_INDEX_BROKEN, MAX_DOOR_INDEX); // First 12 doors are open so this is easier
+                            randAppear = Randomize.Rng.Next(MIN_DOOR_INDEX_BROKEN, MAX_DOOR_INDEX); // First 12 doors are open so this is easier
                         }
                         else
                         {
-                            temp = Randomize.Rng.Next(0, MAX_DOOR_INDEX);
+                            randAppear = Randomize.Rng.Next(0, MAX_DOOR_INDEX);
                         }
 
                         // Airlock
                         if ((Properties.Settings.Default.RandomizeDoorModels & 2) > 0 &&
-                            (g.Field_Array.Where(x => x.Label == LBL_LOC_NAME).FirstOrDefault().Field_Data as GFF_old.CExoLocString).StringRef == 21080)
+                            (g.Top_Level.Fields.Where(f => f.Label == LBL_LOC_NAME).FirstOrDefault() as GFF.CExoLocString).StringRef == 21080)
                         {
                             continue;
                         }
 
-                        var field = g.Field_Array.Where(k => k.Label == LBL_GENERIC_TYPE).FirstOrDefault();
-                        var id = BitConverter.ToInt32((byte[])field.Field_Data, 0);
+                        //Get Info from Door2DA for the Spoiler Log
+                        var field = g.Top_Level.Fields.Where(f => f.Label == LBL_GENERIC_TYPE).FirstOrDefault() as GFF.BYTE;
+                        int id = (int)field.Value;
 
                         var label_old = door2DA.Data[COL_LABEL][id];
-                        var label_new = door2DA.Data[COL_LABEL][temp];
+                        var label_new = door2DA.Data[COL_LABEL][randAppear];
 
-                        LookupTable[fi.Name][DOOR].Add(rf.Label, new Tuple<int, string, int, string>(id, label_old, temp, label_new));
+                        LookupTable[fi.Name][DOOR].Add(rf.Label, new Tuple<int, string, int, string>(id, label_old, randAppear, label_new));
 
-                        g.Field_Array.Where(k => k.Label == LBL_GENERIC_TYPE).FirstOrDefault().Field_Data = temp;
-                        g.Field_Array.Where(k => k.Label == LBL_GENERIC_TYPE).FirstOrDefault().DataOrDataOffset = temp;
+                        //Change the appearance value
+                        (g.Top_Level.Fields.Where(f => f.Label == LBL_GENERIC_TYPE).FirstOrDefault() as GFF.BYTE).Value = (byte)randAppear;
 
                         rf.File_Data = g.ToRawData();
                     }
@@ -105,32 +108,32 @@ namespace kotor_Randomizer_2
 
                     foreach (RIM.rFile rf in r.File_Table.Where(k => k.TypeID == (int)ResourceType.UTP))
                     {
-                        GFF_old g = new GFF_old(rf.File_Data);
+                        GFF g = new GFF(rf.File_Data);
 
-                        if (Globals.BROKEN_PLACE.Contains(g.Field_Array.Where(k => k.Label == LBL_APPEARANCE).FirstOrDefault().DataOrDataOffset)) { continue; }
+                        if (Globals.BROKEN_PLACE.Contains((int)(g.Top_Level.Fields.Where(f => f.Label == LBL_APPEARANCE).FirstOrDefault() as GFF.DWORD).Value)) { continue; }
 
-                        int temp = 0;
+                        int randAppear = 0;
                         bool isBroken = false;
                         bool isLarge = false;
 
                         do
                         {
-                            temp = Randomize.Rng.Next(0, MAX_PLAC_INDEX);
-                            isBroken = ((Properties.Settings.Default.RandomizePlaceModels & 4) > 0) && Globals.BROKEN_PLACE.Contains(temp); // Always Satisfied if Broken omission disbaled
-                            isLarge  = ((Properties.Settings.Default.RandomizePlaceModels & 2) > 0) && Globals.LARGE_PLACE.Contains(temp);  // Always satisifed if Large omission disabled
+                            randAppear = Randomize.Rng.Next(0, MAX_PLAC_INDEX);
+                            isBroken = ((Properties.Settings.Default.RandomizePlaceModels & 4) > 0) && Globals.BROKEN_PLACE.Contains(randAppear); // Always Satisfied if Broken omission disbaled
+                            isLarge  = ((Properties.Settings.Default.RandomizePlaceModels & 2) > 0) && Globals.LARGE_PLACE.Contains(randAppear);  // Always satisifed if Large omission disabled
                         }
                         while (isBroken || isLarge);
 
-                        var field = g.Field_Array.Where(k => k.Label == LBL_APPEARANCE).FirstOrDefault();
-                        var id = Convert.ToInt32(field.Field_Data);
+                        var field = g.Top_Level.Fields.Where(f => f.Label == LBL_APPEARANCE).FirstOrDefault() as GFF.DWORD;
+                        int id = (int)field.Value;
 
                         var label_old = plac2DA.Data[COL_LABEL][id];
-                        var label_new = plac2DA.Data[COL_LABEL][temp];
+                        var label_new = plac2DA.Data[COL_LABEL][randAppear];
 
-                        LookupTable[fi.Name][PLACEABLE].Add(rf.Label, new Tuple<int, string, int, string>(id, label_old, temp, label_new));
+                        LookupTable[fi.Name][PLACEABLE].Add(rf.Label, new Tuple<int, string, int, string>(id, label_old, randAppear, label_new));
 
-                        g.Field_Array.Where(k => k.Label == LBL_APPEARANCE).FirstOrDefault().Field_Data = temp;
-                        g.Field_Array.Where(k => k.Label == LBL_APPEARANCE).FirstOrDefault().DataOrDataOffset = temp;
+                        //Change the appearance value
+                        (g.Top_Level.Fields.Where(f => f.Label == LBL_APPEARANCE).FirstOrDefault() as GFF.DWORD).Value = (uint)randAppear;
 
                         rf.File_Data = g.ToRawData();
                     }
@@ -143,30 +146,29 @@ namespace kotor_Randomizer_2
 
                     foreach (RIM.rFile rf in r.File_Table.Where(k => k.TypeID == (int)ResourceType.UTC))
                     {
-                        GFF_old g = new GFF_old(rf.File_Data);
+                        GFF g = new GFF(rf.File_Data);
 
-                        int temp = 0;
+                        int randAppear = 0;
                         bool isBroken = false;
                         bool isLarge = false;
 
                         do
                         {
-                            temp = Randomize.Rng.Next(0, MAX_CHAR_INDEX);
-                            isBroken = ((Properties.Settings.Default.RandomizeCharModels & 4) > 0) && Globals.BROKEN_CHARS.Contains(temp);  // Always Satisfied if Broken omission disabled
-                            isLarge  = ((Properties.Settings.Default.RandomizeCharModels & 2) > 0) && Globals.LARGE_CHARS.Contains(temp);   // Always satisifed if Large omission disabled
+                            randAppear = Randomize.Rng.Next(0, MAX_CHAR_INDEX);
+                            isBroken = ((Properties.Settings.Default.RandomizeCharModels & 4) > 0) && Globals.BROKEN_CHARS.Contains(randAppear);  // Always Satisfied if Broken omission disabled
+                            isLarge  = ((Properties.Settings.Default.RandomizeCharModels & 2) > 0) && Globals.LARGE_CHARS.Contains(randAppear);   // Always satisifed if Large omission disabled
                         }
                         while (isBroken || isLarge);
 
-                        var field = g.Field_Array.Where(k => k.Label == LBL_APPEARANCE_TYPE).FirstOrDefault();
-                        var id = Convert.ToInt32(field.Field_Data);
+                        var field = g.Top_Level.Fields.Where(f => f.Label == LBL_APPEARANCE_TYPE).FirstOrDefault() as GFF.WORD;
+                        int id = (int)field.Value;
 
                         var label_old = char2DA.Data[COL_LABEL][id];
-                        var label_new = char2DA.Data[COL_LABEL][temp];
+                        var label_new = char2DA.Data[COL_LABEL][randAppear];
 
-                        LookupTable[fi.Name][CHARACTER].Add(rf.Label, new Tuple<int, string, int, string>(id, label_old, temp, label_new));
+                        LookupTable[fi.Name][CHARACTER].Add(rf.Label, new Tuple<int, string, int, string>(id, label_old, randAppear, label_new));
 
-                        g.Field_Array.Where(k => k.Label == LBL_APPEARANCE_TYPE).FirstOrDefault().Field_Data = temp;
-                        g.Field_Array.Where(k => k.Label == LBL_APPEARANCE_TYPE).FirstOrDefault().DataOrDataOffset = temp;
+                        (g.Top_Level.Fields.Where(f => f.Label == LBL_APPEARANCE_TYPE).FirstOrDefault() as GFF.WORD).Value = (ushort)randAppear;
 
                         rf.File_Data = g.ToRawData();
                     }
