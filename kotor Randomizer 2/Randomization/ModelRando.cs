@@ -19,6 +19,10 @@ namespace kotor_Randomizer_2
         private const string DOOR = "Door";
         private const string PLACEABLE = "Placeable";
 
+        private const string AREA_UNK_CATACOMBS = "unk_m44ab";
+        private const string LABEL_UNK_FLPNL = "flpnl";
+        private const string LABEL_UNK_RESETPANEL = "panelreset";
+
         public const string LBL_LOC_NAME = "LocName";
         public const string LBL_GENERIC_TYPE = "GenericType";
         public const string LBL_APPEARANCE = "Appearance";
@@ -118,7 +122,17 @@ namespace kotor_Randomizer_2
 
                         do
                         {
-                            randAppear = Randomize.Rng.Next(0, MAX_PLAC_INDEX);
+                            if (fi.Name.Contains(AREA_UNK_CATACOMBS) &&
+                                (rf.Label.StartsWith(LABEL_UNK_FLPNL) ||
+                                rf.Label == LABEL_UNK_RESETPANEL))
+                            {
+                                randAppear = Globals.PANEL_PLACE[Randomize.Rng.Next(0, Globals.PANEL_PLACE.Count)];
+                            }
+                            else
+                            {
+                                randAppear = Randomize.Rng.Next(0, MAX_PLAC_INDEX);
+                            }
+
                             isBroken = ((Properties.Settings.Default.RandomizePlaceModels & 4) > 0) && Globals.BROKEN_PLACE.Contains(randAppear); // Always Satisfied if Broken omission disbaled
                             isLarge  = ((Properties.Settings.Default.RandomizePlaceModels & 2) > 0) && Globals.LARGE_PLACE.Contains(randAppear);  // Always satisifed if Large omission disabled
                         }
