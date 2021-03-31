@@ -55,6 +55,9 @@ namespace kotor_Randomizer_2
             TwoDA door2DA = new TwoDA(doorVRE.EntryData, doorVRE.ResRef);
             TwoDA plac2DA = new TwoDA(placVRE.EntryData, placVRE.ResRef);
 
+            // Check if the floor panel fix is enabled.
+            bool isFloorPanelActive = (Properties.Settings.Default.RandomizePlaceModels & 8) > 0;
+
             foreach (FileInfo fi in paths.FilesInModules)
             {
                 RIM r = new RIM(fi.FullName);
@@ -110,33 +113,37 @@ namespace kotor_Randomizer_2
                 {
                     LookupTable[fi.Name].Add(PLACEABLE, new Dictionary<string, Tuple<int, string, int, string>>());
 
+                    // Check if floor panels should be replaced with valid placeables.
+                    bool useValidFloorPanels = isFloorPanelActive && fi.Name.Contains(AREA_UNK_CATACOMBS);
+
                     foreach (RIM.rFile rf in r.File_Table.Where(k => k.TypeID == (int)ResourceType.UTP))
                     {
                         GFF g = new GFF(rf.File_Data);
 
+                        // If this is a broken placeable, skip it.
                         if (Globals.BROKEN_PLACE.Contains((int)(g.Top_Level.Fields.Where(f => f.Label == LBL_APPEARANCE).FirstOrDefault() as GFF.DWORD).Value)) { continue; }
 
                         int randAppear = 0;
-                        bool isBroken = false;
-                        bool isLarge = false;
 
-                        do
+                        // Randomly generate a valid replacement for the "Lights Out" panels.
+                        if (useValidFloorPanels && (rf.Label.StartsWith(LABEL_UNK_FLPNL) || rf.Label == LABEL_UNK_RESETPANEL))
                         {
-                            if (fi.Name.Contains(AREA_UNK_CATACOMBS) &&
-                                (rf.Label.StartsWith(LABEL_UNK_FLPNL) ||
-                                rf.Label == LABEL_UNK_RESETPANEL))
-                            {
-                                randAppear = Globals.PANEL_PLACE[Randomize.Rng.Next(0, Globals.PANEL_PLACE.Count)];
-                            }
-                            else
+                            randAppear = Globals.PANEL_PLACE[Randomize.Rng.Next(0, Globals.PANEL_PLACE.Count)];
+                        }
+                        else
+                        {
+                            // Generate a random appearance for this placeable.
+                            bool isBroken = false;
+                            bool isLarge = false;
+
+                            do
                             {
                                 randAppear = Randomize.Rng.Next(0, MAX_PLAC_INDEX);
+                                isBroken = ((Properties.Settings.Default.RandomizePlaceModels & 4) > 0) && Globals.BROKEN_PLACE.Contains(randAppear); // Always Satisfied if Broken omission disbaled
+                                isLarge  = ((Properties.Settings.Default.RandomizePlaceModels & 2) > 0) && Globals.LARGE_PLACE.Contains(randAppear);  // Always satisifed if Large omission disabled
                             }
-
-                            isBroken = ((Properties.Settings.Default.RandomizePlaceModels & 4) > 0) && Globals.BROKEN_PLACE.Contains(randAppear); // Always Satisfied if Broken omission disbaled
-                            isLarge  = ((Properties.Settings.Default.RandomizePlaceModels & 2) > 0) && Globals.LARGE_PLACE.Contains(randAppear);  // Always satisifed if Large omission disabled
+                            while (isBroken || isLarge);
                         }
-                        while (isBroken || isLarge);
 
                         var field = g.Top_Level.Fields.Where(f => f.Label == LBL_APPEARANCE).FirstOrDefault() as GFF.DWORD;
                         int id = (int)field.Value;
@@ -146,7 +153,7 @@ namespace kotor_Randomizer_2
 
                         LookupTable[fi.Name][PLACEABLE].Add(rf.Label, new Tuple<int, string, int, string>(id, label_old, randAppear, label_new));
 
-                        //Change the appearance value
+                        // Change the appearance value.
                         (g.Top_Level.Fields.Where(f => f.Label == LBL_APPEARANCE).FirstOrDefault() as GFF.DWORD).Value = (uint)randAppear;
 
                         rf.File_Data = g.ToRawData();

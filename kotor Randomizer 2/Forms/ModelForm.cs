@@ -33,6 +33,7 @@ namespace kotor_Randomizer_2
             cbPlaceRando.Checked = (Properties.Settings.Default.RandomizePlaceModels & 1) > 0;
             cbLargePlace.Checked = (Properties.Settings.Default.RandomizePlaceModels & 2) > 0;
             cbBrokenPlace.Checked = (Properties.Settings.Default.RandomizePlaceModels & 4) > 0;
+            cbFloorPanels.Checked = (Properties.Settings.Default.RandomizePlaceModels & 8) > 0;
 
             cbDoorRando.Checked = (Properties.Settings.Default.RandomizeDoorModels & 1) > 0;
             cbLargeDoor.Checked = (Properties.Settings.Default.RandomizeDoorModels & 2) > 0; //Airlock ommision
@@ -46,21 +47,21 @@ namespace kotor_Randomizer_2
         //Main Checkboxes
         private void cbCharRando_CheckedChanged(object sender, EventArgs e)
         {
-            pCharRando.Enabled = cbCharRando.Checked;
+            flpCharRando.Enabled = cbCharRando.Checked;
             if (!checks_set) { return; }
             Properties.Settings.Default.RandomizeCharModels ^= 1;
         }
         
         private void cbPlaceRando_CheckedChanged(object sender, EventArgs e)
         {
-            pPlaceRando.Enabled = cbPlaceRando.Checked;
+            flpPlaceRando.Enabled = cbPlaceRando.Checked;
             if (!checks_set) { return; }
             Properties.Settings.Default.RandomizePlaceModels ^= 1;
         }
 
         private void cbDoorRando_CheckedChanged(object sender, EventArgs e)
         {
-            pDoorRando.Enabled = cbDoorRando.Checked;
+            flpDoorRando.Enabled = cbDoorRando.Checked;
             if (!checks_set) { return; }
             Properties.Settings.Default.RandomizeDoorModels ^= 1;
         }
@@ -88,6 +89,12 @@ namespace kotor_Randomizer_2
         {
             if (!checks_set) { return; }
             Properties.Settings.Default.RandomizePlaceModels ^= 1 << 2;
+        }
+
+        private void cbFloorSwitches_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checks_set) { return; }
+            Properties.Settings.Default.RandomizePlaceModels ^= 1 << 3;
         }
 
         private void cbLargeDoor_CheckedChanged(object sender, EventArgs e)
