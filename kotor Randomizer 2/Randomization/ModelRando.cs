@@ -58,7 +58,26 @@ namespace kotor_Randomizer_2
             // Check if the floor panel fix is enabled.
             bool isFloorPanelActive = (Properties.Settings.Default.RandomizePlaceModels & 8) > 0;
 
-            foreach (FileInfo fi in paths.FilesInModules)
+            // Check if modules have been randomized.
+            var moduleFiles = paths.FilesInModules.ToList();
+          
+            if (ModuleRando.LookupTable.Any())
+            {
+                // If randomized, ensure module files are processed in the same order every time.
+                var sortedLookup = ModuleRando.LookupTable.OrderBy(kvp => kvp.Key);
+                var newList = new List<FileInfo>();
+
+                foreach (var kvp in sortedLookup)
+                {
+                    var filesToAdd = moduleFiles.Where(fi => fi.Name.Contains(kvp.Value));
+                    newList.AddRange(filesToAdd);
+                }
+
+                moduleFiles = newList;
+            }
+
+            // Loop through each file and randomize the requested model types.
+            foreach (FileInfo fi in moduleFiles)
             {
                 RIM r = new RIM(fi.FullName);
                 LookupTable.Add(fi.Name, new Dictionary<string, Dictionary<string, Tuple<int, string, int, string>>>());
