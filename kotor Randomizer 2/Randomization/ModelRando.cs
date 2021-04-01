@@ -57,6 +57,7 @@ namespace kotor_Randomizer_2
 
             // Check if the floor panel fix is enabled.
             bool isFloorPanelActive = (Properties.Settings.Default.RandomizePlaceModels & 8) > 0;
+            var catacombsFile = AREA_UNK_CATACOMBS;
 
             // Check if modules have been randomized.
             var moduleFiles = paths.FilesInModules.ToList();
@@ -69,6 +70,10 @@ namespace kotor_Randomizer_2
 
                 foreach (var kvp in sortedLookup)
                 {
+                    // Find the file that has replaced the catacombs for the floor panel fix.
+                    if (kvp.Key == AREA_UNK_CATACOMBS) catacombsFile = kvp.Value;
+
+                    // Add the files to modify to the new list in proper order.
                     var filesToAdd = moduleFiles.Where(fi => fi.Name.Contains(kvp.Value));
                     newList.AddRange(filesToAdd);
                 }
@@ -133,7 +138,7 @@ namespace kotor_Randomizer_2
                     LookupTable[fi.Name].Add(PLACEABLE, new Dictionary<string, Tuple<int, string, int, string>>());
 
                     // Check if floor panels should be replaced with valid placeables.
-                    bool useValidFloorPanels = isFloorPanelActive && fi.Name.Contains(AREA_UNK_CATACOMBS);
+                    bool useValidFloorPanels = isFloorPanelActive && fi.Name.Contains(catacombsFile);
 
                     foreach (RIM.rFile rf in r.File_Table.Where(k => k.TypeID == (int)ResourceType.UTP))
                     {
@@ -288,83 +293,59 @@ namespace kotor_Randomizer_2
             ws.Cell(i, 1).Style.Font.Bold = true;
             i += 2;     // Skip a row.
 
-            // Model Randomization Settings
-            //   Settings A
-            ws.Cell(i, 1).Value = "Model Type";
-            ws.Cell(i, 2).Value = "Is Active";
-            ws.Cell(i, 3).Value = "Omit Large";
-            ws.Cell(i, 4).Value = "Omit Broken";
-            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            // Character Randomization Settings
+            ws.Cell(i, 1).Value = "Character Models";
             ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Style.Font.Bold = true;
-            ws.Cell(i, 3).Style.Font.Bold = true;
-            ws.Cell(i, 4).Style.Font.Bold = true;
+            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizeCharModels & 1) > 0).ToString();
             i++;
 
-            string charIsActive = ((Properties.Settings.Default.RandomizeCharModels & 1) > 0).ToString();
-            string charOmitFirst = ((Properties.Settings.Default.RandomizeCharModels & 2) > 0).ToString();
-            string charOmitSecond = ((Properties.Settings.Default.RandomizeCharModels & 4) > 0).ToString();
-
-            string modelIsActive = ((Properties.Settings.Default.RandomizePlaceModels & 1) > 0).ToString();
-            string modelOmitFirst = ((Properties.Settings.Default.RandomizePlaceModels & 2) > 0).ToString();
-            string modelOmitSecond = ((Properties.Settings.Default.RandomizePlaceModels & 4) > 0).ToString();
-
-            var settings = new List<Tuple<string, string, string, string>>()
-            {
-                new Tuple<string, string, string, string>("Character Models", charIsActive, charOmitFirst, charOmitSecond),
-                new Tuple<string, string, string, string>("Placeable Models", modelIsActive, modelOmitFirst, modelOmitSecond),
-            };
-
-            foreach (var setting in settings)
-            {
-                ws.Cell(i, 1).Value = setting.Item1;
-                ws.Cell(i, 2).Value = setting.Item2;
-                ws.Cell(i, 3).Value = setting.Item3;
-                ws.Cell(i, 4).Value = setting.Item4;
-                ws.Cell(i, 1).Style.Font.Italic = true;
-                i++;
-            }
-
-            i++;    // Skip a row.
-
-            //   Settings B
-            ws.Cell(i, 1).Value = "Model Type";
-            ws.Cell(i, 2).Value = "Is Active";
-            ws.Cell(i, 3).Value = "Omit Airlocks";
-            ws.Cell(i, 4).Value = "Omit Broken";
-            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Style.Font.Bold = true;
-            ws.Cell(i, 3).Style.Font.Bold = true;
-            ws.Cell(i, 4).Style.Font.Bold = true;
+            ws.Cell(i, 1).Value = "Omit Large";
+            ws.Cell(i, 1).Style.Font.Italic = true;
+            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizeCharModels & 2) > 0).ToString();
             i++;
 
-            string doorIsActive = ((Properties.Settings.Default.RandomizeDoorModels & 1) > 0).ToString();
-            string doorOmitFirst = ((Properties.Settings.Default.RandomizeDoorModels & 2) > 0).ToString();
-            string doorOmitSecond = ((Properties.Settings.Default.RandomizeDoorModels & 4) > 0).ToString();
+            ws.Cell(i, 1).Value = "Omit Broken";
+            ws.Cell(i, 1).Style.Font.Italic = true;
+            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizeCharModels & 4) > 0).ToString();
+            i += 2;     // Skip a row.
 
-            settings = new List<Tuple<string, string, string, string>>()
-            {
-                new Tuple<string, string, string, string>("Door Models", doorIsActive, doorOmitFirst, doorOmitSecond),
-            };
+            // Placeable Randomization Settings
+            ws.Cell(i, 1).Value = "Placeable Models";
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizePlaceModels & 1) > 0).ToString();
+            i++;
 
-            foreach (var setting in settings)
-            {
-                ws.Cell(i, 1).Value = setting.Item1;
-                ws.Cell(i, 2).Value = setting.Item2;
-                ws.Cell(i, 3).Value = setting.Item3;
-                ws.Cell(i, 4).Value = setting.Item4;
-                ws.Cell(i, 1).Style.Font.Italic = true;
-                i++;
-            }
+            ws.Cell(i, 1).Value = "Omit Large";
+            ws.Cell(i, 1).Style.Font.Italic = true;
+            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizePlaceModels & 2) > 0).ToString();
+            i++;
 
-            i += 2;     // Skip two rows.
+            ws.Cell(i, 1).Value = "Omit Broken";
+            ws.Cell(i, 1).Style.Font.Italic = true;
+            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizePlaceModels & 4) > 0).ToString();
+            i++;
+
+            ws.Cell(i, 1).Value = "Easy Panels";
+            ws.Cell(i, 1).Style.Font.Italic = true;
+            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizePlaceModels & 8) > 0).ToString();
+            i += 2;     // Skip a row.
+
+            // Door Randomization Settings
+            ws.Cell(i, 1).Value = "Door Models";
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizeDoorModels & 1) > 0).ToString();
+            i++;
+
+            ws.Cell(i, 1).Value = "Omit Airlocks";
+            ws.Cell(i, 1).Style.Font.Italic = true;
+            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizeDoorModels & 2) > 0).ToString();
+            i++;
+
+            ws.Cell(i, 1).Value = "Omit Broken";
+            ws.Cell(i, 1).Style.Font.Italic = true;
+            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizeDoorModels & 4) > 0).ToString();
+            i += 3;     // Skip two rows.
+
             int j = 1;  // Start at column A.
             var jMax = 1;   // Remember max table width.
             var areModulesRandomized = ModuleRando.LookupTable.Any();
