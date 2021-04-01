@@ -168,12 +168,17 @@ namespace kotor_Randomizer_2
         /// <summary>
         /// Large Placeable Models
         /// </summary>
-        public static readonly List<int> LARGE_PLACE = new List<int>() { 1, 2, 55, 56, 57, 58, 65, 66, 110, 111, 142, 172, 176, 194, 217, 218, 226 }; // NEED TO RESEARCH
+        public static readonly List<int> LARGE_PLACE = new List<int>() { 1, 2, 55, 56, 57, 58, 65, 66, 110, 111, 142, 172, 176, 194, 195, 217, 218, 226 }; // NEED TO RESEARCH
 
         /// <summary>
         /// Broken Placeable Models
         /// </summary>
-        public static readonly List<int> BROKEN_PLACE = new List<int>() { 0, 8, 9, 47, 54, 62, 78, 84, 90, 94, 97, 115, 158, 167, 159, 219 };
+        public static readonly List<int> BROKEN_PLACE = new List<int>() { 0, 8, 9, 47, 54, 62, 78, 84, 90, 94, 96, 97, 115, 121, 158, 167, 159, 219 };
+
+        /// <summary>
+        /// Valid Floor Panel Placeables
+        /// </summary>
+        public static readonly List<int> PANEL_PLACE = new List<int>() { 14, 15, 29, 30, 31, 36, 45, 48, 49, 53, 68, 69, 79, 108, 109, 114, 130, 131, 141, 143, 145, 148, 152, 154, 157, 193, 227, 228, 229, 230, 231 };
 
         /// <summary>
         /// Extra Files found in the 'lips' directory
