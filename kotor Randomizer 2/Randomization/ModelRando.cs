@@ -51,7 +51,25 @@ namespace kotor_Randomizer_2
             TwoDA door2DA = new TwoDA(doorVRE.EntryData, doorVRE.ResRef);
             TwoDA plac2DA = new TwoDA(placVRE.EntryData, placVRE.ResRef);
 
-            foreach (FileInfo fi in paths.FilesInModules)
+            var moduleFiles = paths.FilesInModules.ToList();
+
+            // Check if modules have been randomized.
+            if (ModuleRando.LookupTable.Any())
+            {
+                // If randomized, ensure module files are processed in the same order every time.
+                var sortedLookup = ModuleRando.LookupTable.OrderBy(kvp => kvp.Key);
+                var newList = new List<FileInfo>();
+
+                foreach (var kvp in sortedLookup)
+                {
+                    var filesToAdd = moduleFiles.Where(fi => fi.Name.Contains(kvp.Value));
+                    newList.AddRange(filesToAdd);
+                }
+
+                moduleFiles = newList;
+            }
+
+            foreach (FileInfo fi in moduleFiles)
             {
                 RIM r = new RIM(fi.FullName);
                 LookupTable.Add(fi.Name, new Dictionary<string, Dictionary<string, Tuple<int, string, int, string>>>());
