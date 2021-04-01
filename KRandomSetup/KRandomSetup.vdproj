@@ -372,7 +372,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_E09C5AED8BBFCFAB6139F897DD0BBD05"
@@ -490,7 +490,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Kotor Randomizer"
         "ProductCode" = "8:{381FE893-B77E-4B03-8BD2-96D91BC72461}"
-        "PackageCode" = "8:{14774517-D26B-4C84-98CD-64C063A42A9D}"
+        "PackageCode" = "8:{88448FFD-55A0-4188-8D88-A3176B5412E4}"
         "UpgradeCode" = "8:{3DA44908-725D-48AE-860D-C34768CFA05C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -503,7 +503,7 @@
         "ARPHELPLINK" = "8:"
         "Title" = "8:Kotor Randomizer Setup"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Lane Dibello"
+        "ARPCONTACT" = "8:Lane Dibello; Glasnonck"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:https://www.speedrun.com/kotor1"
