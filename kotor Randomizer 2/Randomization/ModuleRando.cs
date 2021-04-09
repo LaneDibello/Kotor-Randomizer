@@ -121,8 +121,15 @@ namespace kotor_Randomizer_2
 
             int i = 1;
             ws.Cell(i, 1).Value = "Seed";
-            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
             ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
+            i++;
+
+            Version version = typeof(StartForm).Assembly.GetName().Version;
+            ws.Cell(i, 1).Value = "Version";
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
+            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
             i += 2;     // Skip a row.
 
             // Module Randomization Settings
@@ -151,17 +158,22 @@ namespace kotor_Randomizer_2
                 new Tuple<string, string>("Delete Milestone Save Data", (!Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete)).ToString()),
                 new Tuple<string, string>("Include Minigames in Save", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames).ToString()),
                 new Tuple<string, string>("Include All Modules in Save", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules).ToString()),
+                new Tuple<string, string>("", ""),  // Skip a row.
+                new Tuple<string, string>("Add Spice Lab Load Zone", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ).ToString()),
                 new Tuple<string, string>("Fix Dream Sequence", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream).ToString()),
                 new Tuple<string, string>("Fix Mind Prison", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison).ToString()),
                 new Tuple<string, string>("Fix Module Coordinates", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates).ToString()),
-                new Tuple<string, string>("Fix Leviathan Elevators", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev).ToString()),
-                new Tuple<string, string>("Add Spice Lab Load Zone", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ).ToString()),
-                new Tuple<string, string>("Unlock Galaxy Map", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap).ToString()),
-                new Tuple<string, string>("Unlock Various Doors", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins).ToString()),
+                new Tuple<string, string>("Unlock DAN Ruins Door", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins).ToString()),
+                new Tuple<string, string>("Unlock EBO Galaxy Map", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap).ToString()),
+                new Tuple<string, string>("Unlock LEV Elevators", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev).ToString()),
+                new Tuple<string, string>("Unlock MAN Door to Sub", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManSub).ToString()),
+                new Tuple<string, string>("Unlock STA Door to Bastila", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila).ToString()),
+                new Tuple<string, string>("Unlock UNK Summit Exit", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit).ToString()),
+                new Tuple<string, string>("", ""),  // Skip a row.
+                new Tuple<string, string>("Shuffle Preset", presetName),
                 new Tuple<string, string>("", ""),  // Skip a row.
                 new Tuple<string, string>("Use Rando Exclusion Rules", Properties.Settings.Default.UseRandoRules.ToString()),
                 new Tuple<string, string>("Verify Reachability", Properties.Settings.Default.VerifyReachability.ToString()),
-                new Tuple<string, string>("Ignore Single-Use Transitions", Properties.Settings.Default.IgnoreOnceEdges.ToString()),
                 new Tuple<string, string>("Goal Is Malak", Properties.Settings.Default.GoalIsMalak.ToString()),
                 new Tuple<string, string>("Goal Is Star Maps", Properties.Settings.Default.GoalIsStarMaps.ToString()),
                 new Tuple<string, string>("Goal Is Pazaak", Properties.Settings.Default.GoalIsPazaak.ToString()),
@@ -169,8 +181,7 @@ namespace kotor_Randomizer_2
                 new Tuple<string, string>("Allow Glitch DLZ", Properties.Settings.Default.AllowGlitchDlz.ToString()),
                 new Tuple<string, string>("Allow Glitch FLU", Properties.Settings.Default.AllowGlitchFlu.ToString()),
                 new Tuple<string, string>("Allow Glitch GPW", Properties.Settings.Default.AllowGlitchGpw.ToString()),
-                new Tuple<string, string>("", ""),  // Skip a row.
-                new Tuple<string, string>("Shuffle Preset", presetName),
+                new Tuple<string, string>("Ignore Single-Use Edges", Properties.Settings.Default.IgnoreOnceEdges.ToString()),
                 new Tuple<string, string>("", ""),  // Skip a row.
             };
 
@@ -222,16 +233,35 @@ namespace kotor_Randomizer_2
             i++;
 
             ws.Cell(i, 1).Value = "Has Changed";
+            ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Range(i, 1, i + 1, 1).Merge().Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Value = "New Destination";
+            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i, 2).Style.Font.Bold = true;
+            ws.Cell(i, 2).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+            ws.Range(i, 2, i, 3).Merge();
+            ws.Cell(i, 4).Value = "Old Destination";
+            ws.Cell(i, 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i, 4).Style.Font.Bold = true;
+            ws.Cell(i, 4).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+            ws.Range(i, 4, i, 5).Merge();
+            i++;
+
             ws.Cell(i, 2).Value = "Default Code";
             ws.Cell(i, 3).Value = "Default Name";
-            ws.Cell(i, 4).Value = "Randomized Code";
-            ws.Cell(i, 5).Value = "Randomized Name";
-            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 4).Value = "Shuffled Code";
+            ws.Cell(i, 5).Value = "Shuffled Name";
+            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i, 3).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i, 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i, 5).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 3).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 4).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 5).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 1).Style.Font.Bold = true;
             ws.Cell(i, 2).Style.Font.Bold = true;
             ws.Cell(i, 3).Style.Font.Bold = true;
             ws.Cell(i, 4).Style.Font.Bold = true;
@@ -248,8 +278,10 @@ namespace kotor_Randomizer_2
 
                 ws.Cell(i, 1).Value = omitted ? "OMITTED" : changed.ToString();
                 ws.Cell(i, 2).Value = kvp.Key;
+                ws.Cell(i, 2).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                 ws.Cell(i, 3).Value = defaultName;
                 ws.Cell(i, 4).Value = kvp.Value;
+                ws.Cell(i, 4).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                 ws.Cell(i, 5).Value = randomizedName;
 
                 if (omitted)
