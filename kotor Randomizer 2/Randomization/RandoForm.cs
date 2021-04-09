@@ -87,6 +87,10 @@ namespace kotor_Randomizer_2
                 // Randomize the categories.
                 try
                 {
+                    // Copy over custom appearance.2da to fix potential model and texture issues.
+                    paths.BackUpOverrideDirectory();
+                    File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance);
+
                     if (Properties.Settings.Default.DoRandomization_Module)
                     {
                         Randomize.RestartRng();

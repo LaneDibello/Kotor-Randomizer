@@ -163,7 +163,7 @@ namespace kotor_Randomizer_2
         /// <summary>
         /// Broken Creature Models
         /// </summary>
-        public static readonly List<int> BROKEN_CHARS = new List<int>() { 0, 29, 82, 184 };
+        public static readonly List<int> BROKEN_CHARS = new List<int>() { 0, 29, 82 };
 
         /// <summary>
         /// Large Placeable Models
@@ -1081,7 +1081,6 @@ namespace kotor_Randomizer_2
         /// </summary>
         public static BindingList<string> OmitItems = new BindingList<string>()
         {
-            "g_a_clothes04",    // Clothing Variant 4
             "g_i_collarlgt001", // Collar Light
             "g_i_glowrod01",    // Glow Rod
             "g_i_implant104",   // Done

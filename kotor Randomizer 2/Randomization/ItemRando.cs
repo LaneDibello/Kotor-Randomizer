@@ -231,6 +231,13 @@ namespace kotor_Randomizer_2
             ws.Cell(i, 1).Value = "Seed";
             ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
             ws.Cell(i, 1).Style.Font.Bold = true;
+            i++;
+
+            Version version = typeof(StartForm).Assembly.GetName().Version;
+            ws.Cell(i, 1).Value = "Version";
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
+            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
             i += 2;     // Skip a row.
 
             // Item Randomization Settings
@@ -316,16 +323,17 @@ namespace kotor_Randomizer_2
             if (iMax > i) i = iMax; // Return to the bottom of the settings list.
             else          i++;      // Skip a row.
 
-            i++;    // Skip an additional row.
+            i++;    // Skip an additional 2 rows.
 
             // Randomized Items
             ws.Cell(i,   1).Value = "Has Changed";
-            ws.Cell(i-1, 2).Value = "Original";
+            ws.Cell(i-1, 2).Value = "Original (New Item)";
             ws.Cell(i,   2).Value = "ID";
             ws.Cell(i,   3).Value = "Label";
-            ws.Cell(i-1, 4).Value = "Randomized";
+            ws.Cell(i-1, 4).Value = "Randomized (Old Item)";
             ws.Cell(i,   4).Value = "ID";
             ws.Cell(i,   5).Value = "Label";
+            ws.Cell(i,   1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             ws.Cell(i-1, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             ws.Cell(i-1, 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             ws.Cell(i,   1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
