@@ -21,9 +21,23 @@ namespace kotor_Randomizer_2
             KEY k = new KEY(paths.chitin_backup);
             b.AttachKey(k, "data\\2da.bif");
 
+            var filesInOverride = paths.FilesInOverride.ToList();
+
             foreach (BIF.VariableResourceEntry VRE in b.VariableResourceTable.Where(x => Globals.Selected2DAs.Keys.Contains(x.ResRef)))
             {
-                TwoDA t = new TwoDA(VRE.EntryData, VRE.ResRef);
+                // Check to see if this table is already in the override directory.
+                TwoDA t;
+                if (filesInOverride.Any(fi => fi.Name == $"{VRE.ResRef}.2da"))
+                {
+                    // Modify the existing table.
+                    t = new TwoDA(File.ReadAllBytes(filesInOverride.First(fi => fi.Name == $"{VRE.ResRef}.2da").FullName), VRE.ResRef);
+                }
+                else
+                {
+                    // Fetch the table from the 2DA BIF file.
+                    t = new TwoDA(VRE.EntryData, VRE.ResRef);
+                }
+
                 if (!LookupTable.ContainsKey(VRE.ResRef))
                 {
                     // Add 2DA to the table.
