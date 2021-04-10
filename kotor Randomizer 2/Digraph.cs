@@ -81,15 +81,15 @@ namespace kotor_Randomizer_2
     public class ModuleDigraph
     {
         #region Properties
-        /// <summary> Collection of parsed modules that are the vertices of the digraph. </summary>
+        /// <summary> Collection of parsed modules that are the unrandomized vertices of the digraph. </summary>
         public List<ModuleVertex> Modules { get; }
-        /// <summary> Lookup that indicates which modules are reachable. Reachable[WarpCode] = isReachable; </summary>
+        /// <summary> Lookup that indicates which modules are reachable. Keys used are the original warp code. Reachable[Original.WarpCode] = isReachable; </summary>
         public Dictionary<string, bool> Reachable { get; private set; }
         /// <summary> Flag indicating that the Reachable lookup table has been updated in the latest cycle of DFS. </summary>
         private bool ReachableUpdated { get; set; } = false;
         /// <summary> Queue containing edges labeled with the Once tag. These will be checked after every other option has been taken during a cycle. </summary>
         public Queue<ModuleEdge> OnceQueue { get; } = new Queue<ModuleEdge>();
-        /// <summary> Lookup table for the randomization. RandomLookup[Original.WarpCode] = Randomized.WarpCode; </summary>
+        /// <summary> Lookup table for the randomization. Noteably, it is the reverse of ModuleRando.LookupTable. RandomLookup[Randomized.WarpCode] = Original.WarpCode; </summary>
         public Dictionary<string, string> RandomLookup  { get; set; }
 
         /// <summary> Reaching the tag(s) Malak is a goal for this randomization. </summary>
@@ -221,7 +221,7 @@ namespace kotor_Randomizer_2
 
         #region Reachability
         /// <summary>
-        /// Updates the randomization lookup table.
+        /// Updates the randomization lookup table by inverting the given table.
         /// </summary>
         /// <param name="lookup">New lookup table.</param>
         public void SetRandomizationLookup(Dictionary<string, string> lookup)
@@ -270,26 +270,26 @@ namespace kotor_Randomizer_2
 
             // Search through all modules connected to the start. For now, treat start as not reachable
             // since we may have no opportunity to return here.
-            foreach (var w in randStart.LeadsTo)
+            foreach (var edge in randStart.LeadsTo)
             {
                 // If this is a once edge, determine how to handle it.
-                if (IsOnceEdge(w))
+                if (IsOnceEdge(edge))
                 {
                     // Ignore once edges if setting is enabled.
                     if (!IgnoreOnceEdges)
                     {
                         // If allowed, enqueue the once edge for checking at the end of this cycle.
-                        if (!Reachable[RandomLookup[w.WarpCode]] && !OnceQueue.Contains(w))
+                        if (!Reachable[RandomLookup[edge.WarpCode]] && !OnceQueue.Contains(edge))
                         {
-                            OnceQueue.Enqueue(w);
+                            OnceQueue.Enqueue(edge);
                             ReachableUpdated = true;
                         }
                     }
                     continue;
                 }
                 // If this is a locked edge, determine if it is still locked.
-                if (EnforceEdgeTagLocked && IsLockedEdge(w)) { continue; }
-                DepthFirstSearch(touched, Modules.Find(m => m.WarpCode == RandomLookup[w.WarpCode]));
+                if (EnforceEdgeTagLocked && IsLockedEdge(edge)) { continue; }
+                DepthFirstSearch(touched, Modules.Find(m => m.WarpCode == RandomLookup[edge.WarpCode]));
             }
 
             // Check edges marked as Once for reachability.
@@ -356,26 +356,26 @@ namespace kotor_Randomizer_2
             }
 
             // Check each edge that hasn't been reached already.
-            foreach (var w in v.LeadsTo)
+            foreach (var edge in v.LeadsTo)
             {
                 // If this is a once edge, determine how to handle it.
-                if (IsOnceEdge(w))
+                if (IsOnceEdge(edge))
                 {
                     // Ignore once edges if setting is enabled.
                     if (!IgnoreOnceEdges)
                     {
                         // If allowed, enqueue the once edge for checking at the end of this cycle.
-                        if (!Reachable[RandomLookup[w.WarpCode]] && !OnceQueue.Contains(w))
+                        if (!Reachable[RandomLookup[edge.WarpCode]] && !OnceQueue.Contains(edge))
                         {
-                            OnceQueue.Enqueue(w);
+                            OnceQueue.Enqueue(edge);
                             ReachableUpdated = true;
                         }
                     }
                     continue;
                 }
                 // If this is a locked edge, determine if it is still locked.
-                if (EnforceEdgeTagLocked && IsLockedEdge(w)) continue;
-                if (!touched[RandomLookup[w.WarpCode]]) DepthFirstSearch(touched, Modules.Find(m => m.WarpCode == RandomLookup[w.WarpCode]));
+                if (EnforceEdgeTagLocked && IsLockedEdge(edge)) continue;
+                if (!touched[RandomLookup[edge.WarpCode]]) DepthFirstSearch(touched, Modules.Find(m => m.WarpCode == RandomLookup[edge.WarpCode]));
             }
         }
 
@@ -488,13 +488,13 @@ namespace kotor_Randomizer_2
         /// <summary>
         /// Returns true if all vertices in the given collection are reachable. Returns true if empty.
         /// </summary>
-        /// <param name="ends">Vertices to check for reachability.</param>
+        /// <param name="ends">The original vertices to check for reachability.</param>
         private bool IsReachable(IEnumerable<ModuleVertex> ends)
         {
             bool goal = true;
             foreach (var end in ends)
             {
-                goal &= Reachable[RandomLookup.Where(kvp => kvp.Value == end.WarpCode).First().Key];
+                goal &= Reachable[end.WarpCode];
             }
             return goal;
         }
