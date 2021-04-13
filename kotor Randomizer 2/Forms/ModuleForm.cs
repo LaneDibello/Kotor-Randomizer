@@ -406,12 +406,16 @@ namespace kotor_Randomizer_2
                 cbSaveAllMods.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules);
                 cbSaveMiniGame.Enabled = !cbSaveAllMods.Checked; // If all save checked, disable mg save checkbox.
 
+                cbVulkSpiceLZ.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
                 cbFixDream.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream);
-                cbUnlockGalaxyMap.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
-                cbFixCoordinates.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates);
                 cbFixMindPrison.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
+                cbFixCoordinates.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates);
                 cbUnlockDanRuins.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
+                cbUnlockGalaxyMap.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
                 cbUnlockLevElevators.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+                cbUnlockManSub.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManSub);
+                cbUnlockStaBastila.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
+                cbUnlockUnkSummit.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
 
                 // Load new reachability settings.
                 cbUseRandoRules.Checked = Properties.Settings.Default.UseRandoRules;

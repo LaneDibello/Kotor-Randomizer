@@ -9,7 +9,7 @@ namespace kotor_Randomizer_2
 {
     public static class KRP
     {
-        private const string VERSION = "KRP V2.1";
+        private const string VERSION = "KRP V2.2";
         //private static int CategoryCount = 8;
 
         #region public methods
@@ -77,6 +77,9 @@ namespace kotor_Randomizer_2
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockDanRuins; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockLevElev; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.VulkarSpiceLZ; }
+                        if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockManSub; }
+                        if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockStaBastila; }
+                        if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockUnkSummit; }
 
                         // Load reachability settings
                         Properties.Settings.Default.UseRandoRules = br.ReadBoolean();
@@ -339,8 +342,11 @@ namespace kotor_Randomizer_2
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates));   // Fixed Module Coordinates
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison));    // Fixed Rakatan Riddles
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins));   // Unlock Problem Doors
-                    bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev));  // Fixed Leviathan Elevators
+                    bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev));    // Fixed Leviathan Elevators
                     bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ));    // Add Vulkar Spice Loading Zone
+                    bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManSub));     // Unlock door to Manaan sub
+                    bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila)); // Unlock door to Bastila
+                    bw.Write(Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit));  // Unlock exit on Summit
 
                     bw.Write(Properties.Settings.Default.UseRandoRules);
                     bw.Write(Properties.Settings.Default.VerifyReachability);
