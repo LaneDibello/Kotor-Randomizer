@@ -90,6 +90,7 @@ namespace kotor_Randomizer_2
                     // Copy over custom appearance.2da to fix potential model and texture issues.
                     paths.BackUpOverrideDirectory();
                     File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance);
+                    File.WriteAllBytes(Path.Combine(paths.Override, "k_pdan_13_area.ncs"), Properties.Resources.k_pdan_13_area);
 
                     if (Properties.Settings.Default.DoRandomization_Module)
                     {

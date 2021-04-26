@@ -423,9 +423,9 @@ namespace kotor_Randomizer_2
         //Armor Regexes
         static List<Regex> ArmorRegs = new List<Regex>()
         {
-            new Regex("^g1*_a_", RegexOptions.Compiled | RegexOptions.IgnoreCase),// All Armor
+            new Regex("^g1*_a_|^geno_armor", RegexOptions.Compiled | RegexOptions.IgnoreCase),// All Armor
 
-            new Regex("^g1*_a_class4", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 4
+            new Regex("^g1*_a_class4|^geno_armor", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 4
             new Regex("^g1*_a_class5", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 5
             new Regex("^g1*_a_class6", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 6
             new Regex("^g1*_a_class7", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 7
@@ -451,7 +451,7 @@ namespace kotor_Randomizer_2
         //Belt Regexs
         static List<Regex> BeltsRegs = new List<Regex>()
         {
-            new Regex("^g1*_i_belt", RegexOptions.Compiled | RegexOptions.IgnoreCase)//All Belts
+            new Regex("^g1*_i_belt|^geno_stealth", RegexOptions.Compiled | RegexOptions.IgnoreCase)//All Belts
         };
 
         ////Various Regexes
@@ -491,7 +491,7 @@ namespace kotor_Randomizer_2
         //Gauntlets
         static List<Regex> GlovesRegs = new List<Regex>()
         {
-            new Regex("^g1*_i_gauntlet", RegexOptions.Compiled | RegexOptions.IgnoreCase)//Gloves
+            new Regex("^g1*_i_gauntlet|^geno_gloves", RegexOptions.Compiled | RegexOptions.IgnoreCase)//Gloves
         };
 
         //Implants
@@ -507,10 +507,10 @@ namespace kotor_Randomizer_2
         //Mask
         static List<Regex> MaskRegs = new List<Regex>()
         {
-            new Regex("^g1*_i_mask", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Masks
+            new Regex("^g1*_i_mask|^geno_visor", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Masks
 
             new Regex("^g1*_i_mask(08|09|10|11|13|16|17|18|22|23|24)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Mask No Armor Prof
-            new Regex("^g1*_i_mask(01|02|03|04|05|07|19|20|21)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Mask Light
+            new Regex("^g1*_i_mask(01|02|03|04|05|07|19|20|21)|^geno_visor", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Mask Light
             new Regex("^g1*_i_mask(06|12|15)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Mask Medium
             new Regex("^g1*_i_mask14", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Mask Heavy
         };
@@ -530,20 +530,20 @@ namespace kotor_Randomizer_2
         //Upgrades/Crystals
         static List<Regex> UpgradeRegs = new List<Regex>()
         {
-            new Regex("^g1*_(i_upgrade|w_sbrcrstl)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Upgrades
+            new Regex("^g1*_(i_upgrade|w_sbrcrstl)|^kas25_wookcrysta|^tat18_dragonprl", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Upgrades
 
             new Regex("^g1*_i_upgrade", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Normal Upgrades
-            new Regex("(^g1*_w_sbrcrstl(0|1([1-3]|9))|^tat18_dragonprl)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Crystal Upgrades
+            new Regex("(^g1*_w_sbrcrstl(0|1([1-3]|9))|^kas25_wookcrysta|^tat18_dragonprl)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Crystal Upgrades
             new Regex("^g1*_w_sbrcrstl(1[4-8]|2)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Crystal Colors
         };
 
         //Blaster
         static List<Regex> BlastersRegs = new List<Regex>()
         {
-            new Regex("^g1*_(w_.*(bls*tr*|rfl|pstl|cstr)|i_bithitem)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Blasters
+            new Regex("^g1*_(w_.*(bls*tr*|rfl|pstl|cstr)|i_bithitem)|geno_blaster", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Blasters
 
             new Regex("^g1*_w_.*(rptn)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Heavy Weapons
-            new Regex("^g1*_(w_.*(pstl|hldoblst|hvyblstr|ionblstr)|i_bithitem)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Blaster Pistols
+            new Regex("^g1*_(w_.*(pstl|hldoblst|hvyblstr|ionblstr)|i_bithitem)|geno_blaster", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Blaster Pistols
             new Regex("^g1*_w_.*(crbn|rfl|cstr)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Blaster Rifles
         };
 
@@ -576,13 +576,13 @@ namespace kotor_Randomizer_2
         //Melee
         static List<Regex> MeleeRegs = new List<Regex>()
         {
-            new Regex("^g1*_w_(stunbaton|war|.*swr*d|vi*bro|gaffi|qtrstaff)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Melee Weapons
+            new Regex("^g1*_w_(stunbaton|war|.*swr*d|vi*bro|gaffi|qtrstaff)|^geno_blade", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Melee Weapons
 
             new Regex("^g1*_w_stunbaton", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Stun Batons
             new Regex("^g1*_w_lngswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Long Swords
             new Regex("^g1*_w_shortswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Short Swords
             new Regex("^g1*_w_vbroshort", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Vibro Shortblades
-            new Regex("^g1*_w_vbroswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Vibroblades
+            new Regex("^g1*_w_vbroswrd|^geno_blade", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Vibroblades
             new Regex("^g1*_w_dblswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Double Swords
             new Regex("^g1*_w_qtrstaff", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Quarter Staves
             new Regex("^g1*_w_vbrdblswd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Vibro Doubleblades

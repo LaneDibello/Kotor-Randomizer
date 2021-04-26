@@ -264,6 +264,7 @@
     <None Include="Resources\ALLINCLUDED_modulesave.2da" />
     <None Include="Resources\appearance.2da" />
     <None Include="Resources\g_brakatan003.utc" />
+    <None Include="Resources\k_pdan_13_area.ncs" />
     <None Include="Resources\k_pebn_galaxy.ncs" />
     <None Include="Resources\k_plev_goto40aa.ncs" />
     <None Include="Resources\k_plev_goto40ab.ncs" />
