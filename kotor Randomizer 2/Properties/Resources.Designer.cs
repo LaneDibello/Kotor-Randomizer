@@ -209,6 +209,16 @@ namespace kotor_Randomizer_2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] k_pdan_13_area {
+            get {
+                object obj = ResourceManager.GetObject("k_pdan_13_area", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] k_pebn_galaxy {
             get {
                 object obj = ResourceManager.GetObject("k_pebn_galaxy", resourceCulture);
