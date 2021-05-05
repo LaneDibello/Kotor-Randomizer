@@ -119,7 +119,7 @@
   </Module>
   <Module WarpCode="korr_m33ab" CommonName="Sith Academy Entrance">
     <LeadsTo WarpCode="korr_m33aa" CommonName="Dreshdae" />
-    <LeadsTo WarpCode="korr_m35aa" CommonName="Sith Academy" Tags="Locked" Unlock="korr_m33aa" />
+    <LeadsTo WarpCode="korr_m35aa" CommonName="Sith Academy" Tags="Locked,UL_Academy" Unlock="korr_m33aa" />
   </Module>
   <Module WarpCode="korr_m34aa" CommonName="Shyrack Caves">
     <LeadsTo WarpCode="korr_m36aa" CommonName="Valley of the Dark Lords" />
@@ -193,12 +193,12 @@
   <Module WarpCode="manm26ad" CommonName="Manaan Docking Bay">
     <LeadsTo WarpCode="ebo_m12aa" CommonName="Ebon Hawk" />
     <LeadsTo WarpCode="manm26ac"  CommonName="West Central" />
-    <LeadsTo WarpCode="manm27aa"  CommonName="Manaan Sith Base" Tags="Locked,FLU" Unlock="manm26ae" />
+    <LeadsTo WarpCode="manm27aa"  CommonName="Manaan Sith Base" Tags="Locked,FLU,UL_Hangar" Unlock="manm26ae" />
   </Module>
   <Module WarpCode="manm26ae" CommonName="East Central">
     <LeadsTo WarpCode="manm26ac" CommonName="West Central" />
     <LeadsTo WarpCode="manm26ab" CommonName="Ahto East" />
-    <LeadsTo WarpCode="manm28aa" CommonName="Hrakert Station" Tags="Locked,Clip" Unlock="manm27aa" />
+    <LeadsTo WarpCode="manm28aa" CommonName="Hrakert Station" Tags="Locked,Clip,UL_Embassy" Unlock="manm27aa" />
     <LeadsTo WarpCode="manm26aa" CommonName="Ahto West" Tags="Once,Locked" Unlock="manm28ad" />
   </Module>
   <Module WarpCode="manm26mg" CommonName="Manaan Swoops">
@@ -277,10 +277,10 @@
     <LeadsTo WarpCode="tar_m02ab" CommonName="Upper City North" />
     <LeadsTo WarpCode="tar_m03ab" CommonName="Lower City Apt West" />
     <LeadsTo WarpCode="tar_m03ad" CommonName="Lower City Apt East" />
-    <LeadsTo WarpCode="tar_m10aa" CommonName="Vulkar Base" Tags="Locked,FLU" Unlock="tar_m10aa" />
+    <LeadsTo WarpCode="tar_m10aa" CommonName="Vulkar Base" Tags="Locked,FLU,UL_Vulkar" Unlock="tar_m10aa" />
     <LeadsTo WarpCode="tar_m11aa" CommonName="Bek Base" />
     <LeadsTo WarpCode="tar_m03ae" CommonName="Javyar's Cantina" />
-    <LeadsTo WarpCode="tar_m04aa" CommonName="Undercity" Tags="Locked,FLU" Unlock="tar_m11aa" />
+    <LeadsTo WarpCode="tar_m04aa" CommonName="Undercity" Tags="Locked,FLU,UL_Undercity" Unlock="tar_m11aa" />
   </Module>
   <Module WarpCode="tar_m03ab" CommonName="Lower City Apt West">
     <LeadsTo WarpCode="tar_m03aa" CommonName="Lower City" />
@@ -425,7 +425,7 @@
     <LeadsTo WarpCode="unk_m41ac" CommonName="North Beach" />
   </Module>
   <Module WarpCode="unk_m44aa" CommonName="Temple Main Floor">
-    <LeadsTo WarpCode="unk_m41ad" CommonName="Temple Exterior" Tags="Locked" Unlock="unk_m44ac" />
+    <LeadsTo WarpCode="unk_m41ad" CommonName="Temple Exterior" Tags="Locked,UL_TempleExit" Unlock="unk_m44ac" />
     <LeadsTo WarpCode="unk_m44ab" CommonName="Temple Catacombs" />
     <LeadsTo WarpCode="unk_m44ac" CommonName="Temple Summit" Tags="Locked,GPW,DLZ" Unlock="unk_m44ab" />
   </Module>

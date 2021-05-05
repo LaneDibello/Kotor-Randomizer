@@ -69,10 +69,15 @@ namespace kotor_Randomizer_2
         public const string TAG_FIX_SPICE = "FixSpice";
 
         // Unlock Tags ... Edge (Tags)
-        public const string TAG_UNLOCK_DAN_RUINS   = "UL_Ruins";
-        public const string TAG_UNLOCK_MAN_SUB     = "UL_Sub";
-        public const string TAG_UNLOCK_STA_BASTILA = "UL_Deck3";
-        public const string TAG_UNLOCK_UNK_SUMMIT  = "UL_Summit";
+        public const string TAG_UNLOCK_DAN_RUINS       = "UL_Ruins";
+        public const string TAG_UNLOCK_KOR_ACADEMY     = "UL_Academy";
+        public const string TAG_UNLOCK_MAN_EMBASSY     = "UL_Embassy";
+        public const string TAG_UNLOCK_MAN_HANGAR      = "UL_Hangar";
+        public const string TAG_UNLOCK_STA_BASTILA     = "UL_Deck3";
+        public const string TAG_UNLOCK_TAR_VULKAR      = "UL_Vulkar";
+        public const string TAG_UNLOCK_TAR_UNDERCITY   = "UL_Undercity";
+        public const string TAG_UNLOCK_UNK_SUMMIT      = "UL_Summit";
+        public const string TAG_UNLOCK_UNK_TEMPLE_EXIT = "UL_TempleExit";
     }
 
     /// <summary>
@@ -123,13 +128,23 @@ namespace kotor_Randomizer_2
         public bool EnabledFixSpice { get; set; } = false;
 
         /// <summary> UnlockDanRuins is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledUnlockDanRuins   { get; set; } = false;
-        /// <summary> UnlockManSub is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledUnlockManSub     { get; set; } = false;
+        public bool EnabledUnlockDanRuins      { get; set; } = false;
+        /// <summary> UnlockKorValley is enabled for this randomization. </summary>
+        public bool EnabledUnlockKorAcademy    { get; set; } = false;
+        /// <summary> UnlockManEmbassy is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
+        public bool EnabledUnlockManEmbassy    { get; set; } = false;
+        /// <summary> UnlockManHangar is enabled for this randomization. </summary>
+        public bool EnabledUnlockManHangar     { get; set; } = false;
         /// <summary> UnlockStaBastila is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledUnlockStaBastila { get; set; } = false;
+        public bool EnabledUnlockStaBastila    { get; set; } = false;
+        /// <summary> UnlockTarUndercity is enabled for this randomization. </summary>
+        public bool EnabledUnlockTarUndercity  { get; set; } = false;
+        /// <summary> UnlockTarVulkar is enabled for this randomization. </summary>
+        public bool EnabledUnlockTarVulkar     { get; set; } = false;
         /// <summary> UnlockUnkSummit is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledUnlockUnkSummit  { get; set; } = false;
+        public bool EnabledUnlockUnkSummit     { get; set; } = false;
+        /// <summary> UnlockeUnkTempleExit is enabled for this randomization. </summary>
+        public bool EnabledUnlockUnkTempleExit { get; set; } = false;
         #endregion
 
         /// <summary>
@@ -163,9 +178,14 @@ namespace kotor_Randomizer_2
             EnabledFixMap = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
             EnabledFixSpice = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
             EnabledUnlockDanRuins = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
-            EnabledUnlockManSub = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManSub);
+            EnabledUnlockKorAcademy = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley);
+            EnabledUnlockManEmbassy = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy);
+            EnabledUnlockManHangar = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar);
             EnabledUnlockStaBastila = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
+            EnabledUnlockTarUndercity = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity);
+            EnabledUnlockTarVulkar = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar);
             EnabledUnlockUnkSummit = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
+            EnabledUnlockUnkTempleExit = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit);
             EnforceEdgeTagLocked = true;
             IgnoreOnceEdges = Properties.Settings.Default.IgnoreOnceEdges;
             GoalIsMalak = Properties.Settings.Default.GoalIsMalak;
@@ -389,14 +409,19 @@ namespace kotor_Randomizer_2
             bool isOnce = false;
             if (edge.IsOnce)
             {
-                if ((EnabledFixBox           && edge.IsFixBox          ) ||
-                    (EnabledFixElev          && edge.IsFixElev         ) ||
-                    (EnabledFixMap           && edge.IsFixMap          ) ||
-                    (EnabledFixSpice         && edge.IsFixSpice        ) ||
-                    (EnabledUnlockDanRuins   && edge.IsUnlockDanRuins  ) ||
-                    (EnabledUnlockManSub     && edge.IsUnlockManSub    ) ||
-                    (EnabledUnlockStaBastila && edge.IsUnlockStaBastila) ||
-                    (EnabledUnlockUnkSummit  && edge.IsUnlockUnkSummit ))
+                if ((EnabledFixBox              && edge.IsFixBox             ) ||
+                    (EnabledFixElev             && edge.IsFixElev            ) ||
+                    (EnabledFixMap              && edge.IsFixMap             ) ||
+                    (EnabledFixSpice            && edge.IsFixSpice           ) ||
+                    (EnabledUnlockDanRuins      && edge.IsUnlockDanRuins     ) ||
+                    (EnabledUnlockKorAcademy    && edge.IsUnlockKorAcademy   ) ||
+                    (EnabledUnlockManEmbassy    && edge.IsUnlockManEmbassy   ) ||
+                    (EnabledUnlockManHangar     && edge.IsUnlockManHangar    ) ||
+                    (EnabledUnlockStaBastila    && edge.IsUnlockStaBastila   ) ||
+                    (EnabledUnlockTarUndercity  && edge.IsUnlockTarUndercity ) ||
+                    (EnabledUnlockTarVulkar     && edge.IsUnlockTarVulkar    ) ||
+                    (EnabledUnlockUnkSummit     && edge.IsUnlockUnkSummit    ) ||
+                    (EnabledUnlockUnkTempleExit && edge.IsUnlockUnkTempleExit))
                 {
                     isOnce = false;
                 }
@@ -424,18 +449,23 @@ namespace kotor_Randomizer_2
             if (edge.IsLocked)
             {
                 // Check to see if we can bypass this lock with an allowed glitch or enabled fix.
-                if ((AllowGlitchClip         && edge.IsClip            ) ||
-                    (AllowGlitchDlz          && edge.IsDlz             ) ||
-                    (AllowGlitchFlu          && edge.IsFlu             ) || // How to handle FluReq? One FLU still requires Carth...
-                    (AllowGlitchGpw          && edge.IsGpw             ) ||
-                    (EnabledFixBox           && edge.IsFixBox          ) ||
-                    (EnabledFixElev          && edge.IsFixElev         ) ||
-                    (EnabledFixMap           && edge.IsFixMap          ) ||
-                    (EnabledFixSpice         && edge.IsFixSpice        ) ||
-                    (EnabledUnlockDanRuins   && edge.IsUnlockDanRuins  ) ||
-                    (EnabledUnlockManSub     && edge.IsUnlockManSub    ) ||
-                    (EnabledUnlockStaBastila && edge.IsUnlockStaBastila) ||
-                    (EnabledUnlockUnkSummit  && edge.IsUnlockUnkSummit ))
+                if ((AllowGlitchClip            && edge.IsClip               ) ||
+                    (AllowGlitchDlz             && edge.IsDlz                ) ||
+                    (AllowGlitchFlu             && edge.IsFlu                ) || // How to handle FluReq? One FLU still requires Carth...
+                    (AllowGlitchGpw             && edge.IsGpw                ) ||
+                    (EnabledFixBox              && edge.IsFixBox             ) ||
+                    (EnabledFixElev             && edge.IsFixElev            ) ||
+                    (EnabledFixMap              && edge.IsFixMap             ) ||
+                    (EnabledFixSpice            && edge.IsFixSpice           ) ||
+                    (EnabledUnlockDanRuins      && edge.IsUnlockDanRuins     ) ||
+                    (EnabledUnlockKorAcademy    && edge.IsUnlockKorAcademy   ) ||
+                    (EnabledUnlockManEmbassy    && edge.IsUnlockManEmbassy   ) ||
+                    (EnabledUnlockManHangar     && edge.IsUnlockManHangar    ) ||
+                    (EnabledUnlockStaBastila    && edge.IsUnlockStaBastila   ) ||
+                    (EnabledUnlockTarUndercity  && edge.IsUnlockTarUndercity ) ||
+                    (EnabledUnlockTarVulkar     && edge.IsUnlockTarVulkar    ) ||
+                    (EnabledUnlockUnkSummit     && edge.IsUnlockUnkSummit    ) ||
+                    (EnabledUnlockUnkTempleExit && edge.IsUnlockUnkTempleExit))
                 {
                     isLocked = false;
                 }
@@ -704,10 +734,15 @@ namespace kotor_Randomizer_2
         public bool IsFixMap   { get; } = false;
         public bool IsFixSpice { get; } = false;
 
-        public bool IsUnlockDanRuins   { get; } = false;
-        public bool IsUnlockManSub     { get; } = false;
-        public bool IsUnlockStaBastila { get; } = false;
-        public bool IsUnlockUnkSummit  { get; } = false;
+        public bool IsUnlockDanRuins      { get; } = false;
+        public bool IsUnlockKorAcademy    { get; } = false;
+        public bool IsUnlockManEmbassy    { get; } = false;
+        public bool IsUnlockManHangar     { get; } = false;
+        public bool IsUnlockStaBastila    { get; } = false;
+        public bool IsUnlockTarVulkar     { get; } = false;
+        public bool IsUnlockTarUndercity  { get; } = false;
+        public bool IsUnlockUnkSummit     { get; } = false;
+        public bool IsUnlockUnkTempleExit { get; } = false;
 
         public List<string> Tags { get; } = new List<string>();
 
@@ -774,10 +809,15 @@ namespace kotor_Randomizer_2
             IsFixMap   = Tags.Contains(XmlConsts.TAG_FIX_MAP);
             IsFixSpice = Tags.Contains(XmlConsts.TAG_FIX_SPICE);
 
-            IsUnlockDanRuins   = Tags.Contains(XmlConsts.TAG_UNLOCK_DAN_RUINS);
-            IsUnlockManSub     = Tags.Contains(XmlConsts.TAG_UNLOCK_MAN_SUB);
-            IsUnlockStaBastila = Tags.Contains(XmlConsts.TAG_UNLOCK_STA_BASTILA);
-            IsUnlockUnkSummit  = Tags.Contains(XmlConsts.TAG_UNLOCK_UNK_SUMMIT);
+            IsUnlockDanRuins      = Tags.Contains(XmlConsts.TAG_UNLOCK_DAN_RUINS);
+            IsUnlockKorAcademy    = Tags.Contains(XmlConsts.TAG_UNLOCK_KOR_ACADEMY);
+            IsUnlockManEmbassy    = Tags.Contains(XmlConsts.TAG_UNLOCK_MAN_EMBASSY);
+            IsUnlockManHangar     = Tags.Contains(XmlConsts.TAG_UNLOCK_MAN_HANGAR);
+            IsUnlockStaBastila    = Tags.Contains(XmlConsts.TAG_UNLOCK_STA_BASTILA);
+            IsUnlockTarVulkar     = Tags.Contains(XmlConsts.TAG_UNLOCK_TAR_VULKAR);
+            IsUnlockTarUndercity  = Tags.Contains(XmlConsts.TAG_UNLOCK_TAR_UNDERCITY);
+            IsUnlockUnkSummit     = Tags.Contains(XmlConsts.TAG_UNLOCK_UNK_SUMMIT);
+            IsUnlockUnkTempleExit = Tags.Contains(XmlConsts.TAG_UNLOCK_UNK_TEMPLE_EXIT);
         }
 
         public override string ToString()

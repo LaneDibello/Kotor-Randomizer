@@ -1,4 +1,4 @@
-# Kotor-Randomizer-2
+# Kotor Randomizer
 
 [![GitHub release](https://img.shields.io/github/v/release/LaneDibello/Kotor-Randomizer.svg)](https://github.com/LaneDibello/Kotor-Randomizer/releases/latest)
 [![GitHub issues](https://img.shields.io/github/issues/LaneDibello/Kotor-Randomizer.svg)](https://github.com/LaneDibello/Kotor-Randomizer/issues)
@@ -61,4 +61,4 @@ The Kotor Randomizer was created by Lane and Glasnonck, with help from the kotor
 * Per category seeding means that two players can have different active categories but still have similar experiences when using the same seed.
 
 ## Download
-The Download for the latest stable release can be found in the resource section of the [Kotor Speedrunning SRC page](https://www.speedrun.com/kotor1/resources), under “Kotor Randomizer 2”. It can also be downloaded from the release page on [GitHub](https://github.com/LaneDibello/Kotor-Randomizer/releases/latest).
+The Download for the latest stable release can be found in the resource section of the [Kotor Speedrunning SRC page](https://www.speedrun.com/kotor1/resources), under “Kotor Randomizer”. It can also be downloaded from the release page on [GitHub](https://github.com/LaneDibello/Kotor-Randomizer/releases/latest).

@@ -15,24 +15,40 @@ namespace kotor_Randomizer_2
         private const string AREA_DAN_COURTYARD = "danm14aa";
         private const string AREA_EBO_BOX = "ebo_m46ab";
         private const string AREA_EBO_HAWK = "ebo_m12aa";
+        private const string AREA_KOR_ENTRANCE = "korr_m33ab";
+        private const string AREA_KOR_VALLEY = "korr_m36aa";
         private const string AREA_LEV_COMMAND = "lev_m40ab";
         private const string AREA_LEV_HANGAR = "lev_m40ac";
         private const string AREA_LEV_PRISON = "lev_m40aa";
+        private const string AREA_MAN_DOCKING_BAY = "manm26ad";
         private const string AREA_MAN_EAST_CENTRAL = "manm26ae";
         private const string AREA_STA_DECK3 = "sta_m45ac";
+        private const string AREA_TAR_LOWER_CITY = "tar_m03aa";
         private const string AREA_TAR_VULK_BASE = "tar_m10aa";
+        private const string AREA_UNK_MAIN_FLOOR = "unk_m44aa";
         private const string AREA_UNK_SUMMIT = "unk_m44ac";
         private const string FIXED_DREAM_OVERRIDE = "k_ren_visionland.ncs";
         private const string LABEL_DANT_DOOR = "man14aa_door04";
         private const string LABEL_EBO_BOX = "pebn_mystery";
         private const string LABEL_EBO_PRISON = "g_brakatan003";
+        private const string LABEL_KOR_ENTRANCE_ACADEMY = "k33b_dor_academy";
+        private const string LABEL_KOR_VALLEY_AJUNTA = "kor36_kor37";
+        private const string LABEL_KOR_VALLEY_MARKA = "kor36_kor38a";
+        private const string LABEL_KOR_VALLEY_NAGA = "kor36_kor39";
+        private const string LABEL_KOR_VALLEY_TULAK = "kor36_kor38b";
+        private const string LABEL_KOR_VALLEY_ACADEMY = "kor36_kor35";
         private const string LABEL_LEV_ELEVATOR_A = "plev_elev_dlg";
         private const string LABEL_LEV_ELEVATOR_B = "plev_elev_dlg";
         private const string LABEL_LEV_ELEVATOR_C = "lev40_accntl_dlg";
-        private const string LABEL_MAN_SUB_DOOR = "man26ac_door05";
+        private const string LABEL_MAN_SITH_HANGAR = "man26ad_door02";
+        private const string LABEL_MAN_SUB_DOOR03 = "man26ac_door03";   // Door into the Republic Embassy.
+        private const string LABEL_MAN_SUB_DOOR05 = "man26ac_door05";   // Door to the submersible.
         private const string LABEL_STA_BAST_DOOR = "k45_door_bast1";
+        private const string LABEL_TAR_UNDERCITY = "tar03_underdoor";
+        private const string LABEL_TAR_VULKAR = "tar03_blkdoor";
         private const string LABEL_TAR_VULK_GIT = "m10aa";
         private const string LABEL_UNK_DOOR = "unk44_tpllckdoor";
+        private const string LABEL_UNK_EXIT_DOOR = "unk44_exitdoor";
 
         private const int MAX_ITERATIONS = 10000;   // A large number to give enough chances to find a valid shuffle.
 
@@ -166,7 +182,7 @@ namespace kotor_Randomizer_2
                 new Tuple<string, string>("Unlock DAN Ruins Door", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins).ToString()),
                 new Tuple<string, string>("Unlock EBO Galaxy Map", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap).ToString()),
                 new Tuple<string, string>("Unlock LEV Elevators", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev).ToString()),
-                new Tuple<string, string>("Unlock MAN Door to Sub", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManSub).ToString()),
+                new Tuple<string, string>("Unlock MAN Embassy", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy).ToString()),
                 new Tuple<string, string>("Unlock STA Door to Bastila", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila).ToString()),
                 new Tuple<string, string>("Unlock UNK Summit Exit", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit).ToString()),
                 new Tuple<string, string>("", ""),  // Skip a row.
@@ -709,7 +725,7 @@ namespace kotor_Randomizer_2
                 if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
 
                 RIM r = new RIM(fi.FullName);   // Open what replaced this area.
-                RIM.rFile rf = r.File_Table.FirstOrDefault(x => x.Label == label);
+                RIM.rFile rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.UTD && x.Label == label);
                 GFF g = new GFF(rf.File_Data);  // Grab the door out of the file.
 
                 // Set fields related to opening and unlocking.
@@ -744,6 +760,17 @@ namespace kotor_Randomizer_2
                 UnlockDoorInFile(paths, AREA_DAN_COURTYARD, LABEL_DANT_DOOR);
             }
 
+            // Korriban After the Tomb Encounter
+            if (extrasValue.HasFlag(ModuleExtras.UnlockKorValley))
+            {
+                UnlockDoorInFile(paths, AREA_KOR_ENTRANCE, LABEL_KOR_ENTRANCE_ACADEMY);
+                UnlockDoorInFile(paths, AREA_KOR_VALLEY, LABEL_KOR_VALLEY_ACADEMY);
+                UnlockDoorInFile(paths, AREA_KOR_VALLEY, LABEL_KOR_VALLEY_AJUNTA);
+                UnlockDoorInFile(paths, AREA_KOR_VALLEY, LABEL_KOR_VALLEY_MARKA);
+                UnlockDoorInFile(paths, AREA_KOR_VALLEY, LABEL_KOR_VALLEY_NAGA);
+                UnlockDoorInFile(paths, AREA_KOR_VALLEY, LABEL_KOR_VALLEY_TULAK);
+            }
+
             // Leviathan Elevators
             if (extrasValue.HasFlag(ModuleExtras.UnlockLevElev))
             {
@@ -751,9 +778,16 @@ namespace kotor_Randomizer_2
             }
 
             // Manaan Embassy Door to Submersible
-            if (extrasValue.HasFlag(ModuleExtras.UnlockManSub))
+            if (extrasValue.HasFlag(ModuleExtras.UnlockManEmbassy))
             {
-                UnlockDoorInFile(paths, AREA_MAN_EAST_CENTRAL, LABEL_MAN_SUB_DOOR);
+                UnlockDoorInFile(paths, AREA_MAN_EAST_CENTRAL, LABEL_MAN_SUB_DOOR03);   // Unlock door into Republic Embassy.
+                UnlockDoorInFile(paths, AREA_MAN_EAST_CENTRAL, LABEL_MAN_SUB_DOOR05);   // Unlock door to submersible.
+            }
+
+            // Manaan Sith Hangar Door
+            if (extrasValue.HasFlag(ModuleExtras.UnlockManHangar))
+            {
+                UnlockDoorInFile(paths, AREA_MAN_DOCKING_BAY, LABEL_MAN_SITH_HANGAR);   // Unlock door into Republic Embassy.
             }
 
             // Star Forge Door to Bastila
@@ -762,10 +796,28 @@ namespace kotor_Randomizer_2
                 UnlockDoorInFile(paths, AREA_STA_DECK3, LABEL_STA_BAST_DOOR);
             }
 
+            // Taris Lower City Door to Undercity
+            if (extrasValue.HasFlag(ModuleExtras.UnlockTarUndercity))
+            {
+                UnlockDoorInFile(paths, AREA_TAR_LOWER_CITY, LABEL_TAR_UNDERCITY);
+            }
+
+            // Taris Lower City Door to Vulkar Base
+            if (extrasValue.HasFlag(ModuleExtras.UnlockTarVulkar))
+            {
+                UnlockDoorInFile(paths, AREA_TAR_LOWER_CITY, LABEL_TAR_VULKAR);
+            }
+
             // Lehon Temple Roof
             if (extrasValue.HasFlag(ModuleExtras.UnlockUnkSummit))
             {
                 UnlockDoorInFile(paths, AREA_UNK_SUMMIT, LABEL_UNK_DOOR);
+            }
+
+            // Lehon Temple Main Floor
+            if (extrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit))
+            {
+                UnlockDoorInFile(paths, AREA_UNK_MAIN_FLOOR, LABEL_UNK_EXIT_DOOR);
             }
         }
 
