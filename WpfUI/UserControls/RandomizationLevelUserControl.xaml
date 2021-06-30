@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="Randomizer_WPF.UserControls.RandomizationLevelUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Randomizer_WPF.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="26" d:DesignWidth="250"
+             x:Name="thisView">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="{StaticResource WindowBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" MinWidth="{Binding ElementName=thisView, Path=LevelsBoxMinWidth}" />
+        </Grid.ColumnDefinitions>
+        
+        <Grid.Resources>
+            <Style TargetType="Border">
+                <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="BorderBrush" Value="{StaticResource MediumGrayBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="RadioButton">
+                <Setter Property="Padding" Value="5,0" />
+            </Style>
+        </Grid.Resources>
+        
+        <CheckBox x:Name="cbIsActive" Margin="0" Padding="5,0" VerticalAlignment="Center"
+                  Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked">
+            <TextBlock Text="{Binding CheckboxLabel}" />
+        </CheckBox>
+        <Border Grid.Column="1" BorderThickness="1" Padding="5">
+            <StackPanel Grid.Column="1" Orientation="Horizontal"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        IsEnabled="{Binding ElementName=cbIsActive, Path=IsChecked}">
+                <RadioButton x:Name="rbSubtype"
+                             Visibility="{Binding SubtypeVisible}"
+                             Checked="RbSubtype_Checked">
+                    <TextBlock Text="{Binding SubtypeLabel}" />
+                </RadioButton>
+                <RadioButton x:Name="rbType" Margin="5,0"
+                             Visibility="{Binding TypeVisible}"
+                             Checked="RbType_Checked">
+                    <TextBlock Text="{Binding TypeLabel}" />
+                </RadioButton>
+                <RadioButton x:Name="rbMax"
+                             Visibility="{Binding MaxVisible}"
+                             Checked="RbMax_Checked">
+                    <TextBlock Text="{Binding MaxLabel}" />
+                </RadioButton>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

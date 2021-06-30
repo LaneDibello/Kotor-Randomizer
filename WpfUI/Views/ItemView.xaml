@@ -1,0 +1,248 @@
+﻿<UserControl x:Class="Randomizer_WPF.Views.ItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Randomizer_WPF.Views"
+             xmlns:model="clr-namespace:kotor_Randomizer_2.Models;assembly=KotorRandomizer"
+             xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
+             mc:Ignorable="d" 
+             FontFamily="Microsoft Sans Serif" FontSize="12"
+             x:Name="thisView"
+             d:DesignHeight="540" d:DesignWidth="600"
+             d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
+             DataContextChanged="View_DataContextChanged"
+             Loaded="View_Loaded"
+             >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <DockPanel Background="{StaticResource WindowBrush}">
+        <!-- Dock.Top (1), Description -->
+        <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2"
+                BorderBrush="{StaticResource HarshBlueBrush}">
+            <StackPanel>
+                    <TextBlock Style="{StaticResource tbTitle}" Text="Item Randomization" />
+                    <TextBlock Style="{StaticResource tbDescription}">
+                        Randomize most of the items the player can find or buy.
+                    </TextBlock>
+            </StackPanel>
+        </Border>
+
+        <!-- Dock.Top (2), Toggle Buttons -->
+        <Grid DockPanel.Dock="Top" Margin="5">
+            <Grid.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource K1RandoButtonStyle}">
+                    <Setter Property="Margin" Value="5,0" />
+                    <Setter Property="Padding" Value="8,1" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="14" />
+            </Grid.ColumnDefinitions>
+            <Button Margin="10,0" MaxWidth="140" Content="Toggle All" Click="BtnToggleAll_Click" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Subtype" Click="BtnSubtype_Click" />
+                <Button Content="Type" Click="BtnType_Click" />
+                <Button Content="Max" Click="BtnMax_Click" />
+            </StackPanel>
+        </Grid>
+
+        <!--Content-->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" MaxHeight="500" />
+                <RowDefinition Height="6" />
+                <RowDefinition Height="{Binding ElementName=thisView, Path=ExpanderHeight, Mode=TwoWay}" MinHeight="20" />
+            </Grid.RowDefinitions>
+            
+            <!-- Dock.Center, Item Settings -->
+            <ScrollViewer Padding="5,0" VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel.Resources>
+                        <Style TargetType="uc:RandomizationLevelUserControl">
+                            <Setter Property="Margin" Value="0,1" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <uc:RandomizationLevelUserControl x:Name="rlucArmbands" CheckboxLabel="Armbands"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelArmbands, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucArmor" CheckboxLabel="Armor"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelArmor, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucBelts" CheckboxLabel="Belts" SubtypeVisible="Hidden"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelBelts, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucBlaster" CheckboxLabel="Blasters"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelBlasters, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucCreatureHides" CheckboxLabel="Creature Hides" SubtypeVisible="Hidden"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelCreatureHides, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucCreatureWeapons" CheckboxLabel="Creature Weapons"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelCreatureWeapons, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucDroidEquipment" CheckboxLabel="Droid Equipment"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelDroidEquipment, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucGauntlets" CheckboxLabel="Gauntlets" SubtypeVisible="Hidden"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelGauntlets, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucGrenades" CheckboxLabel="Grenades" SubtypeVisible="Hidden"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelGrenades, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucImplants" CheckboxLabel="Implants"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelImplants, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucLightsabers" CheckboxLabel="Lightsabers"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelLightsabers, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucMasks" CheckboxLabel="Masks"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelMasks, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucMelee" CheckboxLabel="Melee Weapons"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelMelee, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucMines" CheckboxLabel="Mines"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelMines, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucPazaak" CheckboxLabel="Pazaak Cards" SubtypeVisible="Hidden"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelPazaak, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucMedical" CheckboxLabel="Stims/Medpacs"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelMedical, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucUpgrades" CheckboxLabel="Upgrades/Crystals"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelUpgrades, Mode=TwoWay}" />
+                    <uc:RandomizationLevelUserControl x:Name="rlucVarious" CheckboxLabel="Various" SubtypeVisible="Hidden"
+                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelVarious, Mode=TwoWay}" />
+                </StackPanel>
+            </ScrollViewer>
+
+            <GridSplitter Grid.Row="1" Margin="0,2" Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                          x:Name="gsOmittedResize" Background="{StaticResource HarshBlueBrush}" />
+
+            <!--Omitted Items-->
+            <Grid Grid.Row="2" Margin="3">
+                <Grid.Resources>
+                    <Style x:Key="RandomizedItemStyle" TargetType="{x:Type ListViewItem}">
+                        <EventSetter Event="MouseDoubleClick" Handler="LvRandomized_DoubleClick" />
+                    </Style>
+                    <Style x:Key="OmittedItemStyle" TargetType="{x:Type ListViewItem}">
+                        <EventSetter Event="MouseDoubleClick" Handler="LvOmitted_DoubleClick" />
+                    </Style>
+                    <Style TargetType="ScrollBar">
+                        <Style.Triggers>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter Property="Height"    Value="10" />
+                                <Setter Property="MinHeight" Value="10" />
+                            </Trigger>
+                            <Trigger Property="Orientation" Value="Vertical">
+                                <Setter Property="Width"    Value="10" />
+                                <Setter Property="MinWidth" Value="10" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />    <!--Rando List-->
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" /> <!--Control Buttons-->
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />    <!--Omit List-->
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" /> <!--Section Header-->
+                    <RowDefinition Height="auto" /> <!--Preset Selection-->
+                    <RowDefinition Height="auto" /> <!--Titles-->
+                    <RowDefinition Height="*" />    <!--Lists-->
+                    <RowDefinition Height="auto" /> <!--Filter-->
+                </Grid.RowDefinitions>
+
+                <!--Section Header-->
+                <TextBlock Style="{StaticResource tbHeader3}" Text="Omitted Items"
+                           Grid.ColumnSpan="5" Margin="0,0,0,5"
+                           HorizontalAlignment="Center"
+                           />
+
+                <!--Presets-->
+                <Label Grid.Row="1" Margin="0,0,5,0"
+                       HorizontalContentAlignment="Right"
+                       Foreground="{StaticResource HarshBlueBrush}"
+                       Content="Preset:" />
+                <ComboBox x:Name="cbbOmitPreset" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" MaxWidth="236"
+                          SelectedItem="{Binding ItemOmittedPreset, Mode=TwoWay}"
+                          SelectionChanged="CbbOmitPreset_SelectionChanged" />
+
+                <!--Titles-->
+                <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                       Foreground="{StaticResource HarshBlueBrush}"
+                       Content="Randomized" HorizontalContentAlignment="Center" />
+                <Label Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2"
+                       Foreground="{StaticResource HarshBlueBrush}"
+                       Content="Omitted" HorizontalContentAlignment="Center" />
+
+                <!--Rando List-->
+                <ListView Grid.Row="3" Grid.ColumnSpan="2" x:Name="lvRandomized"
+                          ItemContainerStyle="{StaticResource RandomizedItemStyle}"
+                          ItemsSource="{Binding ItemRandomizedList}" FontSize="11">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="110" DisplayMemberBinding="{Binding Code}">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="Code" Click="LvRandomized_ColumnHeader_Click" Content="Code" />
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn Width="140" DisplayMemberBinding="{Binding Label}">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="Label" Click="LvRandomized_ColumnHeader_Click" Content="Label" />
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <!--Control Buttons-->
+                <WrapPanel Grid.Row="3" Grid.Column="2"
+                           Margin="5,0,0,0" Orientation="Vertical"
+                           VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <WrapPanel.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource K1RandoButtonStyle}">
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="FontFamily" Value="Consolas" />
+                            <Setter Property="FontSize" Value="12" />
+                            <Setter Property="Margin" Value="0,2,5,2" />
+                            <Setter Property="Padding" Value="3,3" />
+                            <Setter Property="Width" Value="24" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                    </WrapPanel.Resources>
+                    <Button Content="&lt;&lt;" ToolTip="Randomize All" Click="BtnRandomizeAll_Click" />
+                    <Button Content="&lt;" ToolTip="Randomize Selected" Click="BtnRandomizeSelected_Click" />
+                    <Button Content="&gt;" ToolTip="Omit Selected" Click="BtnOmitSelected_Click" />
+                    <Button Content="&gt;&gt;" ToolTip="Omit All" Click="BtnOmitAll_Click" />
+                </WrapPanel>
+
+                <!--Omit List-->
+                <ListView Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" x:Name="lvOmitted"
+                          ItemContainerStyle="{StaticResource OmittedItemStyle}"
+                          ItemsSource="{Binding ItemOmittedList}" FontSize="11">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="110" DisplayMemberBinding="{Binding Code}">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="Code" Click="LvOmitted_ColumnHeader_Click" Content="Code" />
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                            <GridViewColumn Width="140" DisplayMemberBinding="{Binding Label}">
+                                <GridViewColumn.Header>
+                                    <GridViewColumnHeader Tag="Label" Click="LvOmitted_ColumnHeader_Click" Content="Label" />
+                                </GridViewColumn.Header>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <!--Filter-->
+                <DockPanel Grid.Row="4" Grid.ColumnSpan="5" Margin="0,5,0,0">
+                    <TextBlock DockPanel.Dock="Left" Text="Filter: "
+                               Style="{StaticResource tbHeader4}"
+                               Margin="10,0,5,0"
+                               VerticalAlignment="Center" />
+                    <TextBox x:Name="txtFilter" TextChanged="TxtFilter_TextChanged" />
+                </DockPanel>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</UserControl>

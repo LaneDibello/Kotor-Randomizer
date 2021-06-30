@@ -1,0 +1,255 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:model="clr-namespace:kotor_Randomizer_2.Models;assembly=KotorRandomizer"
+        xmlns:local="clr-namespace:Randomizer_WPF"
+        xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
+        xmlns:v="clr-namespace:Randomizer_WPF.Views"
+        x:Class="Randomizer_WPF.MainWindow"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle, RelativeSource={RelativeSource Self}}"
+        Height="600" Width="800"
+        MinHeight="375" MinWidth="575"
+        FontFamily="Microsoft Sans Serif" FontSize="12"
+        Name="window"
+        d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
+        Closed="Window_Closed"
+        Icon="/Resources/Krandom.ico"
+        >
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/StyleResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.Background>
+        <SolidColorBrush Color="{DynamicResource WindowColor}" />
+    </Window.Background>
+
+    <DockPanel>
+        <!-- Dock.Top, Menu -->
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <!--<Style TargetType="Menu">
+                    <Setter Property="Background" Value="{StaticResource WindowBrush}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                </Style>
+                <Style TargetType="MenuItem">
+                    <Setter Property="Background" Value="{StaticResource WindowBrush}" />
+                    <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                </Style>
+                <Style TargetType="Separator">
+                    <Setter Property="Background" Value="{StaticResource WindowBrush}" />
+                    <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                </Style>-->
+            </Grid.Resources>
+
+            <Menu Name="Menu" Grid.ColumnSpan="2">
+                <Menu.Resources>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="FontFamily" Value="Microsoft Sans Serif" />
+                        <Setter Property="FontSize" Value="12" />
+                    </Style>
+                </Menu.Resources>
+                <MenuItem Header="_File">
+                    <MenuItem Command="New"  Header="_New (Default Settings)" MinWidth="150" />
+                    <MenuItem Command="Open" Header="_Open Settings File" />
+                    <MenuItem Command="Save" Header="_Save Current Settings" />
+                    <MenuItem Header="Save Test" Click="SaveTest_Click" />
+                    <!--<Separator />
+                    <MenuItem Header="Shuffle Current Settings" />-->
+                    <Separator />
+                    <MenuItem Command="Close" Header="_Exit" />
+                </MenuItem>
+                <MenuItem Header="_Spoilers">
+                    <MenuItem Header="Auto-Create Spoilers" Name="miCreateSpoilers" IsCheckable="True" MinWidth="150"
+                              IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}" />
+                    <MenuItem Header="Open Spoilers Folder"
+                              Click="MiOpenSpoilerFolder_Click" />
+                </MenuItem>
+                <MenuItem Header="_Links">
+                    <MenuItem Click="MiHyperlink_Click" Header="Discord Invite" Tag="http://discord.gg/Q2uPRVu" MinWidth="150" />
+                    <MenuItem Header="Leaderboards">
+                        <MenuItem Click="MiHyperlink_Click" Header="KotOR 1" Tag="https://www.speedrun.com/kotor1" />
+                        <MenuItem Click="MiHyperlink_Click" Header="KotOR 2" Tag="https://www.speedrun.com/kotor2" />
+                    </MenuItem>
+                    <MenuItem Header="StrategyWiki">
+                        <MenuItem Click="MiHyperlink_Click" Header="KotOR 1" Tag="https://strategywiki.org/wiki/Star_Wars:_Knights_of_the_Old_Republic" />
+                        <MenuItem Click="MiHyperlink_Click" Header="Cheats" Tag="https://strategywiki.org/wiki/Star_Wars:_Knights_of_the_Old_Republic/Cheats#Windows" />
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+        </Grid>
+        
+        <!-- Dock.Bottom, StatusBar -->
+        <StatusBar DockPanel.Dock="Bottom"
+                   Background="Transparent" Foreground="{DynamicResource HarshBlueBrush}"
+                   BorderBrush="{DynamicResource HarshBlueBrush}" BorderThickness="0,1,0,0">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBar.Resources>
+                <Style TargetType="StatusBarItem">
+                    <Setter Property="FontFamily" Value="Microsoft Sans Serif" />
+                    <Setter Property="FontSize" Value="12" />
+                </Style>
+            </StatusBar.Resources>
+            
+            <!-- Column 0 -->
+            <StatusBarItem>
+                <TextBlock Name="lblCurrentStatus" Text="{Binding ElementName=RandomizeView, Path=CurrentState}" />
+            </StatusBarItem>
+            
+            <!-- Column 1 -->
+            <Separator Grid.Column="1" Background="{DynamicResource HarshBlueBrush}" />
+            
+            <!-- Column 4 -->
+            <StatusBarItem Grid.Column="2" HorizontalAlignment="Center">
+                <ProgressBar Name="pbCurrentProgress" Width="90" Height="16"
+                             Background="Transparent" Foreground="{DynamicResource HarshYellowBrush}"
+                             BorderBrush="{DynamicResource HarshBlueBrush}" />
+            </StatusBarItem>
+        </StatusBar>
+        
+        <!-- Dock.Center, Setting Views -->
+        <Grid Margin="5">
+            <TabControl TabStripPlacement="Left"><!--IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">-->
+                <!-- General Settings -->
+                <TabItem Header="_General" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                    <!-- DataContext inherited from the window.
+                         Locked and Unlocked door lists bound from data context. -->
+                    <v:GeneralView x:Name="GeneralView"
+                                   Kotor1Path="{Binding ElementName=window, Path=Kotor1Path, Mode=TwoWay}"
+                                   Kotor2Path="{Binding ElementName=window, Path=Kotor2Path, Mode=TwoWay}"
+                                   SpoilerPath="{Binding ElementName=window, Path=SpoilerPath, Mode=TwoWay}"
+                                   QolExtras="{Binding GeneralModuleExtrasValue, Mode=TwoWay}"
+                                   />
+                    <!-- Need to add hooks for module extras. -->
+                </TabItem>
+
+                <!-- Hidden tab items for space -->
+                <TabItem Visibility="Hidden" />
+                <TabItem Visibility="Hidden" />
+
+                <!-- Module Rando Settings -->
+                <TabItem Header="_Modules" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                    <!-- DataContext inherited from the window. Everything is bound using this DataContext:
+                         Shuffle Preset, Omitted Modules, Shuffle Logic, Goals, and Glitches. -->
+                    <v:ModuleView x:Name="ModuleView" />
+                    <!-- Need to add SelectedGoals -->
+                </TabItem>
+
+                <!-- Item Rando Settings -->
+                <TabItem Header="_Items" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                    <!-- DataContext inherited from the window.
+                         Randomized and Omitted item lists bound from data context. -->
+                    <v:ItemView x:Name="ItemView"
+                                ItemLevelArmbands="{Binding ItemArmbands, Mode=TwoWay}"
+                                ItemLevelArmor="{Binding ItemArmor, Mode=TwoWay}"
+                                ItemLevelBelts="{Binding ItemBelts, Mode=TwoWay}"
+                                ItemLevelBlasters="{Binding ItemBlasters, Mode=TwoWay}"
+                                ItemLevelCreatureHides="{Binding ItemCreatureHides, Mode=TwoWay}"
+                                ItemLevelCreatureWeapons="{Binding ItemCreatureWeapons, Mode=TwoWay}"
+                                ItemLevelDroidEquipment="{Binding ItemDroidEquipment, Mode=TwoWay}"
+                                ItemLevelGauntlets="{Binding ItemGauntlets, Mode=TwoWay}"
+                                ItemLevelGrenades="{Binding ItemGrenades, Mode=TwoWay}"
+                                ItemLevelImplants="{Binding ItemImplants, Mode=TwoWay}"
+                                ItemLevelLightsabers="{Binding ItemLightsabers, Mode=TwoWay}"
+                                ItemLevelMasks="{Binding ItemMasks, Mode=TwoWay}"
+                                ItemLevelMedical="{Binding ItemMedical, Mode=TwoWay}"
+                                ItemLevelMelee="{Binding ItemMelee, Mode=TwoWay}"
+                                ItemLevelMines="{Binding ItemMines, Mode=TwoWay}"
+                                ItemLevelPazaak="{Binding ItemPazaak, Mode=TwoWay}"
+                                ItemLevelUpgrades="{Binding ItemUpgrades, Mode=TwoWay}"
+                                ItemLevelVarious="{Binding ItemVarious, Mode=TwoWay}"
+                                />
+                </TabItem>
+
+                <!-- Audio Rando Settings -->
+                <TabItem Header="_Audio" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                    <v:AudioView x:Name="AudioView"
+                                 AreaMusic="{Binding AudioAreaMusic, Mode=TwoWay}"
+                                 BattleMusic="{Binding AudioBattleMusic, Mode=TwoWay}"
+                                 AmbientMusic="{Binding AudioAmbientNoise, Mode=TwoWay}"
+                                 CutsceneNoise="{Binding AudioCutsceneNoise, Mode=TwoWay}"
+                                 NpcSounds="{Binding AudioNpcSounds, Mode=TwoWay}"
+                                 PartySounds="{Binding AudioPartySounds, Mode=TwoWay}"
+                                 OverwriteDmcaMusic="{Binding AudioRemoveDmcaMusic, Mode=TwoWay}"
+                                 MixKotorGameMusic="{Binding AudioMixKotorGameMusic, Mode=TwoWay}"
+                                 MixNpcAndPartySounds="{Binding AudioMixNpcAndPartySounds, Mode=TwoWay}"
+                                 />
+                </TabItem>
+
+                <!-- Cosmetic Rando Settings -->
+                <TabItem Header="_Cosmetics" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                    <v:CosmeticView x:Name="CosmeticView"
+                                    TexturePack="{Binding TextureSelectedPack, Mode=TwoWay}" />
+                </TabItem>
+
+                <!-- Party Rando Settings -->
+                <!--<TabItem Header="_Party" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="2*" />
+                        </Grid.RowDefinitions>
+
+                        <uc:LimitedInputUserControl Title="Enter title:" MaxLength="30" Height="54" />
+                        <uc:LimitedInputUserControl Title="Enter description:" MaxLength="140" Grid.Row="1" />
+                        <uc:LimitedInputUserControl Title="Enter notes:" MaxLength="250" Grid.Row="2" />
+                    </Grid>
+                </TabItem>-->
+                
+                <!-- Table Rando Settings -->
+                <TabItem Header="_Tables" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                    <v:TableView x:Name="TableView" />
+                </TabItem>
+
+                <!-- Text Rando Settings -->
+                <TabItem Header="Te_xt" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                    <v:TextView x:Name="TextView"
+                                TextSettingsValue="{Binding TextSettingsValue, Mode=TwoWay}"
+                                />
+                </TabItem>
+                
+                <!-- Other Rando Settings -->
+                <TabItem Header="_Other" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                    <v:OtherView />
+                </TabItem>
+
+                <!-- Hidden tab items for space -->
+                <TabItem Visibility="Hidden" />
+                <TabItem Visibility="Hidden" />
+
+                <!-- Randomize / Unrandomize Launching Point -->
+                <TabItem Header="_Randomize">
+                    <v:RandomizeView x:Name="RandomizeView"
+                                     CreateSpoilers="{Binding ElementName=miCreateSpoilers, Path=IsChecked, Mode=TwoWay}"
+                                     CurrentProgress="{Binding ElementName=pbCurrentProgress, Path=Value, Mode=TwoWay}"
+                                     GamePath="{Binding ElementName=window, Path=Kotor1Path, Mode=OneWay}"
+                                     />
+                    <!-- Need to add dependency properties for start of rando. -->
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </DockPanel>
+</Window>
