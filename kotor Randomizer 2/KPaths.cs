@@ -37,6 +37,8 @@ namespace kotor_Randomizer_2
 
         /// <summary> Path to the RANDOMIZED.log file within the swkotor directory. </summary>
         public readonly string RANDOMIZED_LOG;
+        /// <summary> Filename of the log file indicating that the game has been randomized. </summary>
+        public const string RANDOMIZED_LOG_FILENAME = "RANDOMIZED.log";
 
         /// <summary> Path to the backup of the chitin.key file within the swkotor directory. </summary>
         public readonly string chitin_backup;
@@ -77,7 +79,7 @@ namespace kotor_Randomizer_2
             TexturePacks = $"{swkotor_path}\\TexturePacks\\";
             dialog = $"{swkotor_path}\\dialog.tlk";
 
-            RANDOMIZED_LOG = $"{swkotor_path}\\RANDOMIZED.log";
+            RANDOMIZED_LOG = $"{swkotor_path}\\{RANDOMIZED_LOG_FILENAME}";
 
             chitin_backup = $"{swkotor_path}\\chitin.key.bak";
             data_backup = $"{swkotor_path}\\data_bak\\";

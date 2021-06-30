@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace kotor_Randomizer_2.Models
+{
+    /// <summary>
+    /// Encapsulates an unlockable door within the game.
+    /// </summary>
+    public class UnlockableDoor
+    {
+        /// <summary> Description of what is unlocked. </summary>
+        public string Label { get; set; }
+        /// <summary> Area where the "door" exists. </summary>
+        public string Area { get; set; }
+        /// <summary> Associated ModuleExtras value. </summary>
+        public ModuleExtras Tag { get; set; }
+    }
+}

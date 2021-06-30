@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>kotor_Randomizer_2</RootNamespace>
-    <AssemblyName>kotor Randomizer 2</AssemblyName>
+    <AssemblyName>KotorRandomizer</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -96,6 +96,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Digraph.cs" />
+    <Compile Include="Models\Kotor1Randomizer.cs" />
+    <Compile Include="Models\UnlockableDoor.cs" />
     <Compile Include="Forms\TwodaForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,11 +105,14 @@
       <DependentUpon>TwodaForm.cs</DependentUpon>
     </Compile>
     <Compile Include="KPaths.cs" />
+    <Compile Include="Models\RandomizableItem.cs" />
+    <Compile Include="Models\RandomizableTable.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Models\RandomizerBase.cs" />
     <Compile Include="Randomization\TextRando.cs" />
     <Compile Include="Randomization\TwodaRandom.cs" />
     <Compile Include="Globals.cs" />

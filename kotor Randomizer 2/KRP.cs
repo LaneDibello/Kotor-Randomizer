@@ -9,7 +9,7 @@ namespace kotor_Randomizer_2
 {
     public static class KRP
     {
-        private const string VERSION = "KRP V2.2";
+        public const string VERSION = "KRP V2.2";
         //private static int CategoryCount = 8;
 
         #region public methods

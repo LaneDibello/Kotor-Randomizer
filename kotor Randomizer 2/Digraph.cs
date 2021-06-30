@@ -24,6 +24,7 @@ namespace kotor_Randomizer_2
 
         // Attributes
         public const string ATTR_GAME       = "Game";       // Modules
+        public const string ATTR_PLANET     = "Planet";     // Vertex
         public const string ATTR_CODE       = "WarpCode";   // Vertex, Edge
         public const string ATTR_NAME       = "CommonName"; // Vertex, Edge
         public const string ATTR_TAGS       = "Tags";       // Vertex, Edge
@@ -166,31 +167,61 @@ namespace kotor_Randomizer_2
             ResetSettings();
         }
 
-        public void ResetSettings()
+        public void ResetSettings(Models.Kotor1Randomizer k1rando = null)
         {
-            // Get currently enabled settings.
-            AllowGlitchClip = Properties.Settings.Default.AllowGlitchClip;
-            AllowGlitchDlz = Properties.Settings.Default.AllowGlitchDlz;
-            AllowGlitchFlu = Properties.Settings.Default.AllowGlitchFlu;
-            AllowGlitchGpw = Properties.Settings.Default.AllowGlitchGpw;
-            EnabledFixBox = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
-            EnabledFixElev = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
-            EnabledFixMap = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
-            EnabledFixSpice = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
-            EnabledUnlockDanRuins = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
-            EnabledUnlockKorAcademy = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley);
-            EnabledUnlockManEmbassy = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy);
-            EnabledUnlockManHangar = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar);
-            EnabledUnlockStaBastila = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
-            EnabledUnlockTarUndercity = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity);
-            EnabledUnlockTarVulkar = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar);
-            EnabledUnlockUnkSummit = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
-            EnabledUnlockUnkTempleExit = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit);
-            EnforceEdgeTagLocked = true;
-            IgnoreOnceEdges = Properties.Settings.Default.IgnoreOnceEdges;
-            GoalIsMalak = Properties.Settings.Default.GoalIsMalak;
-            GoalIsPazaak = Properties.Settings.Default.GoalIsPazaak;
-            GoalIsStarMap = Properties.Settings.Default.GoalIsStarMaps;
+            if (k1rando == null)
+            {
+                // Get currently enabled settings.
+                AllowGlitchClip            = Properties.Settings.Default.AllowGlitchClip;
+                AllowGlitchDlz             = Properties.Settings.Default.AllowGlitchDlz;
+                AllowGlitchFlu             = Properties.Settings.Default.AllowGlitchFlu;
+                AllowGlitchGpw             = Properties.Settings.Default.AllowGlitchGpw;
+                EnabledFixBox              = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
+                EnabledFixElev             = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+                EnabledFixMap              = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
+                EnabledFixSpice            = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
+                EnabledUnlockDanRuins      = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
+                EnabledUnlockKorAcademy    = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley);
+                EnabledUnlockManEmbassy    = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy);
+                EnabledUnlockManHangar     = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar);
+                EnabledUnlockStaBastila    = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
+                EnabledUnlockTarUndercity  = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity);
+                EnabledUnlockTarVulkar     = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar);
+                EnabledUnlockUnkSummit     = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
+                EnabledUnlockUnkTempleExit = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit);
+                EnforceEdgeTagLocked       = true;
+                IgnoreOnceEdges            = Properties.Settings.Default.IgnoreOnceEdges;
+                GoalIsMalak                = Properties.Settings.Default.GoalIsMalak;
+                GoalIsPazaak               = Properties.Settings.Default.GoalIsPazaak;
+                GoalIsStarMap              = Properties.Settings.Default.GoalIsStarMaps;
+            }
+            else
+            {
+                AllowGlitchClip            = k1rando.ModuleAllowGlitchClip;
+                AllowGlitchDlz             = k1rando.ModuleAllowGlitchDlz;
+                AllowGlitchFlu             = k1rando.ModuleAllowGlitchFlu;
+                AllowGlitchGpw             = k1rando.ModuleAllowGlitchGpw;
+                //AllowGlitchHotshot         = k1rando.ModuleAllowGlitchHotshot;
+                EnabledFixBox              = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
+                EnabledFixElev             = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+                EnabledFixMap              = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
+                EnabledFixSpice            = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
+                EnabledUnlockDanRuins      = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
+                EnabledUnlockKorAcademy    = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley);
+                EnabledUnlockManEmbassy    = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy);
+                EnabledUnlockManHangar     = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar);
+                EnabledUnlockStaBastila    = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
+                EnabledUnlockTarUndercity  = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity);
+                EnabledUnlockTarVulkar     = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar);
+                EnabledUnlockUnkSummit     = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
+                EnabledUnlockUnkTempleExit = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit);
+                EnforceEdgeTagLocked       = true;
+                IgnoreOnceEdges            = k1rando.ModuleLogicIgnoreOnceEdges;
+                GoalIsMalak                = k1rando.ModuleGoalIsMalak;
+                GoalIsPazaak               = k1rando.ModuleGoalIsPazaak;
+                GoalIsStarMap              = k1rando.ModuleGoalIsStarMap;
+                //GoalIsFullParty            = k1rando.ModuleGoalIsFullParty;
+            }
         }
 
         /// <summary>
@@ -587,6 +618,7 @@ namespace kotor_Randomizer_2
         #region Properties
         public string WarpCode          { get; }
         public string CommonName        { get; }
+        public string Planet            { get; }
         public List<ModuleEdge> LeadsTo { get; } = new List<ModuleEdge>();
 
         public bool IsMalak   { get; } = false;
@@ -614,6 +646,9 @@ namespace kotor_Randomizer_2
             // Check for null parameter.
             if (element == null)
                 throw new ArgumentException("Parameter \'element\' can't be null.", "element");
+
+            // Get Planet
+            Planet = element.Attribute(XmlConsts.ATTR_PLANET)?.Value ?? string.Empty;
 
             // Get WarpCode
             var code = element.Attribute(XmlConsts.ATTR_CODE);

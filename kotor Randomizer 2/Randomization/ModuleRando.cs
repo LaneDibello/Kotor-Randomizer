@@ -10,8 +10,7 @@ namespace kotor_Randomizer_2
 {
     public static class ModuleRando
     {
-        #region Fields
-
+        #region Consts
         private const string AREA_DAN_COURTYARD = "danm14aa";
         private const string AREA_EBO_BOX = "ebo_m46ab";
         private const string AREA_EBO_HAWK = "ebo_m12aa";
@@ -54,11 +53,9 @@ namespace kotor_Randomizer_2
 
         private const string TwoDA_MODULE_SAVE = "modulesave.2da";
         private const string UNLOCK_MAP_OVERRIDE = "k_pebn_galaxy.ncs";
-
-        #endregion Fields
+        #endregion Consts
 
         #region Properties
-
         /// <summary>
         /// A lookup table used to know how the modules are randomized.
         /// Usage: LookupTable[Original] = Randomized;
@@ -70,61 +67,66 @@ namespace kotor_Randomizer_2
         /// </summary>
         private static ModuleDigraph Digraph { get; set; } = new ModuleDigraph(Path.Combine(Environment.CurrentDirectory, "Xml", "KotorModules.xml"));
 
+        public static bool UseRandoRules { get; set; }
+        public static bool VerifyReachability { get; set; }
+        public static ModuleExtras ModuleExtrasValue { get; set; }
+        public static List<string> RandomizedModules { get; set; }
+        public static List<string> OmittedModules { get; set; }
+        private static string ShufflePreset { get; set; }
         #endregion Properties
 
         #region Methods
+        ///// <summary>
+        ///// Creates a CSV file containing a list of the changes made during randomization.
+        ///// If the file already exists, this method will append the data.
+        ///// If no randomization has been performed, no file will be created.
+        ///// </summary>
+        ///// <param name="path">Path to desired output file.</param>
+        //public static void CreateSpoilerLog(string path)
+        //{
+        //    if (LookupTable.Count == 0) { return; }
+        //    var sortedLookup = LookupTable.OrderBy(kvp => kvp.Key);
 
-        /// <summary>
-        /// Creates a CSV file containing a list of the changes made during randomization.
-        /// If the file already exists, this method will append the data.
-        /// If no randomization has been performed, no file will be created.
-        /// </summary>
-        /// <param name="path">Path to desired output file.</param>
-        public static void CreateSpoilerLog(string path)
-        {
-            if (LookupTable.Count == 0) { return; }
-            var sortedLookup = LookupTable.OrderBy(kvp => kvp.Key);
+        //    using (StreamWriter sw = new StreamWriter(path))
+        //    {
+        //        //sw.WriteLine($"Modules");
+        //        sw.WriteLine($"Seed,{Properties.Settings.Default.Seed}");
+        //        sw.WriteLine();
 
-            using (StreamWriter sw = new StreamWriter(path))
-            {
-                //sw.WriteLine($"Modules");
-                sw.WriteLine($"Seed,{Properties.Settings.Default.Seed}");
-                sw.WriteLine();
+        //        sw.WriteLine("Module Extra,Is Enabled");
+        //        sw.WriteLine($"Delete Milestone Save Data,{!Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete)}");
+        //        sw.WriteLine($"Include Minigames in Save,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames)}");
+        //        sw.WriteLine($"Include All Modules in Save,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules)}");
+        //        sw.WriteLine($"Fix Dream Sequence,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream)}");
+        //        sw.WriteLine($"Unlock Galaxy Map,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap)}");
+        //        sw.WriteLine($"Fix Module Coordinates,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates)}");
+        //        sw.WriteLine($"Fix Mind Prison,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison)}");
+        //        sw.WriteLine($"Unlock Various Doors,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins)}");
+        //        sw.WriteLine($"Fix Leviathan Elevators,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev)}");
+        //        sw.WriteLine($"Add Spice Lab Load Zone,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ)}");
+        //        sw.WriteLine();
 
-                sw.WriteLine("Module Extra,Is Enabled");
-                sw.WriteLine($"Delete Milestone Save Data,{!Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete)}");
-                sw.WriteLine($"Include Minigames in Save,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames)}");
-                sw.WriteLine($"Include All Modules in Save,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules)}");
-                sw.WriteLine($"Fix Dream Sequence,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream)}");
-                sw.WriteLine($"Unlock Galaxy Map,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap)}");
-                sw.WriteLine($"Fix Module Coordinates,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates)}");
-                sw.WriteLine($"Fix Mind Prison,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison)}");
-                sw.WriteLine($"Unlock Various Doors,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins)}");
-                sw.WriteLine($"Fix Leviathan Elevators,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev)}");
-                sw.WriteLine($"Add Spice Lab Load Zone,{Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ)}");
-                sw.WriteLine();
+        //        sw.WriteLine($"Verify Reachability,{Properties.Settings.Default.VerifyReachability}");
+        //        sw.WriteLine($"Ignore Single-Use Transitions,{Properties.Settings.Default.IgnoreOnceEdges}");
+        //        sw.WriteLine($"Goal Is Malak,{Properties.Settings.Default.GoalIsMalak}");
+        //        sw.WriteLine($"Goal Is Star Maps,{Properties.Settings.Default.GoalIsStarMaps}");
+        //        sw.WriteLine($"Goal Is Pazaak,{Properties.Settings.Default.GoalIsPazaak}");
+        //        sw.WriteLine($"Allow Glitch Clipping,{Properties.Settings.Default.AllowGlitchClip}");
+        //        sw.WriteLine($"Allow Glitch DLZ,{Properties.Settings.Default.AllowGlitchDlz}");
+        //        sw.WriteLine($"Allow Glitch FLU,{Properties.Settings.Default.AllowGlitchFlu}");
+        //        sw.WriteLine($"Allow Glitch GPW,{Properties.Settings.Default.AllowGlitchGpw}");
+        //        sw.WriteLine();
 
-                sw.WriteLine($"Verify Reachability,{Properties.Settings.Default.VerifyReachability}");
-                sw.WriteLine($"Ignore Single-Use Transitions,{Properties.Settings.Default.IgnoreOnceEdges}");
-                sw.WriteLine($"Goal Is Malak,{Properties.Settings.Default.GoalIsMalak}");
-                sw.WriteLine($"Goal Is Star Maps,{Properties.Settings.Default.GoalIsStarMaps}");
-                sw.WriteLine($"Goal Is Pazaak,{Properties.Settings.Default.GoalIsPazaak}");
-                sw.WriteLine($"Allow Glitch Clipping,{Properties.Settings.Default.AllowGlitchClip}");
-                sw.WriteLine($"Allow Glitch DLZ,{Properties.Settings.Default.AllowGlitchDlz}");
-                sw.WriteLine($"Allow Glitch FLU,{Properties.Settings.Default.AllowGlitchFlu}");
-                sw.WriteLine($"Allow Glitch GPW,{Properties.Settings.Default.AllowGlitchGpw}");
-                sw.WriteLine();
-
-                sw.WriteLine("Has Changed,Default Code,Default Name,Randomized Code,Randomized Name");
-                foreach (var kvp in sortedLookup)
-                {
-                    var defaultName = Digraph.Modules.FirstOrDefault(m => m.WarpCode == kvp.Key)?.CommonName;
-                    var randomizedName = Digraph.Modules.FirstOrDefault(m => m.WarpCode == kvp.Value)?.CommonName;
-                    sw.WriteLine($"{(kvp.Key != kvp.Value).ToString()},{kvp.Key},{defaultName},{kvp.Value},{randomizedName}");
-                }
-                sw.WriteLine();
-            }
-        }
+        //        sw.WriteLine("Has Changed,Default Code,Default Name,Randomized Code,Randomized Name");
+        //        foreach (var kvp in sortedLookup)
+        //        {
+        //            var defaultName = Digraph.Modules.FirstOrDefault(m => m.WarpCode == kvp.Key)?.CommonName;
+        //            var randomizedName = Digraph.Modules.FirstOrDefault(m => m.WarpCode == kvp.Value)?.CommonName;
+        //            sw.WriteLine($"{(kvp.Key != kvp.Value).ToString()},{kvp.Key},{defaultName},{kvp.Value},{randomizedName}");
+        //        }
+        //        sw.WriteLine();
+        //    }
+        //}
 
         /// <summary>
         /// Creates a worksheet in the given XLWorkbook containing the list of changes made
@@ -136,10 +138,10 @@ namespace kotor_Randomizer_2
             var ws = workbook.Worksheets.Add("Module");
 
             int i = 1;
-            ws.Cell(i, 1).Value = "Seed";
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
-            i++;
+            //ws.Cell(i, 1).Value = "Seed";
+            //ws.Cell(i, 1).Style.Font.Bold = true;
+            //ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
+            //i++;
 
             Version version = typeof(StartForm).Assembly.GetName().Version;
             ws.Cell(i, 1).Value = "Version";
@@ -157,13 +159,9 @@ namespace kotor_Randomizer_2
             ws.Cell(i, 2).Style.Font.Bold = true;
             i++;
 
-            string presetName;
+            string presetName = ShufflePreset;
             bool isCustomPreset = false;
-            if (Properties.Settings.Default.LastPresetComboIndex >= 0)
-            {
-                presetName = Globals.OMIT_PRESETS.Keys.ToList()[Properties.Settings.Default.LastPresetComboIndex];
-            }
-            else
+            if (string.IsNullOrWhiteSpace(ShufflePreset))
             {
                 presetName = "Custom";
                 isCustomPreset = true;
@@ -171,33 +169,33 @@ namespace kotor_Randomizer_2
 
             var settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Delete Milestone Save Data", (!Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete)).ToString()),
-                new Tuple<string, string>("Include Minigames in Save", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames).ToString()),
-                new Tuple<string, string>("Include All Modules in Save", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules).ToString()),
+                new Tuple<string, string>("Delete Milestone Save Data", (!ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete)).ToString()),
+                new Tuple<string, string>("Include Minigames in Save",    ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames).ToString()),
+                new Tuple<string, string>("Include All Modules in Save",  ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules).ToString()),
                 new Tuple<string, string>("", ""),  // Skip a row.
-                new Tuple<string, string>("Add Spice Lab Load Zone", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ).ToString()),
-                new Tuple<string, string>("Fix Dream Sequence", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream).ToString()),
-                new Tuple<string, string>("Fix Mind Prison", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison).ToString()),
-                new Tuple<string, string>("Fix Module Coordinates", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates).ToString()),
-                new Tuple<string, string>("Unlock DAN Ruins Door", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins).ToString()),
-                new Tuple<string, string>("Unlock EBO Galaxy Map", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap).ToString()),
-                new Tuple<string, string>("Unlock LEV Elevators", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev).ToString()),
-                new Tuple<string, string>("Unlock MAN Embassy", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy).ToString()),
-                new Tuple<string, string>("Unlock STA Door to Bastila", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila).ToString()),
-                new Tuple<string, string>("Unlock UNK Summit Exit", Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit).ToString()),
+                new Tuple<string, string>("Add Spice Lab Load Zone",      ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ).ToString()),
+                new Tuple<string, string>("Fix Dream Sequence",           ModuleExtrasValue.HasFlag(ModuleExtras.FixDream).ToString()),
+                new Tuple<string, string>("Fix Mind Prison",              ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison).ToString()),
+                new Tuple<string, string>("Fix Module Coordinates",       ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates).ToString()),
+                new Tuple<string, string>("Unlock DAN Ruins Door",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins).ToString()),
+                new Tuple<string, string>("Unlock EBO Galaxy Map",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap).ToString()),
+                new Tuple<string, string>("Unlock LEV Elevators",         ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev).ToString()),
+                new Tuple<string, string>("Unlock MAN Embassy",           ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy).ToString()),
+                new Tuple<string, string>("Unlock STA Door to Bastila",   ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila).ToString()),
+                new Tuple<string, string>("Unlock UNK Summit Exit",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit).ToString()),
                 new Tuple<string, string>("", ""),  // Skip a row.
-                new Tuple<string, string>("Shuffle Preset", presetName),
+                new Tuple<string, string>("Shuffle Preset",               presetName),
                 new Tuple<string, string>("", ""),  // Skip a row.
-                new Tuple<string, string>("Use Rando Exclusion Rules", Properties.Settings.Default.UseRandoRules.ToString()),
-                new Tuple<string, string>("Verify Reachability", Properties.Settings.Default.VerifyReachability.ToString()),
-                new Tuple<string, string>("Goal Is Malak", Properties.Settings.Default.GoalIsMalak.ToString()),
-                new Tuple<string, string>("Goal Is Star Maps", Properties.Settings.Default.GoalIsStarMaps.ToString()),
-                new Tuple<string, string>("Goal Is Pazaak", Properties.Settings.Default.GoalIsPazaak.ToString()),
-                new Tuple<string, string>("Allow Glitch Clipping", Properties.Settings.Default.AllowGlitchClip.ToString()),
-                new Tuple<string, string>("Allow Glitch DLZ", Properties.Settings.Default.AllowGlitchDlz.ToString()),
-                new Tuple<string, string>("Allow Glitch FLU", Properties.Settings.Default.AllowGlitchFlu.ToString()),
-                new Tuple<string, string>("Allow Glitch GPW", Properties.Settings.Default.AllowGlitchGpw.ToString()),
-                new Tuple<string, string>("Ignore Single-Use Edges", Properties.Settings.Default.IgnoreOnceEdges.ToString()),
+                new Tuple<string, string>("Use Rando Exclusion Rules",    UseRandoRules.ToString()),
+                new Tuple<string, string>("Verify Reachability",          VerifyReachability.ToString()),
+                new Tuple<string, string>("Goal Is Malak",                Digraph.GoalIsMalak.ToString()),
+                new Tuple<string, string>("Goal Is Star Maps",            Digraph.GoalIsStarMap.ToString()),
+                new Tuple<string, string>("Goal Is Pazaak",               Digraph.GoalIsPazaak.ToString()),
+                new Tuple<string, string>("Allow Glitch Clipping",        Digraph.AllowGlitchClip.ToString()),
+                new Tuple<string, string>("Allow Glitch DLZ",             Digraph.AllowGlitchDlz.ToString()),
+                new Tuple<string, string>("Allow Glitch FLU",             Digraph.AllowGlitchFlu.ToString()),
+                new Tuple<string, string>("Allow Glitch GPW",             Digraph.AllowGlitchGpw.ToString()),
+                new Tuple<string, string>("Ignore Single-Use Edges",      Digraph.IgnoreOnceEdges.ToString()),
                 new Tuple<string, string>("", ""),  // Skip a row.
             };
 
@@ -326,21 +324,21 @@ namespace kotor_Randomizer_2
         /// Populates and shuffles the the modules flagged to be randomized. Returns true if override files should be added.
         /// </summary>
         /// <param name="paths">KPaths object for this game.</param>
-        public static void Module_rando(KPaths paths)
+        /// <param name="k1rando">Kotor1Randomizer object that contains settings to use.</param>
+        public static void Module_rando(KPaths paths, Models.Kotor1Randomizer k1rando = null)
         {
-            // Reset digraph reachability settings.
-            Digraph.ResetSettings();
-            LookupTable.Clear();
+            // Prepare for a new randomization.
+            Reset(k1rando);
+            AssignSettings(k1rando);
 
             // Split the Bound modules into their respective lists.
             bool reachable = false;
             int iterations = 0;
 
             // Only shuffle if there is more than 1 module in the shuffle.
-            if (Globals.BoundModules.Count(x => !x.Omitted) > 1)
+            if (RandomizedModules.Count > 1)
             {
-                if (Properties.Settings.Default.UseRandoRules ||
-                    Properties.Settings.Default.VerifyReachability)
+                if (UseRandoRules || VerifyReachability)
                 {
                     System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
                     sw.Start();
@@ -355,13 +353,13 @@ namespace kotor_Randomizer_2
 
                         Digraph.SetRandomizationLookup(LookupTable);
 
-                        if (Properties.Settings.Default.UseRandoRules)
+                        if (UseRandoRules)
                         {
                             // Skip to the next iteration if the rules are violated.
                             if (AreRulesViolated()) continue;
                         }
 
-                        if (Properties.Settings.Default.VerifyReachability)
+                        if (VerifyReachability)
                         {
                             Digraph.CheckReachability();
                             reachable = Digraph.IsGoalReachable();
@@ -372,7 +370,7 @@ namespace kotor_Randomizer_2
                         }
                     }
 
-                    if (Properties.Settings.Default.VerifyReachability)
+                    if (VerifyReachability)
                     {
                         if (reachable)
                         {
@@ -407,13 +405,13 @@ namespace kotor_Randomizer_2
             WriteOverrideFiles(paths);
 
             // Fix warp coordinates.
-            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates))
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates))
             {
                 FixWarpCoordinates(paths);
             }
 
             // Fixed Rakata riddle Man in Mind Prison.
-            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison))
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison))
             {
                 FixMindPrison(paths);
             }
@@ -422,7 +420,7 @@ namespace kotor_Randomizer_2
             UnlockDoors(paths);
 
             // Vulkar Spice Lab Transition
-            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ))
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ))
             {
                 var vulk_files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_TAR_VULK_BASE]));
                 foreach (FileInfo fi in vulk_files)
@@ -438,6 +436,44 @@ namespace kotor_Randomizer_2
             }
         }
 
+        private static void AssignSettings(Models.Kotor1Randomizer k1rando)
+        {
+            if (k1rando == null)
+            {
+                UseRandoRules = Properties.Settings.Default.UseRandoRules;
+                VerifyReachability = Properties.Settings.Default.VerifyReachability;
+                ModuleExtrasValue = Properties.Settings.Default.ModuleExtrasValue;
+                RandomizedModules = Globals.BoundModules.Where(x => !x.Omitted).Select(x => x.Code).ToList();
+                OmittedModules = Globals.BoundModules.Where(x => x.Omitted).Select(x => x.Code).ToList();
+                if (Properties.Settings.Default.LastPresetComboIndex >= 0)
+                    ShufflePreset = Globals.OMIT_PRESETS.Keys.ToList()[Properties.Settings.Default.LastPresetComboIndex];
+                else
+                    ShufflePreset = "";
+            }
+            else
+            {
+                UseRandoRules = k1rando.ModuleLogicRandoRules;
+                VerifyReachability = k1rando.ModuleLogicReachability;
+                ModuleExtrasValue = k1rando.GeneralModuleExtrasValue;
+                foreach (var door in k1rando.GeneralUnlockedDoors)
+                    ModuleExtrasValue |= door.Tag;
+                RandomizedModules = k1rando.ModuleRandomizedList.Select(x => x.WarpCode).ToList();
+                OmittedModules = k1rando.ModuleOmittedList.Select(x => x.WarpCode).ToList();
+                ShufflePreset = k1rando.ModuleShufflePreset;
+            }
+        }
+
+        /// <summary>
+        /// Creates backups for files modified during this randomization.
+        /// </summary>
+        /// <param name="paths"></param>
+        internal static void CreateBackups(KPaths paths)
+        {
+            paths.BackUpModulesDirectory();
+            paths.BackUpLipsDirectory();
+            paths.BackUpOverrideDirectory();
+        }
+
         /// <summary>
         /// Returns the common name of the given module code. Returns null if the code isn't found.
         /// </summary>
@@ -451,10 +487,10 @@ namespace kotor_Randomizer_2
         /// <summary>
         /// Resets any fields to prepare for a new shuffle.
         /// </summary>
-        internal static void Reset()
+        internal static void Reset(Models.Kotor1Randomizer k1rando = null)
         {
             // Reset digraph reachability settings.
-            Digraph.ResetSettings();
+            Digraph.ResetSettings(k1rando);
             // Prepare lists for new randomization.
             LookupTable.Clear();
         }
@@ -518,10 +554,9 @@ namespace kotor_Randomizer_2
         {
             // Create lookup table for later features.
             LookupTable.Clear();
-
-            foreach (var item in Globals.BoundModules)
+            foreach (var item in Digraph.Modules)
             {
-                LookupTable.Add(item.Code, item.Code);
+                LookupTable.Add(item.WarpCode, item.WarpCode);
             }
         }
 
@@ -530,21 +565,18 @@ namespace kotor_Randomizer_2
         /// </summary>
         private static void CreateLookupTableShuffle()
         {
-            List<string> excluded = Globals.BoundModules.Where(x => x.Omitted).Select(x => x.Code).ToList();
-            List<string> included = Globals.BoundModules.Where(x => !x.Omitted).Select(x => x.Code).ToList();
-
             // Shuffle the list of included modules.
-            List<string> shuffle = new List<string>(included);
+            List<string> shuffle = new List<string>(RandomizedModules);
             Randomize.FisherYatesShuffle(shuffle);
             LookupTable.Clear();
 
-            for (int i = 0; i < included.Count; i++)
+            for (int i = 0; i < RandomizedModules.Count; i++)
             {
-                LookupTable.Add(included[i], shuffle[i]);
+                LookupTable.Add(RandomizedModules[i], shuffle[i]);
             }
 
             // Include the unmodified list of excluded modules.
-            foreach (string name in excluded)
+            foreach (string name in OmittedModules)
             {
                 LookupTable.Add(name, name);
             }
@@ -752,7 +784,7 @@ namespace kotor_Randomizer_2
         /// <param name="paths">KPaths object for this game.</param>
         private static void UnlockDoors(KPaths paths)
         {
-            var extrasValue = Properties.Settings.Default.ModuleExtrasValue;
+            var extrasValue = ModuleExtrasValue;
 
             // Dantooine Ruins
             if (extrasValue.HasFlag(ModuleExtras.UnlockDanRuins))
@@ -849,7 +881,7 @@ namespace kotor_Randomizer_2
         private static void WriteOverrideFiles(KPaths paths)
         {
             string moduleSavePath = Path.Combine(paths.Override, TwoDA_MODULE_SAVE);
-            ModuleExtras saveFileExtras = Properties.Settings.Default.ModuleExtrasValue & (ModuleExtras.SaveAllModules | ModuleExtras.SaveMiniGames | ModuleExtras.NoSaveDelete);
+            ModuleExtras saveFileExtras = ModuleExtrasValue & (ModuleExtras.SaveAllModules | ModuleExtras.SaveMiniGames | ModuleExtras.NoSaveDelete);
 
             // Save Data File
             switch ((int)saveFileExtras)
@@ -892,13 +924,13 @@ namespace kotor_Randomizer_2
             }
 
             // Fix Dream File
-            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixDream))
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.FixDream))
             {
                 File.WriteAllBytes(Path.Combine(paths.Override, FIXED_DREAM_OVERRIDE), Properties.Resources.k_ren_visionland);
             }
 
             // Unlock Galaxy Map File
-            if (Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap))
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap))
             {
                 File.WriteAllBytes(Path.Combine(paths.Override, UNLOCK_MAP_OVERRIDE), Properties.Resources.k_pebn_galaxy);
             }

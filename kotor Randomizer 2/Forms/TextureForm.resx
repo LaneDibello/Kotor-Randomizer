@@ -120,12 +120,12 @@
   <metadata name="TexturesToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="TexturesToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="label2.Text" xml:space="preserve">
     <value>Notice:
 The stability of this feature is still questionable. If you recieve any pop-ups or warnings about "invalid bumpmaps", please contact Lane Dibello with the texture name, so he can omit it from randomization. If you encounter issues mid-run, change your quality settings.
 </value>
   </data>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>54</value>
+  </metadata>
 </root>

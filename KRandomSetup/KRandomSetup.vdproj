@@ -16,7 +16,7 @@
         "Entry"
         {
         "MsmKey" = "8:_0C3D844B42415BE3EF904BEC49FBED85"
-        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+        "OwnerKey" = "8:_8187CBC363DE4764A4E0009AD8DB70D3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -28,7 +28,7 @@
         "Entry"
         {
         "MsmKey" = "8:_0C52F55CB3440D9CF58ECCA24E8C20F3"
-        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+        "OwnerKey" = "8:_8187CBC363DE4764A4E0009AD8DB70D3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -45,6 +45,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_8187CBC363DE4764A4E0009AD8DB70D3"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
         "OwnerKey" = "8:_0C3D844B42415BE3EF904BEC49FBED85"
         "MsmSig" = "8:_UNDEFINED"
@@ -52,31 +58,19 @@
         "Entry"
         {
         "MsmKey" = "8:_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
-        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_8187CBC363DE4764A4E0009AD8DB70D3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_CA2DAC5FC89E4B3FD11C3E2CB8D1111F"
-        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+        "OwnerKey" = "8:_8187CBC363DE4764A4E0009AD8DB70D3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_E09C5AED8BBFCFAB6139F897DD0BBD05"
-        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+        "OwnerKey" = "8:_8187CBC363DE4764A4E0009AD8DB70D3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -88,13 +82,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
+        "OwnerKey" = "8:_8187CBC363DE4764A4E0009AD8DB70D3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0C52F55CB3440D9CF58ECCA24E8C20F3"
+        "OwnerKey" = "8:_E09C5AED8BBFCFAB6139F897DD0BBD05"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -106,7 +100,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E09C5AED8BBFCFAB6139F897DD0BBD05"
+        "OwnerKey" = "8:_0C52F55CB3440D9CF58ECCA24E8C20F3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -211,6 +211,11 @@
             "AssemblyAsmDisplayName" = "8:ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_0C3D844B42415BE3EF904BEC49FBED85"
+                    {
+                    "Name" = "8:ClosedXML.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:ClosedXML.dll"
             "TargetName" = "8:"
@@ -237,6 +242,11 @@
             "AssemblyAsmDisplayName" = "8:ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_0C52F55CB3440D9CF58ECCA24E8C20F3"
+                    {
+                    "Name" = "8:ExcelNumberFormat.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:ExcelNumberFormat.dll"
             "TargetName" = "8:"
@@ -303,6 +313,11 @@
             "AssemblyAsmDisplayName" = "8:DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
+                    {
+                    "Name" = "8:DocumentFormat.OpenXml.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:DocumentFormat.OpenXml.dll"
             "TargetName" = "8:"
@@ -329,6 +344,11 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
+                    "_CA2DAC5FC89E4B3FD11C3E2CB8D1111F"
+                    {
+                    "Name" = "8:System.Net.Http.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -355,6 +375,11 @@
             "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_E09C5AED8BBFCFAB6139F897DD0BBD05"
+                    {
+                    "Name" = "8:KotOR_IO.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:KotOR_IO.dll"
             "TargetName" = "8:"
@@ -387,7 +412,6 @@
             "IconIndex" = "3:0"
                 "Command"
                 {
-                "Command" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
                 }
                 "Verbs"
                 {
@@ -593,7 +617,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+            "Target" = "8:"
             "Folder" = "8:_3E298B683E3C4A37B31DBC6C29223617"
             "WorkingFolder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
             "Icon" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
@@ -607,7 +631,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+            "Target" = "8:"
             "Folder" = "8:_F5452B2152DD4B4E958D476D55855B11"
             "WorkingFolder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
             "Icon" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
@@ -1012,9 +1036,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AA9D070ACAB14309A8AAA185C080E7C1"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_8187CBC363DE4764A4E0009AD8DB70D3"
             {
-            "SourcePath" = "8:..\\kotor Randomizer 2\\obj\\Debug\\kotor Randomizer 2.exe"
+            "SourcePath" = "8:..\\kotor Randomizer 2\\obj\\Debug\\KotorRandomizer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
@@ -1032,9 +1056,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:Debug|Any CPU"
+            "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{36FBE2A5-15E6-4CC3-9174-377807476732}"
+            "OutputProjectGuid" = "8:{31D4C930-D24A-460A-96A5-5141751B98AD}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
