@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:model="clr-namespace:kotor_Randomizer_2.Models;assembly=KotorRandomizer"
+        xmlns:rando="clr-namespace:kotor_Randomizer_2;assembly=KotorRandomizer"
         xmlns:local="clr-namespace:Randomizer_WPF"
         xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
         xmlns:v="clr-namespace:Randomizer_WPF.Views"
@@ -23,6 +24,8 @@
                 <ResourceDictionary Source="Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <local:ModuleExtrasToBoolConverter x:Key="ExtrasToBool" />
+            <local:TextSettingsToBoolConverter x:Key="TextSettingsToBool" />
         </ResourceDictionary>
     </Window.Resources>
 
@@ -66,6 +69,7 @@
                     <MenuItem Command="Open" Header="_Open Settings File" />
                     <MenuItem Command="Save" Header="_Save Current Settings" />
                     <MenuItem Header="Save Test" Click="SaveTest_Click" />
+                    <MenuItem Header="Load Test" Click="LoadTest_Click" />
                     <!--<Separator />
                     <MenuItem Header="Shuffle Current Settings" />-->
                     <Separator />
@@ -113,15 +117,12 @@
                 </Style>
             </StatusBar.Resources>
             
-            <!-- Column 0 -->
             <StatusBarItem>
                 <TextBlock Name="lblCurrentStatus" Text="{Binding ElementName=RandomizeView, Path=CurrentState}" />
             </StatusBarItem>
             
-            <!-- Column 1 -->
             <Separator Grid.Column="1" Background="{DynamicResource HarshBlueBrush}" />
             
-            <!-- Column 4 -->
             <StatusBarItem Grid.Column="2" HorizontalAlignment="Center">
                 <ProgressBar Name="pbCurrentProgress" Width="90" Height="16"
                              Background="Transparent" Foreground="{DynamicResource HarshYellowBrush}"
@@ -131,18 +132,23 @@
         
         <!-- Dock.Center, Setting Views -->
         <Grid Margin="5">
-            <TabControl TabStripPlacement="Left"><!--IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">-->
+            <TabControl TabStripPlacement="Left">
                 <!-- General Settings -->
                 <TabItem Header="_General" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-                    <!-- DataContext inherited from the window.
-                         Locked and Unlocked door lists bound from data context. -->
+                    <!-- DataContext inherited from the window. Locked and Unlocked door lists bound from data context. -->
                     <v:GeneralView x:Name="GeneralView"
-                                   Kotor1Path="{Binding ElementName=window, Path=Kotor1Path, Mode=TwoWay}"
-                                   Kotor2Path="{Binding ElementName=window, Path=Kotor2Path, Mode=TwoWay}"
-                                   SpoilerPath="{Binding ElementName=window, Path=SpoilerPath, Mode=TwoWay}"
-                                   QolExtras="{Binding GeneralModuleExtrasValue, Mode=TwoWay}"
+                                   Kotor1Path ="{Binding ElementName=window, Mode=TwoWay, Path=Kotor1Path}"
+                                   Kotor2Path ="{Binding ElementName=window, Mode=TwoWay, Path=Kotor2Path}"
+                                   SpoilerPath="{Binding ElementName=window, Mode=TwoWay, Path=SpoilerPath}"
+                                   
+                                   SaveDataDeleteMilestone ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.NoSaveDelete}}"
+                                   SaveDataIncludeMinigames="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.SaveMiniGames}}"
+                                   SaveDataIncludeAll      ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.SaveAllModules}}"
+                                   QolAddSpiceLab          ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.VulkarSpiceLZ}}"
+                                   QolFixDreamSequence     ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FixDream}}"
+                                   QolFixMindPrison        ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FixMindPrison}}"
+                                   QolFixModuleCoordinates ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FixCoordinates}}"
                                    />
-                    <!-- Need to add hooks for module extras. -->
                 </TabItem>
 
                 <!-- Hidden tab items for space -->
@@ -154,7 +160,6 @@
                     <!-- DataContext inherited from the window. Everything is bound using this DataContext:
                          Shuffle Preset, Omitted Modules, Shuffle Logic, Goals, and Glitches. -->
                     <v:ModuleView x:Name="ModuleView" />
-                    <!-- Need to add SelectedGoals -->
                 </TabItem>
 
                 <!-- Item Rando Settings -->
@@ -162,38 +167,38 @@
                     <!-- DataContext inherited from the window.
                          Randomized and Omitted item lists bound from data context. -->
                     <v:ItemView x:Name="ItemView"
-                                ItemLevelArmbands="{Binding ItemArmbands, Mode=TwoWay}"
-                                ItemLevelArmor="{Binding ItemArmor, Mode=TwoWay}"
-                                ItemLevelBelts="{Binding ItemBelts, Mode=TwoWay}"
-                                ItemLevelBlasters="{Binding ItemBlasters, Mode=TwoWay}"
-                                ItemLevelCreatureHides="{Binding ItemCreatureHides, Mode=TwoWay}"
+                                ItemLevelArmbands       ="{Binding ItemArmbands       , Mode=TwoWay}"
+                                ItemLevelArmor          ="{Binding ItemArmor          , Mode=TwoWay}"
+                                ItemLevelBelts          ="{Binding ItemBelts          , Mode=TwoWay}"
+                                ItemLevelBlasters       ="{Binding ItemBlasters       , Mode=TwoWay}"
+                                ItemLevelCreatureHides  ="{Binding ItemCreatureHides  , Mode=TwoWay}"
                                 ItemLevelCreatureWeapons="{Binding ItemCreatureWeapons, Mode=TwoWay}"
-                                ItemLevelDroidEquipment="{Binding ItemDroidEquipment, Mode=TwoWay}"
-                                ItemLevelGauntlets="{Binding ItemGauntlets, Mode=TwoWay}"
-                                ItemLevelGrenades="{Binding ItemGrenades, Mode=TwoWay}"
-                                ItemLevelImplants="{Binding ItemImplants, Mode=TwoWay}"
-                                ItemLevelLightsabers="{Binding ItemLightsabers, Mode=TwoWay}"
-                                ItemLevelMasks="{Binding ItemMasks, Mode=TwoWay}"
-                                ItemLevelMedical="{Binding ItemMedical, Mode=TwoWay}"
-                                ItemLevelMelee="{Binding ItemMelee, Mode=TwoWay}"
-                                ItemLevelMines="{Binding ItemMines, Mode=TwoWay}"
-                                ItemLevelPazaak="{Binding ItemPazaak, Mode=TwoWay}"
-                                ItemLevelUpgrades="{Binding ItemUpgrades, Mode=TwoWay}"
-                                ItemLevelVarious="{Binding ItemVarious, Mode=TwoWay}"
+                                ItemLevelDroidEquipment ="{Binding ItemDroidEquipment , Mode=TwoWay}"
+                                ItemLevelGauntlets      ="{Binding ItemGloves         , Mode=TwoWay}"
+                                ItemLevelGrenades       ="{Binding ItemGrenades       , Mode=TwoWay}"
+                                ItemLevelImplants       ="{Binding ItemImplants       , Mode=TwoWay}"
+                                ItemLevelLightsabers    ="{Binding ItemLightsabers    , Mode=TwoWay}"
+                                ItemLevelMasks          ="{Binding ItemMasks          , Mode=TwoWay}"
+                                ItemLevelMedical        ="{Binding ItemMedical        , Mode=TwoWay}"
+                                ItemLevelMelee          ="{Binding ItemMeleeWeapons   , Mode=TwoWay}"
+                                ItemLevelMines          ="{Binding ItemMines          , Mode=TwoWay}"
+                                ItemLevelPazaak         ="{Binding ItemPazaakCards    , Mode=TwoWay}"
+                                ItemLevelUpgrades       ="{Binding ItemUpgrades       , Mode=TwoWay}"
+                                ItemLevelVarious        ="{Binding ItemVarious        , Mode=TwoWay}"
                                 />
                 </TabItem>
 
                 <!-- Audio Rando Settings -->
                 <TabItem Header="_Audio" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
                     <v:AudioView x:Name="AudioView"
-                                 AreaMusic="{Binding AudioAreaMusic, Mode=TwoWay}"
-                                 BattleMusic="{Binding AudioBattleMusic, Mode=TwoWay}"
-                                 AmbientMusic="{Binding AudioAmbientNoise, Mode=TwoWay}"
-                                 CutsceneNoise="{Binding AudioCutsceneNoise, Mode=TwoWay}"
-                                 NpcSounds="{Binding AudioNpcSounds, Mode=TwoWay}"
-                                 PartySounds="{Binding AudioPartySounds, Mode=TwoWay}"
-                                 OverwriteDmcaMusic="{Binding AudioRemoveDmcaMusic, Mode=TwoWay}"
-                                 MixKotorGameMusic="{Binding AudioMixKotorGameMusic, Mode=TwoWay}"
+                                 AreaMusic           ="{Binding AudioAreaMusic           , Mode=TwoWay}"
+                                 BattleMusic         ="{Binding AudioBattleMusic         , Mode=TwoWay}"
+                                 AmbientMusic        ="{Binding AudioAmbientNoise        , Mode=TwoWay}"
+                                 CutsceneNoise       ="{Binding AudioCutsceneNoise       , Mode=TwoWay}"
+                                 NpcSounds           ="{Binding AudioNpcSounds           , Mode=TwoWay}"
+                                 PartySounds         ="{Binding AudioPartySounds         , Mode=TwoWay}"
+                                 OverwriteDmcaMusic  ="{Binding AudioRemoveDmcaMusic     , Mode=TwoWay}"
+                                 MixKotorGameMusic   ="{Binding AudioMixKotorGameMusic   , Mode=TwoWay}"
                                  MixNpcAndPartySounds="{Binding AudioMixNpcAndPartySounds, Mode=TwoWay}"
                                  />
                 </TabItem>
@@ -201,23 +206,26 @@
                 <!-- Cosmetic Rando Settings -->
                 <TabItem Header="_Cosmetics" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
                     <v:CosmeticView x:Name="CosmeticView"
-                                    TexturePack="{Binding TextureSelectedPack, Mode=TwoWay}" />
+                                    TexturePack        ="{Binding TextureSelectedPack, Mode=TwoWay}"
+                                    TextureCubeMaps    ="{Binding TextureCubeMaps    , Mode=TwoWay}"
+                                    TextureCreatures   ="{Binding TextureCreatures   , Mode=TwoWay}"
+                                    TextureEffects     ="{Binding TextureEffects     , Mode=TwoWay}"
+                                    TextureItems       ="{Binding TextureItems       , Mode=TwoWay}"
+                                    TexturePlanetary   ="{Binding TexturePlanetary   , Mode=TwoWay}"
+                                    TextureNPC         ="{Binding TextureNPC         , Mode=TwoWay}"
+                                    TexturePlayerHeads ="{Binding TexturePlayerHeads , Mode=TwoWay}"
+                                    TexturePlayerBodies="{Binding TexturePlayerBodies, Mode=TwoWay}"
+                                    TexturePlaceables  ="{Binding TexturePlaceables  , Mode=TwoWay}"
+                                    TextureParty       ="{Binding TextureParty       , Mode=TwoWay}"
+                                    TextureStunt       ="{Binding TextureStunt       , Mode=TwoWay}"
+                                    TextureVehicles    ="{Binding TextureVehicles    , Mode=TwoWay}"
+                                    TextureWeapons     ="{Binding TextureWeapons     , Mode=TwoWay}"
+                                    TextureOther       ="{Binding TextureOther       , Mode=TwoWay}"
+                                    />
                 </TabItem>
 
                 <!-- Party Rando Settings -->
-                <!--<TabItem Header="_Party" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="2*" />
-                        </Grid.RowDefinitions>
-
-                        <uc:LimitedInputUserControl Title="Enter title:" MaxLength="30" Height="54" />
-                        <uc:LimitedInputUserControl Title="Enter description:" MaxLength="140" Grid.Row="1" />
-                        <uc:LimitedInputUserControl Title="Enter notes:" MaxLength="250" Grid.Row="2" />
-                    </Grid>
-                </TabItem>-->
+                <!--<TabItem Header="_Party" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"></TabItem>-->
                 
                 <!-- Table Rando Settings -->
                 <TabItem Header="_Tables" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
@@ -227,7 +235,11 @@
                 <!-- Text Rando Settings -->
                 <TabItem Header="Te_xt" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
                     <v:TextView x:Name="TextView"
-                                TextSettingsValue="{Binding TextSettingsValue, Mode=TwoWay}"
+                                RandomizeDialogueEntries="{Binding TextSettingsValue, Mode=TwoWay, Converter={StaticResource TextSettingsToBool}, ConverterParameter={x:Static rando:TextSettings.RandoDialogEntries}}"
+                                RandomizeDialogueReplies="{Binding TextSettingsValue, Mode=TwoWay, Converter={StaticResource TextSettingsToBool}, ConverterParameter={x:Static rando:TextSettings.RandoDialogReplies}}"
+                                MatchEntrySounds        ="{Binding TextSettingsValue, Mode=TwoWay, Converter={StaticResource TextSettingsToBool}, ConverterParameter={x:Static rando:TextSettings.MatchEntrySoundsWText}}"
+                                RandomizeAdditionalText ="{Binding TextSettingsValue, Mode=TwoWay, Converter={StaticResource TextSettingsToBool}, ConverterParameter={x:Static rando:TextSettings.RandoFullTLK}}"
+                                MatchSimilarStringLength="{Binding TextSettingsValue, Mode=TwoWay, Converter={StaticResource TextSettingsToBool}, ConverterParameter={x:Static rando:TextSettings.MatchSimLengthStrings}}"
                                 />
                 </TabItem>
                 

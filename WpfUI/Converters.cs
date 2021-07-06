@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kotor_Randomizer_2;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Randomizer_WPF
     [ValueConversion(typeof(bool), typeof(Visibility))]
     public class BoolToVisibilityConverter : IValueConverter
     {
+        #region IValueConverter Members
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (targetType != typeof(Visibility)) throw new InvalidOperationException("The target must be of type Visibility.");
@@ -27,6 +29,7 @@ namespace Randomizer_WPF
             if ((Visibility)value == Visibility.Visible) return true;
             else                                         return false;
         }
+        #endregion
     }
 
     [ValueConversion(typeof(bool), typeof(bool))]
@@ -52,6 +55,7 @@ namespace Randomizer_WPF
     [ValueConversion(typeof(bool), typeof(Visibility))]
     public class InverseBoolToVisibilityConverter : IValueConverter
     {
+        #region IValueConverter Members
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (targetType != typeof(Visibility)) throw new InvalidOperationException("The target must be of type Visibility.");
@@ -67,5 +71,72 @@ namespace Randomizer_WPF
             if ((Visibility)value == Visibility.Visible) return false;
             else                                         return true;
         }
+        #endregion
+    }
+
+    [ValueConversion(typeof(ModuleExtras), typeof(bool))]
+    public class ModuleExtrasToBoolConverter : IValueConverter
+    {
+        private ModuleExtras target;
+        public ModuleExtrasToBoolConverter() { }
+
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            target = (ModuleExtras)value;
+            return target.HasFlag((ModuleExtras)parameter);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (target.HasFlag((ModuleExtras)parameter))
+            {
+                if ((bool)value)
+                    return target;
+                else
+                    return target ^= (ModuleExtras)parameter;
+            }
+            else
+            {
+                if ((bool)value)
+                    return target |= (ModuleExtras)parameter;
+                else
+                    return target;
+            }
+        }
+        #endregion
+    }
+
+    [ValueConversion(typeof(TextSettings), typeof(bool))]
+    public class TextSettingsToBoolConverter : IValueConverter
+    {
+        private TextSettings target;
+        public TextSettingsToBoolConverter() { }
+
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            target = (TextSettings)value;
+            return target.HasFlag((TextSettings)parameter);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (target.HasFlag((TextSettings)parameter))
+            {
+                if ((bool)value)
+                    return target;
+                else
+                    return target ^= (TextSettings)parameter;
+            }
+            else
+            {
+                if ((bool)value)
+                    return target |= (TextSettings)parameter;
+                else
+                    return target;
+            }
+        }
+        #endregion
     }
 }

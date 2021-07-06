@@ -73,6 +73,26 @@ namespace kotor_Randomizer_2.Models
         }
         #endregion
 
+        #region Methods
+        /// <summary>
+        /// Resets all column settings to unrandomized.
+        /// </summary>
+        public void Reset()
+        {
+            foreach (var column in Randomized)
+                Columns.Add(column);
+            Randomized.Clear();
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        public override string ToString()
+        {
+            return $"{Name}, Count = {Columns.Count + Randomized.Count}, Shuffled [{string.Join(", ", Randomized)}], Default [{string.Join(", ", Columns)}]";
+        }
+        #endregion
+
         #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;
         protected void NotifyPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

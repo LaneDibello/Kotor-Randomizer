@@ -109,11 +109,11 @@ namespace kotor_Randomizer_2.Models
             var fi = new FileInfo(path);
             SettingsFileName = fi.Name;
 
-            // Will the file be in KRP format?
-            if (path.ToLower().EndsWith(".krp"))
-                WriteKRP(File.OpenWrite(path));
-            else
-                WriteToFile(path);
+            //// Will the file be in KRP format?
+            //if (path.ToLower().EndsWith(".krp"))
+            //    WriteKRP(File.OpenWrite(path));
+            //else
+            WriteToFile(path);
         }
 
         /// <summary> Reads an xml preset file. This provides backwards compatibility. </summary>
@@ -126,7 +126,7 @@ namespace kotor_Randomizer_2.Models
         protected abstract void ReadKRP(Stream s);
 
         /// <summary> Writes a KRP file using the old, compact format. </summary>
-        protected abstract void WriteKRP(Stream s);
+        //protected abstract void WriteKRP(Stream s);
         #endregion Public Methods
     }
 }

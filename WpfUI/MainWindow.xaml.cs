@@ -95,7 +95,7 @@ namespace Randomizer_WPF
         {
             get
             {
-                Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+                Version v = System.Reflection.Assembly.GetAssembly(typeof(Kotor1Randomizer)).GetName().Version;
                 return $"Kotor Randomizer (v{v.Major}.{v.Minor}.{v.Build})";
             }
         }
@@ -162,7 +162,12 @@ namespace Randomizer_WPF
 
         private void SaveTest_Click(object sender, RoutedEventArgs e)
         {
-            K1Randomizer.Save(@"C:\Users\chilley\Documents\Knights\test.xkrp");
+            K1Randomizer.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"Knights\test.xkrp"));
+        }
+
+        private void LoadTest_Click(object sender, RoutedEventArgs e)
+        {
+            K1Randomizer.Load(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"Knights\test.xkrp"));
         }
     }
 }

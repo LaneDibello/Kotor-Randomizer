@@ -9,20 +9,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
+using System.Xml.Linq;
 using ClosedXML.Excel;
 
 namespace kotor_Randomizer_2.Models
 {
+    /// <summary>
+    /// Encapsulates the settings and processes used to randomize Kotor 1.
+    /// </summary>
     public class Kotor1Randomizer : RandomizerBase
     {
         #region Constants
-        const ModuleExtras EXTRAS_MASK = ModuleExtras.NoSaveDelete   | ModuleExtras.SaveMiniGames | ModuleExtras.SaveAllModules |
-                                         ModuleExtras.FixCoordinates | ModuleExtras.FixDream      | ModuleExtras.FixMindPrison  |
-                                         ModuleExtras.VulkarSpiceLZ;
-        const ModuleExtras UNLOCKS_MASK = ModuleExtras.UnlockDanRuins   | ModuleExtras.UnlockGalaxyMap    | ModuleExtras.UnlockKorValley |
-                                          ModuleExtras.UnlockLevElev    | ModuleExtras.UnlockManEmbassy   | ModuleExtras.UnlockManHangar |
-                                          ModuleExtras.UnlockStaBastila | ModuleExtras.UnlockTarUndercity | ModuleExtras.UnlockTarVulkar |
-                                          ModuleExtras.UnlockUnkSummit  | ModuleExtras.UnlockUnkTempleExit;
+        public const ModuleExtras EXTRAS_MASK = ModuleExtras.NoSaveDelete   | ModuleExtras.SaveMiniGames | ModuleExtras.SaveAllModules |
+                                                ModuleExtras.FixCoordinates | ModuleExtras.FixDream      | ModuleExtras.FixMindPrison  |
+                                                ModuleExtras.VulkarSpiceLZ;
+        public const ModuleExtras UNLOCKS_MASK = ModuleExtras.UnlockDanRuins   | ModuleExtras.UnlockGalaxyMap    | ModuleExtras.UnlockKorValley |
+                                                 ModuleExtras.UnlockLevElev    | ModuleExtras.UnlockManEmbassy   | ModuleExtras.UnlockManHangar |
+                                                 ModuleExtras.UnlockStaBastila | ModuleExtras.UnlockTarUndercity | ModuleExtras.UnlockTarVulkar |
+                                                 ModuleExtras.UnlockUnkSummit  | ModuleExtras.UnlockUnkTempleExit;
 
         const string ELEM_SETTINGS = "Settings";
 
@@ -55,6 +59,7 @@ namespace kotor_Randomizer_2.Models
         const string ATTR_QOL      = "QoL";
         const string ATTR_TAG      = "Tag";
         const string ATTR_CODE     = "Code";
+        const string ATTR_NAME     = "Name";
         const string ATTR_SETTINGS = "Settings";
 
         const string ATTR_AMBIENT     = "Ambient";
@@ -100,6 +105,7 @@ namespace kotor_Randomizer_2.Models
         const string ATTR_IGNORE_ONCE = "IgnoreOnce";
         const string ATTR_RULES       = "Rules";
         const string ATTR_REACHABLE   = "Reachable";
+        const string ATTR_PRESET      = "Preset";
 
         const string ATTR_POLYMORPH      = "Polymorph";
         const string ATTR_SWOOP_BOOSTERS = "SwoopBoosters";
@@ -118,13 +124,18 @@ namespace kotor_Randomizer_2.Models
         const string ATTR_STUNT     = "Stunt";
         const string ATTR_VEHICLE   = "Vehicle";
         const string ATTR_WEAPON    = "Weapon";
-
-        const string ATTR_          = "";
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Constructs the randomizer with default settings.
+        /// </summary>
         public Kotor1Randomizer() : this(string.Empty) { }
 
+        /// <summary>
+        /// Constructs the randomizer with settings read from the given file path.
+        /// </summary>
+        /// <param name="path">Full path to a randomizer settings file.</param>
         public Kotor1Randomizer(string path)
         {
             // Create list of unlockable doors.
@@ -155,11 +166,7 @@ namespace kotor_Randomizer_2.Models
             ItemRandomizedList = new ObservableCollection<RandomizableItem>(Globals.ITEM_LIST_FULL);
 
             // Get list of randomizable tables.
-            Table2DAs = new ObservableCollection<RandomizableTable>();
-            foreach (var table in Globals.TWODA_COLLUMNS)
-            {
-                Table2DAs.Add(new RandomizableTable(table.Key, table.Value));
-            }
+            Table2DAs = new ObservableCollection<RandomizableTable>(Globals.TWODA_COLLUMNS.Select(table => new RandomizableTable(table.Key, table.Value)));
 
             // Load settings from file if the path is not empty.
             if (!string.IsNullOrWhiteSpace(path) && File.Exists(path))
@@ -860,7 +867,9 @@ namespace kotor_Randomizer_2.Models
         {
             get
             {
-                return TextSettingsValue != TextSettings.Default;
+                return TextSettingsValue.HasFlag(TextSettings.RandoDialogEntries) ||
+                       TextSettingsValue.HasFlag(TextSettings.RandoDialogReplies) ||
+                       TextSettingsValue.HasFlag(TextSettings.RandoFullTLK);
             }
         }
         public bool DoRandomizeTextures
@@ -887,7 +896,28 @@ namespace kotor_Randomizer_2.Models
         #endregion Active Rando Properties
         #endregion Properties
 
-        #region Methods
+        #region Public/Protected Methods
+        /// <summary>
+        /// Resets all randomization settings to the default value.
+        /// </summary>
+        public void ResetSettingsToDefault()
+        {
+            ResetGeneral();
+            ResetAudio();
+            ResetItems();
+            ResetModels();
+            ResetModules();
+            ResetOther();
+            ResetTables();
+            ResetText();
+            ResetTextures();
+        }
+
+        /// <summary>
+        /// Randomization and spoiler creation delegate for BackgroundWorker DoWork event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public override void Randomizer_DoWork(object sender, DoWorkEventArgs e)
         {
             var bw = sender as BackgroundWorker;
@@ -920,6 +950,11 @@ namespace kotor_Randomizer_2.Models
             }
         }
 
+        /// <summary>
+        /// Unrandomization delegate for BackgroundWorker DoWork event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public override void Unrandomize(object sender, DoWorkEventArgs e)
         {
             var bw = sender as BackgroundWorker;
@@ -967,7 +1002,7 @@ namespace kotor_Randomizer_2.Models
                     ReportProgress(bw, progress += stepSize, Properties.Resources.TaskFinishing, BusyState.Unrandomizing);
                     File.Delete(paths.RANDOMIZED_LOG);
 
-                    ResetRandomizationCategories();
+                    ResetStaticRandomizationClasses();
                 }
                 catch (Exception ex)
                 {
@@ -987,7 +1022,41 @@ namespace kotor_Randomizer_2.Models
         /// <param name="s"></param>
         protected override void ReadFromFile(string path)
         {
-            throw new NotImplementedException();
+            XDocument doc = XDocument.Load(path);
+            var element = doc.Descendants(ELEM_GENERAL).FirstOrDefault();
+            ReadGeneralSettings(element);
+
+            element = doc.Descendants(ELEM_AUDIO  ).FirstOrDefault();
+            if (element != null) ReadAudioSettings(element);
+            else                 ResetAudio();
+
+            element = doc.Descendants(ELEM_ITEM   ).FirstOrDefault();
+            if (element != null) ReadItemSettings(element);
+            else                 ResetItems();
+
+            element = doc.Descendants(ELEM_MODEL  ).FirstOrDefault();
+            if (element != null) ReadModelSettings(element);
+            else                 ResetModels();
+
+            element = doc.Descendants(ELEM_MODULE ).FirstOrDefault();
+            if (element != null) ReadModuleSettings(element);
+            else                 ResetModules();
+
+            element = doc.Descendants(ELEM_OTHER  ).FirstOrDefault();
+            if (element != null) ReadOtherSettings(element);
+            else                 ResetOther();
+
+            element = doc.Descendants(ELEM_TABLE  ).FirstOrDefault();
+            if (element != null) ReadTableSettings(element);
+            else                 ResetTables();
+
+            element = doc.Descendants(ELEM_TEXT   ).FirstOrDefault();
+            if (element != null) ReadTextSettings(element);
+            else                 ResetText();
+
+            element = doc.Descendants(ELEM_TEXTURE).FirstOrDefault();
+            if (element != null) ReadTextureSettings(element);
+            else                 ResetTextures();
         }
 
         /// <summary>
@@ -1001,191 +1070,17 @@ namespace kotor_Randomizer_2.Models
                 w.WriteStartDocument();
                 w.WriteStartElement(ELEM_SETTINGS); // Begin Settings
 
-                {
-                    w.WriteStartElement(ELEM_GENERAL);  // Begin General
-                    w.WriteAttributeString(ATTR_QOL, GeneralModuleExtrasValue.ToString());
+                WriteGeneralSettings(w);
 
-                    foreach (var item in GeneralUnlockedDoors)
-                    {
-                        w.WriteStartElement(ELEM_UNLOCK);   // Begin Unlock
-                        w.WriteAttributeString(ATTR_TAG, item.Tag.ToString());
-                        w.WriteEndElement();                // End Unlock
-                    }
-                    w.WriteEndElement();                // End General
-                }   // General Settings
-
-                if (DoRandomizeAudio)
-                {
-                    w.WriteStartElement(ELEM_AUDIO);    // Begin Audio
-                    w.WriteAttributeString(ATTR_AMBIENT,     AudioAmbientNoise.ToString());
-                    w.WriteAttributeString(ATTR_AREA,        AudioAmbientNoise.ToString());
-                    w.WriteAttributeString(ATTR_BATTLE,      AudioAmbientNoise.ToString());
-                    w.WriteAttributeString(ATTR_CUTSCENE,    AudioAmbientNoise.ToString());
-                    w.WriteAttributeString(ATTR_NPC,         AudioAmbientNoise.ToString());
-                    w.WriteAttributeString(ATTR_PARTY,       AudioAmbientNoise.ToString());
-                    w.WriteAttributeString(ATTR_MIXNPCPARTY, AudioAmbientNoise.ToString());
-                    w.WriteAttributeString(ATTR_REMOVE_DMCA, AudioAmbientNoise.ToString());
-                    w.WriteEndElement();                // End Audio
-                }   // Audio Settings
-
-                if (DoRandomizeItems)
-                {
-                    w.WriteStartElement(ELEM_ITEM);     // Begin Item
-                    w.WriteAttributeString(ATTR_ARMBAND,    ItemArmbands.ToString());
-                    w.WriteAttributeString(ATTR_ARMOR,      ItemArmor.ToString());
-                    w.WriteAttributeString(ATTR_BELT,       ItemBelts.ToString());
-                    w.WriteAttributeString(ATTR_BLASTER,    ItemBlasters.ToString());
-                    w.WriteAttributeString(ATTR_CHIDE,      ItemCreatureHides.ToString());
-                    w.WriteAttributeString(ATTR_CWEAPON,    ItemCreatureWeapons.ToString());
-                    w.WriteAttributeString(ATTR_DROID,      ItemDroidEquipment.ToString());
-                    w.WriteAttributeString(ATTR_GLOVE,      ItemGloves.ToString());
-                    w.WriteAttributeString(ATTR_GRENADE,    ItemGrenades.ToString());
-                    w.WriteAttributeString(ATTR_IMPLANT,    ItemImplants.ToString());
-                    w.WriteAttributeString(ATTR_LIGHTSABER, ItemLightsabers.ToString());
-                    w.WriteAttributeString(ATTR_MASK,       ItemMasks.ToString());
-                    w.WriteAttributeString(ATTR_MELEE,      ItemMeleeWeapons.ToString());
-                    w.WriteAttributeString(ATTR_MINE,       ItemMines.ToString());
-                    w.WriteAttributeString(ATTR_MEDICAL,    ItemMedical.ToString());
-                    w.WriteAttributeString(ATTR_PAZAAK,     ItemPazaakCards.ToString());
-                    w.WriteAttributeString(ATTR_UPGRADE,    ItemUpgrades.ToString());
-                    w.WriteAttributeString(ATTR_VARIOUS,    ItemVarious.ToString());
-
-                    w.WriteStartElement(ELEM_OMIT);     // Begin Omit
-                    foreach (var item in ItemOmittedList)
-                    {
-                        w.WriteStartElement(ELEM_ITEM); // Begin Item
-                        w.WriteAttributeString(ATTR_CODE, item.Code);
-                        w.WriteEndElement();            // End Item
-                    }
-                    w.WriteEndElement();                // End Omit
-                    w.WriteEndElement();                // End Item
-                }   // Item Settings
-
-                if (DoRandomizeModels)
-                {
-                    w.WriteStartElement(ELEM_MODEL);    // Begin Model
-                    if (ModelCharacterRando)
-                    {
-                        w.WriteStartElement(ELEM_CHAR); // Begin Character
-                        w.WriteAttributeString(ATTR_OMIT_LARGE,  ModelCharacterOmitLarge.ToString());
-                        w.WriteAttributeString(ATTR_OMIT_BROKEN, ModelCharacterOmitBroken.ToString());
-                        w.WriteEndElement();            // End Character
-                    }
-                    if (ModelDoorRando)
-                    {
-                        w.WriteStartElement(ELEM_DOOR); // Begin Door
-                        w.WriteAttributeString(ATTR_OMIT_AIRLOCK, ModelDoorOmitAirlock.ToString());
-                        w.WriteAttributeString(ATTR_OMIT_BROKEN,  ModelDoorOmitBroken.ToString());
-                        w.WriteEndElement();            // End Door
-                    }
-                    if (ModelPlaceableRando)
-                    {
-                        w.WriteStartElement(ELEM_PLAC); // Begin Placeable
-                        w.WriteAttributeString(ATTR_OMIT_LARGE,  ModelPlaceableOmitLarge.ToString());
-                        w.WriteAttributeString(ATTR_OMIT_BROKEN, ModelPlaceableOmitBroken.ToString());
-                        w.WriteAttributeString(ATTR_EASY_PANELS, ModelPlaceableEasyPanels.ToString());
-                        w.WriteEndElement();            // End Placeable
-                    }
-                    w.WriteEndElement();                // End Model
-                }   // Model Settings
-
-                if (DoRandomizeModules)
-                {
-                    w.WriteStartElement(ELEM_MODULE);   // Begin Module
-                    w.WriteStartElement(ELEM_GLITCHES); // Begin Glitches
-                    w.WriteAttributeString(ATTR_CLIP,    ModuleAllowGlitchClip.ToString());
-                    w.WriteAttributeString(ATTR_DLZ,     ModuleAllowGlitchDlz.ToString());
-                    w.WriteAttributeString(ATTR_FLU,     ModuleAllowGlitchFlu.ToString());
-                    w.WriteAttributeString(ATTR_GPW,     ModuleAllowGlitchGpw.ToString());
-                    w.WriteAttributeString(ATTR_HOTSHOT, ModuleAllowGlitchHotshot.ToString());
-                    w.WriteEndElement();                // End Glitches
-
-                    w.WriteStartElement(ELEM_GOALS);    // Begin Goals
-                    w.WriteAttributeString(ATTR_MALAK,  ModuleGoalIsMalak.ToString());
-                    w.WriteAttributeString(ATTR_MAPS,   ModuleGoalIsStarMap.ToString());
-                    w.WriteAttributeString(ATTR_PAZAAK, ModuleGoalIsPazaak.ToString());
-                    w.WriteAttributeString(ATTR_PARTY,  ModuleGoalIsFullParty.ToString());
-                    w.WriteEndElement();                // End Goals
-
-                    w.WriteStartElement(ELEM_LOGIC);    // Begin Logic
-                    w.WriteAttributeString(ATTR_IGNORE_ONCE, ModuleLogicIgnoreOnceEdges.ToString());
-                    w.WriteAttributeString(ATTR_RULES,       ModuleLogicRandoRules.ToString());
-                    w.WriteAttributeString(ATTR_REACHABLE,   ModuleLogicReachability.ToString());
-                    w.WriteEndElement();                // End Logic
-
-                    w.WriteStartElement(ELEM_OMIT);     // Begin Omit
-                    foreach (var item in ModuleOmittedList)
-                    {
-                        w.WriteStartElement(ELEM_MODULE);   // Begin Module
-                        w.WriteAttributeString(ATTR_CODE, item.WarpCode);
-                        w.WriteEndElement();                // End Module;
-                    }
-                    w.WriteEndElement();                // End Omit
-                    w.WriteEndElement();                // End Module
-                }   // Module Settings
-
-                if (DoRandomizeOther)
-                {
-                    w.WriteStartElement(ELEM_OTHER);    // Start Other
-                    if (OtherPartyMembers)   w.WriteAttributeString(ATTR_PARTY,          OtherPartyMembers.ToString());
-                    if (OtherPazaakDecks)    w.WriteAttributeString(ATTR_PAZAAK,         OtherPazaakDecks.ToString());
-                    if (OtherPolymorphMode)  w.WriteAttributeString(ATTR_POLYMORPH,      OtherPolymorphMode.ToString());
-                    if (OtherSwoopBoosters)  w.WriteAttributeString(ATTR_SWOOP_BOOSTERS, OtherSwoopBoosters.ToString());
-                    if (OtherSwoopObstacles) w.WriteAttributeString(ATTR_SWOOP_OBSTACLE, OtherSwoopObstacles.ToString());
-
-                    if (OtherNameGeneration)
-                    {
-                        w.WriteStartElement(ELEM_NAMES);    // Start Names
-                        foreach (var name in OtherFirstNamesF.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) w.WriteElementString(ELEM_FIRST_NAME_F, name);
-                        foreach (var name in OtherFirstNamesM.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) w.WriteElementString(ELEM_FIRST_NAME_M, name);
-                        foreach (var name in OtherLastNames.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))   w.WriteElementString(ELEM_LAST_NAME,    name);
-                        w.WriteEndElement();                // End   Names
-                    }
-                    w.WriteEndElement();                // End Other
-                }   // Other Settings
-
-                //if (DoRandomizeParty) { }
-
-                if (DoRandomizeTables)
-                {
-                    w.WriteStartElement(ELEM_TABLE);    // Start Table
-                    foreach (var table in Table2DAs.Where(rt => rt.IsRandomized))
-                    {
-                        w.WriteStartElement(ELEM_TABLE);    // Start Table
-                        foreach (var column in table.Randomized)
-                            w.WriteElementString(ELEM_COLUMN, column);
-                        w.WriteEndElement();                // End   Table
-                    }
-                    w.WriteEndElement();                // End   Table
-                }   // Table Settings
-
-                if (DoRandomizeText)
-                {
-                    w.WriteStartElement(ELEM_TEXT); // Start Text
-                    w.WriteAttributeString(ATTR_SETTINGS,   TextSettingsValue.ToString());
-                    w.WriteEndElement();            // End   Text
-                }   // Text Settings
-
-                if (DoRandomizeTextures)
-                {
-                    w.WriteStartElement(ELEM_TEXTURE);  // Start Texture
-                    w.WriteAttributeString(ATTR_PACK,       TextureSelectedPack.ToString());
-                    w.WriteAttributeString(ATTR_CREATURE,   TextureCreatures.ToString());
-                    w.WriteAttributeString(ATTR_CUBE_MAP,   TextureCubeMaps.ToString());
-                    w.WriteAttributeString(ATTR_EFFECT,     TextureEffects.ToString());
-                    w.WriteAttributeString(ATTR_ITEM,       TextureItems.ToString());
-                    w.WriteAttributeString(ATTR_NPC,        TextureNPC.ToString());
-                    w.WriteAttributeString(ATTR_OTHER,      TextureOther.ToString());
-                    w.WriteAttributeString(ATTR_PARTY,      TextureParty.ToString());
-                    w.WriteAttributeString(ATTR_PLACE,      TexturePlaceables.ToString());
-                    w.WriteAttributeString(ATTR_PLANETARY,  TexturePlanetary.ToString());
-                    w.WriteAttributeString(ATTR_BODY,       TexturePlayerBodies.ToString());
-                    w.WriteAttributeString(ATTR_HEAD,       TexturePlayerHeads.ToString());
-                    w.WriteAttributeString(ATTR_STUNT,      TextureStunt.ToString());
-                    w.WriteAttributeString(ATTR_VEHICLE,    TextureVehicles.ToString());
-                    w.WriteAttributeString(ATTR_WEAPON,     TextureWeapons.ToString());
-                    w.WriteEndElement();                // End   Texture
-                }   // Texture Settings
+                if (DoRandomizeAudio   ) WriteAudioSettings(w);
+                if (DoRandomizeItems   ) WriteItemSettings(w);
+                if (DoRandomizeModels  ) WriteModelSettings(w);
+                if (DoRandomizeModules ) WriteModuleSettings(w);
+                if (DoRandomizeOther   ) WriteOtherSettings(w);
+                //if (DoRandomizeParty   ) WritePartySettings(w);   // Not yet implemented.
+                if (DoRandomizeTables  ) WriteTableSettings(w);
+                if (DoRandomizeText    ) WriteTextSettings(w);
+                if (DoRandomizeTextures) WriteTextureSettings(w);
 
                 w.WriteEndElement();                // End Settings
                 w.WriteEndDocument();
@@ -1227,7 +1122,7 @@ namespace kotor_Randomizer_2.Models
                 else                ResetTextures();
 
                 if (doRandoTwoDA)   ReadKRPTwoDAs();
-                else                ResetTwoDAs();
+                else                ResetTables();
 
                 if (doRandoText)    ReadKRPText();
                 else                ResetText();
@@ -1240,19 +1135,12 @@ namespace kotor_Randomizer_2.Models
                 // Expected KRP version didn't match the file.
             }
         }
-
-        /// <summary>
-        /// Writes a KRP file using the old, compact format.
-        /// </summary>
-        /// <param name="s"></param>
-        protected override void WriteKRP(Stream s)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
+        #endregion Public/Protected Methods
 
         #region Private Methods
+        /// <summary>
+        /// Counts the number of active randomization categories.
+        /// </summary>
         private int CountActiveCategories()
         {
             int count = 0;
@@ -1268,6 +1156,11 @@ namespace kotor_Randomizer_2.Models
             return count;
         }
 
+        /// <summary>
+        /// Run randomization methods as needed while reporting progress to the BackgroundWorker.
+        /// </summary>
+        /// <param name="bw"></param>
+        /// <param name="paths"></param>
         private void DoRandomize(BackgroundWorker bw, KPaths paths)
         {
             // Determine step size and throw error if no categories are selected.
@@ -1284,7 +1177,7 @@ namespace kotor_Randomizer_2.Models
             {
                 sw.WriteLine(DateTime.Now.ToString());
                 sw.WriteLine(Properties.Resources.LogHeader);
-                ResetRandomizationCategories();
+                ResetStaticRandomizationClasses();
 
                 try
                 {
@@ -1396,6 +1289,11 @@ namespace kotor_Randomizer_2.Models
             }
         }
 
+        /// <summary>
+        /// Run spoiler creation methods as needed while reporting progress to the BackgroundWorker.
+        /// </summary>
+        /// <param name="bw"></param>
+        /// <param name="spoilersDirectory"></param>
         private void DoSpoil(BackgroundWorker bw, string spoilersDirectory)
         {
             double progress = 0;
@@ -1492,6 +1390,14 @@ namespace kotor_Randomizer_2.Models
             }
         }
 
+        /// <summary>
+        /// Reports progress of the current busy state to the BackgroundWorker.
+        /// </summary>
+        /// <param name="bw"></param>
+        /// <param name="progress"></param>
+        /// <param name="message"></param>
+        /// <param name="state"></param>
+        /// <param name="logMessage"></param>
         private void ReportProgress(BackgroundWorker bw, double progress, string message, BusyState state, bool logMessage = true)
         {
             bw.ReportProgress(0, new RandoProgress()
@@ -1505,7 +1411,22 @@ namespace kotor_Randomizer_2.Models
             });
         }
 
-        private void ResetRandomizationCategories()
+        /// <summary>
+        /// Converts the string representation of the name or numeric value of enumerated constants
+        /// to an equivalent enumerated object of the provided enumeration type.
+        /// </summary>
+        /// <typeparam name="T">An enumeration type.</typeparam>
+        /// <param name="value">A string containing the name or value to convert.</param>
+        /// <returns>An object of type T whose value is represented by value.</returns>
+        private static T ParseEnum<T>(string value)
+        {
+            return (T)Enum.Parse(typeof(T), value);
+        }
+
+        /// <summary>
+        /// Reset static randomization classes for a new randomization.
+        /// </summary>
+        private void ResetStaticRandomizationClasses()
         {
             ModuleRando.Reset(this);
             ItemRando.Reset();
@@ -1517,6 +1438,176 @@ namespace kotor_Randomizer_2.Models
             OtherRando.Reset();
         }
 
+        /// <summary>
+        /// Reset General settings to default.
+        /// </summary>
+        private void ResetGeneral()
+        {
+            GeneralModuleExtrasValue = ModuleExtras.Default;
+            foreach (var door in GeneralUnlockedDoors)
+                GeneralLockedDoors.Add(door);
+            GeneralUnlockedDoors.Clear();
+        }
+
+        /// <summary>
+        /// Reset Audio settings to default.
+        /// </summary>
+        private void ResetAudio()
+        {
+            AudioAmbientNoise         = RandomizationLevel.None;
+            AudioAreaMusic            = RandomizationLevel.None;
+            AudioBattleMusic          = RandomizationLevel.None;
+            AudioCutsceneNoise        = RandomizationLevel.None;
+            AudioNpcSounds            = RandomizationLevel.None;
+            AudioPartySounds          = RandomizationLevel.None;
+            AudioRemoveDmcaMusic      = false;
+            AudioMixNpcAndPartySounds = false;
+        }
+
+        /// <summary>
+        /// Reset Item settings to default.
+        /// </summary>
+        private void ResetItems()
+        {
+            ItemArmbands        = RandomizationLevel.None;
+            ItemArmor           = RandomizationLevel.None;
+            ItemBelts           = RandomizationLevel.None;
+            ItemBlasters        = RandomizationLevel.None;
+            ItemCreatureHides   = RandomizationLevel.None;
+            ItemCreatureWeapons = RandomizationLevel.None;
+            ItemDroidEquipment  = RandomizationLevel.None;
+            ItemGloves          = RandomizationLevel.None;
+            ItemGrenades        = RandomizationLevel.None;
+            ItemImplants        = RandomizationLevel.None;
+            ItemLightsabers     = RandomizationLevel.None;
+            ItemMasks           = RandomizationLevel.None;
+            ItemMeleeWeapons    = RandomizationLevel.None;
+            ItemMines           = RandomizationLevel.None;
+            ItemPazaakCards     = RandomizationLevel.None;
+            ItemMedical         = RandomizationLevel.None;
+            ItemUpgrades        = RandomizationLevel.None;
+            ItemVarious         = RandomizationLevel.None;
+
+            // Move all items to randomized list.
+            foreach (var item in ItemOmittedList) ItemRandomizedList.Add(item);
+            ItemOmittedList.Clear();
+
+            // Grab omitted list from globals.
+            var omitItems = ItemRandomizedList.Where(ri => Globals.OMIT_ITEM_PRESETS.First().Value.Contains(ri.Code)).ToList();
+            foreach (var item in omitItems)
+            {
+                ItemOmittedList.Add(item);
+                ItemRandomizedList.Remove(item);
+            }
+
+            ItemOmittedPreset = Globals.OMIT_ITEM_PRESETS.First().Key;
+        }
+
+        /// <summary>
+        /// Reset Model settings to default.
+        /// </summary>
+        private void ResetModels()
+        {
+            ModelCharacterRando      = false;
+            ModelCharacterOmitLarge  = true;
+            ModelCharacterOmitBroken = true;
+
+            ModelDoorRando           = false;
+            ModelDoorOmitAirlock     = true;
+            ModelDoorOmitBroken      = true;
+
+            ModelPlaceableRando      = false;
+            ModelPlaceableOmitLarge  = true;
+            ModelPlaceableOmitBroken = true;
+            ModelPlaceableEasyPanels = false;
+        }
+
+        /// <summary>
+        /// Reset Module settings to default.
+        /// </summary>
+        private void ResetModules()
+        {
+            GeneralModuleExtrasValue = ModuleExtras.Default;
+
+            foreach (var item in GeneralUnlockedDoors) GeneralLockedDoors.Add(item);
+            GeneralUnlockedDoors.Clear();
+
+            ModuleAllowGlitchClip      = false;
+            ModuleAllowGlitchDlz       = false;
+            ModuleAllowGlitchFlu       = false;
+            ModuleAllowGlitchGpw       = false;
+            ModuleAllowGlitchHotshot   = true;
+            ModuleGoalIsMalak          = true;
+            ModuleGoalIsPazaak         = false;
+            ModuleGoalIsStarMap        = false;
+            ModuleGoalIsFullParty      = false;
+            ModuleLogicIgnoreOnceEdges = true;
+            ModuleLogicRandoRules      = true;
+            ModuleLogicReachability    = true;
+
+            foreach (var item in ModuleRandomizedList) ModuleOmittedList.Add(item);
+            ModuleRandomizedList.Clear();
+            ModuleShufflePreset = Globals.OMIT_PRESETS.First().Key;
+        }
+
+        /// <summary>
+        /// Reset Other settings to default.
+        /// </summary>
+        private void ResetOther()
+        {
+            OtherNameGeneration = false;
+            OtherFirstNamesF    = string.Empty;
+            OtherFirstNamesM    = string.Empty;
+            OtherLastNames      = string.Empty;
+            OtherPartyMembers   = false;
+            OtherPazaakDecks    = false;
+            OtherPolymorphMode  = false;
+            OtherSwoopBoosters  = false;
+            OtherSwoopObstacles = false;
+        }
+
+        /// <summary>
+        /// Reset 2DA settings to default.
+        /// </summary>
+        private void ResetTables()
+        {
+            foreach (var table in Table2DAs) table.Reset();
+        }
+
+        /// <summary>
+        /// Reset Text settings to default.
+        /// </summary>
+        private void ResetText()
+        {
+            TextSettingsValue = TextSettings.Default;
+        }
+
+        /// <summary>
+        /// Reset Texture settings to default.
+        /// </summary>
+        private void ResetTextures()
+        {
+            TextureSelectedPack = TexturePack.HighQuality;
+
+            TextureCreatures    = RandomizationLevel.None;
+            TextureCubeMaps     = RandomizationLevel.None;
+            TextureEffects      = RandomizationLevel.None;
+            TextureItems        = RandomizationLevel.None;
+            TextureNPC          = RandomizationLevel.None;
+            TextureOther        = RandomizationLevel.None;
+            TextureParty        = RandomizationLevel.None;
+            TexturePlaceables   = RandomizationLevel.None;
+            TexturePlanetary    = RandomizationLevel.None;
+            TexturePlayerBodies = RandomizationLevel.None;
+            TexturePlayerHeads  = RandomizationLevel.None;
+            TextureStunt        = RandomizationLevel.None;
+            TextureVehicles     = RandomizationLevel.None;
+            TextureWeapons      = RandomizationLevel.None;
+        }
+
+        /// <summary>
+        /// Read Module and General settings from newly read KRP.
+        /// </summary>
         private void ReadKRPModules()
         {
             // Grab QoL from module extras.
@@ -1565,6 +1656,9 @@ namespace kotor_Randomizer_2.Models
             }
         }
 
+        /// <summary>
+        /// Read Item settings from newly read KRP.
+        /// </summary>
         private void ReadKRPItems()
         {
             ItemOmittedPreset = null;
@@ -1601,6 +1695,9 @@ namespace kotor_Randomizer_2.Models
             }
         }
 
+        /// <summary>
+        /// Read Audio settings from newly read KRP.
+        /// </summary>
         private void ReadKRPAudio()
         {
             AudioAmbientNoise         = Properties.Settings.Default.RandomizeAmbientNoise;
@@ -1613,6 +1710,9 @@ namespace kotor_Randomizer_2.Models
             AudioMixNpcAndPartySounds = Properties.Settings.Default.MixNpcAndPartySounds;
         }
 
+        /// <summary>
+        /// Read Model settings from newly read KRP.
+        /// </summary>
         private void ReadKRPModels()
         {
             ModelCharacterRando      = (Properties.Settings.Default.RandomizeCharModels & 1) > 0;
@@ -1629,6 +1729,9 @@ namespace kotor_Randomizer_2.Models
             ModelPlaceableEasyPanels = (Properties.Settings.Default.RandomizePlaceModels & 8) > 0;
         }
 
+        /// <summary>
+        /// Read Texture settings from newly read KRP.
+        /// </summary>
         private void ReadKRPTextures()
         {
             TextureSelectedPack = Properties.Settings.Default.TexturePack;
@@ -1649,139 +1752,578 @@ namespace kotor_Randomizer_2.Models
             TextureWeapons      = Properties.Settings.Default.TextureRandomizeWeapons;
         }
 
+        /// <summary>
+        /// Read 2DA settings from newly read KRP.
+        /// </summary>
         private void ReadKRPTwoDAs()
         {
-            throw new NotImplementedException();
+            ResetTables();  // Reset columns to default prior to reading new settings.
+            foreach (var kvp in Globals.Selected2DAs)
+            {
+                // Find the selected table.
+                var table = Table2DAs.First(rt => rt.Name == kvp.Key);
+
+                // For each selected column, set it to be randomized.
+                foreach (var col in kvp.Value)
+                {
+                    table.Randomized.Add(col);
+                    table.Columns.Remove(col);
+                }
+            }
         }
 
+        /// <summary>
+        /// Read Text settings from newly read KRP.
+        /// </summary>
         private void ReadKRPText()
         {
             TextSettingsValue = Properties.Settings.Default.TextSettingsValue;
         }
 
+        /// <summary>
+        /// Read Other settings from newly read KRP.
+        /// </summary>
         private void ReadKRPOther()
         {
-            throw new NotImplementedException();
-        }
-
-        private void ResetModules()
-        {
-            ModuleAllowGlitchClip      = false;
-            ModuleAllowGlitchDlz       = false;
-            ModuleAllowGlitchFlu       = false;
-            ModuleAllowGlitchGpw       = false;
-            ModuleAllowGlitchHotshot   = true;
-            ModuleGoalIsMalak          = true;
-            ModuleGoalIsPazaak         = false;
-            ModuleGoalIsStarMap        = false;
-            ModuleGoalIsFullParty      = false;
-            ModuleLogicIgnoreOnceEdges = true;
-            ModuleLogicRandoRules      = true;
-            ModuleLogicReachability    = true;
-
-            foreach (var item in ModuleRandomizedList) ModuleOmittedList.Add(item);
-            ModuleRandomizedList.Clear();
-            ModuleShufflePreset = Globals.OMIT_PRESETS.First().Key;
-        }
-
-        private void ResetItems()
-        {
-            ItemArmbands        = RandomizationLevel.None;
-            ItemArmor           = RandomizationLevel.None;
-            ItemBelts           = RandomizationLevel.None;
-            ItemBlasters        = RandomizationLevel.None;
-            ItemCreatureHides   = RandomizationLevel.None;
-            ItemCreatureWeapons = RandomizationLevel.None;
-            ItemDroidEquipment  = RandomizationLevel.None;
-            ItemGloves          = RandomizationLevel.None;
-            ItemGrenades        = RandomizationLevel.None;
-            ItemImplants        = RandomizationLevel.None;
-            ItemLightsabers     = RandomizationLevel.None;
-            ItemMasks           = RandomizationLevel.None;
-            ItemMeleeWeapons    = RandomizationLevel.None;
-            ItemMines           = RandomizationLevel.None;
-            ItemPazaakCards     = RandomizationLevel.None;
-            ItemMedical         = RandomizationLevel.None;
-            ItemUpgrades        = RandomizationLevel.None;
-            ItemVarious         = RandomizationLevel.None;
-
-            // Move all items to randomized list.
-            foreach (var item in ItemOmittedList) ItemRandomizedList.Add(item);
-            ItemOmittedList.Clear();
-
-            // Grab omitted list from globals.
-            var omitItems = ItemRandomizedList.Where(ri => Globals.OMIT_ITEM_PRESETS.First().Value.Contains(ri.Code));
-            foreach (var item in omitItems)
+            OtherNameGeneration = Properties.Settings.Default.RandomizeNameGen;
+            if (OtherNameGeneration)
             {
-                ItemOmittedList.Add(item);
-                ItemRandomizedList.Remove(item);
+                OtherFirstNamesF = string.Join(Environment.NewLine, Properties.Settings.Default.FirstnamesF.OfType<string>());
+                OtherFirstNamesM = string.Join(Environment.NewLine, Properties.Settings.Default.FirstnamesM.OfType<string>());
+                OtherLastNames   = string.Join(Environment.NewLine, Properties.Settings.Default.Lastnames.OfType<string>());
+            }
+            else
+            {
+                OtherFirstNamesF = string.Empty;
+                OtherFirstNamesM = string.Empty;
+                OtherLastNames   = string.Empty;
             }
 
-            ItemOmittedPreset = Globals.OMIT_ITEM_PRESETS.First().Key;
+            OtherPartyMembers   = Properties.Settings.Default.RandomizePartyMembers;
+            OtherPazaakDecks    = Properties.Settings.Default.RandomizePazaakDecks;
+            OtherPolymorphMode  = Properties.Settings.Default.PolymorphMode;
+            OtherSwoopBoosters  = Properties.Settings.Default.RandomizeSwoopBoosters;
+            OtherSwoopObstacles = Properties.Settings.Default.RandomizeSwoopObstacles;
         }
 
-        private void ResetAudio()
+        /// <summary>
+        /// Read general settings from an XML file.
+        /// </summary>
+        /// <param name="element">XML element containing the general settings.</param>
+        private void ReadGeneralSettings(XElement element)
         {
-            AudioAmbientNoise         = RandomizationLevel.None;
-            AudioAreaMusic            = RandomizationLevel.None;
-            AudioBattleMusic          = RandomizationLevel.None;
-            AudioCutsceneNoise        = RandomizationLevel.None;
-            AudioNpcSounds            = RandomizationLevel.None;
-            AudioPartySounds          = RandomizationLevel.None;
-            AudioRemoveDmcaMusic      = false;
-            AudioMixNpcAndPartySounds = false;
+            ResetGeneral();
+            GeneralModuleExtrasValue = ParseEnum<ModuleExtras>(element.Attribute(ATTR_QOL).Value);
+
+            foreach (var unlock in element.Descendants(ELEM_UNLOCK))
+            {
+                var tag = ParseEnum<ModuleExtras>(unlock.Attribute(ATTR_TAG).Value);
+                var door = GeneralLockedDoors.FirstOrDefault(x => x.Tag == tag);
+                if (door != null)
+                {
+                    GeneralUnlockedDoors.Add(door);
+                    GeneralLockedDoors.Remove(door);
+                }
+            }
         }
 
-        private void ResetModels()
+        /// <summary>
+        /// Read audio settings from an XML file.
+        /// </summary>
+        /// <param name="element">XML element containing the audio settings.</param>
+        private void ReadAudioSettings(XElement element)
         {
-            ModelCharacterRando      = false;
-            ModelCharacterOmitLarge  = false;
-            ModelCharacterOmitBroken = false;
-
-            ModelDoorRando           = false;
-            ModelDoorOmitAirlock     = false;
-            ModelDoorOmitBroken      = false;
-
-            ModelPlaceableRando      = false;
-            ModelPlaceableOmitLarge  = false;
-            ModelPlaceableOmitBroken = false;
-            ModelPlaceableEasyPanels = false;
+            AudioAmbientNoise         = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_AMBIENT ).Value);
+            AudioAreaMusic            = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_AREA    ).Value);
+            AudioBattleMusic          = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_BATTLE  ).Value);
+            AudioCutsceneNoise        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_CUTSCENE).Value);
+            AudioNpcSounds            = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_NPC     ).Value);
+            AudioPartySounds          = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_PARTY   ).Value);
+            AudioMixNpcAndPartySounds = bool.Parse(element.Attribute(ATTR_MIXNPCPARTY).Value);
+            AudioRemoveDmcaMusic      = bool.Parse(element.Attribute(ATTR_REMOVE_DMCA).Value);
         }
 
-        private void ResetTextures()
+        /// <summary>
+        /// Read item settings from an XML file.
+        /// </summary>
+        /// <param name="element">XML element containing the item settings.</param>
+        private void ReadItemSettings(XElement element)
         {
-            TextureSelectedPack = TexturePack.HighQuality;
+            ItemArmbands        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_ARMBAND   ).Value);
+            ItemArmor           = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_ARMOR     ).Value);
+            ItemBelts           = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_BELT      ).Value);
+            ItemBlasters        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_BLASTER   ).Value);
+            ItemCreatureHides   = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_CHIDE     ).Value);
+            ItemCreatureWeapons = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_CWEAPON   ).Value);
+            ItemDroidEquipment  = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_DROID     ).Value);
+            ItemGloves          = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_GLOVE     ).Value);
+            ItemGrenades        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_GRENADE   ).Value);
+            ItemImplants        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_IMPLANT   ).Value);
+            ItemLightsabers     = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_LIGHTSABER).Value);
+            ItemMasks           = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_MASK      ).Value);
+            ItemMeleeWeapons    = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_MELEE     ).Value);
+            ItemMines           = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_MINE      ).Value);
+            ItemMedical         = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_MEDICAL   ).Value);
+            ItemPazaakCards     = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_PAZAAK    ).Value);
+            ItemUpgrades        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_UPGRADE   ).Value);
+            ItemVarious         = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_VARIOUS   ).Value);
 
-            TextureCreatures    = RandomizationLevel.None;
-            TextureCubeMaps     = RandomizationLevel.None;
-            TextureEffects      = RandomizationLevel.None;
-            TextureItems        = RandomizationLevel.None;
-            TextureNPC          = RandomizationLevel.None;
-            TextureOther        = RandomizationLevel.None;
-            TextureParty        = RandomizationLevel.None;
-            TexturePlaceables   = RandomizationLevel.None;
-            TexturePlanetary    = RandomizationLevel.None;
-            TexturePlayerBodies = RandomizationLevel.None;
-            TexturePlayerHeads  = RandomizationLevel.None;
-            TextureStunt        = RandomizationLevel.None;
-            TextureVehicles     = RandomizationLevel.None;
-            TextureWeapons      = RandomizationLevel.None;
+            foreach (var item in ItemOmittedList)
+                ItemRandomizedList.Add(item);
+            ItemOmittedList.Clear();
+
+            var omit = element.Descendants(ELEM_OMIT).FirstOrDefault();
+            ItemOmittedPreset = omit.Attribute(ATTR_PRESET)?.Value ?? null;
+
+            if (ItemOmittedPreset == null)
+            {
+                foreach (var i in element.Descendants(ELEM_ITEM))
+                {
+                    var code = i.Attribute(ATTR_CODE).Value;
+                    var item = ItemRandomizedList.FirstOrDefault(x => x.Code == code);
+                    if (item != null)
+                    {
+                        ItemOmittedList.Add(item);
+                        ItemRandomizedList.Remove(item);
+                    }
+                }
+            }
         }
 
-        private void ResetTwoDAs()
+        /// <summary>
+        /// Read model settings from an XML file.
+        /// </summary>
+        /// <param name="element">XML element containing the model settings.</param>
+        private void ReadModelSettings(XElement element)
         {
-            throw new NotImplementedException();
+            var charElement = element.Descendants(ELEM_CHAR).FirstOrDefault();
+            if (charElement != null)
+            {
+                ModelCharacterRando = true;
+                ModelCharacterOmitLarge  = bool.Parse(charElement.Attribute(ATTR_OMIT_LARGE ).Value);
+                ModelCharacterOmitBroken = bool.Parse(charElement.Attribute(ATTR_OMIT_BROKEN).Value);
+            }
+            else
+            {
+                ModelCharacterRando = false;
+                ModelCharacterOmitLarge = true;
+                ModelCharacterOmitBroken = true;
+            }
+
+            var doorElement = element.Descendants(ELEM_DOOR).FirstOrDefault();
+            if (doorElement != null)
+            {
+                ModelDoorRando = true;
+                ModelDoorOmitAirlock = bool.Parse(doorElement.Attribute(ATTR_OMIT_AIRLOCK).Value);
+                ModelDoorOmitBroken  = bool.Parse(doorElement.Attribute(ATTR_OMIT_BROKEN ).Value);
+            }
+            else
+            {
+                ModelDoorRando = false;
+                ModelDoorOmitAirlock = true;
+                ModelDoorOmitBroken  = true;
+            }
+
+            var placElement = element.Descendants(ELEM_PLAC).FirstOrDefault();
+            if (placElement != null)
+            {
+                ModelPlaceableRando      = true;
+                ModelPlaceableOmitLarge  = bool.Parse(placElement.Attribute(ATTR_OMIT_LARGE ).Value);
+                ModelPlaceableOmitBroken = bool.Parse(placElement.Attribute(ATTR_OMIT_BROKEN).Value);
+                ModelPlaceableEasyPanels = bool.Parse(placElement.Attribute(ATTR_EASY_PANELS).Value);
+            }
+            else
+            {
+                ModelPlaceableRando      = false;
+                ModelPlaceableOmitLarge  = true;
+                ModelPlaceableOmitBroken = true;
+                ModelPlaceableEasyPanels = false;
+            }
         }
 
-        private void ResetText()
+        /// <summary>
+        /// Read module settings from an XML file.
+        /// </summary>
+        /// <param name="element">XML element containing the module settings.</param>
+        private void ReadModuleSettings(XElement element)
         {
-            TextSettingsValue = TextSettings.Default;
+            var glitches = element.Descendants(ELEM_GLITCHES).FirstOrDefault();
+            ModuleAllowGlitchClip    = bool.Parse(glitches.Attribute(ATTR_CLIP   ).Value);
+            ModuleAllowGlitchDlz     = bool.Parse(glitches.Attribute(ATTR_DLZ    ).Value);
+            ModuleAllowGlitchFlu     = bool.Parse(glitches.Attribute(ATTR_FLU    ).Value);
+            ModuleAllowGlitchGpw     = bool.Parse(glitches.Attribute(ATTR_GPW    ).Value);
+            ModuleAllowGlitchHotshot = bool.Parse(glitches.Attribute(ATTR_HOTSHOT).Value);
+
+            var goals = element.Descendants(ELEM_GOALS).FirstOrDefault();
+            ModuleGoalIsMalak     = bool.Parse(goals.Attribute(ATTR_MALAK ).Value);
+            ModuleGoalIsStarMap   = bool.Parse(goals.Attribute(ATTR_MAPS  ).Value);
+            ModuleGoalIsPazaak    = bool.Parse(goals.Attribute(ATTR_PAZAAK).Value);
+            ModuleGoalIsFullParty = bool.Parse(goals.Attribute(ATTR_PARTY ).Value);
+
+            var logic = element.Descendants(ELEM_LOGIC).FirstOrDefault();
+            ModuleLogicIgnoreOnceEdges = bool.Parse(logic.Attribute(ATTR_IGNORE_ONCE).Value);
+            ModuleLogicRandoRules      = bool.Parse(logic.Attribute(ATTR_RULES      ).Value);
+            ModuleLogicReachability    = bool.Parse(logic.Attribute(ATTR_REACHABLE  ).Value);
+
+            foreach (var module in ModuleOmittedList)
+                ModuleRandomizedList.Add(module);
+            ModuleOmittedList.Clear();
+
+            var omit = element.Descendants(ELEM_OMIT).FirstOrDefault();
+            ModuleShufflePreset = omit.Attribute(ATTR_PRESET)?.Value ?? null;
+
+            if (ModuleShufflePreset == null)
+            {
+                foreach (var mod in element.Descendants(ELEM_MODULE))
+                {
+                    var module = ModuleRandomizedList.FirstOrDefault(x => x.WarpCode == mod.Attribute(ATTR_CODE).Value);
+                    ModuleOmittedList.Add(module);
+                    ModuleRandomizedList.Remove(module);
+                }
+            }
         }
 
-        private void ResetOther()
+        /// <summary>
+        /// Read other settings from an XML file.
+        /// </summary>
+        /// <param name="element">XML element containing the other settings.</param>
+        private void ReadOtherSettings(XElement element)
         {
-            throw new NotImplementedException();
+            // If these boolean attributes exist, their settings are enabled (true).
+            OtherPartyMembers   = element.Attribute(ATTR_PARTY)          != null;
+            OtherPazaakDecks    = element.Attribute(ATTR_PAZAAK)         != null;
+            OtherPolymorphMode  = element.Attribute(ATTR_POLYMORPH)      != null;
+            OtherSwoopBoosters  = element.Attribute(ATTR_SWOOP_BOOSTERS) != null;
+            OtherSwoopObstacles = element.Attribute(ATTR_SWOOP_OBSTACLE) != null;
+
+            var names = element.Descendants(ELEM_NAMES).FirstOrDefault();
+            if (names != null)
+            {
+                OtherNameGeneration = true;
+
+                // Female First Names
+                StringBuilder sb = new StringBuilder();
+                foreach (var name in names.Descendants(ELEM_FIRST_NAME_F))
+                {
+                    sb.AppendLine(name.Value);
+                }
+                OtherFirstNamesF = sb.ToString().TrimEnd("\r\n".ToCharArray());
+
+                // Male First Names
+                sb.Clear();
+                foreach (var name in names.Descendants(ELEM_FIRST_NAME_M))
+                {
+                    sb.AppendLine(name.Value);
+                }
+                OtherFirstNamesM = sb.ToString().TrimEnd("\r\n".ToCharArray());
+
+                // Last Names
+                sb.Clear();
+                foreach (var name in names.Descendants(ELEM_LAST_NAME))
+                {
+                    sb.AppendLine(name.Value);
+                }
+                OtherLastNames = sb.ToString().TrimEnd("\r\n".ToCharArray());
+            }
+            else
+            {
+                OtherNameGeneration = false;
+            }
         }
-        #endregion
+
+        /// <summary>
+        /// Read table settings from an XML file.
+        /// </summary>
+        /// <param name="element">XML element containing the table settings.</param>
+        private void ReadTableSettings(XElement element)
+        {
+            ResetTables();
+            foreach (var tbl in element.Descendants(ELEM_TABLE))
+            {
+                var name = tbl.Attribute(ATTR_NAME).Value;
+                var twoDA = Table2DAs.FirstOrDefault(x => x.Name == name);
+                foreach (var col in tbl.Descendants(ELEM_COLUMN))
+                {
+                    twoDA.Randomized.Add(col.Value);
+                    twoDA.Columns.Remove(col.Value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Read text settings from an XML file.
+        /// </summary>
+        /// <param name="element">XML element containing the text settings.</param>
+        private void ReadTextSettings(XElement element)
+        {
+            TextSettingsValue = ParseEnum<TextSettings>(element.Attribute(ATTR_SETTINGS).Value);
+        }
+
+        /// <summary>
+        /// Read texture settings from an XML file.
+        /// </summary>
+        /// <param name="element">XML element containing the texture settings.</param>
+        private void ReadTextureSettings(XElement element)
+        {
+            TextureSelectedPack = ParseEnum<TexturePack>(element.Attribute(ATTR_PACK).Value);
+            
+            TextureCreatures    = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_CREATURE ).Value);
+            TextureCubeMaps     = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_CUBE_MAP ).Value);
+            TextureEffects      = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_EFFECT   ).Value);
+            TextureItems        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_ITEM     ).Value);
+            TextureNPC          = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_NPC      ).Value);
+            TextureOther        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_OTHER    ).Value);
+            TextureParty        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_PARTY    ).Value);
+            TexturePlaceables   = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_PLACE    ).Value);
+            TexturePlanetary    = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_PLANETARY).Value);
+            TexturePlayerBodies = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_BODY     ).Value);
+            TexturePlayerHeads  = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_HEAD     ).Value);
+            TextureStunt        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_STUNT    ).Value);
+            TextureVehicles     = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_VEHICLE  ).Value);
+            TextureWeapons      = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_WEAPON   ).Value);
+        }
+
+        /// <summary>
+        /// Write General settings to an XML file.
+        /// </summary>
+        /// <param name="w"></param>
+        private void WriteGeneralSettings(XmlTextWriter w)
+        {
+            w.WriteStartElement(ELEM_GENERAL);  // Begin General
+            w.WriteAttributeString(ATTR_QOL, GeneralModuleExtrasValue.ToString());
+
+            foreach (var item in GeneralUnlockedDoors)
+            {
+                w.WriteStartElement(ELEM_UNLOCK);   // Begin Unlock
+                w.WriteAttributeString(ATTR_TAG, item.Tag.ToString());
+                w.WriteEndElement();                // End Unlock
+            }
+            w.WriteEndElement();                // End General
+        }
+
+        /// <summary>
+        /// Write Audio settings to an XML file.
+        /// </summary>
+        /// <param name="w"></param>
+        private void WriteAudioSettings(XmlTextWriter w)
+        {
+            w.WriteStartElement(ELEM_AUDIO);    // Begin Audio
+            w.WriteAttributeString(ATTR_AMBIENT,     AudioAmbientNoise.ToString());
+            w.WriteAttributeString(ATTR_AREA,        AudioAreaMusic.ToString());
+            w.WriteAttributeString(ATTR_BATTLE,      AudioBattleMusic.ToString());
+            w.WriteAttributeString(ATTR_CUTSCENE,    AudioCutsceneNoise.ToString());
+            w.WriteAttributeString(ATTR_NPC,         AudioNpcSounds.ToString());
+            w.WriteAttributeString(ATTR_PARTY,       AudioPartySounds.ToString());
+            w.WriteAttributeString(ATTR_MIXNPCPARTY, AudioMixNpcAndPartySounds.ToString());
+            w.WriteAttributeString(ATTR_REMOVE_DMCA, AudioRemoveDmcaMusic.ToString());
+            w.WriteEndElement();                // End Audio
+        }
+
+        /// <summary>
+        /// Write Item settings to an XML file.
+        /// </summary>
+        /// <param name="w"></param>
+        private void WriteItemSettings(XmlTextWriter w)
+        {
+            w.WriteStartElement(ELEM_ITEM);     // Begin Item
+            w.WriteAttributeString(ATTR_ARMBAND,    ItemArmbands.ToString());
+            w.WriteAttributeString(ATTR_ARMOR,      ItemArmor.ToString());
+            w.WriteAttributeString(ATTR_BELT,       ItemBelts.ToString());
+            w.WriteAttributeString(ATTR_BLASTER,    ItemBlasters.ToString());
+            w.WriteAttributeString(ATTR_CHIDE,      ItemCreatureHides.ToString());
+            w.WriteAttributeString(ATTR_CWEAPON,    ItemCreatureWeapons.ToString());
+            w.WriteAttributeString(ATTR_DROID,      ItemDroidEquipment.ToString());
+            w.WriteAttributeString(ATTR_GLOVE,      ItemGloves.ToString());
+            w.WriteAttributeString(ATTR_GRENADE,    ItemGrenades.ToString());
+            w.WriteAttributeString(ATTR_IMPLANT,    ItemImplants.ToString());
+            w.WriteAttributeString(ATTR_LIGHTSABER, ItemLightsabers.ToString());
+            w.WriteAttributeString(ATTR_MASK,       ItemMasks.ToString());
+            w.WriteAttributeString(ATTR_MELEE,      ItemMeleeWeapons.ToString());
+            w.WriteAttributeString(ATTR_MINE,       ItemMines.ToString());
+            w.WriteAttributeString(ATTR_MEDICAL,    ItemMedical.ToString());
+            w.WriteAttributeString(ATTR_PAZAAK,     ItemPazaakCards.ToString());
+            w.WriteAttributeString(ATTR_UPGRADE,    ItemUpgrades.ToString());
+            w.WriteAttributeString(ATTR_VARIOUS,    ItemVarious.ToString());
+
+            w.WriteStartElement(ELEM_OMIT);     // Begin Omit
+            if (!string.IsNullOrWhiteSpace(ItemOmittedPreset))
+            {
+                // Write omitted preset name to file.
+                w.WriteAttributeString(ATTR_PRESET, ItemOmittedPreset);
+            }
+            else
+            {
+                // Write each omitted item to the file.
+                foreach (var item in ItemOmittedList)
+                {
+                    w.WriteStartElement(ELEM_ITEM); // Begin Item
+                    w.WriteAttributeString(ATTR_CODE, item.Code);
+                    w.WriteEndElement();            // End Item
+                }
+            }
+            w.WriteEndElement();                // End Omit
+            w.WriteEndElement();                // End Item
+        }
+
+        /// <summary>
+        /// Write Model settings to an XML file.
+        /// </summary>
+        /// <param name="w"></param>
+        private void WriteModelSettings(XmlTextWriter w)
+        {
+            w.WriteStartElement(ELEM_MODEL);    // Begin Model
+            if (ModelCharacterRando)
+            {
+                w.WriteStartElement(ELEM_CHAR); // Begin Character
+                w.WriteAttributeString(ATTR_OMIT_LARGE,  ModelCharacterOmitLarge.ToString());
+                w.WriteAttributeString(ATTR_OMIT_BROKEN, ModelCharacterOmitBroken.ToString());
+                w.WriteEndElement();            // End Character
+            }
+            if (ModelDoorRando)
+            {
+                w.WriteStartElement(ELEM_DOOR); // Begin Door
+                w.WriteAttributeString(ATTR_OMIT_AIRLOCK, ModelDoorOmitAirlock.ToString());
+                w.WriteAttributeString(ATTR_OMIT_BROKEN,  ModelDoorOmitBroken.ToString());
+                w.WriteEndElement();            // End Door
+            }
+            if (ModelPlaceableRando)
+            {
+                w.WriteStartElement(ELEM_PLAC); // Begin Placeable
+                w.WriteAttributeString(ATTR_OMIT_LARGE,  ModelPlaceableOmitLarge.ToString());
+                w.WriteAttributeString(ATTR_OMIT_BROKEN, ModelPlaceableOmitBroken.ToString());
+                w.WriteAttributeString(ATTR_EASY_PANELS, ModelPlaceableEasyPanels.ToString());
+                w.WriteEndElement();            // End Placeable
+            }
+            w.WriteEndElement();                // End Model
+        }
+
+        /// <summary>
+        /// Write Module settings to an XML file.
+        /// </summary>
+        /// <param name="w"></param>
+        private void WriteModuleSettings(XmlTextWriter w)
+        {
+            w.WriteStartElement(ELEM_MODULE);   // Begin Module
+            w.WriteStartElement(ELEM_GLITCHES); // Begin Glitches
+            w.WriteAttributeString(ATTR_CLIP,    ModuleAllowGlitchClip.ToString());
+            w.WriteAttributeString(ATTR_DLZ,     ModuleAllowGlitchDlz.ToString());
+            w.WriteAttributeString(ATTR_FLU,     ModuleAllowGlitchFlu.ToString());
+            w.WriteAttributeString(ATTR_GPW,     ModuleAllowGlitchGpw.ToString());
+            w.WriteAttributeString(ATTR_HOTSHOT, ModuleAllowGlitchHotshot.ToString());
+            w.WriteEndElement();                // End Glitches
+
+            w.WriteStartElement(ELEM_GOALS);    // Begin Goals
+            w.WriteAttributeString(ATTR_MALAK,  ModuleGoalIsMalak.ToString());
+            w.WriteAttributeString(ATTR_MAPS,   ModuleGoalIsStarMap.ToString());
+            w.WriteAttributeString(ATTR_PAZAAK, ModuleGoalIsPazaak.ToString());
+            w.WriteAttributeString(ATTR_PARTY,  ModuleGoalIsFullParty.ToString());
+            w.WriteEndElement();                // End Goals
+
+            w.WriteStartElement(ELEM_LOGIC);    // Begin Logic
+            w.WriteAttributeString(ATTR_IGNORE_ONCE, ModuleLogicIgnoreOnceEdges.ToString());
+            w.WriteAttributeString(ATTR_RULES,       ModuleLogicRandoRules.ToString());
+            w.WriteAttributeString(ATTR_REACHABLE,   ModuleLogicReachability.ToString());
+            w.WriteEndElement();                // End Logic
+
+            w.WriteStartElement(ELEM_OMIT);     // Begin Omit
+            if (!string.IsNullOrWhiteSpace(ModuleShufflePreset))
+            {
+                // Write the module omit preset to file.
+                w.WriteAttributeString(ATTR_PRESET, ModuleShufflePreset);
+            }
+            else
+            {
+                // Write each omitted module to file.
+                foreach (var item in ModuleOmittedList)
+                {
+                    w.WriteStartElement(ELEM_MODULE);   // Begin Module
+                    w.WriteAttributeString(ATTR_CODE, item.WarpCode);
+                    w.WriteEndElement();                // End Module;
+                }
+            }
+            w.WriteEndElement();                // End Omit
+            w.WriteEndElement();                // End Module
+        }
+
+        /// <summary>
+        /// Write Other settings to an XML file.
+        /// </summary>
+        /// <param name="w"></param>
+        private void WriteOtherSettings(XmlTextWriter w)
+        {
+            w.WriteStartElement(ELEM_OTHER);    // Start Other
+            if (OtherPartyMembers  ) w.WriteAttributeString(ATTR_PARTY,          OtherPartyMembers.ToString());
+            if (OtherPazaakDecks   ) w.WriteAttributeString(ATTR_PAZAAK,         OtherPazaakDecks.ToString());
+            if (OtherPolymorphMode ) w.WriteAttributeString(ATTR_POLYMORPH,      OtherPolymorphMode.ToString());
+            if (OtherSwoopBoosters ) w.WriteAttributeString(ATTR_SWOOP_BOOSTERS, OtherSwoopBoosters.ToString());
+            if (OtherSwoopObstacles) w.WriteAttributeString(ATTR_SWOOP_OBSTACLE, OtherSwoopObstacles.ToString());
+
+            if (OtherNameGeneration)
+            {
+                w.WriteStartElement(ELEM_NAMES);    // Start Names
+                foreach (var name in OtherFirstNamesF.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) w.WriteElementString(ELEM_FIRST_NAME_F, name);
+                foreach (var name in OtherFirstNamesM.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) w.WriteElementString(ELEM_FIRST_NAME_M, name);
+                foreach (var name in OtherLastNames.Split(  "\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) w.WriteElementString(ELEM_LAST_NAME,    name);
+                w.WriteEndElement();                // End   Names
+            }
+            w.WriteEndElement();                // End Other
+        }
+
+        /// <summary>
+        /// Write Table settings to an XML file.
+        /// </summary>
+        /// <param name="w"></param>
+        private void WriteTableSettings(XmlTextWriter w)
+        {
+            w.WriteStartElement(ELEM_TABLE);    // Start Table
+            foreach (var table in Table2DAs.Where(rt => rt.IsRandomized))
+            {
+                w.WriteStartElement(ELEM_TABLE);    // Start Table
+
+                w.WriteAttributeString(ATTR_NAME, table.Name);
+                foreach (var column in table.Randomized)
+                    w.WriteElementString(ELEM_COLUMN, column);
+
+                w.WriteEndElement();                // End   Table
+            }
+            w.WriteEndElement();                // End   Table
+        }
+
+        /// <summary>
+        /// Write Text settings to an XML file.
+        /// </summary>
+        /// <param name="w"></param>
+        private void WriteTextSettings(XmlTextWriter w)
+        {
+            w.WriteStartElement(ELEM_TEXT); // Start Text
+            w.WriteAttributeString(ATTR_SETTINGS, TextSettingsValue.ToString());
+            w.WriteEndElement();            // End   Text
+        }
+
+        /// <summary>
+        /// Write Texture settings to an XML file.
+        /// </summary>
+        /// <param name="w"></param>
+        private void WriteTextureSettings(XmlTextWriter w)
+        {
+            w.WriteStartElement(ELEM_TEXTURE);  // Start Texture
+            w.WriteAttributeString(ATTR_PACK,      TextureSelectedPack.ToString());
+            w.WriteAttributeString(ATTR_CREATURE,  TextureCreatures.ToString());
+            w.WriteAttributeString(ATTR_CUBE_MAP,  TextureCubeMaps.ToString());
+            w.WriteAttributeString(ATTR_EFFECT,    TextureEffects.ToString());
+            w.WriteAttributeString(ATTR_ITEM,      TextureItems.ToString());
+            w.WriteAttributeString(ATTR_NPC,       TextureNPC.ToString());
+            w.WriteAttributeString(ATTR_OTHER,     TextureOther.ToString());
+            w.WriteAttributeString(ATTR_PARTY,     TextureParty.ToString());
+            w.WriteAttributeString(ATTR_PLACE,     TexturePlaceables.ToString());
+            w.WriteAttributeString(ATTR_PLANETARY, TexturePlanetary.ToString());
+            w.WriteAttributeString(ATTR_BODY,      TexturePlayerBodies.ToString());
+            w.WriteAttributeString(ATTR_HEAD,      TexturePlayerHeads.ToString());
+            w.WriteAttributeString(ATTR_STUNT,     TextureStunt.ToString());
+            w.WriteAttributeString(ATTR_VEHICLE,   TextureVehicles.ToString());
+            w.WriteAttributeString(ATTR_WEAPON,    TextureWeapons.ToString());
+            w.WriteEndElement();                // End   Texture
+        }
+        #endregion Private Methods
     }
 }

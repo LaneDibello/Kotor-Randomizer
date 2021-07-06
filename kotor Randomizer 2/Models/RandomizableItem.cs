@@ -28,5 +28,13 @@ namespace kotor_Randomizer_2.Models
         public string Label { get; set; }
         /// <summary> UNUSED. Collection of tags that identify item groups. </summary>
         public List<string> Tags { get; set; } = new List<string>();
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        public override string ToString()
+        {
+            return $"[{Code}] {Label}";
+        }
     }
 }

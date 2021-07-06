@@ -41,15 +41,14 @@ namespace Randomizer_WPF.Views
         public static readonly DependencyProperty Kotor1PathProperty  = DependencyProperty.Register("Kotor1Path",  typeof(string), typeof(GeneralView));
         public static readonly DependencyProperty Kotor2PathProperty  = DependencyProperty.Register("Kotor2Path",  typeof(string), typeof(GeneralView));
         public static readonly DependencyProperty SpoilerPathProperty = DependencyProperty.Register("SpoilerPath", typeof(string), typeof(GeneralView));
-        public static readonly DependencyProperty QolExtrasProperty   = DependencyProperty.Register("QolExtras",   typeof(ModuleExtras), typeof(GeneralView), new PropertyMetadata(ModuleExtras.Default));
 
-        public static readonly DependencyProperty SaveDataDeleteMilestoneProperty   = DependencyProperty.Register("SaveDataDeleteMilestone",  typeof(bool), typeof(GeneralView), new PropertyMetadata(true, HandleQolValueChanged));
-        public static readonly DependencyProperty SaveDataIncludeMinigamesProperty  = DependencyProperty.Register("SaveDataIncludeMinigames", typeof(bool), typeof(GeneralView), new PropertyMetadata(HandleQolValueChanged));
-        public static readonly DependencyProperty SaveDataIncludeAllProperty        = DependencyProperty.Register("SaveDataIncludeAll",       typeof(bool), typeof(GeneralView), new PropertyMetadata(HandleQolValueChanged));
-        public static readonly DependencyProperty QolAddSpiceLabProperty            = DependencyProperty.Register("QolAddSpiceLab",           typeof(bool), typeof(GeneralView), new PropertyMetadata(HandleQolValueChanged));
-        public static readonly DependencyProperty QolFixDreamSequenceProperty       = DependencyProperty.Register("QolFixDreamSequence",      typeof(bool), typeof(GeneralView), new PropertyMetadata(HandleQolValueChanged));
-        public static readonly DependencyProperty QolFixMindPrisonProperty          = DependencyProperty.Register("QolFixMindPrison",         typeof(bool), typeof(GeneralView), new PropertyMetadata(HandleQolValueChanged));
-        public static readonly DependencyProperty QolFixModuleCoordinatesProperty   = DependencyProperty.Register("QolFixModuleCoordinates",  typeof(bool), typeof(GeneralView), new PropertyMetadata(HandleQolValueChanged));
+        public static readonly DependencyProperty SaveDataDeleteMilestoneProperty   = DependencyProperty.Register("SaveDataDeleteMilestone",  typeof(bool), typeof(GeneralView));
+        public static readonly DependencyProperty SaveDataIncludeMinigamesProperty  = DependencyProperty.Register("SaveDataIncludeMinigames", typeof(bool), typeof(GeneralView));
+        public static readonly DependencyProperty SaveDataIncludeAllProperty        = DependencyProperty.Register("SaveDataIncludeAll",       typeof(bool), typeof(GeneralView));
+        public static readonly DependencyProperty QolAddSpiceLabProperty            = DependencyProperty.Register("QolAddSpiceLab",           typeof(bool), typeof(GeneralView));
+        public static readonly DependencyProperty QolFixDreamSequenceProperty       = DependencyProperty.Register("QolFixDreamSequence",      typeof(bool), typeof(GeneralView));
+        public static readonly DependencyProperty QolFixMindPrisonProperty          = DependencyProperty.Register("QolFixMindPrison",         typeof(bool), typeof(GeneralView));
+        public static readonly DependencyProperty QolFixModuleCoordinatesProperty   = DependencyProperty.Register("QolFixModuleCoordinates",  typeof(bool), typeof(GeneralView));
         #endregion
 
         #region Public Properties
@@ -69,12 +68,6 @@ namespace Randomizer_WPF.Views
         {
             get { return (string)GetValue(SpoilerPathProperty); }
             set { SetValue(SpoilerPathProperty, value); }
-        }
-
-        public ModuleExtras QolExtras
-        {
-            get { return (ModuleExtras)GetValue(QolExtrasProperty); }
-            set { SetValue(QolExtrasProperty, value); }
         }
 
         public bool SaveDataDeleteMilestone
@@ -121,22 +114,6 @@ namespace Randomizer_WPF.Views
         #endregion
 
         #region Events
-        private static void HandleQolValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var view = d as GeneralView;
-            var extras = ModuleExtras.Default;
-
-            if (!view.SaveDataDeleteMilestone)  extras |= ModuleExtras.NoSaveDelete;
-            if (view.SaveDataIncludeMinigames)  extras |= ModuleExtras.SaveMiniGames;
-            if (view.SaveDataIncludeAll      )  extras |= ModuleExtras.SaveAllModules;
-            if (view.QolAddSpiceLab          )  extras |= ModuleExtras.VulkarSpiceLZ;
-            if (view.QolFixDreamSequence     )  extras |= ModuleExtras.FixDream;
-            if (view.QolFixMindPrison        )  extras |= ModuleExtras.FixMindPrison;
-            if (view.QolFixModuleCoordinates )  extras |= ModuleExtras.FixCoordinates;
-
-            view.QolExtras = extras;
-        }
-
         private void BtnLockAll_Click(object sender, RoutedEventArgs e)
         {
             var view = CollectionViewSource.GetDefaultView(lvUnlocked.ItemsSource);

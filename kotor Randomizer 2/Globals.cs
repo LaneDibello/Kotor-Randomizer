@@ -1575,6 +1575,7 @@ namespace kotor_Randomizer_2
                     "g_w_sonicrfl03",   // Sonic rifle
                     "g_w_vbrdblswd02", "g_w_vbrdblswd03",   // Sith War Sword
                     "g_w_waraxe001",    // Gamorrean Battleaxe
+                    "w_bstrcrbn",   // Clothing, weapons +1
                 }
             },
         };

@@ -29,13 +29,11 @@ namespace Randomizer_WPF.Views
         #endregion
 
         #region Dependency Properties
-        public static readonly DependencyProperty RandomizeDialogueEntriesProperty = DependencyProperty.Register("RandomizeDialogueEntries", typeof(bool), typeof(TextView), new PropertyMetadata(HandleTextSettingsChanged));
-        public static readonly DependencyProperty RandomizeDialogueRepliesProperty = DependencyProperty.Register("RandomizeDialogueReplies", typeof(bool), typeof(TextView), new PropertyMetadata(HandleTextSettingsChanged));
-        public static readonly DependencyProperty MatchEntrySoundsProperty         = DependencyProperty.Register("MatchEntrySounds",         typeof(bool), typeof(TextView), new PropertyMetadata(HandleTextSettingsChanged));
-        public static readonly DependencyProperty RandomizeAdditionalTextProperty  = DependencyProperty.Register("RandomizeAdditionalText",  typeof(bool), typeof(TextView), new PropertyMetadata(HandleTextSettingsChanged));
-        public static readonly DependencyProperty MatchSimilarStringLengthProperty = DependencyProperty.Register("MatchSimilarStringLength", typeof(bool), typeof(TextView), new PropertyMetadata(HandleTextSettingsChanged));
-
-        public static readonly DependencyProperty TextSettingsValueProperty = DependencyProperty.Register("TextSettingsValue", typeof(TextSettings), typeof(TextView), new PropertyMetadata(TextSettings.Default));
+        public static readonly DependencyProperty RandomizeDialogueEntriesProperty = DependencyProperty.Register("RandomizeDialogueEntries", typeof(bool), typeof(TextView));
+        public static readonly DependencyProperty RandomizeDialogueRepliesProperty = DependencyProperty.Register("RandomizeDialogueReplies", typeof(bool), typeof(TextView));
+        public static readonly DependencyProperty MatchEntrySoundsProperty         = DependencyProperty.Register("MatchEntrySounds",         typeof(bool), typeof(TextView));
+        public static readonly DependencyProperty RandomizeAdditionalTextProperty  = DependencyProperty.Register("RandomizeAdditionalText",  typeof(bool), typeof(TextView));
+        public static readonly DependencyProperty MatchSimilarStringLengthProperty = DependencyProperty.Register("MatchSimilarStringLength", typeof(bool), typeof(TextView));
         #endregion
 
         #region Public Properties
@@ -67,28 +65,6 @@ namespace Randomizer_WPF.Views
         {
             get { return (bool)GetValue(MatchSimilarStringLengthProperty); }
             set { SetValue(MatchSimilarStringLengthProperty, value); }
-        }
-
-        public TextSettings TextSettingsValue
-        {
-            get { return (TextSettings)GetValue(TextSettingsValueProperty); }
-            set { SetValue(TextSettingsValueProperty, value); }
-        }
-        #endregion
-
-        #region Events
-        private static void HandleTextSettingsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var view = d as TextView;
-            var settings = TextSettings.Default;
-
-            if (view.RandomizeDialogueEntries)  settings |= TextSettings.RandoDialogEntries;
-            if (view.RandomizeDialogueReplies)  settings |= TextSettings.RandoDialogReplies;
-            if (view.MatchEntrySounds        )  settings |= TextSettings.MatchEntrySoundsWText;
-            if (view.RandomizeAdditionalText )  settings |= TextSettings.RandoFullTLK;
-            if (view.MatchSimilarStringLength)  settings |= TextSettings.MatchSimLengthStrings;
-
-            view.TextSettingsValue = settings;
         }
         #endregion
     }

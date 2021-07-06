@@ -234,20 +234,20 @@
 
                         <!-- Texture Settings -->
                         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="5,4,5,0">
-                            <uc:RandomizationLevelUserControl x:Name="rlucCubeMaps"     CheckboxLabel="CubeMaps"      SelectedLevel="{Binding TextureCubeMaps, Mode=TwoWay}" />
-                            <uc:RandomizationLevelUserControl x:Name="rlucCreatures"    CheckboxLabel="Creatures"     SelectedLevel="{Binding TextureCreatures, Mode=TwoWay}" />
-                            <uc:RandomizationLevelUserControl x:Name="rlucEffects"      CheckboxLabel="Effects"       SelectedLevel="{Binding TextureEffects, Mode=TwoWay}" />
-                            <uc:RandomizationLevelUserControl x:Name="rlucItems"        CheckboxLabel="Items"         SelectedLevel="{Binding TextureItems, Mode=TwoWay}" />
-                            <uc:RandomizationLevelUserControl x:Name="rlucPlanetary"    CheckboxLabel="Planetary"     SelectedLevel="{Binding TexturePlanetary, Mode=TwoWay}" />
-                            <uc:RandomizationLevelUserControl x:Name="rlucNPC"          CheckboxLabel="NPC"           SelectedLevel="{Binding TextureNPC, Mode=TwoWay}" />
-                            <uc:RandomizationLevelUserControl x:Name="rlucPlayerHeads"  CheckboxLabel="Player Heads"  SelectedLevel="{Binding TexturePlayerHeads, Mode=TwoWay}" />
-                            <uc:RandomizationLevelUserControl x:Name="rlucPlayerBodies" CheckboxLabel="Player Bodies" SelectedLevel="{Binding TexturePlayerBodies, Mode=TwoWay}" />
-                            <uc:RandomizationLevelUserControl x:Name="rlucPlaceables"   CheckboxLabel="Placeables"    SelectedLevel="{Binding TexturePlaceables, Mode=TwoWay}" />
-                            <uc:RandomizationLevelUserControl x:Name="rlucParty"        CheckboxLabel="Party"         SelectedLevel="{Binding TextureParty, Mode=TwoWay}" />
-                            <uc:RandomizationLevelUserControl x:Name="rlucStunt"        CheckboxLabel="Stunt"         SelectedLevel="{Binding TextureStunt, Mode=TwoWay}" />
-                            <uc:RandomizationLevelUserControl x:Name="rlucVehicles"     CheckboxLabel="Vehicles"      SelectedLevel="{Binding TextureVehicles, Mode=TwoWay}" />
-                            <uc:RandomizationLevelUserControl x:Name="rlucWeapons"      CheckboxLabel="Weapons"       SelectedLevel="{Binding TextureWeapons, Mode=TwoWay}" />
-                            <uc:RandomizationLevelUserControl x:Name="rlucOther"        CheckboxLabel="Other"         SelectedLevel="{Binding TextureOther, Mode=TwoWay}" />
+                            <uc:RandomizationLevelUserControl x:Name="rlucCubeMaps"     CheckboxLabel="CubeMaps"      SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=TextureCubeMaps    }" />
+                            <uc:RandomizationLevelUserControl x:Name="rlucCreatures"    CheckboxLabel="Creatures"     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=TextureCreatures   }" />
+                            <uc:RandomizationLevelUserControl x:Name="rlucEffects"      CheckboxLabel="Effects"       SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=TextureEffects     }" />
+                            <uc:RandomizationLevelUserControl x:Name="rlucItems"        CheckboxLabel="Items"         SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=TextureItems       }" />
+                            <uc:RandomizationLevelUserControl x:Name="rlucPlanetary"    CheckboxLabel="Planetary"     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=TexturePlanetary   }" />
+                            <uc:RandomizationLevelUserControl x:Name="rlucNPC"          CheckboxLabel="NPC"           SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=TextureNPC         }" />
+                            <uc:RandomizationLevelUserControl x:Name="rlucPlayerHeads"  CheckboxLabel="Player Heads"  SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=TexturePlayerHeads }" />
+                            <uc:RandomizationLevelUserControl x:Name="rlucPlayerBodies" CheckboxLabel="Player Bodies" SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=TexturePlayerBodies}" />
+                            <uc:RandomizationLevelUserControl x:Name="rlucPlaceables"   CheckboxLabel="Placeables"    SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=TexturePlaceables  }" />
+                            <uc:RandomizationLevelUserControl x:Name="rlucParty"        CheckboxLabel="Party"         SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=TextureParty       }" />
+                            <uc:RandomizationLevelUserControl x:Name="rlucStunt"        CheckboxLabel="Stunt"         SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=TextureStunt       }" />
+                            <uc:RandomizationLevelUserControl x:Name="rlucVehicles"     CheckboxLabel="Vehicles"      SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=TextureVehicles    }" />
+                            <uc:RandomizationLevelUserControl x:Name="rlucWeapons"      CheckboxLabel="Weapons"       SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=TextureWeapons     }" />
+                            <uc:RandomizationLevelUserControl x:Name="rlucOther"        CheckboxLabel="Other"         SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=TextureOther       }" />
                         </StackPanel>
                     </Grid>
                 </Expander>

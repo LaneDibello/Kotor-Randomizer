@@ -72,41 +72,41 @@
                         </Style>
                     </StackPanel.Resources>
                     <uc:RandomizationLevelUserControl x:Name="rlucArmbands" CheckboxLabel="Armbands"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelArmbands, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelArmbands, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucArmor" CheckboxLabel="Armor"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelArmor, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelArmor, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucBelts" CheckboxLabel="Belts" SubtypeVisible="Hidden"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelBelts, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelBelts, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucBlaster" CheckboxLabel="Blasters"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelBlasters, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelBlasters, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucCreatureHides" CheckboxLabel="Creature Hides" SubtypeVisible="Hidden"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelCreatureHides, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelCreatureHides, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucCreatureWeapons" CheckboxLabel="Creature Weapons"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelCreatureWeapons, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelCreatureWeapons, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucDroidEquipment" CheckboxLabel="Droid Equipment"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelDroidEquipment, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelDroidEquipment, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucGauntlets" CheckboxLabel="Gauntlets" SubtypeVisible="Hidden"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelGauntlets, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelGauntlets, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucGrenades" CheckboxLabel="Grenades" SubtypeVisible="Hidden"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelGrenades, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelGrenades, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucImplants" CheckboxLabel="Implants"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelImplants, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelImplants, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucLightsabers" CheckboxLabel="Lightsabers"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelLightsabers, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelLightsabers, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucMasks" CheckboxLabel="Masks"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelMasks, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelMasks, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucMelee" CheckboxLabel="Melee Weapons"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelMelee, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelMelee, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucMines" CheckboxLabel="Mines"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelMines, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelMines, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucPazaak" CheckboxLabel="Pazaak Cards" SubtypeVisible="Hidden"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelPazaak, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelPazaak, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucMedical" CheckboxLabel="Stims/Medpacs"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelMedical, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelMedical, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucUpgrades" CheckboxLabel="Upgrades/Crystals"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelUpgrades, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelUpgrades, Mode=TwoWay}" />
                     <uc:RandomizationLevelUserControl x:Name="rlucVarious" CheckboxLabel="Various" SubtypeVisible="Hidden"
-                                                  SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelVarious, Mode=TwoWay}" />
+                                                      SelectedLevel="{Binding ElementName=thisView, Path=ItemLevelVarious, Mode=TwoWay}" />
                 </StackPanel>
             </ScrollViewer>
 

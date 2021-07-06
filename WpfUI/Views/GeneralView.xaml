@@ -135,7 +135,7 @@
 
                         <StackPanel Grid.Column="0" Grid.Row="1">
                             <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataDeleteMilestone, Mode=TwoWay}">
-                                <TextBlock Text="Delete Milestone Save Data" />
+                                <TextBlock Text="Prevent Milestone Save Data Deletion" />
                             </CheckBox>
                             <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataIncludeMinigames, Mode=TwoWay}"
                                       IsEnabled="{Binding ElementName=cbSaveAllModules, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"
