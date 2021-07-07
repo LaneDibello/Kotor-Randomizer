@@ -15,6 +15,7 @@
         FontFamily="Microsoft Sans Serif" FontSize="12"
         Name="window"
         d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
+        Closing="Window_Closing"
         Closed="Window_Closed"
         Icon="/Resources/Krandom.ico"
         >
@@ -33,6 +34,13 @@
         <SolidColorBrush Color="{DynamicResource WindowColor}" />
     </Window.Background>
 
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New"   Executed="NewCommand_Executed"   CanExecute="NewCommand_CanExecute"   />
+        <CommandBinding Command="ApplicationCommands.Open"  Executed="OpenCommand_Executed"  CanExecute="OpenCommand_CanExecute"  />
+        <CommandBinding Command="ApplicationCommands.Save"  Executed="SaveCommand_Executed"  CanExecute="SaveCommand_CanExecute"  />
+        <CommandBinding Command="local:CustomCommands.Exit" Executed="ExitCommand_Executed" CanExecute="ExitCommand_CanExecute" />
+    </Window.CommandBindings>
+
     <DockPanel>
         <!-- Dock.Top, Menu -->
         <Grid DockPanel.Dock="Top">
@@ -40,23 +48,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Grid.Resources>
-                <!--<Style TargetType="Menu">
-                    <Setter Property="Background" Value="{StaticResource WindowBrush}" />
-                    <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
-                    <Setter Property="BorderThickness" Value="0,0,0,1" />
-                </Style>
-                <Style TargetType="MenuItem">
-                    <Setter Property="Background" Value="{StaticResource WindowBrush}" />
-                    <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
-                </Style>
-                <Style TargetType="Separator">
-                    <Setter Property="Background" Value="{StaticResource WindowBrush}" />
-                    <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
-                    <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
-                </Style>-->
-            </Grid.Resources>
-
+            
             <Menu Name="Menu" Grid.ColumnSpan="2">
                 <Menu.Resources>
                     <Style TargetType="MenuItem">
@@ -65,15 +57,11 @@
                     </Style>
                 </Menu.Resources>
                 <MenuItem Header="_File">
-                    <MenuItem Command="New"  Header="_New (Default Settings)" MinWidth="150" />
-                    <MenuItem Command="Open" Header="_Open Settings File" />
-                    <MenuItem Command="Save" Header="_Save Current Settings" />
-                    <MenuItem Header="Save Test" Click="SaveTest_Click" />
-                    <MenuItem Header="Load Test" Click="LoadTest_Click" />
-                    <!--<Separator />
-                    <MenuItem Header="Shuffle Current Settings" />-->
+                    <MenuItem Header="_New (Default Settings)" Command="ApplicationCommands.New"   MinWidth="150" />
+                    <MenuItem Header="_Open Settings File"     Command="ApplicationCommands.Open"  />
+                    <MenuItem Header="_Save Current Settings"  Command="ApplicationCommands.Save"  />
                     <Separator />
-                    <MenuItem Command="Close" Header="_Exit" />
+                    <MenuItem Header="E_xit" Command="local:CustomCommands.Exit" />
                 </MenuItem>
                 <MenuItem Header="_Spoilers">
                     <MenuItem Header="Auto-Create Spoilers" Name="miCreateSpoilers" IsCheckable="True" MinWidth="150"
@@ -139,6 +127,7 @@
                     <v:GeneralView x:Name="GeneralView"
                                    Kotor1Path ="{Binding ElementName=window, Mode=TwoWay, Path=Kotor1Path}"
                                    Kotor2Path ="{Binding ElementName=window, Mode=TwoWay, Path=Kotor2Path}"
+                                   PresetPath ="{Binding ElementName=window, Mode=TwoWay, Path=PresetPath}"
                                    SpoilerPath="{Binding ElementName=window, Mode=TwoWay, Path=SpoilerPath}"
                                    
                                    SaveDataDeleteMilestone ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.NoSaveDelete}}"
@@ -255,11 +244,11 @@
                 <!-- Randomize / Unrandomize Launching Point -->
                 <TabItem Header="_Randomize">
                     <v:RandomizeView x:Name="RandomizeView"
-                                     CreateSpoilers="{Binding ElementName=miCreateSpoilers, Path=IsChecked, Mode=TwoWay}"
-                                     CurrentProgress="{Binding ElementName=pbCurrentProgress, Path=Value, Mode=TwoWay}"
-                                     GamePath="{Binding ElementName=window, Path=Kotor1Path, Mode=OneWay}"
+                                     CreateSpoilers ="{Binding ElementName=miCreateSpoilers,  Path=IsChecked,   Mode=TwoWay}"
+                                     CurrentProgress="{Binding ElementName=pbCurrentProgress, Path=Value,       Mode=TwoWay}"
+                                     GamePath       ="{Binding ElementName=window,            Path=Kotor1Path,  Mode=OneWay}"
+                                     SpoilerPath    ="{Binding ElementName=window,            Path=SpoilerPath, Mode=OneWay}"
                                      />
-                    <!-- Need to add dependency properties for start of rando. -->
                 </TabItem>
             </TabControl>
         </Grid>

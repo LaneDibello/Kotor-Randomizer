@@ -12,8 +12,10 @@ namespace Randomizer_WPF
     {
         #region Constants
         public const string ELEM_SETTINGS = "Settings";
+        public const string ATTR_DO_SPOILERS = "CreateSpoilers";
         public const string ATTR_KOTOR1_PATH = "Kotor1Path";
         public const string ATTR_KOTOR2_PATH = "Kotor2Path";
+        public const string ATTR_PRESET_PATH = "PresetsPath";
         public const string ATTR_SPOILER_PATH = "SpoilersPath";
         #endregion
 
@@ -27,8 +29,10 @@ namespace Randomizer_WPF
         #endregion
 
         #region Properties
+        public bool CreateSpoilers { get; set; }
         public string Kotor1Path { get; set; }
         public string Kotor2Path { get; set; }
+        public string PresetPath { get; set; }
         public string SpoilerPath { get; set; }
         #endregion
 
@@ -39,9 +43,11 @@ namespace Randomizer_WPF
             var settings = doc.Descendants(ELEM_SETTINGS).FirstOrDefault();
             if (settings == null) throw new ArgumentException("Settings file is not correctly formatted.");
 
-            Kotor1Path  = settings.Attribute(ATTR_KOTOR1_PATH )?.Value ?? string.Empty;
-            Kotor2Path  = settings.Attribute(ATTR_KOTOR2_PATH )?.Value ?? string.Empty;
-            SpoilerPath = settings.Attribute(ATTR_SPOILER_PATH)?.Value ?? string.Empty;
+            CreateSpoilers = bool.Parse(settings.Attribute(ATTR_DO_SPOILERS)?.Value ?? "false");
+            Kotor1Path     = settings.Attribute(ATTR_KOTOR1_PATH )?.Value ?? string.Empty;
+            Kotor2Path     = settings.Attribute(ATTR_KOTOR2_PATH )?.Value ?? string.Empty;
+            PresetPath     = settings.Attribute(ATTR_PRESET_PATH )?.Value ?? string.Empty;
+            SpoilerPath    = settings.Attribute(ATTR_SPOILER_PATH)?.Value ?? string.Empty;
         }
 
         public void WriteFile(string path)
@@ -49,8 +55,10 @@ namespace Randomizer_WPF
             using (var writer = new XmlTextWriter(path, null))
             {
                 writer.WriteStartElement(ELEM_SETTINGS);
+                writer.WriteAttributeString(ATTR_DO_SPOILERS,  CreateSpoilers.ToString());
                 writer.WriteAttributeString(ATTR_KOTOR1_PATH,  Kotor1Path);
                 writer.WriteAttributeString(ATTR_KOTOR2_PATH,  Kotor2Path);
+                writer.WriteAttributeString(ATTR_PRESET_PATH,  PresetPath);
                 writer.WriteAttributeString(ATTR_SPOILER_PATH, SpoilerPath);
                 writer.WriteEndElement();
                 writer.Flush();

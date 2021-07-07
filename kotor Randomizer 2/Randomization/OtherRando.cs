@@ -405,9 +405,18 @@ namespace kotor_Randomizer_2
             else
             {
                 RandomizeNameGen = k1rando.OtherNameGeneration;
-                FirstnamesM = k1rando.OtherFirstNamesM.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
-                FirstnamesF = k1rando.OtherFirstNamesF.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
-                Lastnames = k1rando.OtherLastNames.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
+                if (string.IsNullOrWhiteSpace(k1rando.OtherFirstNamesM))
+                     FirstnamesM = new List<string>();
+                else FirstnamesM = k1rando.OtherFirstNamesM.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
+
+                if (string.IsNullOrWhiteSpace(k1rando.OtherFirstNamesF))
+                     FirstnamesF = new List<string>();
+                else FirstnamesF = k1rando.OtherFirstNamesF.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
+
+                if (string.IsNullOrWhiteSpace(k1rando.OtherLastNames))
+                     Lastnames = new List<string>();
+                else Lastnames = k1rando.OtherLastNames.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
+
                 PolymorphMode = k1rando.OtherPolymorphMode;
                 RandomizePazaakDecks = k1rando.OtherPazaakDecks;
                 RandomizePartyMembers = k1rando.OtherPartyMembers;

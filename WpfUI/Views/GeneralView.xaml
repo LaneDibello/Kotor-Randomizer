@@ -83,7 +83,7 @@
                         <uc:PathUserControl Grid.Row="1" TextLabel="Kotor 2 Path" PathText="{Binding ElementName=thisView, Path=Kotor2Path, Mode=TwoWay}" IsEnabled="False" />
 
                         <Button Grid.Column="1" Grid.RowSpan="2" Content="Auto Find Paths"
-                                Margin="5,2,0,2" TextBlock.TextAlignment="Center"
+                                Margin="0,2,5,2" TextBlock.TextAlignment="Center"
                                 Style="{StaticResource K1RandoButtonStyle}"
                                 Click="BtnAutoFindPaths_Click" />
 
@@ -93,7 +93,10 @@
 
                         <Border Grid.Row="3" Grid.ColumnSpan="2" Padding="0,5,0,0"
                                 BorderBrush="{StaticResource HarshBlueBrush}" BorderThickness="0,1,0,0">
-                            <uc:PathUserControl Grid.Row="3" TextLabel="Spoiler Path" PathText="{Binding ElementName=thisView, Path=SpoilerPath, Mode=TwoWay}" />
+                            <StackPanel>
+                                <uc:PathUserControl Grid.Row="3" TextLabel="Presets Folder"  PathText="{Binding ElementName=thisView, Path=PresetPath,  Mode=TwoWay}" />
+                                <uc:PathUserControl Grid.Row="3" TextLabel="Spoilers Folder" PathText="{Binding ElementName=thisView, Path=SpoilerPath, Mode=TwoWay}" />
+                            </StackPanel>
                         </Border>
                     </Grid>
                 </Expander>

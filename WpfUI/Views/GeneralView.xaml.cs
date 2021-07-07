@@ -40,6 +40,7 @@ namespace Randomizer_WPF.Views
         #region Dependency Properties
         public static readonly DependencyProperty Kotor1PathProperty  = DependencyProperty.Register("Kotor1Path",  typeof(string), typeof(GeneralView));
         public static readonly DependencyProperty Kotor2PathProperty  = DependencyProperty.Register("Kotor2Path",  typeof(string), typeof(GeneralView));
+        public static readonly DependencyProperty PresetPathProperty  = DependencyProperty.Register("PresetPath",  typeof(string), typeof(GeneralView));
         public static readonly DependencyProperty SpoilerPathProperty = DependencyProperty.Register("SpoilerPath", typeof(string), typeof(GeneralView));
 
         public static readonly DependencyProperty SaveDataDeleteMilestoneProperty   = DependencyProperty.Register("SaveDataDeleteMilestone",  typeof(bool), typeof(GeneralView));
@@ -62,6 +63,12 @@ namespace Randomizer_WPF.Views
         {
             get { return (string)GetValue(Kotor2PathProperty); }
             set { SetValue(Kotor2PathProperty, value); }
+        }
+
+        public string PresetPath
+        {
+            get { return (string)GetValue(PresetPathProperty); }
+            set { SetValue(PresetPathProperty, value); }
         }
 
         public string SpoilerPath

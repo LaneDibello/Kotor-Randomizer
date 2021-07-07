@@ -59,11 +59,12 @@ namespace Randomizer_WPF.Views
         #endregion
 
         #region Dependency Properties
-        public static readonly DependencyProperty CreateSpoilersProperty = DependencyProperty.Register("CreateSpoilers", typeof(bool), typeof(RandomizeView));
+        public static readonly DependencyProperty CreateSpoilersProperty  = DependencyProperty.Register("CreateSpoilers",  typeof(bool),   typeof(RandomizeView));
         public static readonly DependencyProperty CurrentProgressProperty = DependencyProperty.Register("CurrentProgress", typeof(double), typeof(RandomizeView));
-        public static readonly DependencyProperty CurrentStateProperty = DependencyProperty.Register("CurrentState", typeof(string), typeof(RandomizeView));
-        public static readonly DependencyProperty IsBusyProperty = DependencyProperty.Register("IsBusy", typeof(bool), typeof(RandomizeView));
-        public static readonly DependencyProperty GamePathProperty = DependencyProperty.Register("GamePath", typeof(string), typeof(RandomizeView), new PropertyMetadata("", HandleGamePathChanged));
+        public static readonly DependencyProperty CurrentStateProperty    = DependencyProperty.Register("CurrentState",    typeof(string), typeof(RandomizeView));
+        public static readonly DependencyProperty IsBusyProperty          = DependencyProperty.Register("IsBusy",          typeof(bool),   typeof(RandomizeView));
+        public static readonly DependencyProperty GamePathProperty        = DependencyProperty.Register("GamePath",        typeof(string), typeof(RandomizeView), new PropertyMetadata("", HandleGamePathChanged));
+        public static readonly DependencyProperty SpoilerPathProperty     = DependencyProperty.Register("SpoilerPath",     typeof(string), typeof(RandomizeView));
         #endregion
 
         #region Public Properties
@@ -95,6 +96,12 @@ namespace Randomizer_WPF.Views
         {
             get { return (string)GetValue(GamePathProperty); }
             set { SetValue(GamePathProperty, value); }
+        }
+
+        public string SpoilerPath
+        {
+            get { return (string)GetValue(SpoilerPathProperty); }
+            set { SetValue(SpoilerPathProperty, value); }
         }
         #endregion
 
@@ -152,11 +159,15 @@ namespace Randomizer_WPF.Views
 
                 SetBusy("Randomization in Progress ...");
 
+                // If creating spoilers, make sure the directory exists.
+                if (CreateSpoilers && !string.IsNullOrWhiteSpace(SpoilerPath) && !System.IO.Directory.Exists(SpoilerPath))
+                    System.IO.Directory.CreateDirectory(SpoilerPath);
+
                 bwDoRando.RunWorkerAsync(new kotor_Randomizer_2.Models.RandoArgs()
                 {
                     Seed = (int)tbSeed.Tag,
                     GamePath = GamePath,
-                    SpoilersPath = CreateSpoilers ? @"C:\Users\chilley\Documents\Knights" : null,  // Null if spoilers shouldn't be created.
+                    SpoilersPath = CreateSpoilers ? SpoilerPath : null,  // Null if spoilers shouldn't be created.
                 });
             }
         }
