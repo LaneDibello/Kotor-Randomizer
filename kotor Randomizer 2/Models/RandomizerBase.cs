@@ -52,12 +52,6 @@ namespace kotor_Randomizer_2.Models
         public string Status { get; set; }
         /// <summary> Text to write to the log. </summary>
         public string Log { get; set; }
-        /// <summary> True if current busy state is randomizing. </summary>
-        public bool IsRandomizing { get; set; }
-        /// <summary> True if current busy state is unrandomizing. </summary>
-        public bool IsUnrandomizing { get; set; }
-        /// <summary> True if current busy state is spoiling. </summary>
-        public bool IsSpoiling { get; set; }
         /// <summary> Current busy state. </summary>
         public BusyState State { get; set; }
     }

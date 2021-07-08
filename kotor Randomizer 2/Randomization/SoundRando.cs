@@ -374,76 +374,13 @@ namespace kotor_Randomizer_2
             AddToSoundLookup(actionList, randList);
         }
 
-        //public static void GenerateSpoilerLog(string path)
-        //{
-        //    if (MusicLookupTable.Count == 0 &&
-        //        SoundLookupTable.Count == 0)
-        //    { return; }
-
-        //    using (StreamWriter sw = new StreamWriter(path))
-        //    {
-        //        sw.WriteLine($"Seed,{Properties.Settings.Default.Seed}");
-        //        sw.WriteLine();
-
-        //        sw.WriteLine($"Area Music,{Properties.Settings.Default.RandomizeAreaMusic}");
-        //        sw.WriteLine($"Battle Music,{Properties.Settings.Default.RandomizeBattleMusic}");
-        //        sw.WriteLine($"Ambient Noise,{Properties.Settings.Default.RandomizeAmbientNoise}");
-        //        sw.WriteLine($"Cutscene Noise,{Properties.Settings.Default.RandomizeCutsceneNoise}");
-        //        sw.WriteLine($"NPC Sounds,{Properties.Settings.Default.RandomizeNpcSounds}");
-        //        sw.WriteLine($"Party Sounds,{Properties.Settings.Default.RandomizePartySounds}");
-        //        sw.WriteLine($"Remove DMCA,{Properties.Settings.Default.RemoveDmcaMusic}");
-        //        sw.WriteLine($"Mix NPC and Party,{Properties.Settings.Default.MixNpcAndPartySounds}");
-        //        sw.WriteLine();
-
-        //        if (MusicLookupTable.Any())
-        //        {
-        //            var sortedLookup = MusicLookupTable.OrderBy(kvp => kvp.Key);
-        //            sw.WriteLine("Music");
-        //            sw.WriteLine("Original,Randomized");
-
-        //            foreach (var kvp in sortedLookup)
-        //            {
-        //                sw.WriteLine($"{kvp.Key},{kvp.Value}");
-        //            }
-
-        //            sw.WriteLine();
-        //        }
-
-        //        if (SoundLookupTable.Any())
-        //        {
-        //            var sortedLookup = SoundLookupTable.OrderBy(kvp => kvp.Key);
-        //            sw.WriteLine("Sound");
-        //            sw.WriteLine("Original,Randomized");
-
-        //            foreach (var kvp in sortedLookup)
-        //            {
-        //                sw.WriteLine($"{kvp.Key},{kvp.Value}");
-        //            }
-
-        //            sw.WriteLine();
-        //        }
-        //    }
-        //}
-
         public static void CreateSpoilerLog(XLWorkbook workbook)
         {
             if (MusicLookupTable.Count == 0 &&
                 SoundLookupTable.Count == 0)
             { return; }
             var ws = workbook.Worksheets.Add("MusicSound");
-
             int i = 1;
-            //ws.Cell(i, 1).Value = "Seed";
-            //ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
-            //ws.Cell(i, 1).Style.Font.Bold = true;
-            //i++;
-
-            Version version = typeof(StartForm).Assembly.GetName().Version;
-            ws.Cell(i, 1).Value = "Version";
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
-            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-            i += 2;     // Skip a row.
 
             // Music and Sound Randomization Settings
             ws.Cell(i, 1).Value = "Music/Sound Type";

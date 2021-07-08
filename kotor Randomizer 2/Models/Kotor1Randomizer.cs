@@ -941,7 +941,7 @@ namespace kotor_Randomizer_2.Models
 
                 // If SpoilersPath is given, create spoiler logs.
                 if (!string.IsNullOrWhiteSpace(args.SpoilersPath))
-                    DoSpoil(bw, args.SpoilersPath);
+                    DoSpoil(bw, args.SpoilersPath, args.Seed);
             }
             else
             {
@@ -975,31 +975,31 @@ namespace kotor_Randomizer_2.Models
 
                 try
                 {
-                    ReportProgress(bw, progress += stepSize, Properties.Resources.UnrandomizingModules, BusyState.Unrandomizing);
+                    ReportProgress(bw, progress += stepSize, BusyState.Unrandomizing, message: $"... {Properties.Resources.UnrandomizingModules}");
                     paths.RestoreModulesDirectory();
 
-                    ReportProgress(bw, progress += stepSize, Properties.Resources.UnrandomizingLips, BusyState.Unrandomizing);
+                    ReportProgress(bw, progress += stepSize, BusyState.Unrandomizing, message: $"... {Properties.Resources.UnrandomizingLips}");
                     paths.RestoreLipsDirectory();
 
-                    ReportProgress(bw, progress += stepSize, Properties.Resources.UnrandomizingOverrides, BusyState.Unrandomizing);
+                    ReportProgress(bw, progress += stepSize, BusyState.Unrandomizing, message: $"... {Properties.Resources.UnrandomizingOverrides}");
                     paths.RestoreOverrideDirectory();
 
-                    ReportProgress(bw, progress += stepSize, Properties.Resources.UnrandomizingMusic, BusyState.Unrandomizing);
+                    ReportProgress(bw, progress += stepSize, BusyState.Unrandomizing, message: $"... {Properties.Resources.UnrandomizingMusic}");
                     paths.RestoreMusicDirectory();
 
-                    ReportProgress(bw, progress += stepSize, Properties.Resources.UnrandomizingSounds, BusyState.Unrandomizing);
+                    ReportProgress(bw, progress += stepSize, BusyState.Unrandomizing, message: $"... {Properties.Resources.UnrandomizingSounds}");
                     paths.RestoreSoundsDirectory();
 
-                    ReportProgress(bw, progress += stepSize, Properties.Resources.UnrandomizingTextures, BusyState.Unrandomizing);
+                    ReportProgress(bw, progress += stepSize, BusyState.Unrandomizing, message: $"... {Properties.Resources.UnrandomizingTextures}");
                     paths.RestoreTexturePacksDirectory();
 
-                    ReportProgress(bw, progress += stepSize, Properties.Resources.UnrandomizingKeyTable, BusyState.Unrandomizing);
+                    ReportProgress(bw, progress += stepSize, BusyState.Unrandomizing, message: $"... {Properties.Resources.UnrandomizingKeyTable}");
                     paths.RestoreChitinFile();
 
-                    ReportProgress(bw, progress += stepSize, Properties.Resources.UnrandomizingTLKFile, BusyState.Unrandomizing);
+                    ReportProgress(bw, progress += stepSize, BusyState.Unrandomizing, message: $"... {Properties.Resources.UnrandomizingTLKFile}");
                     paths.RestoreDialogFile();
 
-                    ReportProgress(bw, progress += stepSize, Properties.Resources.TaskFinishing, BusyState.Unrandomizing);
+                    ReportProgress(bw, progress += stepSize, BusyState.Unrandomizing, message: $"... {Properties.Resources.TaskFinishing}");
                     File.Delete(paths.RANDOMIZED_LOG);
 
                     ResetStaticRandomizationClasses();
@@ -1168,9 +1168,9 @@ namespace kotor_Randomizer_2.Models
             if (activeCategories == 0)
                 throw new InvalidOperationException(Properties.Resources.ErrorNoRandomization);
 
-            activeCategories++; // Increase steps by 1.
+            activeCategories = activeCategories * 2 + 1; // Double the steps for backing up files, add one for finishing up.
             double stepSize = 100.0 / activeCategories;  // Calculate step size.
-            double progress = 0;
+            double progress = 0 - stepSize;
 
             // Begin randomization process.
             using (StreamWriter sw = new StreamWriter(paths.RANDOMIZED_LOG))
@@ -1185,93 +1185,123 @@ namespace kotor_Randomizer_2.Models
                     File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance);
                     File.WriteAllBytes(Path.Combine(paths.Override, "k_pdan_13_area.ncs"), Properties.Resources.k_pdan_13_area);
 
+                    string category;
+                    string backupFormat      = "... backing up {0}.";
+                    string randomizingFormat = "... randomizing {0}.";
+
                     if (DoRandomizeModules)     // Randomize Modules
                     {
-                        ReportProgress(bw, progress += stepSize, Properties.Resources.RandomizingModules, BusyState.Randomizing);
+                        category = "Modules and General";
                         Randomize.RestartRng();
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
+
                         ModuleRando.CreateBackups(paths);
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
+
                         ModuleRando.Module_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogModulesDone);
                     }
 
                     if (DoRandomizeItems)       // Randomize Items
                     {
-                        ReportProgress(bw, progress += stepSize, Properties.Resources.RandomizingItems, BusyState.Randomizing);
+                        category = "Items";
                         Randomize.RestartRng();
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
+
                         ItemRando.CreateItemBackups(paths);
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
+
                         ItemRando.item_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogItemsDone);
                     }
 
                     if (DoRandomizeAudio)       // Randomize Audio
                     {
-                        ReportProgress(bw, progress += stepSize, Properties.Resources.RandomizingMusicSound, BusyState.Randomizing);
+                        category = "Audio";
                         Randomize.RestartRng();
 
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
                         // If music files are to be randomized, create backups.
-                        if (AudioAreaMusic != RandomizationLevel.None ||
-                            AudioAmbientNoise != RandomizationLevel.None ||
-                            AudioBattleMusic != RandomizationLevel.None ||
-                            AudioCutsceneNoise != RandomizationLevel.None ||
+                        if (AudioAreaMusic   != RandomizationLevel.None || AudioAmbientNoise  != RandomizationLevel.None ||
+                            AudioBattleMusic != RandomizationLevel.None || AudioCutsceneNoise != RandomizationLevel.None ||
                             AudioRemoveDmcaMusic)
                         {
                             SoundRando.CreateMusicBackups(paths);
                         }
 
                         // If sound files are to be randomized, create backups.
-                        if (AudioAmbientNoise != RandomizationLevel.None ||
-                            AudioBattleMusic != RandomizationLevel.None ||
-                            AudioNpcSounds != RandomizationLevel.None ||
-                            AudioPartySounds != RandomizationLevel.None)
+                        if (AudioAmbientNoise != RandomizationLevel.None || AudioBattleMusic != RandomizationLevel.None ||
+                            AudioNpcSounds    != RandomizationLevel.None || AudioPartySounds != RandomizationLevel.None)
                         {
                             SoundRando.CreateSoundBackups(paths);
                         }
 
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
                         SoundRando.sound_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogMusicSoundDone);
                     }
 
                     if (DoRandomizeModels)      // Randomize Cosmetics (Models)
                     {
-                        ReportProgress(bw, progress += stepSize, Properties.Resources.RandomizingModels, BusyState.Randomizing);
+                        category = "Models";
                         Randomize.RestartRng();
+
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
                         ModelRando.CreateModelBackups(paths);
+
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
                         ModelRando.model_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogItemsDone);
                     }
 
                     if (DoRandomizeTextures)    // Randomize Cosmetics (Textures)
                     {
-                        ReportProgress(bw, progress += stepSize, Properties.Resources.RandomizingTextures, BusyState.Randomizing);
+                        category = "Textures";
                         Randomize.RestartRng();
+
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
                         TextureRando.CreateTextureBackups(paths);
+
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
                         TextureRando.texture_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogTexturesDone);
                     }
 
                     if (DoRandomizeTables)      // Randomize Tables
                     {
-                        ReportProgress(bw, progress += stepSize, Properties.Resources.Randomizing2DA, BusyState.Randomizing);
+                        category = "Tables";
                         Randomize.RestartRng();
+
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
                         TwodaRandom.CreateTwoDABackups(paths);
+
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
                         TwodaRandom.Twoda_rando(paths, this);
                         sw.WriteLine(Properties.Resources.Log2DADone);
                     }
 
                     if (DoRandomizeText)        // Randomize Text
                     {
-                        ReportProgress(bw, progress += stepSize, Properties.Resources.RandomizingText, BusyState.Randomizing);
+                        category = "Text";
                         Randomize.RestartRng();
+
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
                         TextRando.CreateTextBackups(paths);
+
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
                         TextRando.text_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogTextDone);
                     }
 
                     if (DoRandomizeOther)       // Randomize Other
                     {
-                        ReportProgress(bw, progress += stepSize, Properties.Resources.RandomizingOther, BusyState.Randomizing);
+                        category = "Other";
                         Randomize.RestartRng();
+
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
                         OtherRando.CreateOtherBackups(paths);
+
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
                         OtherRando.other_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogOtherDone);
                     }
@@ -1282,7 +1312,7 @@ namespace kotor_Randomizer_2.Models
                 }
                 finally
                 {
-                    ReportProgress(bw, 100, Properties.Resources.TaskFinishing, BusyState.Randomizing);
+                    ReportProgress(bw, 100, BusyState.Randomizing, message: Properties.Resources.TaskFinishing);
                     sw.WriteLine("\nThe Kotor Randomizer was created by Lane Dibello, with help from Glasnonck, and the greater Kotor Speedrunning community.");
                     sw.WriteLine("If you encounter any issues please try to contact me @Lane#5847 on Discord");
                 }
@@ -1294,10 +1324,10 @@ namespace kotor_Randomizer_2.Models
         /// </summary>
         /// <param name="bw"></param>
         /// <param name="spoilersDirectory"></param>
-        private void DoSpoil(BackgroundWorker bw, string spoilersDirectory)
+        private void DoSpoil(BackgroundWorker bw, string spoilersDirectory, int seed)
         {
             double progress = 0;
-            double stepSize = 100.0 / (CountActiveCategories() + 1);
+            double stepSize = 100.0 / (CountActiveCategories() + 2);    // Active categories + General + Saving
 
             var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
             var filename = $"{timestamp}, Seed {Randomize.Seed}.xlsx";
@@ -1305,7 +1335,7 @@ namespace kotor_Randomizer_2.Models
             if (!Directory.Exists(spoilersDirectory))
             {
                 var message = $"Spoilers directory \"{spoilersDirectory}\" doesn't exist. Spoiler will be saved at \"{Path.Combine(Environment.CurrentDirectory, filename)}\".";
-                ReportProgress(bw, progress, message, BusyState.Spoiling);
+                ReportProgress(bw, progress, BusyState.Spoiling, message: message);
                 spoilersDirectory = Environment.CurrentDirectory;
             }
 
@@ -1316,68 +1346,76 @@ namespace kotor_Randomizer_2.Models
             {
                 using (var workbook = new XLWorkbook())
                 {
-                    ReportProgress(bw, progress, "Starting to write spoiler logs.", BusyState.Spoiling);
+                    ReportProgress(bw, progress, BusyState.Spoiling, message: "Starting to write spoilers to log.");
+
+                    string category = "General";
+                    string spoilFormat = "... spoiling {0}.";
+
+                    ReportProgress(bw, 0, BusyState.Spoiling, category, string.Format(spoilFormat, category));
+                    ModuleRando.CreateGeneralSpoilerLog(workbook, seed);
 
                     if (DoRandomizeItems)
                     {
-                        ReportProgress(bw, progress, "Item", BusyState.Spoiling, false);
+                        category = "Items";
+                        ReportProgress(bw, progress += stepSize, BusyState.Spoiling, category, string.Format(spoilFormat, category));
                         ItemRando.CreateSpoilerLog(workbook);
-                        progress += stepSize;
                     }
 
                     if (DoRandomizeModels)
                     {
-                        ReportProgress(bw, progress, "Model", BusyState.Spoiling, false);
+                        category = "Models";
+                        ReportProgress(bw, progress += stepSize, BusyState.Spoiling, category, string.Format(spoilFormat, category));
                         ModelRando.CreateSpoilerLog(workbook);
-                        progress += stepSize;
                     }
 
                     if (DoRandomizeModules)
                     {
-                        ReportProgress(bw, progress, "Module", BusyState.Spoiling, false);
-                        ModuleRando.CreateSpoilerLog(workbook);
-                        progress += stepSize;
+                        category = "Modules";
+                        ReportProgress(bw, progress += stepSize, BusyState.Spoiling, category, string.Format(spoilFormat, category));
+                        ModuleRando.CreateSpoilerLog(workbook, false);
                     }
 
                     if (DoRandomizeAudio)
                     {
-                        ReportProgress(bw, progress, "Audio", BusyState.Spoiling, false);
+                        category = "Audio";
+                        ReportProgress(bw, progress += stepSize, BusyState.Spoiling, category, string.Format(spoilFormat, category));
                         SoundRando.CreateSpoilerLog(workbook);
-                        progress += stepSize;
                     }
 
                     if (DoRandomizeOther)
                     {
-                        ReportProgress(bw, progress, "Other", BusyState.Spoiling, false);
+                        category = "Other";
+                        ReportProgress(bw, progress += stepSize, BusyState.Spoiling, category, string.Format(spoilFormat, category));
                         OtherRando.CreateSpoilerLog(workbook);
-                        progress += stepSize;
                     }
 
                     if (DoRandomizeText)
                     {
-                        ReportProgress(bw, progress, "Text", BusyState.Spoiling, false);
+                        category = "Text";
+                        ReportProgress(bw, progress += stepSize, BusyState.Spoiling, category, string.Format(spoilFormat, category));
                         TextRando.CreateSpoilerLog(workbook);
-                        progress += stepSize;
                     }
 
                     if (DoRandomizeTextures)
                     {
-                        ReportProgress(bw, progress, "Texture", BusyState.Spoiling, false);
+                        category = "Textures";
+                        ReportProgress(bw, progress += stepSize, BusyState.Spoiling, category, string.Format(spoilFormat, category));
                         TextureRando.CreateSpoilerLog(workbook);
-                        progress += stepSize;
                     }
 
                     if (DoRandomizeTables)
                     {
-                        ReportProgress(bw, progress, "2DA", BusyState.Spoiling, false);
+                        category = "Tables";
+                        ReportProgress(bw, progress += stepSize, BusyState.Spoiling, category, string.Format(spoilFormat, category));
                         TwodaRandom.CreateSpoilerLog(workbook);
-                        progress += stepSize;
                     }
 
-                    ReportProgress(bw, progress, "Saving File", BusyState.Spoiling, false);
-
                     // If any worksheets have been added, save the spoiler log.
-                    if (workbook.Worksheets.Count > 0) workbook.SaveAs(path);
+                    if (workbook.Worksheets.Count > 0)
+                    {
+                        ReportProgress(bw, progress += stepSize, BusyState.Spoiling, "Saving File", "... saving the spoiler log.");
+                        workbook.SaveAs(path);
+                    }
                 }
             }
             catch (Exception ex)
@@ -1386,28 +1424,31 @@ namespace kotor_Randomizer_2.Models
             }
             finally
             {
-                ReportProgress(bw, 100, Properties.Resources.TaskFinishing, BusyState.Spoiling);
+                ReportProgress(bw, 100, BusyState.Spoiling, message: "Spoiler log created.");
             }
         }
 
         /// <summary>
         /// Reports progress of the current busy state to the BackgroundWorker.
         /// </summary>
-        /// <param name="bw"></param>
-        /// <param name="progress"></param>
-        /// <param name="message"></param>
-        /// <param name="state"></param>
-        /// <param name="logMessage"></param>
-        private void ReportProgress(BackgroundWorker bw, double progress, string message, BusyState state, bool logMessage = true)
+        /// <param name="bw">BackgroundWorker to report progress to.</param>
+        /// <param name="progress">Percent progress on the current action.</param>
+        /// <param name="state">BusyState of the randomizer.</param>
+        /// <param name="status">Text to display as the current status.</param>
+        /// <param name="message">Text to write to the log.</param>
+        private void ReportProgress(
+            BackgroundWorker bw,
+            double progress,
+            BusyState state,
+            string status = null,
+            string message = null)
         {
             bw.ReportProgress(0, new RandoProgress()
             {
-                IsRandomizing   = state == BusyState.Randomizing,
-                IsSpoiling      = state == BusyState.Spoiling,
-                IsUnrandomizing = state == BusyState.Unrandomizing,
+                State           = state,
                 PercentComplete = progress,
-                Status         = message,
-                Log             = logMessage ? message : null,
+                Status          = status,
+                Log             = message,
             });
         }
 

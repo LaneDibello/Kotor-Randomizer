@@ -297,13 +297,29 @@ namespace Randomizer_WPF.Views
             {
                 CurrentProgress = progress.PercentComplete;
                 if (!string.IsNullOrWhiteSpace(progress.Log))
-                    WriteLineToLog($"... {progress.Log}");
+                    WriteLineToLog(progress.Log);
 
-                string format = "Processing ... [{0:F1}%] {1}";
-                if (progress.IsRandomizing)   format = "Randomizing ... [{0:F1}%] {1}";
-                if (progress.IsUnrandomizing) format = "Unrandomizing ... [{0:F1}%] {1}";
-                if (progress.IsSpoiling)      format = "Spoiling ... [{0:F1}%] {1}";
-                CurrentState = string.Format(format, progress.PercentComplete, progress.Status);
+                if (progress.Status == null)
+                    progress.Status = string.Empty;
+
+                string statusFormat;
+                switch (progress.State)
+                {
+                    case kotor_Randomizer_2.Models.BusyState.Randomizing:
+                        statusFormat = "Randomizing ... [{0:F1}%] {1}";
+                        break;
+                    case kotor_Randomizer_2.Models.BusyState.Spoiling:
+                        statusFormat = "Spoiling ... [{0:F1}%] {1}";
+                        break;
+                    case kotor_Randomizer_2.Models.BusyState.Unrandomizing:
+                        statusFormat = "Unrandomizing ... [{0:F1}%] {1}";
+                        break;
+                    case kotor_Randomizer_2.Models.BusyState.Unknown:
+                    default:
+                        statusFormat = "Processing ... [{0:F1}%] {1}";
+                        break;
+                }
+                CurrentState = string.Format(statusFormat, progress.PercentComplete, progress.Status);
             }
             else
             {

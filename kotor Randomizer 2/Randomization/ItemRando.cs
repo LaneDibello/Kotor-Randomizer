@@ -243,60 +243,6 @@ namespace kotor_Randomizer_2
 
         private static List<List<string>> Type_Lists = new List<List<string>>();
 
-        ///// <summary>
-        ///// Creates a CSV file containing a list of the changes made during randomization.
-        ///// If the file already exists, this method will append the data.
-        ///// If no randomization has been performed, no file will be created.
-        ///// </summary>
-        ///// <param name="path">Path to desired output file.</param>
-        //public static void GenerateSpoilerLog(string path)
-        //{
-        //    if (LookupTable.Count == 0) { return; }
-        //    var sortedLookup = LookupTable.OrderBy(x => x.Item1);
-
-        //    using (StreamWriter sw = new StreamWriter(path))
-        //    {
-        //        //sw.WriteLine("Items,");
-        //        sw.WriteLine($"Seed,{Properties.Settings.Default.Seed}");
-        //        sw.WriteLine();
-
-        //        sw.WriteLine("Item Type,Rando Level");
-        //        sw.WriteLine($"Armbands,{Properties.Settings.Default.RandomizeArmbands}");
-        //        sw.WriteLine($"Armor,{Properties.Settings.Default.RandomizeArmor}");
-        //        sw.WriteLine($"Belts,{Properties.Settings.Default.RandomizeBelts}");
-        //        sw.WriteLine($"Blasters,{Properties.Settings.Default.RandomizeBlasters}");
-        //        sw.WriteLine($"Creature Hides,{Properties.Settings.Default.RandomizeHides}");
-        //        sw.WriteLine($"Creature Weapons,{Properties.Settings.Default.RandomizeCreature}");
-        //        sw.WriteLine($"Droid Equipment,{Properties.Settings.Default.RandomizeDroid}");
-        //        sw.WriteLine($"Gauntlets,{Properties.Settings.Default.RandomizeGloves}");
-        //        sw.WriteLine($"Grenades,{Properties.Settings.Default.RandomizeGrenades}");
-        //        sw.WriteLine($"Implants,{Properties.Settings.Default.RandomizeImplants}");
-        //        sw.WriteLine($"Lightsabers,{Properties.Settings.Default.RandomizeLightsabers}");
-        //        sw.WriteLine($"Masks,{Properties.Settings.Default.RandomizeMask}");
-        //        sw.WriteLine($"Melee Weapons,{Properties.Settings.Default.RandomizeMelee}");
-        //        sw.WriteLine($"Mines,{Properties.Settings.Default.RandomizeMines}");
-        //        sw.WriteLine($"Pazaak Cards,{Properties.Settings.Default.RandomizePaz}");
-        //        sw.WriteLine($"Stims/Medpacs,{Properties.Settings.Default.RandomizeStims}");
-        //        sw.WriteLine($"Upgrades/Crystals,{Properties.Settings.Default.RandomizeUpgrade}");
-        //        sw.WriteLine($"Various,{Properties.Settings.Default.RandomizeVarious}");
-        //        sw.WriteLine();
-
-        //        sw.WriteLine("Omitted Items");
-        //        foreach (var item in Globals.OmitItems)
-        //        {
-        //            sw.WriteLine(item);
-        //        }
-        //        sw.WriteLine();
-
-        //        sw.WriteLine("Has Changed,Original,Randomized");
-        //        foreach (var tpl in sortedLookup)
-        //        {
-        //            sw.WriteLine($"{(tpl.Item1 != tpl.Item2).ToString()},{tpl.Item1},{tpl.Item2}");
-        //        }
-        //        sw.WriteLine();
-        //    }
-        //}
-
         internal static void Reset()
         {
             // Prepare lists for new randomization.
@@ -309,25 +255,7 @@ namespace kotor_Randomizer_2
         {
             if (LookupTable.Count == 0) { return; }
             var ws = workbook.Worksheets.Add("Item");
-
-            //KEY k = new KEY(Paths.chitin_backup);
-            //BIF b = new BIF(Path.Combine(Paths.data, "templates.bif"));
-            //b.AttachKey(k, "data\\templates.bif");
-            //var items = b.VariableResourceTable.Where(x => x.ResourceType == ResourceType.UTI);
-            //TLK t = new TLK(File.Exists(Paths.dialog_backup) ? Paths.dialog_backup : Paths.dialog);
-
             int i = 1;
-            //ws.Cell(i, 1).Value = "Seed";
-            //ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
-            //ws.Cell(i, 1).Style.Font.Bold = true;
-            //i++;
-
-            Version version = typeof(StartForm).Assembly.GetName().Version;
-            ws.Cell(i, 1).Value = "Version";
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
-            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-            i += 2;     // Skip a row.
 
             // Item Randomization Settings
             ws.Cell(i, 1).Value = "Item Type";
@@ -384,7 +312,7 @@ namespace kotor_Randomizer_2
             if (isCustomPreset)
             {
                 int iMax = i;
-                i = 3;  // Restart at the top of the settings list.
+                i = 1;  // Restart at the top of the settings list.
 
                 ws.Cell(i, 4).Value = "Omitted Items";
                 ws.Cell(i, 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;

@@ -30,16 +30,16 @@
         </ResourceDictionary>
     </Window.Resources>
 
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New"   Executed="NewCommand_Executed"   CanExecute="NewCommand_CanExecute"  />
+        <CommandBinding Command="ApplicationCommands.Open"  Executed="OpenCommand_Executed"  CanExecute="OpenCommand_CanExecute" />
+        <CommandBinding Command="ApplicationCommands.Save"  Executed="SaveCommand_Executed"  CanExecute="SaveCommand_CanExecute" />
+        <CommandBinding Command="local:CustomCommands.Exit" Executed="ExitCommand_Executed"  CanExecute="ExitCommand_CanExecute" />
+    </Window.CommandBindings>
+
     <Window.Background>
         <SolidColorBrush Color="{DynamicResource WindowColor}" />
     </Window.Background>
-
-    <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.New"   Executed="NewCommand_Executed"   CanExecute="NewCommand_CanExecute"   />
-        <CommandBinding Command="ApplicationCommands.Open"  Executed="OpenCommand_Executed"  CanExecute="OpenCommand_CanExecute"  />
-        <CommandBinding Command="ApplicationCommands.Save"  Executed="SaveCommand_Executed"  CanExecute="SaveCommand_CanExecute"  />
-        <CommandBinding Command="local:CustomCommands.Exit" Executed="ExitCommand_Executed" CanExecute="ExitCommand_CanExecute" />
-    </Window.CommandBindings>
 
     <DockPanel>
         <!-- Dock.Top, Menu -->
@@ -64,20 +64,19 @@
                     <MenuItem Header="E_xit" Command="local:CustomCommands.Exit" />
                 </MenuItem>
                 <MenuItem Header="_Spoilers">
-                    <MenuItem Header="Auto-Create Spoilers" Name="miCreateSpoilers" IsCheckable="True" MinWidth="150"
+                    <MenuItem Header="_Auto-Create Spoilers" Name="miCreateSpoilers" IsCheckable="True" MinWidth="150"
                               IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}" />
-                    <MenuItem Header="Open Spoilers Folder"
-                              Click="MiOpenSpoilerFolder_Click" />
+                    <MenuItem Header="_Open Spoilers Folder" Click="MiOpenSpoilerFolder_Click" />
                 </MenuItem>
                 <MenuItem Header="_Links">
-                    <MenuItem Click="MiHyperlink_Click" Header="Discord Invite" Tag="http://discord.gg/Q2uPRVu" MinWidth="150" />
-                    <MenuItem Header="Leaderboards">
-                        <MenuItem Click="MiHyperlink_Click" Header="KotOR 1" Tag="https://www.speedrun.com/kotor1" />
-                        <MenuItem Click="MiHyperlink_Click" Header="KotOR 2" Tag="https://www.speedrun.com/kotor2" />
+                    <MenuItem Header="_Discord Invite" Click="MiHyperlink_Click" Tag="http://discord.gg/Q2uPRVu" MinWidth="150" />
+                    <MenuItem Header="_Leaderboards">
+                        <MenuItem Header="KotOR _1" Click="MiHyperlink_Click" Tag="https://www.speedrun.com/kotor1" />
+                        <MenuItem Header="KotOR _2" Click="MiHyperlink_Click" Tag="https://www.speedrun.com/kotor2" />
                     </MenuItem>
-                    <MenuItem Header="StrategyWiki">
-                        <MenuItem Click="MiHyperlink_Click" Header="KotOR 1" Tag="https://strategywiki.org/wiki/Star_Wars:_Knights_of_the_Old_Republic" />
-                        <MenuItem Click="MiHyperlink_Click" Header="Cheats" Tag="https://strategywiki.org/wiki/Star_Wars:_Knights_of_the_Old_Republic/Cheats#Windows" />
+                    <MenuItem Header="_StrategyWiki">
+                        <MenuItem Header="KotOR _1" Click="MiHyperlink_Click" Tag="https://strategywiki.org/wiki/Star_Wars:_Knights_of_the_Old_Republic" />
+                        <MenuItem Header="_Cheats"  Click="MiHyperlink_Click" Tag="https://strategywiki.org/wiki/Star_Wars:_Knights_of_the_Old_Republic/Cheats#Windows" />
                     </MenuItem>
                 </MenuItem>
             </Menu>

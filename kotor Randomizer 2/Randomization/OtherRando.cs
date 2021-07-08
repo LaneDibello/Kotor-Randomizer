@@ -435,25 +435,12 @@ namespace kotor_Randomizer_2
             { return; }
             var ws = workbook.Worksheets.Add("Other");
 
-            //var paths = new KPaths(Properties.Settings.Default.Kotor1Path);
             TLK tlk = new TLK(File.Exists(Paths.dialog_backup) ? Paths.dialog_backup : Paths.dialog);
             KEY key = new KEY(Paths.chitin_backup);
             BIF bifTmp = new BIF(Path.Combine(Paths.data, "templates.bif"));
             bifTmp.AttachKey(key, "data\\templates.bif");
 
             int i = 1;
-            //ws.Cell(i, 1).Value = "Seed";
-            //ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
-            //ws.Cell(i, 1).Style.Font.Bold = true;
-            //i++;
-
-            Version version = typeof(StartForm).Assembly.GetName().Version;
-            ws.Cell(i, 1).Value = "Version";
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
-            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-            i += 2;     // Skip a row.
-
             int jMax = 2;   // Remember the widest table.
 
             // Other Randomization Settings
@@ -713,7 +700,7 @@ namespace kotor_Randomizer_2
                     int iDone = i;
                     int j = 1;
 
-                    if (Properties.Settings.Default.RandomizeSwoopBoosters)
+                    if (RandomizeSwoopBoosters)
                     {
                         // Column Headers
                         ws.Cell(i, j).Value = "Boosters";
@@ -759,7 +746,7 @@ namespace kotor_Randomizer_2
                         if (iDone < i) iDone = i;   // Remember the length of this table.
                     }
 
-                    if (Properties.Settings.Default.RandomizeSwoopObstacles)
+                    if (RandomizeSwoopObstacles)
                     {
                         i = iStart;
 

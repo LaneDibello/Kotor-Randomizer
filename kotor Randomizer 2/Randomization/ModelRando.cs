@@ -270,59 +270,6 @@ namespace kotor_Randomizer_2
             }
         }
 
-        ///// <summary>
-        ///// Creates a CSV file containing a list of the changes made during randomization.
-        ///// If the file already exists, this method will append the data.
-        ///// If no randomization has been performed, no file will be created.
-        ///// </summary>
-        ///// <param name="path">Path to desired output file.</param>
-        //public static void GenerateSpoilerLog(string path)
-        //{
-        //    if (LookupTable.Count == 0)
-        //    {
-        //        return;
-        //    }
-
-        //    using (StreamWriter sw = new StreamWriter(path))
-        //    {
-        //        //sw.WriteLine("Model,");
-        //        sw.WriteLine($"Seed,{Properties.Settings.Default.Seed}");
-        //        sw.WriteLine();
-
-        //        bool IsActive = (Properties.Settings.Default.RandomizeCharModels & 1) > 0;
-        //        bool OmitFirst = (Properties.Settings.Default.RandomizeCharModels & 2) > 0;
-        //        bool OmitSecond = (Properties.Settings.Default.RandomizeCharModels & 4) > 0;
-        //        sw.WriteLine("Model Type,Is Active,Omit Large Models,Omit Broken Models");
-        //        sw.WriteLine($"Character Models,{IsActive},{OmitFirst},{OmitSecond}");
-
-        //        IsActive = (Properties.Settings.Default.RandomizePlaceModels & 1) > 0;
-        //        OmitFirst = (Properties.Settings.Default.RandomizePlaceModels & 2) > 0;
-        //        OmitSecond = (Properties.Settings.Default.RandomizePlaceModels & 4) > 0;
-        //        sw.WriteLine("Model Type,Is Active,Omit Large Models,Omit Broken Models");
-        //        sw.WriteLine($"Placeable Models,{IsActive},{OmitFirst},{OmitSecond}");
-
-        //        IsActive = (Properties.Settings.Default.RandomizeDoorModels & 1) > 0;
-        //        OmitFirst = (Properties.Settings.Default.RandomizeDoorModels & 2) > 0;
-        //        OmitSecond = (Properties.Settings.Default.RandomizeDoorModels & 4) > 0;
-        //        sw.WriteLine("Model Type,Is Active,Omit Airlocks,Omit Broken Models");
-        //        sw.WriteLine($"Door Models,{IsActive},{OmitFirst},{OmitSecond}");
-        //        sw.WriteLine();
-
-        //        sw.WriteLine("Map Filename,Model Type,Model Label,Original ID,Randomized ID");
-        //        foreach (var map in LookupTable)
-        //        {
-        //            foreach (var type in map.Value)
-        //            {
-        //                foreach (var kvp in type.Value)
-        //                {
-        //                    sw.WriteLine($"{map.Key},{type.Key},{kvp.Key},{kvp.Value.Item1},{kvp.Value.Item2}");
-        //                }
-        //            }
-        //        }
-        //        sw.WriteLine();
-        //    }
-        //}
-
         internal static void Reset()
         {
             // Prepare lists for new randomization.
@@ -333,19 +280,7 @@ namespace kotor_Randomizer_2
         {
             if (LookupTable.Count == 0) { return; }
             var ws = workbook.Worksheets.Add("Model");
-
             int i = 1;
-            //ws.Cell(i, 1).Value = "Seed";
-            //ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
-            //ws.Cell(i, 1).Style.Font.Bold = true;
-            //i++;
-
-            Version version = typeof(StartForm).Assembly.GetName().Version;
-            ws.Cell(i, 1).Value = "Version";
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
-            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-            i += 2;     // Skip a row.
 
             // Character Randomization Settings
             ws.Cell(i, 1).Value = "Character Models";
