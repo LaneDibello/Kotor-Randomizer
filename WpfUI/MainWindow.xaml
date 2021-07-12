@@ -18,6 +18,7 @@
         Closing="Window_Closing"
         Closed="Window_Closed"
         Icon="/Resources/Krandom.ico"
+        AllowDrop="True" DragOver="Window_DragOver" Drop="Window_Drop"
         >
     <Window.Resources>
         <ResourceDictionary>

@@ -1660,7 +1660,7 @@ namespace kotor_Randomizer_2.Models
 
             // Grab unlocks from module extras.
             ModuleExtras unlocks = Properties.Settings.Default.ModuleExtrasValue & UNLOCKS_MASK;
-            var toUnlock = GeneralLockedDoors.Where(du => unlocks.HasFlag(du.Tag));
+            var toUnlock = GeneralLockedDoors.Where(du => unlocks.HasFlag(du.Tag)).ToList();
             foreach (var item in toUnlock)
             {
                 GeneralUnlockedDoors.Add(item);
@@ -1728,7 +1728,7 @@ namespace kotor_Randomizer_2.Models
             ItemOmittedList.Clear();
 
             // Grab omitted list from globals.
-            var omitItems = ItemRandomizedList.Where(ri => Globals.OmitItems.Contains(ri.Code));
+            var omitItems = ItemRandomizedList.Where(ri => Globals.OmitItems.Contains(ri.Code)).ToList();
             foreach (var item in omitItems)
             {
                 ItemOmittedList.Add(item);

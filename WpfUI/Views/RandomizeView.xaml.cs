@@ -387,13 +387,13 @@ namespace Randomizer_WPF.Views
             IsBusy = false;
         }
 
-        private void WriteToLog(string message)
+        public void WriteToLog(string message)
         {
             tbLog.AppendText($"{message}");
             tbLog.ScrollToEnd();
         }
 
-        private void WriteLineToLog(string message = "")
+        public void WriteLineToLog(string message = "")
         {
             WriteToLog($"{message}{Environment.NewLine}");
         }

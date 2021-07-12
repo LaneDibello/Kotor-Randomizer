@@ -164,6 +164,39 @@ namespace Randomizer_WPF
             };
             file.WriteFile(Path.Combine(Environment.CurrentDirectory, SETTINGS_FILENAME));
         }
+
+        private void Window_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.None;
+
+            // If the data is a file drop, verify that it is in a usable format.
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                var info = new FileInfo(files.First());
+                if (info.Extension.ToLower() == ".xkrp" || info.Extension.ToLower() == ".krp")
+                {
+                    e.Effects = DragDropEffects.Copy | DragDropEffects.Move;
+                }
+            }
+
+            e.Handled = true;
+        }
+
+        private void Window_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                var path = files.First();
+                if (MessageBox.Show(this, $"Do you wish to open this file?{Environment.NewLine}\"{path}\"{Environment.NewLine}Current randomization settings will be lost.",
+                    "Load Dragged File?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    RandomizeView.WriteLineToLog($"Opening settings file: \"{path}\"");
+                    K1Randomizer.Load(path);
+                }
+            }
+        }
         #endregion Events
 
         #region Commands
@@ -175,7 +208,10 @@ namespace Randomizer_WPF
         private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             if (MessageBox.Show(this, "Are you sure you wish to clear the current settings? This cannot be undone.", "Clear Settings?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                RandomizeView.WriteLineToLog("Clearing randomization settings.");
                 K1Randomizer.ResetSettingsToDefault();
+            }
         }
 
         private void OpenCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -188,10 +224,14 @@ namespace Randomizer_WPF
             if (!Directory.Exists(PresetPath)) Directory.CreateDirectory(PresetPath);
             var dialog = new OpenFileDialog
             {
-                Filter = "XML Kotor Rando Preset (*.xkrp)|*.xkrp|Kotor Rando Preset (*.krp)|*.krp|All files (*.*)|*.*",
+                Filter = "XML Kotor Rando Preset (*.xkrp)|*.xkrp|Kotor Rando Preset (*.krp)|*.krp",
                 InitialDirectory = PresetPath,
             };
-            if (dialog.ShowDialog() == true) K1Randomizer.Load(dialog.FileName);
+            if (dialog.ShowDialog() == true)
+            {
+                RandomizeView.WriteLineToLog($"Opening settings file: \"{dialog.FileName}\"");
+                K1Randomizer.Load(dialog.FileName);
+            }
         }
 
         private void SaveCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -207,7 +247,11 @@ namespace Randomizer_WPF
                 Filter = "XML Kotor Rando Preset (*.xkrp)|*.xkrp",
                 InitialDirectory = PresetPath,
             };
-            if (dialog.ShowDialog() == true) K1Randomizer.Save(dialog.FileName);
+            if (dialog.ShowDialog() == true)
+            {
+                K1Randomizer.Save(dialog.FileName);
+                RandomizeView.WriteLineToLog($"Settings saved to file: \"{dialog.FileName}\"");
+            }
         }
 
         private void ExitCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)

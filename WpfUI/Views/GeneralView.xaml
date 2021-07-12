@@ -11,7 +11,7 @@
              FontFamily="Microsoft Sans Serif" FontSize="12"
              x:Name="thisView"
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
-             d:DesignHeight="450" d:DesignWidth="450"
+             d:DesignHeight="600" d:DesignWidth="450"
              DataContextChanged="View_DataContextChanged"
              Loaded="View_Loaded"
              >
@@ -63,9 +63,22 @@
                 </Expander>
 
                 <!-- Game Paths -->
-                <Expander IsExpanded="True">
+                <Expander>
                     <Expander.Header>
-                        <TextBlock Style="{StaticResource tbHeader3}" Text="Game Paths" />
+                        <TextBlock Text="Game Paths">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource tbHeader3}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=thisView, Path=Kotor1Path}" Value="">
+                                            <Setter Property="Foreground" Value="{StaticResource HarshRedBrush}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ElementName=thisView, Path=Kotor1Path}" Value="{x:Null}">
+                                            <Setter Property="Foreground" Value="{StaticResource HarshRedBrush}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Expander.Header>
                     <Grid Margin="3">
                         <Grid.ColumnDefinitions>
@@ -102,7 +115,7 @@
                 </Expander>
 
                 <!-- Quality of Life -->
-                <Expander>
+                <Expander IsExpanded="True">
                     <Expander.Header>
                         <TextBlock Style="{StaticResource tbHeader3}" Text="Quality of Life" />
                     </Expander.Header>
@@ -170,7 +183,7 @@
                 </Expander>
                 
                 <!-- Unlock Doors -->
-                <Expander>
+                <Expander IsExpanded="True">
                     <Expander.Resources>
                         <Style x:Key="UnlockedItemStyle" TargetType="{x:Type ListViewItem}">
                             <EventSetter Event="MouseDoubleClick" Handler="LvUnlockedItem_DoubleClick" />

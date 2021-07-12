@@ -88,7 +88,7 @@ namespace kotor_Randomizer_2.Models
             SettingsFileName = fi.Name;
 
             // Is the file in KRP format?
-            if (fi.Extension.ToLower() == "krp")
+            if (fi.Extension.ToLower() == ".krp")
                 ReadKRP(File.OpenRead(path));
             else
                 ReadFromFile(path);

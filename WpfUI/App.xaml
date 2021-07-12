@@ -15,6 +15,7 @@
     <Color x:Key="MediumGray">#404040</Color>
     <Color x:Key="DarkGreen">#001600</Color>
     <Color x:Key="BrightGreen">#1AB08A</Color>
+    <Color x:Key="HarshRed">#FF0000</Color>
     <Color x:Key="MediumYellow">#FED98E</Color>
     <Color x:Key="HarshYellow">#D3D808</Color>
     <!--#endregion-->
@@ -26,6 +27,7 @@
     <SolidColorBrush x:Key="MediumGrayBrush" Color="{StaticResource MediumGray}" />
     <SolidColorBrush x:Key="DarkGreenBrush" Color="{StaticResource DarkGreen}" />
     <SolidColorBrush x:Key="BrightGreenBrush" Color="{StaticResource BrightGreen}" />
+    <SolidColorBrush x:Key="HarshRedBrush" Color="{StaticResource HarshRed}" />
     <SolidColorBrush x:Key="MediumYellowBrush" Color="{StaticResource MediumYellow}" />
     <SolidColorBrush x:Key="HarshYellowBrush" Color="{StaticResource HarshYellow}" />
     <!--#endregion-->
