@@ -62,6 +62,9 @@
                     <MenuItem Header="_Open Settings File"     Command="ApplicationCommands.Open"  />
                     <MenuItem Header="_Save Current Settings"  Command="ApplicationCommands.Save"  />
                     <Separator />
+                    <MenuItem Header="Open _Previous Settings At Startup" Name="miStartupLast" IsCheckable="True"
+                              IsChecked="{Binding ElementName=window, Path=OpenLastSettingsOnStartup, Mode=TwoWay}" />
+                    <Separator />
                     <MenuItem Header="E_xit" Command="local:CustomCommands.Exit" />
                 </MenuItem>
                 <MenuItem Header="_Spoilers">
@@ -245,6 +248,7 @@
                 <TabItem Header="_Randomize">
                     <v:RandomizeView x:Name="RandomizeView"
                                      CreateSpoilers ="{Binding ElementName=miCreateSpoilers,  Path=IsChecked,   Mode=TwoWay}"
+                                     OpenLastSettingsOnStartup="{Binding ElementName=miStartupLast, Path=IsChecked, Mode=OneWay}"
                                      CurrentProgress="{Binding ElementName=pbCurrentProgress, Path=Value,       Mode=TwoWay}"
                                      GamePath       ="{Binding ElementName=window,            Path=Kotor1Path,  Mode=OneWay}"
                                      SpoilerPath    ="{Binding ElementName=window,            Path=SpoilerPath, Mode=OneWay}"

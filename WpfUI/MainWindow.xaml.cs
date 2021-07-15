@@ -31,6 +31,7 @@ namespace Randomizer_WPF
         {
             InitializeComponent();
 
+            // Check for a settings file.
             var path = Path.Combine(Environment.CurrentDirectory, SETTINGS_FILENAME);
             SettingsFile file = null;
             if (File.Exists(path))
@@ -45,11 +46,13 @@ namespace Randomizer_WPF
                 }
             }
 
+            // If file doesn't exist, create one with default values.
             if (file == null)
             {
                 file = new SettingsFile()
                 {
-                    CreateSpoilers = false,
+                    CreateSpoilers      = false,
+                    StartupLastSettings = true,
                     Kotor1Path  = @"",
                     Kotor2Path  = @"",
                     PresetPath  = Path.Combine(Environment.CurrentDirectory, "Presets"),
@@ -58,13 +61,20 @@ namespace Randomizer_WPF
                 file.WriteFile(path);
             }
 
+            // Create objects and pull settings from file.
             K1Randomizer = new Kotor1Randomizer();
             miCreateSpoilers.IsChecked = file.CreateSpoilers;
+            OpenLastSettingsOnStartup  = file.StartupLastSettings;
             Kotor1Path  = file.Kotor1Path;
             Kotor2Path  = file.Kotor2Path;
             PresetPath  = file.PresetPath;
             SpoilerPath = file.SpoilerPath;
 
+            // If last settings should be opened, check for the file and load it.
+            var lastPath = Path.Combine(Environment.CurrentDirectory, "last.xkrp");
+            if (OpenLastSettingsOnStartup && File.Exists(lastPath)) K1Randomizer.Load(lastPath);
+
+            // Set window data context.
             DataContext = K1Randomizer;
         }
         #endregion Constructors
@@ -74,6 +84,7 @@ namespace Randomizer_WPF
         public static readonly DependencyProperty Kotor2PathProperty  = DependencyProperty.Register("Kotor2Path",  typeof(string), typeof(MainWindow));
         public static readonly DependencyProperty PresetPathProperty  = DependencyProperty.Register("PresetPath",  typeof(string), typeof(MainWindow));
         public static readonly DependencyProperty SpoilerPathProperty = DependencyProperty.Register("SpoilerPath", typeof(string), typeof(MainWindow));
+        public static readonly DependencyProperty OpenLastSettingsOnStartupProperty = DependencyProperty.Register("OpenLastSettingsOnStartup", typeof(bool), typeof(MainWindow));
         #endregion Dependency Properties
 
         #region Properties
@@ -109,6 +120,12 @@ namespace Randomizer_WPF
             {
                 return (RandomizeView != null) && (RandomizeView.IsBusy);
             }
+        }
+
+        public bool OpenLastSettingsOnStartup
+        {
+            get { return (bool)GetValue(OpenLastSettingsOnStartupProperty); }
+            set { SetValue(OpenLastSettingsOnStartupProperty, value); }
         }
 
         public string WindowTitle
@@ -157,6 +174,7 @@ namespace Randomizer_WPF
             var file = new SettingsFile()
             {
                 CreateSpoilers = miCreateSpoilers.IsChecked,
+                StartupLastSettings = OpenLastSettingsOnStartup,
                 Kotor1Path  = Kotor1Path,
                 Kotor2Path  = Kotor2Path,
                 PresetPath  = PresetPath,
