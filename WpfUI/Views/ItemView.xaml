@@ -29,7 +29,8 @@
             <StackPanel>
                     <TextBlock Style="{StaticResource tbTitle}" Text="Item Randomization" />
                     <TextBlock Style="{StaticResource tbDescription}">
-                        Randomize most of the items the player can find or buy.
+                        Shuffles most of the items the player can find or buy. "Subtype" limits the shuffle to subcategories and
+                        "Type" limits the shuffle to the category itself. All categories marked as "Max" will be shuffled together.
                     </TextBlock>
             </StackPanel>
         </Border>

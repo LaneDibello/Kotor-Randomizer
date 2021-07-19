@@ -8,7 +8,7 @@
              xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
              mc:Ignorable="d" 
              FontFamily="Microsoft Sans Serif" FontSize="12"
-             d:DesignHeight="400" d:DesignWidth="500"
+             d:DesignHeight="500" d:DesignWidth="500"
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
              >
     <UserControl.Resources>
@@ -16,6 +16,24 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <ToolTip x:Key="ttPolymorph">
+                Causes equipable items to have random disguise modifiers, essentially allowing the player to
+                polymorph. (Doesn't synergize well with model rando!)
+            </ToolTip>
+            <ToolTip x:Key="ttPazaak">
+                Randomizes the cards contained within the NPC pazaak decks.
+            </ToolTip>
+            <ToolTip x:Key="ttParty">
+                This entirely morphs each party member into a different creature, wth different stats and equipment.
+            </ToolTip>
+            <ToolTip x:Key="ttBooster">
+                Randomizes the placement of booster pads in each swoop track - Taris, Tatooine, and Manaan.
+            </ToolTip>
+            <ToolTip x:Key="ttObstacle">
+                **NOT RECOMMENDED** Randomizes the placement of obstacles in each swoop track - Taris, Tatooine, and
+                Manaan. ** Visual location of the obstacles does not change!
+            </ToolTip>
         </ResourceDictionary>
     </UserControl.Resources>
     
@@ -36,7 +54,6 @@
             <StackPanel>
                 <StackPanel.Resources>
                     <Style TargetType="Expander">
-                        <Setter Property="IsExpanded" Value="True" />
                         <Setter Property="Margin" Value="0,0,0,5" />
                         <Setter Property="Padding" Value="2" />
                         <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
@@ -45,10 +62,7 @@
                 </StackPanel.Resources>
                 
                 <!--Name Generation-->
-                <Expander>
-                    <Expander.Header>
-                        <TextBlock Style="{StaticResource tbHeader3}" Text="Name Generation" />
-                    </Expander.Header>
+                <Expander HeaderTemplate="{StaticResource exHeader}" Header="Name Generation">
                     <Grid Margin="5" Height="180">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -114,11 +128,9 @@
                         <uc:RestrictedTextBox x:Name="rtbLName" Grid.Column="4" Text="{Binding OtherLastNames, Mode=TwoWay}" />
                     </Grid>
                 </Expander>
-                
-                <Expander>
-                    <Expander.Header>
-                        <TextBlock Style="{StaticResource tbHeader3}" Text="Various Other" />
-                    </Expander.Header>
+
+                <!--Various Other-->
+                <Expander HeaderTemplate="{StaticResource exHeader}" Header="Various Other" IsExpanded="True">
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -150,13 +162,16 @@
                         <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource tbHeader4}"
                                    Text="Various" HorizontalAlignment="Center" />
                         <StackPanel Grid.Column="0" Grid.Row="1">
-                            <CheckBox IsChecked="{Binding OtherPolymorphMode, Mode=TwoWay}">
+                            <CheckBox IsChecked="{Binding OtherPolymorphMode, Mode=TwoWay}"
+                                      ToolTip="{StaticResource ttPolymorph}">
                                 <TextBlock Text="Equipment Polymorph Mode" />
                             </CheckBox>
-                            <CheckBox IsChecked="{Binding OtherPazaakDecks, Mode=TwoWay}">
+                            <CheckBox IsChecked="{Binding OtherPazaakDecks, Mode=TwoWay}"
+                                      ToolTip="{StaticResource ttPazaak}">
                                 <TextBlock Text="Randomize NPC Pazaak Decks" />
                             </CheckBox>
-                            <CheckBox IsChecked="{Binding OtherPartyMembers, Mode=TwoWay}">
+                            <CheckBox IsChecked="{Binding OtherPartyMembers, Mode=TwoWay}"
+                                      ToolTip="{StaticResource ttParty}">
                                 <TextBlock Text="Randomize Party Members" />
                             </CheckBox>
                         </StackPanel>
@@ -165,17 +180,11 @@
                                    Text="Swoop Races" HorizontalAlignment="Center" />
                         <StackPanel Grid.Column="1" Grid.Row="1">
                             <CheckBox IsChecked="{Binding OtherSwoopBoosters, Mode=TwoWay}"
-                                      ToolTip="Randomizes the placement of booster pads in each swoop track - Taris, Tatooine, and Manaan.">
+                                      ToolTip="{StaticResource ttBooster}">
                                 <TextBlock Text="Booster Pad Placement" />
                             </CheckBox>
-                            <CheckBox IsChecked="{Binding OtherSwoopObstacles, Mode=TwoWay}">
-                                <CheckBox.ToolTip>
-                                    <ToolTip>
-                                        <TextBlock Foreground="Black"><Run Foreground="Red">**NOT RECOMMENDED**</Run><LineBreak/>
-                                        Randomizes the placement of obstacles in each swoop track - Taris, Tatooine, and Manaan.<LineBreak/>
-                                        ** Visual location of the obstacles does not change!</TextBlock>
-                                    </ToolTip>
-                                </CheckBox.ToolTip>
+                            <CheckBox IsChecked="{Binding OtherSwoopObstacles, Mode=TwoWay}"
+                                      ToolTip="{StaticResource ttObstacle}">
                                 <TextBlock Text="Obstacle Placement" />
                             </CheckBox>
                         </StackPanel>

@@ -59,8 +59,8 @@
                 </Menu.Resources>
                 <MenuItem Header="_File">
                     <MenuItem Header="_New (Default Settings)" Command="ApplicationCommands.New"   MinWidth="150" />
-                    <MenuItem Header="_Open Settings File"     Command="ApplicationCommands.Open"  />
-                    <MenuItem Header="_Save Current Settings"  Command="ApplicationCommands.Save"  />
+                    <MenuItem Header="_Open Settings File..."     Command="ApplicationCommands.Open"  />
+                    <MenuItem Header="_Save Current Settings..."  Command="ApplicationCommands.Save"  />
                     <Separator />
                     <MenuItem Header="Open _Previous Settings At Startup" Name="miStartupLast" IsCheckable="True"
                               IsChecked="{Binding ElementName=window, Path=OpenLastSettingsOnStartup, Mode=TwoWay}" />

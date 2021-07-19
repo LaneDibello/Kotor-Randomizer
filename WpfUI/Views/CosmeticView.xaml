@@ -50,11 +50,7 @@
                 </StackPanel.Resources>
                 
                 <!-- Model Randomization -->
-                <Expander IsExpanded="True">
-                    <Expander.Header>
-                        <TextBlock Style="{StaticResource tbHeader3}" Text="Model Randomization" />
-                    </Expander.Header>
-
+                <Expander IsExpanded="True" HeaderTemplate="{StaticResource exHeader}" Header="Model Randomization">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -152,11 +148,7 @@
                 </Expander>
                 
                 <!-- Texture Randomization -->
-                <Expander IsEnabled="True">
-                    <Expander.Header>
-                        <TextBlock Style="{StaticResource tbHeader3}" Text="Texture Randomization" />
-                    </Expander.Header>
-                    
+                <Expander IsEnabled="True" HeaderTemplate="{StaticResource exHeader}" Header="Texture Randomization">
                     <Grid Margin="0,3,2,3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="130" />

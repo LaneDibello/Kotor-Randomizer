@@ -21,18 +21,61 @@
                 <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+
+            <ToolTip x:Key="ttPathAuto">
+                Automatically searches for the most common game paths.
+            </ToolTip>
+            <ToolTip x:Key="ttQolMilestone">
+                Save data is normally deleted at cetrain milestones. This can cause loss of progress if module
+                randomization is active. Enable this feature to prevent deleting this data.
+            </ToolTip>
+            <ToolTip x:Key="ttQolMinigames">
+                Enabling this allows you to save and load within a minigame module. This is sometimes needed if
+                module randomization is active.
+            </ToolTip>
+            <ToolTip x:Key="ttQolAllModules">
+                Enabling this allows you to save and load within any module (minigames and cutscenes included).
+                This is sometimes needed for certain module randomizations.
+            </ToolTip>
+            <ToolTip x:Key="ttQolSpice">
+                Adds a new loading zone to the far west end of the Vulkar Base leading to the unused module
+                Vulkar Spice Lab.
+            </ToolTip>
+            <ToolTip x:Key="ttQolDream">
+                Fixes a rare instance in which a game crash could occur with dream sequences.
+            </ToolTip>
+            <ToolTip x:Key="ttQolMystery">
+                Updates the Mystery Box in the Ebon Hawk so it can be used multiple times.
+            </ToolTip>
+            <ToolTip x:Key="ttQolCoordinates">
+                Fixes the warp coordinates of several modules that would lead to potential softlocks otherwise:
+                Undercity, Tulak Horde, Leviathan Hangar, Ahto West, Manaan Sith Base, Rakatan Settlement, and
+                Temple Main Floor.
+            </ToolTip>
         </ResourceDictionary>
     </UserControl.Resources>
 
     <DockPanel Background="{StaticResource WindowBrush}">
+        <DockPanel.Resources>
+            <Style TargetType="Expander">
+                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Margin" Value="0,0,0,5" />
+                <Setter Property="Padding" Value="2" />
+            </Style>
+            <Style TargetType="uc:PathUserControl">
+                <Setter Property="Margin" Value="0,2" />
+            </Style>
+        </DockPanel.Resources>
+
         <!-- Dock.Top, Title and Description -->
         <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2"
                 BorderBrush="{StaticResource HarshBlueBrush}">
-            <StackPanel>
+            <StackPanel Margin="5,0,5,5">
                 <TextBlock Style="{StaticResource tbTitle}" Text="General Settings" />
                 <TextBlock Style="{StaticResource tbDescription}">
-                    This randomizer will shuffle game files within the Kotor 1 directory to provide
-                    a new experience each time you play. Created by Lane Dibello and Glasnonck.
+                        This randomizer will shuffle game files within the Kotor 1 directory to provide
+                        a new experience each time you play. Created by Lane Dibello and Glasnonck.
                 </TextBlock>
             </StackPanel>
         </Border>
@@ -40,26 +83,21 @@
         <!-- Dock.Center, Settings -->
         <ScrollViewer Style="{StaticResource svPadded}">
             <StackPanel>
-                <StackPanel.Resources>
-                    <Style TargetType="Expander">
-                        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
-                        <Setter Property="BorderThickness" Value="1" />
-                        <Setter Property="Margin" Value="0,0,0,5" />
-                        <Setter Property="Padding" Value="2" />
-                    </Style>
-                    <Style TargetType="uc:PathUserControl">
-                        <Setter Property="Margin" Value="0,2" />
-                    </Style>
-                </StackPanel.Resources>
-
                 <!-- Help and Instructions -->
-                <Expander>
-                    <Expander.Header>
-                        <TextBlock Style="{StaticResource tbHeader3}" Text="Help and Instructions" />
-                    </Expander.Header>
-                    <Grid Margin="3">
-                        <TextBlock Foreground="{StaticResource HarshBlueBrush}">Hello</TextBlock>
-                    </Grid>
+                <Expander HeaderTemplate="{StaticResource exHeader}" Header="Help and Instructions">
+                    <TextBlock Style="{StaticResource tbDescription}">
+                        <Run FontWeight="Bold" TextDecorations="Underline">Game Paths:</Run>
+                        Set the path to the Kotor 1 game folder with copy/paste or use the Auto-Find feature.
+                        A valid path must be given before you can randomize. The presets and spoilers folder
+                        options identify where those types of files will be saved.
+                        <LineBreak/><LineBreak/>
+                        <Run FontWeight="Bold" TextDecorations="Underline">Quality of Life:</Run>
+                        Select various helpful adjustments to improve your experience in the game, with or without
+                        actually randomizing anything else.
+                        <LineBreak/><LineBreak/>
+                        <Run FontWeight="Bold" TextDecorations="Underline">Unlock Doors:</Run>
+                        Unlock certain doors that can be troublesome to handle during a module shuffled playthrough.
+                    </TextBlock>
                 </Expander>
 
                 <!-- Game Paths -->
@@ -98,6 +136,7 @@
                         <Button Grid.Column="1" Grid.RowSpan="2" Content="Auto Find Paths"
                                 Margin="0,2,5,2" TextBlock.TextAlignment="Center"
                                 Style="{StaticResource K1RandoButtonStyle}"
+                                ToolTip="{StaticResource ttPathAuto}"
                                 Click="BtnAutoFindPaths_Click" />
 
                         <Label Grid.Row="2" Foreground="{StaticResource HarshBlueBrush}" HorizontalAlignment="Center">
@@ -115,10 +154,7 @@
                 </Expander>
 
                 <!-- Quality of Life -->
-                <Expander IsExpanded="True">
-                    <Expander.Header>
-                        <TextBlock Style="{StaticResource tbHeader3}" Text="Quality of Life" />
-                    </Expander.Header>
+                <Expander IsExpanded="True" HeaderTemplate="{StaticResource exHeader}" Header="Quality of Life">
                     <Grid Margin="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -150,32 +186,39 @@
                                    Text="Quality of Life" HorizontalAlignment="Center" />
 
                         <StackPanel Grid.Column="0" Grid.Row="1">
-                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataDeleteMilestone, Mode=TwoWay}">
+                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataDeleteMilestone, Mode=TwoWay}"
+                                      ToolTip="{StaticResource ttQolMilestone}">
                                 <TextBlock Text="Prevent Milestone Save Data Deletion" />
                             </CheckBox>
                             <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataIncludeMinigames, Mode=TwoWay}"
                                       IsEnabled="{Binding ElementName=cbSaveAllModules, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"
+                                      ToolTip="{StaticResource ttQolMinigames}"
                                       x:Name="cbSaveMinigames">
                                 <TextBlock Text="Include Minigames in Save" />
                             </CheckBox>
                             <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataIncludeAll, Mode=TwoWay}"
                                       Checked="CbSaveAllModules_Checked"
+                                      ToolTip="{StaticResource ttQolAllModules}"
                                       x:Name="cbSaveAllModules">
                                 <TextBlock Text="Include All Modules in Save" />
                             </CheckBox>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Grid.Row="1" Margin="5,0">
-                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolAddSpiceLab, Mode=TwoWay}">
+                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolAddSpiceLab, Mode=TwoWay}"
+                                      ToolTip="{StaticResource ttQolSpice}">
                                 <TextBlock Text="Add Spice Lab Load Zone" />
                             </CheckBox>
-                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixDreamSequence, Mode=TwoWay}">
+                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixDreamSequence, Mode=TwoWay}"
+                                      ToolTip="{StaticResource ttQolDream}">
                                 <TextBlock Text="Fix Dream Sequence" />
                             </CheckBox>
-                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixMindPrison, Mode=TwoWay}">
+                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixMindPrison, Mode=TwoWay}"
+                                      ToolTip="{StaticResource ttQolMystery}">
                                 <TextBlock Text="Fix Mind Prison" />
                             </CheckBox>
-                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixModuleCoordinates, Mode=TwoWay}">
+                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixModuleCoordinates, Mode=TwoWay}"
+                                      ToolTip="{StaticResource ttQolCoordinates}">
                                 <TextBlock Text="Fix Module Coordinates" />
                             </CheckBox>
                         </StackPanel>
@@ -183,18 +226,18 @@
                 </Expander>
                 
                 <!-- Unlock Doors -->
-                <Expander IsExpanded="True">
+                <Expander IsExpanded="True" HeaderTemplate="{StaticResource exHeader}" Header="Unlock Doors">
                     <Expander.Resources>
-                        <Style x:Key="UnlockedItemStyle" TargetType="{x:Type ListViewItem}">
+                        <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
+                            <Setter Property="ToolTip" Value="{Binding ToolTipMessage}" />
+                        </Style>
+                        <Style x:Key="UnlockedItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ItemStyle}">
                             <EventSetter Event="MouseDoubleClick" Handler="LvUnlockedItem_DoubleClick" />
                         </Style>
-                        <Style x:Key="LockedItemStyle" TargetType="{x:Type ListViewItem}">
+                        <Style x:Key="LockedItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ItemStyle}">
                             <EventSetter Event="MouseDoubleClick" Handler="LvLockedItem_DoubleClick" />
                         </Style>
                     </Expander.Resources>
-                    <Expander.Header>
-                        <TextBlock Style="{StaticResource tbHeader3}" Text="Unlock Doors" />
-                    </Expander.Header>
                     <Grid Margin="3,0,3,3">
                         <Grid.Resources>
                             <Style TargetType="ScrollBar">

@@ -18,6 +18,59 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <ToolTip x:Key="ttLogicRules">
+                These rules prevent certain modules from replacing others when that replacement would cause
+                problems - inescapable or inaccessible rooms.
+            </ToolTip>
+            <ToolTip x:Key="ttLogicRule1">
+                If a module has one exit, the module cannot replace its only destination. (e.g., Czerka Office
+                cannot replace Anchorhead) This prevents binary infinite loops that you can't escape from.
+            </ToolTip>
+            <ToolTip x:Key="ttLogicRule2">
+                The parent of a module with only one entrance cannot replace that module. (e.g., Anchorhead
+                cannot replace Czerka Office) This prevents some modules from becoming completely unreachable.
+            </ToolTip>
+            <ToolTip x:Key="ttLogicRule3">
+                If a module has multiple exits, but only one is unlocked, it cannot be in the unlocked location.
+                (Sith Academy Entrance cannot replace Dreshdae) Similar to rule 1, this prevents binary loops
+                that you can't escape from unless the other door is unlocked.
+            </ToolTip>
+            <ToolTip x:Key="ttLogicReachability">
+                Reachability means that all modules leading up to and including the ones containing the goal(s)
+                can be found using either normal in-game logic or using the glitches enabled below.
+            </ToolTip>
+            <ToolTip x:Key="ttLogicOnce">
+                The reachability algorithm will ignore one-time use loading zones or transitions to fulfill the
+                reachability condition. *Enable this option for a more stable randomization.*
+            </ToolTip>
+            <ToolTip x:Key="ttGoalMalak">
+                Defeat Malak on the Viewing Platform of the Star Forge.
+            </ToolTip>
+            <ToolTip x:Key="ttGoalMaps">
+                Collect the 5 star maps from Dantooine, Kashyyyk, Korriban, Manaan, and Tatooine.
+            </ToolTip>
+            <ToolTip x:Key="ttGoalPazaak">
+                Defeat all pazaak players across the galaxy.
+            </ToolTip>
+            <ToolTip x:Key="ttGoalParty">
+                Find and recruit all 9 party members.
+            </ToolTip>
+            <ToolTip x:Key="ttGlitchClip">
+                Clipping through doors, etc.
+            </ToolTip>
+            <ToolTip x:Key="ttGlitchDLZ">
+                Displaced Loading Zone
+            </ToolTip>
+            <ToolTip x:Key="ttGlitchFLU">
+                Fake Level Up
+            </ToolTip>
+            <ToolTip x:Key="ttGlitchGPW">
+                Gather Party Warp / Teleport
+            </ToolTip>
+            <ToolTip x:Key="ttGlitchHotshot">
+                Hotshotting back to a previous save.
+            </ToolTip>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -54,7 +107,8 @@
                 </Grid>
 
                 <!-- Custom Module Shuffle -->
-                <Expander BorderBrush="{StaticResource HarshBlueBrush}" BorderThickness="1" Padding="2">
+                <Expander BorderBrush="{StaticResource HarshBlueBrush}" BorderThickness="1" Padding="2"
+                          HeaderTemplate="{StaticResource exHeader}" Header="Custom Shuffle Settings">
                     <Expander.Resources>
                         <Style x:Key="RandomizedStyle" TargetType="{x:Type ListViewItem}">
                             <EventSetter Event="MouseDoubleClick" Handler="LvShuffleIncluded_DoubleClick" />
@@ -75,9 +129,6 @@
                             </Style.Triggers>
                         </Style>
                     </Expander.Resources>
-                    <Expander.Header>
-                        <TextBlock Style="{StaticResource tbHeader3}" Text="Custom Shuffle Settings" />
-                    </Expander.Header>
                     <Grid Margin="5,0,5,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />    <!--Rando List-->
@@ -189,46 +240,23 @@
                     </StackPanel.Resources>
                     
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{Binding ModuleLogicRandoRules, Mode=TwoWay}">
+                        <CheckBox IsChecked="{Binding ModuleLogicRandoRules, Mode=TwoWay}"
+                                  ToolTip="{StaticResource ttLogicRules}">
                             <TextBlock Text="Use Randomization Exclusion Rules" />
                         </CheckBox>
                         <TextBlock Margin="10,0" VerticalAlignment="Center">
-                            <Run Text="(Rule 1,">
-                                <Run.ToolTip>
-                                    <TextBlock Foreground="Black">
-                                        If a module has one exit, the module cannot replace its only<LineBreak/>
-                                        destination. (e.g., Czerka Office cannot replace Anchorhead)<LineBreak/>
-                                        This prevents binary infinite loops that you can't escape from.
-                                    </TextBlock>
-                                </Run.ToolTip>
-                            </Run>
-                            <Run Text="Rule 2,">
-                                <Run.ToolTip>
-                                    <TextBlock Foreground="Black">
-                                        The parent of a module with only one entrance cannot replace<LineBreak/>
-                                        that module. (e.g., Anchorhead cannot replace Czerka Office)<LineBreak/>
-                                        This prevents some modules from becoming completely unreachable.
-                                    </TextBlock>
-                                </Run.ToolTip>
-                            </Run>
-                            <Run Text="Rule 3)">
-                                <Run.ToolTip>
-                                    <TextBlock Foreground="Black">
-                                        If a module has multiple exits, but only one is unlocked, it<LineBreak/>
-                                        cannot be in the unlocked location. (Sith Academy Entrance<LineBreak/>
-                                        cannot replace Dreshdae)<LineBreak/>
-                                        Similar to rule 1, this prevents binary loops that you can't<LineBreak/>
-                                        escape from unless the other door is unlocked.
-                                    </TextBlock>
-                                </Run.ToolTip>
-                            </Run>
+                            <Run Text="(Rule 1," ToolTip="{StaticResource ttLogicRule1}" />
+                            <Run Text="Rule 2,"  ToolTip="{StaticResource ttLogicRule2}" />
+                            <Run Text="Rule 3)"  ToolTip="{StaticResource ttLogicRule3}" />
                         </TextBlock>
                     </StackPanel>
 
-                    <CheckBox IsChecked="{Binding ModuleLogicReachability, Mode=TwoWay}">
+                    <CheckBox IsChecked="{Binding ModuleLogicReachability, Mode=TwoWay}"
+                              ToolTip="{StaticResource ttLogicReachability}">
                         <TextBlock Text="Verify Module Reachability" />
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding ModuleLogicIgnoreOnceEdges, Mode=TwoWay}">
+                    <CheckBox IsChecked="{Binding ModuleLogicIgnoreOnceEdges, Mode=TwoWay}"
+                              ToolTip="{StaticResource ttLogicOnce}">
                         <TextBlock Text="Ignore Single-Use Transitions" />
                     </CheckBox>
                 </StackPanel>
@@ -250,16 +278,20 @@
                             </Style.Triggers>
                         </Style>
                     </WrapPanel.Resources>
-                    <CheckBox IsChecked="{Binding ModuleGoalIsMalak, Mode=TwoWay}">
+                    <CheckBox IsChecked="{Binding ModuleGoalIsMalak, Mode=TwoWay}"
+                              ToolTip="{StaticResource ttGoalMalak}">
                         <TextBlock Text="Defeat Malak" />
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding ModuleGoalIsStarMap, Mode=TwoWay}">
+                    <CheckBox IsChecked="{Binding ModuleGoalIsStarMap, Mode=TwoWay}"
+                              ToolTip="{StaticResource ttGoalMaps}">
                         <TextBlock Text="Collect Star Maps" />
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding ModuleGoalIsPazaak, Mode=TwoWay}">
+                    <CheckBox IsChecked="{Binding ModuleGoalIsPazaak, Mode=TwoWay}"
+                              ToolTip="{StaticResource ttGoalPazaak}">
                         <TextBlock Text="Pazaak Champion" />
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding ModuleGoalIsFullParty, Mode=TwoWay}" IsEnabled="False">
+                    <CheckBox IsChecked="{Binding ModuleGoalIsFullParty, Mode=TwoWay}" IsEnabled="False"
+                              ToolTip="{StaticResource ttGoalParty}">
                         <TextBlock Text="Recruit Party Members" />
                     </CheckBox>
                 </WrapPanel>
@@ -298,19 +330,24 @@
                             </Style.Triggers>
                         </Style>
                     </WrapPanel.Resources>
-                    <CheckBox IsChecked="{Binding ModuleAllowGlitchClip, Mode=TwoWay}">
+                    <CheckBox IsChecked="{Binding ModuleAllowGlitchClip, Mode=TwoWay}"
+                              ToolTip="{StaticResource ttGlitchClip}">
                         <TextBlock Text="Clipping" />
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding ModuleAllowGlitchDlz, Mode=TwoWay}">
+                    <CheckBox IsChecked="{Binding ModuleAllowGlitchDlz, Mode=TwoWay}"
+                              ToolTip="{StaticResource ttGlitchDLZ}">
                         <TextBlock Text="DLZ" />
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding ModuleAllowGlitchFlu, Mode=TwoWay}">
+                    <CheckBox IsChecked="{Binding ModuleAllowGlitchFlu, Mode=TwoWay}"
+                              ToolTip="{StaticResource ttGlitchFLU}">
                         <TextBlock Text="FLU" />
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding ModuleAllowGlitchGpw, Mode=TwoWay}">
+                    <CheckBox IsChecked="{Binding ModuleAllowGlitchGpw, Mode=TwoWay}"
+                              ToolTip="{StaticResource ttGlitchGPW}">
                         <TextBlock Text="GPW" />
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding ModuleAllowGlitchHotshot, Mode=TwoWay}" IsEnabled="False">
+                    <CheckBox IsChecked="{Binding ModuleAllowGlitchHotshot, Mode=TwoWay}" IsEnabled="False"
+                              ToolTip="{StaticResource ttGlitchHotshot}">
                         <TextBlock Text="Hotshot" />
                     </CheckBox>
                 </WrapPanel>

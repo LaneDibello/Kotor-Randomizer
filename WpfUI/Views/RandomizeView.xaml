@@ -15,6 +15,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/RandomizerWpf;component/Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
             <base:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <base:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
         </ResourceDictionary>
@@ -44,7 +45,8 @@
             <StackPanel>
                 <TextBlock Style="{StaticResource tbTitle}" Text="Randomize the Game" />
                 <TextBlock Style="{StaticResource tbDescription}">
-                    ... Description to be added ...
+                    This page displays a log of the randomization progress. The seed used is displayed below, and can be saved
+                    to revisit or share with others. Start the randomization by clicking the "Randomize!" button below.
                 </TextBlock>
             </StackPanel>
         </Border>

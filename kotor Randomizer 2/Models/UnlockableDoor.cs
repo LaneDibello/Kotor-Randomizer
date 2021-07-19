@@ -17,6 +17,8 @@ namespace kotor_Randomizer_2.Models
         public string Area { get; set; }
         /// <summary> Associated ModuleExtras value. </summary>
         public ModuleExtras Tag { get; set; }
+        /// <summary> Message to display as a ToolTip. </summary>
+        public string ToolTipMessage { get; set; }
 
         /// <summary>
         /// Returns a string that represents the current object.

@@ -182,6 +182,37 @@
         </Setter>
     </Style>
     <!--#endregion Button Styles-->
+
+    <!--#region ToolTip Style-->
+    <DataTemplate x:Key="ttMessage">
+        <TextBlock Text="{Binding}"
+                   Foreground="Black"
+                   TextWrapping="Wrap"
+                   MaxWidth="350"
+                   />
+    </DataTemplate>
+
+    <Style TargetType="ToolTip">
+        <Setter Property="ContentTemplate" Value="{StaticResource ttMessage}" />
+    </Style>
+    <!--#endregion ToolTip Style-->
+    
+    <!--#region Expander Templates-->
+    <DataTemplate x:Key="exHeader">
+        <TextBlock Text="{Binding}"
+                   Style="{StaticResource tbHeader3}"
+                   />
+    </DataTemplate>
+    
+    <DataTemplate x:Key="exHeaderCentered">
+        <TextBlock Text="{Binding}"
+                   Style="{StaticResource tbHeader3}"
+                   HorizontalAlignment="Center"
+                   TextAlignment="Center"
+                   Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}"
+                   />
+    </DataTemplate>
+    <!--#endregion Expander Template-->
     
     <!-- Tab Control Style -->
     <Style TargetType="{x:Type TabControl}">

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Randomizer_WPF.Views"
              xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="350" d:DesignWidth="400"
+             d:DesignHeight="450" d:DesignWidth="400"
              FontFamily="Microsoft Sans Serif" FontSize="12"
              Name="thisView">
     <UserControl.Resources>
@@ -14,6 +14,17 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <ToolTip x:Key="ttDMCA">
+                Removes several Area Music tracks that are more often identified by DMCA algorithms from being selected
+                as a valid replacement for each track.
+            </ToolTip>
+            <ToolTip x:Key="ttMixK12Music">
+                Includes music from Kotor 2 when shuffling Area and Battle Music.
+            </ToolTip>
+            <ToolTip x:Key="ttMixSounds">
+                Shuffles all character sounds together.
+            </ToolTip>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -43,7 +54,9 @@
             <StackPanel>
                 <TextBlock Style="{StaticResource tbTitle}" Text="Audio Randomization" />
                 <TextBlock Style="{StaticResource tbDescription}">
-                    Shuffle music, noise, and other sounds.
+                    Shuffle music, noise, and other sounds. Use "Type" randomization to limit the randomization within each category
+                    (e.g., Area Music will only be randomized with other Area Music). All categories set to "Max" randomization will
+                    be shuffled together. Party Sounds can be shuffled at the more limited level of "Actions".
                 </TextBlock>
             </StackPanel>
         </Border>
@@ -112,13 +125,16 @@
                                                       CheckboxLabel="Party Sounds" SubtypeVisible="Visible"
                                                       SelectedLevel="{Binding ElementName=thisView, Path=PartySounds, Mode=TwoWay}" />
 
-                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=OverwriteDmcaMusic, Mode=TwoWay}">
+                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=OverwriteDmcaMusic, Mode=TwoWay}"
+                              ToolTip="{StaticResource ttDMCA}">
                         <TextBlock Text="Overwrite likely DMCA music" />
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=MixKotorGameMusic, Mode=TwoWay}" IsEnabled="False">
+                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=MixKotorGameMusic, Mode=TwoWay}" IsEnabled="False"
+                              ToolTip="{StaticResource ttMixK12Music}">
                         <TextBlock Text="Mix Kotor 1 and 2 music" />
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=MixNpcAndPartySounds, Mode=TwoWay}" IsEnabled="False">
+                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=MixNpcAndPartySounds, Mode=TwoWay}" IsEnabled="False"
+                              ToolTip="{StaticResource ttMixSounds}">
                         <TextBlock Text="Mix NPC and Party Sounds Together" />
                     </CheckBox>
                 </StackPanel>

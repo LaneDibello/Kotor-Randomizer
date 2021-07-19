@@ -139,17 +139,61 @@ namespace kotor_Randomizer_2.Models
         public Kotor1Randomizer(string path)
         {
             // Create list of unlockable doors.
-            GeneralLockedDoors.Add(new UnlockableDoor() { Area = "LEV", Label = "Elevators",         Tag = ModuleExtras.UnlockLevElev });
-            GeneralLockedDoors.Add(new UnlockableDoor() { Area = "MAN", Label = "Republic Embassy",  Tag = ModuleExtras.UnlockManEmbassy });
-            GeneralLockedDoors.Add(new UnlockableDoor() { Area = "MAN", Label = "Sith Hangar",       Tag = ModuleExtras.UnlockManHangar });
-            GeneralLockedDoors.Add(new UnlockableDoor() { Area = "STA", Label = "Door to Bastila",   Tag = ModuleExtras.UnlockStaBastila });
-            GeneralLockedDoors.Add(new UnlockableDoor() { Area = "TAR", Label = "Undercity",         Tag = ModuleExtras.UnlockTarUndercity });
-            GeneralLockedDoors.Add(new UnlockableDoor() { Area = "TAR", Label = "Vulkar Base",       Tag = ModuleExtras.UnlockTarVulkar });
-            GeneralLockedDoors.Add(new UnlockableDoor() { Area = "UNK", Label = "Summit Exit",       Tag = ModuleExtras.UnlockUnkSummit });
-            GeneralLockedDoors.Add(new UnlockableDoor() { Area = "UNK", Label = "Temple Exit",       Tag = ModuleExtras.UnlockUnkTempleExit });
-            GeneralLockedDoors.Add(new UnlockableDoor() { Area = "DAN", Label = "Ruins Door",        Tag = ModuleExtras.UnlockDanRuins });
-            GeneralLockedDoors.Add(new UnlockableDoor() { Area = "EBO", Label = "Galaxy Map",        Tag = ModuleExtras.UnlockGalaxyMap });
-            GeneralLockedDoors.Add(new UnlockableDoor() { Area = "KOR", Label = "Valley After Tomb", Tag = ModuleExtras.UnlockKorValley });
+            GeneralLockedDoors.Add(new UnlockableDoor()
+            {
+                Area = "LEV", Label = "Elevators",         Tag = ModuleExtras.UnlockLevElev,
+                ToolTipMessage = "The Leviathan elevator will not restrict you from going to the Hangar early, and the Hangar elevator is now usable."
+            });
+            GeneralLockedDoors.Add(new UnlockableDoor()
+            {
+                Area = "MAN", Label = "Republic Embassy",  Tag = ModuleExtras.UnlockManEmbassy,
+                ToolTipMessage = "Unlocks the Republic Embassy door and the door to the submersible."
+            });
+            GeneralLockedDoors.Add(new UnlockableDoor()
+            {
+                Area = "MAN", Label = "Sith Hangar",       Tag = ModuleExtras.UnlockManHangar,
+                ToolTipMessage = "Unlocks the Sith Hangar door before visiting Roland."
+            });
+            GeneralLockedDoors.Add(new UnlockableDoor()
+            {
+                Area = "STA", Label = "Door to Bastila",   Tag = ModuleExtras.UnlockStaBastila,
+                ToolTipMessage = "Unlocks the door leading to the Bastila fight, allowing it to be opened after fighting her."
+            });
+            GeneralLockedDoors.Add(new UnlockableDoor()
+            {
+                Area = "TAR", Label = "Undercity",         Tag = ModuleExtras.UnlockTarUndercity,
+                ToolTipMessage = "Unlocks the Undercity door in the Lower City."
+            });
+            GeneralLockedDoors.Add(new UnlockableDoor()
+            {
+                Area = "TAR", Label = "Vulkar Base",       Tag = ModuleExtras.UnlockTarVulkar,
+                ToolTipMessage = "Unlocks the Vulkar Base in the Lower City."
+            });
+            GeneralLockedDoors.Add(new UnlockableDoor()
+            {
+                Area = "UNK", Label = "Summit Exit",       Tag = ModuleExtras.UnlockUnkSummit,
+                ToolTipMessage = "Unlocks the exit door from the Temple Summit."
+            });
+            GeneralLockedDoors.Add(new UnlockableDoor()
+            {
+                Area = "UNK", Label = "Temple Exit",       Tag = ModuleExtras.UnlockUnkTempleExit,
+                ToolTipMessage = "Unlocks the exit door from the Temple Main Floor."
+            });
+            GeneralLockedDoors.Add(new UnlockableDoor()
+            {
+                Area = "DAN", Label = "Ruins Door",        Tag = ModuleExtras.UnlockDanRuins,
+                ToolTipMessage = "Unlocks the door into the Dantooine Ruins and the door out of the Unknown World's Temple Summit."
+            });
+            GeneralLockedDoors.Add(new UnlockableDoor()
+            {
+                Area = "EBO", Label = "Galaxy Map",        Tag = ModuleExtras.UnlockGalaxyMap,
+                ToolTipMessage = "Unlock all destinations on the Ebon Hawk galaxy map from the start of the game."
+            });
+            GeneralLockedDoors.Add(new UnlockableDoor()
+            {
+                Area = "KOR", Label = "Valley After Tomb", Tag = ModuleExtras.UnlockKorValley,
+                ToolTipMessage = "Ensures the Sith Tomb and Sith Academy remain unlocked regardless of the Uthar / Yuthura outcome in Naga Sadow."
+            });
 
             // Create module digraph and get the list of modules.
             ModuleDigraph graph;
