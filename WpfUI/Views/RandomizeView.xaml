@@ -117,7 +117,9 @@
                      Text="Randomization log"
                      TextWrapping="Wrap"
                      TextAlignment="Justify"
-                     VerticalScrollBarVisibility="Auto" />
+                     VerticalScrollBarVisibility="Auto"
+                     SelectionBrush="{StaticResource LightBlueBrush}"
+                     />
         </Grid>
     </DockPanel>
 </UserControl>

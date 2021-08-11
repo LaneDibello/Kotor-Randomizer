@@ -10,7 +10,7 @@
         x:Class="Randomizer_WPF.MainWindow"
         mc:Ignorable="d"
         Title="{Binding WindowTitle, RelativeSource={RelativeSource Self}}"
-        Height="600" Width="800"
+        Height="620" Width="800"
         MinHeight="375" MinWidth="575"
         FontFamily="Microsoft Sans Serif" FontSize="12"
         Name="window"

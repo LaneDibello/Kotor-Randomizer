@@ -8,6 +8,7 @@
              xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
              mc:Ignorable="d" 
              FontFamily="Microsoft Sans Serif" FontSize="12"
+             DataContextChanged="UserControl_DataContextChanged"
              d:DesignHeight="400" d:DesignWidth="350"
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
              >
@@ -36,7 +37,7 @@
         <Grid Margin="5">
             <Grid.Resources>
                 <Style TargetType="TextBlock" BasedOn="{StaticResource tbHeader3}">
-                    <Setter Property="Margin" Value="0,0,0,5" />
+                    <Setter Property="Margin" Value="0,0,0,0" />
                     <Setter Property="TextAlignment" Value="Center" />
                     <Setter Property="TextDecorations" Value="Underline" />
                 </Style>
@@ -45,22 +46,46 @@
                     <Setter Property="HorizontalAlignment" Value="Stretch" />
                     <Setter Property="VerticalAlignment" Value="Stretch" />
                 </Style>
+                <Style TargetType="{x:Type ListViewItem}" x:Key="BaseItemStyle">
+                    <Style.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                                         Color="{StaticResource BlueGray}" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
+                                         Color="{StaticResource BlueGray}" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
+                                         Color="White" />
+                    </Style.Resources>
+                </Style>
                 <Style TargetType="ListView">
+                    <Setter Property="Margin" Value="0,5,0,0" />
                     <Setter Property="FontSize" Value="14" />
                     <Setter Property="Background" Value="Transparent" />
                     <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
                     <Setter Property="BorderThickness" Value="2" />
                     <Setter Property="Padding" Value="2" />
+                    <Setter Property="ItemContainerStyle" Value="{StaticResource BaseItemStyle}" />
                 </Style>
-                <Style TargetType="ListViewItem" x:Key="ColumnsItemStyle">
+                <Style TargetType="ListViewItem" x:Key="ColumnsItemStyle" BasedOn="{StaticResource BaseItemStyle}">
+                    <Setter Property="Background" Value="Transparent" />
                     <Setter Property="FontSize" Value="14" />
                     <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
                     <EventSetter Event="MouseDoubleClick" Handler="LvColumns_DoubleClick" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{StaticResource HarshYellowBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
-                <Style TargetType="ListViewItem" x:Key="RandomizedItemStyle">
+                <Style TargetType="ListViewItem" x:Key="RandomizedItemStyle" BasedOn="{StaticResource BaseItemStyle}">
+                    <Setter Property="Background" Value="Transparent" />
                     <Setter Property="FontSize" Value="14" />
                     <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
                     <EventSetter Event="MouseDoubleClick" Handler="LvRandomized_DoubleClick" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{StaticResource HarshYellowBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
             </Grid.Resources>
             <Grid.ColumnDefinitions>
@@ -81,7 +106,23 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Tables" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Tables" />
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
+                        <StackPanel.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                                <Setter Property="FontFamily" Value="Ariel" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <TextBlock Text="( " />
+                        <TextBlock Name="lblRandomizedTableCount" Text="XX" />
+                        <TextBlock Text=" / " />
+                        <TextBlock Text="{Binding Table2DAs.Count, Mode=OneWay}" />
+                        <TextBlock Text=" )" />
+                    </StackPanel>
+                </StackPanel>
+                
                 <ListView Grid.Row="1" x:Name="lvTables" ItemsSource="{Binding Table2DAs}">
                     <ListView.ItemTemplate>
                         <DataTemplate>

@@ -27,7 +27,7 @@ namespace Randomizer_WPF
         #endregion Constants
 
         #region Constructors
-        public MainWindow()
+        public MainWindow(string startupFilePath = "")
         {
             InitializeComponent();
 
@@ -70,13 +70,19 @@ namespace Randomizer_WPF
             PresetPath  = file.PresetPath;
             SpoilerPath = file.SpoilerPath;
 
-            // If last settings should be opened, check for the file and load it.
-            var lastPath = Path.Combine(Environment.CurrentDirectory, "last.xkrp");
-            if (OpenLastSettingsOnStartup && File.Exists(lastPath)) K1Randomizer.Load(lastPath);
+            if (!string.IsNullOrEmpty(startupFilePath))
+            {
+                LoadSettingsFile(startupFilePath);  // If startup file path given, load it.
+            }
+            else if (OpenLastSettingsOnStartup)
+            {
+                LoadLastUsedSettings();             // If last settings should be used, load it.
+            }
 
             // Set window data context.
             DataContext = K1Randomizer;
         }
+
         #endregion Constructors
 
         #region Dependency Properties
@@ -282,6 +288,54 @@ namespace Randomizer_WPF
             this.Close();
         }
         #endregion Commands
+
+        #region Private Methods
+        private void LoadLastUsedSettings()
+        {
+            var lastPath = Path.Combine(Environment.CurrentDirectory, "last.xkrp");
+            if (File.Exists(lastPath))
+            {
+                try
+                {
+                    // Write message to log about loading startup file.
+                    RandomizeView.WriteLineToLog("Loading last used settings.");
+
+                    // Load the file that was requested.
+                    K1Randomizer.Load(lastPath);
+
+                    // Make a note that the file was loaded successfully.
+                    RandomizeView.WriteLineToLog("Settings loaded successfully.");
+                }
+                catch (Exception e)
+                {
+                    // Write message to log about failure.
+                    RandomizeView.WriteLineToLog($"Failed to load last used settings: {e.Message}");
+                    MessageBox.Show($"Failed to load last used settings: {e.Message}", "Read Error");
+                }
+            }
+        }
+
+        private void LoadSettingsFile(string startupFilePath)
+        {
+            try
+            {
+                // Write message to log about loading startup file.
+                RandomizeView.WriteLineToLog($"Loading settings from file: {startupFilePath}");
+
+                // Load the file that was requested.
+                K1Randomizer.Load(startupFilePath);
+
+                // Make a note that the file was loaded successfully.
+                RandomizeView.WriteLineToLog("Settings loaded sucessfully.");
+            }
+            catch (Exception e)
+            {
+                // Write message to log about failure.
+                RandomizeView.WriteLineToLog($"Failed to load settings from file: {e.Message}");
+                MessageBox.Show($"Failed to load settings from file: {e.Message}", "Read Error");
+            }
+        }
+        #endregion Private Methods
     }
 
     public static class CustomCommands

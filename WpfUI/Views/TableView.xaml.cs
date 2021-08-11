@@ -25,16 +25,28 @@ namespace Randomizer_WPF.Views
             InitializeComponent();
         }
 
+        private void UpdateRandomizedTableCount()
+        {
+            lblRandomizedTableCount.Text = (DataContext as kotor_Randomizer_2.Models.Kotor1Randomizer).Table2DAs.Count(rt => rt.IsRandomized).ToString("D2");
+        }
+
+        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            UpdateRandomizedTableCount();
+        }
+
         private void LvColumns_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             (lvRandomized.ItemsSource as IList<string>).Add((string)(sender as ListViewItem).Content);
             (lvColumns.ItemsSource as IList<string>).Remove((string)(sender as ListViewItem).Content);
+            UpdateRandomizedTableCount();
         }
 
         private void LvRandomized_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             (lvColumns.ItemsSource as IList<string>).Add((string)(sender as ListViewItem).Content);
             (lvRandomized.ItemsSource as IList<string>).Remove((string)(sender as ListViewItem).Content);
+            UpdateRandomizedTableCount();
         }
 
         private void BtnRandomizeAll_Click(object sender, RoutedEventArgs e)
@@ -46,6 +58,7 @@ namespace Randomizer_WPF.Views
                 destination.Add(item);
             }
             source.Clear();
+            UpdateRandomizedTableCount();
         }
 
         private void BtnRandomizeSelected_Click(object sender, RoutedEventArgs e)
@@ -58,6 +71,7 @@ namespace Randomizer_WPF.Views
                 destination.Add(item);
                 source.Remove(item);
             }
+            UpdateRandomizedTableCount();
         }
 
         private void BtnOmitSelected_Click(object sender, RoutedEventArgs e)
@@ -70,6 +84,7 @@ namespace Randomizer_WPF.Views
                 destination.Add(item);
                 source.Remove(item);
             }
+            UpdateRandomizedTableCount();
         }
 
         private void BtnOmitAll_Click(object sender, RoutedEventArgs e)
@@ -81,6 +96,7 @@ namespace Randomizer_WPF.Views
                 destination.Add(item);
             }
             source.Clear();
+            UpdateRandomizedTableCount();
         }
     }
 }
