@@ -53,6 +53,8 @@ namespace kotor_Randomizer_2
 
         private const string TwoDA_MODULE_SAVE = "modulesave.2da";
         private const string UNLOCK_MAP_OVERRIDE = "k_pebn_galaxy.ncs";
+        private const string KOR_OPEN_ACADEMY = "k33b_openacademy.ncs";
+        private const string KOR_VALLEY_ENTER = "k36_pkor_enter.ncs";
         #endregion Consts
 
         #region Properties
@@ -894,6 +896,7 @@ namespace kotor_Randomizer_2
                 UnlockDoorInFile(paths, AREA_KOR_VALLEY, LABEL_KOR_VALLEY_MARKA);
                 UnlockDoorInFile(paths, AREA_KOR_VALLEY, LABEL_KOR_VALLEY_NAGA);
                 UnlockDoorInFile(paths, AREA_KOR_VALLEY, LABEL_KOR_VALLEY_TULAK);
+
             }
 
             // Leviathan Elevators
@@ -1026,6 +1029,13 @@ namespace kotor_Randomizer_2
             if (ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap))
             {
                 File.WriteAllBytes(Path.Combine(paths.Override, UNLOCK_MAP_OVERRIDE), Properties.Resources.k_pebn_galaxy);
+            }
+
+            // Keep Korriban Doors Unlocked
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley))
+            {
+                File.WriteAllBytes(Path.Combine(paths.Override, KOR_OPEN_ACADEMY), Properties.Resources.k33b_openacademy);
+                File.WriteAllBytes(Path.Combine(paths.Override, KOR_VALLEY_ENTER), Properties.Resources.k36_pkor_enter);
             }
         }
 
