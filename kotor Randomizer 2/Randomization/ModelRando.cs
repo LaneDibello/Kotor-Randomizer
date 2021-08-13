@@ -24,6 +24,9 @@ namespace kotor_Randomizer_2
         private const string LABEL_UNK_FLPNL = "flpnl";
         private const string LABEL_UNK_RESETPANEL = "panelreset";
 
+        private const string LABEL_LEV_ELEVCTRL = "plev_elevctrl";
+        private const string LABEL_LEV_ACCONTROL = "lev40_accontrol";
+
         public const string LBL_LOC_NAME = "LocName";
         public const string LBL_GENERIC_TYPE = "GenericType";
         public const string LBL_APPEARANCE = "Appearance";
@@ -160,6 +163,9 @@ namespace kotor_Randomizer_2
 
                     foreach (RIM.rFile rf in r.File_Table.Where(k => k.TypeID == (int)ResourceType.UTP))
                     {
+                        // Don't randomize the elevator control placeables.
+                        if (rf.Label == LABEL_LEV_ELEVCTRL || rf.Label == LABEL_LEV_ACCONTROL) continue;
+
                         GFF g = new GFF(rf.File_Data);
 
                         // If this is a broken placeable, skip it.
