@@ -95,17 +95,17 @@ namespace kotor_Randomizer_2.Models
         const string ATTR_OMIT_AIRLOCK = "OmitAirlock";
         const string ATTR_EASY_PANELS  = "EasyPanels";
 
-        const string ATTR_CLIP        = "Clip";
-        const string ATTR_DLZ         = "DLZ";
-        const string ATTR_FLU         = "FLU";
-        const string ATTR_GPW         = "GPW";
-        const string ATTR_HOTSHOT     = "Hotshot";
-        const string ATTR_MALAK       = "Malak";
-        const string ATTR_MAPS        = "StarMaps";
-        const string ATTR_IGNORE_ONCE = "IgnoreOnce";
-        const string ATTR_RULES       = "Rules";
-        const string ATTR_REACHABLE   = "Reachable";
-        const string ATTR_PRESET      = "Preset";
+        const string ATTR_CLIP         = "Clip";
+        const string ATTR_DLZ          = "DLZ";
+        const string ATTR_FLU          = "FLU";
+        const string ATTR_GPW          = "GPW";
+        const string ATTR_STRONG_GOALS = "StrongGoals";
+        const string ATTR_MALAK        = "Malak";
+        const string ATTR_MAPS         = "StarMaps";
+        const string ATTR_IGNORE_ONCE  = "IgnoreOnce";
+        const string ATTR_RULES        = "Rules";
+        const string ATTR_REACHABLE    = "Reachable";
+        const string ATTR_PRESET       = "Preset";
 
         const string ATTR_POLYMORPH      = "Polymorph";
         const string ATTR_SWOOP_BOOSTERS = "SwoopBoosters";
@@ -211,6 +211,10 @@ namespace kotor_Randomizer_2.Models
 
             // Get list of randomizable tables.
             Table2DAs = new ObservableCollection<RandomizableTable>(Globals.TWODA_COLLUMNS.Select(table => new RandomizableTable(table.Key, table.Value)));
+
+            // Add property changed event hooks.
+            foreach (var table in Table2DAs)
+                table.PropertyChanged += UpdateRandomizedTableCount;
 
             // Load settings from file if the path is not empty.
             if (!string.IsNullOrWhiteSpace(path) && File.Exists(path))
@@ -552,11 +556,11 @@ namespace kotor_Randomizer_2.Models
             set => SetField(ref _moduleAllowGlitchGpw, value);
         }
 
-        private bool _moduleAllowGlitchHotshot = true;
-        public bool ModuleAllowGlitchHotshot
+        private bool _moduleLogicStrongGoals;
+        public bool ModuleLogicStrongGoals
         {
-            get => _moduleAllowGlitchHotshot;
-            set => SetField(ref _moduleAllowGlitchHotshot, value);
+            get => _moduleLogicStrongGoals;
+            set => SetField(ref _moduleLogicStrongGoals, value);
         }
 
         private bool _moduleGoalIsMalak = true;
@@ -701,6 +705,13 @@ namespace kotor_Randomizer_2.Models
         {
             get => _table2DAs;
             set => SetField(ref _table2DAs, value);
+        }
+
+        private int _tableRandomizedCount;
+        public int TableRandomizedCount
+        {
+            get => _tableRandomizedCount;
+            set => SetField(ref _tableRandomizedCount, value);
         }
         #endregion
 
@@ -1066,41 +1077,35 @@ namespace kotor_Randomizer_2.Models
         /// <param name="s"></param>
         protected override void ReadFromFile(string path)
         {
+            ResetSettingsToDefault();
+
             XDocument doc = XDocument.Load(path);
             var element = doc.Descendants(ELEM_GENERAL).FirstOrDefault();
-            ReadGeneralSettings(element);
+            if (element != null) ReadGeneralSettings(element);
 
             element = doc.Descendants(ELEM_AUDIO  ).FirstOrDefault();
             if (element != null) ReadAudioSettings(element);
-            else                 ResetAudio();
 
             element = doc.Descendants(ELEM_ITEM   ).FirstOrDefault();
             if (element != null) ReadItemSettings(element);
-            else                 ResetItems();
 
             element = doc.Descendants(ELEM_MODEL  ).FirstOrDefault();
             if (element != null) ReadModelSettings(element);
-            else                 ResetModels();
 
             element = doc.Descendants(ELEM_MODULE ).FirstOrDefault();
             if (element != null) ReadModuleSettings(element);
-            else                 ResetModules();
 
             element = doc.Descendants(ELEM_OTHER  ).FirstOrDefault();
             if (element != null) ReadOtherSettings(element);
-            else                 ResetOther();
 
             element = doc.Descendants(ELEM_TABLE  ).FirstOrDefault();
             if (element != null) ReadTableSettings(element);
-            else                 ResetTables();
 
             element = doc.Descendants(ELEM_TEXT   ).FirstOrDefault();
             if (element != null) ReadTextSettings(element);
-            else                 ResetText();
 
             element = doc.Descendants(ELEM_TEXTURE).FirstOrDefault();
             if (element != null) ReadTextureSettings(element);
-            else                 ResetTextures();
         }
 
         /// <summary>
@@ -1473,6 +1478,16 @@ namespace kotor_Randomizer_2.Models
         }
 
         /// <summary>
+        /// Updates the count of randomized tables whenever one of the tables is modified.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UpdateRandomizedTableCount(object sender, PropertyChangedEventArgs e)
+        {
+            TableRandomizedCount = Table2DAs.Count(rt => rt.IsRandomized);
+        }
+
+        /// <summary>
         /// Reports progress of the current busy state to the BackgroundWorker.
         /// </summary>
         /// <param name="bw">BackgroundWorker to report progress to.</param>
@@ -1621,7 +1636,7 @@ namespace kotor_Randomizer_2.Models
             ModuleAllowGlitchDlz       = false;
             ModuleAllowGlitchFlu       = false;
             ModuleAllowGlitchGpw       = false;
-            ModuleAllowGlitchHotshot   = true;
+            ModuleLogicStrongGoals     = false;
             ModuleGoalIsMalak          = true;
             ModuleGoalIsPazaak         = false;
             ModuleGoalIsStarMap        = false;
@@ -1716,7 +1731,7 @@ namespace kotor_Randomizer_2.Models
             ModuleAllowGlitchDlz       = Properties.Settings.Default.AllowGlitchDlz;
             ModuleAllowGlitchFlu       = Properties.Settings.Default.AllowGlitchFlu;
             ModuleAllowGlitchGpw       = Properties.Settings.Default.AllowGlitchGpw;
-            ModuleAllowGlitchHotshot   = true;
+            ModuleLogicStrongGoals     = false;
             ModuleGoalIsMalak          = Properties.Settings.Default.GoalIsMalak;
             ModuleGoalIsPazaak         = Properties.Settings.Default.GoalIsPazaak;
             ModuleGoalIsStarMap        = Properties.Settings.Default.GoalIsStarMaps;
@@ -1897,17 +1912,18 @@ namespace kotor_Randomizer_2.Models
         /// <param name="element">XML element containing the general settings.</param>
         private void ReadGeneralSettings(XElement element)
         {
-            ResetGeneral();
-            GeneralModuleExtrasValue = ParseEnum<ModuleExtras>(element.Attribute(ATTR_QOL).Value);
+            { if (element.Attribute(ATTR_QOL) is XAttribute attr) GeneralModuleExtrasValue = ParseEnum<ModuleExtras>(attr.Value); }
 
             foreach (var unlock in element.Descendants(ELEM_UNLOCK))
             {
-                var tag = ParseEnum<ModuleExtras>(unlock.Attribute(ATTR_TAG).Value);
-                var door = GeneralLockedDoors.FirstOrDefault(x => x.Tag == tag);
-                if (door != null)
+                if (unlock.Attribute(ATTR_TAG) is XAttribute tag)
                 {
-                    GeneralUnlockedDoors.Add(door);
-                    GeneralLockedDoors.Remove(door);
+                    var door = GeneralLockedDoors.FirstOrDefault(x => x.Tag == ParseEnum<ModuleExtras>(tag.Value));
+                    if (door != null)
+                    {
+                        GeneralUnlockedDoors.Add(door);
+                        GeneralLockedDoors.Remove(door);
+                    }
                 }
             }
         }
@@ -1918,14 +1934,15 @@ namespace kotor_Randomizer_2.Models
         /// <param name="element">XML element containing the audio settings.</param>
         private void ReadAudioSettings(XElement element)
         {
-            AudioAmbientNoise         = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_AMBIENT ).Value);
-            AudioAreaMusic            = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_AREA    ).Value);
-            AudioBattleMusic          = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_BATTLE  ).Value);
-            AudioCutsceneNoise        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_CUTSCENE).Value);
-            AudioNpcSounds            = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_NPC     ).Value);
-            AudioPartySounds          = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_PARTY   ).Value);
-            AudioMixNpcAndPartySounds = bool.Parse(element.Attribute(ATTR_MIXNPCPARTY).Value);
-            AudioRemoveDmcaMusic      = bool.Parse(element.Attribute(ATTR_REMOVE_DMCA).Value);
+            // Read audio settings.
+            { if (element.Attribute(ATTR_AMBIENT    ) is XAttribute attr) AudioAmbientNoise         = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_AREA       ) is XAttribute attr) AudioAreaMusic            = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_BATTLE     ) is XAttribute attr) AudioBattleMusic          = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_CUTSCENE   ) is XAttribute attr) AudioCutsceneNoise        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_NPC        ) is XAttribute attr) AudioNpcSounds            = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_PARTY      ) is XAttribute attr) AudioPartySounds          = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_MIXNPCPARTY) is XAttribute attr) AudioMixNpcAndPartySounds = bool.Parse(attr.Value); }
+            { if (element.Attribute(ATTR_REMOVE_DMCA) is XAttribute attr) AudioRemoveDmcaMusic      = bool.Parse(attr.Value); }
         }
 
         /// <summary>
@@ -1934,33 +1951,37 @@ namespace kotor_Randomizer_2.Models
         /// <param name="element">XML element containing the item settings.</param>
         private void ReadItemSettings(XElement element)
         {
-            ItemArmbands        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_ARMBAND   ).Value);
-            ItemArmor           = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_ARMOR     ).Value);
-            ItemBelts           = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_BELT      ).Value);
-            ItemBlasters        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_BLASTER   ).Value);
-            ItemCreatureHides   = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_CHIDE     ).Value);
-            ItemCreatureWeapons = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_CWEAPON   ).Value);
-            ItemDroidEquipment  = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_DROID     ).Value);
-            ItemGloves          = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_GLOVE     ).Value);
-            ItemGrenades        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_GRENADE   ).Value);
-            ItemImplants        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_IMPLANT   ).Value);
-            ItemLightsabers     = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_LIGHTSABER).Value);
-            ItemMasks           = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_MASK      ).Value);
-            ItemMeleeWeapons    = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_MELEE     ).Value);
-            ItemMines           = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_MINE      ).Value);
-            ItemMedical         = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_MEDICAL   ).Value);
-            ItemPazaakCards     = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_PAZAAK    ).Value);
-            ItemUpgrades        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_UPGRADE   ).Value);
-            ItemVarious         = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_VARIOUS   ).Value);
+            // Read item settings. Note: we can assume element is not null.
+            { if (element.Attribute(ATTR_ARMBAND   ) is XAttribute attr) ItemArmbands        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_ARMOR     ) is XAttribute attr) ItemArmor           = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_BELT      ) is XAttribute attr) ItemBelts           = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_BLASTER   ) is XAttribute attr) ItemBlasters        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_CHIDE     ) is XAttribute attr) ItemCreatureHides   = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_CWEAPON   ) is XAttribute attr) ItemCreatureWeapons = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_DROID     ) is XAttribute attr) ItemDroidEquipment  = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_GLOVE     ) is XAttribute attr) ItemGloves          = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_GRENADE   ) is XAttribute attr) ItemGrenades        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_IMPLANT   ) is XAttribute attr) ItemImplants        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_LIGHTSABER) is XAttribute attr) ItemLightsabers     = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_MASK      ) is XAttribute attr) ItemMasks           = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_MELEE     ) is XAttribute attr) ItemMeleeWeapons    = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_MINE      ) is XAttribute attr) ItemMines           = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_MEDICAL   ) is XAttribute attr) ItemMedical         = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_PAZAAK    ) is XAttribute attr) ItemPazaakCards     = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_UPGRADE   ) is XAttribute attr) ItemUpgrades        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_VARIOUS   ) is XAttribute attr) ItemVarious         = ParseEnum<RandomizationLevel>(attr.Value); }
 
+            // Reset omitted items list.
             foreach (var item in ItemOmittedList)
                 ItemRandomizedList.Add(item);
             ItemOmittedList.Clear();
 
+            // Read omitted item preset.
             var omit = element.Descendants(ELEM_OMIT).FirstOrDefault();
             ItemOmittedPreset = omit.Attribute(ATTR_PRESET)?.Value ?? null;
 
-            if (ItemOmittedPreset == null)
+            // If preset is null, read the list of omitted items.
+            if (ItemOmittedPreset is null)
             {
                 foreach (var i in element.Descendants(ELEM_ITEM))
                 {
@@ -1981,48 +2002,29 @@ namespace kotor_Randomizer_2.Models
         /// <param name="element">XML element containing the model settings.</param>
         private void ReadModelSettings(XElement element)
         {
-            var charElement = element.Descendants(ELEM_CHAR).FirstOrDefault();
-            if (charElement != null)
+            // Read character settings.
+            if (element.Descendants(ELEM_CHAR).FirstOrDefault() is XElement charElement)
             {
                 ModelCharacterRando = true;
-                ModelCharacterOmitLarge  = bool.Parse(charElement.Attribute(ATTR_OMIT_LARGE ).Value);
-                ModelCharacterOmitBroken = bool.Parse(charElement.Attribute(ATTR_OMIT_BROKEN).Value);
-            }
-            else
-            {
-                ModelCharacterRando = false;
-                ModelCharacterOmitLarge = true;
-                ModelCharacterOmitBroken = true;
+                { if (charElement.Attribute(ATTR_OMIT_LARGE ) is XAttribute attr) ModelCharacterOmitLarge  = bool.Parse(attr.Value); }
+                { if (charElement.Attribute(ATTR_OMIT_BROKEN) is XAttribute attr) ModelCharacterOmitBroken = bool.Parse(attr.Value); }
             }
 
-            var doorElement = element.Descendants(ELEM_DOOR).FirstOrDefault();
-            if (doorElement != null)
+            // Read door settings.
+            if (element.Descendants(ELEM_DOOR).FirstOrDefault() is XElement doorElement)
             {
                 ModelDoorRando = true;
-                ModelDoorOmitAirlock = bool.Parse(doorElement.Attribute(ATTR_OMIT_AIRLOCK).Value);
-                ModelDoorOmitBroken  = bool.Parse(doorElement.Attribute(ATTR_OMIT_BROKEN ).Value);
-            }
-            else
-            {
-                ModelDoorRando = false;
-                ModelDoorOmitAirlock = true;
-                ModelDoorOmitBroken  = true;
+                { if (doorElement.Attribute(ATTR_OMIT_AIRLOCK) is XAttribute attr) ModelDoorOmitAirlock = bool.Parse(attr.Value); }
+                { if (doorElement.Attribute(ATTR_OMIT_BROKEN ) is XAttribute attr) ModelDoorOmitBroken  = bool.Parse(attr.Value); }
             }
 
-            var placElement = element.Descendants(ELEM_PLAC).FirstOrDefault();
-            if (placElement != null)
+            // Read placeable settings.
+            if (element.Descendants(ELEM_PLAC).FirstOrDefault() is XElement placElement)
             {
-                ModelPlaceableRando      = true;
-                ModelPlaceableOmitLarge  = bool.Parse(placElement.Attribute(ATTR_OMIT_LARGE ).Value);
-                ModelPlaceableOmitBroken = bool.Parse(placElement.Attribute(ATTR_OMIT_BROKEN).Value);
-                ModelPlaceableEasyPanels = bool.Parse(placElement.Attribute(ATTR_EASY_PANELS).Value);
-            }
-            else
-            {
-                ModelPlaceableRando      = false;
-                ModelPlaceableOmitLarge  = true;
-                ModelPlaceableOmitBroken = true;
-                ModelPlaceableEasyPanels = false;
+                ModelPlaceableRando = true;
+                { if (placElement.Attribute(ATTR_OMIT_LARGE ) is XAttribute attr) ModelPlaceableOmitLarge  = bool.Parse(attr.Value); }
+                { if (placElement.Attribute(ATTR_OMIT_BROKEN) is XAttribute attr) ModelPlaceableOmitBroken = bool.Parse(attr.Value); }
+                { if (placElement.Attribute(ATTR_EASY_PANELS) is XAttribute attr) ModelPlaceableEasyPanels = bool.Parse(attr.Value); }
             }
         }
 
@@ -2032,38 +2034,53 @@ namespace kotor_Randomizer_2.Models
         /// <param name="element">XML element containing the module settings.</param>
         private void ReadModuleSettings(XElement element)
         {
-            var glitches = element.Descendants(ELEM_GLITCHES).FirstOrDefault();
-            ModuleAllowGlitchClip    = bool.Parse(glitches.Attribute(ATTR_CLIP   ).Value);
-            ModuleAllowGlitchDlz     = bool.Parse(glitches.Attribute(ATTR_DLZ    ).Value);
-            ModuleAllowGlitchFlu     = bool.Parse(glitches.Attribute(ATTR_FLU    ).Value);
-            ModuleAllowGlitchGpw     = bool.Parse(glitches.Attribute(ATTR_GPW    ).Value);
-            ModuleAllowGlitchHotshot = bool.Parse(glitches.Attribute(ATTR_HOTSHOT).Value);
+            // Read glitch settings.
+            if (element.Descendants(ELEM_GLITCHES).FirstOrDefault() is XElement glitches)
+            {
+                { if (glitches.Attribute(ATTR_CLIP) is XAttribute attr) ModuleAllowGlitchClip = bool.Parse(attr.Value); }
+                { if (glitches.Attribute(ATTR_DLZ ) is XAttribute attr) ModuleAllowGlitchDlz  = bool.Parse(attr.Value); }
+                { if (glitches.Attribute(ATTR_FLU ) is XAttribute attr) ModuleAllowGlitchFlu  = bool.Parse(attr.Value); }
+                { if (glitches.Attribute(ATTR_GPW ) is XAttribute attr) ModuleAllowGlitchGpw  = bool.Parse(attr.Value); }
+            }
 
-            var goals = element.Descendants(ELEM_GOALS).FirstOrDefault();
-            ModuleGoalIsMalak     = bool.Parse(goals.Attribute(ATTR_MALAK ).Value);
-            ModuleGoalIsStarMap   = bool.Parse(goals.Attribute(ATTR_MAPS  ).Value);
-            ModuleGoalIsPazaak    = bool.Parse(goals.Attribute(ATTR_PAZAAK).Value);
-            ModuleGoalIsFullParty = bool.Parse(goals.Attribute(ATTR_PARTY ).Value);
+            // Read goal settings.
+            if (element.Descendants(ELEM_GOALS).FirstOrDefault() is XElement goals)
+            {
+                { if (goals.Attribute(ATTR_MALAK ) is XAttribute attr) ModuleGoalIsMalak     = bool.Parse(attr.Value); }
+                { if (goals.Attribute(ATTR_MAPS  ) is XAttribute attr) ModuleGoalIsStarMap   = bool.Parse(attr.Value); }
+                { if (goals.Attribute(ATTR_PAZAAK) is XAttribute attr) ModuleGoalIsPazaak    = bool.Parse(attr.Value); }
+                { if (goals.Attribute(ATTR_PARTY ) is XAttribute attr) ModuleGoalIsFullParty = bool.Parse(attr.Value); }
+            }
 
-            var logic = element.Descendants(ELEM_LOGIC).FirstOrDefault();
-            ModuleLogicIgnoreOnceEdges = bool.Parse(logic.Attribute(ATTR_IGNORE_ONCE).Value);
-            ModuleLogicRandoRules      = bool.Parse(logic.Attribute(ATTR_RULES      ).Value);
-            ModuleLogicReachability    = bool.Parse(logic.Attribute(ATTR_REACHABLE  ).Value);
+            // Read logic settings.
+            if (element.Descendants(ELEM_LOGIC).FirstOrDefault() is XElement logic)
+            {
+                { if (logic.Attribute(ATTR_RULES       ) is XAttribute attr) ModuleLogicRandoRules      = bool.Parse(attr.Value); }
+                { if (logic.Attribute(ATTR_REACHABLE   ) is XAttribute attr) ModuleLogicReachability    = bool.Parse(attr.Value); }
+                { if (logic.Attribute(ATTR_IGNORE_ONCE ) is XAttribute attr) ModuleLogicIgnoreOnceEdges = bool.Parse(attr.Value); }
+                { if (logic.Attribute(ATTR_STRONG_GOALS) is XAttribute attr) ModuleLogicStrongGoals     = bool.Parse(attr.Value); }
+            }
 
+            // Reset omitted module list.
             foreach (var module in ModuleOmittedList)
                 ModuleRandomizedList.Add(module);
             ModuleOmittedList.Clear();
 
+            // Read shuffle preset.
             var omit = element.Descendants(ELEM_OMIT).FirstOrDefault();
             ModuleShufflePreset = omit.Attribute(ATTR_PRESET)?.Value ?? null;
 
-            if (ModuleShufflePreset == null)
+            // If no shuffle preset, read omitted modules list.
+            if (ModuleShufflePreset is null)
             {
                 foreach (var mod in element.Descendants(ELEM_MODULE))
                 {
-                    var module = ModuleRandomizedList.FirstOrDefault(x => x.WarpCode == mod.Attribute(ATTR_CODE).Value);
-                    ModuleOmittedList.Add(module);
-                    ModuleRandomizedList.Remove(module);
+                    var module = ModuleRandomizedList.FirstOrDefault(x => x.WarpCode == mod.Attribute(ATTR_CODE)?.Value);
+                    if (module != null)
+                    {
+                        ModuleOmittedList.Add(module);
+                        ModuleRandomizedList.Remove(module);
+                    }
                 }
             }
         }
@@ -2122,15 +2139,17 @@ namespace kotor_Randomizer_2.Models
         /// <param name="element">XML element containing the table settings.</param>
         private void ReadTableSettings(XElement element)
         {
-            ResetTables();
             foreach (var tbl in element.Descendants(ELEM_TABLE))
             {
                 var name = tbl.Attribute(ATTR_NAME).Value;
                 var twoDA = Table2DAs.FirstOrDefault(x => x.Name == name);
-                foreach (var col in tbl.Descendants(ELEM_COLUMN))
+                if (twoDA != null)
                 {
-                    twoDA.Randomized.Add(col.Value);
-                    twoDA.Columns.Remove(col.Value);
+                    foreach (var col in tbl.Descendants(ELEM_COLUMN))
+                    {
+                        twoDA.Randomized.Add(col.Value);
+                        twoDA.Columns.Remove(col.Value);
+                    }
                 }
             }
         }
@@ -2141,7 +2160,8 @@ namespace kotor_Randomizer_2.Models
         /// <param name="element">XML element containing the text settings.</param>
         private void ReadTextSettings(XElement element)
         {
-            TextSettingsValue = ParseEnum<TextSettings>(element.Attribute(ATTR_SETTINGS).Value);
+            var attr = element.Attribute(ATTR_SETTINGS);
+            if (attr != null) TextSettingsValue = ParseEnum<TextSettings>(attr.Value);
         }
 
         /// <summary>
@@ -2150,22 +2170,22 @@ namespace kotor_Randomizer_2.Models
         /// <param name="element">XML element containing the texture settings.</param>
         private void ReadTextureSettings(XElement element)
         {
-            TextureSelectedPack = ParseEnum<TexturePack>(element.Attribute(ATTR_PACK).Value);
-            
-            TextureCreatures    = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_CREATURE ).Value);
-            TextureCubeMaps     = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_CUBE_MAP ).Value);
-            TextureEffects      = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_EFFECT   ).Value);
-            TextureItems        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_ITEM     ).Value);
-            TextureNPC          = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_NPC      ).Value);
-            TextureOther        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_OTHER    ).Value);
-            TextureParty        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_PARTY    ).Value);
-            TexturePlaceables   = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_PLACE    ).Value);
-            TexturePlanetary    = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_PLANETARY).Value);
-            TexturePlayerBodies = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_BODY     ).Value);
-            TexturePlayerHeads  = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_HEAD     ).Value);
-            TextureStunt        = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_STUNT    ).Value);
-            TextureVehicles     = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_VEHICLE  ).Value);
-            TextureWeapons      = ParseEnum<RandomizationLevel>(element.Attribute(ATTR_WEAPON   ).Value);
+            { if (element.Attribute(ATTR_PACK) is XAttribute attr) TextureSelectedPack = ParseEnum<TexturePack>(attr.Value); }
+
+            { if (element.Attribute(ATTR_CREATURE ) is XAttribute attr) TextureCreatures    = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_CUBE_MAP ) is XAttribute attr) TextureCubeMaps     = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_EFFECT   ) is XAttribute attr) TextureEffects      = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_ITEM     ) is XAttribute attr) TextureItems        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_NPC      ) is XAttribute attr) TextureNPC          = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_OTHER    ) is XAttribute attr) TextureOther        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_PARTY    ) is XAttribute attr) TextureParty        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_PLACE    ) is XAttribute attr) TexturePlaceables   = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_PLANETARY) is XAttribute attr) TexturePlanetary    = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_BODY     ) is XAttribute attr) TexturePlayerBodies = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_HEAD     ) is XAttribute attr) TexturePlayerHeads  = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_STUNT    ) is XAttribute attr) TextureStunt        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_VEHICLE  ) is XAttribute attr) TextureVehicles     = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(ATTR_WEAPON   ) is XAttribute attr) TextureWeapons      = ParseEnum<RandomizationLevel>(attr.Value); }
         }
 
         /// <summary>
@@ -2294,7 +2314,6 @@ namespace kotor_Randomizer_2.Models
             w.WriteAttributeString(ATTR_DLZ,     ModuleAllowGlitchDlz.ToString());
             w.WriteAttributeString(ATTR_FLU,     ModuleAllowGlitchFlu.ToString());
             w.WriteAttributeString(ATTR_GPW,     ModuleAllowGlitchGpw.ToString());
-            w.WriteAttributeString(ATTR_HOTSHOT, ModuleAllowGlitchHotshot.ToString());
             w.WriteEndElement();                // End Glitches
 
             w.WriteStartElement(ELEM_GOALS);    // Begin Goals
@@ -2305,9 +2324,10 @@ namespace kotor_Randomizer_2.Models
             w.WriteEndElement();                // End Goals
 
             w.WriteStartElement(ELEM_LOGIC);    // Begin Logic
-            w.WriteAttributeString(ATTR_IGNORE_ONCE, ModuleLogicIgnoreOnceEdges.ToString());
-            w.WriteAttributeString(ATTR_RULES,       ModuleLogicRandoRules.ToString());
-            w.WriteAttributeString(ATTR_REACHABLE,   ModuleLogicReachability.ToString());
+            w.WriteAttributeString(ATTR_RULES,        ModuleLogicRandoRules.ToString());
+            w.WriteAttributeString(ATTR_REACHABLE,    ModuleLogicReachability.ToString());
+            w.WriteAttributeString(ATTR_IGNORE_ONCE,  ModuleLogicIgnoreOnceEdges.ToString());
+            w.WriteAttributeString(ATTR_STRONG_GOALS, ModuleLogicStrongGoals.ToString());
             w.WriteEndElement();                // End Logic
 
             w.WriteStartElement(ELEM_OMIT);     // Begin Omit

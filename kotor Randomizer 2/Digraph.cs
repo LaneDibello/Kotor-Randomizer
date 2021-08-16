@@ -91,6 +91,11 @@ namespace kotor_Randomizer_2
         public List<ModuleVertex> Modules { get; }
         /// <summary> Lookup that indicates which modules are reachable. Keys used are the original warp code. Reachable[Original.WarpCode] = isReachable; </summary>
         public Dictionary<string, bool> Reachable { get; private set; }
+        /// <summary>
+        /// Lookup that forms a 2-dimensional table of reachability. The first module is considered the starting point for the DFS.
+        /// ReachableTable[Start.WarpCode][Destination.WarpCode] = isReachable;
+        /// </summary>
+        public Dictionary<string, Dictionary<string, bool>> ReachableTable { get; private set; }
         /// <summary> Flag indicating that the Reachable lookup table has been updated in the latest cycle of DFS. </summary>
         private bool ReachableUpdated { get; set; } = false;
         /// <summary> Queue containing edges labeled with the Once tag. These will be checked after every other option has been taken during a cycle. </summary>
@@ -98,12 +103,20 @@ namespace kotor_Randomizer_2
         /// <summary> Lookup table for the randomization. Noteably, it is the reverse of ModuleRando.LookupTable. RandomLookup[Randomized.WarpCode] = Original.WarpCode; </summary>
         public Dictionary<string, string> RandomLookup  { get; set; }
 
-        /// <summary> Reaching the tag(s) Malak is a goal for this randomization. </summary>
+        /// <summary> Reaching the tag Malak is a goal for this randomization. </summary>
         public bool GoalIsMalak   { get; set; } = true;
-        /// <summary> Reaching the tag(s) Pazaak is a goal for this randomization. </summary>
+        /// <summary> Reaching the tags Pazaak is a goal for this randomization. </summary>
         public bool GoalIsPazaak  { get; set; } = false;
-        /// <summary> Reaching the tag(s) StarMap is a goal for this randomization. </summary>
+        /// <summary> Reaching the tags StarMap is a goal for this randomization. </summary>
         public bool GoalIsStarMap { get; set; } = false;
+        /// <summary> Reaching the tags of each party member is a goal for this randomization. </summary>
+        public bool GoalIsFullParty   { get; set; } = false;
+
+        /// <summary> Setting used to verify that all active goals can reach all other active goals. </summary>
+        public bool EnabledStrongGoals { get; set; } = false;
+
+        /// <summary> List of all party member tags. </summary>
+        public readonly List<string> PARTY_MEMBERS = new List<string>() { "Bastila", "Canderous", "Carth", "HK47", "Jolee", "Juhani", "Mission", "T3M4", "Zaalbar" };
 
         /// <summary> Allow usage of the glitch Clipping to bypass locked edges. </summary>
         public bool AllowGlitchClip { get; set; } = false;
@@ -194,6 +207,8 @@ namespace kotor_Randomizer_2
                 GoalIsMalak                = Properties.Settings.Default.GoalIsMalak;
                 GoalIsPazaak               = Properties.Settings.Default.GoalIsPazaak;
                 GoalIsStarMap              = Properties.Settings.Default.GoalIsStarMaps;
+                GoalIsFullParty            = false;
+                EnabledStrongGoals         = false;
             }
             else
             {
@@ -201,7 +216,6 @@ namespace kotor_Randomizer_2
                 AllowGlitchDlz             = k1rando.ModuleAllowGlitchDlz;
                 AllowGlitchFlu             = k1rando.ModuleAllowGlitchFlu;
                 AllowGlitchGpw             = k1rando.ModuleAllowGlitchGpw;
-                //AllowGlitchHotshot         = k1rando.ModuleAllowGlitchHotshot;
                 EnabledFixBox              = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
                 EnabledFixElev             = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
                 EnabledFixMap              = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
@@ -220,7 +234,8 @@ namespace kotor_Randomizer_2
                 GoalIsMalak                = k1rando.ModuleGoalIsMalak;
                 GoalIsPazaak               = k1rando.ModuleGoalIsPazaak;
                 GoalIsStarMap              = k1rando.ModuleGoalIsStarMap;
-                //GoalIsFullParty            = k1rando.ModuleGoalIsFullParty;
+                GoalIsFullParty            = k1rando.ModuleGoalIsFullParty;
+                EnabledStrongGoals         = k1rando.ModuleLogicStrongGoals;
             }
         }
 
@@ -307,7 +322,31 @@ namespace kotor_Randomizer_2
             } while (ReachableUpdated);
 
             Console.WriteLine($" > Time used to create digraph and check reachability...{sw.Elapsed}");
+
+            //// If strong goals is enabled, create a digraph starting from each goal module.
+            //if (EnabledStrongGoals)
+            //{
+            //    // Store the reachability array for the module tagged with Start.
+            //    ReachableTable = new Dictionary<string, Dictionary<string, bool>>();
+            //    var startModule = Modules.Find(v => v.IsStart);
+            //    ReachableTable[startModule.WarpCode] = Reachable;
+
+            //    // Collect a list of active goal tags.
+            //    var goalTags = GetActiveGoalModules();
+            //}
         }
+
+        //private List<ModuleVertex> GetActiveGoalModules()
+        //{
+        //    var modList = new List<ModuleVertex>();
+
+        //    if (GoalIsMalak    ) modList.AddRange(Modules.Where(v => v.IsMalak  ));
+        //    if (GoalIsStarMap  ) modList.AddRange(Modules.Where(v => v.IsStarMap));
+        //    if (GoalIsPazaak   ) modList.AddRange(Modules.Where(v => v.IsPazaak ));
+        //    if (GoalIsFullParty) modList.AddRange(Modules.Where(v => v.IsParty  ));
+
+        //    return modList;
+        //}
 
         /// <summary>
         /// Begins the Depth-First Search reachability checking.
@@ -585,6 +624,21 @@ namespace kotor_Randomizer_2
         }
 
         /// <summary>
+        /// Returns true if all Party modules are reachable.
+        /// </summary>
+        private bool IsPartyReachable()
+        {
+            bool goal = true;
+
+            foreach (var member in PARTY_MEMBERS)
+            {
+                goal &= (Reachable.ContainsKey(member) && Reachable[member]);
+            }
+
+            return goal;
+        }
+
+        /// <summary>
         /// Returns true if all active goals are reachable. Returns true if no goals are active.
         /// </summary>
         public bool IsGoalReachable()
@@ -604,6 +658,11 @@ namespace kotor_Randomizer_2
             {
                 goal &= IsStarMapReachable();
                 if (!goal) Console.WriteLine(" - Goal unreachable: Star Map");
+            }
+            if (goal && GoalIsFullParty)
+            {
+                goal &= IsPartyReachable();
+                if (!goal) Console.WriteLine(" - Goal unreachable: Party");
             }
             return goal;
         }
@@ -625,6 +684,15 @@ namespace kotor_Randomizer_2
         public bool IsPazaak  { get; } = false;
         public bool IsStart   { get; } = false;
         public bool IsStarMap { get; } = false;
+        public bool IsParty
+        {
+            get
+            {
+                return IsBastila || IsCanderous || IsCarth  ||
+                       IsHK47    || IsJolee     || IsJuhani ||
+                       IsMission || IsT3M4      || IsZaalbar;
+            }
+        }
 
         public bool IsBastila   { get; } = false;
         public bool IsCanderous { get; } = false;
@@ -672,24 +740,24 @@ namespace kotor_Randomizer_2
                     Tags.Add(tag);
             }
 
+            // Get LockedTag
+            LockedTag = element.Attribute(XmlConsts.ATTR_LOCKED_TAG)?.Value; // Null if it doesn't exist.
+
             // Parse Tags
             IsMalak   = Tags.Contains(XmlConsts.TAG_MALAK);
             IsPazaak  = Tags.Contains(XmlConsts.TAG_PAZAAK);
             IsStart   = Tags.Contains(XmlConsts.TAG_START);
             IsStarMap = Tags.Contains(XmlConsts.TAG_STAR_MAP);
 
-            IsBastila   = Tags.Contains(XmlConsts.TAG_BASTILA);
-            IsCanderous = Tags.Contains(XmlConsts.TAG_CANDEROUS);
-            IsCarth     = Tags.Contains(XmlConsts.TAG_CARTH);
-            IsHK47      = Tags.Contains(XmlConsts.TAG_HK47);
-            IsJolee     = Tags.Contains(XmlConsts.TAG_JOLEE);
-            IsJuhani    = Tags.Contains(XmlConsts.TAG_JUHANI);
-            IsMission   = Tags.Contains(XmlConsts.TAG_MISSION);
-            IsT3M4      = Tags.Contains(XmlConsts.TAG_T3M4);
-            IsZaalbar   = Tags.Contains(XmlConsts.TAG_ZAALBAR);
-
-            // Get LockedTag
-            LockedTag = element.Attribute(XmlConsts.ATTR_LOCKED_TAG)?.Value; // Null if it doesn't exist.
+            IsBastila   = Tags.Contains(XmlConsts.TAG_BASTILA  ) || LockedTag == XmlConsts.TAG_BASTILA;
+            IsCanderous = Tags.Contains(XmlConsts.TAG_CANDEROUS) || LockedTag == XmlConsts.TAG_CANDEROUS;
+            IsCarth     = Tags.Contains(XmlConsts.TAG_CARTH    ) || LockedTag == XmlConsts.TAG_CARTH;
+            IsHK47      = Tags.Contains(XmlConsts.TAG_HK47     ) || LockedTag == XmlConsts.TAG_HK47;
+            IsJolee     = Tags.Contains(XmlConsts.TAG_JOLEE    ) || LockedTag == XmlConsts.TAG_JOLEE;
+            IsJuhani    = Tags.Contains(XmlConsts.TAG_JUHANI   ) || LockedTag == XmlConsts.TAG_JUHANI;
+            IsMission   = Tags.Contains(XmlConsts.TAG_MISSION  ) || LockedTag == XmlConsts.TAG_MISSION;
+            IsT3M4      = Tags.Contains(XmlConsts.TAG_T3M4     ) || LockedTag == XmlConsts.TAG_T3M4;
+            IsZaalbar   = Tags.Contains(XmlConsts.TAG_ZAALBAR  ) || LockedTag == XmlConsts.TAG_ZAALBAR;
 
             // Get list of Unlocks
             var unlocks = element.Attribute(XmlConsts.ATTR_UNLOCK);

@@ -8,7 +8,6 @@
              xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
              mc:Ignorable="d" 
              FontFamily="Microsoft Sans Serif" FontSize="12"
-             DataContextChanged="UserControl_DataContextChanged"
              d:DesignHeight="400" d:DesignWidth="350"
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
              >
@@ -115,11 +114,9 @@
                                 <Setter Property="FontFamily" Value="Ariel" />
                             </Style>
                         </StackPanel.Resources>
-                        <TextBlock Text="( " />
-                        <TextBlock Name="lblRandomizedTableCount" Text="XX" />
+                        <TextBlock Name="lblRandomizedTableCount" Text="{Binding Path=TableRandomizedCount, StringFormat=( {0:D2}}" />
                         <TextBlock Text=" / " />
-                        <TextBlock Text="{Binding Table2DAs.Count, Mode=OneWay}" />
-                        <TextBlock Text=" )" />
+                        <TextBlock Text="{Binding Table2DAs.Count, Mode=OneWay, StringFormat={}{0:D2} )}" />
                     </StackPanel>
                 </StackPanel>
                 

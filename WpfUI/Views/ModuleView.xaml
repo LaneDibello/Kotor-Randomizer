@@ -68,8 +68,9 @@
             <ToolTip x:Key="ttGlitchGPW">
                 Gather Party Warp / Teleport
             </ToolTip>
-            <ToolTip x:Key="ttGlitchHotshot">
-                Hotshotting back to a previous save.
+            <ToolTip x:Key="ttStrongReachability">
+                Ensure that every goal location is reachable from every other goal location. The resulting shuffle
+                will be less reliant on using Hotshots to get back to important zones.
             </ToolTip>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -84,6 +85,11 @@
                     that all loading zones that lead to a certain map will lead to the same newly randomized map.
                     Logic settings improve the likelihood that a seed can be completed given the selected goal(s).
                 </TextBlock>
+                <TextBlock Text="* = Recommended Setting"
+                           Foreground="{StaticResource HarshYellowBrush}"
+                           Margin="5,0,0,5"
+                           VerticalAlignment="Center"
+                           />
             </StackPanel>
         </Border>
         
@@ -231,11 +237,16 @@
                 <StackPanel Margin="10,0,0,0">
                     <StackPanel.Resources>
                         <Style TargetType="CheckBox">
-                            <Setter Property="Margin" Value="3,0" />
+                            <Setter Property="Margin" Value="3,0,0,0" />
                         </Style>
                         <Style TargetType="TextBlock">
-                            <Setter Property="Margin" Value="3" />
+                            <Setter Property="Margin" Value="3,3,0,3" />
                             <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
+                                </Trigger>
+                            </Style.Triggers>
                         </Style>
                     </StackPanel.Resources>
                     
@@ -244,6 +255,9 @@
                                   ToolTip="{StaticResource ttLogicRules}">
                             <TextBlock Text="Use Randomization Exclusion Rules" />
                         </CheckBox>
+                        <TextBlock Text="*"
+                                   Foreground="{StaticResource HarshYellowBrush}"
+                                   VerticalAlignment="Center" />
                         <TextBlock Margin="10,0" VerticalAlignment="Center">
                             <Run Text="(Rule 1," ToolTip="{StaticResource ttLogicRule1}" />
                             <Run Text="Rule 2,"  ToolTip="{StaticResource ttLogicRule2}" />
@@ -251,14 +265,32 @@
                         </TextBlock>
                     </StackPanel>
 
-                    <CheckBox IsChecked="{Binding ModuleLogicReachability, Mode=TwoWay}"
-                              ToolTip="{StaticResource ttLogicReachability}">
-                        <TextBlock Text="Verify Module Reachability" />
-                    </CheckBox>
-                    <CheckBox IsChecked="{Binding ModuleLogicIgnoreOnceEdges, Mode=TwoWay}"
-                              ToolTip="{StaticResource ttLogicOnce}">
-                        <TextBlock Text="Ignore Single-Use Transitions" />
-                    </CheckBox>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding ModuleLogicReachability, Mode=TwoWay}"
+                                  ToolTip="{StaticResource ttLogicReachability}">
+                            <TextBlock Text="Verify Module Reachability" />
+                        </CheckBox>
+                        <TextBlock Text="*"
+                                   Foreground="{StaticResource HarshYellowBrush}"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+
+                    <StackPanel Margin="20,0,0,0"
+                                IsEnabled="{Binding ModuleLogicReachability, Mode=OneWay}">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding ModuleLogicIgnoreOnceEdges, Mode=TwoWay}"
+                                      ToolTip="{StaticResource ttLogicOnce}">
+                                <TextBlock Text="Ignore Single-Use Transitions" />
+                            </CheckBox>
+                            <TextBlock Text="*"
+                                       Foreground="{StaticResource HarshYellowBrush}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                        <CheckBox IsChecked="{Binding ModuleLogicStrongGoals, Mode=TwoWay}" IsEnabled="False"
+                                  ToolTip="{StaticResource ttStrongReachability}">
+                            <TextBlock Text="Strongly Reachable Goals" />
+                        </CheckBox>
+                    </StackPanel>
                 </StackPanel>
 
                 <!-- Goals -->
@@ -290,7 +322,7 @@
                               ToolTip="{StaticResource ttGoalPazaak}">
                         <TextBlock Text="Pazaak Champion" />
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding ModuleGoalIsFullParty, Mode=TwoWay}" IsEnabled="False"
+                    <CheckBox IsChecked="{Binding ModuleGoalIsFullParty, Mode=TwoWay}"
                               ToolTip="{StaticResource ttGoalParty}">
                         <TextBlock Text="Recruit Party Members" />
                     </CheckBox>
@@ -345,10 +377,6 @@
                     <CheckBox IsChecked="{Binding ModuleAllowGlitchGpw, Mode=TwoWay}"
                               ToolTip="{StaticResource ttGlitchGPW}">
                         <TextBlock Text="GPW" />
-                    </CheckBox>
-                    <CheckBox IsChecked="{Binding ModuleAllowGlitchHotshot, Mode=TwoWay}" IsEnabled="False"
-                              ToolTip="{StaticResource ttGlitchHotshot}">
-                        <TextBlock Text="Hotshot" />
                     </CheckBox>
                 </WrapPanel>
             </StackPanel>
