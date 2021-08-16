@@ -254,6 +254,7 @@ namespace Randomizer_WPF.Views
                     tbSeed.Text = seed.ToString();
                 }
 
+                tbSeed.Tag = (int)seed;
                 tbSeedHex.Text = seed.ToString("X");
                 initialized = true;
             }
@@ -287,6 +288,7 @@ namespace Randomizer_WPF.Views
                     tbSeedHex.Text = seed.ToString("X");
                 }
 
+                tbSeed.Tag = (int)seed;
                 tbSeed.Text = seed.ToString();
                 initialized = true;
             }

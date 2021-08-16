@@ -95,7 +95,7 @@ namespace kotor_Randomizer_2
         /// Lookup that forms a 2-dimensional table of reachability. The first module is considered the starting point for the DFS.
         /// ReachableTable[Start.WarpCode][Destination.WarpCode] = isReachable;
         /// </summary>
-        public Dictionary<string, Dictionary<string, bool>> ReachableTable { get; private set; }
+        public Dictionary<string, Dictionary<string, bool>> ReachableTable { get; private set; } = new Dictionary<string, Dictionary<string, bool>>();
         /// <summary> Flag indicating that the Reachable lookup table has been updated in the latest cycle of DFS. </summary>
         private bool ReachableUpdated { get; set; } = false;
         /// <summary> Queue containing edges labeled with the Once tag. These will be checked after every other option has been taken during a cycle. </summary>
@@ -244,7 +244,7 @@ namespace kotor_Randomizer_2
         /// </summary>
         public void WriteReachableToConsole()
         {
-            foreach (var vertex in Reachable.Where(kvp => kvp.Value == true))
+            foreach (var vertex in ReachableTable.First().Value.Where(kvp => kvp.Value == true))
             {
                 if (!Modules.Any(v => v.WarpCode == vertex.Key)) continue;
                 var module = Modules.Find(v => v.WarpCode == vertex.Key);
@@ -303,60 +303,66 @@ namespace kotor_Randomizer_2
         /// </summary>
         public void CheckReachability()
         {
+            var modulesToCheck = new List<ModuleVertex> { Modules.Find(v => v.IsStart) };
+            if (EnabledStrongGoals)
+            {
+                modulesToCheck.AddRange(GetActiveGoalModules());    // If strong goals are enabled, create a digraph starting from each goal module.
+                modulesToCheck = modulesToCheck.Distinct().ToList();
+            }
+
+            Console.WriteLine($" > Checking reachability for {modulesToCheck.Count} module(s).");
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
 
-            // Reset objects needed for reachability testing.
-            Reachable = Modules.ToDictionary(m => m.WarpCode, b => false);
-            OnceQueue.Clear();
-
-            // Check reachability again to find unlocked edges.
-            CheckReachabilityDFS(Reachable);
-
-            // Continue to check to find newly unlocked edges, until none are unlocked.
-            do
+            foreach (var startModule in modulesToCheck)
             {
-                ReachableUpdated = false;
-                var touched = Reachable.ToDictionary(kvp => kvp.Key, kvp => false);
-                CheckReachabilityDFS(touched);
-            } while (ReachableUpdated);
+                // Reset objects needed for reachability testing.
+                Reachable = Modules.ToDictionary(m => m.WarpCode, b => false);
+                OnceQueue.Clear();
 
-            Console.WriteLine($" > Time used to create digraph and check reachability...{sw.Elapsed}");
+                // Check reachability again to find unlocked edges.
+                CheckReachabilityDFS(Reachable, startModule);
 
-            //// If strong goals is enabled, create a digraph starting from each goal module.
-            //if (EnabledStrongGoals)
-            //{
-            //    // Store the reachability array for the module tagged with Start.
-            //    ReachableTable = new Dictionary<string, Dictionary<string, bool>>();
-            //    var startModule = Modules.Find(v => v.IsStart);
-            //    ReachableTable[startModule.WarpCode] = Reachable;
+                // Continue to check to find newly unlocked edges, until none are unlocked.
+                do
+                {
+                    ReachableUpdated = false;
+                    var touched = Reachable.ToDictionary(kvp => kvp.Key, kvp => false);
+                    CheckReachabilityDFS(touched, startModule);
+                } while (ReachableUpdated);
+                
+                // Store the reachability array for the module.
+                ReachableTable[startModule.WarpCode] = Reachable.ToDictionary(r => r.Key, r => r.Value);
+            }
 
-            //    // Collect a list of active goal tags.
-            //    var goalTags = GetActiveGoalModules();
-            //}
+            Console.WriteLine($" > {modulesToCheck.Count} digraph(s) created and searched in {sw.Elapsed}.");
         }
 
-        //private List<ModuleVertex> GetActiveGoalModules()
-        //{
-        //    var modList = new List<ModuleVertex>();
+        /// <summary>
+        /// Get a list of the modules with tags related to the active goals.
+        /// </summary>
+        /// <returns>Collection of modules with tags related to the active goals.</returns>
+        private List<ModuleVertex> GetActiveGoalModules()
+        {
+            var modList = new List<ModuleVertex>();
 
-        //    if (GoalIsMalak    ) modList.AddRange(Modules.Where(v => v.IsMalak  ));
-        //    if (GoalIsStarMap  ) modList.AddRange(Modules.Where(v => v.IsStarMap));
-        //    if (GoalIsPazaak   ) modList.AddRange(Modules.Where(v => v.IsPazaak ));
-        //    if (GoalIsFullParty) modList.AddRange(Modules.Where(v => v.IsParty  ));
+            if (GoalIsMalak    ) modList.AddRange(Modules.Where(v => v.IsMalak  ));
+            if (GoalIsStarMap  ) modList.AddRange(Modules.Where(v => v.IsStarMap));
+            if (GoalIsPazaak   ) modList.AddRange(Modules.Where(v => v.IsPazaak ));
+            if (GoalIsFullParty) modList.AddRange(Modules.Where(v => v.IsParty  ));
 
-        //    return modList;
-        //}
+            return modList;
+        }
 
         /// <summary>
         /// Begins the Depth-First Search reachability checking.
         /// </summary>
         /// <param name="touched">Dictionary indicating if each module has been checked during this cycle.</param>
-        /// <param name="origStart">Module where the depth-first search will begin. If null, the Start tag is used.</param>
-        private void CheckReachabilityDFS(Dictionary<string, bool> touched, ModuleVertex origStart = null)
+        /// <param name="startingModule">Module where the depth-first search will begin. If null, the Start tag is used.</param>
+        private void CheckReachabilityDFS(Dictionary<string, bool> touched, ModuleVertex startingModule)
         {
-            if (origStart == null) origStart = Modules.Find(v => v.IsStart);
-            var randStart = Modules.Find(v => v.WarpCode == RandomLookup[origStart.WarpCode]);
+            if (startingModule == null) startingModule = Modules.Find(v => v.IsStart);
+            var randStart = Modules.Find(v => v.WarpCode == RandomLookup[startingModule.WarpCode]);
 
             // Search through all modules connected to the start. For now, treat start as not reachable
             // since we may have no opportunity to return here.
@@ -594,7 +600,27 @@ namespace kotor_Randomizer_2
             bool goal = true;
             foreach (var end in ends)
             {
-                goal &= Reachable[end.WarpCode];
+                if (EnabledStrongGoals)
+                {
+                    foreach (var start in ReachableTable)
+                    {
+                        // Verify that this goal end point can be reached from each starting location.
+                        goal &= start.Value[end.WarpCode];
+                        if (goal == false)
+                        {
+                            Console.WriteLine($" - Unable to reach {end.WarpCode} starting from {start.Key}.");
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    // The starting module is always stored first in ReachableTable.
+                    goal &= ReachableTable.First().Value[end.WarpCode];
+                    if (goal == false) Console.WriteLine($" - Unable to reach {end.WarpCode} from start.");
+                }
+
+                if (goal == false) break;
             }
             return goal;
         }

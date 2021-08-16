@@ -293,7 +293,7 @@
     <LeadsTo WarpCode="STUNT_03a" CommonName="Taris Destruction Order" Tags="Once,Locked" Unlock="tar_m09aa" />
     <!--<LeadsTo WarpCode="tar_m08aa" CommonName="Davik's Estate" Tags="Once,Locked" Unlock="tar_m09aa" />-->
   </Module>
-  <Module Planet="Taris" WarpCode="tar_m03af" CommonName="Swoop Platform" Tags="Bastila">
+  <Module Planet="Taris" WarpCode="tar_m03af" CommonName="Swoop Platform" LockedTag="Bastila" Unlock="tar_m03mg">
     <LeadsTo WarpCode="tar_m03mg" CommonName="Taris Swoops" />
     <LeadsTo WarpCode="tar_m02af" CommonName="Hideout" Tags="Locked" Unlock="tar_m03af,tar_m03mg" />
   </Module>

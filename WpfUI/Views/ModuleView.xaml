@@ -286,7 +286,7 @@
                                        Foreground="{StaticResource HarshYellowBrush}"
                                        VerticalAlignment="Center" />
                         </StackPanel>
-                        <CheckBox IsChecked="{Binding ModuleLogicStrongGoals, Mode=TwoWay}" IsEnabled="False"
+                        <CheckBox IsChecked="{Binding ModuleLogicStrongGoals, Mode=TwoWay}"
                                   ToolTip="{StaticResource ttStrongReachability}">
                             <TextBlock Text="Strongly Reachable Goals" />
                         </CheckBox>
