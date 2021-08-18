@@ -11,7 +11,7 @@
              FontFamily="Microsoft Sans Serif" FontSize="12"
              x:Name="thisView"
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
-             d:DesignHeight="600" d:DesignWidth="450"
+             d:DesignHeight="710" d:DesignWidth="450"
              DataContextChanged="View_DataContextChanged"
              Loaded="View_Loaded"
              >
@@ -83,25 +83,24 @@
         <!-- Dock.Center, Settings -->
         <ScrollViewer Style="{StaticResource svPadded}">
             <StackPanel>
-                <!-- Help and Instructions -->
-                <Expander HeaderTemplate="{StaticResource exHeader}" Header="Help and Instructions">
-                    <TextBlock Style="{StaticResource tbDescription}">
-                        <Run FontWeight="Bold" TextDecorations="Underline">Game Paths:</Run>
-                        Set the path to the Kotor 1 game folder with copy/paste or use the Auto-Find feature.
-                        A valid path must be given before you can randomize. The presets and spoilers folder
-                        options identify where those types of files will be saved.
-                        <LineBreak/><LineBreak/>
-                        <Run FontWeight="Bold" TextDecorations="Underline">Quality of Life:</Run>
-                        Select various helpful adjustments to improve your experience in the game, with or without
-                        actually randomizing anything else.
-                        <LineBreak/><LineBreak/>
-                        <Run FontWeight="Bold" TextDecorations="Underline">Unlock Doors:</Run>
-                        Unlock certain doors that can be troublesome to handle during a module shuffled playthrough.
-                    </TextBlock>
-                </Expander>
-
                 <!-- Game Paths -->
                 <Expander>
+                    <Expander.Style>
+                        <Style TargetType="Expander">
+                            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="Margin" Value="0,0,0,5" />
+                            <Setter Property="Padding" Value="2" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=thisView, Path=Kotor1Path}" Value="">
+                                    <Setter Property="IsExpanded" Value="True" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=thisView, Path=Kotor1Path}" Value="{x:Null}">
+                                    <Setter Property="IsExpanded" Value="True" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Expander.Style>
                     <Expander.Header>
                         <TextBlock Text="Game Paths">
                             <TextBlock.Style>
@@ -128,26 +127,35 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <uc:PathUserControl Grid.Row="0" TextLabel="Kotor 1 Path" PathText="{Binding ElementName=thisView, Path=Kotor1Path, Mode=TwoWay}" />
-                        <uc:PathUserControl Grid.Row="1" TextLabel="Kotor 2 Path" PathText="{Binding ElementName=thisView, Path=Kotor2Path, Mode=TwoWay}" IsEnabled="False" />
+                        <TextBlock Style="{StaticResource tbDescription}"
+                                   Grid.ColumnSpan="2"
+                                   Margin="5,0,5,5">
+                            Set the path to the Kotor 1 game folder with copy/paste or use the Auto-Find feature.
+                            A valid path must be given before you can randomize. The presets and spoilers folder
+                            options identify where those types of files will be saved.
+                        </TextBlock>
+                        
+                        <uc:PathUserControl Grid.Row="1" TextLabel="Kotor 1 Path" PathText="{Binding ElementName=thisView, Path=Kotor1Path, Mode=TwoWay}" />
+                        <uc:PathUserControl Grid.Row="2" TextLabel="Kotor 2 Path" PathText="{Binding ElementName=thisView, Path=Kotor2Path, Mode=TwoWay}" IsEnabled="False" />
 
-                        <Button Grid.Column="1" Grid.RowSpan="2" Content="Auto Find Paths"
+                        <Button Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Content="Auto Find Paths"
                                 Margin="0,2,5,2" TextBlock.TextAlignment="Center"
                                 Style="{StaticResource K1RandoButtonStyle}"
                                 ToolTip="{StaticResource ttPathAuto}"
                                 Click="BtnAutoFindPaths_Click" />
 
-                        <Label Grid.Row="2" Foreground="{StaticResource HarshBlueBrush}" HorizontalAlignment="Center">
+                        <Label Grid.Row="3" Foreground="{StaticResource HarshBlueBrush}" HorizontalAlignment="Center">
                             Kotor 2 randomization has not yet been implemented.
                         </Label>
 
-                        <Border Grid.Row="3" Grid.ColumnSpan="2" Padding="0,5,0,0"
+                        <Border Grid.Row="4" Grid.ColumnSpan="2" Padding="0,5,0,0"
                                 BorderBrush="{StaticResource HarshBlueBrush}" BorderThickness="0,1,0,0">
                             <StackPanel>
-                                <uc:PathUserControl Grid.Row="3" TextLabel="Presets Folder"  PathText="{Binding ElementName=thisView, Path=PresetPath,  Mode=TwoWay}" />
-                                <uc:PathUserControl Grid.Row="3" TextLabel="Spoilers Folder" PathText="{Binding ElementName=thisView, Path=SpoilerPath, Mode=TwoWay}" />
+                                <uc:PathUserControl TextLabel="Presets Folder"  PathText="{Binding ElementName=thisView, Path=PresetPath,  Mode=TwoWay}" />
+                                <uc:PathUserControl TextLabel="Spoilers Folder" PathText="{Binding ElementName=thisView, Path=SpoilerPath, Mode=TwoWay}" />
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -162,6 +170,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
@@ -180,12 +189,19 @@
                             </Style>
                         </Grid.Resources>
 
-                        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource tbHeader4}"
+                        <TextBlock Style="{StaticResource tbDescription}"
+                                   Grid.ColumnSpan="3"
+                                   Margin="5,0,5,5">
+                            Select various helpful adjustments to improve your experience in the game, with or without
+                            actually randomizing anything else.
+                        </TextBlock>
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource tbHeader4}"
                                    Text="Save Data" HorizontalAlignment="Center" />
-                        <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource tbHeader4}"
+                        <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource tbHeader4}"
                                    Text="Quality of Life" HorizontalAlignment="Center" />
 
-                        <StackPanel Grid.Column="0" Grid.Row="1">
+                        <StackPanel Grid.Column="0" Grid.Row="2">
                             <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataDeleteMilestone, Mode=TwoWay}"
                                       ToolTip="{StaticResource ttQolMilestone}">
                                 <TextBlock Text="Prevent Milestone Save Data Deletion" />
@@ -204,7 +220,7 @@
                             </CheckBox>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="1" Margin="5,0">
+                        <StackPanel Grid.Column="1" Grid.Row="2" Margin="5,0">
                             <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolAddSpiceLab, Mode=TwoWay}"
                                       ToolTip="{StaticResource ttQolSpice}">
                                 <TextBlock Text="Add Spice Lab Load Zone" />
@@ -259,17 +275,24 @@
                             <ColumnDefinition Width="*" />  <!--Locked List-->
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" /> <!--Description-->
                             <RowDefinition Height="Auto" /> <!--Titles-->
                             <RowDefinition Height="102" />  <!--Lists-->
                             <RowDefinition Height="Auto" /> <!--Filter-->
                         </Grid.RowDefinitions>
 
+                        <TextBlock Style="{StaticResource tbDescription}"
+                                   Grid.ColumnSpan="3"
+                                   Margin="5,0,5,5">
+                            Unlock certain doors that can be troublesome to handle during a module shuffled playthrough.
+                        </TextBlock>
+                        
                         <!--Titles-->
-                        <TextBlock Style="{StaticResource tbHeader4}" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0" Margin="0,0,0,5" Text="Unlocked" />
-                        <TextBlock Style="{StaticResource tbHeader4}" HorizontalAlignment="Center" Grid.Column="4" Grid.Row="0" Margin="0,0,0,5" Text="Locked" />
+                        <TextBlock Style="{StaticResource tbHeader4}" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Margin="0,0,0,5" Text="Unlocked" />
+                        <TextBlock Style="{StaticResource tbHeader4}" HorizontalAlignment="Center" Grid.Column="4" Grid.Row="1" Margin="0,0,0,5" Text="Locked" />
 
                         <!--Unlocked List-->
-                        <ListView Grid.Column="0" Grid.Row="1" x:Name="lvUnlocked"
+                        <ListView Grid.Column="0" Grid.Row="2" x:Name="lvUnlocked"
                                   ItemContainerStyle="{StaticResource UnlockedItemStyle}"
                                   ItemsSource="{Binding GeneralUnlockedDoors}"
                                   FontSize="11">
@@ -290,7 +313,7 @@
                         </ListView>
 
                         <!--Control Buttons-->
-                        <StackPanel Grid.Column="1" Grid.Row="1" Margin="5,0" VerticalAlignment="Center">
+                        <StackPanel Grid.Column="1" Grid.Row="2" Margin="5,0" VerticalAlignment="Center">
                             <StackPanel.Resources>
                                 <Style TargetType="Button" BasedOn="{StaticResource K1RandoButtonStyle}">
                                     <Setter Property="BorderThickness" Value="1" />
@@ -307,7 +330,7 @@
                         </StackPanel>
 
                         <!--Locked List-->
-                        <ListView Grid.Column="2" Grid.Row="1" x:Name="lvLocked"
+                        <ListView Grid.Column="2" Grid.Row="2" x:Name="lvLocked"
                                   ItemContainerStyle="{StaticResource LockedItemStyle}"
                                   ItemsSource="{Binding GeneralLockedDoors}"
                                   FontSize="11">
@@ -328,7 +351,7 @@
                         </ListView>
 
                         <!--Filter-->
-                        <DockPanel Grid.Row="2" Grid.ColumnSpan="5" Margin="0,5,0,0">
+                        <DockPanel Grid.Row="3" Grid.ColumnSpan="5" Margin="0,5,0,0">
                             <TextBlock DockPanel.Dock="Left" Text="Filter: "
                                        Style="{StaticResource tbHeader4}"
                                        Margin="10,0,5,0"
