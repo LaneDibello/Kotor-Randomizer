@@ -71,7 +71,6 @@
             this.cbUnlockTarUndercity = new System.Windows.Forms.CheckBox();
             this.cbUnlockTarVulkar = new System.Windows.Forms.CheckBox();
             this.cbUnlockUnkTempleExit = new System.Windows.Forms.CheckBox();
-            this.lblWIP = new System.Windows.Forms.Label();
             this.lblSaveData = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -86,6 +85,9 @@
             this.flpTimeSavers = new System.Windows.Forms.FlowLayoutPanel();
             this.flpUnlockDoors = new System.Windows.Forms.FlowLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
+            this.lblWIP = new System.Windows.Forms.Label();
+            this.cbStrongGoals = new System.Windows.Forms.CheckBox();
+            this.cbGoalParty = new System.Windows.Forms.CheckBox();
             this.pnlGoals.SuspendLayout();
             this.pnlGlitches.SuspendLayout();
             this.pnlOther.SuspendLayout();
@@ -314,7 +316,7 @@
             this.cbReachability.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbReachability.Location = new System.Drawing.Point(20, 595);
             this.cbReachability.Name = "cbReachability";
-            this.cbReachability.Size = new System.Drawing.Size(151, 28);
+            this.cbReachability.Size = new System.Drawing.Size(151, 17);
             this.cbReachability.TabIndex = 15;
             this.cbReachability.Text = "Verify Module Reachability";
             this.ModulesToolTip.SetToolTip(this.cbReachability, "Reachability means that all modules leading up to\r\nand including the ones contain" +
@@ -328,7 +330,7 @@
             this.lblGoals.AutoSize = true;
             this.lblGoals.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGoals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblGoals.Location = new System.Drawing.Point(37, 631);
+            this.lblGoals.Location = new System.Drawing.Point(37, 619);
             this.lblGoals.Name = "lblGoals";
             this.lblGoals.Size = new System.Drawing.Size(132, 13);
             this.lblGoals.TabIndex = 33;
@@ -354,7 +356,6 @@
             this.cbGoalMalak.AutoSize = true;
             this.cbGoalMalak.Checked = true;
             this.cbGoalMalak.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbGoalMalak.Enabled = false;
             this.cbGoalMalak.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbGoalMalak.Location = new System.Drawing.Point(3, 3);
             this.cbGoalMalak.Name = "cbGoalMalak";
@@ -368,7 +369,6 @@
             // cbGoalStarMaps
             // 
             this.cbGoalStarMaps.AutoSize = true;
-            this.cbGoalStarMaps.Enabled = false;
             this.cbGoalStarMaps.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbGoalStarMaps.Location = new System.Drawing.Point(3, 23);
             this.cbGoalStarMaps.Name = "cbGoalStarMaps";
@@ -383,7 +383,6 @@
             // cbGoalPazaak
             // 
             this.cbGoalPazaak.AutoSize = true;
-            this.cbGoalPazaak.Enabled = false;
             this.cbGoalPazaak.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbGoalPazaak.Location = new System.Drawing.Point(3, 43);
             this.cbGoalPazaak.Name = "cbGoalPazaak";
@@ -397,7 +396,6 @@
             // cbGlitchDlz
             // 
             this.cbGlitchDlz.AutoSize = true;
-            this.cbGlitchDlz.Enabled = false;
             this.cbGlitchDlz.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbGlitchDlz.Location = new System.Drawing.Point(4, 23);
             this.cbGlitchDlz.Name = "cbGlitchDlz";
@@ -411,7 +409,6 @@
             // cbGlitchFlu
             // 
             this.cbGlitchFlu.AutoSize = true;
-            this.cbGlitchFlu.Enabled = false;
             this.cbGlitchFlu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbGlitchFlu.Location = new System.Drawing.Point(73, 23);
             this.cbGlitchFlu.Name = "cbGlitchFlu";
@@ -425,7 +422,6 @@
             // cbGlitchGpw
             // 
             this.cbGlitchGpw.AutoSize = true;
-            this.cbGlitchGpw.Enabled = false;
             this.cbGlitchGpw.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbGlitchGpw.Location = new System.Drawing.Point(73, 3);
             this.cbGlitchGpw.Name = "cbGlitchGpw";
@@ -456,7 +452,6 @@
             // cbGlitchClip
             // 
             this.cbGlitchClip.AutoSize = true;
-            this.cbGlitchClip.Enabled = false;
             this.cbGlitchClip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbGlitchClip.Location = new System.Drawing.Point(4, 3);
             this.cbGlitchClip.Name = "cbGlitchClip";
@@ -639,18 +634,6 @@
             this.cbUnlockUnkTempleExit.UseVisualStyleBackColor = true;
             this.cbUnlockUnkTempleExit.CheckedChanged += new System.EventHandler(this.cbUnlockUnkTempleExit_CheckedChanged);
             // 
-            // lblWIP
-            // 
-            this.lblWIP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.lblWIP.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblWIP.Location = new System.Drawing.Point(197, 595);
-            this.lblWIP.Name = "lblWIP";
-            this.lblWIP.Size = new System.Drawing.Size(337, 28);
-            this.lblWIP.TabIndex = 53;
-            this.lblWIP.Text = "Reachability verification is a work in progress. It does not yet ensure the seed " +
-    "is beatable, but it does improve those chances.";
-            this.lblWIP.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // lblSaveData
             // 
             this.lblSaveData.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -719,12 +702,13 @@
             // 
             this.pnlGoals.AutoSize = true;
             this.pnlGoals.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
+            this.pnlGoals.Controls.Add(this.cbGoalParty);
             this.pnlGoals.Controls.Add(this.cbGoalMalak);
             this.pnlGoals.Controls.Add(this.cbGoalStarMaps);
             this.pnlGoals.Controls.Add(this.cbGoalPazaak);
-            this.pnlGoals.Location = new System.Drawing.Point(37, 651);
+            this.pnlGoals.Location = new System.Drawing.Point(37, 637);
             this.pnlGoals.Name = "pnlGoals";
-            this.pnlGoals.Size = new System.Drawing.Size(137, 63);
+            this.pnlGoals.Size = new System.Drawing.Size(142, 83);
             this.pnlGoals.TabIndex = 63;
             // 
             // pnlGlitches
@@ -742,6 +726,7 @@
             // pnlOther
             // 
             this.pnlOther.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
+            this.pnlOther.Controls.Add(this.cbStrongGoals);
             this.pnlOther.Controls.Add(this.cbIgnoreOnceEdges);
             this.pnlOther.Location = new System.Drawing.Point(366, 651);
             this.pnlOther.Name = "pnlOther";
@@ -823,6 +808,42 @@
             this.label4.TabIndex = 70;
             this.label4.Text = "Unlock Doors";
             this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // lblWIP
+            // 
+            this.lblWIP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
+            this.lblWIP.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.lblWIP.Location = new System.Drawing.Point(197, 595);
+            this.lblWIP.Name = "lblWIP";
+            this.lblWIP.Size = new System.Drawing.Size(337, 28);
+            this.lblWIP.TabIndex = 53;
+            this.lblWIP.Text = "Reachability verification is a work in progress. It does not yet ensure the seed " +
+    "is beatable, but it does improve those chances.";
+            this.lblWIP.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cbStrongGoals
+            // 
+            this.cbStrongGoals.AutoSize = true;
+            this.cbStrongGoals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbStrongGoals.Location = new System.Drawing.Point(3, 23);
+            this.cbStrongGoals.Name = "cbStrongGoals";
+            this.cbStrongGoals.Size = new System.Drawing.Size(149, 17);
+            this.cbStrongGoals.TabIndex = 24;
+            this.cbStrongGoals.Text = "Strongly Reachable Goals";
+            this.cbStrongGoals.UseVisualStyleBackColor = true;
+            this.cbStrongGoals.CheckedChanged += new System.EventHandler(this.cbStrongGoals_CheckedChanged);
+            // 
+            // cbGoalParty
+            // 
+            this.cbGoalParty.AutoSize = true;
+            this.cbGoalParty.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbGoalParty.Location = new System.Drawing.Point(3, 63);
+            this.cbGoalParty.Name = "cbGoalParty";
+            this.cbGoalParty.Size = new System.Drawing.Size(133, 17);
+            this.cbGoalParty.TabIndex = 19;
+            this.cbGoalParty.Text = "Recruit Party Members";
+            this.cbGoalParty.UseVisualStyleBackColor = true;
+            this.cbGoalParty.CheckedChanged += new System.EventHandler(this.cbGoalParty_CheckedChanged);
             // 
             // ModuleForm
             // 
@@ -918,7 +939,6 @@
         private System.Windows.Forms.Label lblRule1;
         private System.Windows.Forms.Label lblRule2;
         private System.Windows.Forms.Label lblRule3;
-        private System.Windows.Forms.Label lblWIP;
         private System.Windows.Forms.Label lblSaveData;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel2;
@@ -941,5 +961,8 @@
         private System.Windows.Forms.CheckBox cbUnlockTarUndercity;
         private System.Windows.Forms.CheckBox cbUnlockTarVulkar;
         private System.Windows.Forms.CheckBox cbUnlockUnkTempleExit;
+        private System.Windows.Forms.CheckBox cbStrongGoals;
+        private System.Windows.Forms.Label lblWIP;
+        private System.Windows.Forms.CheckBox cbGoalParty;
     }
 }

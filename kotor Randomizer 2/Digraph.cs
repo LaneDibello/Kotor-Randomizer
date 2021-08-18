@@ -207,8 +207,8 @@ namespace kotor_Randomizer_2
                 GoalIsMalak                = Properties.Settings.Default.GoalIsMalak;
                 GoalIsPazaak               = Properties.Settings.Default.GoalIsPazaak;
                 GoalIsStarMap              = Properties.Settings.Default.GoalIsStarMaps;
-                GoalIsFullParty            = false;
-                EnabledStrongGoals         = false;
+                GoalIsFullParty            = Properties.Settings.Default.GoalIsParty;
+                EnabledStrongGoals         = Properties.Settings.Default.StrongGoals;
             }
             else
             {
@@ -304,16 +304,22 @@ namespace kotor_Randomizer_2
         public void CheckReachability()
         {
             var modulesToCheck = new List<ModuleVertex> { Modules.Find(v => v.IsStart) };
+
+            // If strong goals are enabled, we need to create a digraph starting from each goal module.
             if (EnabledStrongGoals)
             {
-                modulesToCheck.AddRange(GetActiveGoalModules());    // If strong goals are enabled, create a digraph starting from each goal module.
-                modulesToCheck = modulesToCheck.Distinct().ToList();
+                modulesToCheck.AddRange(GetActiveGoalModules());        // Get a list of all active goal modules.
+                modulesToCheck = modulesToCheck.Distinct().ToList();    // Remove any duplicate modules.
             }
+
+            // Create a new table to clear any stale data.
+            ReachableTable = new Dictionary<string, Dictionary<string, bool>>();
 
             Console.WriteLine($" > Checking reachability for {modulesToCheck.Count} module(s).");
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
 
+            // Perform reachability testing for each module.
             foreach (var startModule in modulesToCheck)
             {
                 // Reset objects needed for reachability testing.
@@ -331,7 +337,7 @@ namespace kotor_Randomizer_2
                     CheckReachabilityDFS(touched, startModule);
                 } while (ReachableUpdated);
                 
-                // Store the reachability array for the module.
+                // Store the reachability array for the starting module.
                 ReachableTable[startModule.WarpCode] = Reachable.ToDictionary(r => r.Key, r => r.Value);
             }
 
@@ -600,24 +606,15 @@ namespace kotor_Randomizer_2
             bool goal = true;
             foreach (var end in ends)
             {
-                if (EnabledStrongGoals)
+                foreach (var start in ReachableTable)
                 {
-                    foreach (var start in ReachableTable)
+                    // Verify that this goal end point can be reached from each starting location.
+                    goal &= start.Value[end.WarpCode];
+                    if (goal == false)
                     {
-                        // Verify that this goal end point can be reached from each starting location.
-                        goal &= start.Value[end.WarpCode];
-                        if (goal == false)
-                        {
-                            Console.WriteLine($" - Unable to reach {end.WarpCode} starting from {start.Key}.");
-                            break;
-                        }
+                        Console.WriteLine($" - Unable to reach {end.WarpCode} starting from {start.Key}.");
+                        break;
                     }
-                }
-                else
-                {
-                    // The starting module is always stored first in ReachableTable.
-                    goal &= ReachableTable.First().Value[end.WarpCode];
-                    if (goal == false) Console.WriteLine($" - Unable to reach {end.WarpCode} from start.");
                 }
 
                 if (goal == false) break;
@@ -658,7 +655,17 @@ namespace kotor_Randomizer_2
 
             foreach (var member in PARTY_MEMBERS)
             {
-                goal &= (Reachable.ContainsKey(member) && Reachable[member]);
+                foreach (var start in ReachableTable)
+                {
+                    goal &= (start.Value.ContainsKey(member) && start.Value[member]);
+                    if (goal == false)
+                    {
+                        Console.WriteLine($" - Unable to reach {member} starting from {start.Key}.");
+                        break;
+                    }
+                }
+
+                if (goal == false) break;
             }
 
             return goal;

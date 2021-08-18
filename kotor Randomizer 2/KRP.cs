@@ -93,6 +93,9 @@ namespace kotor_Randomizer_2
                         Properties.Settings.Default.GoalIsPazaak = br.ReadBoolean();
                         Properties.Settings.Default.GoalIsStarMaps = br.ReadBoolean();
 
+                        Properties.Settings.Default.GoalIsParty = false;
+                        Properties.Settings.Default.StrongGoals = false;
+
                         Properties.Settings.Default.LastPresetComboIndex = -2;
                         Properties.Settings.Default.ModulePresetSelected = false;
                     }
