@@ -13,18 +13,45 @@ namespace kotor_Randomizer_2
         private static Dictionary<string, string> MusicLookupTable { get; set; } = new Dictionary<string, string>();
         private static Dictionary<string, string> SoundLookupTable { get; set; } = new Dictionary<string, string>();
 
-        public static void sound_rando(KPaths paths)
+        private static RandomizationLevel RandomizeAmbientNoise { get; set; }
+        private static RandomizationLevel RandomizeAreaMusic { get; set; }
+        private static RandomizationLevel RandomizeBattleMusic { get; set; }
+        private static RandomizationLevel RandomizeCutsceneNoise { get; set; }
+        private static RandomizationLevel RandomizeNpcSounds { get; set; }
+        private static RandomizationLevel RandomizePartySounds { get; set; }
+        private static bool MixNpcAndPartySounds { get; set; }
+        private static bool RemoveDmcaMusic { get; set; }
+
+        /// <summary>
+        /// Creates backups for music files modified during this randomization.
+        /// </summary>
+        /// <param name="paths"></param>
+        internal static void CreateMusicBackups(KPaths paths)
         {
-            // Prepare lists for new randomization.
-            MusicLookupTable.Clear();
-            SoundLookupTable.Clear();
+            paths.BackUpMusicDirectory();
+        }
+
+        /// <summary>
+        /// Creates backups for sound files modified during this randomization.
+        /// </summary>
+        /// <param name="paths"></param>
+        internal static void CreateSoundBackups(KPaths paths)
+        {
+            paths.BackUpSoundDirectory();
+        }
+
+        public static void sound_rando(KPaths paths, Models.Kotor1Randomizer k1rando = null)
+        {
+            // Prepare for new randomization.
+            Reset();
+            AssignSettings(k1rando);
 
             // Get file collections
             List<FileInfo> maxMusic = new List<FileInfo>();
             List<FileInfo> maxSound = new List<FileInfo>();
             List<FileInfo> musicFiles = new List<FileInfo>();
             List<FileInfo> soundFiles = new List<FileInfo>();
-            if (Directory.Exists(paths.music_backup))  musicFiles = paths.FilesInMusicBackup.ToList();
+            if (Directory.Exists(paths.music_backup)) musicFiles = paths.FilesInMusicBackup.ToList();
             if (Directory.Exists(paths.sounds_backup)) soundFiles = paths.FilesInSoundsBackup.ToList();
 
             // Area Music
@@ -34,12 +61,12 @@ namespace kotor_Randomizer_2
                 areaMusic.AddRange(musicFiles.Where(f => f.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)));
             }
 
-            if (Properties.Settings.Default.RemoveDmcaMusic)
+            if (RemoveDmcaMusic)
             {
                 areaMusic.RemoveAll(f => DmcaAreaMusic.Contains(f.Name));   // Remove DMCA music from the area list.
             }
 
-            switch (Properties.Settings.Default.RandomizeAreaMusic)
+            switch (RandomizeAreaMusic)
             {
                 case RandomizationLevel.Max:
                     maxMusic.AddRange(areaMusic);
@@ -67,7 +94,7 @@ namespace kotor_Randomizer_2
                 ambientNoiseSound.AddRange(soundFiles.Where(f => f.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)));
             }
 
-            switch (Properties.Settings.Default.RandomizeAmbientNoise)
+            switch (RandomizeAmbientNoise)
             {
                 case RandomizationLevel.Max:
                     maxMusic.AddRange(ambientNoiseMusic);
@@ -90,7 +117,7 @@ namespace kotor_Randomizer_2
             List<FileInfo> battleMusic = new List<FileInfo>(musicFiles.Where(f => RegexBattleMusic.IsMatch(f.Name)));
             List<FileInfo> battleMusicEnd = new List<FileInfo>(soundFiles.Where(f => RegexBattleMusic.IsMatch(f.Name)));
 
-            switch (Properties.Settings.Default.RandomizeBattleMusic)
+            switch (RandomizeBattleMusic)
             {
                 case RandomizationLevel.Max:
                     maxMusic.AddRange(battleMusic);
@@ -113,7 +140,7 @@ namespace kotor_Randomizer_2
             List<FileInfo> cutsceneNoise = new List<FileInfo>(musicFiles.Where(f => RegexCutscene.IsMatch(f.Name)));
             cutsceneNoise.RemoveAll(f => f.Name.StartsWith("57.")); // Remove specific exception
 
-            switch (Properties.Settings.Default.RandomizeCutsceneNoise)
+            switch (RandomizeCutsceneNoise)
             {
                 case RandomizationLevel.Max:
                     maxMusic.AddRange(cutsceneNoise);
@@ -139,7 +166,7 @@ namespace kotor_Randomizer_2
             //else
             {
                 // Party Sounds (if not mixing)
-                switch (Properties.Settings.Default.RandomizePartySounds)
+                switch (RandomizePartySounds)
                 {
                     case RandomizationLevel.Max:
                         maxSound.AddRange(partySounds);
@@ -187,7 +214,7 @@ namespace kotor_Randomizer_2
             }
 
             // Overwrite DMCA music with alternatives
-            if (Properties.Settings.Default.RemoveDmcaMusic)
+            if (RemoveDmcaMusic)
             {
                 var orig = new List<FileInfo>();
                 var rand = new List<FileInfo>();
@@ -200,6 +227,34 @@ namespace kotor_Randomizer_2
                     rand.Add(replacement);
                 }
                 AddToMusicLookup(orig, rand);
+            }
+        }
+
+        private static void AssignSettings(Models.Kotor1Randomizer k1rando)
+        {
+            // If k1rando is null, pull from settings.
+            if (null == k1rando)
+            {
+                RandomizeAmbientNoise  = Properties.Settings.Default.RandomizeAmbientNoise;
+                RandomizeAreaMusic     = Properties.Settings.Default.RandomizeAreaMusic;
+                RandomizeBattleMusic   = Properties.Settings.Default.RandomizeBattleMusic;
+                RandomizeCutsceneNoise = Properties.Settings.Default.RandomizeCutsceneNoise;
+                RandomizeNpcSounds     = Properties.Settings.Default.RandomizeNpcSounds;
+                RandomizePartySounds   = Properties.Settings.Default.RandomizePartySounds;
+                MixNpcAndPartySounds   = Properties.Settings.Default.MixNpcAndPartySounds;
+                RemoveDmcaMusic        = Properties.Settings.Default.RemoveDmcaMusic;
+            }
+            // Otherwise, pull from the Kotor1Randomizer object.
+            else
+            {
+                RandomizeAmbientNoise  = k1rando.AudioAmbientNoise;
+                RandomizeAreaMusic     = k1rando.AudioAreaMusic;
+                RandomizeBattleMusic   = k1rando.AudioBattleMusic;
+                RandomizeCutsceneNoise = k1rando.AudioCutsceneNoise;
+                RandomizeNpcSounds     = k1rando.AudioNpcSounds;
+                RandomizePartySounds   = k1rando.AudioPartySounds;
+                MixNpcAndPartySounds   = k1rando.AudioMixNpcAndPartySounds;
+                RemoveDmcaMusic        = k1rando.AudioRemoveDmcaMusic;
             }
         }
 
@@ -319,76 +374,13 @@ namespace kotor_Randomizer_2
             AddToSoundLookup(actionList, randList);
         }
 
-        public static void GenerateSpoilerLog(string path)
-        {
-            if (MusicLookupTable.Count == 0 &&
-                SoundLookupTable.Count == 0)
-            { return; }
-
-            using (StreamWriter sw = new StreamWriter(path))
-            {
-                sw.WriteLine($"Seed,{Properties.Settings.Default.Seed}");
-                sw.WriteLine();
-
-                sw.WriteLine($"Area Music,{Properties.Settings.Default.RandomizeAreaMusic}");
-                sw.WriteLine($"Battle Music,{Properties.Settings.Default.RandomizeBattleMusic}");
-                sw.WriteLine($"Ambient Noise,{Properties.Settings.Default.RandomizeAmbientNoise}");
-                sw.WriteLine($"Cutscene Noise,{Properties.Settings.Default.RandomizeCutsceneNoise}");
-                sw.WriteLine($"NPC Sounds,{Properties.Settings.Default.RandomizeNpcSounds}");
-                sw.WriteLine($"Party Sounds,{Properties.Settings.Default.RandomizePartySounds}");
-                sw.WriteLine($"Remove DMCA,{Properties.Settings.Default.RemoveDmcaMusic}");
-                sw.WriteLine($"Mix NPC and Party,{Properties.Settings.Default.MixNpcAndPartySounds}");
-                sw.WriteLine();
-
-                if (MusicLookupTable.Any())
-                {
-                    var sortedLookup = MusicLookupTable.OrderBy(kvp => kvp.Key);
-                    sw.WriteLine("Music");
-                    sw.WriteLine("Original,Randomized");
-
-                    foreach (var kvp in sortedLookup)
-                    {
-                        sw.WriteLine($"{kvp.Key},{kvp.Value}");
-                    }
-
-                    sw.WriteLine();
-                }
-
-                if (SoundLookupTable.Any())
-                {
-                    var sortedLookup = SoundLookupTable.OrderBy(kvp => kvp.Key);
-                    sw.WriteLine("Sound");
-                    sw.WriteLine("Original,Randomized");
-
-                    foreach (var kvp in sortedLookup)
-                    {
-                        sw.WriteLine($"{kvp.Key},{kvp.Value}");
-                    }
-
-                    sw.WriteLine();
-                }
-            }
-        }
-
         public static void CreateSpoilerLog(XLWorkbook workbook)
         {
             if (MusicLookupTable.Count == 0 &&
                 SoundLookupTable.Count == 0)
             { return; }
             var ws = workbook.Worksheets.Add("MusicSound");
-
             int i = 1;
-            ws.Cell(i, 1).Value = "Seed";
-            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            i++;
-
-            Version version = typeof(StartForm).Assembly.GetName().Version;
-            ws.Cell(i, 1).Value = "Version";
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
-            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-            i += 2;     // Skip a row.
 
             // Music and Sound Randomization Settings
             ws.Cell(i, 1).Value = "Music/Sound Type";
@@ -401,14 +393,14 @@ namespace kotor_Randomizer_2
 
             var settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Area Music", Properties.Settings.Default.RandomizeAreaMusic.ToString()),
-                new Tuple<string, string>("Battle Music", Properties.Settings.Default.RandomizeBattleMusic.ToString()),
-                new Tuple<string, string>("Ambient Noise", Properties.Settings.Default.RandomizeAmbientNoise.ToString()),
-                new Tuple<string, string>("Cutscene Noise", Properties.Settings.Default.RandomizeCutsceneNoise.ToString()),
-                new Tuple<string, string>("NPC Sounds", Properties.Settings.Default.RandomizeNpcSounds.ToString()),
-                new Tuple<string, string>("Party Sounds", Properties.Settings.Default.RandomizePartySounds.ToString()),
-                new Tuple<string, string>("Remove DMCA", Properties.Settings.Default.RemoveDmcaMusic.ToString()),
-                new Tuple<string, string>("Mix NPC and Party", Properties.Settings.Default.MixNpcAndPartySounds.ToString()),
+                new Tuple<string, string>("Area Music",        RandomizeAreaMusic.ToString()),
+                new Tuple<string, string>("Battle Music",      RandomizeBattleMusic.ToString()),
+                new Tuple<string, string>("Ambient Noise",     RandomizeAmbientNoise.ToString()),
+                new Tuple<string, string>("Cutscene Noise",    RandomizeCutsceneNoise.ToString()),
+                new Tuple<string, string>("NPC Sounds",        RandomizeNpcSounds.ToString()),
+                new Tuple<string, string>("Party Sounds",      RandomizePartySounds.ToString()),
+                new Tuple<string, string>("Remove DMCA",       RemoveDmcaMusic.ToString()),
+                new Tuple<string, string>("Mix NPC and Party", MixNpcAndPartySounds.ToString()),
                 new Tuple<string, string>("", ""),  // Skip a row.
             };
 

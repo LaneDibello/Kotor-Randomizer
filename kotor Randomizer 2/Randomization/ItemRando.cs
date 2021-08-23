@@ -7,48 +7,86 @@ using System.IO;
 using KotOR_IO;
 using System.Text.RegularExpressions;
 using ClosedXML.Excel;
+using kotor_Randomizer_2.Models;
 
 namespace kotor_Randomizer_2
 {
     public static class ItemRando
     {
+        #region Private Properties
+        //private static KPaths             Paths                { get; set; }
+        private static RandomizationLevel RandomizeArmbands    { get; set; }
+        private static RandomizationLevel RandomizeArmor       { get; set; }
+        private static RandomizationLevel RandomizeBelts       { get; set; }
+        private static RandomizationLevel RandomizeBlasters    { get; set; }
+        private static RandomizationLevel RandomizeHides       { get; set; }
+        private static RandomizationLevel RandomizeCreature    { get; set; }
+        private static RandomizationLevel RandomizeDroid       { get; set; }
+        private static RandomizationLevel RandomizeGloves      { get; set; }
+        private static RandomizationLevel RandomizeGrenades    { get; set; }
+        private static RandomizationLevel RandomizeImplants    { get; set; }
+        private static RandomizationLevel RandomizeLightsabers { get; set; }
+        private static RandomizationLevel RandomizeMask        { get; set; }
+        private static RandomizationLevel RandomizeMelee       { get; set; }
+        private static RandomizationLevel RandomizeMines       { get; set; }
+        private static RandomizationLevel RandomizePaz         { get; set; }
+        private static RandomizationLevel RandomizeStims       { get; set; }
+        private static RandomizationLevel RandomizeUpgrade     { get; set; }
+        private static RandomizationLevel RandomizeVarious     { get; set; }
+        private static List<string>       OmittedItems         { get; set; }
+        private static string             OmitPreset           { get; set; }
+        #endregion Private Properties
+
         /// <summary>
         /// A lookup table used to know how the items are randomized.
         /// Usage: List(Old ID, New ID)
         /// </summary>
         internal static List<Tuple<string, string>> LookupTable { get; set; } = new List<Tuple<string, string>>();
 
-        public static void item_rando(KPaths paths)
+        /// <summary>
+        /// Creates backups for files modified during this randomization.
+        /// </summary>
+        /// <param name="paths"></param>
+        internal static void CreateItemBackups(KPaths paths)
         {
-            // Prepare lists for new randomization.
-            Max_Rando.Clear();
-            Type_Lists.Clear();
-            LookupTable.Clear();
+            paths.BackUpChitinFile();
+        }
+
+        /// <summary>
+        /// Randomizes the types of items requested.
+        /// </summary>
+        /// <param name="paths">KPaths object for this game.</param>
+        /// <param name="k1rando">Kotor1Randomizer object that contains settings to use.</param>
+        public static void item_rando(KPaths paths, Kotor1Randomizer k1rando = null)
+        {
+            // Prepare for new randomization.
+            Reset();
+            AssignSettings(k1rando);
 
             // Load KEY file.
             KEY k = new KEY(paths.chitin);
 
             // Handle categories
-            HandleCategory(k, ArmbandsRegs, Properties.Settings.Default.RandomizeArmbands);
-            HandleCategory(k, ArmorRegs, Properties.Settings.Default.RandomizeArmor);
-            HandleCategory(k, BeltsRegs, Properties.Settings.Default.RandomizeBelts);
-            HandleCategory(k, BlastersRegs, Properties.Settings.Default.RandomizeBlasters);
-            HandleCategory(k, HidesRegs, Properties.Settings.Default.RandomizeHides);
-            HandleCategory(k, CreatureRegs, Properties.Settings.Default.RandomizeCreature);
-            HandleCategory(k, DroidRegs, Properties.Settings.Default.RandomizeDroid);
-            HandleCategory(k, GlovesRegs, Properties.Settings.Default.RandomizeGloves);
-            HandleCategory(k, GrenadesRegs, Properties.Settings.Default.RandomizeGrenades);
-            HandleCategory(k, ImplantsRegs, Properties.Settings.Default.RandomizeImplants);
-            HandleCategory(k, LightsabersRegs, Properties.Settings.Default.RandomizeLightsabers);
-            HandleCategory(k, MaskRegs, Properties.Settings.Default.RandomizeMask);
-            HandleCategory(k, MeleeRegs, Properties.Settings.Default.RandomizeMelee);
-            HandleCategory(k, MinesRegs, Properties.Settings.Default.RandomizeMines);
-            HandleCategory(k, PazRegs, Properties.Settings.Default.RandomizePaz);
-            HandleCategory(k, StimsRegs, Properties.Settings.Default.RandomizeStims);
-            HandleCategory(k, UpgradeRegs, Properties.Settings.Default.RandomizeUpgrade);
+            HandleCategory(k, ArmbandsRegs,    RandomizeArmbands);
+            HandleCategory(k, ArmorRegs,       RandomizeArmor);
+            HandleCategory(k, BeltsRegs,       RandomizeBelts);
+            HandleCategory(k, BlastersRegs,    RandomizeBlasters);
+            HandleCategory(k, HidesRegs,       RandomizeHides);
+            HandleCategory(k, CreatureRegs,    RandomizeCreature);
+            HandleCategory(k, DroidRegs,       RandomizeDroid);
+            HandleCategory(k, GlovesRegs,      RandomizeGloves);
+            HandleCategory(k, GrenadesRegs,    RandomizeGrenades);
+            HandleCategory(k, ImplantsRegs,    RandomizeImplants);
+            HandleCategory(k, LightsabersRegs, RandomizeLightsabers);
+            HandleCategory(k, MaskRegs,        RandomizeMask);
+            HandleCategory(k, MeleeRegs,       RandomizeMelee);
+            HandleCategory(k, MinesRegs,       RandomizeMines);
+            HandleCategory(k, PazRegs,         RandomizePaz);
+            HandleCategory(k, StimsRegs,       RandomizeStims);
+            HandleCategory(k, UpgradeRegs,     RandomizeUpgrade);
 
             // Handle Various
-            switch (Properties.Settings.Default.RandomizeVarious)
+            switch (RandomizeVarious)
             {
                 default:
                 case RandomizationLevel.None:
@@ -63,7 +101,7 @@ namespace kotor_Randomizer_2
             }
 
             // Omitted Items
-            foreach (var item in Globals.OmitItems)
+            foreach (var item in OmittedItems)
             {
                 LookupTable.Add(new Tuple<string, string>(item, item));
             }
@@ -96,6 +134,58 @@ namespace kotor_Randomizer_2
             k.WriteToFile(paths.chitin);
         }
 
+        private static void AssignSettings(Kotor1Randomizer k1rando)
+        {
+            if (k1rando == null)
+            {
+                //Paths = new KPaths(Properties.Settings.Default.Kotor1Path);
+                RandomizeArmbands = Properties.Settings.Default.RandomizeArmbands;
+                RandomizeArmor = Properties.Settings.Default.RandomizeArmor;
+                RandomizeBelts = Properties.Settings.Default.RandomizeBelts;
+                RandomizeBlasters = Properties.Settings.Default.RandomizeBlasters;
+                RandomizeHides = Properties.Settings.Default.RandomizeHides;
+                RandomizeCreature = Properties.Settings.Default.RandomizeCreature;
+                RandomizeDroid = Properties.Settings.Default.RandomizeDroid;
+                RandomizeGloves = Properties.Settings.Default.RandomizeGloves;
+                RandomizeGrenades = Properties.Settings.Default.RandomizeGrenades;
+                RandomizeImplants = Properties.Settings.Default.RandomizeImplants;
+                RandomizeLightsabers = Properties.Settings.Default.RandomizeLightsabers;
+                RandomizeMask = Properties.Settings.Default.RandomizeMask;
+                RandomizeMelee = Properties.Settings.Default.RandomizeMelee;
+                RandomizeMines = Properties.Settings.Default.RandomizeMines;
+                RandomizePaz = Properties.Settings.Default.RandomizePaz;
+                RandomizeStims = Properties.Settings.Default.RandomizeStims;
+                RandomizeUpgrade = Properties.Settings.Default.RandomizeUpgrade;
+                RandomizeVarious = Properties.Settings.Default.RandomizeVarious;
+                OmittedItems = Globals.OmitItems.ToList();
+                OmitPreset = "";
+            }
+            else
+            {
+                //Paths = k1rando.Paths;
+                RandomizeArmbands = k1rando.ItemArmbands;
+                RandomizeArmor = k1rando.ItemArmor;
+                RandomizeBelts = k1rando.ItemBelts;
+                RandomizeBlasters = k1rando.ItemBlasters;
+                RandomizeHides = k1rando.ItemCreatureHides;
+                RandomizeCreature = k1rando.ItemCreatureWeapons;
+                RandomizeDroid = k1rando.ItemDroidEquipment;
+                RandomizeGloves = k1rando.ItemGloves;
+                RandomizeGrenades = k1rando.ItemGrenades;
+                RandomizeImplants = k1rando.ItemImplants;
+                RandomizeLightsabers = k1rando.ItemLightsabers;
+                RandomizeMask = k1rando.ItemMasks;
+                RandomizeMelee = k1rando.ItemMeleeWeapons;
+                RandomizeMines = k1rando.ItemMines;
+                RandomizePaz = k1rando.ItemPazaakCards;
+                RandomizeStims = k1rando.ItemMedical;
+                RandomizeUpgrade = k1rando.ItemUpgrades;
+                RandomizeVarious = k1rando.ItemVarious;
+                OmittedItems = k1rando.ItemOmittedList.Select(x => x.Code).ToList();
+                OmitPreset = k1rando.ItemOmittedPreset;
+            }
+        }
+
         private static void HandleCategory(KEY k, List<Regex> r, RandomizationLevel randomizationLevel)
         {
             switch (randomizationLevel)
@@ -122,7 +212,7 @@ namespace kotor_Randomizer_2
 
         private static bool Is_Forbidden(string s)
         {
-            return Globals.OmitItems.Contains(s);
+            return OmittedItems.Contains(s);
         }
 
         private static bool Matches_None(string s)
@@ -153,60 +243,6 @@ namespace kotor_Randomizer_2
 
         private static List<List<string>> Type_Lists = new List<List<string>>();
 
-        /// <summary>
-        /// Creates a CSV file containing a list of the changes made during randomization.
-        /// If the file already exists, this method will append the data.
-        /// If no randomization has been performed, no file will be created.
-        /// </summary>
-        /// <param name="path">Path to desired output file.</param>
-        public static void GenerateSpoilerLog(string path)
-        {
-            if (LookupTable.Count == 0) { return; }
-            var sortedLookup = LookupTable.OrderBy(x => x.Item1);
-
-            using (StreamWriter sw = new StreamWriter(path))
-            {
-                //sw.WriteLine("Items,");
-                sw.WriteLine($"Seed,{Properties.Settings.Default.Seed}");
-                sw.WriteLine();
-
-                sw.WriteLine("Item Type,Rando Level");
-                sw.WriteLine($"Armbands,{Properties.Settings.Default.RandomizeArmbands}");
-                sw.WriteLine($"Armor,{Properties.Settings.Default.RandomizeArmor}");
-                sw.WriteLine($"Belts,{Properties.Settings.Default.RandomizeBelts}");
-                sw.WriteLine($"Blasters,{Properties.Settings.Default.RandomizeBlasters}");
-                sw.WriteLine($"Creature Hides,{Properties.Settings.Default.RandomizeHides}");
-                sw.WriteLine($"Creature Weapons,{Properties.Settings.Default.RandomizeCreature}");
-                sw.WriteLine($"Droid Equipment,{Properties.Settings.Default.RandomizeDroid}");
-                sw.WriteLine($"Gauntlets,{Properties.Settings.Default.RandomizeGloves}");
-                sw.WriteLine($"Grenades,{Properties.Settings.Default.RandomizeGrenades}");
-                sw.WriteLine($"Implants,{Properties.Settings.Default.RandomizeImplants}");
-                sw.WriteLine($"Lightsabers,{Properties.Settings.Default.RandomizeLightsabers}");
-                sw.WriteLine($"Masks,{Properties.Settings.Default.RandomizeMask}");
-                sw.WriteLine($"Melee Weapons,{Properties.Settings.Default.RandomizeMelee}");
-                sw.WriteLine($"Mines,{Properties.Settings.Default.RandomizeMines}");
-                sw.WriteLine($"Pazaak Cards,{Properties.Settings.Default.RandomizePaz}");
-                sw.WriteLine($"Stims/Medpacs,{Properties.Settings.Default.RandomizeStims}");
-                sw.WriteLine($"Upgrades/Crystals,{Properties.Settings.Default.RandomizeUpgrade}");
-                sw.WriteLine($"Various,{Properties.Settings.Default.RandomizeVarious}");
-                sw.WriteLine();
-
-                sw.WriteLine("Omitted Items");
-                foreach (var item in Globals.OmitItems)
-                {
-                    sw.WriteLine(item);
-                }
-                sw.WriteLine();
-
-                sw.WriteLine("Has Changed,Original,Randomized");
-                foreach (var tpl in sortedLookup)
-                {
-                    sw.WriteLine($"{(tpl.Item1 != tpl.Item2).ToString()},{tpl.Item1},{tpl.Item2}");
-                }
-                sw.WriteLine();
-            }
-        }
-
         internal static void Reset()
         {
             // Prepare lists for new randomization.
@@ -219,26 +255,7 @@ namespace kotor_Randomizer_2
         {
             if (LookupTable.Count == 0) { return; }
             var ws = workbook.Worksheets.Add("Item");
-
-            var paths = new KPaths(Properties.Settings.Default.Kotor1Path);
-            KEY k = new KEY(paths.chitin_backup);
-            BIF b = new BIF(Path.Combine(paths.data, "templates.bif"));
-            b.AttachKey(k, "data\\templates.bif");
-            var items = b.VariableResourceTable.Where(x => x.ResourceType == ResourceType.UTI);
-            TLK t = new TLK(File.Exists(paths.dialog_backup) ? paths.dialog_backup : paths.dialog);
-
             int i = 1;
-            ws.Cell(i, 1).Value = "Seed";
-            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            i++;
-
-            Version version = typeof(StartForm).Assembly.GetName().Version;
-            ws.Cell(i, 1).Value = "Version";
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
-            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-            i += 2;     // Skip a row.
 
             // Item Randomization Settings
             ws.Cell(i, 1).Value = "Item Type";
@@ -249,26 +266,36 @@ namespace kotor_Randomizer_2
             ws.Cell(i, 2).Style.Font.Bold = true;
             i++;
 
+            string presetName = OmitPreset;
+            bool isCustomPreset = false;
+            if (string.IsNullOrWhiteSpace(OmitPreset))
+            {
+                presetName = "Custom";
+                isCustomPreset = true;
+            }
+
             var settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Armbands", Properties.Settings.Default.RandomizeArmbands.ToString()),
-                new Tuple<string, string>("Armor", Properties.Settings.Default.RandomizeArmor.ToString()),
-                new Tuple<string, string>("Belts", Properties.Settings.Default.RandomizeBelts.ToString()),
-                new Tuple<string, string>("Blasters", Properties.Settings.Default.RandomizeBlasters.ToString()),
-                new Tuple<string, string>("Creature Hides", Properties.Settings.Default.RandomizeHides.ToString()),
-                new Tuple<string, string>("Creature Weapons", Properties.Settings.Default.RandomizeCreature.ToString()),
-                new Tuple<string, string>("Droid Equipment", Properties.Settings.Default.RandomizeDroid.ToString()),
-                new Tuple<string, string>("Gauntlets", Properties.Settings.Default.RandomizeGloves.ToString()),
-                new Tuple<string, string>("Grenades", Properties.Settings.Default.RandomizeGrenades.ToString()),
-                new Tuple<string, string>("Implants", Properties.Settings.Default.RandomizeImplants.ToString()),
-                new Tuple<string, string>("Lightsabers", Properties.Settings.Default.RandomizeLightsabers.ToString()),
-                new Tuple<string, string>("Masks", Properties.Settings.Default.RandomizeMask.ToString()),
-                new Tuple<string, string>("Melee Weapons", Properties.Settings.Default.RandomizeMelee.ToString()),
-                new Tuple<string, string>("Mines", Properties.Settings.Default.RandomizeMines.ToString()),
-                new Tuple<string, string>("Pazaak Cards", Properties.Settings.Default.RandomizePaz.ToString()),
-                new Tuple<string, string>("Stims/Medpacs", Properties.Settings.Default.RandomizeStims.ToString()),
-                new Tuple<string, string>("Upgrades/Crystals", Properties.Settings.Default.RandomizeUpgrade.ToString()),
-                new Tuple<string, string>("Various", Properties.Settings.Default.RandomizeVarious.ToString()),
+                new Tuple<string, string>("Armbands",          RandomizeArmbands.ToString()),
+                new Tuple<string, string>("Armor",             RandomizeArmor.ToString()),
+                new Tuple<string, string>("Belts",             RandomizeBelts.ToString()),
+                new Tuple<string, string>("Blasters",          RandomizeBlasters.ToString()),
+                new Tuple<string, string>("Creature Hides",    RandomizeHides.ToString()),
+                new Tuple<string, string>("Creature Weapons",  RandomizeCreature.ToString()),
+                new Tuple<string, string>("Droid Equipment",   RandomizeDroid.ToString()),
+                new Tuple<string, string>("Gauntlets",         RandomizeGloves.ToString()),
+                new Tuple<string, string>("Grenades",          RandomizeGrenades.ToString()),
+                new Tuple<string, string>("Implants",          RandomizeImplants.ToString()),
+                new Tuple<string, string>("Lightsabers",       RandomizeLightsabers.ToString()),
+                new Tuple<string, string>("Masks",             RandomizeMask.ToString()),
+                new Tuple<string, string>("Melee Weapons",     RandomizeMelee.ToString()),
+                new Tuple<string, string>("Mines",             RandomizeMines.ToString()),
+                new Tuple<string, string>("Pazaak Cards",      RandomizePaz.ToString()),
+                new Tuple<string, string>("Stims/Medpacs",     RandomizeStims.ToString()),
+                new Tuple<string, string>("Upgrades/Crystals", RandomizeUpgrade.ToString()),
+                new Tuple<string, string>("Various",           RandomizeVarious.ToString()),
+                new Tuple<string, string>("", ""),
+                new Tuple<string, string>("Item Omit Preset",  presetName),
             };
 
             foreach (var setting in settings)
@@ -282,46 +309,49 @@ namespace kotor_Randomizer_2
             i++;    // Skip a row.
 
             // Omitted Items
-            int iMax = i;
-            i = 3;  // Restart at the top of the settings list.
-
-            ws.Cell(i, 4).Value = "Omitted Items";
-            ws.Cell(i, 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-            ws.Cell(i, 4).Style.Font.Bold = true;
-            ws.Range(i, 4, i, 5).Merge();
-            i++;
-
-            ws.Cell(i, 4).Value = "ID";
-            ws.Cell(i, 5).Value = "Label";
-            ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 5).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 4).Style.Font.Italic = true;
-            ws.Cell(i, 5).Style.Font.Italic = true;
-            i++;
-
-            var sortedList = Globals.OmitItems.ToList();
-            sortedList.Sort();
-
-            foreach (var item in sortedList)
+            if (isCustomPreset)
             {
-                ws.Cell(i, 4).Value = item;
-                var origItemName = "";
+                int iMax = i;
+                i = 1;  // Restart at the top of the settings list.
 
-                var origItemVre = items.FirstOrDefault(x => x.ResRef == item);
-                if (origItemVre != null)
+                ws.Cell(i, 4).Value = "Omitted Items";
+                ws.Cell(i, 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Cell(i, 4).Style.Font.Bold = true;
+                ws.Range(i, 4, i, 5).Merge();
+                i++;
+
+                ws.Cell(i, 4).Value = "ID";
+                ws.Cell(i, 5).Value = "Label";
+                ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                ws.Cell(i, 5).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                ws.Cell(i, 4).Style.Font.Italic = true;
+                ws.Cell(i, 5).Style.Font.Italic = true;
+                i++;
+
+                var sortedList = OmittedItems.ToList();
+                sortedList.Sort();
+
+                foreach (var item in sortedList)
                 {
-                    GFF origItem = new GFF(origItemVre.EntryData);
-                    if (origItem.Top_Level.Fields.FirstOrDefault(x => x.Label == "LocalizedName") is GFF.CExoLocString field)
-                        origItemName = t.String_Data_Table[field.StringRef].StringText;
+                    ws.Cell(i, 4).Value = item;
+                    var origItemName = Globals.ITEM_LIST_FULL.FirstOrDefault(ri => ri.Code == item)?.Label ?? "";
+
+                    //var origItemVre = items.FirstOrDefault(x => x.ResRef == item);
+                    //if (origItemVre != null)
+                    //{
+                    //    GFF origItem = new GFF(origItemVre.EntryData);
+                    //    if (origItem.Top_Level.Fields.FirstOrDefault(x => x.Label == "LocalizedName") is GFF.CExoLocString field)
+                    //        origItemName = t.String_Data_Table[field.StringRef].StringText;
+                    //}
+
+                    ws.Cell(i, 5).Value = origItemName;
+                    i++;
                 }
 
-                ws.Cell(i, 5).Value = origItemName;
-                i++;
+                // Handle variable length of omitted items list.
+                if (iMax > i) i = iMax; // Return to the bottom of the settings list.
+                else i++;      // Skip a row.
             }
-
-            // Handle variable length of omitted items list.
-            if (iMax > i) i = iMax; // Return to the bottom of the settings list.
-            else          i++;      // Skip a row.
 
             i++;    // Skip an additional 2 rows.
 
@@ -361,33 +391,33 @@ namespace kotor_Randomizer_2
             var sortedLookup = LookupTable.OrderBy(tpl => tpl.Item1);
             foreach (var tpl in sortedLookup)
             {
-                string origItemName = "";
-                string randItemName = "";
-                var omitted = Globals.OmitItems.Any(x => x == tpl.Item1);
+                var omitted = OmittedItems.Any(x => x == tpl.Item1);
                 var changed = tpl.Item1 != tpl.Item2;   // Has the shuffle changed this item?
+                string origItemName = Globals.ITEM_LIST_FULL.FirstOrDefault(ri => ri.Code == tpl.Item1)?.Label ?? "";
+                string randItemName = changed ? Globals.ITEM_LIST_FULL.FirstOrDefault(ri => ri.Code == tpl.Item2)?.Label ?? "" : origItemName;
 
-                var origItemVre = items.FirstOrDefault(x => x.ResRef == tpl.Item1);
-                if (origItemVre != null)
-                {
-                    GFF origItem = new GFF(origItemVre.EntryData);
-                    if (origItem.Top_Level.Fields.FirstOrDefault(x => x.Label == "LocalizedName") is GFF.CExoLocString field)
-                        origItemName = t.String_Data_Table[field.StringRef].StringText;
-                }
+                //var origItemVre = items.FirstOrDefault(x => x.ResRef == tpl.Item1);
+                //if (origItemVre != null)
+                //{
+                //    GFF origItem = new GFF(origItemVre.EntryData);
+                //    if (origItem.Top_Level.Fields.FirstOrDefault(x => x.Label == "LocalizedName") is GFF.CExoLocString field)
+                //        origItemName = t.String_Data_Table[field.StringRef].StringText;
+                //}
 
-                if (changed)
-                {
-                    var randItemVre = items.FirstOrDefault(x => x.ResRef == tpl.Item2);
-                    if (randItemVre != null)
-                    {
-                        GFF randItem = new GFF(randItemVre.EntryData);
-                        if (randItem.Top_Level.Fields.FirstOrDefault(x => x.Label == "LocalizedName") is GFF.CExoLocString field)
-                            randItemName = t.String_Data_Table[field.StringRef].StringText;
-                    }
-                }
-                else
-                {
-                    randItemName = origItemName;
-                }
+                //if (changed)
+                //{
+                //    var randItemVre = items.FirstOrDefault(x => x.ResRef == tpl.Item2);
+                //    if (randItemVre != null)
+                //    {
+                //        GFF randItem = new GFF(randItemVre.EntryData);
+                //        if (randItem.Top_Level.Fields.FirstOrDefault(x => x.Label == "LocalizedName") is GFF.CExoLocString field)
+                //            randItemName = t.String_Data_Table[field.StringRef].StringText;
+                //    }
+                //}
+                //else
+                //{
+                //    randItemName = origItemName;
+                //}
 
                 ws.Cell(i, 1).Value = omitted ? "OMITTED" : changed.ToString();
                 ws.Cell(i, 2).Style.Border.LeftBorder = XLBorderStyleValues.Thin;

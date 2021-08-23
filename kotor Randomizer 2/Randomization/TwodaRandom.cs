@@ -4,6 +4,7 @@ using System.Linq;
 using System.IO;
 using KotOR_IO;
 using ClosedXML.Excel;
+using kotor_Randomizer_2.Models;
 
 namespace kotor_Randomizer_2
 {
@@ -15,15 +16,29 @@ namespace kotor_Randomizer_2
         /// </summary>
         private static Dictionary<string, Dictionary<string, List<Tuple<string, string>>>> LookupTable { get; set; } = new Dictionary<string, Dictionary<string, List<Tuple<string, string>>>>();
 
-        public static void Twoda_rando(KPaths paths)
+        public static Dictionary<string, List<string>> Selected2DAs { get; set; }
+
+        /// <summary>
+        /// Creates backups for files modified during this randomization.
+        /// </summary>
+        /// <param name="paths"></param>
+        internal static void CreateTwoDABackups(KPaths paths)
         {
+            paths.BackUpChitinFile();
+            paths.BackUpOverrideDirectory();
+        }
+
+        public static void Twoda_rando(KPaths paths, Kotor1Randomizer k1rando = null)
+        {
+            AssignSettings(k1rando);
+
             BIF b = new BIF(Path.Combine(paths.data, "2da.bif"));
             KEY k = new KEY(paths.chitin_backup);
             b.AttachKey(k, "data\\2da.bif");
 
             var filesInOverride = paths.FilesInOverride.ToList();
 
-            foreach (BIF.VariableResourceEntry VRE in b.VariableResourceTable.Where(x => Globals.Selected2DAs.Keys.Contains(x.ResRef)))
+            foreach (BIF.VariableResourceEntry VRE in b.VariableResourceTable.Where(x => Selected2DAs.Keys.Contains(x.ResRef)))
             {
                 // Check to see if this table is already in the override directory.
                 TwoDA t;
@@ -44,7 +59,7 @@ namespace kotor_Randomizer_2
                     LookupTable.Add(VRE.ResRef, new Dictionary<string, List<Tuple<string, string>>>());
                 }
 
-                foreach (string col in Globals.Selected2DAs[VRE.ResRef])
+                foreach (string col in Selected2DAs[VRE.ResRef])
                 {
                     if (!LookupTable[VRE.ResRef].ContainsKey(col))
                     {
@@ -66,29 +81,34 @@ namespace kotor_Randomizer_2
             }
         }
 
+        private static void AssignSettings(Kotor1Randomizer k1rando)
+        {
+            if (k1rando == null)
+            {
+                Selected2DAs = Globals.Selected2DAs;
+            }
+            else
+            {
+                Selected2DAs = new Dictionary<string, List<string>>();
+                foreach (var table in k1rando.Table2DAs.Where(rt => rt.IsRandomized))
+                {
+                    Selected2DAs.Add(table.Name, table.Randomized.ToList());
+                }
+            }
+        }
+
         internal static void Reset()
         {
             // Prepare lists for new randomization.
             LookupTable.Clear();
+            Selected2DAs = null;
         }
 
         internal static void CreateSpoilerLog(XLWorkbook workbook)
         {
             if (LookupTable.Count == 0) { return; }
             var ws = workbook.Worksheets.Add("TwoDA");
-
             int i = 1;
-            ws.Cell(i, 1).Value = "Seed";
-            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            i++;
-
-            Version version = typeof(StartForm).Assembly.GetName().Version;
-            ws.Cell(i, 1).Value = "Version";
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
-            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-            i += 2;     // Skip a row;
 
             // TwoDA Randomization
             const string ORIGINAL = "Orig";

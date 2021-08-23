@@ -1,0 +1,54 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Randomizer_WPF.UserControls"
+             xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic"
+             x:Class="Randomizer_WPF.UserControls.PathUserControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="26" d:DesignWidth="300"
+             x:Name="thisView">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+        <Label Foreground="{StaticResource HarshBlueBrush}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding TextLabel}" />
+                <TextBlock Text=":" />
+            </StackPanel>
+        </Label>
+        <TextBox Grid.Column="1"
+                 Margin="5,0"
+                 Text="{Binding ElementName=thisView, Path=PathText, Mode=TwoWay}"
+                 MinWidth="{Binding TextBoxMinWidth}"
+                 VerticalContentAlignment="Center"
+                 />
+        <Button Grid.Column="2" Content="{Binding ButtonLabel}"
+                MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                MinHeight="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                Style="{DynamicResource K1RandoButtonStyle}"
+                Click="BtnBrowse_Click"
+                Visibility="Collapsed"/>
+    </Grid>
+</UserControl>

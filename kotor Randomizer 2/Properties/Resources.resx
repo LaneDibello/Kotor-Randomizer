@@ -364,4 +364,10 @@
   <data name="k_pdan_13_area" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\k_pdan_13_area.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="k33b_openacademy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k33b_openacademy.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="k36_pkor_enter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k36_pkor_enter.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

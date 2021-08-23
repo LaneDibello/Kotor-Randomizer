@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="Randomizer_WPF.Views.TextView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Randomizer_WPF.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="350"
+             FontFamily="Microsoft Sans Serif" FontSize="12"
+             x:Name="thisView">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid Background="{StaticResource WindowBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Title and Description -->
+        <Border Grid.ColumnSpan="2" Grid.Row="0"
+                BorderBrush="{StaticResource HarshBlueBrush}"
+                BorderThickness="0,0,0,2">
+            <StackPanel>
+                <TextBlock Style="{StaticResource tbTitle}" Text="Text Randomization" />
+                <TextBlock Style="{StaticResource tbDescription}">
+                    Randomize the dialogue and text throughout the game. Entries are the statements made
+                    by NPCs and Replies are the options given to the Player. Entry sounds can be matched
+                    so the new dialogue matches its text.
+                </TextBlock>
+            </StackPanel>
+        </Border>
+        
+        <!-- Settings -->
+        <StackPanel Grid.Row="1" Margin="5,0">
+            <StackPanel.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="Margin" Value="0,5" />
+                    <Setter Property="Padding" Value="2" />
+                </Style>
+                <Style TargetType="CheckBox">
+                    <Setter Property="Margin" Value="3" />
+                    <Setter Property="Padding" Value="5,0" />
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Resources>
+            
+            <!-- Dialogue Rando -->
+            <Border>
+                <StackPanel>
+                    <CheckBox x:Name="cbRandomEntries" IsChecked="{Binding ElementName=thisView, Path=RandomizeDialogueEntries}">
+                        <TextBlock Text="Randomize Entries"/>
+                    </CheckBox>
+                    <StackPanel Margin="18,0,0,0" IsEnabled="{Binding ElementName=cbRandomEntries, Path=IsChecked}">
+                        <CheckBox IsChecked="{Binding ElementName=thisView, Path=MatchEntrySounds}">
+                            <TextBlock Text="Match Entry Sounds" />
+                        </CheckBox>
+                    </StackPanel>
+                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=RandomizeDialogueReplies}">
+                        <TextBlock Text="Randomize Replies" />
+                    </CheckBox>
+                </StackPanel>
+            </Border>
+            
+            <!-- TLK Rando -->
+            <Border>
+                <StackPanel>
+                    <CheckBox x:Name="cbAdditionalText" IsChecked="{Binding ElementName=thisView, Path=RandomizeAdditionalText}">
+                        <TextBlock Text="Randomize Additional Text" />
+                    </CheckBox>
+                    <StackPanel Margin="18,0,0,0" IsEnabled="{Binding ElementName=cbAdditionalText, Path=IsChecked}">
+                        <CheckBox IsChecked="{Binding ElementName=thisView, Path=MatchSimilarStringLength}">
+                            <TextBlock Text="Match Similar String Length" />
+                        </CheckBox>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -42,8 +42,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.flpCharRando = new System.Windows.Forms.FlowLayoutPanel();
             this.flpPlaceRando = new System.Windows.Forms.FlowLayoutPanel();
-            this.flpDoorRando = new System.Windows.Forms.FlowLayoutPanel();
             this.cbFloorPanels = new System.Windows.Forms.CheckBox();
+            this.flpDoorRando = new System.Windows.Forms.FlowLayoutPanel();
             this.ModelToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.flpCharRando.SuspendLayout();
             this.flpPlaceRando.SuspendLayout();
@@ -199,18 +199,6 @@
             this.flpPlaceRando.Size = new System.Drawing.Size(127, 76);
             this.flpPlaceRando.TabIndex = 8;
             // 
-            // flpDoorRando
-            // 
-            this.flpDoorRando.AutoSize = true;
-            this.flpDoorRando.Controls.Add(this.cbLargeDoor);
-            this.flpDoorRando.Controls.Add(this.cbBrokenDoor);
-            this.flpDoorRando.Enabled = false;
-            this.flpDoorRando.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpDoorRando.Location = new System.Drawing.Point(138, 158);
-            this.flpDoorRando.Name = "flpDoorRando";
-            this.flpDoorRando.Size = new System.Drawing.Size(130, 55);
-            this.flpDoorRando.TabIndex = 9;
-            // 
             // cbFloorPanels
             // 
             this.cbFloorPanels.AutoSize = true;
@@ -223,6 +211,18 @@
         "hat have collision too large for the\r\npuzzle to be solved.");
             this.cbFloorPanels.UseVisualStyleBackColor = true;
             this.cbFloorPanels.CheckedChanged += new System.EventHandler(this.cbFloorSwitches_CheckedChanged);
+            // 
+            // flpDoorRando
+            // 
+            this.flpDoorRando.AutoSize = true;
+            this.flpDoorRando.Controls.Add(this.cbLargeDoor);
+            this.flpDoorRando.Controls.Add(this.cbBrokenDoor);
+            this.flpDoorRando.Enabled = false;
+            this.flpDoorRando.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpDoorRando.Location = new System.Drawing.Point(138, 158);
+            this.flpDoorRando.Name = "flpDoorRando";
+            this.flpDoorRando.Size = new System.Drawing.Size(130, 55);
+            this.flpDoorRando.TabIndex = 9;
             // 
             // ModelToolTip
             // 

@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using KotOR_IO;
 using System.IO;
 using ClosedXML.Excel;
+using kotor_Randomizer_2.Models;
 
 namespace kotor_Randomizer_2
 {
@@ -27,6 +28,22 @@ namespace kotor_Randomizer_2
         /// </summary>
         private static Dictionary<int, string> NameLookup { get; set; } = new Dictionary<int, string>();
 
+        private static RandomizationLevel RandomizeCreatures    { get; set; }
+        private static RandomizationLevel RandomizeCubeMaps     { get; set; }
+        private static RandomizationLevel RandomizeEffects      { get; set; }
+        private static RandomizationLevel RandomizeItems        { get; set; }
+        private static RandomizationLevel RandomizeNPC          { get; set; }
+        private static RandomizationLevel RandomizeOther        { get; set; }
+        private static RandomizationLevel RandomizeParty        { get; set; }
+        private static RandomizationLevel RandomizePlaceables   { get; set; }
+        private static RandomizationLevel RandomizePlanetary    { get; set; }
+        private static RandomizationLevel RandomizePlayerBodies { get; set; }
+        private static RandomizationLevel RandomizePlayerHeads  { get; set; }
+        private static RandomizationLevel RandomizeStunt        { get; set; }
+        private static RandomizationLevel RandomizeVehicles     { get; set; }
+        private static RandomizationLevel RandomizeWeapons      { get; set; }
+        private static TexturePack        SelectedPack          { get; set; }
+
         #region Regexes
         private static readonly Regex RegexCubeMaps = new Regex("^CM_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex RegexCreatures = new Regex("^C_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -43,15 +60,24 @@ namespace kotor_Randomizer_2
         private static readonly Regex RegexWeapons = new Regex("^W_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         #endregion
 
-        public static void texture_rando(KPaths paths)
+        /// <summary>
+        /// Creates backups for files modified during this randomization.
+        /// </summary>
+        /// <param name="paths"></param>
+        internal static void CreateTextureBackups(KPaths paths)
         {
-            // Prepare lists for new randomization.
-            MaxRando.Clear();
-            TypeLists.Clear();
+            paths.BackUpTexturesDirectory();
+        }
+
+        public static void texture_rando(KPaths paths, Kotor1Randomizer k1rando = null)
+        {
+            // Prepare for new randomization.
+            Reset();
+            AssignSettings(k1rando);
 
             // Load in texture pack.
             string pack_name;
-            switch (Properties.Settings.Default.TexturePack)
+            switch (SelectedPack)
             {
                 default:
                 case TexturePack.HighQuality:
@@ -74,22 +100,22 @@ namespace kotor_Randomizer_2
             }
 
             // Handle categories.
-            HandleCategory(e, RegexCubeMaps,   Properties.Settings.Default.TextureRandomizeCubeMaps);
-            HandleCategory(e, RegexCreatures,  Properties.Settings.Default.TextureRandomizeCreatures);
-            HandleCategory(e, RegexEffects,    Properties.Settings.Default.TextureRandomizeEffects);
-            HandleCategory(e, RegexItems,      Properties.Settings.Default.TextureRandomizeItems);
-            HandleCategory(e, RegexPlanetary,  Properties.Settings.Default.TextureRandomizePlanetary);
-            HandleCategory(e, RegexNPC,        Properties.Settings.Default.TextureRandomizeNPC);
-            HandleCategory(e, RegexPlayHeads,  Properties.Settings.Default.TextureRandomizePlayHeads);
-            HandleCategory(e, RegexPlayBodies, Properties.Settings.Default.TextureRandomizePlayBodies);
-            HandleCategory(e, RegexPlaceables, Properties.Settings.Default.TextureRandomizePlaceables);
-            HandleCategory(e, RegexParty,      Properties.Settings.Default.TextureRandomizeParty);
-            HandleCategory(e, RegexStunt,      Properties.Settings.Default.TextureRandomizeStunt);
-            HandleCategory(e, RegexVehicles,   Properties.Settings.Default.TextureRandomizeVehicles);
-            HandleCategory(e, RegexWeapons,    Properties.Settings.Default.TextureRandomizeWeapons);
+            HandleCategory(e, RegexCubeMaps,   RandomizeCubeMaps);
+            HandleCategory(e, RegexCreatures,  RandomizeCreatures);
+            HandleCategory(e, RegexEffects,    RandomizeEffects);
+            HandleCategory(e, RegexItems,      RandomizeItems);
+            HandleCategory(e, RegexPlanetary,  RandomizePlanetary);
+            HandleCategory(e, RegexNPC,        RandomizeNPC);
+            HandleCategory(e, RegexPlayHeads,  RandomizePlayerHeads);
+            HandleCategory(e, RegexPlayBodies, RandomizePlayerBodies);
+            HandleCategory(e, RegexPlaceables, RandomizePlaceables);
+            HandleCategory(e, RegexParty,      RandomizeParty);
+            HandleCategory(e, RegexStunt,      RandomizeStunt);
+            HandleCategory(e, RegexVehicles,   RandomizeVehicles);
+            HandleCategory(e, RegexWeapons,    RandomizeWeapons);
 
             // Handle other.
-            switch (Properties.Settings.Default.TextureRandomizeOther)
+            switch (RandomizeOther)
             {
                 default:
                 case RandomizationLevel.None:
@@ -129,6 +155,46 @@ namespace kotor_Randomizer_2
             }
 
             e.WriteToFile(paths.TexturePacks + pack_name);
+        }
+
+        private static void AssignSettings(Kotor1Randomizer k1rando)
+        {
+            if (k1rando == null)
+            {
+                RandomizeCreatures    = Properties.Settings.Default.TextureRandomizeCreatures;
+                RandomizeCubeMaps     = Properties.Settings.Default.TextureRandomizeCubeMaps;
+                RandomizeEffects      = Properties.Settings.Default.TextureRandomizeEffects;
+                RandomizeItems        = Properties.Settings.Default.TextureRandomizeItems;
+                RandomizeNPC          = Properties.Settings.Default.TextureRandomizeNPC;
+                RandomizeOther        = Properties.Settings.Default.TextureRandomizeOther;
+                RandomizeParty        = Properties.Settings.Default.TextureRandomizeParty;
+                RandomizePlaceables   = Properties.Settings.Default.TextureRandomizePlaceables;
+                RandomizePlanetary    = Properties.Settings.Default.TextureRandomizePlanetary;
+                RandomizePlayerBodies = Properties.Settings.Default.TextureRandomizePlayBodies;
+                RandomizePlayerHeads  = Properties.Settings.Default.TextureRandomizePlayHeads;
+                RandomizeStunt        = Properties.Settings.Default.TextureRandomizeStunt;
+                RandomizeVehicles     = Properties.Settings.Default.TextureRandomizeVehicles;
+                RandomizeWeapons      = Properties.Settings.Default.TextureRandomizeWeapons;
+                SelectedPack          = Properties.Settings.Default.TexturePack;
+            }
+            else
+            {
+                RandomizeCreatures    = k1rando.TextureCreatures;
+                RandomizeCubeMaps     = k1rando.TextureCubeMaps;
+                RandomizeEffects      = k1rando.TextureEffects;
+                RandomizeItems        = k1rando.TextureItems;
+                RandomizeNPC          = k1rando.TextureNPC;
+                RandomizeOther        = k1rando.TextureOther;
+                RandomizeParty        = k1rando.TextureParty;
+                RandomizePlaceables   = k1rando.TexturePlaceables;
+                RandomizePlanetary    = k1rando.TexturePlanetary;
+                RandomizePlayerBodies = k1rando.TexturePlayerBodies;
+                RandomizePlayerHeads  = k1rando.TexturePlayerHeads;
+                RandomizeStunt        = k1rando.TextureStunt;
+                RandomizeVehicles     = k1rando.TextureVehicles;
+                RandomizeWeapons      = k1rando.TextureWeapons;
+                SelectedPack          = k1rando.TextureSelectedPack;
+            }
         }
 
         private static bool Matches_None(string s)
@@ -192,23 +258,11 @@ namespace kotor_Randomizer_2
         {
             if (LookupTable.Count == 0) { return; }
             var ws = workbook.Worksheets.Add("Texture");
-
             int i = 1;
-            ws.Cell(i, 1).Value = "Seed";
-            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            i++;
-
-            Version version = typeof(StartForm).Assembly.GetName().Version;
-            ws.Cell(i, 1).Value = "Version";
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
-            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-            i++;
 
             // Texture Randomization Settings
             ws.Cell(i, 1).Value = "Texture Pack";
-            ws.Cell(i, 2).Value = Properties.Settings.Default.TexturePack.ToDescription();
+            ws.Cell(i, 2).Value = SelectedPack.ToDescription();
             ws.Cell(i, 1).Style.Font.Bold = true;
             i += 2;     // Skip a row.
 
@@ -222,20 +276,20 @@ namespace kotor_Randomizer_2
 
             var settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Cube Maps", Properties.Settings.Default.TextureRandomizeCubeMaps.ToString()),
-                new Tuple<string, string>("Creatures", Properties.Settings.Default.TextureRandomizeCreatures.ToString()),
-                new Tuple<string, string>("Effects", Properties.Settings.Default.TextureRandomizeEffects.ToString()),
-                new Tuple<string, string>("Items", Properties.Settings.Default.TextureRandomizeItems.ToString()),
-                new Tuple<string, string>("Planetary", Properties.Settings.Default.TextureRandomizePlanetary.ToString()),
-                new Tuple<string, string>("NPC", Properties.Settings.Default.TextureRandomizeNPC.ToString()),
-                new Tuple<string, string>("Player Heads", Properties.Settings.Default.TextureRandomizePlayHeads.ToString()),
-                new Tuple<string, string>("Player Bodies", Properties.Settings.Default.TextureRandomizePlayBodies.ToString()),
-                new Tuple<string, string>("Placeables", Properties.Settings.Default.TextureRandomizePlaceables.ToString()),
-                new Tuple<string, string>("Party", Properties.Settings.Default.TextureRandomizeParty.ToString()),
-                new Tuple<string, string>("Stunt", Properties.Settings.Default.TextureRandomizeStunt.ToString()),
-                new Tuple<string, string>("Vehicles", Properties.Settings.Default.TextureRandomizeVehicles.ToString()),
-                new Tuple<string, string>("Weapons", Properties.Settings.Default.TextureRandomizeWeapons.ToString()),
-                new Tuple<string, string>("Other", Properties.Settings.Default.TextureRandomizeOther.ToString()),
+                new Tuple<string, string>("Cube Maps",     RandomizeCubeMaps.ToString()),
+                new Tuple<string, string>("Creatures",     RandomizeCreatures.ToString()),
+                new Tuple<string, string>("Effects",       RandomizeEffects.ToString()),
+                new Tuple<string, string>("Items",         RandomizeItems.ToString()),
+                new Tuple<string, string>("Planetary",     RandomizePlanetary.ToString()),
+                new Tuple<string, string>("NPC",           RandomizeNPC.ToString()),
+                new Tuple<string, string>("Player Heads",  RandomizePlayerHeads.ToString()),
+                new Tuple<string, string>("Player Bodies", RandomizePlayerBodies.ToString()),
+                new Tuple<string, string>("Placeables",    RandomizePlaceables.ToString()),
+                new Tuple<string, string>("Party",         RandomizeParty.ToString()),
+                new Tuple<string, string>("Stunt",         RandomizeStunt.ToString()),
+                new Tuple<string, string>("Vehicles",      RandomizeVehicles.ToString()),
+                new Tuple<string, string>("Weapons",       RandomizeWeapons.ToString()),
+                new Tuple<string, string>("Other",         RandomizeOther.ToString()),
                 new Tuple<string, string>("", ""),  // Skip a row.
             };
 
