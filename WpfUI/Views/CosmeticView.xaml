@@ -141,6 +141,9 @@
                                 "Broken Models" are those that are either not present or can cause stability issues.
                             </TextBlock>
                             <TextBlock Style="{StaticResource tbDescription}">
+                                "Easy Floor Panels" ensures the puzzle in the Temple Catacombs is solvable.
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource tbDescription}">
                                 The "Airlocks" of Manaan can sometimes lose functionality when randomized.
                             </TextBlock>
                         </StackPanel>

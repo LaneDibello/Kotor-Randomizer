@@ -182,7 +182,7 @@ namespace kotor_Randomizer_2.Models
             GeneralLockedDoors.Add(new UnlockableDoor()
             {
                 Area = "DAN", Label = "Ruins Door",        Tag = ModuleExtras.UnlockDanRuins,
-                ToolTipMessage = "Unlocks the door into the Dantooine Ruins and the door out of the Unknown World's Temple Summit."
+                ToolTipMessage = "Unlocks the door into the Dantooine Ruins."
             });
             GeneralLockedDoors.Add(new UnlockableDoor()
             {
