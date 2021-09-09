@@ -86,6 +86,8 @@ namespace kotor_Randomizer_2
         UnlockTarVulkar     = 0x10000, // 0b0001 00000000 00000000
         /// <summary> Unlock the Lehon Temple exit on the Main Floor. </summary>
         UnlockUnkTempleExit = 0x20000, // 0b0010 00000000 00000000
+        /// <summary> Speeds up the envirosuit to match normal run speed. </summary>
+        FastEnvirosuit      = 0x40000, // 0b0100 00000000 00000000
     }
 
     [Flags]

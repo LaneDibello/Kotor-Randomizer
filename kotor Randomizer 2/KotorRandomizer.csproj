@@ -268,6 +268,7 @@
     </Compile>
     <None Include="Resources\ALLINCLUDED_modulesave.2da" />
     <None Include="Resources\appearance.2da" />
+    <None Include="Resources\appearance_speedysuit.2da" />
     <None Include="Resources\g_brakatan003.utc" />
     <None Include="Resources\k33b_openacademy.ncs" />
     <None Include="Resources\k36_pkor_enter.ncs" />

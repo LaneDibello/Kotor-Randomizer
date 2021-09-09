@@ -78,16 +78,17 @@
             this.lblGeneralSettings = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pnlGoals = new System.Windows.Forms.Panel();
+            this.cbGoalParty = new System.Windows.Forms.CheckBox();
             this.pnlGlitches = new System.Windows.Forms.Panel();
             this.pnlOther = new System.Windows.Forms.Panel();
+            this.cbStrongGoals = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.flpSaveData = new System.Windows.Forms.FlowLayoutPanel();
             this.flpTimeSavers = new System.Windows.Forms.FlowLayoutPanel();
             this.flpUnlockDoors = new System.Windows.Forms.FlowLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
             this.lblWIP = new System.Windows.Forms.Label();
-            this.cbStrongGoals = new System.Windows.Forms.CheckBox();
-            this.cbGoalParty = new System.Windows.Forms.CheckBox();
+            this.cbSpeedySuit = new System.Windows.Forms.CheckBox();
             this.pnlGoals.SuspendLayout();
             this.pnlGlitches.SuspendLayout();
             this.pnlOther.SuspendLayout();
@@ -221,7 +222,7 @@
             // 
             this.cbFixDream.AutoSize = true;
             this.cbFixDream.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbFixDream.Location = new System.Drawing.Point(7, 28);
+            this.cbFixDream.Location = new System.Drawing.Point(7, 51);
             this.cbFixDream.Name = "cbFixDream";
             this.cbFixDream.Size = new System.Drawing.Size(125, 17);
             this.cbFixDream.TabIndex = 4;
@@ -247,7 +248,7 @@
             // 
             this.cbFixCoordinates.AutoSize = true;
             this.cbFixCoordinates.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbFixCoordinates.Location = new System.Drawing.Point(7, 74);
+            this.cbFixCoordinates.Location = new System.Drawing.Point(7, 97);
             this.cbFixCoordinates.Name = "cbFixCoordinates";
             this.cbFixCoordinates.Size = new System.Drawing.Size(136, 17);
             this.cbFixCoordinates.TabIndex = 6;
@@ -260,7 +261,7 @@
             // 
             this.cbFixMindPrison.AutoSize = true;
             this.cbFixMindPrison.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbFixMindPrison.Location = new System.Drawing.Point(7, 51);
+            this.cbFixMindPrison.Location = new System.Drawing.Point(7, 74);
             this.cbFixMindPrison.Name = "cbFixMindPrison";
             this.cbFixMindPrison.Size = new System.Drawing.Size(97, 17);
             this.cbFixMindPrison.TabIndex = 5;
@@ -303,9 +304,9 @@
             this.cbVulkSpiceLZ.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbVulkSpiceLZ.Location = new System.Drawing.Point(7, 5);
             this.cbVulkSpiceLZ.Name = "cbVulkSpiceLZ";
-            this.cbVulkSpiceLZ.Size = new System.Drawing.Size(151, 17);
+            this.cbVulkSpiceLZ.Size = new System.Drawing.Size(124, 17);
             this.cbVulkSpiceLZ.TabIndex = 8;
-            this.cbVulkSpiceLZ.Text = "Add Spice Lab Load Zone";
+            this.cbVulkSpiceLZ.Text = "Add Spice Lab Zone";
             this.ModulesToolTip.SetToolTip(this.cbVulkSpiceLZ, "A new loading zone to the unused Vulkar Spice Lab\r\nis added to the far west end o" +
         "f the Vulkar Base.");
             this.cbVulkSpiceLZ.UseVisualStyleBackColor = true;
@@ -711,6 +712,18 @@
             this.pnlGoals.Size = new System.Drawing.Size(142, 83);
             this.pnlGoals.TabIndex = 63;
             // 
+            // cbGoalParty
+            // 
+            this.cbGoalParty.AutoSize = true;
+            this.cbGoalParty.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbGoalParty.Location = new System.Drawing.Point(3, 63);
+            this.cbGoalParty.Name = "cbGoalParty";
+            this.cbGoalParty.Size = new System.Drawing.Size(133, 17);
+            this.cbGoalParty.TabIndex = 19;
+            this.cbGoalParty.Text = "Recruit Party Members";
+            this.cbGoalParty.UseVisualStyleBackColor = true;
+            this.cbGoalParty.CheckedChanged += new System.EventHandler(this.cbGoalParty_CheckedChanged);
+            // 
             // pnlGlitches
             // 
             this.pnlGlitches.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
@@ -732,6 +745,18 @@
             this.pnlOther.Name = "pnlOther";
             this.pnlOther.Size = new System.Drawing.Size(169, 63);
             this.pnlOther.TabIndex = 65;
+            // 
+            // cbStrongGoals
+            // 
+            this.cbStrongGoals.AutoSize = true;
+            this.cbStrongGoals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbStrongGoals.Location = new System.Drawing.Point(3, 23);
+            this.cbStrongGoals.Name = "cbStrongGoals";
+            this.cbStrongGoals.Size = new System.Drawing.Size(149, 17);
+            this.cbStrongGoals.TabIndex = 24;
+            this.cbStrongGoals.Text = "Strongly Reachable Goals";
+            this.cbStrongGoals.UseVisualStyleBackColor = true;
+            this.cbStrongGoals.CheckedChanged += new System.EventHandler(this.cbStrongGoals_CheckedChanged);
             // 
             // label1
             // 
@@ -763,6 +788,7 @@
             this.flpTimeSavers.AutoScroll = true;
             this.flpTimeSavers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.flpTimeSavers.Controls.Add(this.cbVulkSpiceLZ);
+            this.flpTimeSavers.Controls.Add(this.cbSpeedySuit);
             this.flpTimeSavers.Controls.Add(this.cbFixDream);
             this.flpTimeSavers.Controls.Add(this.cbFixMindPrison);
             this.flpTimeSavers.Controls.Add(this.cbFixCoordinates);
@@ -821,29 +847,18 @@
     "is beatable, but it does improve those chances.";
             this.lblWIP.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // cbStrongGoals
+            // cbSpeedySuit
             // 
-            this.cbStrongGoals.AutoSize = true;
-            this.cbStrongGoals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbStrongGoals.Location = new System.Drawing.Point(3, 23);
-            this.cbStrongGoals.Name = "cbStrongGoals";
-            this.cbStrongGoals.Size = new System.Drawing.Size(149, 17);
-            this.cbStrongGoals.TabIndex = 24;
-            this.cbStrongGoals.Text = "Strongly Reachable Goals";
-            this.cbStrongGoals.UseVisualStyleBackColor = true;
-            this.cbStrongGoals.CheckedChanged += new System.EventHandler(this.cbStrongGoals_CheckedChanged);
-            // 
-            // cbGoalParty
-            // 
-            this.cbGoalParty.AutoSize = true;
-            this.cbGoalParty.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbGoalParty.Location = new System.Drawing.Point(3, 63);
-            this.cbGoalParty.Name = "cbGoalParty";
-            this.cbGoalParty.Size = new System.Drawing.Size(133, 17);
-            this.cbGoalParty.TabIndex = 19;
-            this.cbGoalParty.Text = "Recruit Party Members";
-            this.cbGoalParty.UseVisualStyleBackColor = true;
-            this.cbGoalParty.CheckedChanged += new System.EventHandler(this.cbGoalParty_CheckedChanged);
+            this.cbSpeedySuit.AutoSize = true;
+            this.cbSpeedySuit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbSpeedySuit.Location = new System.Drawing.Point(7, 28);
+            this.cbSpeedySuit.Name = "cbSpeedySuit";
+            this.cbSpeedySuit.Size = new System.Drawing.Size(95, 17);
+            this.cbSpeedySuit.TabIndex = 9;
+            this.cbSpeedySuit.Text = "Fast Envirosuit";
+            this.ModulesToolTip.SetToolTip(this.cbSpeedySuit, "Speeds up the envirosuit to match normal run speed.");
+            this.cbSpeedySuit.UseVisualStyleBackColor = true;
+            this.cbSpeedySuit.CheckedChanged += new System.EventHandler(this.cbSpeedySuit_CheckedChanged);
             // 
             // ModuleForm
             // 
@@ -964,5 +979,6 @@
         private System.Windows.Forms.CheckBox cbStrongGoals;
         private System.Windows.Forms.Label lblWIP;
         private System.Windows.Forms.CheckBox cbGoalParty;
+        private System.Windows.Forms.CheckBox cbSpeedySuit;
     }
 }

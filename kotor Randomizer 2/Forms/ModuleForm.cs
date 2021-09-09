@@ -292,6 +292,12 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.FixMindPrison;
         }
 
+        private void cbSpeedySuit_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.FastEnvirosuit;
+        }
+
         private void cbUnlockDanRuins_CheckedChanged(object sender, EventArgs e)
         {
             if (!Constructed) { return; }

@@ -11,7 +11,7 @@
              FontFamily="Microsoft Sans Serif" FontSize="12"
              x:Name="thisView"
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
-             d:DesignHeight="710" d:DesignWidth="450"
+             d:DesignHeight="710" d:DesignWidth="600"
              DataContextChanged="View_DataContextChanged"
              Loaded="View_Loaded"
              >
@@ -40,6 +40,9 @@
             <ToolTip x:Key="ttQolSpice">
                 Adds a new loading zone to the far west end of the Vulkar Base leading to the unused module
                 Vulkar Spice Lab.
+            </ToolTip>
+            <ToolTip x:Key="ttQolEnvirosuit">
+                Speeds up the envirosuit to match normal run speed.
             </ToolTip>
             <ToolTip x:Key="ttQolDream">
                 Fixes a rare instance in which a game crash could occur with dream sequences.
@@ -166,7 +169,7 @@
                     <Grid Margin="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="170" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -220,24 +223,32 @@
                             </CheckBox>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="2" Margin="5,0">
-                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolAddSpiceLab, Mode=TwoWay}"
+                        <WrapPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal">
+                            <StackPanel Margin="5,0">
+                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolAddSpiceLab, Mode=TwoWay}"
                                       ToolTip="{StaticResource ttQolSpice}">
-                                <TextBlock Text="Add Spice Lab Load Zone" />
-                            </CheckBox>
-                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixDreamSequence, Mode=TwoWay}"
+                                    <TextBlock Text="Add Spice Lab Load Zone" />
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFastEnvirosuit, Mode=TwoWay}"
+                                      ToolTip="{StaticResource ttQolEnvirosuit}">
+                                    <TextBlock Text="Fast Envirosuit" />
+                                </CheckBox>
+                            </StackPanel>
+                            <StackPanel Margin="5,0">
+                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixDreamSequence, Mode=TwoWay}"
                                       ToolTip="{StaticResource ttQolDream}">
-                                <TextBlock Text="Fix Dream Sequence" />
-                            </CheckBox>
-                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixMindPrison, Mode=TwoWay}"
+                                    <TextBlock Text="Fix Dream Sequence" />
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixMindPrison, Mode=TwoWay}"
                                       ToolTip="{StaticResource ttQolMystery}">
-                                <TextBlock Text="Fix Mind Prison" />
-                            </CheckBox>
-                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixModuleCoordinates, Mode=TwoWay}"
+                                    <TextBlock Text="Fix Mind Prison" />
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixModuleCoordinates, Mode=TwoWay}"
                                       ToolTip="{StaticResource ttQolCoordinates}">
-                                <TextBlock Text="Fix Module Coordinates" />
-                            </CheckBox>
-                        </StackPanel>
+                                    <TextBlock Text="Fix Module Coordinates" />
+                                </CheckBox>
+                            </StackPanel>
+                        </WrapPanel>
                     </Grid>
                 </Expander>
                 

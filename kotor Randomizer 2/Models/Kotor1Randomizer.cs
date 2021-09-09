@@ -22,7 +22,7 @@ namespace kotor_Randomizer_2.Models
         #region Constants
         public const ModuleExtras EXTRAS_MASK = ModuleExtras.NoSaveDelete   | ModuleExtras.SaveMiniGames | ModuleExtras.SaveAllModules |
                                                 ModuleExtras.FixCoordinates | ModuleExtras.FixDream      | ModuleExtras.FixMindPrison  |
-                                                ModuleExtras.VulkarSpiceLZ;
+                                                ModuleExtras.FastEnvirosuit | ModuleExtras.VulkarSpiceLZ;
         public const ModuleExtras UNLOCKS_MASK = ModuleExtras.UnlockDanRuins   | ModuleExtras.UnlockGalaxyMap    | ModuleExtras.UnlockKorValley |
                                                  ModuleExtras.UnlockLevElev    | ModuleExtras.UnlockManEmbassy   | ModuleExtras.UnlockManHangar |
                                                  ModuleExtras.UnlockStaBastila | ModuleExtras.UnlockTarUndercity | ModuleExtras.UnlockTarVulkar |
@@ -1231,8 +1231,17 @@ namespace kotor_Randomizer_2.Models
                 try
                 {
                     paths.BackUpOverrideDirectory();
-                    File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance);
+
+                    // Write general override files
                     File.WriteAllBytes(Path.Combine(paths.Override, "k_pdan_13_area.ncs"), Properties.Resources.k_pdan_13_area);
+                    if (GeneralModuleExtrasValue.HasFlag(ModuleExtras.FastEnvirosuit))
+                    {
+                        File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance_speedysuit);
+                    }
+                    else
+                    {
+                        File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance);
+                    }
 
                     string category;
                     string backupFormat      = "... backing up {0}.";
