@@ -1230,19 +1230,21 @@ namespace kotor_Randomizer_2.Models
 
                 try
                 {
+                    // Write general override files.
                     paths.BackUpOverrideDirectory();
-
-                    // Write general override files
                     File.WriteAllBytes(Path.Combine(paths.Override, "k_pdan_13_area.ncs"), Properties.Resources.k_pdan_13_area);
-                    if (GeneralModuleExtrasValue.HasFlag(ModuleExtras.FastEnvirosuit))
-                    {
-                        File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance_speedysuit);
-                    }
-                    else
-                    {
-                        File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance);
-                    }
 
+                    // Write appearance override.
+                    if (GeneralModuleExtrasValue.HasFlag(ModuleExtras.FastEnvirosuit))
+                        File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance_speedysuit);
+                    else
+                        File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance);
+
+                    // Write early T3 override.
+                    if (GeneralModuleExtrasValue.HasFlag(ModuleExtras.EarlyT3))
+                        File.WriteAllBytes(Path.Combine(paths.Override, "tar02_janice021.dlg"), Properties.Resources.tar02_janice021);
+
+                    // Perform category-based randomization.
                     string category;
                     string backupFormat      = "... backing up {0}.";
                     string randomizingFormat = "... randomizing {0}.";

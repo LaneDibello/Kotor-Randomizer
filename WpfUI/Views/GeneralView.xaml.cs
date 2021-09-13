@@ -48,6 +48,7 @@ namespace Randomizer_WPF.Views
         public static readonly DependencyProperty SaveDataIncludeAllProperty        = DependencyProperty.Register("SaveDataIncludeAll",       typeof(bool), typeof(GeneralView));
         public static readonly DependencyProperty QolAddSpiceLabProperty            = DependencyProperty.Register("QolAddSpiceLab",           typeof(bool), typeof(GeneralView));
         public static readonly DependencyProperty QolFastEnvirosuitProperty         = DependencyProperty.Register("QolFastEnvirosuit",        typeof(bool), typeof(GeneralView));
+        public static readonly DependencyProperty QolEarlyT3Property                = DependencyProperty.Register("QolEarlyT3",               typeof(bool), typeof(GeneralView));
         public static readonly DependencyProperty QolFixDreamSequenceProperty       = DependencyProperty.Register("QolFixDreamSequence",      typeof(bool), typeof(GeneralView));
         public static readonly DependencyProperty QolFixMindPrisonProperty          = DependencyProperty.Register("QolFixMindPrison",         typeof(bool), typeof(GeneralView));
         public static readonly DependencyProperty QolFixModuleCoordinatesProperty   = DependencyProperty.Register("QolFixModuleCoordinates",  typeof(bool), typeof(GeneralView));
@@ -106,6 +107,12 @@ namespace Randomizer_WPF.Views
         {
             get { return (bool)GetValue(QolFastEnvirosuitProperty); }
             set { SetValue(QolFastEnvirosuitProperty, value); }
+        }
+
+        public bool QolEarlyT3
+        {
+            get { return (bool)GetValue(QolEarlyT3Property); }
+            set { SetValue(QolEarlyT3Property, value); }
         }
 
         public bool QolFixDreamSequence

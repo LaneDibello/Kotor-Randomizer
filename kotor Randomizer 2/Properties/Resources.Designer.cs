@@ -691,6 +691,16 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] tar02_janice021 {
+            get {
+                object obj = ResourceManager.GetObject("tar02_janice021", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Finishing Up.
         /// </summary>
         internal static string TaskFinishing {

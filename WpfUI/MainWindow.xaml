@@ -138,6 +138,7 @@
                                    SaveDataIncludeAll      ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.SaveAllModules}}"
                                    QolAddSpiceLab          ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.VulkarSpiceLZ}}"
                                    QolFastEnvirosuit       ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FastEnvirosuit}}"
+                                   QolEarlyT3              ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.EarlyT3}}"
                                    QolFixDreamSequence     ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FixDream}}"
                                    QolFixMindPrison        ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FixMindPrison}}"
                                    QolFixModuleCoordinates ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FixCoordinates}}"

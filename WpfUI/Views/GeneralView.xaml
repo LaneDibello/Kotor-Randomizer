@@ -44,6 +44,9 @@
             <ToolTip x:Key="ttQolEnvirosuit">
                 Speeds up the envirosuit to match normal run speed.
             </ToolTip>
+            <ToolTip x:Key="ttQolEarlyT3">
+                Allows T3M4 to be purchased before winning the Taris Swoop Race and speaking with Canderous.
+            </ToolTip>
             <ToolTip x:Key="ttQolDream">
                 Fixes a rare instance in which a game crash could occur with dream sequences.
             </ToolTip>
@@ -226,25 +229,29 @@
                         <WrapPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal">
                             <StackPanel Margin="5,0">
                                 <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolAddSpiceLab, Mode=TwoWay}"
-                                      ToolTip="{StaticResource ttQolSpice}">
+                                          ToolTip="{StaticResource ttQolSpice}">
                                     <TextBlock Text="Add Spice Lab Load Zone" />
                                 </CheckBox>
                                 <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFastEnvirosuit, Mode=TwoWay}"
-                                      ToolTip="{StaticResource ttQolEnvirosuit}">
+                                          ToolTip="{StaticResource ttQolEnvirosuit}">
                                     <TextBlock Text="Fast Envirosuit" />
+                                </CheckBox>
+                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolEarlyT3, Mode=TwoWay}"
+                                          ToolTip="{StaticResource ttQolEarlyT3}">
+                                    <TextBlock Text="T3M4 Purchasable Early" />
                                 </CheckBox>
                             </StackPanel>
                             <StackPanel Margin="5,0">
                                 <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixDreamSequence, Mode=TwoWay}"
-                                      ToolTip="{StaticResource ttQolDream}">
+                                          ToolTip="{StaticResource ttQolDream}">
                                     <TextBlock Text="Fix Dream Sequence" />
                                 </CheckBox>
                                 <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixMindPrison, Mode=TwoWay}"
-                                      ToolTip="{StaticResource ttQolMystery}">
+                                          ToolTip="{StaticResource ttQolMystery}">
                                     <TextBlock Text="Fix Mind Prison" />
                                 </CheckBox>
                                 <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixModuleCoordinates, Mode=TwoWay}"
-                                      ToolTip="{StaticResource ttQolCoordinates}">
+                                          ToolTip="{StaticResource ttQolCoordinates}">
                                     <TextBlock Text="Fix Module Coordinates" />
                                 </CheckBox>
                             </StackPanel>

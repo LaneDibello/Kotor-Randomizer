@@ -88,6 +88,8 @@ namespace kotor_Randomizer_2
         UnlockUnkTempleExit = 0x20000, // 0b0010 00000000 00000000
         /// <summary> Speeds up the envirosuit to match normal run speed. </summary>
         FastEnvirosuit      = 0x40000, // 0b0100 00000000 00000000
+        /// <summary> Allows T3M4 to be purchased before winning the Taris Swoop Race and speaking with Canderous. </summary>
+        EarlyT3             = 0x80000, // 0b1000 00000000 00000000
     }
 
     [Flags]

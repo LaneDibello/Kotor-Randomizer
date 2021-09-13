@@ -284,6 +284,7 @@
     <None Include="Resources\NODELETE_MGINCLUDED_modulesave.2da" />
     <None Include="Resources\NODELETE_modulesave.2da" />
     <None Include="Resources\pebn_mystery.dlg" />
+    <None Include="Resources\tar02_janice021.dlg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
