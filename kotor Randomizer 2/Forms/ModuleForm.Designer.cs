@@ -44,7 +44,7 @@
             this.cbFixCoordinates = new System.Windows.Forms.CheckBox();
             this.cbFixMindPrison = new System.Windows.Forms.CheckBox();
             this.cbUnlockDanRuins = new System.Windows.Forms.CheckBox();
-            this.cbUnlockLevElevators = new System.Windows.Forms.CheckBox();
+            this.cbUnlockLevHangar = new System.Windows.Forms.CheckBox();
             this.cbVulkSpiceLZ = new System.Windows.Forms.CheckBox();
             this.cbReachability = new System.Windows.Forms.CheckBox();
             this.lblGoals = new System.Windows.Forms.Label();
@@ -71,6 +71,7 @@
             this.cbUnlockTarUndercity = new System.Windows.Forms.CheckBox();
             this.cbUnlockTarVulkar = new System.Windows.Forms.CheckBox();
             this.cbUnlockUnkTempleExit = new System.Windows.Forms.CheckBox();
+            this.cbSpeedySuit = new System.Windows.Forms.CheckBox();
             this.lblSaveData = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -88,7 +89,7 @@
             this.flpUnlockDoors = new System.Windows.Forms.FlowLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
             this.lblWIP = new System.Windows.Forms.Label();
-            this.cbSpeedySuit = new System.Windows.Forms.CheckBox();
+            this.cbEnableLevHangarElev = new System.Windows.Forms.CheckBox();
             this.pnlGoals.SuspendLayout();
             this.pnlGlitches.SuspendLayout();
             this.pnlOther.SuspendLayout();
@@ -284,19 +285,18 @@
             this.cbUnlockDanRuins.UseVisualStyleBackColor = true;
             this.cbUnlockDanRuins.CheckedChanged += new System.EventHandler(this.cbUnlockDanRuins_CheckedChanged);
             // 
-            // cbUnlockLevElevators
+            // cbUnlockLevHangar
             // 
-            this.cbUnlockLevElevators.AutoSize = true;
-            this.cbUnlockLevElevators.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUnlockLevElevators.Location = new System.Drawing.Point(7, 74);
-            this.cbUnlockLevElevators.Name = "cbUnlockLevElevators";
-            this.cbUnlockLevElevators.Size = new System.Drawing.Size(93, 17);
-            this.cbUnlockLevElevators.TabIndex = 7;
-            this.cbUnlockLevElevators.Text = "LEV Elevators";
-            this.ModulesToolTip.SetToolTip(this.cbUnlockLevElevators, "The Leviathan elevator will not restrict you from going to\r\nthe Hangar early, and" +
-        " the Hangar elevator is now usable.");
-            this.cbUnlockLevElevators.UseVisualStyleBackColor = true;
-            this.cbUnlockLevElevators.CheckedChanged += new System.EventHandler(this.cbUnlockLevElevators_CheckedChanged);
+            this.cbUnlockLevHangar.AutoSize = true;
+            this.cbUnlockLevHangar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUnlockLevHangar.Location = new System.Drawing.Point(7, 74);
+            this.cbUnlockLevHangar.Name = "cbUnlockLevHangar";
+            this.cbUnlockLevHangar.Size = new System.Drawing.Size(122, 17);
+            this.cbUnlockLevHangar.TabIndex = 7;
+            this.cbUnlockLevHangar.Text = "LEV Hangar Access";
+            this.ModulesToolTip.SetToolTip(this.cbUnlockLevHangar, "The Leviathan elevator will not restrict you from going to\r\nthe Hangar early.");
+            this.cbUnlockLevHangar.UseVisualStyleBackColor = true;
+            this.cbUnlockLevHangar.CheckedChanged += new System.EventHandler(this.cbUnlockLevHangarAccess_CheckedChanged);
             // 
             // cbVulkSpiceLZ
             // 
@@ -533,7 +533,7 @@
             // 
             this.cbUnlockManEmbassy.AutoSize = true;
             this.cbUnlockManEmbassy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUnlockManEmbassy.Location = new System.Drawing.Point(7, 97);
+            this.cbUnlockManEmbassy.Location = new System.Drawing.Point(7, 120);
             this.cbUnlockManEmbassy.Name = "cbUnlockManEmbassy";
             this.cbUnlockManEmbassy.Size = new System.Drawing.Size(140, 17);
             this.cbUnlockManEmbassy.TabIndex = 11;
@@ -546,7 +546,7 @@
             // 
             this.cbUnlockStaBastila.AutoSize = true;
             this.cbUnlockStaBastila.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUnlockStaBastila.Location = new System.Drawing.Point(7, 143);
+            this.cbUnlockStaBastila.Location = new System.Drawing.Point(7, 166);
             this.cbUnlockStaBastila.Name = "cbUnlockStaBastila";
             this.cbUnlockStaBastila.Size = new System.Drawing.Size(119, 17);
             this.cbUnlockStaBastila.TabIndex = 12;
@@ -560,7 +560,7 @@
             // 
             this.cbUnlockUnkSummit.AutoSize = true;
             this.cbUnlockUnkSummit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUnlockUnkSummit.Location = new System.Drawing.Point(7, 212);
+            this.cbUnlockUnkSummit.Location = new System.Drawing.Point(7, 235);
             this.cbUnlockUnkSummit.Name = "cbUnlockUnkSummit";
             this.cbUnlockUnkSummit.Size = new System.Drawing.Size(106, 17);
             this.cbUnlockUnkSummit.TabIndex = 13;
@@ -587,7 +587,7 @@
             // 
             this.cbUnlockManHangar.AutoSize = true;
             this.cbUnlockManHangar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUnlockManHangar.Location = new System.Drawing.Point(7, 120);
+            this.cbUnlockManHangar.Location = new System.Drawing.Point(7, 143);
             this.cbUnlockManHangar.Name = "cbUnlockManHangar";
             this.cbUnlockManHangar.Size = new System.Drawing.Size(109, 17);
             this.cbUnlockManHangar.TabIndex = 15;
@@ -600,7 +600,7 @@
             // 
             this.cbUnlockTarUndercity.AutoSize = true;
             this.cbUnlockTarUndercity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUnlockTarUndercity.Location = new System.Drawing.Point(7, 166);
+            this.cbUnlockTarUndercity.Location = new System.Drawing.Point(7, 189);
             this.cbUnlockTarUndercity.Name = "cbUnlockTarUndercity";
             this.cbUnlockTarUndercity.Size = new System.Drawing.Size(96, 17);
             this.cbUnlockTarUndercity.TabIndex = 16;
@@ -613,7 +613,7 @@
             // 
             this.cbUnlockTarVulkar.AutoSize = true;
             this.cbUnlockTarVulkar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUnlockTarVulkar.Location = new System.Drawing.Point(7, 189);
+            this.cbUnlockTarVulkar.Location = new System.Drawing.Point(7, 212);
             this.cbUnlockTarVulkar.Name = "cbUnlockTarVulkar";
             this.cbUnlockTarVulkar.Size = new System.Drawing.Size(108, 17);
             this.cbUnlockTarVulkar.TabIndex = 17;
@@ -626,7 +626,7 @@
             // 
             this.cbUnlockUnkTempleExit.AutoSize = true;
             this.cbUnlockUnkTempleExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUnlockUnkTempleExit.Location = new System.Drawing.Point(7, 235);
+            this.cbUnlockUnkTempleExit.Location = new System.Drawing.Point(7, 258);
             this.cbUnlockUnkTempleExit.Name = "cbUnlockUnkTempleExit";
             this.cbUnlockUnkTempleExit.Size = new System.Drawing.Size(107, 17);
             this.cbUnlockUnkTempleExit.TabIndex = 18;
@@ -634,6 +634,19 @@
             this.ModulesToolTip.SetToolTip(this.cbUnlockUnkTempleExit, "Unlocks the exit door from the Temple Main Floor.");
             this.cbUnlockUnkTempleExit.UseVisualStyleBackColor = true;
             this.cbUnlockUnkTempleExit.CheckedChanged += new System.EventHandler(this.cbUnlockUnkTempleExit_CheckedChanged);
+            // 
+            // cbSpeedySuit
+            // 
+            this.cbSpeedySuit.AutoSize = true;
+            this.cbSpeedySuit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbSpeedySuit.Location = new System.Drawing.Point(7, 28);
+            this.cbSpeedySuit.Name = "cbSpeedySuit";
+            this.cbSpeedySuit.Size = new System.Drawing.Size(95, 17);
+            this.cbSpeedySuit.TabIndex = 9;
+            this.cbSpeedySuit.Text = "Fast Envirosuit";
+            this.ModulesToolTip.SetToolTip(this.cbSpeedySuit, "Speeds up the envirosuit to match normal run speed.");
+            this.cbSpeedySuit.UseVisualStyleBackColor = true;
+            this.cbSpeedySuit.CheckedChanged += new System.EventHandler(this.cbSpeedySuit_CheckedChanged);
             // 
             // lblSaveData
             // 
@@ -807,7 +820,8 @@
             this.flpUnlockDoors.Controls.Add(this.cbUnlockDanRuins);
             this.flpUnlockDoors.Controls.Add(this.cbUnlockGalaxyMap);
             this.flpUnlockDoors.Controls.Add(this.cbUnlockKorValley);
-            this.flpUnlockDoors.Controls.Add(this.cbUnlockLevElevators);
+            this.flpUnlockDoors.Controls.Add(this.cbUnlockLevHangar);
+            this.flpUnlockDoors.Controls.Add(this.cbEnableLevHangarElev);
             this.flpUnlockDoors.Controls.Add(this.cbUnlockManEmbassy);
             this.flpUnlockDoors.Controls.Add(this.cbUnlockManHangar);
             this.flpUnlockDoors.Controls.Add(this.cbUnlockStaBastila);
@@ -847,18 +861,18 @@
     "is beatable, but it does improve those chances.";
             this.lblWIP.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // cbSpeedySuit
+            // cbEnableLevHangarElev
             // 
-            this.cbSpeedySuit.AutoSize = true;
-            this.cbSpeedySuit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbSpeedySuit.Location = new System.Drawing.Point(7, 28);
-            this.cbSpeedySuit.Name = "cbSpeedySuit";
-            this.cbSpeedySuit.Size = new System.Drawing.Size(95, 17);
-            this.cbSpeedySuit.TabIndex = 9;
-            this.cbSpeedySuit.Text = "Fast Envirosuit";
-            this.ModulesToolTip.SetToolTip(this.cbSpeedySuit, "Speeds up the envirosuit to match normal run speed.");
-            this.cbSpeedySuit.UseVisualStyleBackColor = true;
-            this.cbSpeedySuit.CheckedChanged += new System.EventHandler(this.cbSpeedySuit_CheckedChanged);
+            this.cbEnableLevHangarElev.AutoSize = true;
+            this.cbEnableLevHangarElev.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbEnableLevHangarElev.Location = new System.Drawing.Point(7, 97);
+            this.cbEnableLevHangarElev.Name = "cbEnableLevHangarElev";
+            this.cbEnableLevHangarElev.Size = new System.Drawing.Size(126, 17);
+            this.cbEnableLevHangarElev.TabIndex = 19;
+            this.cbEnableLevHangarElev.Text = "LEV Hangar Elevator";
+            this.ModulesToolTip.SetToolTip(this.cbEnableLevHangarElev, "The Leviathan Hangar elevator is now usable.");
+            this.cbEnableLevHangarElev.UseVisualStyleBackColor = true;
+            this.cbEnableLevHangarElev.CheckedChanged += new System.EventHandler(this.cbEnableLevHangarElevator_CheckedChanged);
             // 
             // ModuleForm
             // 
@@ -935,7 +949,7 @@
         private System.Windows.Forms.CheckBox cbFixCoordinates;
         private System.Windows.Forms.CheckBox cbFixMindPrison;
         private System.Windows.Forms.CheckBox cbUnlockDanRuins;
-        private System.Windows.Forms.CheckBox cbUnlockLevElevators;
+        private System.Windows.Forms.CheckBox cbUnlockLevHangar;
         private System.Windows.Forms.CheckBox cbVulkSpiceLZ;
         private System.Windows.Forms.CheckBox cbReachability;
         private System.Windows.Forms.Label lblGoals;
@@ -980,5 +994,6 @@
         private System.Windows.Forms.Label lblWIP;
         private System.Windows.Forms.CheckBox cbGoalParty;
         private System.Windows.Forms.CheckBox cbSpeedySuit;
+        private System.Windows.Forms.CheckBox cbEnableLevHangarElev;
     }
 }

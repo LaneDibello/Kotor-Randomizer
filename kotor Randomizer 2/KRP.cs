@@ -75,7 +75,8 @@ namespace kotor_Randomizer_2
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.FixCoordinates; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.FixMindPrison; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockDanRuins; }
-                        if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockLevElev; }
+                        if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockLevElev;
+                                                Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.EnableLevHangarElev; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.VulkarSpiceLZ; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockManEmbassy; }
                         if (br.ReadBoolean()) { Properties.Settings.Default.ModuleExtrasValue |= ModuleExtras.UnlockStaBastila; }

@@ -22,11 +22,11 @@ namespace kotor_Randomizer_2.Models
         #region Constants
         public const ModuleExtras EXTRAS_MASK = ModuleExtras.NoSaveDelete   | ModuleExtras.SaveMiniGames | ModuleExtras.SaveAllModules |
                                                 ModuleExtras.FixCoordinates | ModuleExtras.FixDream      | ModuleExtras.FixMindPrison  |
-                                                ModuleExtras.FastEnvirosuit | ModuleExtras.VulkarSpiceLZ;
-        public const ModuleExtras UNLOCKS_MASK = ModuleExtras.UnlockDanRuins   | ModuleExtras.UnlockGalaxyMap    | ModuleExtras.UnlockKorValley |
-                                                 ModuleExtras.UnlockLevElev    | ModuleExtras.UnlockManEmbassy   | ModuleExtras.UnlockManHangar |
-                                                 ModuleExtras.UnlockStaBastila | ModuleExtras.UnlockTarUndercity | ModuleExtras.UnlockTarVulkar |
-                                                 ModuleExtras.UnlockUnkSummit  | ModuleExtras.UnlockUnkTempleExit;
+                                                ModuleExtras.FastEnvirosuit | ModuleExtras.EarlyT3       | ModuleExtras.VulkarSpiceLZ;
+        public const ModuleExtras UNLOCKS_MASK = ModuleExtras.UnlockDanRuins   | ModuleExtras.UnlockGalaxyMap     | ModuleExtras.UnlockKorValley    |
+                                                 ModuleExtras.UnlockLevElev  | ModuleExtras.EnableLevHangarElev | ModuleExtras.UnlockManEmbassy   |
+                                                 ModuleExtras.UnlockManHangar  | ModuleExtras.UnlockStaBastila    | ModuleExtras.UnlockTarUndercity |
+                                                 ModuleExtras.UnlockTarVulkar  | ModuleExtras.UnlockUnkSummit     | ModuleExtras.UnlockUnkTempleExit;
 
         const string ELEM_SETTINGS = "Settings";
 
@@ -141,8 +141,13 @@ namespace kotor_Randomizer_2.Models
             // Create list of unlockable doors.
             GeneralLockedDoors.Add(new UnlockableDoor()
             {
-                Area = "LEV", Label = "Elevators",         Tag = ModuleExtras.UnlockLevElev,
-                ToolTipMessage = "The Leviathan elevator will not restrict you from going to the Hangar early, and the Hangar elevator is now usable."
+                Area = "LEV", Label = "Hangar Access",     Tag = ModuleExtras.UnlockLevElev,
+                ToolTipMessage = "The Leviathan elevator will not restrict you from going to the Hangar early."
+            });
+            GeneralLockedDoors.Add(new UnlockableDoor()
+            {
+                Area = "LEV", Label = "Enable Hangar Elevator", Tag = ModuleExtras.EnableLevHangarElev,
+                ToolTipMessage = "The Leviathan Hangar elevator will now be usable."
             });
             GeneralLockedDoors.Add(new UnlockableDoor()
             {

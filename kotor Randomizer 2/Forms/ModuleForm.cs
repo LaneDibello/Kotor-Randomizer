@@ -49,7 +49,8 @@ namespace kotor_Randomizer_2
             cbUnlockDanRuins.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
             cbUnlockGalaxyMap.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
             cbUnlockKorValley.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley);
-            cbUnlockLevElevators.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+            cbUnlockLevHangar.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+            cbEnableLevHangarElev.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev);
             cbUnlockManHangar.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar);
             cbUnlockManEmbassy.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy);
             cbUnlockStaBastila.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
@@ -304,10 +305,16 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockDanRuins;
         }
 
-        private void cbUnlockLevElevators_CheckedChanged(object sender, EventArgs e)
+        private void cbUnlockLevHangarAccess_CheckedChanged(object sender, EventArgs e)
         {
             if (!Constructed) { return; }
             Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockLevElev;
+        }
+
+        private void cbEnableLevHangarElevator_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.EnableLevHangarElev;
         }
 
         private void cbUnlockManSub_CheckedChanged(object sender, EventArgs e)
@@ -460,7 +467,8 @@ namespace kotor_Randomizer_2
                 cbFixCoordinates.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates);
                 cbUnlockDanRuins.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
                 cbUnlockGalaxyMap.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
-                cbUnlockLevElevators.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+                cbUnlockLevHangar.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+                cbEnableLevHangarElev.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev);
                 cbUnlockManEmbassy.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy);
                 cbUnlockStaBastila.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
                 cbUnlockUnkSummit.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);

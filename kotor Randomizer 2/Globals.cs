@@ -49,47 +49,49 @@ namespace kotor_Randomizer_2
     public enum ModuleExtras
     {
         /// <summary> (Default Behavior) Delete milestone save data. </summary>
-        Default             = 0x00000, // 0b0000 00000000 00000000
+        Default             = 0x000000, // 0b00000000 00000000 00000000
         /// <summary> Do not delete milestone save data. </summary>
-        NoSaveDelete        = 0x00001, // 0b0000 00000000 00000001
+        NoSaveDelete        = 0x000001, // 0b00000000 00000000 00000001
         /// <summary> Include minigame data in the save file. </summary>
-        SaveMiniGames       = 0x00002, // 0b0000 00000000 00000010
+        SaveMiniGames       = 0x000002, // 0b00000000 00000000 00000010
         /// <summary> Include all module data in the save file. </summary>
-        SaveAllModules      = 0x00004, // 0b0000 00000000 00000100
+        SaveAllModules      = 0x000004, // 0b00000000 00000000 00000100
         /// <summary> Fix dream cutscenes. </summary>
-        FixDream            = 0x00008, // 0b0000 00000000 00001000
+        FixDream            = 0x000008, // 0b00000000 00000000 00001000
         /// <summary> Unlock all destinations on the galaxy map. </summary>
-        UnlockGalaxyMap     = 0x00010, // 0b0000 00000000 00010000
+        UnlockGalaxyMap     = 0x000010, // 0b00000000 00000000 00010000
         /// <summary> Fix warp spawn coordinates in certain modules. </summary>
-        FixCoordinates      = 0x00020, // 0b0000 00000000 00100000
+        FixCoordinates      = 0x000020, // 0b00000000 00000000 00100000
         /// <summary> Fix Rakatan mind prison to prevent soft-locks. </summary>
-        FixMindPrison       = 0x00040, // 0b0000 00000000 01000000
+        FixMindPrison       = 0x000040, // 0b00000000 00000000 01000000
         /// <summary> Unlock ancient doors to Dantooine ruins, and on the Lehon Temple roof. </summary>
-        UnlockDanRuins      = 0x00080, // 0b0000 00000000 10000000
-        /// <summary> Allows Leviathan elevators to go to any of the other decks without prerequisites. </summary>
-        UnlockLevElev       = 0x00100, // 0b0000 00000001 00000000
+        UnlockDanRuins      = 0x000080, // 0b00000000 00000000 10000000
+        /// <summary> Allows Leviathan elevators to go to the hangar without prerequisites. </summary>
+        UnlockLevElev       = 0x000100, // 0b00000000 00000001 00000000
         /// <summary> Adds a Load Zone leading the the Vulkar Spice in the rear of the Vulkar base main floor, next to the pool. </summary>
-        VulkarSpiceLZ       = 0x00200, // 0b0000 00000010 00000000
+        VulkarSpiceLZ       = 0x000200, // 0b00000000 00000010 00000000
         /// <summary> Unlock the Republic Embassy door and the door to the submersible in Manaan's republic embassy. </summary>
-        UnlockManEmbassy    = 0x00400, // 0b0000 00000100 00000000
+        UnlockManEmbassy    = 0x000400, // 0b00000000 00000100 00000000
         /// <summary> Keep the door to Bastila on the Command Center (Deck 3) of the Star Forge unlocked, even after fighting her. </summary>
-        UnlockStaBastila    = 0x00800, // 0b0000 00001000 00000000
+        UnlockStaBastila    = 0x000800, // 0b00000000 00001000 00000000
         /// <summary> Unlock the door that exits from the Temple Summit on the Unknown World. </summary>
-        UnlockUnkSummit     = 0x01000, // 0b0000 00010000 00000000
+        UnlockUnkSummit     = 0x001000, // 0b00000000 00010000 00000000
         /// <summary> Ensure Sith Tomb and Sith Academy stay unlocked regardless of Uthar/Yuthura outcome. </summary>
-        UnlockKorValley     = 0x02000, // 0b0000 00100000 00000000
+        UnlockKorValley     = 0x002000, // 0b00000000 00100000 00000000
         /// <summary> Unlock the Sith Hangar door on Manaan. </summary>
-        UnlockManHangar     = 0x04000, // 0b0000 01000000 00000000
+        UnlockManHangar     = 0x004000, // 0b00000000 01000000 00000000
         /// <summary> Unlock Undercity door in the Lower City. </summary>
-        UnlockTarUndercity  = 0x08000, // 0b0000 10000000 00000000
+        UnlockTarUndercity  = 0x008000, // 0b00000000 10000000 00000000
         /// <summary> Unlock Vulkar Base door in the Lower City. </summary>
-        UnlockTarVulkar     = 0x10000, // 0b0001 00000000 00000000
+        UnlockTarVulkar     = 0x010000, // 0b00000001 00000000 00000000
         /// <summary> Unlock the Lehon Temple exit on the Main Floor. </summary>
-        UnlockUnkTempleExit = 0x20000, // 0b0010 00000000 00000000
+        UnlockUnkTempleExit = 0x020000, // 0b00000010 00000000 00000000
         /// <summary> Speeds up the envirosuit to match normal run speed. </summary>
-        FastEnvirosuit      = 0x40000, // 0b0100 00000000 00000000
+        FastEnvirosuit      = 0x040000, // 0b00000100 00000000 00000000
         /// <summary> Allows T3M4 to be purchased before winning the Taris Swoop Race and speaking with Canderous. </summary>
-        EarlyT3             = 0x80000, // 0b1000 00000000 00000000
+        EarlyT3             = 0x080000, // 0b00001000 00000000 00000000
+        /// <summary> Enables the elevator on the Leviathan Hangar to go to other levels. </summary>
+        EnableLevHangarElev = 0x100000, // 0b00010000 00000000 00000000
     }
 
     [Flags]

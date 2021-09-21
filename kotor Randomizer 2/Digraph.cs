@@ -68,6 +68,7 @@ namespace kotor_Randomizer_2
         public const string TAG_FIX_ELEV  = "FixElev";
         public const string TAG_FIX_MAP   = "FixMap";
         public const string TAG_FIX_SPICE = "FixSpice";
+        public const string TAG_HANGAR_ACCESS = "HangarAccess";
 
         // Unlock Tags ... Edge (Tags)
         public const string TAG_UNLOCK_DAN_RUINS       = "UL_Ruins";
@@ -79,6 +80,9 @@ namespace kotor_Randomizer_2
         public const string TAG_UNLOCK_TAR_UNDERCITY   = "UL_Undercity";
         public const string TAG_UNLOCK_UNK_SUMMIT      = "UL_Summit";
         public const string TAG_UNLOCK_UNK_TEMPLE_EXIT = "UL_TempleExit";
+
+        // Early Party Tags ... Vertex (Unlock)
+        public const string TAG_UNLOCK_EARLY_T3M4 = "EarlyT3";
     }
 
     /// <summary>
@@ -134,8 +138,10 @@ namespace kotor_Randomizer_2
 
         /// <summary> FixBox is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
         public bool EnabledFixBox   { get; set; } = false;
+        /// <summary> HangarAccess is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
+        public bool EnabledHangarAccess { get; set; } = false;
         /// <summary> FixElev is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledFixElev  { get; set; } = false;
+        public bool EnabledFixHangarElev  { get; set; } = false;
         /// <summary> FixMap is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
         public bool EnabledFixMap   { get; set; } = false;
         /// <summary> FixSpice is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
@@ -159,6 +165,9 @@ namespace kotor_Randomizer_2
         public bool EnabledUnlockUnkSummit     { get; set; } = false;
         /// <summary> UnlockeUnkTempleExit is enabled for this randomization. </summary>
         public bool EnabledUnlockUnkTempleExit { get; set; } = false;
+
+        /// <summary> Early T3M4 is enabled for this randomization. </summary>
+        public bool EnabledEarlyT3M4 { get; set; } = false;
         #endregion
 
         /// <summary>
@@ -190,7 +199,8 @@ namespace kotor_Randomizer_2
                 AllowGlitchFlu             = Properties.Settings.Default.AllowGlitchFlu;
                 AllowGlitchGpw             = Properties.Settings.Default.AllowGlitchGpw;
                 EnabledFixBox              = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
-                EnabledFixElev             = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+                EnabledHangarAccess        = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+                EnabledFixHangarElev       = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev);
                 EnabledFixMap              = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
                 EnabledFixSpice            = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
                 EnabledUnlockDanRuins      = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
@@ -202,6 +212,7 @@ namespace kotor_Randomizer_2
                 EnabledUnlockTarVulkar     = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar);
                 EnabledUnlockUnkSummit     = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
                 EnabledUnlockUnkTempleExit = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit);
+                EnabledEarlyT3M4           = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.EarlyT3);
                 EnforceEdgeTagLocked       = true;
                 IgnoreOnceEdges            = Properties.Settings.Default.IgnoreOnceEdges;
                 GoalIsMalak                = Properties.Settings.Default.GoalIsMalak;
@@ -217,7 +228,8 @@ namespace kotor_Randomizer_2
                 AllowGlitchFlu             = k1rando.ModuleAllowGlitchFlu;
                 AllowGlitchGpw             = k1rando.ModuleAllowGlitchGpw;
                 EnabledFixBox              = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
-                EnabledFixElev             = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+                EnabledHangarAccess        = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+                EnabledFixHangarElev       = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev);
                 EnabledFixMap              = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
                 EnabledFixSpice            = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
                 EnabledUnlockDanRuins      = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
@@ -229,6 +241,7 @@ namespace kotor_Randomizer_2
                 EnabledUnlockTarVulkar     = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar);
                 EnabledUnlockUnkSummit     = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
                 EnabledUnlockUnkTempleExit = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit);
+                EnabledEarlyT3M4           = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.EarlyT3);
                 EnforceEdgeTagLocked       = true;
                 IgnoreOnceEdges            = k1rando.ModuleLogicIgnoreOnceEdges;
                 GoalIsMalak                = k1rando.ModuleGoalIsMalak;
@@ -258,8 +271,13 @@ namespace kotor_Randomizer_2
                 if (!string.IsNullOrWhiteSpace(module.LockedTag))
                     sb.Append($" -[{module.LockedTag}]-");
 
-                if (module.Unlock.Count > 0)
-                    sb.Append($" =[{module.Unlock.Aggregate((i, j) => $"{i},{j}")}]=");
+                if (module.UnlockSets.Count > 0)
+                {
+                    sb.Append($" =[");
+                    foreach (var set in module.UnlockSets)
+                        sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
+                    sb.Append($"]=");
+                }
 
                 sb.AppendLine();
 
@@ -324,6 +342,7 @@ namespace kotor_Randomizer_2
             {
                 // Reset objects needed for reachability testing.
                 Reachable = Modules.ToDictionary(m => m.WarpCode, b => false);
+                AddVertexTagUnlocks();
                 OnceQueue.Clear();
 
                 // Check reachability again to find unlocked edges.
@@ -342,6 +361,14 @@ namespace kotor_Randomizer_2
             }
 
             Console.WriteLine($" > {modulesToCheck.Count} digraph(s) created and searched in {sw.Elapsed}.");
+        }
+
+        /// <summary>
+        /// Adds special unlocks for vertex LockedTags.
+        /// </summary>
+        private void AddVertexTagUnlocks()
+        {
+            if (EnabledEarlyT3M4) Reachable.Add(XmlConsts.TAG_UNLOCK_EARLY_T3M4, true);
         }
 
         /// <summary>
@@ -443,16 +470,27 @@ namespace kotor_Randomizer_2
                 var isUnlocked = true;
 
                 // If ALL tags are reachable, this tag is also reachable.
-                foreach (var ul in v.Unlock)
+                foreach (var set in v.UnlockSets)
                 {
-                    if (Reachable.ContainsKey(ul) && Reachable[ul]) isUnlocked = true;
-                    else
-                    {
-                        isUnlocked = false;
-                        break;
-                    }
-                }
+                    // Reset assumption to true, as we're just looking for one false in each set.
+                    isUnlocked = true;
 
+                    // ALL vertices within a set need to be reachable.
+                    foreach (var target in set)
+                    {
+                        // If the tag is not in Reachable or it is not reachable, then the tag is still locked.
+                        //if (Reachable.ContainsKey(target) && Reachable[target]) isUnlocked = true;
+                        if (!Reachable.ContainsKey(target) || !Reachable[target])
+                        {
+                            isUnlocked = false;
+                            break;
+                        }
+                    }
+
+                    // If a reachable set has been found, break out of the loop.
+                    if (isUnlocked) break;
+                }
+                
                 if (!Reachable.ContainsKey(v.LockedTag)) Reachable.Add(v.LockedTag, isUnlocked);
                 else Reachable[v.LockedTag] = isUnlocked;
             }
@@ -492,7 +530,8 @@ namespace kotor_Randomizer_2
             if (edge.IsOnce)
             {
                 if ((EnabledFixBox              && edge.IsFixBox             ) ||
-                    (EnabledFixElev             && edge.IsFixElev            ) ||
+                    (EnabledHangarAccess        && edge.IsAccessHangar       ) ||
+                    (EnabledFixHangarElev       && edge.IsFixHangar          ) ||
                     (EnabledFixMap              && edge.IsFixMap             ) ||
                     (EnabledFixSpice            && edge.IsFixSpice           ) ||
                     (EnabledUnlockDanRuins      && edge.IsUnlockDanRuins     ) ||
@@ -536,7 +575,8 @@ namespace kotor_Randomizer_2
                     (AllowGlitchFlu             && edge.IsFlu                ) || // How to handle FluReq? One FLU still requires Carth...
                     (AllowGlitchGpw             && edge.IsGpw                ) ||
                     (EnabledFixBox              && edge.IsFixBox             ) ||
-                    (EnabledFixElev             && edge.IsFixElev            ) ||
+                    (EnabledHangarAccess        && edge.IsAccessHangar       ) ||
+                    (EnabledFixHangarElev       && edge.IsFixHangar          ) ||
                     (EnabledFixMap              && edge.IsFixMap             ) ||
                     (EnabledFixSpice            && edge.IsFixSpice           ) ||
                     (EnabledUnlockDanRuins      && edge.IsUnlockDanRuins     ) ||
@@ -563,7 +603,7 @@ namespace kotor_Randomizer_2
                         // ALL vertices within a set need to be reachable.
                         foreach (var target in set)
                         {
-                            // If the tag is not in Reachable, then it's a one that we haven't seen and the edge is still locked.
+                            // If the tag is not in Reachable, then it's one that we haven't seen and the edge is still locked.
                             if (!Reachable.ContainsKey(target))
                             {
                                 Reachable.Add(target, false);
@@ -739,7 +779,11 @@ namespace kotor_Randomizer_2
 
         public List<string> Tags { get; } = new List<string>();
         public string LockedTag { get; }
-        public List<string> Unlock { get; } = new List<string>();
+
+        // List of sets: Unlock="A,B,C; C,D,E; E,F,G".
+        //  , is AND within the set
+        //  ; is OR between sets
+        public List<List<string>> UnlockSets { get; } = new List<List<string>>();
         #endregion
 
         public ModuleVertex(XElement element)
@@ -796,8 +840,13 @@ namespace kotor_Randomizer_2
             var unlocks = element.Attribute(XmlConsts.ATTR_UNLOCK);
             if (unlocks != null && !string.IsNullOrWhiteSpace(unlocks.Value))
             {
-                foreach (var unlock in unlocks.Value.Split(XmlConsts.TAG_SEPARATOR_COMMA))
-                    Unlock.Add(unlock);
+                foreach (var set in unlocks.Value.Split(XmlConsts.TAG_SEPARATOR_SEMICOLON))
+                {
+                    var unlockSet = new List<string>();
+                    foreach (var unlock in unlocks.Value.Split(XmlConsts.TAG_SEPARATOR_COMMA))
+                        unlockSet.Add(unlock);
+                    UnlockSets.Add(unlockSet);
+                }
             }
 
             // Get adjacent vertices
@@ -826,9 +875,14 @@ namespace kotor_Randomizer_2
                 sb.Append($", LockedTag: {LockedTag}");
             }
 
-            if (Unlock.Count > 0)
+            if (UnlockSets.Count > 0)
             {
-                sb.Append($", Unlock: [{Unlock.Aggregate((i, j) => $"{i},{j}")}]");
+                sb.Append($", Unlock: [");
+                foreach (var set in UnlockSets)
+                {
+                    sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
+                }
+                sb.Append("]");
             }
 
             if (LeadsTo.Count > 0)
@@ -865,10 +919,11 @@ namespace kotor_Randomizer_2
         public bool IsFlu { get; } = false;
         public bool IsGpw { get; } = false;
 
-        public bool IsFixBox   { get; } = false;
-        public bool IsFixElev  { get; } = false;
-        public bool IsFixMap   { get; } = false;
-        public bool IsFixSpice { get; } = false;
+        public bool IsAccessHangar { get; } = false;
+        public bool IsFixBox    { get; } = false;
+        public bool IsFixHangar { get; } = false;
+        public bool IsFixMap    { get; } = false;
+        public bool IsFixSpice  { get; } = false;
 
         public bool IsUnlockDanRuins      { get; } = false;
         public bool IsUnlockKorAcademy    { get; } = false;
@@ -916,6 +971,7 @@ namespace kotor_Randomizer_2
                     Tags.Add(tag);
             }
 
+            // Get list of Unlocks
             var unlocks = element.Attribute(XmlConsts.ATTR_UNLOCK);
             if (unlocks != null && !string.IsNullOrWhiteSpace(unlocks.Value))
             {
@@ -940,10 +996,11 @@ namespace kotor_Randomizer_2
             IsFlu = Tags.Contains(XmlConsts.TAG_FLU);
             IsGpw = Tags.Contains(XmlConsts.TAG_GPW);
 
-            IsFixBox   = Tags.Contains(XmlConsts.TAG_FIX_BOX);
-            IsFixElev  = Tags.Contains(XmlConsts.TAG_FIX_ELEV);
-            IsFixMap   = Tags.Contains(XmlConsts.TAG_FIX_MAP);
-            IsFixSpice = Tags.Contains(XmlConsts.TAG_FIX_SPICE);
+            IsAccessHangar = Tags.Contains(XmlConsts.TAG_HANGAR_ACCESS);
+            IsFixHangar = Tags.Contains(XmlConsts.TAG_FIX_ELEV);
+            IsFixBox    = Tags.Contains(XmlConsts.TAG_FIX_BOX);
+            IsFixMap    = Tags.Contains(XmlConsts.TAG_FIX_MAP);
+            IsFixSpice  = Tags.Contains(XmlConsts.TAG_FIX_SPICE);
 
             IsUnlockDanRuins      = Tags.Contains(XmlConsts.TAG_UNLOCK_DAN_RUINS);
             IsUnlockKorAcademy    = Tags.Contains(XmlConsts.TAG_UNLOCK_KOR_ACADEMY);

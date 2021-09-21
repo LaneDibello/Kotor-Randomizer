@@ -167,7 +167,8 @@ namespace kotor_Randomizer_2
                 new Tuple<string, string>("Unlock DAN Ruins Door",      ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins     ) ? "Unlocked" : "Locked"),
                 new Tuple<string, string>("Unlock EBO Galaxy Map",      ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap    ) ? "Unlocked" : "Locked"),
                 new Tuple<string, string>("Unlock KOR Valley",          ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley    ) ? "Unlocked" : "Locked"),
-                new Tuple<string, string>("Unlock LEV Elevators",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev      ) ? "Unlocked" : "Locked"),
+                new Tuple<string, string>("Unlock LEV Hangar Access",   ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev    ) ? "Unlocked" : "Locked"),
+                new Tuple<string, string>("Enable LEV Hangar Elevator", ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev) ? "Enabled"  : "Disabled"),
                 new Tuple<string, string>("Unlock MAN Embassy",         ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy   ) ? "Unlocked" : "Locked"),
                 new Tuple<string, string>("Unlock MAN Hangar",          ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar    ) ? "Unlocked" : "Locked"),
                 new Tuple<string, string>("Unlock STA Door to Bastila", ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila   ) ? "Unlocked" : "Locked"),
@@ -239,7 +240,8 @@ namespace kotor_Randomizer_2
                     new Tuple<string, string>("Unlock DAN Ruins Door",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins     ) ? "Unlocked" : "Locked"),
                     new Tuple<string, string>("Unlock EBO Galaxy Map",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap    ) ? "Unlocked" : "Locked"),
                     new Tuple<string, string>("Unlock KOR Valley",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley    ) ? "Unlocked" : "Locked"),
-                    new Tuple<string, string>("Unlock LEV Elevators",         ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev      ) ? "Unlocked" : "Locked"),
+                    new Tuple<string, string>("Unlock LEV Hangar Access",     ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev    ) ? "Unlocked" : "Locked"),
+                    new Tuple<string, string>("Enable LEV Hangar Elevator",   ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev) ? "Enabled"  : "Disabled"),
                     new Tuple<string, string>("Unlock MAN Embassy",           ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy   ) ? "Unlocked" : "Locked"),
                     new Tuple<string, string>("Unlock MAN Hangar",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar    ) ? "Unlocked" : "Locked"),
                     new Tuple<string, string>("Unlock STA Door to Bastila",   ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila   ) ? "Unlocked" : "Locked"),
@@ -678,14 +680,13 @@ namespace kotor_Randomizer_2
         }
 
         /// <summary>
-        /// Unlock Leviathan Hangar option in the other two elevator access, and enables the use of the Hangar elevator.
+        /// Unlock Leviathan Hangar option in the other two elevator access.
         /// </summary>
         /// <param name="paths">KPaths object for this game.</param>
-        private static void FixLeviathanElevators(KPaths paths)
+        private static void FixLeviathanHangarAccess(KPaths paths)
         {
             var lev_files_a = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_LEV_PRISON]));
             var lev_files_b = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_LEV_COMMAND]));
-            var lev_files_c = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_LEV_HANGAR]));
 
             // Prison Block Fix - Unlock option to visit Hangar.
             foreach (FileInfo fi in lev_files_a)
@@ -732,6 +733,15 @@ namespace kotor_Randomizer_2
 
                 r_lev.WriteToFile(fi.FullName);
             }
+        }
+
+        /// <summary>
+        /// Enables the use of the Leviathan Hangar elevator.
+        /// </summary>
+        /// <param name="paths">KPaths object for this game.</param>
+        private static void FixLeviathanHangarElevator(KPaths paths)
+        {
+            var lev_files_c = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_LEV_HANGAR]));
 
             // Hangar Fix - Enable the elevator so it can be used.
             foreach (FileInfo fi in lev_files_c)
@@ -902,7 +912,11 @@ namespace kotor_Randomizer_2
             // Leviathan Elevators
             if (extrasValue.HasFlag(ModuleExtras.UnlockLevElev))
             {
-                FixLeviathanElevators(paths);
+                FixLeviathanHangarAccess(paths);
+            }
+            if (extrasValue.HasFlag(ModuleExtras.EnableLevHangarElev))
+            {
+                FixLeviathanHangarElevator(paths);
             }
 
             // Manaan Embassy Door to Submersible
