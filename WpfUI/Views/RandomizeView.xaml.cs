@@ -41,7 +41,6 @@ namespace Randomizer_WPF.Views
             initialized = true;
 
             tbLog.Clear();
-            WriteLineToLog($"Once you are satisfied with the settings, click the button below to randomize your game.{Environment.NewLine}");
             CurrentState = "Ready";
 
             // Generate a new random seed.
@@ -65,7 +64,6 @@ namespace Randomizer_WPF.Views
         public static readonly DependencyProperty IsBusyProperty          = DependencyProperty.Register("IsBusy",          typeof(bool),   typeof(RandomizeView));
         public static readonly DependencyProperty GamePathProperty        = DependencyProperty.Register("GamePath",        typeof(string), typeof(RandomizeView), new PropertyMetadata("", HandleGamePathChanged));
         public static readonly DependencyProperty SpoilerPathProperty     = DependencyProperty.Register("SpoilerPath",     typeof(string), typeof(RandomizeView));
-        public static readonly DependencyProperty OpenLastSettingsOnStartupProperty = DependencyProperty.Register("OpenLastSettingsOnStartup", typeof(bool), typeof(RandomizeView));
         #endregion
 
         #region Public Properties
@@ -73,12 +71,6 @@ namespace Randomizer_WPF.Views
         {
             get { return (bool)GetValue(CreateSpoilersProperty); }
             set { SetValue(CreateSpoilersProperty, value); }
-        }
-
-        public bool OpenLastSettingsOnStartup
-        {
-            get { return (bool)GetValue(OpenLastSettingsOnStartupProperty); }
-            set { SetValue(OpenLastSettingsOnStartupProperty, value); }
         }
 
         public double CurrentProgress
@@ -161,14 +153,6 @@ namespace Randomizer_WPF.Views
             else
             {
                 CurrentProgress = 0;
-
-                if (OpenLastSettingsOnStartup)
-                {
-                    WriteToLog("Saving current settings ... ");
-                    CurrentState = $"Saving ...";
-                    (DataContext as kotor_Randomizer_2.Models.Kotor1Randomizer).Save(System.IO.Path.Combine(Environment.CurrentDirectory, "last.xkrp"));
-                    WriteLineToLog("done.");
-                }
 
                 WriteLineToLog("Starting randomization!");
                 CurrentState = $"Randomizing ...";

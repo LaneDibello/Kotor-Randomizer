@@ -123,9 +123,9 @@ namespace kotor_Randomizer_2.Models
         public Kotor1Randomizer() : this(string.Empty) { }
 
         /// <summary>
-        /// Constructs the randomizer with settings read from the given file path.
+        /// Constructs the randomizer with settings read from the given preset file path.
         /// </summary>
-        /// <param name="path">Full path to a randomizer settings file.</param>
+        /// <param name="path">Full path to a randomizer preset file.</param>
         public Kotor1Randomizer(string path)
         {
             // Create list of unlockable doors.

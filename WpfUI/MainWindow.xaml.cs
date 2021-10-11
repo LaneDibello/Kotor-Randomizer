@@ -31,58 +31,23 @@ namespace Randomizer_WPF
         {
             InitializeComponent();
 
-            // Check for a settings file.
-            var path = Path.Combine(Environment.CurrentDirectory, SETTINGS_FILENAME);
-            SettingsFile file = null;
-            if (File.Exists(path))
-            {
-                try
-                {
-                    file = new SettingsFile(path);
-                }
-                catch (Exception)
-                {
-                    File.Delete(path);  // Delete the bad file.
-                }
-            }
-
-            // If file doesn't exist, create one with default values.
-            if (file == null)
-            {
-                file = new SettingsFile()
-                {
-                    CreateSpoilers      = false,
-                    StartupLastSettings = true,
-                    Kotor1Path  = @"",
-                    Kotor2Path  = @"",
-                    PresetPath  = Path.Combine(Environment.CurrentDirectory, "Presets"),
-                    SpoilerPath = Path.Combine(Environment.CurrentDirectory, "Spoilers"),
-                };
-                file.WriteFile(path);
-            }
+            SettingsFile file = GetSettingsFile();
 
             // Create objects and pull settings from file.
             K1Randomizer = new Kotor1Randomizer();
             miCreateSpoilers.IsChecked = file.CreateSpoilers;
-            OpenLastSettingsOnStartup  = file.StartupLastSettings;
-            Kotor1Path  = file.Kotor1Path;
-            Kotor2Path  = file.Kotor2Path;
-            PresetPath  = file.PresetPath;
+            Kotor1Path = file.Kotor1Path;
+            Kotor2Path = file.Kotor2Path;
+            PresetPath = file.PresetPath;
             SpoilerPath = file.SpoilerPath;
 
-            if (!string.IsNullOrEmpty(startupFilePath))
-            {
-                LoadSettingsFile(startupFilePath);  // If startup file path given, load it.
-            }
-            else if (OpenLastSettingsOnStartup)
-            {
-                LoadLastUsedSettings();             // If last settings should be used, load it.
-            }
+            // If startup file path given, load it -- primarily used for debugging.
+            if (!string.IsNullOrEmpty(startupFilePath)) LoadPresetFile(startupFilePath);
+            else GetLastUsedPreset();      // Always load the last settings.
 
-            // Set window data context.
-            DataContext = K1Randomizer;
+            DataContext = K1Randomizer;     // Set window data context.
+            WriteLineToLog($"{Environment.NewLine}Once you are satisfied, click the button below to randomize your game.{Environment.NewLine}");
         }
-
         #endregion Constructors
 
         #region Dependency Properties
@@ -90,7 +55,6 @@ namespace Randomizer_WPF
         public static readonly DependencyProperty Kotor2PathProperty  = DependencyProperty.Register("Kotor2Path",  typeof(string), typeof(MainWindow));
         public static readonly DependencyProperty PresetPathProperty  = DependencyProperty.Register("PresetPath",  typeof(string), typeof(MainWindow));
         public static readonly DependencyProperty SpoilerPathProperty = DependencyProperty.Register("SpoilerPath", typeof(string), typeof(MainWindow));
-        public static readonly DependencyProperty OpenLastSettingsOnStartupProperty = DependencyProperty.Register("OpenLastSettingsOnStartup", typeof(bool), typeof(MainWindow));
         #endregion Dependency Properties
 
         #region Properties
@@ -126,12 +90,6 @@ namespace Randomizer_WPF
             {
                 return (RandomizeView != null) && (RandomizeView.IsBusy);
             }
-        }
-
-        public bool OpenLastSettingsOnStartup
-        {
-            get { return (bool)GetValue(OpenLastSettingsOnStartupProperty); }
-            set { SetValue(OpenLastSettingsOnStartupProperty, value); }
         }
 
         public string WindowTitle
@@ -177,16 +135,21 @@ namespace Randomizer_WPF
 
         private void Window_Closed(object sender, EventArgs e)
         {
+            WriteToLog("Saving current settings ... ");
+            if (RandomizeView != null) RandomizeView.CurrentState = "Saving ...";
+
             var file = new SettingsFile()
             {
                 CreateSpoilers = miCreateSpoilers.IsChecked,
-                StartupLastSettings = OpenLastSettingsOnStartup,
                 Kotor1Path  = Kotor1Path,
                 Kotor2Path  = Kotor2Path,
                 PresetPath  = PresetPath,
                 SpoilerPath = SpoilerPath,
             };
             file.WriteFile(Path.Combine(Environment.CurrentDirectory, SETTINGS_FILENAME));
+
+            K1Randomizer.Save(Path.Combine(Environment.CurrentDirectory, "last.xkrp"));
+            WriteToLog("done.");
         }
 
         private void Window_DragOver(object sender, DragEventArgs e)
@@ -216,7 +179,7 @@ namespace Randomizer_WPF
                 if (MessageBox.Show(this, $"Do you wish to open this file?{Environment.NewLine}\"{path}\"{Environment.NewLine}Current randomization settings will be lost.",
                     "Load Dragged File?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    RandomizeView.WriteLineToLog($"Opening settings file: \"{path}\"");
+                    WriteLineToLog($"Opening settings file: \"{path}\"");
                     K1Randomizer.Load(path);
                 }
             }
@@ -233,7 +196,7 @@ namespace Randomizer_WPF
         {
             if (MessageBox.Show(this, "Are you sure you wish to clear the current settings? This cannot be undone.", "Clear Settings?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                RandomizeView.WriteLineToLog("Clearing randomization settings.");
+                WriteLineToLog("Clearing randomization settings.");
                 K1Randomizer.ResetSettingsToDefault();
             }
         }
@@ -253,7 +216,7 @@ namespace Randomizer_WPF
             };
             if (dialog.ShowDialog() == true)
             {
-                RandomizeView.WriteLineToLog($"Opening settings file: \"{dialog.FileName}\"");
+                WriteLineToLog($"Opening settings file: \"{dialog.FileName}\"");
                 K1Randomizer.Load(dialog.FileName);
             }
         }
@@ -274,7 +237,7 @@ namespace Randomizer_WPF
             if (dialog.ShowDialog() == true)
             {
                 K1Randomizer.Save(dialog.FileName);
-                RandomizeView.WriteLineToLog($"Settings saved to file: \"{dialog.FileName}\"");
+                WriteLineToLog($"Settings saved to file: \"{dialog.FileName}\"");
             }
         }
 
@@ -290,7 +253,59 @@ namespace Randomizer_WPF
         #endregion Commands
 
         #region Private Methods
-        private void LoadLastUsedSettings()
+        private SettingsFile GetSettingsFile()
+        {
+            // Check for a settings file.
+            var path = Path.Combine(Environment.CurrentDirectory, SETTINGS_FILENAME);
+            SettingsFile file = null;
+
+            if (File.Exists(path))
+            {
+                try
+                {
+                    WriteToLog("Reading settings file ... ");
+                    file = new SettingsFile(path);
+                    WriteLineToLog("done.");
+                }
+                catch (Exception)
+                {
+                    WriteLineToLog("error.");
+                    WriteLineToLog("Deleting the bad file.");
+                    File.Delete(path);  // Delete the bad file.
+                    file = null;
+                }
+            }
+
+            // If file doesn't exist, create one with default values.
+            if (file == null)
+            {
+                WriteToLog("Creating settings file with default values ... ");
+                file = new SettingsFile()
+                {
+                    CreateSpoilers = false,
+                    Kotor1Path = @"",
+                    Kotor2Path = @"",
+                    PresetPath = Path.Combine(Environment.CurrentDirectory, "Presets"),
+                    SpoilerPath = Path.Combine(Environment.CurrentDirectory, "Spoilers"),
+                };
+                file.WriteFile(path);
+                WriteLineToLog("done.");
+            }
+
+            return file;
+        }
+
+        private void WriteToLog(string message)
+        {
+            RandomizeView?.WriteToLog(message);
+        }
+
+        private void WriteLineToLog(string message = "")
+        {
+            RandomizeView?.WriteLineToLog(message);
+        }
+
+        private void GetLastUsedPreset()
         {
             var lastPath = Path.Combine(Environment.CurrentDirectory, "last.xkrp");
             if (File.Exists(lastPath))
@@ -298,41 +313,42 @@ namespace Randomizer_WPF
                 try
                 {
                     // Write message to log about loading startup file.
-                    RandomizeView.WriteLineToLog("Loading last used settings.");
+                    WriteToLog("Reading last used preset ... ");
 
                     // Load the file that was requested.
                     K1Randomizer.Load(lastPath);
 
                     // Make a note that the file was loaded successfully.
-                    RandomizeView.WriteLineToLog("Settings loaded successfully.");
+                    WriteLineToLog("done.");
                 }
                 catch (Exception e)
                 {
                     // Write message to log about failure.
-                    RandomizeView.WriteLineToLog($"Failed to load last used settings: {e.Message}");
-                    MessageBox.Show($"Failed to load last used settings: {e.Message}", "Read Error");
+                    WriteLineToLog("error.");
+                    WriteLineToLog($"Failed to read last used preset: {e.Message}");
+                    MessageBox.Show($"Failed to read last used preset: {e.Message}", "Read Error");
                 }
             }
         }
 
-        private void LoadSettingsFile(string startupFilePath)
+        private void LoadPresetFile(string presetFilePath)
         {
             try
             {
                 // Write message to log about loading startup file.
-                RandomizeView.WriteLineToLog($"Loading settings from file: {startupFilePath}");
+                WriteLineToLog($"Reading preset from file: {presetFilePath}");
 
                 // Load the file that was requested.
-                K1Randomizer.Load(startupFilePath);
+                K1Randomizer.Load(presetFilePath);
 
                 // Make a note that the file was loaded successfully.
-                RandomizeView.WriteLineToLog("Settings loaded sucessfully.");
+                WriteLineToLog("Preset loaded sucessfully.");
             }
             catch (Exception e)
             {
                 // Write message to log about failure.
-                RandomizeView.WriteLineToLog($"Failed to load settings from file: {e.Message}");
-                MessageBox.Show($"Failed to load settings from file: {e.Message}", "Read Error");
+                WriteLineToLog($"Failed to read preset from file: {e.Message}");
+                MessageBox.Show($"Failed to read preset from file: {e.Message}", "Read Error");
             }
         }
         #endregion Private Methods
