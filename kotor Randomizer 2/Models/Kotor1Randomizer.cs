@@ -28,102 +28,92 @@ namespace kotor_Randomizer_2.Models
                                                  ModuleExtras.UnlockManHangar  | ModuleExtras.UnlockStaBastila    | ModuleExtras.UnlockTarUndercity |
                                                  ModuleExtras.UnlockTarVulkar  | ModuleExtras.UnlockUnkSummit     | ModuleExtras.UnlockUnkTempleExit;
 
-        const string ELEM_SETTINGS = "Settings";
-
-        const string ELEM_OMIT    = "Omit";
-        const string ELEM_UNLOCK  = "Unlock";
-
-        const string ELEM_GENERAL = "General";
-        const string ELEM_AUDIO   = "Audio";
-        const string ELEM_ITEM    = "Item";
-        const string ELEM_MODEL   = "Model";
-        const string ELEM_MODULE  = "Module";
-        const string ELEM_OTHER   = "Other";
-        const string ELEM_TABLE   = "Table";
-        const string ELEM_TEXT    = "Text";
-        const string ELEM_TEXTURE = "Texture";
-
-        const string ELEM_CHAR     = "Character";
-        const string ELEM_DOOR     = "Door";
-        const string ELEM_PLAC     = "Placeable";
-        const string ELEM_GLITCHES = "Glitches";
-        const string ELEM_GOALS    = "Goals";
-        const string ELEM_LOGIC    = "Logic";
-
-        const string ELEM_NAMES        = "Names";
-        const string ELEM_FIRST_NAME_F = "FirstF";
-        const string ELEM_FIRST_NAME_M = "FirstM";
-        const string ELEM_LAST_NAME    = "Last";
-        const string ELEM_COLUMN       = "Column";
-
-        const string ATTR_QOL      = "QoL";
-        const string ATTR_TAG      = "Tag";
-        const string ATTR_CODE     = "Code";
-        const string ATTR_NAME     = "Name";
-        const string ATTR_SETTINGS = "Settings";
-
-        const string ATTR_AMBIENT     = "Ambient";
-        const string ATTR_AREA        = "Area";
-        const string ATTR_BATTLE      = "Battle";
-        const string ATTR_CUTSCENE    = "Cutscene";
-        const string ATTR_NPC         = "Npc";
-        const string ATTR_PARTY       = "Party";
-        const string ATTR_MIXNPCPARTY = "MixNpcParty";
-        const string ATTR_REMOVE_DMCA = "RemoveDmca";
-
-        const string ATTR_ARMBAND    = "Armband";
-        const string ATTR_ARMOR      = "Armor";
-        const string ATTR_BELT       = "Belt";
-        const string ATTR_BLASTER    = "Blaster";
-        const string ATTR_CHIDE      = "CHide";
-        const string ATTR_CWEAPON    = "CWeapon";
-        const string ATTR_DROID      = "Droid";
-        const string ATTR_GLOVE      = "Glove";
-        const string ATTR_GRENADE    = "Grenade";
-        const string ATTR_IMPLANT    = "Implant";
-        const string ATTR_LIGHTSABER = "Lightsaber";
-        const string ATTR_MASK       = "Mask";
-        const string ATTR_MELEE      = "Melee";
-        const string ATTR_MINE       = "Mine";
-        const string ATTR_MEDICAL    = "Medical";
-        const string ATTR_PAZAAK     = "Pazaak";
-        const string ATTR_UPGRADE    = "Upgrade";
-        const string ATTR_VARIOUS    = "Various";
-
-        const string ATTR_OMIT_LARGE   = "OmitLarge";
-        const string ATTR_OMIT_BROKEN  = "OmitBroken";
-        const string ATTR_OMIT_AIRLOCK = "OmitAirlock";
-        const string ATTR_EASY_PANELS  = "EasyPanels";
-
-        const string ATTR_CLIP         = "Clip";
-        const string ATTR_DLZ          = "DLZ";
-        const string ATTR_FLU          = "FLU";
-        const string ATTR_GPW          = "GPW";
-        const string ATTR_STRONG_GOALS = "StrongGoals";
-        const string ATTR_MALAK        = "Malak";
-        const string ATTR_MAPS         = "StarMaps";
-        const string ATTR_IGNORE_ONCE  = "IgnoreOnce";
-        const string ATTR_RULES        = "Rules";
-        const string ATTR_REACHABLE    = "Reachable";
-        const string ATTR_PRESET       = "Preset";
-
-        const string ATTR_POLYMORPH      = "Polymorph";
-        const string ATTR_SWOOP_BOOSTERS = "SwoopBoosters";
-        const string ATTR_SWOOP_OBSTACLE = "SwoopObstacle";
-
-        const string ATTR_PACK      = "Pack";
-        const string ATTR_CREATURE  = "Creature";
-        const string ATTR_CUBE_MAP  = "CubeMap";
-        const string ATTR_EFFECT    = "Effect";
-        const string ATTR_ITEM      = "Item";
-        const string ATTR_OTHER     = "Other";
-        const string ATTR_PLACE     = "Placeable";
-        const string ATTR_PLANETARY = "Planetary";
-        const string ATTR_BODY      = "PBody";
-        const string ATTR_HEAD      = "PHead";
-        const string ATTR_STUNT     = "Stunt";
-        const string ATTR_VEHICLE   = "Vehicle";
-        const string ATTR_WEAPON    = "Weapon";
+        const string XML_AMBIENT        = "Ambient";
+        const string XML_AREA           = "Area";
+        const string XML_ARMBAND        = "Armband";
+        const string XML_ARMOR          = "Armor";
+        const string XML_AUDIO          = "Audio";
+        const string XML_BATTLE         = "Battle";
+        const string XML_BELT           = "Belt";
+        const string XML_BLASTER        = "Blaster";
+        const string XML_BODY           = "PBody";
+        const string XML_CHAR           = "Character";
+        const string XML_CHIDE          = "CHide";
+        const string XML_CLIP           = "Clip";
+        const string XML_CODE           = "Code";
+        const string XML_COLUMN         = "Column";
+        const string XML_COLUMNS        = "Columns";
+        const string XML_CREATURE       = "Creature";
+        const string XML_CUBE_MAP       = "CubeMap";
+        const string XML_CUTSCENE       = "Cutscene";
+        const string XML_CWEAPON        = "CWeapon";
+        const string XML_DLZ            = "DLZ";
+        const string XML_DOOR           = "Door";
+        const string XML_DROID          = "Droid";
+        const string XML_EASY_PANELS    = "EasyPanels";
+        const string XML_EFFECT         = "Effect";
+        const string XML_FIRST_NAME_F   = "FirstF";
+        const string XML_FIRST_NAME_M   = "FirstM";
+        const string XML_FLU            = "FLU";
+        const string XML_GENERAL        = "General";
+        const string XML_GLITCHES       = "Glitches";
+        const string XML_GLOVE          = "Glove";
+        const string XML_GOALS          = "Goals";
+        const string XML_GPW            = "GPW";
+        const string XML_GRENADE        = "Grenade";
+        const string XML_HEAD           = "PHead";
+        const string XML_IGNORE_ONCE    = "IgnoreOnce";
+        const string XML_IMPLANT        = "Implant";
+        const string XML_ITEM           = "Item";
+        const string XML_LAST_NAME      = "Last";
+        const string XML_LIGHTSABER     = "Lightsaber";
+        const string XML_LOGIC          = "Logic";
+        const string XML_MALAK          = "Malak";
+        const string XML_MAPS           = "StarMaps";
+        const string XML_MASK           = "Mask";
+        const string XML_MEDICAL        = "Medical";
+        const string XML_MELEE          = "Melee";
+        const string XML_MINE           = "Mine";
+        const string XML_MIXNPCPARTY    = "MixNpcParty";
+        const string XML_MODEL          = "Model";
+        const string XML_MODULE         = "Module";
+        const string XML_NAME           = "Name";
+        const string XML_NAMES          = "Names";
+        const string XML_NPC            = "Npc";
+        const string XML_OMIT           = "Omit";
+        const string XML_OMIT_AIRLOCK   = "OmitAirlock";
+        const string XML_OMIT_BROKEN    = "OmitBroken";
+        const string XML_OMIT_LARGE     = "OmitLarge";
+        const string XML_OTHER          = "Other";
+        const string XML_PACK           = "Pack";
+        const string XML_PARTY          = "Party";
+        const string XML_PAZAAK         = "Pazaak";
+        const string XML_PLAC           = "Placeable";
+        const string XML_PLACE          = "Placeable";
+        const string XML_PLANETARY      = "Planetary";
+        const string XML_POLYMORPH      = "Polymorph";
+        const string XML_PRESET         = "Preset";
+        const string XML_QOL            = "QoL";
+        const string XML_REACHABLE      = "Reachable";
+        const string XML_REMOVE_DMCA    = "RemoveDmca";
+        const string XML_RULES          = "Rules";
+        const string XML_SETTINGS       = "Settings";
+        const string XML_STRONG_GOALS   = "StrongGoals";
+        const string XML_STUNT          = "Stunt";
+        const string XML_SWOOP_BOOSTERS = "SwoopBoosters";
+        const string XML_SWOOP_OBSTACLE = "SwoopObstacle";
+        const string XML_TABLE          = "Table";
+        const string XML_TABLES         = "Tables";
+        const string XML_TAG            = "Tag";
+        const string XML_TEXT           = "Text";
+        const string XML_TEXTURE        = "Texture";
+        const string XML_UNLOCK         = "Unlock";
+        const string XML_UNLOCKS        = "Unlocks";
+        const string XML_UPGRADE        = "Upgrade";
+        const string XML_VARIOUS        = "Various";
+        const string XML_VERSION        = "Version";
+        const string XML_VEHICLE        = "Vehicle";
+        const string XML_WEAPON         = "Weapon";
         #endregion
 
         #region Constructors
@@ -1085,31 +1075,31 @@ namespace kotor_Randomizer_2.Models
             ResetSettingsToDefault();
 
             XDocument doc = XDocument.Load(path);
-            var element = doc.Descendants(ELEM_GENERAL).FirstOrDefault();
+            var element = doc.Descendants(XML_GENERAL).FirstOrDefault();
             if (element != null) ReadGeneralSettings(element);
 
-            element = doc.Descendants(ELEM_AUDIO  ).FirstOrDefault();
+            element = doc.Descendants(XML_AUDIO  ).FirstOrDefault();
             if (element != null) ReadAudioSettings(element);
 
-            element = doc.Descendants(ELEM_ITEM   ).FirstOrDefault();
+            element = doc.Descendants(XML_ITEM   ).FirstOrDefault();
             if (element != null) ReadItemSettings(element);
 
-            element = doc.Descendants(ELEM_MODEL  ).FirstOrDefault();
+            element = doc.Descendants(XML_MODEL  ).FirstOrDefault();
             if (element != null) ReadModelSettings(element);
 
-            element = doc.Descendants(ELEM_MODULE ).FirstOrDefault();
+            element = doc.Descendants(XML_MODULE ).FirstOrDefault();
             if (element != null) ReadModuleSettings(element);
 
-            element = doc.Descendants(ELEM_OTHER  ).FirstOrDefault();
+            element = doc.Descendants(XML_OTHER  ).FirstOrDefault();
             if (element != null) ReadOtherSettings(element);
 
-            element = doc.Descendants(ELEM_TABLE  ).FirstOrDefault();
+            element = doc.Descendants(XML_TABLES ).FirstOrDefault();
             if (element != null) ReadTableSettings(element);
 
-            element = doc.Descendants(ELEM_TEXT   ).FirstOrDefault();
+            element = doc.Descendants(XML_TEXT   ).FirstOrDefault();
             if (element != null) ReadTextSettings(element);
 
-            element = doc.Descendants(ELEM_TEXTURE).FirstOrDefault();
+            element = doc.Descendants(XML_TEXTURE).FirstOrDefault();
             if (element != null) ReadTextureSettings(element);
         }
 
@@ -1122,7 +1112,7 @@ namespace kotor_Randomizer_2.Models
             using (var w = new XmlTextWriter(path, null))
             {
                 w.WriteStartDocument();
-                w.WriteStartElement(ELEM_SETTINGS); // Begin Settings
+                w.WriteStartElement(XML_SETTINGS); // Begin Settings
 
                 WriteGeneralSettings(w);
 
@@ -1927,19 +1917,18 @@ namespace kotor_Randomizer_2.Models
         /// </summary>
         /// <param name="element">XML element containing the general settings.</param>
         private void ReadGeneralSettings(XElement element)
-        {
-            { if (element.Attribute(ATTR_QOL) is XAttribute attr) GeneralModuleExtrasValue = ParseEnum<ModuleExtras>(attr.Value); }
+        {   // Inside General
+            { if (element.Attribute(XML_QOL    ) is XAttribute attr) GeneralModuleExtrasValue = ParseEnum<ModuleExtras>(attr.Value); }
 
-            foreach (var unlock in element.Descendants(ELEM_UNLOCK))
+            var unlocks = ModuleExtras.Default;
+            { if (element.Attribute(XML_UNLOCKS) is XAttribute attr) unlocks = ParseEnum<ModuleExtras>(attr.Value); }
+
+            foreach (var door in GeneralLockedDoors.ToList())
             {
-                if (unlock.Attribute(ATTR_TAG) is XAttribute tag)
+                if (unlocks.HasFlag(door.Tag))
                 {
-                    var door = GeneralLockedDoors.FirstOrDefault(x => x.Tag == ParseEnum<ModuleExtras>(tag.Value));
-                    if (door != null)
-                    {
-                        GeneralUnlockedDoors.Add(door);
-                        GeneralLockedDoors.Remove(door);
-                    }
+                    GeneralUnlockedDoors.Add(door);
+                    GeneralLockedDoors.Remove(door);
                 }
             }
         }
@@ -1951,14 +1940,14 @@ namespace kotor_Randomizer_2.Models
         private void ReadAudioSettings(XElement element)
         {
             // Read audio settings.
-            { if (element.Attribute(ATTR_AMBIENT    ) is XAttribute attr) AudioAmbientNoise         = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_AREA       ) is XAttribute attr) AudioAreaMusic            = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_BATTLE     ) is XAttribute attr) AudioBattleMusic          = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_CUTSCENE   ) is XAttribute attr) AudioCutsceneNoise        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_NPC        ) is XAttribute attr) AudioNpcSounds            = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_PARTY      ) is XAttribute attr) AudioPartySounds          = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_MIXNPCPARTY) is XAttribute attr) AudioMixNpcAndPartySounds = bool.Parse(attr.Value); }
-            { if (element.Attribute(ATTR_REMOVE_DMCA) is XAttribute attr) AudioRemoveDmcaMusic      = bool.Parse(attr.Value); }
+            { if (element.Attribute(XML_AMBIENT    ) is XAttribute attr) AudioAmbientNoise         = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_AREA       ) is XAttribute attr) AudioAreaMusic            = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_BATTLE     ) is XAttribute attr) AudioBattleMusic          = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_CUTSCENE   ) is XAttribute attr) AudioCutsceneNoise        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_NPC        ) is XAttribute attr) AudioNpcSounds            = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_PARTY      ) is XAttribute attr) AudioPartySounds          = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_MIXNPCPARTY) is XAttribute attr) AudioMixNpcAndPartySounds = bool.Parse(attr.Value); }
+            { if (element.Attribute(XML_REMOVE_DMCA) is XAttribute attr) AudioRemoveDmcaMusic      = bool.Parse(attr.Value); }
         }
 
         /// <summary>
@@ -1968,40 +1957,40 @@ namespace kotor_Randomizer_2.Models
         private void ReadItemSettings(XElement element)
         {
             // Read item settings. Note: we can assume element is not null.
-            { if (element.Attribute(ATTR_ARMBAND   ) is XAttribute attr) ItemArmbands        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_ARMOR     ) is XAttribute attr) ItemArmor           = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_BELT      ) is XAttribute attr) ItemBelts           = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_BLASTER   ) is XAttribute attr) ItemBlasters        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_CHIDE     ) is XAttribute attr) ItemCreatureHides   = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_CWEAPON   ) is XAttribute attr) ItemCreatureWeapons = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_DROID     ) is XAttribute attr) ItemDroidEquipment  = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_GLOVE     ) is XAttribute attr) ItemGloves          = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_GRENADE   ) is XAttribute attr) ItemGrenades        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_IMPLANT   ) is XAttribute attr) ItemImplants        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_LIGHTSABER) is XAttribute attr) ItemLightsabers     = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_MASK      ) is XAttribute attr) ItemMasks           = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_MELEE     ) is XAttribute attr) ItemMeleeWeapons    = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_MINE      ) is XAttribute attr) ItemMines           = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_MEDICAL   ) is XAttribute attr) ItemMedical         = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_PAZAAK    ) is XAttribute attr) ItemPazaakCards     = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_UPGRADE   ) is XAttribute attr) ItemUpgrades        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_VARIOUS   ) is XAttribute attr) ItemVarious         = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_ARMBAND   ) is XAttribute attr) ItemArmbands        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_ARMOR     ) is XAttribute attr) ItemArmor           = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_BELT      ) is XAttribute attr) ItemBelts           = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_BLASTER   ) is XAttribute attr) ItemBlasters        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_CHIDE     ) is XAttribute attr) ItemCreatureHides   = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_CWEAPON   ) is XAttribute attr) ItemCreatureWeapons = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_DROID     ) is XAttribute attr) ItemDroidEquipment  = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_GLOVE     ) is XAttribute attr) ItemGloves          = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_GRENADE   ) is XAttribute attr) ItemGrenades        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_IMPLANT   ) is XAttribute attr) ItemImplants        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_LIGHTSABER) is XAttribute attr) ItemLightsabers     = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_MASK      ) is XAttribute attr) ItemMasks           = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_MELEE     ) is XAttribute attr) ItemMeleeWeapons    = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_MINE      ) is XAttribute attr) ItemMines           = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_MEDICAL   ) is XAttribute attr) ItemMedical         = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_PAZAAK    ) is XAttribute attr) ItemPazaakCards     = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_UPGRADE   ) is XAttribute attr) ItemUpgrades        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_VARIOUS   ) is XAttribute attr) ItemVarious         = ParseEnum<RandomizationLevel>(attr.Value); }
 
-            // Reset omitted items list.
+            // Reset omitted items list. -- May no longer be necessary.
             foreach (var item in ItemOmittedList)
                 ItemRandomizedList.Add(item);
             ItemOmittedList.Clear();
 
             // Read omitted item preset.
-            var omit = element.Descendants(ELEM_OMIT).FirstOrDefault();
-            ItemOmittedPreset = omit.Attribute(ATTR_PRESET)?.Value ?? null;
+            //var omit = element.Descendants(XML_OMIT).FirstOrDefault();
+            ItemOmittedPreset = element.Attribute(XML_PRESET)?.Value ?? null;
 
             // If preset is null, read the list of omitted items.
             if (ItemOmittedPreset is null)
             {
-                foreach (var i in element.Descendants(ELEM_ITEM))
+                foreach (var i in element.Descendants(XML_OMIT))
                 {
-                    var code = i.Attribute(ATTR_CODE).Value;
+                    var code = i.Attribute(XML_CODE).Value;
                     var item = ItemRandomizedList.FirstOrDefault(x => x.Code == code);
                     if (item != null)
                     {
@@ -2019,28 +2008,28 @@ namespace kotor_Randomizer_2.Models
         private void ReadModelSettings(XElement element)
         {
             // Read character settings.
-            if (element.Descendants(ELEM_CHAR).FirstOrDefault() is XElement charElement)
+            if (element.Descendants(XML_CHAR).FirstOrDefault() is XElement charElement)
             {
                 ModelCharacterRando = true;
-                { if (charElement.Attribute(ATTR_OMIT_LARGE ) is XAttribute attr) ModelCharacterOmitLarge  = bool.Parse(attr.Value); }
-                { if (charElement.Attribute(ATTR_OMIT_BROKEN) is XAttribute attr) ModelCharacterOmitBroken = bool.Parse(attr.Value); }
+                { if (charElement.Attribute(XML_OMIT_LARGE ) is XAttribute attr) ModelCharacterOmitLarge  = bool.Parse(attr.Value); }
+                { if (charElement.Attribute(XML_OMIT_BROKEN) is XAttribute attr) ModelCharacterOmitBroken = bool.Parse(attr.Value); }
             }
 
             // Read door settings.
-            if (element.Descendants(ELEM_DOOR).FirstOrDefault() is XElement doorElement)
+            if (element.Descendants(XML_DOOR).FirstOrDefault() is XElement doorElement)
             {
                 ModelDoorRando = true;
-                { if (doorElement.Attribute(ATTR_OMIT_AIRLOCK) is XAttribute attr) ModelDoorOmitAirlock = bool.Parse(attr.Value); }
-                { if (doorElement.Attribute(ATTR_OMIT_BROKEN ) is XAttribute attr) ModelDoorOmitBroken  = bool.Parse(attr.Value); }
+                { if (doorElement.Attribute(XML_OMIT_AIRLOCK) is XAttribute attr) ModelDoorOmitAirlock = bool.Parse(attr.Value); }
+                { if (doorElement.Attribute(XML_OMIT_BROKEN ) is XAttribute attr) ModelDoorOmitBroken  = bool.Parse(attr.Value); }
             }
 
             // Read placeable settings.
-            if (element.Descendants(ELEM_PLAC).FirstOrDefault() is XElement placElement)
+            if (element.Descendants(XML_PLAC).FirstOrDefault() is XElement placElement)
             {
                 ModelPlaceableRando = true;
-                { if (placElement.Attribute(ATTR_OMIT_LARGE ) is XAttribute attr) ModelPlaceableOmitLarge  = bool.Parse(attr.Value); }
-                { if (placElement.Attribute(ATTR_OMIT_BROKEN) is XAttribute attr) ModelPlaceableOmitBroken = bool.Parse(attr.Value); }
-                { if (placElement.Attribute(ATTR_EASY_PANELS) is XAttribute attr) ModelPlaceableEasyPanels = bool.Parse(attr.Value); }
+                { if (placElement.Attribute(XML_OMIT_LARGE ) is XAttribute attr) ModelPlaceableOmitLarge  = bool.Parse(attr.Value); }
+                { if (placElement.Attribute(XML_OMIT_BROKEN) is XAttribute attr) ModelPlaceableOmitBroken = bool.Parse(attr.Value); }
+                { if (placElement.Attribute(XML_EASY_PANELS) is XAttribute attr) ModelPlaceableEasyPanels = bool.Parse(attr.Value); }
             }
         }
 
@@ -2051,30 +2040,30 @@ namespace kotor_Randomizer_2.Models
         private void ReadModuleSettings(XElement element)
         {
             // Read glitch settings.
-            if (element.Descendants(ELEM_GLITCHES).FirstOrDefault() is XElement glitches)
+            if (element.Descendants(XML_GLITCHES).FirstOrDefault() is XElement glitches)
             {
-                { if (glitches.Attribute(ATTR_CLIP) is XAttribute attr) ModuleAllowGlitchClip = bool.Parse(attr.Value); }
-                { if (glitches.Attribute(ATTR_DLZ ) is XAttribute attr) ModuleAllowGlitchDlz  = bool.Parse(attr.Value); }
-                { if (glitches.Attribute(ATTR_FLU ) is XAttribute attr) ModuleAllowGlitchFlu  = bool.Parse(attr.Value); }
-                { if (glitches.Attribute(ATTR_GPW ) is XAttribute attr) ModuleAllowGlitchGpw  = bool.Parse(attr.Value); }
+                { if (glitches.Attribute(XML_CLIP) is XAttribute attr) ModuleAllowGlitchClip = bool.Parse(attr.Value); }
+                { if (glitches.Attribute(XML_DLZ ) is XAttribute attr) ModuleAllowGlitchDlz  = bool.Parse(attr.Value); }
+                { if (glitches.Attribute(XML_FLU ) is XAttribute attr) ModuleAllowGlitchFlu  = bool.Parse(attr.Value); }
+                { if (glitches.Attribute(XML_GPW ) is XAttribute attr) ModuleAllowGlitchGpw  = bool.Parse(attr.Value); }
             }
 
             // Read goal settings.
-            if (element.Descendants(ELEM_GOALS).FirstOrDefault() is XElement goals)
+            if (element.Descendants(XML_GOALS).FirstOrDefault() is XElement goals)
             {
-                { if (goals.Attribute(ATTR_MALAK ) is XAttribute attr) ModuleGoalIsMalak     = bool.Parse(attr.Value); }
-                { if (goals.Attribute(ATTR_MAPS  ) is XAttribute attr) ModuleGoalIsStarMap   = bool.Parse(attr.Value); }
-                { if (goals.Attribute(ATTR_PAZAAK) is XAttribute attr) ModuleGoalIsPazaak    = bool.Parse(attr.Value); }
-                { if (goals.Attribute(ATTR_PARTY ) is XAttribute attr) ModuleGoalIsFullParty = bool.Parse(attr.Value); }
+                { if (goals.Attribute(XML_MALAK ) is XAttribute attr) ModuleGoalIsMalak     = bool.Parse(attr.Value); }
+                { if (goals.Attribute(XML_MAPS  ) is XAttribute attr) ModuleGoalIsStarMap   = bool.Parse(attr.Value); }
+                { if (goals.Attribute(XML_PAZAAK) is XAttribute attr) ModuleGoalIsPazaak    = bool.Parse(attr.Value); }
+                { if (goals.Attribute(XML_PARTY ) is XAttribute attr) ModuleGoalIsFullParty = bool.Parse(attr.Value); }
             }
 
             // Read logic settings.
-            if (element.Descendants(ELEM_LOGIC).FirstOrDefault() is XElement logic)
+            if (element.Descendants(XML_LOGIC).FirstOrDefault() is XElement logic)
             {
-                { if (logic.Attribute(ATTR_RULES       ) is XAttribute attr) ModuleLogicRandoRules      = bool.Parse(attr.Value); }
-                { if (logic.Attribute(ATTR_REACHABLE   ) is XAttribute attr) ModuleLogicReachability    = bool.Parse(attr.Value); }
-                { if (logic.Attribute(ATTR_IGNORE_ONCE ) is XAttribute attr) ModuleLogicIgnoreOnceEdges = bool.Parse(attr.Value); }
-                { if (logic.Attribute(ATTR_STRONG_GOALS) is XAttribute attr) ModuleLogicStrongGoals     = bool.Parse(attr.Value); }
+                { if (logic.Attribute(XML_RULES       ) is XAttribute attr) ModuleLogicRandoRules      = bool.Parse(attr.Value); }
+                { if (logic.Attribute(XML_REACHABLE   ) is XAttribute attr) ModuleLogicReachability    = bool.Parse(attr.Value); }
+                { if (logic.Attribute(XML_IGNORE_ONCE ) is XAttribute attr) ModuleLogicIgnoreOnceEdges = bool.Parse(attr.Value); }
+                { if (logic.Attribute(XML_STRONG_GOALS) is XAttribute attr) ModuleLogicStrongGoals     = bool.Parse(attr.Value); }
             }
 
             // Reset omitted module list.
@@ -2083,15 +2072,15 @@ namespace kotor_Randomizer_2.Models
             ModuleOmittedList.Clear();
 
             // Read shuffle preset.
-            var omit = element.Descendants(ELEM_OMIT).FirstOrDefault();
-            ModuleShufflePreset = omit.Attribute(ATTR_PRESET)?.Value ?? null;
+            var omit = element.Descendants(XML_OMIT).FirstOrDefault();
+            ModuleShufflePreset = omit.Attribute(XML_PRESET)?.Value ?? null;
 
             // If no shuffle preset, read omitted modules list.
             if (ModuleShufflePreset is null)
             {
-                foreach (var mod in element.Descendants(ELEM_MODULE))
+                foreach (var mod in element.Descendants(XML_MODULE))
                 {
-                    var module = ModuleRandomizedList.FirstOrDefault(x => x.WarpCode == mod.Attribute(ATTR_CODE)?.Value);
+                    var module = ModuleRandomizedList.FirstOrDefault(x => x.WarpCode == mod.Attribute(XML_CODE)?.Value);
                     if (module != null)
                     {
                         ModuleOmittedList.Add(module);
@@ -2108,20 +2097,20 @@ namespace kotor_Randomizer_2.Models
         private void ReadOtherSettings(XElement element)
         {
             // If these boolean attributes exist, their settings are enabled (true).
-            OtherPartyMembers   = element.Attribute(ATTR_PARTY)          != null;
-            OtherPazaakDecks    = element.Attribute(ATTR_PAZAAK)         != null;
-            OtherPolymorphMode  = element.Attribute(ATTR_POLYMORPH)      != null;
-            OtherSwoopBoosters  = element.Attribute(ATTR_SWOOP_BOOSTERS) != null;
-            OtherSwoopObstacles = element.Attribute(ATTR_SWOOP_OBSTACLE) != null;
+            OtherPartyMembers   = element.Attribute(XML_PARTY         ) != null;
+            OtherPazaakDecks    = element.Attribute(XML_PAZAAK        ) != null;
+            OtherPolymorphMode  = element.Attribute(XML_POLYMORPH     ) != null;
+            OtherSwoopBoosters  = element.Attribute(XML_SWOOP_BOOSTERS) != null;
+            OtherSwoopObstacles = element.Attribute(XML_SWOOP_OBSTACLE) != null;
 
-            var names = element.Descendants(ELEM_NAMES).FirstOrDefault();
+            var names = element.Descendants(XML_NAMES).FirstOrDefault();
             if (names != null)
             {
                 OtherNameGeneration = true;
 
                 // Female First Names
                 StringBuilder sb = new StringBuilder();
-                foreach (var name in names.Descendants(ELEM_FIRST_NAME_F))
+                foreach (var name in names.Descendants(XML_FIRST_NAME_F))
                 {
                     sb.AppendLine(name.Value);
                 }
@@ -2129,7 +2118,7 @@ namespace kotor_Randomizer_2.Models
 
                 // Male First Names
                 sb.Clear();
-                foreach (var name in names.Descendants(ELEM_FIRST_NAME_M))
+                foreach (var name in names.Descendants(XML_FIRST_NAME_M))
                 {
                     sb.AppendLine(name.Value);
                 }
@@ -2137,7 +2126,7 @@ namespace kotor_Randomizer_2.Models
 
                 // Last Names
                 sb.Clear();
-                foreach (var name in names.Descendants(ELEM_LAST_NAME))
+                foreach (var name in names.Descendants(XML_LAST_NAME))
                 {
                     sb.AppendLine(name.Value);
                 }
@@ -2155,16 +2144,17 @@ namespace kotor_Randomizer_2.Models
         /// <param name="element">XML element containing the table settings.</param>
         private void ReadTableSettings(XElement element)
         {
-            foreach (var tbl in element.Descendants(ELEM_TABLE))
+            foreach (var tbl in element.Descendants(XML_TABLE))
             {
-                var name = tbl.Attribute(ATTR_NAME).Value;
+                var name = tbl.Attribute(XML_NAME).Value;
                 var twoDA = Table2DAs.FirstOrDefault(x => x.Name == name);
                 if (twoDA != null)
                 {
-                    foreach (var col in tbl.Descendants(ELEM_COLUMN))
+                    var columns = tbl.Attribute(XML_COLUMNS).Value.Split(' ');
+                    foreach (var col in columns)
                     {
-                        twoDA.Randomized.Add(col.Value);
-                        twoDA.Columns.Remove(col.Value);
+                        twoDA.Randomized.Add(col);
+                        twoDA.Columns.Remove(col);
                     }
                 }
             }
@@ -2176,7 +2166,7 @@ namespace kotor_Randomizer_2.Models
         /// <param name="element">XML element containing the text settings.</param>
         private void ReadTextSettings(XElement element)
         {
-            var attr = element.Attribute(ATTR_SETTINGS);
+            var attr = element.Attribute(XML_SETTINGS);
             if (attr != null) TextSettingsValue = ParseEnum<TextSettings>(attr.Value);
         }
 
@@ -2186,22 +2176,22 @@ namespace kotor_Randomizer_2.Models
         /// <param name="element">XML element containing the texture settings.</param>
         private void ReadTextureSettings(XElement element)
         {
-            { if (element.Attribute(ATTR_PACK) is XAttribute attr) TextureSelectedPack = ParseEnum<TexturePack>(attr.Value); }
+            { if (element.Attribute(XML_PACK) is XAttribute attr) TextureSelectedPack = ParseEnum<TexturePack>(attr.Value); }
 
-            { if (element.Attribute(ATTR_CREATURE ) is XAttribute attr) TextureCreatures    = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_CUBE_MAP ) is XAttribute attr) TextureCubeMaps     = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_EFFECT   ) is XAttribute attr) TextureEffects      = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_ITEM     ) is XAttribute attr) TextureItems        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_NPC      ) is XAttribute attr) TextureNPC          = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_OTHER    ) is XAttribute attr) TextureOther        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_PARTY    ) is XAttribute attr) TextureParty        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_PLACE    ) is XAttribute attr) TexturePlaceables   = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_PLANETARY) is XAttribute attr) TexturePlanetary    = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_BODY     ) is XAttribute attr) TexturePlayerBodies = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_HEAD     ) is XAttribute attr) TexturePlayerHeads  = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_STUNT    ) is XAttribute attr) TextureStunt        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_VEHICLE  ) is XAttribute attr) TextureVehicles     = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(ATTR_WEAPON   ) is XAttribute attr) TextureWeapons      = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_CREATURE ) is XAttribute attr) TextureCreatures    = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_CUBE_MAP ) is XAttribute attr) TextureCubeMaps     = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_EFFECT   ) is XAttribute attr) TextureEffects      = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_ITEM     ) is XAttribute attr) TextureItems        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_NPC      ) is XAttribute attr) TextureNPC          = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_OTHER    ) is XAttribute attr) TextureOther        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_PARTY    ) is XAttribute attr) TextureParty        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_PLACE    ) is XAttribute attr) TexturePlaceables   = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_PLANETARY) is XAttribute attr) TexturePlanetary    = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_BODY     ) is XAttribute attr) TexturePlayerBodies = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_HEAD     ) is XAttribute attr) TexturePlayerHeads  = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_STUNT    ) is XAttribute attr) TextureStunt        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_VEHICLE  ) is XAttribute attr) TextureVehicles     = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_WEAPON   ) is XAttribute attr) TextureWeapons      = ParseEnum<RandomizationLevel>(attr.Value); }
         }
 
         /// <summary>
@@ -2210,15 +2200,21 @@ namespace kotor_Randomizer_2.Models
         /// <param name="w"></param>
         private void WriteGeneralSettings(XmlTextWriter w)
         {
-            w.WriteStartElement(ELEM_GENERAL);  // Begin General
-            w.WriteAttributeString(ATTR_QOL, GeneralModuleExtrasValue.ToString());
+            w.WriteStartElement(XML_GENERAL);  // Begin General
 
+            Version v = System.Reflection.Assembly.GetAssembly(typeof(Kotor1Randomizer)).GetName().Version;
+            w.WriteAttributeString(XML_VERSION, $"v{v.Major}.{v.Minor}.{v.Build}");
+
+            var activeUnlocks = ModuleExtras.Default;
             foreach (var item in GeneralUnlockedDoors)
-            {
-                w.WriteStartElement(ELEM_UNLOCK);   // Begin Unlock
-                w.WriteAttributeString(ATTR_TAG, item.Tag.ToString());
-                w.WriteEndElement();                // End Unlock
-            }
+                activeUnlocks |= item.Tag;
+
+            if (GeneralModuleExtrasValue != ModuleExtras.Default)
+                w.WriteAttributeString(XML_QOL, ((int)GeneralModuleExtrasValue).ToString());
+
+            if (activeUnlocks != ModuleExtras.Default)
+                w.WriteAttributeString(XML_UNLOCKS, ((int)activeUnlocks).ToString());
+
             w.WriteEndElement();                // End General
         }
 
@@ -2228,15 +2224,15 @@ namespace kotor_Randomizer_2.Models
         /// <param name="w"></param>
         private void WriteAudioSettings(XmlTextWriter w)
         {
-            w.WriteStartElement(ELEM_AUDIO);    // Begin Audio
-            w.WriteAttributeString(ATTR_AMBIENT,     AudioAmbientNoise.ToString());
-            w.WriteAttributeString(ATTR_AREA,        AudioAreaMusic.ToString());
-            w.WriteAttributeString(ATTR_BATTLE,      AudioBattleMusic.ToString());
-            w.WriteAttributeString(ATTR_CUTSCENE,    AudioCutsceneNoise.ToString());
-            w.WriteAttributeString(ATTR_NPC,         AudioNpcSounds.ToString());
-            w.WriteAttributeString(ATTR_PARTY,       AudioPartySounds.ToString());
-            w.WriteAttributeString(ATTR_MIXNPCPARTY, AudioMixNpcAndPartySounds.ToString());
-            w.WriteAttributeString(ATTR_REMOVE_DMCA, AudioRemoveDmcaMusic.ToString());
+            w.WriteStartElement(XML_AUDIO);     // Begin Audio
+            if (AudioAmbientNoise  != RandomizationLevel.None) w.WriteAttributeString(XML_AMBIENT,  AudioAmbientNoise.ToString());
+            if (AudioAreaMusic     != RandomizationLevel.None) w.WriteAttributeString(XML_AREA,     AudioAreaMusic.ToString());
+            if (AudioBattleMusic   != RandomizationLevel.None) w.WriteAttributeString(XML_BATTLE,   AudioBattleMusic.ToString());
+            if (AudioCutsceneNoise != RandomizationLevel.None) w.WriteAttributeString(XML_CUTSCENE, AudioCutsceneNoise.ToString());
+            if (AudioNpcSounds     != RandomizationLevel.None) w.WriteAttributeString(XML_NPC,      AudioNpcSounds.ToString());
+            if (AudioPartySounds   != RandomizationLevel.None) w.WriteAttributeString(XML_PARTY,    AudioPartySounds.ToString());
+            if (AudioMixNpcAndPartySounds) w.WriteAttributeString(XML_MIXNPCPARTY, AudioMixNpcAndPartySounds.ToString());
+            if (AudioRemoveDmcaMusic     ) w.WriteAttributeString(XML_REMOVE_DMCA, AudioRemoveDmcaMusic.ToString());
             w.WriteEndElement();                // End Audio
         }
 
@@ -2246,43 +2242,42 @@ namespace kotor_Randomizer_2.Models
         /// <param name="w"></param>
         private void WriteItemSettings(XmlTextWriter w)
         {
-            w.WriteStartElement(ELEM_ITEM);     // Begin Item
-            w.WriteAttributeString(ATTR_ARMBAND,    ItemArmbands.ToString());
-            w.WriteAttributeString(ATTR_ARMOR,      ItemArmor.ToString());
-            w.WriteAttributeString(ATTR_BELT,       ItemBelts.ToString());
-            w.WriteAttributeString(ATTR_BLASTER,    ItemBlasters.ToString());
-            w.WriteAttributeString(ATTR_CHIDE,      ItemCreatureHides.ToString());
-            w.WriteAttributeString(ATTR_CWEAPON,    ItemCreatureWeapons.ToString());
-            w.WriteAttributeString(ATTR_DROID,      ItemDroidEquipment.ToString());
-            w.WriteAttributeString(ATTR_GLOVE,      ItemGloves.ToString());
-            w.WriteAttributeString(ATTR_GRENADE,    ItemGrenades.ToString());
-            w.WriteAttributeString(ATTR_IMPLANT,    ItemImplants.ToString());
-            w.WriteAttributeString(ATTR_LIGHTSABER, ItemLightsabers.ToString());
-            w.WriteAttributeString(ATTR_MASK,       ItemMasks.ToString());
-            w.WriteAttributeString(ATTR_MELEE,      ItemMeleeWeapons.ToString());
-            w.WriteAttributeString(ATTR_MINE,       ItemMines.ToString());
-            w.WriteAttributeString(ATTR_MEDICAL,    ItemMedical.ToString());
-            w.WriteAttributeString(ATTR_PAZAAK,     ItemPazaakCards.ToString());
-            w.WriteAttributeString(ATTR_UPGRADE,    ItemUpgrades.ToString());
-            w.WriteAttributeString(ATTR_VARIOUS,    ItemVarious.ToString());
+            w.WriteStartElement(XML_ITEM);      // Begin Item
+            if (ItemArmbands        != RandomizationLevel.None) w.WriteAttributeString(XML_ARMBAND,    ItemArmbands.ToString());
+            if (ItemArmor           != RandomizationLevel.None) w.WriteAttributeString(XML_ARMOR,      ItemArmor.ToString());
+            if (ItemBelts           != RandomizationLevel.None) w.WriteAttributeString(XML_BELT,       ItemBelts.ToString());
+            if (ItemBlasters        != RandomizationLevel.None) w.WriteAttributeString(XML_BLASTER,    ItemBlasters.ToString());
+            if (ItemCreatureHides   != RandomizationLevel.None) w.WriteAttributeString(XML_CHIDE,      ItemCreatureHides.ToString());
+            if (ItemCreatureWeapons != RandomizationLevel.None) w.WriteAttributeString(XML_CWEAPON,    ItemCreatureWeapons.ToString());
+            if (ItemDroidEquipment  != RandomizationLevel.None) w.WriteAttributeString(XML_DROID,      ItemDroidEquipment.ToString());
+            if (ItemGloves          != RandomizationLevel.None) w.WriteAttributeString(XML_GLOVE,      ItemGloves.ToString());
+            if (ItemGrenades        != RandomizationLevel.None) w.WriteAttributeString(XML_GRENADE,    ItemGrenades.ToString());
+            if (ItemImplants        != RandomizationLevel.None) w.WriteAttributeString(XML_IMPLANT,    ItemImplants.ToString());
+            if (ItemLightsabers     != RandomizationLevel.None) w.WriteAttributeString(XML_LIGHTSABER, ItemLightsabers.ToString());
+            if (ItemMasks           != RandomizationLevel.None) w.WriteAttributeString(XML_MASK,       ItemMasks.ToString());
+            if (ItemMeleeWeapons    != RandomizationLevel.None) w.WriteAttributeString(XML_MELEE,      ItemMeleeWeapons.ToString());
+            if (ItemMines           != RandomizationLevel.None) w.WriteAttributeString(XML_MINE,       ItemMines.ToString());
+            if (ItemMedical         != RandomizationLevel.None) w.WriteAttributeString(XML_MEDICAL,    ItemMedical.ToString());
+            if (ItemPazaakCards     != RandomizationLevel.None) w.WriteAttributeString(XML_PAZAAK,     ItemPazaakCards.ToString());
+            if (ItemUpgrades        != RandomizationLevel.None) w.WriteAttributeString(XML_UPGRADE,    ItemUpgrades.ToString());
+            if (ItemVarious         != RandomizationLevel.None) w.WriteAttributeString(XML_VARIOUS,    ItemVarious.ToString());
 
-            w.WriteStartElement(ELEM_OMIT);     // Begin Omit
             if (!string.IsNullOrWhiteSpace(ItemOmittedPreset))
             {
-                // Write omitted preset name to file.
-                w.WriteAttributeString(ATTR_PRESET, ItemOmittedPreset);
+                // Write omit preset string.
+                w.WriteAttributeString(XML_PRESET, ItemOmittedPreset);
             }
             else
             {
                 // Write each omitted item to the file.
                 foreach (var item in ItemOmittedList)
                 {
-                    w.WriteStartElement(ELEM_ITEM); // Begin Item
-                    w.WriteAttributeString(ATTR_CODE, item.Code);
-                    w.WriteEndElement();            // End Item
+                    w.WriteStartElement(XML_OMIT);  // Begin Omit
+                    w.WriteAttributeString(XML_CODE, item.Code);
+                    w.WriteEndElement();            // End Omit
                 }
             }
-            w.WriteEndElement();                // End Omit
+
             w.WriteEndElement();                // End Item
         }
 
@@ -2292,27 +2287,27 @@ namespace kotor_Randomizer_2.Models
         /// <param name="w"></param>
         private void WriteModelSettings(XmlTextWriter w)
         {
-            w.WriteStartElement(ELEM_MODEL);    // Begin Model
+            w.WriteStartElement(XML_MODEL);    // Begin Model
             if (ModelCharacterRando)
             {
-                w.WriteStartElement(ELEM_CHAR); // Begin Character
-                w.WriteAttributeString(ATTR_OMIT_LARGE,  ModelCharacterOmitLarge.ToString());
-                w.WriteAttributeString(ATTR_OMIT_BROKEN, ModelCharacterOmitBroken.ToString());
+                w.WriteStartElement(XML_CHAR); // Begin Character
+                w.WriteAttributeString(XML_OMIT_LARGE,  ModelCharacterOmitLarge.ToString());
+                w.WriteAttributeString(XML_OMIT_BROKEN, ModelCharacterOmitBroken.ToString());
                 w.WriteEndElement();            // End Character
             }
             if (ModelDoorRando)
             {
-                w.WriteStartElement(ELEM_DOOR); // Begin Door
-                w.WriteAttributeString(ATTR_OMIT_AIRLOCK, ModelDoorOmitAirlock.ToString());
-                w.WriteAttributeString(ATTR_OMIT_BROKEN,  ModelDoorOmitBroken.ToString());
+                w.WriteStartElement(XML_DOOR); // Begin Door
+                w.WriteAttributeString(XML_OMIT_AIRLOCK, ModelDoorOmitAirlock.ToString());
+                w.WriteAttributeString(XML_OMIT_BROKEN,  ModelDoorOmitBroken.ToString());
                 w.WriteEndElement();            // End Door
             }
             if (ModelPlaceableRando)
             {
-                w.WriteStartElement(ELEM_PLAC); // Begin Placeable
-                w.WriteAttributeString(ATTR_OMIT_LARGE,  ModelPlaceableOmitLarge.ToString());
-                w.WriteAttributeString(ATTR_OMIT_BROKEN, ModelPlaceableOmitBroken.ToString());
-                w.WriteAttributeString(ATTR_EASY_PANELS, ModelPlaceableEasyPanels.ToString());
+                w.WriteStartElement(XML_PLAC); // Begin Placeable
+                w.WriteAttributeString(XML_OMIT_LARGE,  ModelPlaceableOmitLarge.ToString());
+                w.WriteAttributeString(XML_OMIT_BROKEN, ModelPlaceableOmitBroken.ToString());
+                w.WriteAttributeString(XML_EASY_PANELS, ModelPlaceableEasyPanels.ToString());
                 w.WriteEndElement();            // End Placeable
             }
             w.WriteEndElement();                // End Model
@@ -2324,41 +2319,41 @@ namespace kotor_Randomizer_2.Models
         /// <param name="w"></param>
         private void WriteModuleSettings(XmlTextWriter w)
         {
-            w.WriteStartElement(ELEM_MODULE);   // Begin Module
-            w.WriteStartElement(ELEM_GLITCHES); // Begin Glitches
-            w.WriteAttributeString(ATTR_CLIP,    ModuleAllowGlitchClip.ToString());
-            w.WriteAttributeString(ATTR_DLZ,     ModuleAllowGlitchDlz.ToString());
-            w.WriteAttributeString(ATTR_FLU,     ModuleAllowGlitchFlu.ToString());
-            w.WriteAttributeString(ATTR_GPW,     ModuleAllowGlitchGpw.ToString());
+            w.WriteStartElement(XML_MODULE);   // Begin Module
+            w.WriteStartElement(XML_GLITCHES); // Begin Glitches
+            w.WriteAttributeString(XML_CLIP,    ModuleAllowGlitchClip.ToString());
+            w.WriteAttributeString(XML_DLZ,     ModuleAllowGlitchDlz.ToString());
+            w.WriteAttributeString(XML_FLU,     ModuleAllowGlitchFlu.ToString());
+            w.WriteAttributeString(XML_GPW,     ModuleAllowGlitchGpw.ToString());
             w.WriteEndElement();                // End Glitches
 
-            w.WriteStartElement(ELEM_GOALS);    // Begin Goals
-            w.WriteAttributeString(ATTR_MALAK,  ModuleGoalIsMalak.ToString());
-            w.WriteAttributeString(ATTR_MAPS,   ModuleGoalIsStarMap.ToString());
-            w.WriteAttributeString(ATTR_PAZAAK, ModuleGoalIsPazaak.ToString());
-            w.WriteAttributeString(ATTR_PARTY,  ModuleGoalIsFullParty.ToString());
+            w.WriteStartElement(XML_GOALS);    // Begin Goals
+            w.WriteAttributeString(XML_MALAK,  ModuleGoalIsMalak.ToString());
+            w.WriteAttributeString(XML_MAPS,   ModuleGoalIsStarMap.ToString());
+            w.WriteAttributeString(XML_PAZAAK, ModuleGoalIsPazaak.ToString());
+            w.WriteAttributeString(XML_PARTY,  ModuleGoalIsFullParty.ToString());
             w.WriteEndElement();                // End Goals
 
-            w.WriteStartElement(ELEM_LOGIC);    // Begin Logic
-            w.WriteAttributeString(ATTR_RULES,        ModuleLogicRandoRules.ToString());
-            w.WriteAttributeString(ATTR_REACHABLE,    ModuleLogicReachability.ToString());
-            w.WriteAttributeString(ATTR_IGNORE_ONCE,  ModuleLogicIgnoreOnceEdges.ToString());
-            w.WriteAttributeString(ATTR_STRONG_GOALS, ModuleLogicStrongGoals.ToString());
+            w.WriteStartElement(XML_LOGIC);    // Begin Logic
+            w.WriteAttributeString(XML_RULES,        ModuleLogicRandoRules.ToString());
+            w.WriteAttributeString(XML_REACHABLE,    ModuleLogicReachability.ToString());
+            w.WriteAttributeString(XML_IGNORE_ONCE,  ModuleLogicIgnoreOnceEdges.ToString());
+            w.WriteAttributeString(XML_STRONG_GOALS, ModuleLogicStrongGoals.ToString());
             w.WriteEndElement();                // End Logic
 
-            w.WriteStartElement(ELEM_OMIT);     // Begin Omit
+            w.WriteStartElement(XML_OMIT);     // Begin Omit
             if (!string.IsNullOrWhiteSpace(ModuleShufflePreset))
             {
                 // Write the module omit preset to file.
-                w.WriteAttributeString(ATTR_PRESET, ModuleShufflePreset);
+                w.WriteAttributeString(XML_PRESET, ModuleShufflePreset);
             }
             else
             {
                 // Write each omitted module to file.
                 foreach (var item in ModuleOmittedList)
                 {
-                    w.WriteStartElement(ELEM_MODULE);   // Begin Module
-                    w.WriteAttributeString(ATTR_CODE, item.WarpCode);
+                    w.WriteStartElement(XML_MODULE);   // Begin Module
+                    w.WriteAttributeString(XML_CODE, item.WarpCode);
                     w.WriteEndElement();                // End Module;
                 }
             }
@@ -2372,19 +2367,19 @@ namespace kotor_Randomizer_2.Models
         /// <param name="w"></param>
         private void WriteOtherSettings(XmlTextWriter w)
         {
-            w.WriteStartElement(ELEM_OTHER);    // Start Other
-            if (OtherPartyMembers  ) w.WriteAttributeString(ATTR_PARTY,          OtherPartyMembers.ToString());
-            if (OtherPazaakDecks   ) w.WriteAttributeString(ATTR_PAZAAK,         OtherPazaakDecks.ToString());
-            if (OtherPolymorphMode ) w.WriteAttributeString(ATTR_POLYMORPH,      OtherPolymorphMode.ToString());
-            if (OtherSwoopBoosters ) w.WriteAttributeString(ATTR_SWOOP_BOOSTERS, OtherSwoopBoosters.ToString());
-            if (OtherSwoopObstacles) w.WriteAttributeString(ATTR_SWOOP_OBSTACLE, OtherSwoopObstacles.ToString());
+            w.WriteStartElement(XML_OTHER);    // Start Other
+            if (OtherPartyMembers  ) w.WriteAttributeString(XML_PARTY,          OtherPartyMembers.ToString());
+            if (OtherPazaakDecks   ) w.WriteAttributeString(XML_PAZAAK,         OtherPazaakDecks.ToString());
+            if (OtherPolymorphMode ) w.WriteAttributeString(XML_POLYMORPH,      OtherPolymorphMode.ToString());
+            if (OtherSwoopBoosters ) w.WriteAttributeString(XML_SWOOP_BOOSTERS, OtherSwoopBoosters.ToString());
+            if (OtherSwoopObstacles) w.WriteAttributeString(XML_SWOOP_OBSTACLE, OtherSwoopObstacles.ToString());
 
             if (OtherNameGeneration)
             {
-                w.WriteStartElement(ELEM_NAMES);    // Start Names
-                foreach (var name in OtherFirstNamesF.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) w.WriteElementString(ELEM_FIRST_NAME_F, name);
-                foreach (var name in OtherFirstNamesM.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) w.WriteElementString(ELEM_FIRST_NAME_M, name);
-                foreach (var name in OtherLastNames.Split(  "\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) w.WriteElementString(ELEM_LAST_NAME,    name);
+                w.WriteStartElement(XML_NAMES);    // Start Names
+                foreach (var name in OtherFirstNamesF.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) w.WriteElementString(XML_FIRST_NAME_F, name);
+                foreach (var name in OtherFirstNamesM.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) w.WriteElementString(XML_FIRST_NAME_M, name);
+                foreach (var name in OtherLastNames.Split(  "\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)) w.WriteElementString(XML_LAST_NAME,    name);
                 w.WriteEndElement();                // End   Names
             }
             w.WriteEndElement();                // End Other
@@ -2396,18 +2391,17 @@ namespace kotor_Randomizer_2.Models
         /// <param name="w"></param>
         private void WriteTableSettings(XmlTextWriter w)
         {
-            w.WriteStartElement(ELEM_TABLE);    // Start Table
+            w.WriteStartElement(XML_TABLES);    // Start Tables
             foreach (var table in Table2DAs.Where(rt => rt.IsRandomized))
             {
-                w.WriteStartElement(ELEM_TABLE);    // Start Table
+                w.WriteStartElement(XML_TABLE);    // Start Table
 
-                w.WriteAttributeString(ATTR_NAME, table.Name);
-                foreach (var column in table.Randomized)
-                    w.WriteElementString(ELEM_COLUMN, column);
+                w.WriteAttributeString(XML_NAME, table.Name);
+                w.WriteAttributeString(XML_COLUMNS, string.Join(" ", table.Randomized));
 
                 w.WriteEndElement();                // End   Table
             }
-            w.WriteEndElement();                // End   Table
+            w.WriteEndElement();                // End   Tables
         }
 
         /// <summary>
@@ -2416,8 +2410,8 @@ namespace kotor_Randomizer_2.Models
         /// <param name="w"></param>
         private void WriteTextSettings(XmlTextWriter w)
         {
-            w.WriteStartElement(ELEM_TEXT); // Start Text
-            w.WriteAttributeString(ATTR_SETTINGS, TextSettingsValue.ToString());
+            w.WriteStartElement(XML_TEXT); // Start Text
+            w.WriteAttributeString(XML_SETTINGS, ((int)TextSettingsValue).ToString());
             w.WriteEndElement();            // End   Text
         }
 
@@ -2427,22 +2421,22 @@ namespace kotor_Randomizer_2.Models
         /// <param name="w"></param>
         private void WriteTextureSettings(XmlTextWriter w)
         {
-            w.WriteStartElement(ELEM_TEXTURE);  // Start Texture
-            w.WriteAttributeString(ATTR_PACK,      TextureSelectedPack.ToString());
-            w.WriteAttributeString(ATTR_CREATURE,  TextureCreatures.ToString());
-            w.WriteAttributeString(ATTR_CUBE_MAP,  TextureCubeMaps.ToString());
-            w.WriteAttributeString(ATTR_EFFECT,    TextureEffects.ToString());
-            w.WriteAttributeString(ATTR_ITEM,      TextureItems.ToString());
-            w.WriteAttributeString(ATTR_NPC,       TextureNPC.ToString());
-            w.WriteAttributeString(ATTR_OTHER,     TextureOther.ToString());
-            w.WriteAttributeString(ATTR_PARTY,     TextureParty.ToString());
-            w.WriteAttributeString(ATTR_PLACE,     TexturePlaceables.ToString());
-            w.WriteAttributeString(ATTR_PLANETARY, TexturePlanetary.ToString());
-            w.WriteAttributeString(ATTR_BODY,      TexturePlayerBodies.ToString());
-            w.WriteAttributeString(ATTR_HEAD,      TexturePlayerHeads.ToString());
-            w.WriteAttributeString(ATTR_STUNT,     TextureStunt.ToString());
-            w.WriteAttributeString(ATTR_VEHICLE,   TextureVehicles.ToString());
-            w.WriteAttributeString(ATTR_WEAPON,    TextureWeapons.ToString());
+            w.WriteStartElement(XML_TEXTURE);  // Start Texture
+            w.WriteAttributeString(XML_PACK, TextureSelectedPack.ToString());
+            if (TextureCreatures    != RandomizationLevel.None) w.WriteAttributeString(XML_CREATURE,  TextureCreatures.ToString());
+            if (TextureCubeMaps     != RandomizationLevel.None) w.WriteAttributeString(XML_CUBE_MAP,  TextureCubeMaps.ToString());
+            if (TextureEffects      != RandomizationLevel.None) w.WriteAttributeString(XML_EFFECT,    TextureEffects.ToString());
+            if (TextureItems        != RandomizationLevel.None) w.WriteAttributeString(XML_ITEM,      TextureItems.ToString());
+            if (TextureNPC          != RandomizationLevel.None) w.WriteAttributeString(XML_NPC,       TextureNPC.ToString());
+            if (TextureOther        != RandomizationLevel.None) w.WriteAttributeString(XML_OTHER,     TextureOther.ToString());
+            if (TextureParty        != RandomizationLevel.None) w.WriteAttributeString(XML_PARTY,     TextureParty.ToString());
+            if (TexturePlaceables   != RandomizationLevel.None) w.WriteAttributeString(XML_PLACE,     TexturePlaceables.ToString());
+            if (TexturePlanetary    != RandomizationLevel.None) w.WriteAttributeString(XML_PLANETARY, TexturePlanetary.ToString());
+            if (TexturePlayerBodies != RandomizationLevel.None) w.WriteAttributeString(XML_BODY,      TexturePlayerBodies.ToString());
+            if (TexturePlayerHeads  != RandomizationLevel.None) w.WriteAttributeString(XML_HEAD,      TexturePlayerHeads.ToString());
+            if (TextureStunt        != RandomizationLevel.None) w.WriteAttributeString(XML_STUNT,     TextureStunt.ToString());
+            if (TextureVehicles     != RandomizationLevel.None) w.WriteAttributeString(XML_VEHICLE,   TextureVehicles.ToString());
+            if (TextureWeapons      != RandomizationLevel.None) w.WriteAttributeString(XML_WEAPON,    TextureWeapons.ToString());
             w.WriteEndElement();                // End   Texture
         }
         #endregion Private Methods

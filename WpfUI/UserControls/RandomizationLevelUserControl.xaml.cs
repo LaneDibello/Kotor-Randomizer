@@ -139,6 +139,9 @@ namespace Randomizer_WPF.UserControls
 
         #region Events
 
+        public delegate void Control_RandomizationLevelChanged(string tag, RandomizationLevel oldValue, RandomizationLevel newValue);
+        public event Control_RandomizationLevelChanged RandomizationLevelChanged;
+
         private static void OnSelectedLevelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RandomizationLevelUserControl control = d as RandomizationLevelUserControl;
@@ -158,6 +161,7 @@ namespace Randomizer_WPF.UserControls
                 rbMax.IsChecked = (RandomizationLevel)e.NewValue == RandomizationLevel.Max;
                 cbIsActive.IsChecked = true;
             }
+            RandomizationLevelChanged?.Invoke(Tag.ToString(), (RandomizationLevel)e.OldValue, (RandomizationLevel)e.NewValue);
         }
 
         private static void OnSubtypeVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

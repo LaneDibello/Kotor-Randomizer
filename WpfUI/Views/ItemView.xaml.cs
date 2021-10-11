@@ -33,7 +33,12 @@ namespace Randomizer_WPF.Views
         private SortAdorner lvOmittedSortAdorner;
         private GridViewColumnHeader lvOmittedSortCol;
 
+        private List<RandomizableItem> _fullItemList = new List<RandomizableItem>();
+
         private List<RandomizationLevelUserControl> ItemControls = new List<RandomizationLevelUserControl>();
+
+        bool Constructed = false;
+        bool DelaySort = false;
         #endregion
 
         #region Constructor
@@ -67,25 +72,25 @@ namespace Randomizer_WPF.Views
         #endregion
 
         #region Dependency Properties
-        public static readonly DependencyProperty ItemLevelArmbandsProperty = DependencyProperty.Register("ItemLevelArmbands", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelArmorProperty = DependencyProperty.Register("ItemLevelArmor", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelBeltsProperty = DependencyProperty.Register("ItemLevelBelts", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelBlastersProperty = DependencyProperty.Register("ItemLevelBlasters", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelCreatureHidesProperty = DependencyProperty.Register("ItemLevelCreatureHides", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelCreatureWeaponsProperty = DependencyProperty.Register("ItemLevelCreatureWeapons", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelDroidEquipmentProperty = DependencyProperty.Register("ItemLevelDroidEquipment", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelGauntletsProperty = DependencyProperty.Register("ItemLevelGauntlets", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelGrenadesProperty = DependencyProperty.Register("ItemLevelGrenades", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelImplantsProperty = DependencyProperty.Register("ItemLevelImplants", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelLightsabersProperty = DependencyProperty.Register("ItemLevelLightsabers", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelMasksProperty = DependencyProperty.Register("ItemLevelMasks", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelMeleeProperty = DependencyProperty.Register("ItemLevelMelee", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelMinesProperty = DependencyProperty.Register("ItemLevelMines", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelPazaakProperty = DependencyProperty.Register("ItemLevelPazaak", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelMedicalProperty = DependencyProperty.Register("ItemLevelMedical", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelUpgradesProperty = DependencyProperty.Register("ItemLevelUpgrades", typeof(RandomizationLevel), typeof(ItemView));
-        public static readonly DependencyProperty ItemLevelVariousProperty = DependencyProperty.Register("ItemLevelVarious", typeof(RandomizationLevel), typeof(ItemView));
-        protected static readonly DependencyProperty ExpanderHeightProperty = DependencyProperty.Register("ExpanderHeight", typeof(double), typeof(ItemView), new PropertyMetadata(24.0));
+        public static readonly DependencyProperty ItemLevelArmbandsProperty         = DependencyProperty.Register("ItemLevelArmbands", typeof(RandomizationLevel), typeof(ItemView)/*, null, UpdateLists*/);
+        public static readonly DependencyProperty ItemLevelArmorProperty            = DependencyProperty.Register("ItemLevelArmor", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelBeltsProperty            = DependencyProperty.Register("ItemLevelBelts", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelBlastersProperty         = DependencyProperty.Register("ItemLevelBlasters", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelCreatureHidesProperty    = DependencyProperty.Register("ItemLevelCreatureHides", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelCreatureWeaponsProperty  = DependencyProperty.Register("ItemLevelCreatureWeapons", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelDroidEquipmentProperty   = DependencyProperty.Register("ItemLevelDroidEquipment", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelGauntletsProperty        = DependencyProperty.Register("ItemLevelGauntlets", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelGrenadesProperty         = DependencyProperty.Register("ItemLevelGrenades", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelImplantsProperty         = DependencyProperty.Register("ItemLevelImplants", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelLightsabersProperty      = DependencyProperty.Register("ItemLevelLightsabers", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelMasksProperty            = DependencyProperty.Register("ItemLevelMasks", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelMeleeProperty            = DependencyProperty.Register("ItemLevelMelee", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelMinesProperty            = DependencyProperty.Register("ItemLevelMines", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelPazaakProperty           = DependencyProperty.Register("ItemLevelPazaak", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelMedicalProperty          = DependencyProperty.Register("ItemLevelMedical", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelUpgradesProperty         = DependencyProperty.Register("ItemLevelUpgrades", typeof(RandomizationLevel), typeof(ItemView));
+        public static readonly DependencyProperty ItemLevelVariousProperty          = DependencyProperty.Register("ItemLevelVarious", typeof(RandomizationLevel), typeof(ItemView));
+        protected static readonly DependencyProperty ExpanderHeightProperty         = DependencyProperty.Register("ExpanderHeight", typeof(double), typeof(ItemView), new PropertyMetadata(24.0));
         #endregion
 
         #region Properties
@@ -207,35 +212,52 @@ namespace Randomizer_WPF.Views
         #region Events
         private void BtnToggleAll_Click(object sender, RoutedEventArgs e)
         {
+            DelaySort = true;
             bool CheckAllBoxes = ItemControls.Any(rluc => !rluc.IsChecked);
+
             foreach (var item in ItemControls)
             {
                 item.IsChecked = CheckAllBoxes;
             }
+
+            DelaySort = false;
+            CbbOmitPreset_SelectionChanged(this, null);
         }
 
         private void BtnSubtype_Click(object sender, RoutedEventArgs e)
         {
+            DelaySort = true;
             foreach (var item in ItemControls)
             {
                 item.SelectedLevel = RandomizationLevel.Subtype;
             }
+
+            DelaySort = false;
+            CbbOmitPreset_SelectionChanged(this, null);
         }
 
         private void BtnType_Click(object sender, RoutedEventArgs e)
         {
+            DelaySort = true;
             foreach (var item in ItemControls)
             {
                 item.SelectedLevel = RandomizationLevel.Type;
             }
+
+            DelaySort = false;
+            CbbOmitPreset_SelectionChanged(this, null);
         }
 
         private void BtnMax_Click(object sender, RoutedEventArgs e)
         {
+            DelaySort = true;
             foreach (var item in ItemControls)
             {
                 item.SelectedLevel = RandomizationLevel.Max;
             }
+
+            DelaySort = false;
+            CbbOmitPreset_SelectionChanged(this, null);
         }
 
         private void BtnRandomizeAll_Click(object sender, RoutedEventArgs e)
@@ -298,7 +320,7 @@ namespace Randomizer_WPF.Views
 
         private void CbbOmitPreset_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cbbOmitPreset.SelectedItem == null)
+            if (cbbOmitPreset?.SelectedItem == null)
             {
                 // Do nothing.
             }
@@ -383,6 +405,13 @@ namespace Randomizer_WPF.Views
                 lvOmittedItemSource = k1rand.ItemOmittedList;
             }
 
+            _fullItemList.Clear();
+            _fullItemList.AddRange(lvRandomizedItemSource);
+            _fullItemList.AddRange(lvOmittedItemSource);
+
+            lvRandomizedItemSource.Clear();
+            lvOmittedItemSource.Clear();
+
             cbbOmitPreset.SelectedItem = cbbItemPresetOptions.First();
         }
 
@@ -393,6 +422,61 @@ namespace Randomizer_WPF.Views
 
             view = (CollectionView)CollectionViewSource.GetDefaultView(lvOmitted.ItemsSource);
             if (view != null) view.Filter = HandleListFilter;
+
+            // Set up the default sort for item omitted list views.
+            if (!Constructed)
+            {
+                SortAdorner.SortColumn(lvRandomized,
+                                       ref lvRandomizedSortCol,
+                                       ref lvRandomizedSortAdorner,
+                                       gvchRandomizedLabel,
+                                       gvchRandomizedLabel.Tag.ToString());
+                SortAdorner.SortColumn(lvRandomized,
+                                       ref lvRandomizedSortCol,
+                                       ref lvRandomizedSortAdorner,
+                                       gvchRandomizedCategory,
+                                       gvchRandomizedCategory.Tag.ToString());
+                SortAdorner.SortColumn(lvOmitted,
+                                       ref lvOmittedSortCol,
+                                       ref lvOmittedSortAdorner,
+                                       gvchOmittedCategory,
+                                       gvchOmittedCategory.Tag.ToString());
+                Constructed = true;
+            }
+        }
+
+        private void RandomizationLevelChanged(string category, RandomizationLevel oldValue, RandomizationLevel newValue)
+        {
+            var changed = false;
+
+            // Ignore if nothing has changed.
+            if (oldValue == newValue) return;
+
+            // Add items if enabling a randomization.
+            if (oldValue == RandomizationLevel.None)
+            {
+                foreach (var item in _fullItemList.Where(i => i.Category == category))
+                {
+                    // Only add it if it's not already in the list.
+                    if (!lvRandomizedItemSource.Contains(item))
+                        lvRandomizedItemSource.Add(item);
+                }
+                changed = true;
+            }
+
+            // Remove items if disabling a randomization.
+            if (newValue == RandomizationLevel.None)
+            {
+                foreach (var item in _fullItemList.Where(i => i.Category == category))
+                {
+                    lvOmittedItemSource.Remove(item);
+                    lvRandomizedItemSource.Remove(item);
+                }
+                changed = true;
+            }
+
+            // Sort items based on category selection.
+            if (changed && !DelaySort) CbbOmitPreset_SelectionChanged(this, null);
         }
         #endregion
 

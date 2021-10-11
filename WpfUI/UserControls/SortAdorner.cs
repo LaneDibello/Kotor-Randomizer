@@ -48,19 +48,21 @@ namespace Randomizer_WPF.UserControls
 
         internal static void SortColumn(ListView lv, ref GridViewColumnHeader column, ref SortAdorner adorner, GridViewColumnHeader newColumn, string sortBy)
         {
+            if (lv == null) return;
+
             if (column != null)
             {
-                AdornerLayer.GetAdornerLayer(column).Remove(adorner);
+                AdornerLayer.GetAdornerLayer(column)?.Remove(adorner);
                 lv.Items.SortDescriptions.Clear();
             }
 
             ListSortDirection newDir = ListSortDirection.Ascending;
-            if (column == newColumn && adorner.Direction == newDir)
+            if (column == newColumn && adorner?.Direction == newDir)
                 newDir = ListSortDirection.Descending;
 
             column = newColumn;
             adorner = new SortAdorner(column, newDir);
-            AdornerLayer.GetAdornerLayer(column).Add(adorner);
+            AdornerLayer.GetAdornerLayer(column)?.Add(adorner);
             lv.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
         }
     }
