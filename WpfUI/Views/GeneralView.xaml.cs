@@ -50,6 +50,7 @@ namespace Randomizer_WPF.Views
         public static readonly DependencyProperty QolFastEnvirosuitProperty         = DependencyProperty.Register("QolFastEnvirosuit",        typeof(bool), typeof(GeneralView));
         public static readonly DependencyProperty QolEarlyT3Property                = DependencyProperty.Register("QolEarlyT3",               typeof(bool), typeof(GeneralView));
         public static readonly DependencyProperty QolFixDreamSequenceProperty       = DependencyProperty.Register("QolFixDreamSequence",      typeof(bool), typeof(GeneralView));
+        public static readonly DependencyProperty QolFixFighterEncounterProperty    = DependencyProperty.Register("QolFixFighterEncounter",   typeof(bool), typeof(GeneralView));
         public static readonly DependencyProperty QolFixMindPrisonProperty          = DependencyProperty.Register("QolFixMindPrison",         typeof(bool), typeof(GeneralView));
         public static readonly DependencyProperty QolFixModuleCoordinatesProperty   = DependencyProperty.Register("QolFixModuleCoordinates",  typeof(bool), typeof(GeneralView));
         #endregion
@@ -119,6 +120,12 @@ namespace Randomizer_WPF.Views
         {
             get { return (bool)GetValue(QolFixDreamSequenceProperty); }
             set { SetValue(QolFixDreamSequenceProperty, value); }
+        }
+
+        public bool QolFixFighterEncounter
+        {
+            get { return (bool)GetValue(QolFixFighterEncounterProperty); }
+            set { SetValue(QolFixFighterEncounterProperty, value); }
         }
 
         public bool QolFixMindPrison

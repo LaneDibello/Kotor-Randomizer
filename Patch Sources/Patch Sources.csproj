@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="k_pebn_galaxy.nss" />
+    <None Include="k_pebo_mgheart.nss" />
     <None Include="k_ren_visionland.nss" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

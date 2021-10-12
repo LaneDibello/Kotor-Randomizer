@@ -274,6 +274,7 @@
     <None Include="Resources\k36_pkor_enter.ncs" />
     <None Include="Resources\k_pdan_13_area.ncs" />
     <None Include="Resources\k_pebn_galaxy.ncs" />
+    <None Include="Resources\k_pebo_mgheart.ncs" />
     <None Include="Resources\k_plev_goto40aa.ncs" />
     <None Include="Resources\k_plev_goto40ab.ncs" />
     <None Include="Resources\k_ren_visionland.ncs" />

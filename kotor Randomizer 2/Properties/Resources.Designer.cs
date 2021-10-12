@@ -239,6 +239,16 @@ namespace kotor_Randomizer_2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] k_pebo_mgheart {
+            get {
+                object obj = ResourceManager.GetObject("k_pebo_mgheart", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] k_plev_goto40aa {
             get {
                 object obj = ResourceManager.GetObject("k_plev_goto40aa", resourceCulture);

@@ -92,6 +92,8 @@ namespace kotor_Randomizer_2
         EarlyT3             = 0x080000, // 0b00001000 00000000 00000000
         /// <summary> Enables the elevator on the Leviathan Hangar to go to other levels. </summary>
         EnableLevHangarElev = 0x100000, // 0b00010000 00000000 00000000
+        /// <summary> Prevents the fighter encounter from getting stuck after fighters are destroyed. </summary>
+        FixFighterEncounter = 0x200000, // 0b00100000 00000000 00000000
     }
 
     [Flags]
@@ -1188,6 +1190,12 @@ namespace kotor_Randomizer_2
                     "ebo_m12aa", // Ebon Hawk
                 }
             },
+            // Fighter Skirmish
+            { "M12ab", new List<string>()
+                {
+                    "ebo_m12aa", // Ebon Hawk
+                }
+            },
         };
         /// <summary>
         /// The parent of a module with only one entrance cannot be inside that child.
@@ -1364,6 +1372,7 @@ namespace kotor_Randomizer_2
                     "ebo_m46ab", // Mystery Box
                     "lev_m40ac", // Leviathan Hangar
                     "liv_m99aa", // Yavin Station
+                    "M12ab",     // Fighter Encounter (other entrances are CS or once)
                 }
             },
         };

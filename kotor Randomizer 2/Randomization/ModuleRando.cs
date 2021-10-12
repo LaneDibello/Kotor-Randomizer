@@ -27,6 +27,7 @@ namespace kotor_Randomizer_2
         private const string AREA_UNK_MAIN_FLOOR = "unk_m44aa";
         private const string AREA_UNK_SUMMIT = "unk_m44ac";
         private const string FIXED_DREAM_OVERRIDE = "k_ren_visionland.ncs";
+        private const string FIXED_FIGHTER_OVERRIDE = "k_pebo_mgheart.ncs";
         private const string LABEL_DANT_DOOR = "man14aa_door04";
         private const string LABEL_EBO_BOX = "pebn_mystery";
         private const string LABEL_EBO_PRISON = "g_brakatan003";
@@ -138,10 +139,11 @@ namespace kotor_Randomizer_2
 
             settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Add Spice Lab Load Zone", ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ ).ToString()),
-                new Tuple<string, string>("Fix Dream Sequence",      ModuleExtrasValue.HasFlag(ModuleExtras.FixDream      ).ToString()),
-                new Tuple<string, string>("Fix Mind Prison",         ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison ).ToString()),
-                new Tuple<string, string>("Fix Module Coordinates",  ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates).ToString()),
+                new Tuple<string, string>("Add Spice Lab Load Zone", ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ      ).ToString()),
+                new Tuple<string, string>("Fix Dream Sequence",      ModuleExtrasValue.HasFlag(ModuleExtras.FixDream           ).ToString()),
+                new Tuple<string, string>("Fix Fighter Encounter",   ModuleExtrasValue.HasFlag(ModuleExtras.FixFighterEncounter).ToString()),
+                new Tuple<string, string>("Fix Mind Prison",         ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison      ).ToString()),
+                new Tuple<string, string>("Fix Module Coordinates",  ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates     ).ToString()),
                 new Tuple<string, string>("", ""),  // Skip a row.
             };
 
@@ -234,13 +236,14 @@ namespace kotor_Randomizer_2
                     new Tuple<string, string>("", ""),  // Skip a row.
                     new Tuple<string, string>("Add Spice Lab Load Zone",      ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ).ToString()),
                     new Tuple<string, string>("Fix Dream Sequence",           ModuleExtrasValue.HasFlag(ModuleExtras.FixDream).ToString()),
+                    new Tuple<string, string>("Fix Fighter Encounter",        ModuleExtrasValue.HasFlag(ModuleExtras.FixFighterEncounter).ToString()),
                     new Tuple<string, string>("Fix Mind Prison",              ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison).ToString()),
                     new Tuple<string, string>("Fix Module Coordinates",       ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates).ToString()),
                     new Tuple<string, string>("", ""),  // Skip a row.
                     new Tuple<string, string>("Unlock DAN Ruins Door",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins     ) ? "Unlocked" : "Locked"),
                     new Tuple<string, string>("Unlock EBO Galaxy Map",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap    ) ? "Unlocked" : "Locked"),
                     new Tuple<string, string>("Unlock KOR Valley",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley    ) ? "Unlocked" : "Locked"),
-                    new Tuple<string, string>("Unlock LEV Hangar Access",     ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev    ) ? "Unlocked" : "Locked"),
+                    new Tuple<string, string>("Unlock LEV Hangar Access",     ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev      ) ? "Unlocked" : "Locked"),
                     new Tuple<string, string>("Enable LEV Hangar Elevator",   ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev) ? "Enabled"  : "Disabled"),
                     new Tuple<string, string>("Unlock MAN Embassy",           ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy   ) ? "Unlocked" : "Locked"),
                     new Tuple<string, string>("Unlock MAN Hangar",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar    ) ? "Unlocked" : "Locked"),
@@ -1037,6 +1040,12 @@ namespace kotor_Randomizer_2
             if (ModuleExtrasValue.HasFlag(ModuleExtras.FixDream))
             {
                 File.WriteAllBytes(Path.Combine(paths.Override, FIXED_DREAM_OVERRIDE), Properties.Resources.k_ren_visionland);
+            }
+
+            // Fix Fighter Encounter
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.FixFighterEncounter))
+            {
+                File.WriteAllBytes(Path.Combine(paths.Override, FIXED_FIGHTER_OVERRIDE), Properties.Resources.k_pebo_mgheart);
             }
 
             // Unlock Galaxy Map File

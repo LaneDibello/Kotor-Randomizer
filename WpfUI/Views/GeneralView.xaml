@@ -57,6 +57,10 @@
             <ToolTip x:Key="ttQolDream">
                 Fixes a rare instance in which a game crash could occur with dream sequences.
             </ToolTip>
+            <ToolTip x:Key="ttQolFighters">
+                Ensures that the fighter encounter will send you back to the Ebon Hawk if it is entered
+                from an unusual location, as can happen when its module is randomized.
+            </ToolTip>
             <ToolTip x:Key="ttQolMystery">
                 Updates the Mystery Box in the Ebon Hawk so it can be used multiple times.
             </ToolTip>
@@ -191,6 +195,7 @@
                                        Style="{StaticResource tbHeader3}"
                                        FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}"
                                        TextDecorations="Underline"
+                                       Margin="5"
                                        />
                             <TextBlock Style="{StaticResource tbDescription}"
                                        Grid.Column="1" Margin="5,0,5,5"
@@ -229,7 +234,7 @@
                             <Border BorderBrush="{StaticResource HarshBlueBrush}"
                                     BorderThickness="0,1,0,0"
                                     Grid.ColumnSpan="3"
-                                    Margin="0,0,0,3"/>
+                                    Margin="0,0,0,5"/>
 
                             <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource tbHeader4}"
                                        Text="Save Data" HorizontalAlignment="Center" />
@@ -275,6 +280,10 @@
                                               ToolTip="{StaticResource ttQolDream}">
                                         <TextBlock Text="Fix Dream Sequence" />
                                     </CheckBox>
+                                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixFighterEncounter, Mode=TwoWay}"
+                                              ToolTip="{StaticResource ttQolFighters}">
+                                        <TextBlock Text="Fix Fighter Encounter" />
+                                    </CheckBox>
                                     <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixMindPrison, Mode=TwoWay}"
                                               ToolTip="{StaticResource ttQolMystery}">
                                         <TextBlock Text="Fix Mind Prison" />
@@ -302,6 +311,7 @@
                                        Style="{StaticResource tbHeader3}"
                                        FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}"
                                        TextDecorations="Underline"
+                                       Margin="5"
                                        />
                             <TextBlock Style="{StaticResource tbDescription}"
                                        Grid.Column="1" Margin="5,0,5,5"
@@ -349,7 +359,7 @@
                             <Border BorderBrush="{StaticResource HarshBlueBrush}"
                                     BorderThickness="0,1,0,0"
                                     Grid.ColumnSpan="3"
-                                    Margin="0,0,0,3"/>
+                                    Margin="0,0,0,5"/>
 
                             <!--Titles-->
                             <TextBlock Style="{StaticResource tbHeader4}" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Margin="0,0,0,5" Text="Unlocked" />

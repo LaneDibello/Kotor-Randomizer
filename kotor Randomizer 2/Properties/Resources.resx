@@ -376,4 +376,7 @@
   <data name="tar02_janice021" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tar02_janice021.dlg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="k_pebo_mgheart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k_pebo_mgheart.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

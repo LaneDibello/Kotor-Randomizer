@@ -22,12 +22,14 @@ namespace kotor_Randomizer_2.Models
         #region Constants
         public const ModuleExtras EXTRAS_MASK = ModuleExtras.NoSaveDelete   | ModuleExtras.SaveMiniGames | ModuleExtras.SaveAllModules |
                                                 ModuleExtras.FixCoordinates | ModuleExtras.FixDream      | ModuleExtras.FixMindPrison  |
-                                                ModuleExtras.FastEnvirosuit | ModuleExtras.EarlyT3       | ModuleExtras.VulkarSpiceLZ;
+                                                ModuleExtras.FastEnvirosuit | ModuleExtras.EarlyT3       | ModuleExtras.VulkarSpiceLZ  |
+                                                ModuleExtras.FixFighterEncounter;
         public const ModuleExtras UNLOCKS_MASK = ModuleExtras.UnlockDanRuins   | ModuleExtras.UnlockGalaxyMap     | ModuleExtras.UnlockKorValley    |
-                                                 ModuleExtras.UnlockLevElev  | ModuleExtras.EnableLevHangarElev | ModuleExtras.UnlockManEmbassy   |
+                                                 ModuleExtras.UnlockLevElev    | ModuleExtras.EnableLevHangarElev | ModuleExtras.UnlockManEmbassy   |
                                                  ModuleExtras.UnlockManHangar  | ModuleExtras.UnlockStaBastila    | ModuleExtras.UnlockTarUndercity |
                                                  ModuleExtras.UnlockTarVulkar  | ModuleExtras.UnlockUnkSummit     | ModuleExtras.UnlockUnkTempleExit;
 
+        #region XML Consts
         const string XML_AMBIENT        = "Ambient";
         const string XML_AREA           = "Area";
         const string XML_ARMBAND        = "Armband";
@@ -114,6 +116,7 @@ namespace kotor_Randomizer_2.Models
         const string XML_VERSION        = "Version";
         const string XML_VEHICLE        = "Vehicle";
         const string XML_WEAPON         = "Weapon";
+        #endregion XML Consts
         #endregion
 
         #region Constructors
