@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:base="clr-namespace:Randomizer_WPF"
              xmlns:local="clr-namespace:Randomizer_WPF.Views"
              xmlns:model="clr-namespace:kotor_Randomizer_2.Models;assembly=KotorRandomizer"
              mc:Ignorable="d" 
-             d:DesignHeight="540" d:DesignWidth="600"
+             d:DesignHeight="620" d:DesignWidth="600"
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
              FontFamily="Microsoft Sans Serif" FontSize="12"
              Name="thisView"
@@ -18,6 +19,12 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <base:AddToDoubleConverter x:Key="AddToDoubleConverter" />
+
+            <Style TargetType="ToolTip">
+                <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.FontSize}" />
+            </Style>
 
             <ToolTip x:Key="ttLogicRules">
                 These rules prevent certain modules from replacing others when that replacement would cause
@@ -79,7 +86,10 @@
         <!-- Dock.Top, Title and Description -->
         <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2" BorderBrush="{StaticResource HarshBlueBrush}">
             <StackPanel>
-                <TextBlock Style="{StaticResource tbTitle}" Text="Module Settings" />
+                <TextBlock Style="{StaticResource tbTitle}"
+                           Text="Module Settings"
+                           FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=10}"
+                           />
                 <TextBlock Style="{StaticResource tbDescription}">
                     Modules are the levels or maps within Kotor. Module randomization will shuffle the maps such
                     that all loading zones that lead to a certain map will lead to the same newly randomized map.
@@ -101,40 +111,25 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="184" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.ColumnSpan="2" MinWidth="180" /> <!-- spacer -->
                     <TextBlock Text="Shuffled Module Presets:" Style="{StaticResource tbHeader4}" />
                     <ComboBox x:Name="cbbShufflePreset" Grid.Column="2"
+                              Margin="4,0"
                               SelectedItem="{Binding ModuleShufflePreset, Mode=TwoWay}"
                               SelectionChanged="CbbShufflePreset_SelectionChanged" />
                 </Grid>
 
-                <!-- Custom Module Shuffle -->
-                <Expander BorderBrush="{StaticResource HarshBlueBrush}" BorderThickness="1" Padding="2"
-                          HeaderTemplate="{StaticResource exHeader}" Header="Custom Shuffle Settings">
-                    <Expander.Resources>
-                        <Style x:Key="RandomizedStyle" TargetType="{x:Type ListViewItem}">
-                            <EventSetter Event="MouseDoubleClick" Handler="LvShuffleIncluded_DoubleClick" />
-                        </Style>
-                        <Style x:Key="OmittedStyle" TargetType="{x:Type ListViewItem}">
-                            <EventSetter Event="MouseDoubleClick" Handler="LvShuffleExcluded_DoubleClick" />
-                        </Style>
-                        <Style TargetType="ScrollBar">
-                            <Style.Triggers>
-                                <Trigger Property="Orientation" Value="Horizontal">
-                                    <Setter Property="Height"    Value="10" />
-                                    <Setter Property="MinHeight" Value="10" />
-                                </Trigger>
-                                <Trigger Property="Orientation" Value="Vertical">
-                                    <Setter Property="Width"    Value="10" />
-                                    <Setter Property="MinWidth" Value="10" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Expander.Resources>
+                <!--Title-->
+                <TextBlock Grid.Row="0" Text="Custom Shuffle Settings:"
+                            Style="{StaticResource tbHeader4}" />
+
+                <Border BorderBrush="{StaticResource HarshBlueBrush}"
+                        BorderThickness="1" Margin="0,5">
+                    <!-- Custom Module Shuffle -->
                     <Grid Margin="5,0,5,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />    <!--Rando List-->
@@ -143,35 +138,56 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="250" />
+                            <RowDefinition Height="200" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        
-                        <!-- Row 0 -->
-                        <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"
-                               Content="Randomized"
-                               Foreground="{StaticResource HarshBlueBrush}" />
-                        <Label Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center"
-                               Content="Omitted"
-                               Foreground="{StaticResource HarshBlueBrush}" />
-                        
+                        <Grid.Resources>
+                            <Style x:Key="RandomizedStyle" TargetType="{x:Type ListViewItem}">
+                                <EventSetter Event="MouseDoubleClick" Handler="LvShuffleIncluded_DoubleClick" />
+                            </Style>
+                            <Style x:Key="OmittedStyle" TargetType="{x:Type ListViewItem}">
+                                <EventSetter Event="MouseDoubleClick" Handler="LvShuffleExcluded_DoubleClick" />
+                            </Style>
+                            <Style TargetType="ScrollBar">
+                                <Style.Triggers>
+                                    <Trigger Property="Orientation" Value="Horizontal">
+                                        <Setter Property="Height"    Value="10" />
+                                        <Setter Property="MinHeight" Value="10" />
+                                    </Trigger>
+                                    <Trigger Property="Orientation" Value="Vertical">
+                                        <Setter Property="Width"    Value="10" />
+                                        <Setter Property="MinWidth" Value="10" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                            <Style TargetType="Label">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                            </Style>
+                        </Grid.Resources>
+
+                        <!--Headers-->
+                        <Label Grid.Row="0" Grid.Column="0" Content="Randomized" />
+                        <Label Grid.Row="0" Grid.Column="2" Content="Omitted" />
+
                         <!--Randomized List-->
                         <ListView x:Name="lvShuffleIncluded" Grid.Row="1" Grid.Column="0"
                                   ItemContainerStyle="{StaticResource RandomizedStyle}"
-                                  ItemsSource="{Binding ModuleRandomizedList}" FontSize="11">
+                                  ItemsSource="{Binding ModuleRandomizedList}"
+                                  FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=-1}">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Width="70" DisplayMemberBinding="{Binding Planet}">
+                                    <GridViewColumn Width="80" DisplayMemberBinding="{Binding Planet}">
                                         <GridViewColumn.Header>
                                             <GridViewColumnHeader Tag="Planet" Click="LvShuffleIncluded_ColumnHeader_Click" Content="Planet" />
                                         </GridViewColumn.Header>
                                     </GridViewColumn>
-                                    <GridViewColumn Width="74" DisplayMemberBinding="{Binding WarpCode}">
+                                    <GridViewColumn Width="80" DisplayMemberBinding="{Binding WarpCode}">
                                         <GridViewColumn.Header>
                                             <GridViewColumnHeader Tag="WarpCode" Click="LvShuffleIncluded_ColumnHeader_Click" Content="Code" />
                                         </GridViewColumn.Header>
                                     </GridViewColumn>
-                                    <GridViewColumn Width="140" DisplayMemberBinding="{Binding CommonName}">
+                                    <GridViewColumn Width="160" DisplayMemberBinding="{Binding CommonName}">
                                         <GridViewColumnHeader Tag="CommonName" Click="LvShuffleIncluded_ColumnHeader_Click" Content="Name" />
                                     </GridViewColumn>
                                 </GridView>
@@ -201,26 +217,27 @@
                         <!--Omitted List-->
                         <ListView x:Name="lvShuffleExcluded" Grid.Row="1" Grid.Column="2"
                                   ItemContainerStyle="{StaticResource OmittedStyle}"
-                                  ItemsSource="{Binding ModuleOmittedList}" FontSize="11">
+                                  ItemsSource="{Binding ModuleOmittedList}"
+                                  FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=-1}">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Width="70" DisplayMemberBinding="{Binding Planet}">
+                                    <GridViewColumn Width="80" DisplayMemberBinding="{Binding Planet}">
                                         <GridViewColumn.Header>
                                             <GridViewColumnHeader Tag="Planet" Click="LvShuffleExcluded_ColumnHeader_Click" Content="Planet" />
                                         </GridViewColumn.Header>
                                     </GridViewColumn>
-                                    <GridViewColumn Width="74" DisplayMemberBinding="{Binding WarpCode}">
+                                    <GridViewColumn Width="80" DisplayMemberBinding="{Binding WarpCode}">
                                         <GridViewColumn.Header>
                                             <GridViewColumnHeader Tag="WarpCode" Click="LvShuffleExcluded_ColumnHeader_Click" Content="Code" />
                                         </GridViewColumn.Header>
                                     </GridViewColumn>
-                                    <GridViewColumn Width="140" DisplayMemberBinding="{Binding CommonName}">
+                                    <GridViewColumn Width="160" DisplayMemberBinding="{Binding CommonName}">
                                         <GridViewColumnHeader Tag="CommonName" Click="LvShuffleExcluded_ColumnHeader_Click" Content="Name" />
                                     </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        
+
                         <!--Filter-->
                         <DockPanel Grid.Row="2" Grid.ColumnSpan="3" Margin="0,5,0,0">
                             <TextBlock DockPanel.Dock="Left" Text="Filter: "
@@ -230,7 +247,7 @@
                             <TextBox x:Name="txtFilter" TextChanged="TxtFilter_TextChanged" />
                         </DockPanel>
                     </Grid>
-                </Expander>
+                </Border>
 
                 <!-- Logic -->
                 <TextBlock Style="{StaticResource tbHeader4}" Margin="0,5" Text="Shuffle Logic:" />
@@ -238,6 +255,7 @@
                     <StackPanel.Resources>
                         <Style TargetType="CheckBox">
                             <Setter Property="Margin" Value="3,0,0,0" />
+                            <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:ModuleView}}" />
                         </Style>
                         <Style TargetType="TextBlock">
                             <Setter Property="Margin" Value="3,3,0,3" />
@@ -299,6 +317,7 @@
                     <WrapPanel.Resources>
                         <Style TargetType="CheckBox">
                             <Setter Property="Margin" Value="3,0" />
+                            <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:ModuleView}}" />
                         </Style>
                         <Style TargetType="TextBlock">
                             <Setter Property="Margin" Value="3" />
@@ -327,23 +346,6 @@
                         <TextBlock Text="Recruit Party Members" />
                     </CheckBox>
                 </WrapPanel>
-                <!--<Grid Margin="0,5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="180" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.ColumnSpan="2" MinWidth="180" />
-                    <TextBlock Text="Goal(s):" Style="{StaticResource tbHeader4}" />
-                    <ComboBox x:Name="cmbGoal" Grid.Column="2">
-                        <ComboBoxItem Tag="Malak" IsSelected="True">Defeat Malak</ComboBoxItem>
-                        <ComboBoxItem Tag="StarMaps">Collect Star Maps</ComboBoxItem>
-                        <ComboBoxItem Tag="Pazaak">Pazaak Champion</ComboBoxItem>
-                        <ComboBoxItem Tag="Party">Recruit Party Members</ComboBoxItem>
-                    </ComboBox>
-                </Grid>-->
 
                 <!-- Glitches -->
                 <TextBlock Style="{StaticResource tbHeader4}" Margin="0,5" Text="Potentially Required Glitches:" />
@@ -351,6 +353,7 @@
                     <WrapPanel.Resources>
                         <Style TargetType="CheckBox">
                             <Setter Property="Margin" Value="3,0" />
+                            <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:ModuleView}}" />
                         </Style>
                         <Style TargetType="TextBlock">
                             <Setter Property="Margin" Value="3" />

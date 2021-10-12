@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:base="clr-namespace:Randomizer_WPF"
              xmlns:local="clr-namespace:Randomizer_WPF.Views"
              xmlns:model="clr-namespace:kotor_Randomizer_2.Models;assembly=KotorRandomizer"
              xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
              mc:Ignorable="d" 
-             FontFamily="Microsoft Sans Serif" FontSize="12"
+             FontFamily="Microsoft Sans Serif" FontSize="14"
              x:Name="thisView"
              d:DesignHeight="540" d:DesignWidth="600"
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
@@ -19,6 +20,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <base:AddToDoubleConverter x:Key="AddToDoubleConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     
@@ -27,7 +30,10 @@
         <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2"
                 BorderBrush="{StaticResource HarshBlueBrush}">
             <StackPanel>
-                    <TextBlock Style="{StaticResource tbTitle}" Text="Item Randomization" />
+                    <TextBlock Style="{StaticResource tbTitle}"
+                               Text="Item Randomization"
+                               FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=10}"
+                               />
                     <TextBlock Style="{StaticResource tbDescription}">
                         Shuffles most of the items the player can find or buy. "Subtype" limits the shuffle to subcategories and
                         "Type" limits the shuffle to the category itself. All categories marked as "Max" will be shuffled together.
@@ -255,7 +261,8 @@
                 <!--Rando List-->
                 <ListView Grid.Row="3" Grid.ColumnSpan="2" x:Name="lvRandomized"
                           ItemContainerStyle="{StaticResource RandomizedItemStyle}"
-                          ItemsSource="{Binding ItemRandomizedList}" FontSize="11">
+                          ItemsSource="{Binding ItemRandomizedList}"
+                          FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=-1}">
                     <ListView.View>
                         <GridView>
                             <!--<GridViewColumn Width="10" DisplayMemberBinding="{Binding Code}">
@@ -268,7 +275,7 @@
                                     <GridViewColumnHeader x:Name="gvchRandomizedCategory" Tag="Category" Click="LvRandomized_ColumnHeader_Click" Content="Category" />
                                 </GridViewColumn.Header>
                             </GridViewColumn>
-                            <GridViewColumn Width="150" DisplayMemberBinding="{Binding Label}">
+                            <GridViewColumn Width="160" DisplayMemberBinding="{Binding Label}">
                                 <GridViewColumn.Header>
                                     <GridViewColumnHeader x:Name="gvchRandomizedLabel" Tag="Label" Click="LvRandomized_ColumnHeader_Click" Content="Label" />
                                 </GridViewColumn.Header>
@@ -286,7 +293,7 @@
                             <Setter Property="BorderThickness" Value="1" />
                             <Setter Property="FontFamily" Value="Consolas" />
                             <Setter Property="FontSize" Value="12" />
-                            <Setter Property="Margin" Value="0,2,5,2" />
+                            <Setter Property="Margin" Value="0,1,5,1" />
                             <Setter Property="Padding" Value="3,3" />
                             <Setter Property="Width" Value="24" />
                             <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -301,7 +308,8 @@
                 <!--Omit List-->
                 <ListView Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" x:Name="lvOmitted"
                           ItemContainerStyle="{StaticResource OmittedItemStyle}"
-                          ItemsSource="{Binding ItemOmittedList}" FontSize="11">
+                          ItemsSource="{Binding ItemOmittedList}"
+                          FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=-1}">
                     <ListView.View>
                         <GridView>
                             <!--<GridViewColumn Width="10" DisplayMemberBinding="{Binding Code}">
@@ -314,7 +322,7 @@
                                     <GridViewColumnHeader x:Name="gvchOmittedCategory" Tag="Category" Click="LvOmitted_ColumnHeader_Click" Content="Category" />
                                 </GridViewColumn.Header>
                             </GridViewColumn>
-                            <GridViewColumn Width="150" DisplayMemberBinding="{Binding Label}">
+                            <GridViewColumn Width="160" DisplayMemberBinding="{Binding Label}">
                                 <GridViewColumn.Header>
                                     <GridViewColumnHeader x:Name="gvchOmittedLabel" Tag="Label" Click="LvOmitted_ColumnHeader_Click" Content="Label" />
                                 </GridViewColumn.Header>

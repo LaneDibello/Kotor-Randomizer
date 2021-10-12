@@ -10,7 +10,8 @@
         x:Class="Randomizer_WPF.MainWindow"
         mc:Ignorable="d"
         Title="{Binding WindowTitle, RelativeSource={RelativeSource Self}}"
-        Height="620" Width="800"
+        Height="{Binding ElementName=window, Path=CurrentHeight, Mode=TwoWay}"
+        Width="{Binding ElementName=window, Path=CurrentWidth, Mode=TwoWay}"
         MinHeight="375" MinWidth="575"
         FontFamily="Microsoft Sans Serif" FontSize="12"
         Name="window"
@@ -25,6 +26,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <local:StringDoubleConverter x:Key="StringDoubleConverter" />
             <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <local:ModuleExtrasToBoolConverter x:Key="ExtrasToBool" />
             <local:TextSettingsToBoolConverter x:Key="TextSettingsToBool" />
@@ -43,18 +46,25 @@
     </Window.Background>
 
     <DockPanel>
+        <DockPanel.Resources>
+            <Style TargetType="ToolTip" BasedOn="{StaticResource {x:Type ToolTip}}">
+                <Setter Property="FontSize" Value="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
+            </Style>
+        </DockPanel.Resources>
+        
         <!-- Dock.Top, Menu -->
-        <Grid DockPanel.Dock="Top">
+        <Grid DockPanel.Dock="Top" Background="{Binding ElementName=Menu, Path=Background}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             
-            <Menu Name="Menu" Grid.ColumnSpan="2">
+            <Menu x:Name="Menu" Grid.ColumnSpan="2" VerticalAlignment="Center">
                 <Menu.Resources>
                     <Style TargetType="MenuItem">
                         <Setter Property="FontFamily" Value="Microsoft Sans Serif" />
-                        <Setter Property="FontSize" Value="12" />
+                        <Setter Property="FontSize" Value="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
                     </Style>
                 </Menu.Resources>
                 <MenuItem Header="_File">
@@ -81,6 +91,26 @@
                     </MenuItem>
                 </MenuItem>
             </Menu>
+
+            <StackPanel
+                Orientation="Horizontal"
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                >
+                <Label Content="Font Size:"
+                       FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
+                <ComboBox x:Name="cbFontSize" Width="60"
+                          Margin="2"
+                          HorizontalContentAlignment="Center"
+                          FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+                          SelectedIndex="{Binding ElementName=window, Path=SelectedFontIndex, Mode=TwoWay}">
+                    <ComboBoxItem>12</ComboBoxItem>
+                    <ComboBoxItem IsSelected="True">14</ComboBoxItem>
+                    <ComboBoxItem>16</ComboBoxItem>
+                    <ComboBoxItem>18</ComboBoxItem>
+                    <ComboBoxItem>20</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
         </Grid>
         
         <!-- Dock.Bottom, StatusBar -->
@@ -101,7 +131,7 @@
             <StatusBar.Resources>
                 <Style TargetType="StatusBarItem">
                     <Setter Property="FontFamily" Value="Microsoft Sans Serif" />
-                    <Setter Property="FontSize" Value="12" />
+                    <Setter Property="FontSize" Value="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
                 </Style>
             </StatusBar.Resources>
             
@@ -121,10 +151,18 @@
         <!-- Dock.Center, Setting Views -->
         <Grid Margin="5">
             <TabControl TabStripPlacement="Left">
+                <TabControl.Resources>
+                    <Style TargetType="TabItem" BasedOn="{StaticResource K1TabItem}">
+                        <Setter Property="FontSize" Value="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
+                    </Style>
+                </TabControl.Resources>
+                
                 <!-- General Settings -->
                 <TabItem Header="_General" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
                     <!-- DataContext inherited from the window. Locked and Unlocked door lists bound from data context. -->
                     <v:GeneralView x:Name="GeneralView"
+                                   FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+
                                    Kotor1Path ="{Binding ElementName=window, Mode=TwoWay, Path=Kotor1Path}"
                                    Kotor2Path ="{Binding ElementName=window, Mode=TwoWay, Path=Kotor2Path}"
                                    PresetPath ="{Binding ElementName=window, Mode=TwoWay, Path=PresetPath}"
@@ -150,7 +188,9 @@
                 <TabItem Header="_Modules" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
                     <!-- DataContext inherited from the window. Everything is bound using this DataContext:
                          Shuffle Preset, Omitted Modules, Shuffle Logic, Goals, and Glitches. -->
-                    <v:ModuleView x:Name="ModuleView" />
+                    <v:ModuleView x:Name="ModuleView"
+                                  FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+                                  />
                 </TabItem>
 
                 <!-- Item Rando Settings -->
@@ -158,6 +198,8 @@
                     <!-- DataContext inherited from the window.
                          Randomized and Omitted item lists bound from data context. -->
                     <v:ItemView x:Name="ItemView"
+                                FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+                                
                                 ItemLevelArmbands       ="{Binding ItemArmbands       , Mode=TwoWay}"
                                 ItemLevelArmor          ="{Binding ItemArmor          , Mode=TwoWay}"
                                 ItemLevelBelts          ="{Binding ItemBelts          , Mode=TwoWay}"
@@ -182,6 +224,8 @@
                 <!-- Audio Rando Settings -->
                 <TabItem Header="_Audio" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
                     <v:AudioView x:Name="AudioView"
+                                 FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+                                 
                                  AreaMusic           ="{Binding AudioAreaMusic           , Mode=TwoWay}"
                                  BattleMusic         ="{Binding AudioBattleMusic         , Mode=TwoWay}"
                                  AmbientMusic        ="{Binding AudioAmbientNoise        , Mode=TwoWay}"
@@ -197,6 +241,8 @@
                 <!-- Cosmetic Rando Settings -->
                 <TabItem Header="_Cosmetics" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
                     <v:CosmeticView x:Name="CosmeticView"
+                                    FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+                                    
                                     TexturePack        ="{Binding TextureSelectedPack, Mode=TwoWay}"
                                     TextureCubeMaps    ="{Binding TextureCubeMaps    , Mode=TwoWay}"
                                     TextureCreatures   ="{Binding TextureCreatures   , Mode=TwoWay}"
@@ -220,12 +266,16 @@
                 
                 <!-- Table Rando Settings -->
                 <TabItem Header="_Tables" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-                    <v:TableView x:Name="TableView" />
+                    <v:TableView x:Name="TableView"
+                                 FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+                                 />
                 </TabItem>
 
                 <!-- Text Rando Settings -->
                 <TabItem Header="Te_xt" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
                     <v:TextView x:Name="TextView"
+                                FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+                                
                                 RandomizeDialogueEntries="{Binding TextSettingsValue, Mode=TwoWay, Converter={StaticResource TextSettingsToBool}, ConverterParameter={x:Static rando:TextSettings.RandoDialogEntries}}"
                                 RandomizeDialogueReplies="{Binding TextSettingsValue, Mode=TwoWay, Converter={StaticResource TextSettingsToBool}, ConverterParameter={x:Static rando:TextSettings.RandoDialogReplies}}"
                                 MatchEntrySounds        ="{Binding TextSettingsValue, Mode=TwoWay, Converter={StaticResource TextSettingsToBool}, ConverterParameter={x:Static rando:TextSettings.MatchEntrySoundsWText}}"
@@ -236,7 +286,9 @@
                 
                 <!-- Other Rando Settings -->
                 <TabItem Header="_Other" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-                    <v:OtherView />
+                    <v:OtherView x:Name="OtherView"
+                                 FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+                                 />
                 </TabItem>
 
                 <!-- Hidden tab items for space -->
@@ -246,6 +298,8 @@
                 <!-- Randomize / Unrandomize Launching Point -->
                 <TabItem Header="_Randomize">
                     <v:RandomizeView x:Name="RandomizeView"
+                                     FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+                                     
                                      CreateSpoilers ="{Binding ElementName=miCreateSpoilers,  Path=IsChecked,   Mode=TwoWay}"
                                      CurrentProgress="{Binding ElementName=pbCurrentProgress, Path=Value,       Mode=TwoWay}"
                                      GamePath       ="{Binding ElementName=window,            Path=Kotor1Path,  Mode=OneWay}"

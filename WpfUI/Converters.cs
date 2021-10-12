@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace Randomizer_WPF
@@ -28,6 +29,54 @@ namespace Randomizer_WPF
 
             if ((Visibility)value == Visibility.Visible) return true;
             else                                         return false;
+        }
+        #endregion
+    }
+
+    [ValueConversion(typeof(double), typeof(double))]
+    public class AddToDoubleConverter : IValueConverter
+    {
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (targetType != typeof(double))
+                throw new InvalidOperationException("The target must be a double.");
+            double.TryParse(parameter.ToString(), out double toAdd);
+            double.TryParse(value.ToString(), out double result);
+            result += toAdd;
+            return result;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (targetType != typeof(double))
+                throw new InvalidOperationException("The target must be a string.");
+            double.TryParse(parameter.ToString(), out double toAdd);
+            double.TryParse(value.ToString(), out double result);
+            result -= toAdd;
+            return result;
+        }
+        #endregion
+    }
+
+    [ValueConversion(typeof(string), typeof(double))]
+    public class StringDoubleConverter : IValueConverter
+    {
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            const string DEFAULT = "14";
+            if (targetType != typeof(double))
+                throw new InvalidOperationException("The target must be a double.");
+            double.TryParse((value as ComboBoxItem)?.Content?.ToString() ?? DEFAULT, out double result);
+            return result;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (targetType != typeof(string))
+                throw new InvalidOperationException("The target must be a string.");
+            return value.ToString();
         }
         #endregion
     }

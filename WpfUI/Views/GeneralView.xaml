@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Randomizer_WPF"
+             xmlns:base="clr-namespace:Randomizer_WPF"
+             xmlns:local="clr-namespace:Randomizer_WPF.Views"
              xmlns:model="clr-namespace:kotor_Randomizer_2.Models;assembly=KotorRandomizer"
              xmlns:globals="clr-namespace:kotor_Randomizer_2;assembly=KotorRandomizer"
              xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
@@ -20,7 +21,13 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            
+            <base:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <base:AddToDoubleConverter x:Key="AddToDoubleConverter" />
+
+            <Style TargetType="ToolTip">
+                <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.FontSize}" />
+            </Style>
 
             <ToolTip x:Key="ttPathAuto">
                 Automatically searches for the most common game paths.
@@ -78,7 +85,10 @@
         <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2"
                 BorderBrush="{StaticResource HarshBlueBrush}">
             <StackPanel Margin="5,0,5,5">
-                <TextBlock Style="{StaticResource tbTitle}" Text="General Settings" />
+                <TextBlock Style="{StaticResource tbTitle}"
+                           Text="General Settings"
+                           FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=10}"
+                           />
                 <TextBlock Style="{StaticResource tbDescription}">
                         This randomizer will shuffle game files within the Kotor 1 directory to provide
                         a new experience each time you play. Created by Lane Dibello and Glasnonck.
@@ -108,7 +118,8 @@
                         </Style>
                     </Expander.Style>
                     <Expander.Header>
-                        <TextBlock Text="Game Paths">
+                        <TextBlock Text="Game Paths"
+                                   FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock" BasedOn="{StaticResource tbHeader3}">
                                     <Style.Triggers>
@@ -168,216 +179,252 @@
                 </Expander>
 
                 <!-- Quality of Life -->
-                <Expander IsExpanded="True" HeaderTemplate="{StaticResource exHeader}" Header="Quality of Life">
-                    <Grid Margin="3">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="170" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.Resources>
-                            <Style TargetType="CheckBox">
-                                <Setter Property="Margin" Value="0,3" />
-                                <Setter Property="Padding" Value="5,0" />
-                            </Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
-                                <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Grid.Resources>
+                <Border BorderBrush="{StaticResource HarshBlueBrush}"
+                        BorderThickness="1" Padding="3" Margin="0,5">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Quality of Life"
+                                       Style="{StaticResource tbHeader3}"
+                                       FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}"
+                                       TextDecorations="Underline"
+                                       />
+                            <TextBlock Style="{StaticResource tbDescription}"
+                                       Grid.Column="1" Margin="5,0,5,5"
+                                       VerticalAlignment="Center">
+                                Select various helpful adjustments to improve your experience in the game, with or without
+                                actually randomizing anything else.
+                            </TextBlock>
+                        </Grid>
+                        <Grid Margin="5,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.Resources>
+                                <Style TargetType="CheckBox">
+                                    <Setter Property="Margin" Value="0,3" />
+                                    <Setter Property="Padding" Value="5,0" />
+                                    <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:GeneralView}}" />
+                                </Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Resources>
 
-                        <TextBlock Style="{StaticResource tbDescription}"
-                                   Grid.ColumnSpan="3"
-                                   Margin="5,0,5,5">
-                            Select various helpful adjustments to improve your experience in the game, with or without
-                            actually randomizing anything else.
-                        </TextBlock>
-                        
-                        <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource tbHeader4}"
-                                   Text="Save Data" HorizontalAlignment="Center" />
-                        <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource tbHeader4}"
-                                   Text="Quality of Life" HorizontalAlignment="Center" />
+                            <Border BorderBrush="{StaticResource HarshBlueBrush}"
+                                    BorderThickness="0,1,0,0"
+                                    Grid.ColumnSpan="3"
+                                    Margin="0,0,0,3"/>
 
-                        <StackPanel Grid.Column="0" Grid.Row="2">
-                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataDeleteMilestone, Mode=TwoWay}"
-                                      ToolTip="{StaticResource ttQolMilestone}">
-                                <TextBlock Text="Prevent Milestone Save Data Deletion" />
-                            </CheckBox>
-                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataIncludeMinigames, Mode=TwoWay}"
-                                      IsEnabled="{Binding ElementName=cbSaveAllModules, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"
-                                      ToolTip="{StaticResource ttQolMinigames}"
-                                      x:Name="cbSaveMinigames">
-                                <TextBlock Text="Include Minigames in Save" />
-                            </CheckBox>
-                            <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataIncludeAll, Mode=TwoWay}"
-                                      Checked="CbSaveAllModules_Checked"
-                                      ToolTip="{StaticResource ttQolAllModules}"
-                                      x:Name="cbSaveAllModules">
-                                <TextBlock Text="Include All Modules in Save" />
-                            </CheckBox>
-                        </StackPanel>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource tbHeader4}"
+                                       Text="Save Data" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource tbHeader4}"
+                                       Text="Quality of Life" HorizontalAlignment="Center" />
 
-                        <WrapPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal">
-                            <StackPanel Margin="5,0">
-                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolAddSpiceLab, Mode=TwoWay}"
-                                          ToolTip="{StaticResource ttQolSpice}">
-                                    <TextBlock Text="Add Spice Lab Load Zone" />
+                            <StackPanel Grid.Column="0" Grid.Row="2">
+                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataDeleteMilestone, Mode=TwoWay}"
+                                          ToolTip="{StaticResource ttQolMilestone}">
+                                    <TextBlock Text="Prevent Milestone Save Data Deletion" />
                                 </CheckBox>
-                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFastEnvirosuit, Mode=TwoWay}"
-                                          ToolTip="{StaticResource ttQolEnvirosuit}">
-                                    <TextBlock Text="Fast Envirosuit" />
+                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataIncludeMinigames, Mode=TwoWay}"
+                                          IsEnabled="{Binding ElementName=cbSaveAllModules, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"
+                                          ToolTip="{StaticResource ttQolMinigames}"
+                                          x:Name="cbSaveMinigames">
+                                    <TextBlock Text="Include Minigames in Save" />
                                 </CheckBox>
-                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolEarlyT3, Mode=TwoWay}"
-                                          ToolTip="{StaticResource ttQolEarlyT3}">
-                                    <TextBlock Text="T3M4 Purchasable Early" />
+                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataIncludeAll, Mode=TwoWay}"
+                                          Checked="CbSaveAllModules_Checked"
+                                          ToolTip="{StaticResource ttQolAllModules}"
+                                          x:Name="cbSaveAllModules">
+                                    <TextBlock Text="Include All Modules in Save" />
                                 </CheckBox>
                             </StackPanel>
-                            <StackPanel Margin="5,0">
-                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixDreamSequence, Mode=TwoWay}"
-                                          ToolTip="{StaticResource ttQolDream}">
-                                    <TextBlock Text="Fix Dream Sequence" />
-                                </CheckBox>
-                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixMindPrison, Mode=TwoWay}"
-                                          ToolTip="{StaticResource ttQolMystery}">
-                                    <TextBlock Text="Fix Mind Prison" />
-                                </CheckBox>
-                                <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixModuleCoordinates, Mode=TwoWay}"
-                                          ToolTip="{StaticResource ttQolCoordinates}">
-                                    <TextBlock Text="Fix Module Coordinates" />
-                                </CheckBox>
-                            </StackPanel>
-                        </WrapPanel>
-                    </Grid>
-                </Expander>
+
+                            <WrapPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal">
+                                <StackPanel Margin="5,0">
+                                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolAddSpiceLab, Mode=TwoWay}"
+                                              ToolTip="{StaticResource ttQolSpice}">
+                                        <TextBlock Text="Add Spice Lab Load Zone" />
+                                    </CheckBox>
+                                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFastEnvirosuit, Mode=TwoWay}"
+                                              ToolTip="{StaticResource ttQolEnvirosuit}">
+                                        <TextBlock Text="Fast Envirosuit" />
+                                    </CheckBox>
+                                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolEarlyT3, Mode=TwoWay}"
+                                              ToolTip="{StaticResource ttQolEarlyT3}">
+                                        <TextBlock Text="T3M4 Purchasable Early" />
+                                    </CheckBox>
+                                </StackPanel>
+                                <StackPanel Margin="5,0">
+                                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixDreamSequence, Mode=TwoWay}"
+                                              ToolTip="{StaticResource ttQolDream}">
+                                        <TextBlock Text="Fix Dream Sequence" />
+                                    </CheckBox>
+                                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixMindPrison, Mode=TwoWay}"
+                                              ToolTip="{StaticResource ttQolMystery}">
+                                        <TextBlock Text="Fix Mind Prison" />
+                                    </CheckBox>
+                                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixModuleCoordinates, Mode=TwoWay}"
+                                              ToolTip="{StaticResource ttQolCoordinates}">
+                                        <TextBlock Text="Fix Module Coordinates" />
+                                    </CheckBox>
+                                </StackPanel>
+                            </WrapPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
                 
                 <!-- Unlock Doors -->
-                <Expander IsExpanded="True" HeaderTemplate="{StaticResource exHeader}" Header="Unlock Doors">
-                    <Expander.Resources>
-                        <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
-                            <Setter Property="ToolTip" Value="{Binding ToolTipMessage}" />
-                        </Style>
-                        <Style x:Key="UnlockedItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ItemStyle}">
-                            <EventSetter Event="MouseDoubleClick" Handler="LvUnlockedItem_DoubleClick" />
-                        </Style>
-                        <Style x:Key="LockedItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ItemStyle}">
-                            <EventSetter Event="MouseDoubleClick" Handler="LvLockedItem_DoubleClick" />
-                        </Style>
-                    </Expander.Resources>
-                    <Grid Margin="3,0,3,3">
-                        <Grid.Resources>
-                            <Style TargetType="ScrollBar">
-                                <Style.Triggers>
-                                    <Trigger Property="Orientation" Value="Horizontal">
-                                        <Setter Property="Height"    Value="10" />
-                                        <Setter Property="MinHeight" Value="10" />
-                                    </Trigger>
-                                    <Trigger Property="Orientation" Value="Vertical">
-                                        <Setter Property="Width"    Value="10" />
-                                        <Setter Property="MinWidth" Value="10" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Grid.Resources>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />  <!--Unlocked List-->
-                            <ColumnDefinition Width="34" /> <!--Control Buttons-->
-                            <ColumnDefinition Width="*" />  <!--Locked List-->
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" /> <!--Description-->
-                            <RowDefinition Height="Auto" /> <!--Titles-->
-                            <RowDefinition Height="102" />  <!--Lists-->
-                            <RowDefinition Height="Auto" /> <!--Filter-->
-                        </Grid.RowDefinitions>
+                <Border BorderBrush="{StaticResource HarshBlueBrush}"
+                        BorderThickness="1" Padding="3" Margin="0,5">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Unlock Doors"
+                                       Style="{StaticResource tbHeader3}"
+                                       FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}"
+                                       TextDecorations="Underline"
+                                       />
+                            <TextBlock Style="{StaticResource tbDescription}"
+                                       Grid.Column="1" Margin="5,0,5,5"
+                                       VerticalAlignment="Center">
+                                Unlock certain doors that can be troublesome to handle during a module shuffled playthrough.
+                            </TextBlock>
 
-                        <TextBlock Style="{StaticResource tbDescription}"
-                                   Grid.ColumnSpan="3"
-                                   Margin="5,0,5,5">
-                            Unlock certain doors that can be troublesome to handle during a module shuffled playthrough.
-                        </TextBlock>
-                        
-                        <!--Titles-->
-                        <TextBlock Style="{StaticResource tbHeader4}" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Margin="0,0,0,5" Text="Unlocked" />
-                        <TextBlock Style="{StaticResource tbHeader4}" HorizontalAlignment="Center" Grid.Column="4" Grid.Row="1" Margin="0,0,0,5" Text="Locked" />
-
-                        <!--Unlocked List-->
-                        <ListView Grid.Column="0" Grid.Row="2" x:Name="lvUnlocked"
-                                  ItemContainerStyle="{StaticResource UnlockedItemStyle}"
-                                  ItemsSource="{Binding GeneralUnlockedDoors}"
-                                  FontSize="11">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Width="40" DisplayMemberBinding="{Binding Area}">
-                                        <GridViewColumn.Header>
-                                            <GridViewColumnHeader Tag="Area" Click="LvUnlockedColumnHeader_Click" />
-                                        </GridViewColumn.Header>
-                                    </GridViewColumn>
-                                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Label}">
-                                        <GridViewColumn.Header>
-                                            <GridViewColumnHeader Tag="Label" Click="LvUnlockedColumnHeader_Click" Content="Label" />
-                                        </GridViewColumn.Header>
-                                    </GridViewColumn>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-
-                        <!--Control Buttons-->
-                        <StackPanel Grid.Column="1" Grid.Row="2" Margin="5,0" VerticalAlignment="Center">
-                            <StackPanel.Resources>
-                                <Style TargetType="Button" BasedOn="{StaticResource K1RandoButtonStyle}">
-                                    <Setter Property="BorderThickness" Value="1" />
-                                    <Setter Property="FontFamily" Value="Consolas" />
-                                    <Setter Property="FontSize" Value="12" />
-                                    <Setter Property="Margin" Value="0,2" />
-                                    <Setter Property="Padding" Value="0,3" />
+                        </Grid>
+                        <Grid Margin="5,0">
+                            <Grid.Resources>
+                                <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="ToolTip" Value="{Binding ToolTipMessage}" />
                                 </Style>
-                            </StackPanel.Resources>
-                            <Button Content="&lt;&lt;" ToolTip="Unlock All" Click="BtnUnlockAll_Click" />
-                            <Button Content="&lt;" ToolTip="Unlock Selected" Click="BtnUnlockSelected_Click" />
-                            <Button Content="&gt;" ToolTip="Lock Selected" Click="BtnLockSelected_Click" />
-                            <Button Content="&gt;&gt;" ToolTip="Lock All" Click="BtnLockAll_Click" />
-                        </StackPanel>
+                                <Style x:Key="UnlockedItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ItemStyle}">
+                                    <EventSetter Event="MouseDoubleClick" Handler="LvUnlockedItem_DoubleClick" />
+                                </Style>
+                                <Style x:Key="LockedItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ItemStyle}">
+                                    <EventSetter Event="MouseDoubleClick" Handler="LvLockedItem_DoubleClick" />
+                                </Style>
+                                <Style TargetType="ScrollBar">
+                                    <Style.Triggers>
+                                        <Trigger Property="Orientation" Value="Horizontal">
+                                            <Setter Property="Height"    Value="10" />
+                                            <Setter Property="MinHeight" Value="10" />
+                                        </Trigger>
+                                        <Trigger Property="Orientation" Value="Vertical">
+                                            <Setter Property="Width"    Value="10" />
+                                            <Setter Property="MinWidth" Value="10" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />  <!--Unlocked List-->
+                                <ColumnDefinition Width="34" /> <!--Control Buttons-->
+                                <ColumnDefinition Width="*" />  <!--Locked List-->
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" /> <!--Description-->
+                                <RowDefinition Height="Auto" /> <!--Titles-->
+                                <RowDefinition Height="142" />  <!--Lists-->
+                                <RowDefinition Height="Auto" /> <!--Filter-->
+                            </Grid.RowDefinitions>
 
-                        <!--Locked List-->
-                        <ListView Grid.Column="2" Grid.Row="2" x:Name="lvLocked"
-                                  ItemContainerStyle="{StaticResource LockedItemStyle}"
-                                  ItemsSource="{Binding GeneralLockedDoors}"
-                                  FontSize="11">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Width="40" DisplayMemberBinding="{Binding Area}">
-                                        <GridViewColumn.Header>
-                                            <GridViewColumnHeader Tag="Area" Click="LvLockedColumnHeader_Click" />
-                                        </GridViewColumn.Header>
-                                    </GridViewColumn>
-                                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Label}">
-                                        <GridViewColumn.Header>
-                                            <GridViewColumnHeader Tag="Label" Click="LvLockedColumnHeader_Click" Content="Label" />
-                                        </GridViewColumn.Header>
-                                    </GridViewColumn>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
+                            <Border BorderBrush="{StaticResource HarshBlueBrush}"
+                                    BorderThickness="0,1,0,0"
+                                    Grid.ColumnSpan="3"
+                                    Margin="0,0,0,3"/>
 
-                        <!--Filter-->
-                        <DockPanel Grid.Row="3" Grid.ColumnSpan="5" Margin="0,5,0,0">
-                            <TextBlock DockPanel.Dock="Left" Text="Filter: "
-                                       Style="{StaticResource tbHeader4}"
-                                       Margin="10,0,5,0"
-                                       VerticalAlignment="Center" />
-                            <TextBox x:Name="txtFilter" TextChanged="TxtFilter_TextChanged" />
-                        </DockPanel>
-                    </Grid>
-                </Expander>
+                            <!--Titles-->
+                            <TextBlock Style="{StaticResource tbHeader4}" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Margin="0,0,0,5" Text="Unlocked" />
+                            <TextBlock Style="{StaticResource tbHeader4}" HorizontalAlignment="Center" Grid.Column="4" Grid.Row="1" Margin="0,0,0,5" Text="Locked" />
+
+                            <!--Unlocked List-->
+                            <ListView Grid.Column="0" Grid.Row="2" x:Name="lvUnlocked"
+                                      ItemContainerStyle="{StaticResource UnlockedItemStyle}"
+                                      ItemsSource="{Binding GeneralUnlockedDoors}"
+                                      FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=-1}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Width="60" DisplayMemberBinding="{Binding Area}">
+                                            <GridViewColumn.Header>
+                                                <GridViewColumnHeader Tag="Area" Click="LvUnlockedColumnHeader_Click" />
+                                            </GridViewColumn.Header>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="180" DisplayMemberBinding="{Binding Label}">
+                                            <GridViewColumn.Header>
+                                                <GridViewColumnHeader Tag="Label" Click="LvUnlockedColumnHeader_Click" Content="Label" />
+                                            </GridViewColumn.Header>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+
+                            <!--Control Buttons-->
+                            <StackPanel Grid.Column="1" Grid.Row="2" Margin="5,0" VerticalAlignment="Center">
+                                <StackPanel.Resources>
+                                    <Style TargetType="Button" BasedOn="{StaticResource K1RandoButtonStyle}">
+                                        <Setter Property="BorderThickness" Value="1" />
+                                        <Setter Property="FontFamily" Value="Consolas" />
+                                        <Setter Property="FontSize" Value="12" />
+                                        <Setter Property="Margin" Value="0,2" />
+                                        <Setter Property="Padding" Value="0,3" />
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Button Content="&lt;&lt;" ToolTip="Unlock All" Click="BtnUnlockAll_Click" />
+                                <Button Content="&lt;" ToolTip="Unlock Selected" Click="BtnUnlockSelected_Click" />
+                                <Button Content="&gt;" ToolTip="Lock Selected" Click="BtnLockSelected_Click" />
+                                <Button Content="&gt;&gt;" ToolTip="Lock All" Click="BtnLockAll_Click" />
+                            </StackPanel>
+
+                            <!--Locked List-->
+                            <ListView Grid.Column="2" Grid.Row="2" x:Name="lvLocked"
+                                      ItemContainerStyle="{StaticResource LockedItemStyle}"
+                                      ItemsSource="{Binding GeneralLockedDoors}"
+                                      FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=-1}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Width="60" DisplayMemberBinding="{Binding Area}">
+                                            <GridViewColumn.Header>
+                                                <GridViewColumnHeader Tag="Area" Click="LvLockedColumnHeader_Click" />
+                                            </GridViewColumn.Header>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="180" DisplayMemberBinding="{Binding Label}">
+                                            <GridViewColumn.Header>
+                                                <GridViewColumnHeader Tag="Label" Click="LvLockedColumnHeader_Click" Content="Label" />
+                                            </GridViewColumn.Header>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+
+                            <!--Filter-->
+                            <DockPanel Grid.Row="3" Grid.ColumnSpan="5" Margin="0,5,0,0">
+                                <TextBlock DockPanel.Dock="Left" Text="Filter: "
+                                           Style="{StaticResource tbHeader4}"
+                                           Margin="10,0,5,0"
+                                           VerticalAlignment="Center" />
+                                <TextBox x:Name="txtFilter" TextChanged="TxtFilter_TextChanged" />
+                            </DockPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>

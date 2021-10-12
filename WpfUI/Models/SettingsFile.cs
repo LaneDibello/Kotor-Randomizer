@@ -17,6 +17,9 @@ namespace Randomizer_WPF
         public const string ATTR_KOTOR2_PATH = "Kotor2Path";
         public const string ATTR_PRESET_PATH = "PresetsPath";
         public const string ATTR_SPOILER_PATH = "SpoilersPath";
+        public const string ATTR_FONT_SIZE = "FontSizeIndex";
+        public const string ATTR_HEIGHT = "Height";
+        public const string ATTR_WIDTH  = "Width";
         #endregion
 
         #region Constructors
@@ -34,6 +37,9 @@ namespace Randomizer_WPF
         public string Kotor2Path { get; set; }
         public string PresetPath { get; set; }
         public string SpoilerPath { get; set; }
+        public int FontSizeIndex { get; set; }
+        public double Height { get; set; }
+        public double Width { get; set; }
         #endregion
 
         #region Methods
@@ -44,10 +50,16 @@ namespace Randomizer_WPF
             if (settings == null) throw new ArgumentException("Settings file is not correctly formatted.");
 
             CreateSpoilers      = bool.Parse(settings.Attribute(ATTR_DO_SPOILERS)?.Value ?? "false");
-            Kotor1Path          = settings.Attribute(ATTR_KOTOR1_PATH )?.Value ?? string.Empty;
-            Kotor2Path          = settings.Attribute(ATTR_KOTOR2_PATH )?.Value ?? string.Empty;
-            PresetPath          = settings.Attribute(ATTR_PRESET_PATH )?.Value ?? string.Empty;
-            SpoilerPath         = settings.Attribute(ATTR_SPOILER_PATH)?.Value ?? string.Empty;
+            Kotor1Path          = settings.Attribute(ATTR_KOTOR1_PATH    )?.Value ?? string.Empty;
+            Kotor2Path          = settings.Attribute(ATTR_KOTOR2_PATH    )?.Value ?? string.Empty;
+            PresetPath          = settings.Attribute(ATTR_PRESET_PATH    )?.Value ?? string.Empty;
+            SpoilerPath         = settings.Attribute(ATTR_SPOILER_PATH   )?.Value ?? string.Empty;
+            FontSizeIndex       = int.Parse(settings.Attribute(ATTR_FONT_SIZE)?.Value ?? "1");
+
+            if (settings.Attribute(ATTR_HEIGHT) != null)
+                Height = double.Parse(settings.Attribute(ATTR_HEIGHT).Value);
+            if (settings.Attribute(ATTR_WIDTH) != null)
+                Width = double.Parse(settings.Attribute(ATTR_WIDTH).Value);
         }
 
         public void WriteFile(string path)
@@ -55,11 +67,14 @@ namespace Randomizer_WPF
             using (var writer = new XmlTextWriter(path, null))
             {
                 writer.WriteStartElement(ELEM_SETTINGS);
-                writer.WriteAttributeString(ATTR_DO_SPOILERS,      CreateSpoilers.ToString());
-                writer.WriteAttributeString(ATTR_KOTOR1_PATH,      Kotor1Path);
-                writer.WriteAttributeString(ATTR_KOTOR2_PATH,      Kotor2Path);
-                writer.WriteAttributeString(ATTR_PRESET_PATH,      PresetPath);
-                writer.WriteAttributeString(ATTR_SPOILER_PATH,     SpoilerPath);
+                writer.WriteAttributeString(ATTR_DO_SPOILERS,  CreateSpoilers.ToString());
+                writer.WriteAttributeString(ATTR_KOTOR1_PATH,  Kotor1Path);
+                writer.WriteAttributeString(ATTR_KOTOR2_PATH,  Kotor2Path);
+                writer.WriteAttributeString(ATTR_PRESET_PATH,  PresetPath);
+                writer.WriteAttributeString(ATTR_SPOILER_PATH, SpoilerPath);
+                writer.WriteAttributeString(ATTR_FONT_SIZE,    FontSizeIndex.ToString());
+                writer.WriteAttributeString(ATTR_HEIGHT,       Height.ToString());
+                writer.WriteAttributeString(ATTR_WIDTH,        Width.ToString());
                 writer.WriteEndElement();
                 writer.Flush();
             }

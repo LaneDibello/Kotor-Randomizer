@@ -3,19 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:local="clr-namespace:Randomizer_WPF.Views"
+             xmlns:base="clr-namespace:Randomizer_WPF"
              xmlns:model="clr-namespace:kotor_Randomizer_2.Models;assembly=KotorRandomizer"
              xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
              mc:Ignorable="d" 
              FontFamily="Microsoft Sans Serif" FontSize="12"
              d:DesignHeight="400" d:DesignWidth="350"
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
+             x:Name="thisView"
              >
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <base:AddToDoubleConverter x:Key="AddToDoubleConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     
@@ -24,7 +26,10 @@
         <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2"
                 BorderBrush="{StaticResource HarshBlueBrush}">
             <StackPanel>
-                <TextBlock Style="{StaticResource tbTitle}" Text="Table Randomization" />
+                <TextBlock Style="{StaticResource tbTitle}"
+                           Text="Table Randomization"
+                           FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=10}"
+                           />
                 <TextBlock Style="{StaticResource tbDescription}">
                     Randomize tables used throughout the game to scramble a variety of in-game features. The
                     available options have been selected because they are unlikely to break the entire game.
@@ -39,6 +44,7 @@
                     <Setter Property="Margin" Value="0,0,0,0" />
                     <Setter Property="TextAlignment" Value="Center" />
                     <Setter Property="TextDecorations" Value="Underline" />
+                    <Setter Property="FontSize" Value="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}" />
                 </Style>
                 <Style TargetType="GridSplitter">
                     <Setter Property="Background" Value="{StaticResource HarshBlueBrush}" />
@@ -57,7 +63,7 @@
                 </Style>
                 <Style TargetType="ListView">
                     <Setter Property="Margin" Value="0,5,0,0" />
-                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="FontSize" Value="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}" />
                     <Setter Property="Background" Value="Transparent" />
                     <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
                     <Setter Property="BorderThickness" Value="2" />
@@ -66,7 +72,7 @@
                 </Style>
                 <Style TargetType="ListViewItem" x:Key="ColumnsItemStyle" BasedOn="{StaticResource BaseItemStyle}">
                     <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="FontSize" Value="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}" />
                     <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
                     <EventSetter Event="MouseDoubleClick" Handler="LvColumns_DoubleClick" />
                     <Style.Triggers>
@@ -77,7 +83,7 @@
                 </Style>
                 <Style TargetType="ListViewItem" x:Key="RandomizedItemStyle" BasedOn="{StaticResource BaseItemStyle}">
                     <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="FontSize" Value="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}" />
                     <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
                     <EventSetter Event="MouseDoubleClick" Handler="LvRandomized_DoubleClick" />
                     <Style.Triggers>

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:base="clr-namespace:Randomizer_WPF"
              xmlns:local="clr-namespace:Randomizer_WPF.Views"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="350"
@@ -13,6 +14,19 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <base:AddToDoubleConverter x:Key="AddToDoubleConverter" />
+
+            <!--<Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:TextView}}" />-->
+            <Style TargetType="ToolTip">
+                <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.FontSize}" />
+            </Style>
+
+            <ToolTip x:Key="ttEntries">Entries are the statements made by NPCs.</ToolTip>
+            <ToolTip x:Key="ttMatchEntry">Match the sounds so the new dialog matches its text.</ToolTip>
+            <ToolTip x:Key="ttReplies">Replies are the options given to the player.</ToolTip>
+            <ToolTip x:Key="ttAdditional">Shuffles text used throughout the game for menus, items, descriptions, etc.</ToolTip>
+            <ToolTip x:Key="ttMatchLength">Limits shuffle to text with a similar number of characters.</ToolTip>
         </ResourceDictionary>
     </UserControl.Resources>
     
@@ -30,9 +44,13 @@
         <!-- Title and Description -->
         <Border Grid.ColumnSpan="2" Grid.Row="0"
                 BorderBrush="{StaticResource HarshBlueBrush}"
-                BorderThickness="0,0,0,2">
+                BorderThickness="0,0,0,2"
+                Margin="0,0,0,5">
             <StackPanel>
-                <TextBlock Style="{StaticResource tbTitle}" Text="Text Randomization" />
+                <TextBlock Style="{StaticResource tbTitle}"
+                           Text="Text Randomization"
+                           FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=10}"
+                           />
                 <TextBlock Style="{StaticResource tbDescription}">
                     Randomize the dialogue and text throughout the game. Entries are the statements made
                     by NPCs and Replies are the options given to the Player. Entry sounds can be matched
@@ -47,12 +65,13 @@
                 <Style TargetType="Border">
                     <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
                     <Setter Property="BorderThickness" Value="1" />
-                    <Setter Property="Margin" Value="0,5" />
+                    <Setter Property="Margin" Value="0,0,0,5" />
                     <Setter Property="Padding" Value="2" />
                 </Style>
                 <Style TargetType="CheckBox">
                     <Setter Property="Margin" Value="3" />
                     <Setter Property="Padding" Value="5,0" />
+                    <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:TextView}}" />
                 </Style>
                 <Style TargetType="TextBlock">
                     <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
@@ -67,15 +86,18 @@
             <!-- Dialogue Rando -->
             <Border>
                 <StackPanel>
-                    <CheckBox x:Name="cbRandomEntries" IsChecked="{Binding ElementName=thisView, Path=RandomizeDialogueEntries}">
+                    <CheckBox x:Name="cbRandomEntries" IsChecked="{Binding ElementName=thisView, Path=RandomizeDialogueEntries}"
+                              ToolTip="{StaticResource ttEntries}">
                         <TextBlock Text="Randomize Entries"/>
                     </CheckBox>
                     <StackPanel Margin="18,0,0,0" IsEnabled="{Binding ElementName=cbRandomEntries, Path=IsChecked}">
-                        <CheckBox IsChecked="{Binding ElementName=thisView, Path=MatchEntrySounds}">
+                        <CheckBox IsChecked="{Binding ElementName=thisView, Path=MatchEntrySounds}"
+                                  ToolTip="{StaticResource ttMatchEntry}">
                             <TextBlock Text="Match Entry Sounds" />
                         </CheckBox>
                     </StackPanel>
-                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=RandomizeDialogueReplies}">
+                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=RandomizeDialogueReplies}"
+                              ToolTip="{StaticResource ttReplies}">
                         <TextBlock Text="Randomize Replies" />
                     </CheckBox>
                 </StackPanel>
@@ -84,11 +106,13 @@
             <!-- TLK Rando -->
             <Border>
                 <StackPanel>
-                    <CheckBox x:Name="cbAdditionalText" IsChecked="{Binding ElementName=thisView, Path=RandomizeAdditionalText}">
+                    <CheckBox x:Name="cbAdditionalText" IsChecked="{Binding ElementName=thisView, Path=RandomizeAdditionalText}"
+                              ToolTip="{StaticResource ttAdditional}">
                         <TextBlock Text="Randomize Additional Text" />
                     </CheckBox>
                     <StackPanel Margin="18,0,0,0" IsEnabled="{Binding ElementName=cbAdditionalText, Path=IsChecked}">
-                        <CheckBox IsChecked="{Binding ElementName=thisView, Path=MatchSimilarStringLength}">
+                        <CheckBox IsChecked="{Binding ElementName=thisView, Path=MatchSimilarStringLength}"
+                                  ToolTip="{StaticResource ttMatchLength}">
                             <TextBlock Text="Match Similar String Length" />
                         </CheckBox>
                     </StackPanel>
