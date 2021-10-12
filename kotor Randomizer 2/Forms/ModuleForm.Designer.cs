@@ -44,7 +44,7 @@
             this.cbFixCoordinates = new System.Windows.Forms.CheckBox();
             this.cbFixMindPrison = new System.Windows.Forms.CheckBox();
             this.cbUnlockDanRuins = new System.Windows.Forms.CheckBox();
-            this.cbUnlockLevElevators = new System.Windows.Forms.CheckBox();
+            this.cbUnlockLevHangar = new System.Windows.Forms.CheckBox();
             this.cbVulkSpiceLZ = new System.Windows.Forms.CheckBox();
             this.cbReachability = new System.Windows.Forms.CheckBox();
             this.lblGoals = new System.Windows.Forms.Label();
@@ -63,7 +63,15 @@
             this.lblRule2 = new System.Windows.Forms.Label();
             this.lblRule3 = new System.Windows.Forms.Label();
             this.cbUseRandoRules = new System.Windows.Forms.CheckBox();
-            this.lblWIP = new System.Windows.Forms.Label();
+            this.cbUnlockManEmbassy = new System.Windows.Forms.CheckBox();
+            this.cbUnlockStaBastila = new System.Windows.Forms.CheckBox();
+            this.cbUnlockUnkSummit = new System.Windows.Forms.CheckBox();
+            this.cbUnlockKorValley = new System.Windows.Forms.CheckBox();
+            this.cbUnlockManHangar = new System.Windows.Forms.CheckBox();
+            this.cbUnlockTarUndercity = new System.Windows.Forms.CheckBox();
+            this.cbUnlockTarVulkar = new System.Windows.Forms.CheckBox();
+            this.cbUnlockUnkTempleExit = new System.Windows.Forms.CheckBox();
+            this.cbSpeedySuit = new System.Windows.Forms.CheckBox();
             this.lblSaveData = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -71,19 +79,23 @@
             this.lblGeneralSettings = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pnlGoals = new System.Windows.Forms.Panel();
+            this.cbGoalParty = new System.Windows.Forms.CheckBox();
             this.pnlGlitches = new System.Windows.Forms.Panel();
             this.pnlOther = new System.Windows.Forms.Panel();
+            this.cbStrongGoals = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.flpSaveData = new System.Windows.Forms.FlowLayoutPanel();
             this.flpTimeSavers = new System.Windows.Forms.FlowLayoutPanel();
-            this.cbUnlockManSub = new System.Windows.Forms.CheckBox();
-            this.cbUnlockStaBastila = new System.Windows.Forms.CheckBox();
-            this.cbUnlockUnkSummit = new System.Windows.Forms.CheckBox();
+            this.flpUnlockDoors = new System.Windows.Forms.FlowLayoutPanel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblWIP = new System.Windows.Forms.Label();
+            this.cbEnableLevHangarElev = new System.Windows.Forms.CheckBox();
             this.pnlGoals.SuspendLayout();
             this.pnlGlitches.SuspendLayout();
             this.pnlOther.SuspendLayout();
             this.flpSaveData.SuspendLayout();
             this.flpTimeSavers.SuspendLayout();
+            this.flpUnlockDoors.SuspendLayout();
             this.SuspendLayout();
             // 
             // OmittedListBox
@@ -93,7 +105,7 @@
             this.OmittedListBox.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OmittedListBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.OmittedListBox.FormattingEnabled = true;
-            this.OmittedListBox.Location = new System.Drawing.Point(287, 255);
+            this.OmittedListBox.Location = new System.Drawing.Point(287, 234);
             this.OmittedListBox.Name = "OmittedListBox";
             this.OmittedListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.OmittedListBox.Size = new System.Drawing.Size(248, 299);
@@ -108,7 +120,7 @@
             this.RandomizedListBox.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RandomizedListBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.RandomizedListBox.FormattingEnabled = true;
-            this.RandomizedListBox.Location = new System.Drawing.Point(20, 255);
+            this.RandomizedListBox.Location = new System.Drawing.Point(20, 234);
             this.RandomizedListBox.Name = "RandomizedListBox";
             this.RandomizedListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.RandomizedListBox.Size = new System.Drawing.Size(248, 299);
@@ -123,10 +135,11 @@
             this.PresetComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PresetComboBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.PresetComboBox.FormattingEnabled = true;
-            this.PresetComboBox.Location = new System.Drawing.Point(71, 206);
+            this.PresetComboBox.Location = new System.Drawing.Point(71, 185);
             this.PresetComboBox.Name = "PresetComboBox";
             this.PresetComboBox.Size = new System.Drawing.Size(197, 21);
             this.PresetComboBox.TabIndex = 11;
+            this.PresetComboBox.TabStop = false;
             this.ModulesToolTip.SetToolTip(this.PresetComboBox, resources.GetString("PresetComboBox.ToolTip"));
             this.PresetComboBox.SelectedIndexChanged += new System.EventHandler(this.PresetComboBox_SelectedIndexChanged);
             // 
@@ -149,7 +162,7 @@
             // 
             this.lblPresets.AutoSize = true;
             this.lblPresets.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblPresets.Location = new System.Drawing.Point(20, 209);
+            this.lblPresets.Location = new System.Drawing.Point(20, 188);
             this.lblPresets.Name = "lblPresets";
             this.lblPresets.Size = new System.Drawing.Size(45, 13);
             this.lblPresets.TabIndex = 20;
@@ -188,7 +201,7 @@
             // 
             this.lblRandomized.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRandomized.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblRandomized.Location = new System.Drawing.Point(20, 234);
+            this.lblRandomized.Location = new System.Drawing.Point(20, 213);
             this.lblRandomized.Name = "lblRandomized";
             this.lblRandomized.Size = new System.Drawing.Size(248, 14);
             this.lblRandomized.TabIndex = 23;
@@ -199,7 +212,7 @@
             // 
             this.lblOmitted.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOmitted.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblOmitted.Location = new System.Drawing.Point(287, 234);
+            this.lblOmitted.Location = new System.Drawing.Point(287, 213);
             this.lblOmitted.Name = "lblOmitted";
             this.lblOmitted.Size = new System.Drawing.Size(248, 14);
             this.lblOmitted.TabIndex = 24;
@@ -210,7 +223,7 @@
             // 
             this.cbFixDream.AutoSize = true;
             this.cbFixDream.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbFixDream.Location = new System.Drawing.Point(7, 28);
+            this.cbFixDream.Location = new System.Drawing.Point(7, 51);
             this.cbFixDream.Name = "cbFixDream";
             this.cbFixDream.Size = new System.Drawing.Size(125, 17);
             this.cbFixDream.TabIndex = 4;
@@ -223,11 +236,11 @@
             // 
             this.cbUnlockGalaxyMap.AutoSize = true;
             this.cbUnlockGalaxyMap.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUnlockGalaxyMap.Location = new System.Drawing.Point(164, 5);
+            this.cbUnlockGalaxyMap.Location = new System.Drawing.Point(7, 28);
             this.cbUnlockGalaxyMap.Name = "cbUnlockGalaxyMap";
-            this.cbUnlockGalaxyMap.Size = new System.Drawing.Size(144, 17);
+            this.cbUnlockGalaxyMap.Size = new System.Drawing.Size(107, 17);
             this.cbUnlockGalaxyMap.TabIndex = 9;
-            this.cbUnlockGalaxyMap.Text = "Unlock EBO Galaxy Map";
+            this.cbUnlockGalaxyMap.Text = "EBO Galaxy Map";
             this.ModulesToolTip.SetToolTip(this.cbUnlockGalaxyMap, "Unlock all destinations on the Ebon Hawk galaxy map from\r\nthe start of the game.");
             this.cbUnlockGalaxyMap.UseVisualStyleBackColor = true;
             this.cbUnlockGalaxyMap.CheckedChanged += new System.EventHandler(this.cbUnlockGalaxyMap_CheckedChanged);
@@ -236,7 +249,7 @@
             // 
             this.cbFixCoordinates.AutoSize = true;
             this.cbFixCoordinates.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbFixCoordinates.Location = new System.Drawing.Point(7, 74);
+            this.cbFixCoordinates.Location = new System.Drawing.Point(7, 97);
             this.cbFixCoordinates.Name = "cbFixCoordinates";
             this.cbFixCoordinates.Size = new System.Drawing.Size(136, 17);
             this.cbFixCoordinates.TabIndex = 6;
@@ -249,7 +262,7 @@
             // 
             this.cbFixMindPrison.AutoSize = true;
             this.cbFixMindPrison.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbFixMindPrison.Location = new System.Drawing.Point(7, 51);
+            this.cbFixMindPrison.Location = new System.Drawing.Point(7, 74);
             this.cbFixMindPrison.Name = "cbFixMindPrison";
             this.cbFixMindPrison.Size = new System.Drawing.Size(97, 17);
             this.cbFixMindPrison.TabIndex = 5;
@@ -262,29 +275,28 @@
             // 
             this.cbUnlockDanRuins.AutoSize = true;
             this.cbUnlockDanRuins.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUnlockDanRuins.Location = new System.Drawing.Point(7, 97);
+            this.cbUnlockDanRuins.Location = new System.Drawing.Point(7, 5);
             this.cbUnlockDanRuins.Name = "cbUnlockDanRuins";
-            this.cbUnlockDanRuins.Size = new System.Drawing.Size(142, 17);
+            this.cbUnlockDanRuins.Size = new System.Drawing.Size(105, 17);
             this.cbUnlockDanRuins.TabIndex = 10;
-            this.cbUnlockDanRuins.Text = "Unlock DAN Ruins Door";
+            this.cbUnlockDanRuins.Text = "DAN Ruins Door";
             this.ModulesToolTip.SetToolTip(this.cbUnlockDanRuins, "Unlocks the door into the Dantooine Ruins and the door\r\nout of the Unknown World\'" +
         "s Temple Summit.");
             this.cbUnlockDanRuins.UseVisualStyleBackColor = true;
             this.cbUnlockDanRuins.CheckedChanged += new System.EventHandler(this.cbUnlockDanRuins_CheckedChanged);
             // 
-            // cbUnlockLevElevators
+            // cbUnlockLevHangar
             // 
-            this.cbUnlockLevElevators.AutoSize = true;
-            this.cbUnlockLevElevators.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUnlockLevElevators.Location = new System.Drawing.Point(164, 28);
-            this.cbUnlockLevElevators.Name = "cbUnlockLevElevators";
-            this.cbUnlockLevElevators.Size = new System.Drawing.Size(130, 17);
-            this.cbUnlockLevElevators.TabIndex = 7;
-            this.cbUnlockLevElevators.Text = "Unlock LEV Elevators";
-            this.ModulesToolTip.SetToolTip(this.cbUnlockLevElevators, "The Leviathan elevator will not restrict you from going to\r\nthe Hangar early, and" +
-        " the Hangar elevator is now usable.");
-            this.cbUnlockLevElevators.UseVisualStyleBackColor = true;
-            this.cbUnlockLevElevators.CheckedChanged += new System.EventHandler(this.cbUnlockLevElevators_CheckedChanged);
+            this.cbUnlockLevHangar.AutoSize = true;
+            this.cbUnlockLevHangar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUnlockLevHangar.Location = new System.Drawing.Point(7, 74);
+            this.cbUnlockLevHangar.Name = "cbUnlockLevHangar";
+            this.cbUnlockLevHangar.Size = new System.Drawing.Size(122, 17);
+            this.cbUnlockLevHangar.TabIndex = 7;
+            this.cbUnlockLevHangar.Text = "LEV Hangar Access";
+            this.ModulesToolTip.SetToolTip(this.cbUnlockLevHangar, "The Leviathan elevator will not restrict you from going to\r\nthe Hangar early.");
+            this.cbUnlockLevHangar.UseVisualStyleBackColor = true;
+            this.cbUnlockLevHangar.CheckedChanged += new System.EventHandler(this.cbUnlockLevHangarAccess_CheckedChanged);
             // 
             // cbVulkSpiceLZ
             // 
@@ -292,9 +304,9 @@
             this.cbVulkSpiceLZ.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbVulkSpiceLZ.Location = new System.Drawing.Point(7, 5);
             this.cbVulkSpiceLZ.Name = "cbVulkSpiceLZ";
-            this.cbVulkSpiceLZ.Size = new System.Drawing.Size(151, 17);
+            this.cbVulkSpiceLZ.Size = new System.Drawing.Size(124, 17);
             this.cbVulkSpiceLZ.TabIndex = 8;
-            this.cbVulkSpiceLZ.Text = "Add Spice Lab Load Zone";
+            this.cbVulkSpiceLZ.Text = "Add Spice Lab Zone";
             this.ModulesToolTip.SetToolTip(this.cbVulkSpiceLZ, "A new loading zone to the unused Vulkar Spice Lab\r\nis added to the far west end o" +
         "f the Vulkar Base.");
             this.cbVulkSpiceLZ.UseVisualStyleBackColor = true;
@@ -303,9 +315,9 @@
             // cbReachability
             // 
             this.cbReachability.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbReachability.Location = new System.Drawing.Point(20, 616);
+            this.cbReachability.Location = new System.Drawing.Point(20, 595);
             this.cbReachability.Name = "cbReachability";
-            this.cbReachability.Size = new System.Drawing.Size(151, 28);
+            this.cbReachability.Size = new System.Drawing.Size(151, 17);
             this.cbReachability.TabIndex = 15;
             this.cbReachability.Text = "Verify Module Reachability";
             this.ModulesToolTip.SetToolTip(this.cbReachability, "Reachability means that all modules leading up to\r\nand including the ones contain" +
@@ -319,7 +331,7 @@
             this.lblGoals.AutoSize = true;
             this.lblGoals.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGoals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblGoals.Location = new System.Drawing.Point(37, 652);
+            this.lblGoals.Location = new System.Drawing.Point(37, 619);
             this.lblGoals.Name = "lblGoals";
             this.lblGoals.Size = new System.Drawing.Size(132, 13);
             this.lblGoals.TabIndex = 33;
@@ -332,7 +344,7 @@
             this.lblGlitches.AutoSize = true;
             this.lblGlitches.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGlitches.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblGlitches.Location = new System.Drawing.Point(202, 652);
+            this.lblGlitches.Location = new System.Drawing.Point(202, 631);
             this.lblGlitches.Name = "lblGlitches";
             this.lblGlitches.Size = new System.Drawing.Size(138, 13);
             this.lblGlitches.TabIndex = 34;
@@ -345,7 +357,6 @@
             this.cbGoalMalak.AutoSize = true;
             this.cbGoalMalak.Checked = true;
             this.cbGoalMalak.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbGoalMalak.Enabled = false;
             this.cbGoalMalak.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbGoalMalak.Location = new System.Drawing.Point(3, 3);
             this.cbGoalMalak.Name = "cbGoalMalak";
@@ -359,7 +370,6 @@
             // cbGoalStarMaps
             // 
             this.cbGoalStarMaps.AutoSize = true;
-            this.cbGoalStarMaps.Enabled = false;
             this.cbGoalStarMaps.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbGoalStarMaps.Location = new System.Drawing.Point(3, 23);
             this.cbGoalStarMaps.Name = "cbGoalStarMaps";
@@ -374,7 +384,6 @@
             // cbGoalPazaak
             // 
             this.cbGoalPazaak.AutoSize = true;
-            this.cbGoalPazaak.Enabled = false;
             this.cbGoalPazaak.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbGoalPazaak.Location = new System.Drawing.Point(3, 43);
             this.cbGoalPazaak.Name = "cbGoalPazaak";
@@ -388,7 +397,6 @@
             // cbGlitchDlz
             // 
             this.cbGlitchDlz.AutoSize = true;
-            this.cbGlitchDlz.Enabled = false;
             this.cbGlitchDlz.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbGlitchDlz.Location = new System.Drawing.Point(4, 23);
             this.cbGlitchDlz.Name = "cbGlitchDlz";
@@ -402,7 +410,6 @@
             // cbGlitchFlu
             // 
             this.cbGlitchFlu.AutoSize = true;
-            this.cbGlitchFlu.Enabled = false;
             this.cbGlitchFlu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbGlitchFlu.Location = new System.Drawing.Point(73, 23);
             this.cbGlitchFlu.Name = "cbGlitchFlu";
@@ -416,7 +423,6 @@
             // cbGlitchGpw
             // 
             this.cbGlitchGpw.AutoSize = true;
-            this.cbGlitchGpw.Enabled = false;
             this.cbGlitchGpw.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbGlitchGpw.Location = new System.Drawing.Point(73, 3);
             this.cbGlitchGpw.Name = "cbGlitchGpw";
@@ -430,9 +436,9 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.panel1.Location = new System.Drawing.Point(20, 562);
+            this.panel1.Location = new System.Drawing.Point(21, 543);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(515, 2);
+            this.panel1.Size = new System.Drawing.Size(514, 2);
             this.panel1.TabIndex = 41;
             // 
             // ModulesToolTip
@@ -447,7 +453,6 @@
             // cbGlitchClip
             // 
             this.cbGlitchClip.AutoSize = true;
-            this.cbGlitchClip.Enabled = false;
             this.cbGlitchClip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.cbGlitchClip.Location = new System.Drawing.Point(4, 3);
             this.cbGlitchClip.Name = "cbGlitchClip";
@@ -477,7 +482,7 @@
             // 
             this.lblRule1.AutoSize = true;
             this.lblRule1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblRule1.Location = new System.Drawing.Point(222, 593);
+            this.lblRule1.Location = new System.Drawing.Point(222, 572);
             this.lblRule1.Name = "lblRule1";
             this.lblRule1.Size = new System.Drawing.Size(44, 13);
             this.lblRule1.TabIndex = 50;
@@ -490,7 +495,7 @@
             // 
             this.lblRule2.AutoSize = true;
             this.lblRule2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblRule2.Location = new System.Drawing.Point(272, 593);
+            this.lblRule2.Location = new System.Drawing.Point(272, 572);
             this.lblRule2.Name = "lblRule2";
             this.lblRule2.Size = new System.Drawing.Size(41, 13);
             this.lblRule2.TabIndex = 51;
@@ -503,7 +508,7 @@
             // 
             this.lblRule3.AutoSize = true;
             this.lblRule3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblRule3.Location = new System.Drawing.Point(319, 593);
+            this.lblRule3.Location = new System.Drawing.Point(319, 572);
             this.lblRule3.Name = "lblRule3";
             this.lblRule3.Size = new System.Drawing.Size(41, 13);
             this.lblRule3.TabIndex = 52;
@@ -514,7 +519,7 @@
             // 
             this.cbUseRandoRules.AutoSize = true;
             this.cbUseRandoRules.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUseRandoRules.Location = new System.Drawing.Point(20, 592);
+            this.cbUseRandoRules.Location = new System.Drawing.Point(20, 571);
             this.cbUseRandoRules.Name = "cbUseRandoRules";
             this.cbUseRandoRules.Size = new System.Drawing.Size(196, 17);
             this.cbUseRandoRules.TabIndex = 14;
@@ -524,25 +529,132 @@
             this.cbUseRandoRules.UseVisualStyleBackColor = true;
             this.cbUseRandoRules.CheckedChanged += new System.EventHandler(this.cbUseRandoRules_CheckedChanged);
             // 
-            // lblWIP
+            // cbUnlockManEmbassy
             // 
-            this.lblWIP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.lblWIP.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblWIP.Location = new System.Drawing.Point(197, 616);
-            this.lblWIP.Name = "lblWIP";
-            this.lblWIP.Size = new System.Drawing.Size(337, 28);
-            this.lblWIP.TabIndex = 53;
-            this.lblWIP.Text = "Reachability verification is a work in progress. It does not yet ensure the seed " +
-    "is beatable, but it does improve those chances.";
-            this.lblWIP.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cbUnlockManEmbassy.AutoSize = true;
+            this.cbUnlockManEmbassy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUnlockManEmbassy.Location = new System.Drawing.Point(7, 120);
+            this.cbUnlockManEmbassy.Name = "cbUnlockManEmbassy";
+            this.cbUnlockManEmbassy.Size = new System.Drawing.Size(140, 17);
+            this.cbUnlockManEmbassy.TabIndex = 11;
+            this.cbUnlockManEmbassy.Text = "MAN Republic Embassy";
+            this.ModulesToolTip.SetToolTip(this.cbUnlockManEmbassy, "Unlocks the Republic Embassy door and the door to the\r\nsubmersible.");
+            this.cbUnlockManEmbassy.UseVisualStyleBackColor = true;
+            this.cbUnlockManEmbassy.CheckedChanged += new System.EventHandler(this.cbUnlockManSub_CheckedChanged);
+            // 
+            // cbUnlockStaBastila
+            // 
+            this.cbUnlockStaBastila.AutoSize = true;
+            this.cbUnlockStaBastila.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUnlockStaBastila.Location = new System.Drawing.Point(7, 166);
+            this.cbUnlockStaBastila.Name = "cbUnlockStaBastila";
+            this.cbUnlockStaBastila.Size = new System.Drawing.Size(119, 17);
+            this.cbUnlockStaBastila.TabIndex = 12;
+            this.cbUnlockStaBastila.Text = "STA Door to Bastila";
+            this.ModulesToolTip.SetToolTip(this.cbUnlockStaBastila, "Unlocks the door leading to the Bastila fight, allowing it to\r\nbe opened after fi" +
+        "ghting her.");
+            this.cbUnlockStaBastila.UseVisualStyleBackColor = true;
+            this.cbUnlockStaBastila.CheckedChanged += new System.EventHandler(this.cbUnlockStaBastila_CheckedChanged);
+            // 
+            // cbUnlockUnkSummit
+            // 
+            this.cbUnlockUnkSummit.AutoSize = true;
+            this.cbUnlockUnkSummit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUnlockUnkSummit.Location = new System.Drawing.Point(7, 235);
+            this.cbUnlockUnkSummit.Name = "cbUnlockUnkSummit";
+            this.cbUnlockUnkSummit.Size = new System.Drawing.Size(106, 17);
+            this.cbUnlockUnkSummit.TabIndex = 13;
+            this.cbUnlockUnkSummit.Text = "UNK Summit Exit";
+            this.ModulesToolTip.SetToolTip(this.cbUnlockUnkSummit, "Unlocks the exit door from the Temple Summit.");
+            this.cbUnlockUnkSummit.UseVisualStyleBackColor = true;
+            this.cbUnlockUnkSummit.CheckedChanged += new System.EventHandler(this.cbUnlockUnkSummit_CheckedChanged);
+            // 
+            // cbUnlockKorValley
+            // 
+            this.cbUnlockKorValley.AutoSize = true;
+            this.cbUnlockKorValley.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUnlockKorValley.Location = new System.Drawing.Point(7, 51);
+            this.cbUnlockKorValley.Name = "cbUnlockKorValley";
+            this.cbUnlockKorValley.Size = new System.Drawing.Size(135, 17);
+            this.cbUnlockKorValley.TabIndex = 14;
+            this.cbUnlockKorValley.Text = "KOR Valley After Tomb";
+            this.ModulesToolTip.SetToolTip(this.cbUnlockKorValley, "Ensures the Sith Tomb and Sith Academy remain unlocked\r\nregardless of the Uthar/Y" +
+        "uthura outcome in Naga Sadow.");
+            this.cbUnlockKorValley.UseVisualStyleBackColor = true;
+            this.cbUnlockKorValley.CheckedChanged += new System.EventHandler(this.cbUnlockKorValley_CheckedChanged);
+            // 
+            // cbUnlockManHangar
+            // 
+            this.cbUnlockManHangar.AutoSize = true;
+            this.cbUnlockManHangar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUnlockManHangar.Location = new System.Drawing.Point(7, 143);
+            this.cbUnlockManHangar.Name = "cbUnlockManHangar";
+            this.cbUnlockManHangar.Size = new System.Drawing.Size(109, 17);
+            this.cbUnlockManHangar.TabIndex = 15;
+            this.cbUnlockManHangar.Text = "MAN Sith Hangar";
+            this.ModulesToolTip.SetToolTip(this.cbUnlockManHangar, "Unlocks the Sith Hangar door before visiting Roland.");
+            this.cbUnlockManHangar.UseVisualStyleBackColor = true;
+            this.cbUnlockManHangar.CheckedChanged += new System.EventHandler(this.cbUnlockManHangar_CheckedChanged);
+            // 
+            // cbUnlockTarUndercity
+            // 
+            this.cbUnlockTarUndercity.AutoSize = true;
+            this.cbUnlockTarUndercity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUnlockTarUndercity.Location = new System.Drawing.Point(7, 189);
+            this.cbUnlockTarUndercity.Name = "cbUnlockTarUndercity";
+            this.cbUnlockTarUndercity.Size = new System.Drawing.Size(96, 17);
+            this.cbUnlockTarUndercity.TabIndex = 16;
+            this.cbUnlockTarUndercity.Text = "TAR Undercity";
+            this.ModulesToolTip.SetToolTip(this.cbUnlockTarUndercity, "Unlocks the Undercity door in the Lower City.");
+            this.cbUnlockTarUndercity.UseVisualStyleBackColor = true;
+            this.cbUnlockTarUndercity.CheckedChanged += new System.EventHandler(this.cbUnlockTarUndercity_CheckedChanged);
+            // 
+            // cbUnlockTarVulkar
+            // 
+            this.cbUnlockTarVulkar.AutoSize = true;
+            this.cbUnlockTarVulkar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUnlockTarVulkar.Location = new System.Drawing.Point(7, 212);
+            this.cbUnlockTarVulkar.Name = "cbUnlockTarVulkar";
+            this.cbUnlockTarVulkar.Size = new System.Drawing.Size(108, 17);
+            this.cbUnlockTarVulkar.TabIndex = 17;
+            this.cbUnlockTarVulkar.Text = "TAR Vulkar Base";
+            this.ModulesToolTip.SetToolTip(this.cbUnlockTarVulkar, "Unlocks the Vulkar Base in the Lower City.");
+            this.cbUnlockTarVulkar.UseVisualStyleBackColor = true;
+            this.cbUnlockTarVulkar.CheckedChanged += new System.EventHandler(this.cbUnlockTarVulkar_CheckedChanged);
+            // 
+            // cbUnlockUnkTempleExit
+            // 
+            this.cbUnlockUnkTempleExit.AutoSize = true;
+            this.cbUnlockUnkTempleExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbUnlockUnkTempleExit.Location = new System.Drawing.Point(7, 258);
+            this.cbUnlockUnkTempleExit.Name = "cbUnlockUnkTempleExit";
+            this.cbUnlockUnkTempleExit.Size = new System.Drawing.Size(107, 17);
+            this.cbUnlockUnkTempleExit.TabIndex = 18;
+            this.cbUnlockUnkTempleExit.Text = "UNK Temple Exit";
+            this.ModulesToolTip.SetToolTip(this.cbUnlockUnkTempleExit, "Unlocks the exit door from the Temple Main Floor.");
+            this.cbUnlockUnkTempleExit.UseVisualStyleBackColor = true;
+            this.cbUnlockUnkTempleExit.CheckedChanged += new System.EventHandler(this.cbUnlockUnkTempleExit_CheckedChanged);
+            // 
+            // cbSpeedySuit
+            // 
+            this.cbSpeedySuit.AutoSize = true;
+            this.cbSpeedySuit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbSpeedySuit.Location = new System.Drawing.Point(7, 28);
+            this.cbSpeedySuit.Name = "cbSpeedySuit";
+            this.cbSpeedySuit.Size = new System.Drawing.Size(95, 17);
+            this.cbSpeedySuit.TabIndex = 9;
+            this.cbSpeedySuit.Text = "Fast Envirosuit";
+            this.ModulesToolTip.SetToolTip(this.cbSpeedySuit, "Speeds up the envirosuit to match normal run speed.");
+            this.cbSpeedySuit.UseVisualStyleBackColor = true;
+            this.cbSpeedySuit.CheckedChanged += new System.EventHandler(this.cbSpeedySuit_CheckedChanged);
             // 
             // lblSaveData
             // 
             this.lblSaveData.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSaveData.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblSaveData.Location = new System.Drawing.Point(20, 30);
+            this.lblSaveData.Location = new System.Drawing.Point(21, 30);
             this.lblSaveData.Name = "lblSaveData";
-            this.lblSaveData.Size = new System.Drawing.Size(170, 14);
+            this.lblSaveData.Size = new System.Drawing.Size(172, 14);
             this.lblSaveData.TabIndex = 55;
             this.lblSaveData.Text = "Save Data";
             this.lblSaveData.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -552,28 +664,28 @@
             // 
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.label3.Location = new System.Drawing.Point(206, 30);
+            this.label3.Location = new System.Drawing.Point(199, 30);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(329, 14);
+            this.label3.Size = new System.Drawing.Size(164, 14);
             this.label3.TabIndex = 56;
-            this.label3.Text = "Time Savers / Quality of Life";
+            this.label3.Text = "Quality of Life";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.panel2.Location = new System.Drawing.Point(20, 174);
+            this.panel2.Location = new System.Drawing.Point(21, 151);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(515, 2);
+            this.panel2.Size = new System.Drawing.Size(514, 2);
             this.panel2.TabIndex = 60;
             // 
             // lblShuffleSettings
             // 
             this.lblShuffleSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblShuffleSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.lblShuffleSettings.Location = new System.Drawing.Point(20, 181);
+            this.lblShuffleSettings.Location = new System.Drawing.Point(21, 158);
             this.lblShuffleSettings.Name = "lblShuffleSettings";
-            this.lblShuffleSettings.Size = new System.Drawing.Size(515, 18);
+            this.lblShuffleSettings.Size = new System.Drawing.Size(514, 18);
             this.lblShuffleSettings.TabIndex = 54;
             this.lblShuffleSettings.Text = "Module Shuffle Settings";
             this.lblShuffleSettings.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -593,7 +705,7 @@
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.label2.Location = new System.Drawing.Point(20, 569);
+            this.label2.Location = new System.Drawing.Point(20, 548);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(515, 18);
             this.label2.TabIndex = 62;
@@ -604,13 +716,26 @@
             // 
             this.pnlGoals.AutoSize = true;
             this.pnlGoals.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
+            this.pnlGoals.Controls.Add(this.cbGoalParty);
             this.pnlGoals.Controls.Add(this.cbGoalMalak);
             this.pnlGoals.Controls.Add(this.cbGoalStarMaps);
             this.pnlGoals.Controls.Add(this.cbGoalPazaak);
-            this.pnlGoals.Location = new System.Drawing.Point(37, 672);
+            this.pnlGoals.Location = new System.Drawing.Point(37, 637);
             this.pnlGoals.Name = "pnlGoals";
-            this.pnlGoals.Size = new System.Drawing.Size(137, 63);
+            this.pnlGoals.Size = new System.Drawing.Size(142, 83);
             this.pnlGoals.TabIndex = 63;
+            // 
+            // cbGoalParty
+            // 
+            this.cbGoalParty.AutoSize = true;
+            this.cbGoalParty.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbGoalParty.Location = new System.Drawing.Point(3, 63);
+            this.cbGoalParty.Name = "cbGoalParty";
+            this.cbGoalParty.Size = new System.Drawing.Size(133, 17);
+            this.cbGoalParty.TabIndex = 19;
+            this.cbGoalParty.Text = "Recruit Party Members";
+            this.cbGoalParty.UseVisualStyleBackColor = true;
+            this.cbGoalParty.CheckedChanged += new System.EventHandler(this.cbGoalParty_CheckedChanged);
             // 
             // pnlGlitches
             // 
@@ -619,7 +744,7 @@
             this.pnlGlitches.Controls.Add(this.cbGlitchGpw);
             this.pnlGlitches.Controls.Add(this.cbGlitchFlu);
             this.pnlGlitches.Controls.Add(this.cbGlitchDlz);
-            this.pnlGlitches.Location = new System.Drawing.Point(202, 672);
+            this.pnlGlitches.Location = new System.Drawing.Point(202, 651);
             this.pnlGlitches.Name = "pnlGlitches";
             this.pnlGlitches.Size = new System.Drawing.Size(137, 63);
             this.pnlGlitches.TabIndex = 64;
@@ -627,18 +752,31 @@
             // pnlOther
             // 
             this.pnlOther.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
+            this.pnlOther.Controls.Add(this.cbStrongGoals);
             this.pnlOther.Controls.Add(this.cbIgnoreOnceEdges);
-            this.pnlOther.Location = new System.Drawing.Point(366, 672);
+            this.pnlOther.Location = new System.Drawing.Point(366, 651);
             this.pnlOther.Name = "pnlOther";
             this.pnlOther.Size = new System.Drawing.Size(169, 63);
             this.pnlOther.TabIndex = 65;
+            // 
+            // cbStrongGoals
+            // 
+            this.cbStrongGoals.AutoSize = true;
+            this.cbStrongGoals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbStrongGoals.Location = new System.Drawing.Point(3, 23);
+            this.cbStrongGoals.Name = "cbStrongGoals";
+            this.cbStrongGoals.Size = new System.Drawing.Size(149, 17);
+            this.cbStrongGoals.TabIndex = 24;
+            this.cbStrongGoals.Text = "Strongly Reachable Goals";
+            this.cbStrongGoals.UseVisualStyleBackColor = true;
+            this.cbStrongGoals.CheckedChanged += new System.EventHandler(this.cbStrongGoals_CheckedChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.label1.Location = new System.Drawing.Point(366, 652);
+            this.label1.Location = new System.Drawing.Point(366, 631);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(75, 13);
             this.label1.TabIndex = 66;
@@ -651,74 +789,99 @@
             this.flpSaveData.Controls.Add(this.cbSaveMiniGame);
             this.flpSaveData.Controls.Add(this.cbSaveAllMods);
             this.flpSaveData.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpSaveData.Location = new System.Drawing.Point(20, 49);
+            this.flpSaveData.Location = new System.Drawing.Point(21, 49);
             this.flpSaveData.Name = "flpSaveData";
             this.flpSaveData.Padding = new System.Windows.Forms.Padding(4, 2, 2, 2);
-            this.flpSaveData.Size = new System.Drawing.Size(170, 73);
+            this.flpSaveData.Size = new System.Drawing.Size(172, 72);
             this.flpSaveData.TabIndex = 67;
+            this.flpSaveData.WrapContents = false;
             // 
             // flpTimeSavers
             // 
+            this.flpTimeSavers.AutoScroll = true;
             this.flpTimeSavers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
             this.flpTimeSavers.Controls.Add(this.cbVulkSpiceLZ);
+            this.flpTimeSavers.Controls.Add(this.cbSpeedySuit);
             this.flpTimeSavers.Controls.Add(this.cbFixDream);
             this.flpTimeSavers.Controls.Add(this.cbFixMindPrison);
             this.flpTimeSavers.Controls.Add(this.cbFixCoordinates);
-            this.flpTimeSavers.Controls.Add(this.cbUnlockDanRuins);
-            this.flpTimeSavers.Controls.Add(this.cbUnlockGalaxyMap);
-            this.flpTimeSavers.Controls.Add(this.cbUnlockLevElevators);
-            this.flpTimeSavers.Controls.Add(this.cbUnlockManSub);
-            this.flpTimeSavers.Controls.Add(this.cbUnlockStaBastila);
-            this.flpTimeSavers.Controls.Add(this.cbUnlockUnkSummit);
             this.flpTimeSavers.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpTimeSavers.Location = new System.Drawing.Point(206, 49);
+            this.flpTimeSavers.Location = new System.Drawing.Point(199, 49);
             this.flpTimeSavers.Name = "flpTimeSavers";
             this.flpTimeSavers.Padding = new System.Windows.Forms.Padding(4, 2, 2, 2);
-            this.flpTimeSavers.Size = new System.Drawing.Size(329, 119);
+            this.flpTimeSavers.Size = new System.Drawing.Size(164, 96);
             this.flpTimeSavers.TabIndex = 68;
+            this.flpTimeSavers.WrapContents = false;
             // 
-            // cbUnlockManSub
+            // flpUnlockDoors
             // 
-            this.cbUnlockManSub.AutoSize = true;
-            this.cbUnlockManSub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUnlockManSub.Location = new System.Drawing.Point(164, 51);
-            this.cbUnlockManSub.Name = "cbUnlockManSub";
-            this.cbUnlockManSub.Size = new System.Drawing.Size(147, 17);
-            this.cbUnlockManSub.TabIndex = 11;
-            this.cbUnlockManSub.Text = "Unlock MAN Door to Sub";
-            this.cbUnlockManSub.UseVisualStyleBackColor = true;
-            this.cbUnlockManSub.CheckedChanged += new System.EventHandler(this.cbUnlockManSub_CheckedChanged);
+            this.flpUnlockDoors.AutoScroll = true;
+            this.flpUnlockDoors.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
+            this.flpUnlockDoors.Controls.Add(this.cbUnlockDanRuins);
+            this.flpUnlockDoors.Controls.Add(this.cbUnlockGalaxyMap);
+            this.flpUnlockDoors.Controls.Add(this.cbUnlockKorValley);
+            this.flpUnlockDoors.Controls.Add(this.cbUnlockLevHangar);
+            this.flpUnlockDoors.Controls.Add(this.cbEnableLevHangarElev);
+            this.flpUnlockDoors.Controls.Add(this.cbUnlockManEmbassy);
+            this.flpUnlockDoors.Controls.Add(this.cbUnlockManHangar);
+            this.flpUnlockDoors.Controls.Add(this.cbUnlockStaBastila);
+            this.flpUnlockDoors.Controls.Add(this.cbUnlockTarUndercity);
+            this.flpUnlockDoors.Controls.Add(this.cbUnlockTarVulkar);
+            this.flpUnlockDoors.Controls.Add(this.cbUnlockUnkSummit);
+            this.flpUnlockDoors.Controls.Add(this.cbUnlockUnkTempleExit);
+            this.flpUnlockDoors.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpUnlockDoors.Location = new System.Drawing.Point(369, 49);
+            this.flpUnlockDoors.Name = "flpUnlockDoors";
+            this.flpUnlockDoors.Padding = new System.Windows.Forms.Padding(4, 2, 2, 2);
+            this.flpUnlockDoors.Size = new System.Drawing.Size(166, 96);
+            this.flpUnlockDoors.TabIndex = 11;
+            this.flpUnlockDoors.TabStop = true;
+            this.flpUnlockDoors.WrapContents = false;
             // 
-            // cbUnlockStaBastila
+            // label4
             // 
-            this.cbUnlockStaBastila.AutoSize = true;
-            this.cbUnlockStaBastila.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUnlockStaBastila.Location = new System.Drawing.Point(164, 74);
-            this.cbUnlockStaBastila.Name = "cbUnlockStaBastila";
-            this.cbUnlockStaBastila.Size = new System.Drawing.Size(156, 17);
-            this.cbUnlockStaBastila.TabIndex = 12;
-            this.cbUnlockStaBastila.Text = "Unlock STA Door to Bastila";
-            this.cbUnlockStaBastila.UseVisualStyleBackColor = true;
-            this.cbUnlockStaBastila.CheckedChanged += new System.EventHandler(this.cbUnlockStaBastila_CheckedChanged);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.label4.Location = new System.Drawing.Point(369, 30);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(166, 14);
+            this.label4.TabIndex = 70;
+            this.label4.Text = "Unlock Doors";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // cbUnlockUnkSummit
+            // lblWIP
             // 
-            this.cbUnlockUnkSummit.AutoSize = true;
-            this.cbUnlockUnkSummit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
-            this.cbUnlockUnkSummit.Location = new System.Drawing.Point(164, 97);
-            this.cbUnlockUnkSummit.Name = "cbUnlockUnkSummit";
-            this.cbUnlockUnkSummit.Size = new System.Drawing.Size(143, 17);
-            this.cbUnlockUnkSummit.TabIndex = 13;
-            this.cbUnlockUnkSummit.Text = "Unlock UNK Summit Exit";
-            this.cbUnlockUnkSummit.UseVisualStyleBackColor = true;
-            this.cbUnlockUnkSummit.CheckedChanged += new System.EventHandler(this.cbUnlockUnkSummit_CheckedChanged);
+            this.lblWIP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
+            this.lblWIP.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.lblWIP.Location = new System.Drawing.Point(197, 595);
+            this.lblWIP.Name = "lblWIP";
+            this.lblWIP.Size = new System.Drawing.Size(337, 28);
+            this.lblWIP.TabIndex = 53;
+            this.lblWIP.Text = "Reachability verification is a work in progress. It does not yet ensure the seed " +
+    "is beatable, but it does improve those chances.";
+            this.lblWIP.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cbEnableLevHangarElev
+            // 
+            this.cbEnableLevHangarElev.AutoSize = true;
+            this.cbEnableLevHangarElev.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.cbEnableLevHangarElev.Location = new System.Drawing.Point(7, 97);
+            this.cbEnableLevHangarElev.Name = "cbEnableLevHangarElev";
+            this.cbEnableLevHangarElev.Size = new System.Drawing.Size(126, 17);
+            this.cbEnableLevHangarElev.TabIndex = 19;
+            this.cbEnableLevHangarElev.Text = "LEV Hangar Elevator";
+            this.ModulesToolTip.SetToolTip(this.cbEnableLevHangarElev, "The Leviathan Hangar elevator is now usable.");
+            this.cbEnableLevHangarElev.UseVisualStyleBackColor = true;
+            this.cbEnableLevHangarElev.CheckedChanged += new System.EventHandler(this.cbEnableLevHangarElevator_CheckedChanged);
             // 
             // ModuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(556, 752);
+            this.ClientSize = new System.Drawing.Size(556, 726);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.flpUnlockDoors);
             this.Controls.Add(this.flpTimeSavers);
             this.Controls.Add(this.flpSaveData);
             this.Controls.Add(this.label1);
@@ -764,6 +927,8 @@
             this.flpSaveData.PerformLayout();
             this.flpTimeSavers.ResumeLayout(false);
             this.flpTimeSavers.PerformLayout();
+            this.flpUnlockDoors.ResumeLayout(false);
+            this.flpUnlockDoors.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -784,7 +949,7 @@
         private System.Windows.Forms.CheckBox cbFixCoordinates;
         private System.Windows.Forms.CheckBox cbFixMindPrison;
         private System.Windows.Forms.CheckBox cbUnlockDanRuins;
-        private System.Windows.Forms.CheckBox cbUnlockLevElevators;
+        private System.Windows.Forms.CheckBox cbUnlockLevHangar;
         private System.Windows.Forms.CheckBox cbVulkSpiceLZ;
         private System.Windows.Forms.CheckBox cbReachability;
         private System.Windows.Forms.Label lblGoals;
@@ -803,7 +968,6 @@
         private System.Windows.Forms.Label lblRule1;
         private System.Windows.Forms.Label lblRule2;
         private System.Windows.Forms.Label lblRule3;
-        private System.Windows.Forms.Label lblWIP;
         private System.Windows.Forms.Label lblSaveData;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel2;
@@ -816,8 +980,20 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.FlowLayoutPanel flpSaveData;
         private System.Windows.Forms.FlowLayoutPanel flpTimeSavers;
-        private System.Windows.Forms.CheckBox cbUnlockManSub;
+        private System.Windows.Forms.CheckBox cbUnlockManEmbassy;
         private System.Windows.Forms.CheckBox cbUnlockStaBastila;
         private System.Windows.Forms.CheckBox cbUnlockUnkSummit;
+        private System.Windows.Forms.FlowLayoutPanel flpUnlockDoors;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox cbUnlockKorValley;
+        private System.Windows.Forms.CheckBox cbUnlockManHangar;
+        private System.Windows.Forms.CheckBox cbUnlockTarUndercity;
+        private System.Windows.Forms.CheckBox cbUnlockTarVulkar;
+        private System.Windows.Forms.CheckBox cbUnlockUnkTempleExit;
+        private System.Windows.Forms.CheckBox cbStrongGoals;
+        private System.Windows.Forms.Label lblWIP;
+        private System.Windows.Forms.CheckBox cbGoalParty;
+        private System.Windows.Forms.CheckBox cbSpeedySuit;
+        private System.Windows.Forms.CheckBox cbEnableLevHangarElev;
     }
 }

@@ -7,13 +7,17 @@ using System.Text.RegularExpressions;
 using KotOR_IO;
 using System.IO;
 using ClosedXML.Excel;
+using kotor_Randomizer_2.Models;
 
 namespace kotor_Randomizer_2
 {
     public static class TextRando
     {
+        #region Constants
         private const int TLK_STRING_COUNT = 49264;
+        #endregion
 
+        #region Private Properties
         /// <summary>
         /// Lookup table for randomized dialogue entries.
         /// Usage: EntriesLookupTable[Module.Name][RFile.Label] = List(Struct[text].StringRef, rand, Struct[VO_ResRef].Reference, rand, Struct[Sound].Reference, rand);
@@ -30,21 +34,59 @@ namespace kotor_Randomizer_2
         /// </summary>
         private static Dictionary<int, Tuple<string, string>> TlkLookupTable { get; set; } = new Dictionary<int, Tuple<string, string>>();
 
-        public static void text_rando(KPaths paths)
+        private static bool RandoDialogEntries { get; set; }
+        private static bool RandoDialogReplies { get; set; }
+        private static bool MatchEntrySoundsWithText { get; set; }
+        private static bool RandoFullTLK { get; set; }
+        private static bool MatchSimilarStringLength { get; set; }
+        #endregion
+
+        /// <summary>
+        /// Creates backups for files modified during this randomization.
+        /// </summary>
+        /// <param name="paths"></param>
+        internal static void CreateTextBackups(KPaths paths)
         {
-            var settings = Properties.Settings.Default;
-            if (settings.TextSettingsValue.HasFlag(TextSettings.RandoFullTLK)) //Shuffle TLK first, so sound matching still works
+            paths.BackUpDialogFile();
+            paths.BackUpModulesDirectory();
+        }
+
+        public static void text_rando(KPaths paths, Kotor1Randomizer k1rando = null)
+        {
+            AssignSettings(k1rando);
+
+            if (RandoFullTLK) // Shuffle TLK first, so sound matching still works.
             {
-                shuffle_TLK(paths, settings.TextSettingsValue.HasFlag(TextSettings.MatchSimLengthStrings));
+                shuffle_TLK(paths);
             }
-            if (settings.TextSettingsValue.HasFlag(TextSettings.RandoDialogEntries) || settings.TextSettingsValue.HasFlag(TextSettings.RandoDialogReplies))
+            if (RandoDialogEntries || RandoDialogReplies)
             {
-                shuffle_dialogue(paths, settings.TextSettingsValue.HasFlag(TextSettings.RandoDialogEntries), settings.TextSettingsValue.HasFlag(TextSettings.RandoDialogReplies), settings.TextSettingsValue.HasFlag(TextSettings.MatchEntrySoundsWText));
+                shuffle_dialogue(paths);
+            }
+        }
+
+        private static void AssignSettings(Kotor1Randomizer k1rando)
+        {
+            if (k1rando == null)
+            {
+                RandoDialogEntries       = Properties.Settings.Default.TextSettingsValue.HasFlag(TextSettings.RandoDialogEntries);
+                RandoDialogReplies       = Properties.Settings.Default.TextSettingsValue.HasFlag(TextSettings.RandoDialogReplies);
+                MatchEntrySoundsWithText = Properties.Settings.Default.TextSettingsValue.HasFlag(TextSettings.MatchEntrySoundsWText);
+                RandoFullTLK             = Properties.Settings.Default.TextSettingsValue.HasFlag(TextSettings.RandoFullTLK);
+                MatchSimilarStringLength = Properties.Settings.Default.TextSettingsValue.HasFlag(TextSettings.MatchSimLengthStrings);
+            }
+            else
+            {
+                RandoDialogEntries       = k1rando.TextSettingsValue.HasFlag(TextSettings.RandoDialogEntries);
+                RandoDialogReplies       = k1rando.TextSettingsValue.HasFlag(TextSettings.RandoDialogReplies);
+                MatchEntrySoundsWithText = k1rando.TextSettingsValue.HasFlag(TextSettings.MatchEntrySoundsWText);
+                RandoFullTLK             = k1rando.TextSettingsValue.HasFlag(TextSettings.RandoFullTLK);
+                MatchSimilarStringLength = k1rando.TextSettingsValue.HasFlag(TextSettings.MatchSimLengthStrings);
             }
         }
 
         //Randomize Dialogue
-        static void shuffle_dialogue(KPaths paths, bool Entries, bool Replies, bool SoundMatching)
+        static void shuffle_dialogue(KPaths paths)
         {
             TLK t = new TLK(paths.dialog);
 
@@ -59,7 +101,7 @@ namespace kotor_Randomizer_2
                     GFF g = new GFF(RF.File_Data);
 
                     //Entries
-                    if (Entries)
+                    if (RandoDialogEntries)
                     {
                         foreach (GFF.STRUCT S in (g.Top_Level.Fields.Where(x => x.Label == "EntryList").FirstOrDefault() as GFF.LIST).Structs)
                         {
@@ -77,7 +119,7 @@ namespace kotor_Randomizer_2
                                     EntriesLookupTable[fi.Name].Add(RF.Label, new List<Tuple<int, int, string, string, string, string>>());
 
                                 // Sound and Text Matching
-                                if (SoundMatching)
+                                if (MatchEntrySoundsWithText)
                                 {
                                     var text = S.Fields.Where(x => x.Label == "Text").FirstOrDefault() as GFF.CExoLocString;
                                     int textOrig = text.StringRef;
@@ -127,7 +169,7 @@ namespace kotor_Randomizer_2
                     }
 
                     //Replies
-                    if (Replies)
+                    if (RandoDialogReplies)
                     {
                         foreach (GFF.STRUCT S in (g.Top_Level.Fields.Where(x => x.Label == "ReplyList").FirstOrDefault() as GFF.LIST).Structs)
                         {
@@ -159,11 +201,11 @@ namespace kotor_Randomizer_2
         }
 
         //Randomize TLK
-        static void shuffle_TLK(KPaths paths, bool LengthMatching)
+        static void shuffle_TLK(KPaths paths)
         {
             TLK t = new TLK(paths.dialog);
 
-            if (LengthMatching)
+            if (MatchSimilarStringLength)
             {
                 TLK t_ordered = new TLK(paths.dialog);
 
@@ -225,19 +267,7 @@ namespace kotor_Randomizer_2
                 RepliesLookupTable.Count == 0 )
             { return; }
             var ws = workbook.Worksheets.Add("Text");
-
             int i = 1;
-            ws.Cell(i, 1).Value = "Seed";
-            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            i++;
-
-            Version version = typeof(StartForm).Assembly.GetName().Version;
-            ws.Cell(i, 1).Value = "Version";
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
-            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-            i += 2;     // Skip a row.
 
             // Text Randomization Settings
             ws.Cell(i, 1).Value = "Rando Type";
@@ -248,15 +278,14 @@ namespace kotor_Randomizer_2
             ws.Cell(i, 2).Style.Font.Bold = true;
             i++;
 
-            var textSetting = Properties.Settings.Default.TextSettingsValue;
             var settings = new List<Tuple<string, bool>>()
             {
-                new Tuple<string, bool>("Dialogue Randomization", textSetting.HasFlag(TextSettings.RandoDialogEntries) || textSetting.HasFlag(TextSettings.RandoDialogReplies)),
-                new Tuple<string, bool>("Randomize Entries", textSetting.HasFlag(TextSettings.RandoDialogEntries)),
-                new Tuple<string, bool>("Randomize Replies", textSetting.HasFlag(TextSettings.RandoDialogReplies)),
-                new Tuple<string, bool>("Match Entry Sounds", textSetting.HasFlag(TextSettings.MatchEntrySoundsWText)),
-                new Tuple<string, bool>("Randomize Additional Text", textSetting.HasFlag(TextSettings.RandoFullTLK)),
-                new Tuple<string, bool>("Match Text Length", textSetting.HasFlag(TextSettings.MatchSimLengthStrings)),
+                new Tuple<string, bool>("Dialogue Randomization", RandoDialogEntries || RandoDialogReplies),
+                new Tuple<string, bool>("Randomize Entries", RandoDialogEntries),
+                new Tuple<string, bool>("Randomize Replies", RandoDialogReplies),
+                new Tuple<string, bool>("Match Entry Sounds", MatchEntrySoundsWithText),
+                new Tuple<string, bool>("Randomize Additional Text", RandoFullTLK),
+                new Tuple<string, bool>("Match Text Length", MatchSimilarStringLength),
             };
 
             foreach (var setting in settings)
@@ -297,7 +326,7 @@ namespace kotor_Randomizer_2
                 ws.Cell(i, j).Style.Border.RightBorder = XLBorderStyleValues.Thin;
                 ws.Cell(i, j).Style.Font.Italic = true;
 
-                if (textSetting.HasFlag(TextSettings.MatchEntrySoundsWText))
+                if (MatchEntrySoundsWithText)
                 {
                     ws.Cell(i, ++j).Value = "Orig VO_Ref";
                     ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
@@ -338,7 +367,7 @@ namespace kotor_Randomizer_2
                             ws.Cell(i, 2).Value = rfile.Key;
                             ws.Cell(i, 3).Value = set.Item1;
                             ws.Cell(i, 4).Value = set.Item2;
-                            if (textSetting.HasFlag(TextSettings.MatchEntrySoundsWText))
+                            if (MatchEntrySoundsWithText)
                             {
                                 ws.Cell(i, 5).Value = set.Item3;
                                 ws.Cell(i, 6).Value = set.Item4;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using KotOR_IO;
 using ClosedXML.Excel;
+using kotor_Randomizer_2.Models;
 
 namespace kotor_Randomizer_2
 {
@@ -90,43 +91,62 @@ namespace kotor_Randomizer_2
         /// </summary>
         private static Dictionary<string, Tuple<Layout, Layout>> SwoopLookupTable { get; set; } = new Dictionary<string, Tuple<Layout, Layout>>();
 
-        public static void other_rando(KPaths paths)
+        /// <summary>
+        /// Creates backups for files modified during this randomization.
+        /// </summary>
+        /// <param name="paths"></param>
+        internal static void CreateOtherBackups(KPaths paths)
         {
-            // NameGen
-            if (Properties.Settings.Default.RandomizeNameGen)
-            {
-                List<string> male_names = Properties.Settings.Default.FirstnamesM.Cast<string>().Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
-                LTR ltr_male_names = new LTR(male_names);
-                List<string> female_names = Properties.Settings.Default.FirstnamesF.Cast<string>().Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
-                LTR ltr_female_names = new LTR(female_names);
-                List<string> last_names = Properties.Settings.Default.Lastnames.Cast<string>().Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
-                LTR ltr_last_names = new LTR(last_names);
+            paths.BackUpChitinFile();
+            paths.BackUpOverrideDirectory();
+        }
 
-                if (male_names.Any())
+        private static KPaths Paths { get; set; }
+        private static bool RandomizeNameGen { get; set; }
+        private static List<string> FirstnamesM { get; set; } = new List<string>();
+        private static List<string> FirstnamesF { get; set; } = new List<string>();
+        private static List<string> Lastnames   { get; set; } = new List<string>();
+        private static bool PolymorphMode { get; set; }
+        private static bool RandomizePazaakDecks { get; set; }
+        private static bool RandomizePartyMembers { get; set; }
+        private static bool RandomizeSwoopBoosters { get; set; }
+        private static bool RandomizeSwoopObstacles { get; set; }
+
+        public static void other_rando(KPaths paths, Kotor1Randomizer k1rando = null)
+        {
+            Paths = paths;
+            AssignSettings(k1rando);
+
+            // NameGen
+            if (RandomizeNameGen)
+            {
+                LTR ltr_male_names = new LTR(FirstnamesM);
+                LTR ltr_female_names = new LTR(FirstnamesF);
+                LTR ltr_last_names = new LTR(Lastnames);
+
+                if (FirstnamesM.Any())
                 {
-                    NameGenLookup.Add(NAME_GEN_MALE, male_names);
+                    NameGenLookup.Add(NAME_GEN_MALE, FirstnamesM);
                     ltr_male_names.WriteToFile(paths.Override + "humanm.ltr");
                 }
-                if (female_names.Any())
+                if (FirstnamesF.Any())
                 {
-                    NameGenLookup.Add(NAME_GEN_FEMALE, female_names);
+                    NameGenLookup.Add(NAME_GEN_FEMALE, FirstnamesF);
                     ltr_female_names.WriteToFile(paths.Override + "humanf.ltr");
                 }
-                if (last_names.Any())
+                if (Lastnames.Any())
                 {
-                    NameGenLookup.Add(NAME_GEN_LAST, last_names);
+                    NameGenLookup.Add(NAME_GEN_LAST, Lastnames);
                     ltr_last_names.WriteToFile(paths.Override + "humanl.ltr");
                 }
             }
 
             // Polymorph
-            if (Properties.Settings.Default.PolymorphMode)
+            if (PolymorphMode)
             {
                 BIF b = new BIF(paths.data + "templates.bif");
                 KEY k = new KEY(paths.chitin);
                 b.AttachKey(k, "data\\templates.bif");
-
-                
 
                 foreach (var res in b.VariableResourceTable.Where(x => x.ResourceType == ResourceType.UTI))
                 {
@@ -148,15 +168,14 @@ namespace kotor_Randomizer_2
                     GFF.STRUCT disguise_prop = new GFF.STRUCT("", 0,
                         new List<GFF.FIELD>()
                         {
-                        new GFF.BYTE("ChanceAppear", 100),
-                        new GFF.BYTE("CostTable", 0),
-                        new GFF.WORD("CostValue", 0),
-                        new GFF.BYTE("Param1", 255),
-                        new GFF.BYTE("Param1Value", 0),
-                        new GFF.WORD("PropertyName", 59), //Disguise property
-                        new GFF.WORD("Subtype", rando_appearance), //The random appearance value (same values used in model rando)
-                        }
-                        );
+                            new GFF.BYTE("ChanceAppear", 100),
+                            new GFF.BYTE("CostTable", 0),
+                            new GFF.WORD("CostValue", 0),
+                            new GFF.BYTE("Param1", 255),
+                            new GFF.BYTE("Param1Value", 0),
+                            new GFF.WORD("PropertyName", 59), //Disguise property
+                            new GFF.WORD("Subtype", rando_appearance), //The random appearance value (same values used in model rando)
+                        });
 
                     //Adds the disguise property to the UTI's property list
                     (g.Top_Level.Fields.Where(x => x.Label == "PropertiesList").FirstOrDefault() as GFF.LIST).Structs.Add(disguise_prop);
@@ -169,7 +188,7 @@ namespace kotor_Randomizer_2
             }
 
             // Random NPC Pazaak Decks
-            if (Properties.Settings.Default.RandomizePazaakDecks)
+            if (RandomizePazaakDecks)
             {
                 string ops = "+-*";
 
@@ -222,7 +241,7 @@ namespace kotor_Randomizer_2
             }
 
             // Party Rando
-            if (Properties.Settings.Default.RandomizePartyMembers)
+            if (RandomizePartyMembers)
             {
                 BIF b = new BIF(paths.data + "templates.bif");
                 KEY k = new KEY(paths.chitin_backup);
@@ -326,8 +345,7 @@ namespace kotor_Randomizer_2
             }
 
             // Swoop Rando
-            if (Properties.Settings.Default.RandomizeSwoopBoosters ||
-                Properties.Settings.Default.RandomizeSwoopObstacles)
+            if (RandomizeSwoopBoosters || RandomizeSwoopObstacles)
             {
                 // Get the bif containing layout files.
                 BIF b = new BIF(Path.Combine(paths.data, BIF_LAYOUT));
@@ -344,8 +362,8 @@ namespace kotor_Randomizer_2
                     Layout lytOrig = new Layout(lyt);
 
                     lyt.RandomizeLayout(
-                        doTracks:    Properties.Settings.Default.RandomizeSwoopBoosters,
-                        doObstacles: Properties.Settings.Default.RandomizeSwoopObstacles
+                        doTracks:    RandomizeSwoopBoosters,
+                        doObstacles: RandomizeSwoopObstacles
                     );
 
                     string trackName = "";
@@ -370,6 +388,43 @@ namespace kotor_Randomizer_2
             }
         }
 
+        private static void AssignSettings(Kotor1Randomizer k1rando)
+        {
+            if (k1rando == null)
+            {
+                RandomizeNameGen = Properties.Settings.Default.RandomizeNameGen;
+                FirstnamesM = Properties.Settings.Default.FirstnamesM.Cast<string>().Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
+                FirstnamesF = Properties.Settings.Default.FirstnamesF.Cast<string>().Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
+                Lastnames = Properties.Settings.Default.Lastnames.Cast<string>().Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
+                PolymorphMode = Properties.Settings.Default.PolymorphMode;
+                RandomizePazaakDecks = Properties.Settings.Default.RandomizePazaakDecks;
+                RandomizePartyMembers = Properties.Settings.Default.RandomizePartyMembers;
+                RandomizeSwoopBoosters = Properties.Settings.Default.RandomizeSwoopBoosters;
+                RandomizeSwoopObstacles = Properties.Settings.Default.RandomizeSwoopObstacles;
+            }
+            else
+            {
+                RandomizeNameGen = k1rando.OtherNameGeneration;
+                if (string.IsNullOrWhiteSpace(k1rando.OtherFirstNamesM))
+                     FirstnamesM = new List<string>();
+                else FirstnamesM = k1rando.OtherFirstNamesM.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
+
+                if (string.IsNullOrWhiteSpace(k1rando.OtherFirstNamesF))
+                     FirstnamesF = new List<string>();
+                else FirstnamesF = k1rando.OtherFirstNamesF.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
+
+                if (string.IsNullOrWhiteSpace(k1rando.OtherLastNames))
+                     Lastnames = new List<string>();
+                else Lastnames = k1rando.OtherLastNames.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(x => x.Length > 2).ToList();
+
+                PolymorphMode = k1rando.OtherPolymorphMode;
+                RandomizePazaakDecks = k1rando.OtherPazaakDecks;
+                RandomizePartyMembers = k1rando.OtherPartyMembers;
+                RandomizeSwoopBoosters = k1rando.OtherSwoopBoosters;
+                RandomizeSwoopObstacles = k1rando.OtherSwoopObstacles;
+            }
+        }
+
         internal static void CreateSpoilerLog(XLWorkbook workbook)
         {
             if (NameGenLookup.Count == 0        &&
@@ -380,25 +435,12 @@ namespace kotor_Randomizer_2
             { return; }
             var ws = workbook.Worksheets.Add("Other");
 
-            var paths = new KPaths(Properties.Settings.Default.Kotor1Path);
-            TLK tlk = new TLK(File.Exists(paths.dialog_backup) ? paths.dialog_backup : paths.dialog);
-            KEY key = new KEY(paths.chitin_backup);
-            BIF bifTmp = new BIF(Path.Combine(paths.data, "templates.bif"));
+            TLK tlk = new TLK(File.Exists(Paths.dialog_backup) ? Paths.dialog_backup : Paths.dialog);
+            KEY key = new KEY(Paths.chitin_backup);
+            BIF bifTmp = new BIF(Path.Combine(Paths.data, "templates.bif"));
             bifTmp.AttachKey(key, "data\\templates.bif");
 
             int i = 1;
-            ws.Cell(i, 1).Value = "Seed";
-            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            i++;
-
-            Version version = typeof(StartForm).Assembly.GetName().Version;
-            ws.Cell(i, 1).Value = "Version";
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
-            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-            i += 2;     // Skip a row.
-
             int jMax = 2;   // Remember the widest table.
 
             // Other Randomization Settings
@@ -412,12 +454,12 @@ namespace kotor_Randomizer_2
 
             var settings = new List<Tuple<string, bool>>()
             {
-                new Tuple<string, bool>("Name Gen Rando",   Properties.Settings.Default.RandomizeNameGen),
-                new Tuple<string, bool>("Polymorph Mode",   Properties.Settings.Default.PolymorphMode),
-                new Tuple<string, bool>("NPC Pazaak Decks", Properties.Settings.Default.RandomizePazaakDecks),
-                new Tuple<string, bool>("Party Members",    Properties.Settings.Default.RandomizePartyMembers),
-                new Tuple<string, bool>("Swoop Boosters",   Properties.Settings.Default.RandomizeSwoopBoosters),
-                new Tuple<string, bool>("Swoop Obstacles",  Properties.Settings.Default.RandomizeSwoopObstacles),
+                new Tuple<string, bool>("Name Gen Rando",   RandomizeNameGen),
+                new Tuple<string, bool>("Polymorph Mode",   PolymorphMode),
+                new Tuple<string, bool>("NPC Pazaak Decks", RandomizePazaakDecks),
+                new Tuple<string, bool>("Party Members",    RandomizePartyMembers),
+                new Tuple<string, bool>("Swoop Boosters",   RandomizeSwoopBoosters),
+                new Tuple<string, bool>("Swoop Obstacles",  RandomizeSwoopObstacles),
             };
 
             foreach (var setting in settings)
@@ -585,7 +627,7 @@ namespace kotor_Randomizer_2
                 const string CHAR_2DA = "appearance";
                 const string COL_LABEL = "label";
 
-                BIF bif2da = new BIF(Path.Combine(paths.data, "2da.bif"));
+                BIF bif2da = new BIF(Path.Combine(Paths.data, "2da.bif"));
                 bif2da.AttachKey(key, "data\\2da.bif");
 
                 var items = bifTmp.VariableResourceTable.Where(x => x.ResourceType == ResourceType.UTI);
@@ -658,7 +700,7 @@ namespace kotor_Randomizer_2
                     int iDone = i;
                     int j = 1;
 
-                    if (Properties.Settings.Default.RandomizeSwoopBoosters)
+                    if (RandomizeSwoopBoosters)
                     {
                         // Column Headers
                         ws.Cell(i, j).Value = "Boosters";
@@ -704,7 +746,7 @@ namespace kotor_Randomizer_2
                         if (iDone < i) iDone = i;   // Remember the length of this table.
                     }
 
-                    if (Properties.Settings.Default.RandomizeSwoopObstacles)
+                    if (RandomizeSwoopObstacles)
                     {
                         i = iStart;
 

@@ -22,6 +22,7 @@ namespace kotor_Randomizer_2
             InitializeComponent();
             SetBorder(flpSaveData, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
             SetBorder(flpTimeSavers, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
+            SetBorder(flpUnlockDoors, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
             SetBorder(RandomizedListBox, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
             SetBorder(OmittedListBox, Color.FromArgb(0, 175, 255), 1, BorderStyle.None);
             SetBorder(lblWIP, Color.FromArgb(211, 216, 8), 1, BorderStyle.None);
@@ -47,26 +48,31 @@ namespace kotor_Randomizer_2
 
             cbUnlockDanRuins.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
             cbUnlockGalaxyMap.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
-            cbUnlockLevElevators.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
-            cbUnlockManSub.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManSub);
+            cbUnlockKorValley.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley);
+            cbUnlockLevHangar.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+            cbEnableLevHangarElev.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev);
+            cbUnlockManHangar.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar);
+            cbUnlockManEmbassy.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy);
             cbUnlockStaBastila.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
+            cbUnlockTarUndercity.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity);
+            cbUnlockTarVulkar.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar);
             cbUnlockUnkSummit.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
+            cbUnlockUnkTempleExit.Checked = settings.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit);
 
             // Initialize reachability settings
             cbUseRandoRules.Checked = settings.UseRandoRules;
             cbReachability.Checked = settings.VerifyReachability;
-            cbIgnoreOnceEdges.Enabled = cbReachability.Checked;
-            cbGoalMalak.Enabled = cbReachability.Checked;
-            cbGoalStarMaps.Enabled = cbReachability.Checked;
-            cbGoalPazaak.Enabled = cbReachability.Checked;
-            cbGlitchClip.Enabled = cbReachability.Checked;
-            cbGlitchDlz.Enabled = cbReachability.Checked;
-            cbGlitchFlu.Enabled = cbReachability.Checked;
-            cbGlitchGpw.Enabled = cbReachability.Checked;
+
+            pnlGoals.Enabled = cbReachability.Checked;
+            pnlGlitches.Enabled = cbReachability.Checked;
+            pnlOther.Enabled = cbReachability.Checked;
+
             cbIgnoreOnceEdges.Checked = settings.IgnoreOnceEdges;
+            cbStrongGoals.Checked = settings.StrongGoals;
             cbGoalMalak.Checked = settings.GoalIsMalak;
             cbGoalStarMaps.Checked = settings.GoalIsStarMaps;
             cbGoalPazaak.Checked = settings.GoalIsPazaak;
+            cbGoalParty.Checked = settings.GoalIsParty;
             cbGlitchClip.Checked = settings.AllowGlitchClip;
             cbGlitchDlz.Checked = settings.AllowGlitchDlz;
             cbGlitchFlu.Checked = settings.AllowGlitchFlu;
@@ -287,22 +293,34 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.FixMindPrison;
         }
 
+        private void cbSpeedySuit_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.FastEnvirosuit;
+        }
+
         private void cbUnlockDanRuins_CheckedChanged(object sender, EventArgs e)
         {
             if (!Constructed) { return; }
             Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockDanRuins;
         }
 
-        private void cbUnlockLevElevators_CheckedChanged(object sender, EventArgs e)
+        private void cbUnlockLevHangarAccess_CheckedChanged(object sender, EventArgs e)
         {
             if (!Constructed) { return; }
             Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockLevElev;
         }
 
+        private void cbEnableLevHangarElevator_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.EnableLevHangarElev;
+        }
+
         private void cbUnlockManSub_CheckedChanged(object sender, EventArgs e)
         {
             if (!Constructed) { return; }
-            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockManSub;
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockManEmbassy;
         }
 
         private void cbUnlockStaBastila_CheckedChanged(object sender, EventArgs e)
@@ -317,6 +335,36 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockUnkSummit;
         }
 
+        private void cbUnlockKorValley_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockKorValley;
+        }
+
+        private void cbUnlockManHangar_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockManHangar;
+        }
+
+        private void cbUnlockTarUndercity_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockTarUndercity;
+        }
+
+        private void cbUnlockTarVulkar_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockTarVulkar;
+        }
+
+        private void cbUnlockUnkTempleExit_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.ModuleExtrasValue ^= ModuleExtras.UnlockUnkTempleExit;
+        }
+
         private void cbVulkSpiceLZ_CheckedChanged(object sender, EventArgs e)
         {
             if (!Constructed) { return; }
@@ -327,14 +375,9 @@ namespace kotor_Randomizer_2
         {
             if (!Constructed) { return; }
             Properties.Settings.Default.VerifyReachability = cbReachability.Checked;
-            cbIgnoreOnceEdges.Enabled = cbReachability.Checked;
-            cbGoalMalak.Enabled = cbReachability.Checked;
-            cbGoalStarMaps.Enabled = cbReachability.Checked;
-            cbGoalPazaak.Enabled = cbReachability.Checked;
-            cbGlitchClip.Enabled = cbReachability.Checked;
-            cbGlitchDlz.Enabled = cbReachability.Checked;
-            cbGlitchFlu.Enabled = cbReachability.Checked;
-            cbGlitchGpw.Enabled = cbReachability.Checked;
+            pnlGoals.Enabled = cbReachability.Checked;
+            pnlGlitches.Enabled = cbReachability.Checked;
+            pnlOther.Enabled = cbReachability.Checked;
         }
 
         private void cbGoalMalak_CheckedChanged(object sender, EventArgs e)
@@ -353,6 +396,12 @@ namespace kotor_Randomizer_2
         {
             if (!Constructed) { return; }
             Properties.Settings.Default.GoalIsPazaak = cbGoalPazaak.Checked;
+        }
+
+        private void cbGoalParty_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.GoalIsParty = cbGoalParty.Checked;
         }
 
         private void cbGlitchClip_CheckedChanged(object sender, EventArgs e)
@@ -385,6 +434,12 @@ namespace kotor_Randomizer_2
             Properties.Settings.Default.IgnoreOnceEdges = cbIgnoreOnceEdges.Checked;
         }
 
+        private void cbStrongGoals_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Constructed) { return; }
+            Properties.Settings.Default.StrongGoals = cbStrongGoals.Checked;
+        }
+
         private void cbUseRandoRules_CheckedChanged(object sender, EventArgs e)
         {
             if (!Constructed) { return; }
@@ -412,8 +467,9 @@ namespace kotor_Randomizer_2
                 cbFixCoordinates.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates);
                 cbUnlockDanRuins.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
                 cbUnlockGalaxyMap.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
-                cbUnlockLevElevators.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
-                cbUnlockManSub.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManSub);
+                cbUnlockLevHangar.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+                cbEnableLevHangarElev.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev);
+                cbUnlockManEmbassy.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy);
                 cbUnlockStaBastila.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
                 cbUnlockUnkSummit.Checked = Properties.Settings.Default.ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
 
@@ -421,21 +477,19 @@ namespace kotor_Randomizer_2
                 cbUseRandoRules.Checked = Properties.Settings.Default.UseRandoRules;
                 cbReachability.Checked = Properties.Settings.Default.VerifyReachability;
                 cbIgnoreOnceEdges.Checked = Properties.Settings.Default.IgnoreOnceEdges;
+                cbStrongGoals.Checked = Properties.Settings.Default.StrongGoals;
                 cbGoalMalak.Checked = Properties.Settings.Default.GoalIsMalak;
                 cbGoalStarMaps.Checked = Properties.Settings.Default.GoalIsStarMaps;
                 cbGoalPazaak.Checked = Properties.Settings.Default.GoalIsPazaak;
+                cbGoalParty.Checked = Properties.Settings.Default.GoalIsParty;
                 cbGlitchClip.Checked = Properties.Settings.Default.AllowGlitchClip;
                 cbGlitchDlz.Checked = Properties.Settings.Default.AllowGlitchDlz;
                 cbGlitchFlu.Checked = Properties.Settings.Default.AllowGlitchFlu;
                 cbGlitchGpw.Checked = Properties.Settings.Default.AllowGlitchGpw;
-                cbIgnoreOnceEdges.Enabled = cbReachability.Checked;
-                cbGoalMalak.Enabled = cbReachability.Checked;
-                cbGoalStarMaps.Enabled = cbReachability.Checked;
-                cbGoalPazaak.Enabled = cbReachability.Checked;
-                cbGlitchClip.Enabled = cbReachability.Checked;
-                cbGlitchDlz.Enabled = cbReachability.Checked;
-                cbGlitchFlu.Enabled = cbReachability.Checked;
-                cbGlitchGpw.Enabled = cbReachability.Checked;
+
+                pnlGoals.Enabled = cbReachability.Checked;
+                pnlGlitches.Enabled = cbReachability.Checked;
+                pnlOther.Enabled = cbReachability.Checked;
 
                 Constructed = true;
             }

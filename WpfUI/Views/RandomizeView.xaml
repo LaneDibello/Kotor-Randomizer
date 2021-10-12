@@ -1,0 +1,131 @@
+﻿<UserControl x:Class="Randomizer_WPF.Views.RandomizeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Randomizer_WPF.Views"
+             xmlns:base="clr-namespace:Randomizer_WPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="350" d:DesignWidth="480"
+             FontFamily="Microsoft Sans Serif" FontSize="14"
+             DataContextChanged="View_DataContextChanged"
+             x:Name="thisView">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/RandomizerWpf;component/Resources/StyleResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <base:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <base:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
+            <base:AddToDoubleConverter x:Key="AddToDoubleConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <DockPanel Background="{StaticResource DarkBlueBrush}">
+        <DockPanel.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                <Setter Property="Margin" Value="5,0,0,0" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Margin" Value="5,0,0,0" />
+                <Setter Property="MinWidth" Value="130" />
+                <Setter Property="TextAlignment" Value="Right" />
+            </Style>
+        </DockPanel.Resources>
+
+        <!-- Dock.Top, Header -->
+        <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2" BorderBrush="{StaticResource HarshBlueBrush}">
+            <StackPanel>
+                <TextBlock Style="{StaticResource tbTitle}"
+                           Text="Randomize the Game"
+                           FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=10}"
+                           />
+                <TextBlock Style="{StaticResource tbDescription}">
+                    This page displays a log of the randomization progress. The seed used is displayed below, and can be saved
+                    to revisit or share with others. Start the randomization by clicking the "Randomize!" button below.
+                </TextBlock>
+            </StackPanel>
+        </Border>
+        
+        <!-- Dock.Bottom, Button and Progress -->
+        <Border DockPanel.Dock="Bottom" BorderThickness="0,2,0,0"
+                BorderBrush="{StaticResource HarshBlueBrush}">
+            <StackPanel Margin="5,0">
+                <!-- Seed and Spoilers -->
+                <WrapPanel Name="wpSettings" Margin="0,5,0,0" Orientation="Horizontal">
+                    <TextBlock Text="Seed: " />
+                    <TextBox Name="tbSeed" Text="2147483647" MaxLength="11"
+                             PreviewTextInput="TbSeed_PreviewTextInput"
+                             TextChanged="TbSeed_TextChanged"
+                             Visibility="{Binding ElementName=cbDisplayAsHex, Path=IsChecked, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                    <TextBox Name="tbSeedHex" Text="7FFFFFFF" MaxLength="9"
+                             PreviewTextInput="TbSeedHex_PreviewTextInput"
+                             TextChanged="TbSeedHex_TextChanged"
+                             Visibility="{Binding ElementName=cbDisplayAsHex, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <CheckBox Name="cbDisplayAsHex" VerticalAlignment="Center" Margin="5,0,0,0" Visibility="Collapsed">
+                        <TextBlock Text="Display Hex" />
+                    </CheckBox>
+                    <Button Name="btnNewSeed" Content="New Seed"
+                            Style="{StaticResource K1RandoButtonStyle}"
+                            BorderThickness="1"
+                            Margin="5,0,0,0" Click="BtnNewSeed_Click" />
+                    <Border Margin="5,0,0,0" BorderThickness="1,0,0,0"
+                            BorderBrush="{StaticResource HarshBlueBrush}" />
+                    <CheckBox Name="cbCreateSpoilers" VerticalAlignment="Center" Margin="5,0,0,0"
+                              IsChecked="{Binding ElementName=thisView, Path=CreateSpoilers, Mode=TwoWay}">
+                        <TextBlock Text="Create Spoilers" />
+                    </CheckBox>
+                </WrapPanel>
+
+                <!-- Button and Progress -->
+                <Button Name="btnRandomize" Content="Randomize!"
+                        Style="{StaticResource K1RandoButtonStyle}"
+                        BorderThickness="3" Margin="0,5" Padding="4"
+                        FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}"
+                        FontWeight="Bold"
+                        Click="BtnRandomize_Click" />
+                <ProgressBar Name="pbCurrentProgress"
+                             Value="{Binding ElementName=thisView, Path=CurrentProgress, Mode=TwoWay}"
+                             Height="20"
+                             Background="Transparent"
+                             Foreground="{StaticResource HarshYellowBrush}"
+                             BorderBrush="{StaticResource HarshBlueBrush}"
+                             BorderThickness="2"
+                             Margin="0,0,0,5"
+                             />
+            </StackPanel>
+        </Border>
+        
+        <!-- Dock.Center, Randomization Log -->
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Row 0 -->
+            <TextBlock Style="{StaticResource tbHeader4}" Margin="5,0" Text="Randomization Log:" />
+
+            <!-- Row 1 -->
+            <TextBox x:Name="tbLog" Grid.Row="1"
+                     Background="Transparent"
+                     Foreground="{StaticResource HarshBlueBrush}"
+                     Margin="0,5,0,0"
+                     IsReadOnly="True"
+                     Text="Randomization log"
+                     TextWrapping="Wrap"
+                     TextAlignment="Justify"
+                     VerticalScrollBarVisibility="Auto"
+                     SelectionBrush="{StaticResource LightBlueBrush}"
+                     />
+        </Grid>
+    </DockPanel>
+</UserControl>

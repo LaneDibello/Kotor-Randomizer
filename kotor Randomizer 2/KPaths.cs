@@ -37,6 +37,8 @@ namespace kotor_Randomizer_2
 
         /// <summary> Path to the RANDOMIZED.log file within the swkotor directory. </summary>
         public readonly string RANDOMIZED_LOG;
+        /// <summary> Filename of the log file indicating that the game has been randomized. </summary>
+        public const string RANDOMIZED_LOG_FILENAME = "RANDOMIZED.log";
 
         /// <summary> Path to the backup of the chitin.key file within the swkotor directory. </summary>
         public readonly string chitin_backup;
@@ -77,7 +79,7 @@ namespace kotor_Randomizer_2
             TexturePacks = $"{swkotor_path}\\TexturePacks\\";
             dialog = $"{swkotor_path}\\dialog.tlk";
 
-            RANDOMIZED_LOG = $"{swkotor_path}\\RANDOMIZED.log";
+            RANDOMIZED_LOG = $"{swkotor_path}\\{RANDOMIZED_LOG_FILENAME}";
 
             chitin_backup = $"{swkotor_path}\\chitin.key.bak";
             data_backup = $"{swkotor_path}\\data_bak\\";
@@ -254,7 +256,8 @@ namespace kotor_Randomizer_2
         {
             if (Directory.Exists(modules_backup))
             {
-                Directory.Delete(modules, true);
+                if (Directory.Exists(modules))
+                    Directory.Delete(modules, true);
                 Directory.Move(modules_backup, modules);
             }
         }
@@ -266,7 +269,8 @@ namespace kotor_Randomizer_2
         {
             if (Directory.Exists(lips_backup))
             {
-                Directory.Delete(lips, true);
+                if (Directory.Exists(lips))
+                    Directory.Delete(lips, true);
                 Directory.Move(lips_backup, lips);
             }
         }
@@ -278,7 +282,8 @@ namespace kotor_Randomizer_2
         {
             if (Directory.Exists(Override_backup))
             {
-                Directory.Delete(Override, true);
+                if (Directory.Exists(Override))
+                    Directory.Delete(Override, true);
                 Directory.Move(Override_backup, Override);
             }
         }
@@ -290,7 +295,8 @@ namespace kotor_Randomizer_2
         {
             if (Directory.Exists(music_backup))
             {
-                Directory.Delete(music, true);
+                if (Directory.Exists(music))
+                    Directory.Delete(music, true);
                 Directory.Move(music_backup, music);
             }
         }
@@ -302,7 +308,8 @@ namespace kotor_Randomizer_2
         {
             if (Directory.Exists(sounds_backup))
             {
-                Directory.Delete(sounds, true);
+                if (Directory.Exists(sounds))
+                    Directory.Delete(sounds, true);
                 Directory.Move(sounds_backup, sounds);
             }
         }
@@ -314,7 +321,8 @@ namespace kotor_Randomizer_2
         {
             if (Directory.Exists(TexturePacks_backup))
             {
-                Directory.Delete(TexturePacks, true);
+                if (Directory.Exists(TexturePacks))
+                    Directory.Delete(TexturePacks, true);
                 Directory.Move(TexturePacks_backup, TexturePacks);
             }
         }
@@ -326,7 +334,8 @@ namespace kotor_Randomizer_2
         {
             if (File.Exists(chitin_backup))
             {
-                File.Delete(chitin);
+                if (File.Exists(chitin))
+                    File.Delete(chitin);
                 File.Move(chitin_backup, chitin);
             }
         }
@@ -338,7 +347,8 @@ namespace kotor_Randomizer_2
         {
             if (File.Exists(dialog_backup))
             {
-                File.Delete(dialog);
+                if (File.Exists(dialog))
+                    File.Delete(dialog);
                 File.Move(dialog_backup, dialog);
             }
         }

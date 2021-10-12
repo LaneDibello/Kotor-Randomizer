@@ -90,6 +90,16 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] appearance_speedysuit {
+            get {
+                object obj = ResourceManager.GetObject("appearance_speedysuit", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap BoxActive {
@@ -229,6 +239,16 @@ namespace kotor_Randomizer_2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] k_pebo_mgheart {
+            get {
+                object obj = ResourceManager.GetObject("k_pebo_mgheart", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] k_plev_goto40aa {
             get {
                 object obj = ResourceManager.GetObject("k_plev_goto40aa", resourceCulture);
@@ -252,6 +272,26 @@ namespace kotor_Randomizer_2.Properties {
         internal static byte[] k_ren_visionland {
             get {
                 object obj = ResourceManager.GetObject("k_ren_visionland", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] k33b_openacademy {
+            get {
+                object obj = ResourceManager.GetObject("k33b_openacademy", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] k36_pkor_enter {
+            get {
+                object obj = ResourceManager.GetObject("k36_pkor_enter", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -657,6 +697,16 @@ namespace kotor_Randomizer_2.Properties {
         internal static string SoundHelp {
             get {
                 return ResourceManager.GetString("SoundHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] tar02_janice021 {
+            get {
+                object obj = ResourceManager.GetObject("tar02_janice021", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

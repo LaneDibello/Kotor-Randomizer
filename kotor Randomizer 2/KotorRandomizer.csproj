@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>kotor_Randomizer_2</RootNamespace>
-    <AssemblyName>kotor Randomizer 2</AssemblyName>
+    <AssemblyName>KotorRandomizer</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -96,6 +96,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Digraph.cs" />
+    <Compile Include="Models\Kotor1Randomizer.cs" />
+    <Compile Include="Models\UnlockableDoor.cs" />
     <Compile Include="Forms\TwodaForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,11 +105,14 @@
       <DependentUpon>TwodaForm.cs</DependentUpon>
     </Compile>
     <Compile Include="KPaths.cs" />
+    <Compile Include="Models\RandomizableItem.cs" />
+    <Compile Include="Models\RandomizableTable.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Models\RandomizerBase.cs" />
     <Compile Include="Randomization\TextRando.cs" />
     <Compile Include="Randomization\TwodaRandom.cs" />
     <Compile Include="Globals.cs" />
@@ -263,9 +268,13 @@
     </Compile>
     <None Include="Resources\ALLINCLUDED_modulesave.2da" />
     <None Include="Resources\appearance.2da" />
+    <None Include="Resources\appearance_speedysuit.2da" />
     <None Include="Resources\g_brakatan003.utc" />
+    <None Include="Resources\k33b_openacademy.ncs" />
+    <None Include="Resources\k36_pkor_enter.ncs" />
     <None Include="Resources\k_pdan_13_area.ncs" />
     <None Include="Resources\k_pebn_galaxy.ncs" />
+    <None Include="Resources\k_pebo_mgheart.ncs" />
     <None Include="Resources\k_plev_goto40aa.ncs" />
     <None Include="Resources\k_plev_goto40ab.ncs" />
     <None Include="Resources\k_ren_visionland.ncs" />
@@ -276,11 +285,13 @@
     <None Include="Resources\NODELETE_MGINCLUDED_modulesave.2da" />
     <None Include="Resources\NODELETE_modulesave.2da" />
     <None Include="Resources\pebn_mystery.dlg" />
+    <None Include="Resources\tar02_janice021.dlg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\img\KrandomBeta.ico" />
     <Content Include="Xml\KotorModules.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

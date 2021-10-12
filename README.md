@@ -1,7 +1,7 @@
-# Kotor-Randomizer-2
+# Kotor Randomizer
 
-[![GitHub release](https://img.shields.io/github/v/release/LaneDibello/Kotor-Randomizer-2.svg)](https://github.com/LaneDibello/Kotor-Randomizer-2/releases/latest)
-[![GitHub issues](https://img.shields.io/github/issues/LaneDibello/Kotor-Randomizer-2.svg)](https://github.com/LaneDibello/Kotor-Randomizer-2/issues)
+[![GitHub release](https://img.shields.io/github/v/release/LaneDibello/Kotor-Randomizer.svg)](https://github.com/LaneDibello/Kotor-Randomizer/releases/latest)
+[![GitHub issues](https://img.shields.io/github/issues/LaneDibello/Kotor-Randomizer.svg)](https://github.com/LaneDibello/Kotor-Randomizer/issues)
 
 The much anticipated sequel to the original Kotor Randomizer. This program allows for the randomization of various different elements of Bioware’s Star Wars: Knights of the Old Republic.
 
@@ -61,5 +61,4 @@ The Kotor Randomizer was created by Lane and Glasnonck, with help from the kotor
 * Per category seeding means that two players can have different active categories but still have similar experiences when using the same seed.
 
 ## Download
-[The Download for the latest stable release can be found in the resource section of the Kotor Speedrunning SRC page, under “Kotor Randomizer 2”.](https://www.speedrun.com/kotor1/resources)
-
+The Download for the latest stable release can be found in the resource section of the [Kotor Speedrunning SRC page](https://www.speedrun.com/kotor1/resources), under “Kotor Randomizer”. It can also be downloaded from the release page on [GitHub](https://github.com/LaneDibello/Kotor-Randomizer/releases/latest).

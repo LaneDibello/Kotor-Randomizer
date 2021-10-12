@@ -999,5 +999,29 @@ namespace kotor_Randomizer_2.Properties {
                 this["AutoGenerateSpoilers"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GoalIsParty {
+            get {
+                return ((bool)(this["GoalIsParty"]));
+            }
+            set {
+                this["GoalIsParty"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StrongGoals {
+            get {
+                return ((bool)(this["StrongGoals"]));
+            }
+            set {
+                this["StrongGoals"] = value;
+            }
+        }
     }
 }

@@ -16,7 +16,13 @@
         "Entry"
         {
         "MsmKey" = "8:_0C3D844B42415BE3EF904BEC49FBED85"
-        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+        "OwnerKey" = "8:_AD49B7E1A3D24F5BAF53C564044218E7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0C3D844B42415BE3EF904BEC49FBED85"
+        "OwnerKey" = "8:_2CD78A7EAC51BC3987DA22128C2A79BC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -28,13 +34,43 @@
         "Entry"
         {
         "MsmKey" = "8:_0C52F55CB3440D9CF58ECCA24E8C20F3"
-        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+        "OwnerKey" = "8:_B9088CB4A4744E418EC868D5607D735E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0C52F55CB3440D9CF58ECCA24E8C20F3"
+        "OwnerKey" = "8:_4C4F9488A481827ABB01C489462BAE0D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0C52F55CB3440D9CF58ECCA24E8C20F3"
+        "OwnerKey" = "8:_AD49B7E1A3D24F5BAF53C564044218E7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2CD78A7EAC51BC3987DA22128C2A79BC"
+        "OwnerKey" = "8:_B9088CB4A4744E418EC868D5607D735E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2D4952ED5CD92FBDAE0EC3A297CAF326"
+        "OwnerKey" = "8:_B9088CB4A4744E418EC868D5607D735E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4C4F9488A481827ABB01C489462BAE0D"
+        "OwnerKey" = "8:_B9088CB4A4744E418EC868D5607D735E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -52,49 +88,103 @@
         "Entry"
         {
         "MsmKey" = "8:_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
-        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+        "OwnerKey" = "8:_B9088CB4A4744E418EC868D5607D735E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+        "MsmKey" = "8:_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
+        "OwnerKey" = "8:_4C4F9488A481827ABB01C489462BAE0D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
+        "OwnerKey" = "8:_AD49B7E1A3D24F5BAF53C564044218E7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AD49B7E1A3D24F5BAF53C564044218E7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_B9088CB4A4744E418EC868D5607D735E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BE42B29A0F47FAF1EADAFBAD5EC14118"
+        "OwnerKey" = "8:_B9088CB4A4744E418EC868D5607D735E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_CA2DAC5FC89E4B3FD11C3E2CB8D1111F"
-        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+        "OwnerKey" = "8:_AD49B7E1A3D24F5BAF53C564044218E7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CA2DAC5FC89E4B3FD11C3E2CB8D1111F"
+        "OwnerKey" = "8:_B9088CB4A4744E418EC868D5607D735E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_E09C5AED8BBFCFAB6139F897DD0BBD05"
-        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+        "OwnerKey" = "8:_AD49B7E1A3D24F5BAF53C564044218E7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E09C5AED8BBFCFAB6139F897DD0BBD05"
+        "OwnerKey" = "8:_2CD78A7EAC51BC3987DA22128C2A79BC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+        "OwnerKey" = "8:_B9088CB4A4744E418EC868D5607D735E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CA2DAC5FC89E4B3FD11C3E2CB8D1111F"
+        "OwnerKey" = "8:_2D4952ED5CD92FBDAE0EC3A297CAF326"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
+        "OwnerKey" = "8:_BE42B29A0F47FAF1EADAFBAD5EC14118"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0C52F55CB3440D9CF58ECCA24E8C20F3"
+        "OwnerKey" = "8:_2CD78A7EAC51BC3987DA22128C2A79BC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4C4F9488A481827ABB01C489462BAE0D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_AD49B7E1A3D24F5BAF53C564044218E7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E09C5AED8BBFCFAB6139F897DD0BBD05"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -106,7 +196,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E09C5AED8BBFCFAB6139F897DD0BBD05"
+        "OwnerKey" = "8:_0C52F55CB3440D9CF58ECCA24E8C20F3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_CA2DAC5FC89E4B3FD11C3E2CB8D1111F"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -211,6 +313,11 @@
             "AssemblyAsmDisplayName" = "8:ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_0C3D844B42415BE3EF904BEC49FBED85"
+                    {
+                    "Name" = "8:ClosedXML.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:ClosedXML.dll"
             "TargetName" = "8:"
@@ -237,6 +344,11 @@
             "AssemblyAsmDisplayName" = "8:ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_0C52F55CB3440D9CF58ECCA24E8C20F3"
+                    {
+                    "Name" = "8:ExcelNumberFormat.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:ExcelNumberFormat.dll"
             "TargetName" = "8:"
@@ -276,6 +388,99 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2CD78A7EAC51BC3987DA22128C2A79BC"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:KotorRandomizer, Version=2.5.7.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_2CD78A7EAC51BC3987DA22128C2A79BC"
+                    {
+                    "Name" = "8:KotorRandomizer.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:KotorRandomizer.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2D4952ED5CD92FBDAE0EC3A297CAF326"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_2D4952ED5CD92FBDAE0EC3A297CAF326"
+                    {
+                    "Name" = "8:CommonServiceLocator.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:CommonServiceLocator.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4C4F9488A481827ABB01C489462BAE0D"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_4C4F9488A481827ABB01C489462BAE0D"
+                    {
+                    "Name" = "8:ClosedXML.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:ClosedXML.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_59C8CE5B47C74F4FBD029E6F580DEEC6"
             {
             "SourcePath" = "8:..\\kotor Randomizer 2\\Xml\\KotorModules.xml"
@@ -303,8 +508,44 @@
             "AssemblyAsmDisplayName" = "8:DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_9E5E8DDE91C2E21C37FD98EAE3DA40DB"
+                    {
+                    "Name" = "8:DocumentFormat.OpenXml.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:DocumentFormat.OpenXml.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BE42B29A0F47FAF1EADAFBAD5EC14118"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_BE42B29A0F47FAF1EADAFBAD5EC14118"
+                    {
+                    "Name" = "8:KotOR_IO.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:KotOR_IO.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
@@ -329,6 +570,11 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
+                    "_CA2DAC5FC89E4B3FD11C3E2CB8D1111F"
+                    {
+                    "Name" = "8:System.Net.Http.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -355,6 +601,11 @@
             "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_E09C5AED8BBFCFAB6139F897DD0BBD05"
+                    {
+                    "Name" = "8:KotOR_IO.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:KotOR_IO.dll"
             "TargetName" = "8:"
@@ -377,6 +628,29 @@
         }
         "FileType"
         {
+            "{5EB83D71-FA18-4901-BE56-DE22E13CC478}:_07A8726B0DB146038189BD2FAFD05D48"
+            {
+            "Name" = "8:Extensible Preset"
+            "Description" = "8:Extensible Kotor Randomizer Preset"
+            "Extensions" = "8:xkrp"
+            "MIME" = "8:"
+            "Icon" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
+            "IconIndex" = "3:0"
+                "Command"
+                {
+                "Command" = "8:_B9088CB4A4744E418EC868D5607D735E"
+                }
+                "Verbs"
+                {
+                    "{95C0C507-CBF0-42B8-B119-07219E384A4A}:_BA3B490FC8C840B7A103828CC686A501"
+                    {
+                    "Command" = "8:&Open"
+                    "Verb" = "8:open"
+                    "Arguments" = "8:\"%1\""
+                    "Order" = "3:0"
+                    }
+                }
+            }
             "{5EB83D71-FA18-4901-BE56-DE22E13CC478}:_E559DB5C483D4F58A45052DA8A8F447D"
             {
             "Name" = "8:Preset"
@@ -387,7 +661,7 @@
             "IconIndex" = "3:0"
                 "Command"
                 {
-                "Command" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+                "Command" = "8:_AD49B7E1A3D24F5BAF53C564044218E7"
                 }
                 "Verbs"
                 {
@@ -423,6 +697,17 @@
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_F737237EBC5C4A28AF1AC1DF9326ABA1"
+                    {
+                    "Name" = "8:Kotor Speedrunning"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_4F358047597143A4950D295017E12484"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_F9A1482B57944C5197C5C8E1F60C07AF"
@@ -464,15 +749,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Kotor Randomizer"
-        "ProductCode" = "8:{ABFA0446-262C-401A-8450-C6F3EB7937E4}"
-        "PackageCode" = "8:{BD119C97-5B82-45E4-A34C-0AF15F057A4A}"
+        "ProductCode" = "8:{3DB6B5A5-3FEB-4D53-A32B-F66019C4D5C5}"
+        "PackageCode" = "8:{65705DF6-928D-4521-9C58-291AE6859B7F}"
         "UpgradeCode" = "8:{3DA44908-725D-48AE-860D-C34768CFA05C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.5.5"
+        "ProductVersion" = "8:2.5.7"
         "Manufacturer" = "8:Kotor Speedrun Community"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -585,21 +870,35 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_941E3F58D12448E0800C5C196B285FF0"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_19CBC8F1A84F4A7EBC140A6B7A545956"
             {
-            "Name" = "8:Kotor Randomizer"
+            "Name" = "8:(Beta) Kotor Randomizer"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
+            "Target" = "8:_B9088CB4A4744E418EC868D5607D735E"
+            "Folder" = "8:_F737237EBC5C4A28AF1AC1DF9326ABA1"
+            "WorkingFolder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
+            "Icon" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_1DE0A4B626A04ADA96EF13E0447202CF"
+            {
+            "Name" = "8:(Beta) Kotor Randomizer"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_B9088CB4A4744E418EC868D5607D735E"
             "Folder" = "8:_3E298B683E3C4A37B31DBC6C29223617"
             "WorkingFolder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
             "Icon" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C6F70DF347134865AF85647A83F9C5B0"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_25DD49C7A22244C694057B9DE78DCB47"
             {
             "Name" = "8:Kotor Randomizer"
             "Arguments" = "8:"
@@ -607,8 +906,22 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_AA9D070ACAB14309A8AAA185C080E7C1"
-            "Folder" = "8:_F5452B2152DD4B4E958D476D55855B11"
+            "Target" = "8:_AD49B7E1A3D24F5BAF53C564044218E7"
+            "Folder" = "8:_F737237EBC5C4A28AF1AC1DF9326ABA1"
+            "WorkingFolder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
+            "Icon" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_29B335EF15EE4A04B2DCB94744E7DF67"
+            {
+            "Name" = "8:Kotor Randomizer"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_AD49B7E1A3D24F5BAF53C564044218E7"
+            "Folder" = "8:_3E298B683E3C4A37B31DBC6C29223617"
             "WorkingFolder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
             "Icon" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
             "Feature" = "8:"
@@ -1012,9 +1325,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AA9D070ACAB14309A8AAA185C080E7C1"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AD49B7E1A3D24F5BAF53C564044218E7"
             {
-            "SourcePath" = "8:..\\kotor Randomizer 2\\obj\\Debug\\kotor Randomizer 2.exe"
+            "SourcePath" = "8:..\\kotor Randomizer 2\\obj\\Debug\\KotorRandomizer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
@@ -1032,9 +1345,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:Debug|Any CPU"
+            "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{36FBE2A5-15E6-4CC3-9174-377807476732}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B9088CB4A4744E418EC868D5607D735E"
+            {
+            "SourcePath" = "8:..\\WpfUI\\obj\\Debug\\RandomizerWPF.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_F9A1482B57944C5197C5C8E1F60C07AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{12BF9F84-4CB3-4401-AB16-35A77C0FDC41}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

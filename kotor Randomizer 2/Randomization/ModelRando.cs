@@ -4,6 +4,7 @@ using KotOR_IO;
 using System.Collections.Generic;
 using System;
 using ClosedXML.Excel;
+using kotor_Randomizer_2.Models;
 
 namespace kotor_Randomizer_2
 {
@@ -23,12 +24,30 @@ namespace kotor_Randomizer_2
         private const string LABEL_UNK_FLPNL = "flpnl";
         private const string LABEL_UNK_RESETPANEL = "panelreset";
 
+        private const string LABEL_LEV_ELEVCTRL = "plev_elevctrl";
+        private const string LABEL_LEV_ACCONTROL = "lev40_accontrol";
+
         public const string LBL_LOC_NAME = "LocName";
         public const string LBL_GENERIC_TYPE = "GenericType";
         public const string LBL_APPEARANCE = "Appearance";
         public const string LBL_APPEARANCE_TYPE = "Appearance_Type";
 
-        public static void model_rando(KPaths paths)
+        #region Private Properties
+        private static int RandomizePlaceModels { get; set; }
+        private static int RandomizeDoorModels  { get; set; }
+        private static int RandomizeCharModels  { get; set; }
+        #endregion Private Properties
+
+        /// <summary>
+        /// Creates backups for files modified during this randomization.
+        /// </summary>
+        /// <param name="paths"></param>
+        internal static void CreateModelBackups(KPaths paths)
+        {
+            paths.BackUpModulesDirectory();
+        }
+
+        public static void model_rando(KPaths paths, Kotor1Randomizer k1rando = null)
         {
             const int MAX_CHAR_INDEX = 509;
             const int MIN_DOOR_INDEX_BROKEN = 13;
@@ -41,7 +60,9 @@ namespace kotor_Randomizer_2
 
             const string COL_LABEL = "label";
 
-            LookupTable.Clear();
+            // Prepare for new randomization.
+            Reset();
+            AssignSettings(k1rando);
 
             BIF bif = new BIF(Path.Combine(paths.data, "2da.bif"));
             KEY key = new KEY(paths.chitin);
@@ -56,7 +77,7 @@ namespace kotor_Randomizer_2
             TwoDA plac2DA = new TwoDA(placVRE.EntryData, placVRE.ResRef);
 
             // Check if the floor panel fix is enabled.
-            bool isFloorPanelActive = (Properties.Settings.Default.RandomizePlaceModels & 8) > 0;
+            bool isFloorPanelActive = (RandomizePlaceModels & 8) > 0;
             var catacombsFile = AREA_UNK_CATACOMBS;
 
             // Check if modules have been randomized.
@@ -88,7 +109,7 @@ namespace kotor_Randomizer_2
                 LookupTable.Add(fi.Name, new Dictionary<string, Dictionary<string, Tuple<int, string, int, string>>>());
 
                 // Doors
-                if ((Properties.Settings.Default.RandomizeDoorModels & 1) > 0)
+                if ((RandomizeDoorModels & 1) > 0)
                 {
                     LookupTable[fi.Name].Add(DOOR, new Dictionary<string, Tuple<int, string, int, string>>());
 
@@ -100,7 +121,7 @@ namespace kotor_Randomizer_2
                         int randAppear = 0; //The randomly generated Appearance ID
 
                         //Generate the random appearacne values before ommitting airlock, to create more seed consistancy
-                        if ((Properties.Settings.Default.RandomizeDoorModels & 4) > 0) // Broken Doors
+                        if ((RandomizeDoorModels & 4) > 0) // Broken Doors
                         {
                             randAppear = Randomize.Rng.Next(MIN_DOOR_INDEX_BROKEN, MAX_DOOR_INDEX); // First 12 doors are open so this is easier
                         }
@@ -110,7 +131,7 @@ namespace kotor_Randomizer_2
                         }
 
                         // Airlock
-                        if ((Properties.Settings.Default.RandomizeDoorModels & 2) > 0 &&
+                        if ((RandomizeDoorModels & 2) > 0 &&
                             (g.Top_Level.Fields.Where(f => f.Label == LBL_LOC_NAME).FirstOrDefault() as GFF.CExoLocString).StringRef == 21080)
                         {
                             continue;
@@ -133,7 +154,7 @@ namespace kotor_Randomizer_2
                 }
 
                 // Placeables
-                if ((Properties.Settings.Default.RandomizePlaceModels & 1) > 0)
+                if ((RandomizePlaceModels & 1) > 0)
                 {
                     LookupTable[fi.Name].Add(PLACEABLE, new Dictionary<string, Tuple<int, string, int, string>>());
 
@@ -142,6 +163,9 @@ namespace kotor_Randomizer_2
 
                     foreach (RIM.rFile rf in r.File_Table.Where(k => k.TypeID == (int)ResourceType.UTP))
                     {
+                        // Don't randomize the elevator control placeables.
+                        if (rf.Label == LABEL_LEV_ELEVCTRL || rf.Label == LABEL_LEV_ACCONTROL) continue;
+
                         GFF g = new GFF(rf.File_Data);
 
                         // If this is a broken placeable, skip it.
@@ -163,8 +187,8 @@ namespace kotor_Randomizer_2
                             do
                             {
                                 randAppear = Randomize.Rng.Next(0, MAX_PLAC_INDEX);
-                                isBroken = ((Properties.Settings.Default.RandomizePlaceModels & 4) > 0) && Globals.BROKEN_PLACE.Contains(randAppear); // Always Satisfied if Broken omission disbaled
-                                isLarge  = ((Properties.Settings.Default.RandomizePlaceModels & 2) > 0) && Globals.LARGE_PLACE.Contains(randAppear);  // Always satisifed if Large omission disabled
+                                isBroken = ((RandomizePlaceModels & 4) > 0) && Globals.BROKEN_PLACE.Contains(randAppear); // Always Satisfied if Broken omission disbaled
+                                isLarge  = ((RandomizePlaceModels & 2) > 0) && Globals.LARGE_PLACE.Contains(randAppear);  // Always satisifed if Large omission disabled
                             }
                             while (isBroken || isLarge);
                         }
@@ -185,7 +209,7 @@ namespace kotor_Randomizer_2
                 }
 
                 // Characters
-                if ((Properties.Settings.Default.RandomizeCharModels & 1) > 0)
+                if ((RandomizeCharModels & 1) > 0)
                 {
                     LookupTable[fi.Name].Add(CHARACTER, new Dictionary<string, Tuple<int, string, int, string>>());
 
@@ -200,8 +224,8 @@ namespace kotor_Randomizer_2
                         do
                         {
                             randAppear = Randomize.Rng.Next(0, MAX_CHAR_INDEX);
-                            isBroken = ((Properties.Settings.Default.RandomizeCharModels & 4) > 0) && Globals.BROKEN_CHARS.Contains(randAppear);  // Always Satisfied if Broken omission disabled
-                            isLarge  = ((Properties.Settings.Default.RandomizeCharModels & 2) > 0) && Globals.LARGE_CHARS.Contains(randAppear);   // Always satisifed if Large omission disabled
+                            isBroken = ((RandomizeCharModels & 4) > 0) && Globals.BROKEN_CHARS.Contains(randAppear);  // Always Satisfied if Broken omission disabled
+                            isLarge  = ((RandomizeCharModels & 2) > 0) && Globals.LARGE_CHARS.Contains(randAppear);   // Always satisifed if Large omission disabled
                         }
                         while (isBroken || isLarge);
 
@@ -223,56 +247,32 @@ namespace kotor_Randomizer_2
             }
         }
 
-        /// <summary>
-        /// Creates a CSV file containing a list of the changes made during randomization.
-        /// If the file already exists, this method will append the data.
-        /// If no randomization has been performed, no file will be created.
-        /// </summary>
-        /// <param name="path">Path to desired output file.</param>
-        public static void GenerateSpoilerLog(string path)
+        private static void AssignSettings(Kotor1Randomizer k1rando)
         {
-            if (LookupTable.Count == 0)
+            if (k1rando == null)
             {
-                return;
+                RandomizePlaceModels = Properties.Settings.Default.RandomizePlaceModels;
+                RandomizeDoorModels  = Properties.Settings.Default.RandomizeDoorModels;
+                RandomizeCharModels  = Properties.Settings.Default.RandomizeCharModels;
             }
-
-            using (StreamWriter sw = new StreamWriter(path))
+            else
             {
-                //sw.WriteLine("Model,");
-                sw.WriteLine($"Seed,{Properties.Settings.Default.Seed}");
-                sw.WriteLine();
+                RandomizeCharModels  = 0;
+                RandomizeDoorModels  = 0;
+                RandomizePlaceModels = 0;
 
-                bool IsActive = (Properties.Settings.Default.RandomizeCharModels & 1) > 0;
-                bool OmitFirst = (Properties.Settings.Default.RandomizeCharModels & 2) > 0;
-                bool OmitSecond = (Properties.Settings.Default.RandomizeCharModels & 4) > 0;
-                sw.WriteLine("Model Type,Is Active,Omit Large Models,Omit Broken Models");
-                sw.WriteLine($"Character Models,{IsActive},{OmitFirst},{OmitSecond}");
+                if (k1rando.ModelCharacterRando     ) RandomizeCharModels  |= 1;
+                if (k1rando.ModelCharacterOmitLarge ) RandomizeCharModels  |= 2;
+                if (k1rando.ModelCharacterOmitBroken) RandomizeCharModels  |= 4;
 
-                IsActive = (Properties.Settings.Default.RandomizePlaceModels & 1) > 0;
-                OmitFirst = (Properties.Settings.Default.RandomizePlaceModels & 2) > 0;
-                OmitSecond = (Properties.Settings.Default.RandomizePlaceModels & 4) > 0;
-                sw.WriteLine("Model Type,Is Active,Omit Large Models,Omit Broken Models");
-                sw.WriteLine($"Placeable Models,{IsActive},{OmitFirst},{OmitSecond}");
+                if (k1rando.ModelDoorRando      )     RandomizeDoorModels  |= 1;
+                if (k1rando.ModelDoorOmitAirlock)     RandomizeDoorModels  |= 2;
+                if (k1rando.ModelDoorOmitBroken )     RandomizeDoorModels  |= 4;
 
-                IsActive = (Properties.Settings.Default.RandomizeDoorModels & 1) > 0;
-                OmitFirst = (Properties.Settings.Default.RandomizeDoorModels & 2) > 0;
-                OmitSecond = (Properties.Settings.Default.RandomizeDoorModels & 4) > 0;
-                sw.WriteLine("Model Type,Is Active,Omit Airlocks,Omit Broken Models");
-                sw.WriteLine($"Door Models,{IsActive},{OmitFirst},{OmitSecond}");
-                sw.WriteLine();
-
-                sw.WriteLine("Map Filename,Model Type,Model Label,Original ID,Randomized ID");
-                foreach (var map in LookupTable)
-                {
-                    foreach (var type in map.Value)
-                    {
-                        foreach (var kvp in type.Value)
-                        {
-                            sw.WriteLine($"{map.Key},{type.Key},{kvp.Key},{kvp.Value.Item1},{kvp.Value.Item2}");
-                        }
-                    }
-                }
-                sw.WriteLine();
+                if (k1rando.ModelPlaceableRando     ) RandomizePlaceModels |= 1;
+                if (k1rando.ModelPlaceableOmitLarge ) RandomizePlaceModels |= 2;
+                if (k1rando.ModelPlaceableOmitBroken) RandomizePlaceModels |= 4;
+                if (k1rando.ModelPlaceableEasyPanels) RandomizePlaceModels |= 8;
             }
         }
 
@@ -286,74 +286,62 @@ namespace kotor_Randomizer_2
         {
             if (LookupTable.Count == 0) { return; }
             var ws = workbook.Worksheets.Add("Model");
-
             int i = 1;
-            ws.Cell(i, 1).Value = "Seed";
-            ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            i++;
-
-            Version version = typeof(StartForm).Assembly.GetName().Version;
-            ws.Cell(i, 1).Value = "Version";
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
-            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-            i += 2;     // Skip a row.
 
             // Character Randomization Settings
             ws.Cell(i, 1).Value = "Character Models";
             ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizeCharModels & 1) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizeCharModels & 1) > 0).ToString();
             i++;
 
             ws.Cell(i, 1).Value = "Omit Large";
             ws.Cell(i, 1).Style.Font.Italic = true;
-            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizeCharModels & 2) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizeCharModels & 2) > 0).ToString();
             i++;
 
             ws.Cell(i, 1).Value = "Omit Broken";
             ws.Cell(i, 1).Style.Font.Italic = true;
-            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizeCharModels & 4) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizeCharModels & 4) > 0).ToString();
             i += 2;     // Skip a row.
 
             // Placeable Randomization Settings
             ws.Cell(i, 1).Value = "Placeable Models";
             ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizePlaceModels & 1) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizePlaceModels & 1) > 0).ToString();
             i++;
 
             ws.Cell(i, 1).Value = "Omit Large";
             ws.Cell(i, 1).Style.Font.Italic = true;
-            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizePlaceModels & 2) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizePlaceModels & 2) > 0).ToString();
             i++;
 
             ws.Cell(i, 1).Value = "Omit Broken";
             ws.Cell(i, 1).Style.Font.Italic = true;
-            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizePlaceModels & 4) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizePlaceModels & 4) > 0).ToString();
             i++;
 
             ws.Cell(i, 1).Value = "Easy Panels";
             ws.Cell(i, 1).Style.Font.Italic = true;
-            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizePlaceModels & 8) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizePlaceModels & 8) > 0).ToString();
             i += 2;     // Skip a row.
 
             // Door Randomization Settings
             ws.Cell(i, 1).Value = "Door Models";
             ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizeDoorModels & 1) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizeDoorModels & 1) > 0).ToString();
             i++;
 
             ws.Cell(i, 1).Value = "Omit Airlocks";
             ws.Cell(i, 1).Style.Font.Italic = true;
-            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizeDoorModels & 2) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizeDoorModels & 2) > 0).ToString();
             i++;
 
             ws.Cell(i, 1).Value = "Omit Broken";
             ws.Cell(i, 1).Style.Font.Italic = true;
-            ws.Cell(i, 2).Value = ((Properties.Settings.Default.RandomizeDoorModels & 4) > 0).ToString();
-            i += 3;     // Skip two rows.
+            ws.Cell(i, 2).Value = ((RandomizeDoorModels & 4) > 0).ToString();
+            i += 3;         // Skip two rows.
 
-            int j = 1;  // Start at column A.
+            int j = 1;      // Start at column A.
             var jMax = 1;   // Remember max table width.
             var areModulesRandomized = ModuleRando.LookupTable.Any();
 
