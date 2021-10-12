@@ -62,7 +62,7 @@ namespace Randomizer_WPF.UserControls
 
             column = newColumn;
             adorner = new SortAdorner(column, newDir);
-            AdornerLayer.GetAdornerLayer(column)?.Add(adorner);
+            AdornerLayer.GetAdornerLayer(column).Add(adorner);
             lv.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
         }
     }

@@ -24,6 +24,8 @@ namespace Randomizer_WPF
     {
         #region Constants
         public const string SETTINGS_FILENAME = "settings.xml";
+        public const double DEFAULT_HEIGHT = 620.0;
+        public const double DEFAULT_WIDTH  = 820.0;
         #endregion Constants
 
         #region Constructors
@@ -31,18 +33,18 @@ namespace Randomizer_WPF
         {
             InitializeComponent();
 
-            SettingsFile file = GetSettingsFile();
+            CurrentSettings = GetSettingsFile();
 
             // Create objects and pull settings from file.
             K1Randomizer = new Kotor1Randomizer();
-            miCreateSpoilers.IsChecked = file.CreateSpoilers;
-            Kotor1Path = file.Kotor1Path;
-            Kotor2Path = file.Kotor2Path;
-            PresetPath = file.PresetPath;
-            SpoilerPath = file.SpoilerPath;
-            SelectedFontIndex = file.FontSizeIndex;
-            CurrentHeight = file.Height;
-            CurrentWidth = file.Width;
+            miCreateSpoilers.IsChecked = CurrentSettings.CreateSpoilers;
+            Kotor1Path = CurrentSettings.Kotor1Path;
+            Kotor2Path = CurrentSettings.Kotor2Path;
+            PresetPath = CurrentSettings.PresetPath;
+            SpoilerPath = CurrentSettings.SpoilerPath;
+            SelectedFontIndex = CurrentSettings.FontSizeIndex;
+            CurrentHeight = CurrentSettings.Height;
+            CurrentWidth = CurrentSettings.Width;
 
             // If startup file path given, load it -- primarily used for debugging.
             if (!string.IsNullOrEmpty(startupFilePath)) LoadPresetFile(startupFilePath);
@@ -58,10 +60,14 @@ namespace Randomizer_WPF
         public static readonly DependencyProperty Kotor2PathProperty  = DependencyProperty.Register("Kotor2Path",  typeof(string), typeof(MainWindow));
         public static readonly DependencyProperty PresetPathProperty  = DependencyProperty.Register("PresetPath",  typeof(string), typeof(MainWindow));
         public static readonly DependencyProperty SpoilerPathProperty = DependencyProperty.Register("SpoilerPath", typeof(string), typeof(MainWindow));
+        public static readonly DependencyProperty SelectedFontIndexProperty = DependencyProperty.Register("SelectedFontIndex", typeof(int), typeof(MainWindow), new PropertyMetadata(1));
+        public static readonly DependencyProperty CurrentHeightProperty     = DependencyProperty.Register("CurrentHeight",  typeof(double), typeof(MainWindow), new PropertyMetadata(DEFAULT_HEIGHT));
+        public static readonly DependencyProperty CurrentWidthProperty      = DependencyProperty.Register("CurrentWidth",   typeof(double), typeof(MainWindow), new PropertyMetadata(DEFAULT_WIDTH));
         #endregion Dependency Properties
 
         #region Properties
         public Kotor1Randomizer K1Randomizer { get; set; }
+        public SettingsFile CurrentSettings { get; set; }
 
         public string Kotor1Path
         {
@@ -93,35 +99,17 @@ namespace Randomizer_WPF
             set { SetValue(SelectedFontIndexProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for SelectedFontValue.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SelectedFontIndexProperty =
-            DependencyProperty.Register("SelectedFontIndex", typeof(int), typeof(MainWindow), new PropertyMetadata(1));
-
-
-
         public double CurrentHeight
         {
             get { return (double)GetValue(CurrentHeightProperty); }
             set { SetValue(CurrentHeightProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for CurrentHeight.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CurrentHeightProperty =
-            DependencyProperty.Register("CurrentHeight", typeof(double), typeof(MainWindow), new PropertyMetadata(620.0));
-
-
-
         public double CurrentWidth
         {
             get { return (double)GetValue(CurrentWidthProperty); }
             set { SetValue(CurrentWidthProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for CurrentWidth.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CurrentWidthProperty =
-            DependencyProperty.Register("CurrentWidth", typeof(double), typeof(MainWindow), new PropertyMetadata(800.0));
-
-
 
         public bool IsRandomizeViewBusy
         {
@@ -225,6 +213,12 @@ namespace Randomizer_WPF
                     K1Randomizer.Load(path);
                 }
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            CurrentHeight = CurrentSettings.Height;
+            CurrentWidth = CurrentSettings.Width;
         }
         #endregion Events
 
@@ -330,12 +324,15 @@ namespace Randomizer_WPF
                     PresetPath = Path.Combine(Environment.CurrentDirectory, "Presets"),
                     SpoilerPath = Path.Combine(Environment.CurrentDirectory, "Spoilers"),
                     FontSizeIndex = 1,
-                    Height = 620.0,
-                    Width = 800.0,
+                    Height = DEFAULT_HEIGHT,
+                    Width  = DEFAULT_WIDTH,
                 };
                 file.WriteFile(path);
                 WriteLineToLog("done.");
             }
+
+            if (file.Height == 0) file.Height = DEFAULT_HEIGHT;
+            if (file.Width  == 0) file.Width  = DEFAULT_WIDTH;
 
             return file;
         }

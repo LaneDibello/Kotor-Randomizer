@@ -114,6 +114,8 @@
                                    Style="{StaticResource tbHeader3}"
                                    TextDecorations="Underline"
                                    FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}"
+                                   Margin="5,3,5,10"
+                                   VerticalAlignment="Center"
                                    />
 
                         <!--Character Rando-->
@@ -249,7 +251,8 @@
                                        Style="{StaticResource tbHeader3}"
                                        TextDecorations="Underline"
                                        FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}"
-                                       Margin="5,0,5,5"
+                                       Margin="5,3,5,10"
+                                       VerticalAlignment="Center"
                                        />
                         </DockPanel>
 

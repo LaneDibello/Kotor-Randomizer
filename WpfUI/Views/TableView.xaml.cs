@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kotor_Randomizer_2.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -81,6 +82,22 @@ namespace Randomizer_WPF.Views
                 destination.Add(item);
             }
             source.Clear();
+        }
+
+        private void BtnClearAll_Click(object sender, RoutedEventArgs e)
+        {
+            var tables = lvTables.ItemsSource as IList<RandomizableTable>;
+            foreach (var table in tables)
+            {
+                if (table.IsRandomized)
+                {
+                    foreach (var item in table.Randomized)
+                    {
+                        table.Columns.Add(item);
+                    }
+                    table.Randomized.Clear();
+                }
+            }
         }
     }
 }

@@ -36,9 +36,12 @@
                 </TextBlock>
             </StackPanel>
         </Border>
-        
+
+        <Button DockPanel.Dock="Bottom" Content="Reset to Default" Style="{StaticResource K1RandoButtonStyle}"
+                x:Name="btnClearAll" Click="BtnClearAll_Click" />
+
         <!--Table Randomization-->
-        <Grid Margin="5">
+        <Grid Margin="0,5">
             <Grid.Resources>
                 <Style TargetType="TextBlock" BasedOn="{StaticResource tbHeader3}">
                     <Setter Property="Margin" Value="0,0,0,0" />

@@ -195,7 +195,8 @@
                                        Style="{StaticResource tbHeader3}"
                                        FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}"
                                        TextDecorations="Underline"
-                                       Margin="5"
+                                       Margin="5,2,5,10"
+                                       VerticalAlignment="Center"
                                        />
                             <TextBlock Style="{StaticResource tbDescription}"
                                        Grid.Column="1" Margin="5,0,5,5"
@@ -311,7 +312,8 @@
                                        Style="{StaticResource tbHeader3}"
                                        FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}"
                                        TextDecorations="Underline"
-                                       Margin="5"
+                                       Margin="5,2,5,10"
+                                       VerticalAlignment="Center"
                                        />
                             <TextBlock Style="{StaticResource tbDescription}"
                                        Grid.Column="1" Margin="5,0,5,5"
@@ -374,12 +376,12 @@
                                     <GridView>
                                         <GridViewColumn Width="60" DisplayMemberBinding="{Binding Area}">
                                             <GridViewColumn.Header>
-                                                <GridViewColumnHeader Tag="Area" Click="LvUnlockedColumnHeader_Click" />
+                                                <GridViewColumnHeader x:Name="gvchUnlockedArea" Tag="Area" Click="LvUnlockedColumnHeader_Click" Content="Area" HorizontalContentAlignment="Left" />
                                             </GridViewColumn.Header>
                                         </GridViewColumn>
                                         <GridViewColumn Width="180" DisplayMemberBinding="{Binding Label}">
                                             <GridViewColumn.Header>
-                                                <GridViewColumnHeader Tag="Label" Click="LvUnlockedColumnHeader_Click" Content="Label" />
+                                                <GridViewColumnHeader x:Name="gvchUnlockedLabel" Tag="Label" Click="LvUnlockedColumnHeader_Click" Content="Label" />
                                             </GridViewColumn.Header>
                                         </GridViewColumn>
                                     </GridView>
@@ -412,12 +414,12 @@
                                     <GridView>
                                         <GridViewColumn Width="60" DisplayMemberBinding="{Binding Area}">
                                             <GridViewColumn.Header>
-                                                <GridViewColumnHeader Tag="Area" Click="LvLockedColumnHeader_Click" />
+                                                <GridViewColumnHeader x:Name="gvchLockedArea" Tag="Area" Click="LvLockedColumnHeader_Click" Content="Area" HorizontalContentAlignment="Left" />
                                             </GridViewColumn.Header>
                                         </GridViewColumn>
                                         <GridViewColumn Width="180" DisplayMemberBinding="{Binding Label}">
                                             <GridViewColumn.Header>
-                                                <GridViewColumnHeader Tag="Label" Click="LvLockedColumnHeader_Click" Content="Label" />
+                                                <GridViewColumnHeader x:Name="gvchLockedLabel" Tag="Label" Click="LvLockedColumnHeader_Click" Content="Label" />
                                             </GridViewColumn.Header>
                                         </GridViewColumn>
                                     </GridView>

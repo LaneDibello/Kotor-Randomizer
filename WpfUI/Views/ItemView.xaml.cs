@@ -426,22 +426,29 @@ namespace Randomizer_WPF.Views
             // Set up the default sort for item omitted list views.
             if (!Constructed)
             {
-                SortAdorner.SortColumn(lvRandomized,
-                                       ref lvRandomizedSortCol,
-                                       ref lvRandomizedSortAdorner,
-                                       gvchRandomizedLabel,
-                                       gvchRandomizedLabel.Tag.ToString());
-                SortAdorner.SortColumn(lvRandomized,
-                                       ref lvRandomizedSortCol,
-                                       ref lvRandomizedSortAdorner,
-                                       gvchRandomizedCategory,
-                                       gvchRandomizedCategory.Tag.ToString());
-                SortAdorner.SortColumn(lvOmitted,
-                                       ref lvOmittedSortCol,
-                                       ref lvOmittedSortAdorner,
-                                       gvchOmittedCategory,
-                                       gvchOmittedCategory.Tag.ToString());
-                Constructed = true;
+                try
+                {
+                    SortAdorner.SortColumn(lvRandomized,
+                                           ref lvRandomizedSortCol,
+                                           ref lvRandomizedSortAdorner,
+                                           gvchRandomizedLabel,
+                                           gvchRandomizedLabel.Tag.ToString());
+                    SortAdorner.SortColumn(lvRandomized,
+                                           ref lvRandomizedSortCol,
+                                           ref lvRandomizedSortAdorner,
+                                           gvchRandomizedCategory,
+                                           gvchRandomizedCategory.Tag.ToString());
+                    SortAdorner.SortColumn(lvOmitted,
+                                           ref lvOmittedSortCol,
+                                           ref lvOmittedSortAdorner,
+                                           gvchOmittedCategory,
+                                           gvchOmittedCategory.Tag.ToString());
+                    Constructed = true;
+                }
+                catch (Exception)
+                {
+                    // Ignore the exception.
+                }
             }
         }
 

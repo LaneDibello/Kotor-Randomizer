@@ -28,6 +28,8 @@ namespace Randomizer_WPF.Views
         private ObservableCollection<UnlockableDoor> lvUnlockedItemSource = new ObservableCollection<UnlockableDoor>();
         private SortAdorner lvUnlockedSortAdorner = null;
         private GridViewColumnHeader lvUnlockedSortCol = null;
+
+        bool Constructed = false;
         #endregion
 
         #region Constructors
@@ -306,6 +308,33 @@ namespace Randomizer_WPF.Views
 
             view = (CollectionView)CollectionViewSource.GetDefaultView(lvUnlocked.ItemsSource);
             if (view != null) view.Filter = UnlockFilter;
+
+            if (!Constructed)
+            {
+                try
+                {
+                    SortAdorner.SortColumn(lvUnlocked,
+                                           ref lvUnlockedSortCol,
+                                           ref lvUnlockedSortAdorner,
+                                           gvchUnlockedLabel,
+                                           gvchUnlockedLabel.Tag.ToString());
+                    SortAdorner.SortColumn(lvUnlocked,
+                                           ref lvUnlockedSortCol,
+                                           ref lvUnlockedSortAdorner,
+                                           gvchUnlockedArea,
+                                           gvchUnlockedArea.Tag.ToString());
+                    SortAdorner.SortColumn(lvLocked,
+                                           ref lvLockedSortCol,
+                                           ref lvLockedSortAdorner,
+                                           gvchLockedArea,
+                                           gvchLockedArea.Tag.ToString());
+                    Constructed = true;
+                }
+                catch (Exception)
+                {
+                    // Ignore the exception.
+                }
+            }
         }
         #endregion
 

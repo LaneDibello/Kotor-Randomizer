@@ -12,7 +12,7 @@
         Title="{Binding WindowTitle, RelativeSource={RelativeSource Self}}"
         Height="{Binding ElementName=window, Path=CurrentHeight, Mode=TwoWay}"
         Width="{Binding ElementName=window, Path=CurrentWidth, Mode=TwoWay}"
-        MinHeight="375" MinWidth="575"
+        MinHeight="475" MinWidth="575"
         FontFamily="Microsoft Sans Serif" FontSize="12"
         Name="window"
         d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
@@ -20,6 +20,7 @@
         Closed="Window_Closed"
         Icon="/Resources/Krandom.ico"
         AllowDrop="True" DragOver="Window_DragOver" Drop="Window_Drop"
+        Loaded="Window_Loaded"
         >
     <Window.Resources>
         <ResourceDictionary>
