@@ -1,0 +1,55 @@
+﻿<Window x:Class="RandoHelper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RandoHelper"
+        xmlns:ctrls="clr-namespace:RandoHelper.Controls"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle, RelativeSource={RelativeSource Self}}"
+        Height="450"
+        Width="650"
+        >
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                
+            </MenuItem>
+        </Menu>
+
+        <Grid DockPanel.Dock="Bottom" Background="LightGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="2">
+                <TextBlock Text="Modules found: " />
+                <TextBlock Text="??" />
+                <TextBlock Text=" / " />
+                <TextBlock Text="??" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="2">
+                <TextBlock Text="Warnings: " />
+                <TextBlock Text="??" />
+            </StackPanel>
+
+            <ProgressBar x:Name="SearchProgress"
+                         Grid.Column="2"
+                         Width="100"
+                         Height="14"
+                         Value="50"
+                         Margin="2"
+                         />
+        </Grid>
+        
+        <Grid Background="Black">
+            <ctrls:VertexControl x:Name="TestVertexControl" DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:MainWindow}, Path=TestVertex}" />
+        </Grid>
+    </DockPanel>
+</Window>
