@@ -34,6 +34,7 @@ namespace kotor_Randomizer_2.Models
         const string XML_AREA           = "Area";
         const string XML_ARMBAND        = "Armband";
         const string XML_ARMOR          = "Armor";
+        const string XML_ATTACK         = "Attack";
         const string XML_AUDIO          = "Audio";
         const string XML_BATTLE         = "Battle";
         const string XML_BELT           = "Belt";
@@ -49,11 +50,13 @@ namespace kotor_Randomizer_2.Models
         const string XML_CUBE_MAP       = "CubeMap";
         const string XML_CUTSCENE       = "Cutscene";
         const string XML_CWEAPON        = "CWeapon";
+        const string XML_DAMAGE         = "Damage";
         const string XML_DLZ            = "DLZ";
         const string XML_DOOR           = "Door";
         const string XML_DROID          = "Droid";
         const string XML_EASY_PANELS    = "EasyPanels";
         const string XML_EFFECT         = "Effect";
+        const string XML_FIRE           = "Fire";
         const string XML_FIRST_NAME_F   = "FirstF";
         const string XML_FIRST_NAME_M   = "FirstM";
         const string XML_FLU            = "FLU";
@@ -70,6 +73,7 @@ namespace kotor_Randomizer_2.Models
         const string XML_LAST_NAME      = "Last";
         const string XML_LIGHTSABER     = "Lightsaber";
         const string XML_LOGIC          = "Logic";
+        const string XML_LOOP           = "Loop";
         const string XML_MALAK          = "Malak";
         const string XML_MAPS           = "StarMaps";
         const string XML_MASK           = "Mask";
@@ -79,6 +83,7 @@ namespace kotor_Randomizer_2.Models
         const string XML_MIXNPCPARTY    = "MixNpcParty";
         const string XML_MODEL          = "Model";
         const string XML_MODULE         = "Module";
+        const string XML_MOVE           = "Move";
         const string XML_NAME           = "Name";
         const string XML_NAMES          = "Names";
         const string XML_NPC            = "Npc";
@@ -88,7 +93,9 @@ namespace kotor_Randomizer_2.Models
         const string XML_OMIT_LARGE     = "OmitLarge";
         const string XML_OTHER          = "Other";
         const string XML_PACK           = "Pack";
+        const string XML_PARRY          = "Parry";
         const string XML_PARTY          = "Party";
+        const string XML_PAUSE          = "Pause";
         const string XML_PAZAAK         = "Pazaak";
         const string XML_PLAC           = "Placeable";
         const string XML_PLACE          = "Placeable";
@@ -115,6 +122,7 @@ namespace kotor_Randomizer_2.Models
         const string XML_VARIOUS        = "Various";
         const string XML_VERSION        = "Version";
         const string XML_VEHICLE        = "Vehicle";
+        const string XML_WALK           = "Walk";
         const string XML_WEAPON         = "Weapon";
         #endregion XML Consts
         #endregion
@@ -223,6 +231,57 @@ namespace kotor_Randomizer_2.Models
         #endregion Constructors
 
         #region Properties
+        #region Animation Properties
+        private RandomizationLevel _animationAttack;
+        public RandomizationLevel AnimationAttack
+        {
+            get => _animationAttack;
+            set => SetField(ref _animationAttack, value);
+        }
+
+        private RandomizationLevel _animationDamage;
+        public RandomizationLevel AnimationDamage
+        {
+            get => _animationDamage;
+            set => SetField(ref _animationDamage, value);
+        }
+
+        private RandomizationLevel _animationFire;
+        public RandomizationLevel AnimationFire
+        {
+            get => _animationFire;
+            set => SetField(ref _animationFire, value);
+        }
+
+        private RandomizationLevel _animationLoop;
+        public RandomizationLevel AnimationLoop
+        {
+            get => _animationLoop;
+            set => SetField(ref _animationLoop, value);
+        }
+
+        private RandomizationLevel _animationParry;
+        public RandomizationLevel AnimationParry
+        {
+            get => _animationParry;
+            set => SetField(ref _animationParry, value);
+        }
+
+        private RandomizationLevel _animationPause;
+        public RandomizationLevel AnimationPause
+        {
+            get => _animationPause;
+            set => SetField(ref _animationPause, value);
+        }
+
+        private RandomizationLevel _animationMove;
+        public RandomizationLevel AnimationMove
+        {
+            get => _animationMove;
+            set => SetField(ref _animationMove, value);
+        }
+        #endregion
+
         #region Audio Properties
         private RandomizationLevel _audioAmbientNoise;
         public RandomizationLevel AudioAmbientNoise
@@ -830,6 +889,17 @@ namespace kotor_Randomizer_2.Models
         #endregion Texture Properties
 
         #region Active Rando Properties
+        public bool DoRandomizeAnimation
+        {
+            get
+            {
+                return
+                    (AnimationAttack | AnimationDamage | AnimationFire | AnimationLoop
+                    | AnimationParry | AnimationPause  | AnimationMove)
+                    != RandomizationLevel.None;
+            }
+        }
+
         public bool DoRandomizeAudio
         {
             get
@@ -913,7 +983,8 @@ namespace kotor_Randomizer_2.Models
         {
             get
             {
-                return Table2DAs.Any(rt => rt.IsRandomized);
+                return Table2DAs.Any(rt => rt.IsRandomized) ||
+                       DoRandomizeAnimation;
             }
         }
         public bool DoRandomizeText
@@ -2147,6 +2218,14 @@ namespace kotor_Randomizer_2.Models
         /// <param name="element">XML element containing the table settings.</param>
         private void ReadTableSettings(XElement element)
         {
+            { if (element.Attribute(XML_ATTACK) is XAttribute attr) AnimationAttack = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_DAMAGE) is XAttribute attr) AnimationDamage = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_FIRE  ) is XAttribute attr) AnimationFire   = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_LOOP  ) is XAttribute attr) AnimationLoop   = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_PARRY ) is XAttribute attr) AnimationParry  = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_PAUSE ) is XAttribute attr) AnimationPause  = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_MOVE   ) is XAttribute attr) AnimationMove   = ParseEnum<RandomizationLevel>(attr.Value); }
+
             foreach (var tbl in element.Descendants(XML_TABLE))
             {
                 var name = tbl.Attribute(XML_NAME).Value;
@@ -2395,6 +2474,15 @@ namespace kotor_Randomizer_2.Models
         private void WriteTableSettings(XmlTextWriter w)
         {
             w.WriteStartElement(XML_TABLES);    // Start Tables
+
+            if (AnimationAttack != RandomizationLevel.None) w.WriteAttributeString(XML_ATTACK, AnimationAttack.ToString());
+            if (AnimationDamage != RandomizationLevel.None) w.WriteAttributeString(XML_DAMAGE, AnimationDamage.ToString());
+            if (AnimationFire   != RandomizationLevel.None) w.WriteAttributeString(XML_FIRE,   AnimationFire.ToString());
+            if (AnimationLoop   != RandomizationLevel.None) w.WriteAttributeString(XML_LOOP,   AnimationLoop.ToString());
+            if (AnimationParry  != RandomizationLevel.None) w.WriteAttributeString(XML_PARRY,  AnimationParry.ToString());
+            if (AnimationPause  != RandomizationLevel.None) w.WriteAttributeString(XML_PAUSE,  AnimationPause.ToString());
+            if (AnimationMove   != RandomizationLevel.None) w.WriteAttributeString(XML_MOVE,   AnimationMove.ToString());
+
             foreach (var table in Table2DAs.Where(rt => rt.IsRandomized))
             {
                 w.WriteStartElement(XML_TABLE);    // Start Table

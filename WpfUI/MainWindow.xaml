@@ -245,6 +245,14 @@
                     <v:CosmeticView x:Name="CosmeticView"
                                     FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
                                     
+                                    AnimationAttack    ="{Binding AnimationAttack,     Mode=TwoWay}"
+                                    AnimationDamage    ="{Binding AnimationDamage,     Mode=TwoWay}"
+                                    AnimationFire      ="{Binding AnimationFire,       Mode=TwoWay}"
+                                    AnimationLoop      ="{Binding AnimationLoop,       Mode=TwoWay}"
+                                    AnimationParry     ="{Binding AnimationParry,      Mode=TwoWay}"
+                                    AnimationPause     ="{Binding AnimationPause,      Mode=TwoWay}"
+                                    AnimationMove      ="{Binding AnimationMove,       Mode=TwoWay}"
+                                    
                                     TexturePack        ="{Binding TextureSelectedPack, Mode=TwoWay}"
                                     TextureCubeMaps    ="{Binding TextureCubeMaps    , Mode=TwoWay}"
                                     TextureCreatures   ="{Binding TextureCreatures   , Mode=TwoWay}"
