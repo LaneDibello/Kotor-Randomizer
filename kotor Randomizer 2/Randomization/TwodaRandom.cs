@@ -5,32 +5,154 @@ using System.IO;
 using KotOR_IO;
 using ClosedXML.Excel;
 using kotor_Randomizer_2.Models;
+using System.Text.RegularExpressions;
 
 namespace kotor_Randomizer_2
 {
     public static class TwodaRandom
     {
+        #region Fields and Properties
         /// <summary>
         /// Lookup table for how 2DAs are randomized.
         /// Usage: LookupTable[2DA][col_name] = (OriginalData, RandomizedData);
         /// </summary>
         private static Dictionary<string, Dictionary<string, List<Tuple<string, string>>>> LookupTable { get; set; } = new Dictionary<string, Dictionary<string, List<Tuple<string, string>>>>();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static Dictionary<string, List<string>> Selected2DAs { get; set; }
 
-        /// <summary> List of animations to randomize all together. </summary>
+        #region Regexes
+        // Weapon animation naming conventions (explained for Regexes)
+        // A: animation category   1: item category
+        //     b = blaster             0 = monster / droid
+        //     c = common              1 = stun baton
+        //     f = feat                2 = single saber
+        //     g = generic             3 = two handed saber
+        //     m = monster             4 = dual saber
+        //                             5 = single blaster
+        //                             6 = dual blasters
+        //                             7 = rifle
+        //                             8 = natural (unarmed)
+        //                             9 = heavy carbine
+        //                             
+        // B: animation type               2: animation number
+        //     a = attack                      b?a3 = sniper shot
+        //     d = damaged                     b?a4 = power blast
+        //     g = dodge                       c?a6 = burn door with saber
+        //     n = deflect                     f?a1 = crit strike
+        //     p = parry                       f?a2 = flurry
+        //     r = idle (loop)                 f?a3 = power attack
+        //     w = wield                       f?a4 = force jump
+        //     x = knocked down loop       
+        //     y = knocked down            
+        //     z = stand from knocked down 
+
+        /// <summary>
+        /// Regular expression of creature attack animations.
+        /// </summary>
+        private static readonly Regex RegexAniCrAttack = new Regex("^[m][0-9][aw][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        /// <summary>
+        /// Regular expression of creature damaged animations.
+        /// </summary>
+        private static readonly Regex RegexAniCrDamage = new Regex("^[m][0-9][d][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        /// <summary>
+        /// Regular expression of creature parry animations.
+        /// </summary>
+        private static readonly Regex RegexAniCrParry = new Regex("^[m][0-9][pg][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        /// <summary>
+        /// Regular expression of attack animations.
+        /// </summary>
+        private static readonly Regex RegexAniAttack = new Regex("^[bcfg][0-9][aw][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        /// <summary>
+        /// Regular expression of damaged animations.
+        /// </summary>
+        private static readonly Regex RegexAniDamage = new Regex("^[bcfg][0-9][d][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        /// <summary>
+        /// Regular expression of parry animations.
+        /// </summary>
+        private static readonly Regex RegexAniParry = new Regex("^[bcfg][0-9][pg][0-9]$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        #endregion
+
+        #region Animation Settings
+        /// <summary>
+        /// Rando level of attack animations.
+        /// </summary>
+        public static RandomizationLevel AnimationAttack { get; set; }
+
+        /// <summary>
+        /// Rando level of damaged animations.
+        /// </summary>
+        public static RandomizationLevel AnimationDamage { get; set; }
+
+        /// <summary>
+        /// Rando level of fire and forget animations.
+        /// </summary>
+        public static RandomizationLevel AnimationFire { get; set; }
+
+        /// <summary>
+        /// Rando level of looping animations.
+        /// </summary>
+        public static RandomizationLevel AnimationLoop { get; set; }
+
+        /// <summary>
+        /// Rando level of parry animations.
+        /// </summary>
+        public static RandomizationLevel AnimationParry { get; set; }
+
+        /// <summary>
+        /// Rando level of pause and idle animations.
+        /// </summary>
+        public static RandomizationLevel AnimationPause { get; set; }
+
+        /// <summary>
+        /// Rando level of walking and running animations.
+        /// </summary>
+        public static RandomizationLevel AnimationMove { get; set; }
+
+        /// <summary>
+        /// Is any category of animation randomization enabled?
+        /// </summary>
+        public static bool IsAnimationRandomized
+        {
+            get
+            {
+                RandomizationLevel full = AnimationAttack | AnimationDamage | AnimationFire | AnimationLoop | AnimationParry | AnimationPause | AnimationMove;
+                return full != RandomizationLevel.None;
+            }
+        }
+        #endregion
+
+        #region Animation Lists
+        /// <summary>
+        /// List of animations to randomize all together.
+        /// </summary>
         private static List<Animation> AniMaxRando { get; } = new List<Animation>();
 
-        /// <summary> List of creature animations to randomize all together. </summary>
+        /// <summary>
+        /// List of creature animations to randomize all together.
+        /// </summary>
         private static List<Animation> AniMaxRandoCreatures { get; } = new List<Animation>();
 
-        /// <summary> Collection of lists of animations to be randomized by type. </summary>
+        /// <summary>
+        /// Collection of lists of animations to be randomized by type.
+        /// </summary>
         private static List<List<Animation>> AnimationTypeLists { get; } = new List<List<Animation>>();
 
-        /// <summary> Alignment stance animations. </summary>
-        private static readonly List<string> AniAlignment = new List<string>() { "good", "neutral", "evil" };
+        /// <summary>
+        /// Alignment stance animations.
+        /// </summary>
+        private static readonly List<string> AniAlignment = new List<string>() { "good", "neutral", "evil", "whirlwind" };
 
-        /// <summary> Unused animations and animations whose usage is unknown. These seem to include some cutscene specific animations. </summary>
+        /// <summary>
+        /// Unused animations and animations whose usage is unknown. These seem to include some cutscene specific animations.
+        /// </summary>
         private static readonly List<int> AniUnused = new List<int>()
         {
             // Appears Unused
@@ -46,7 +168,9 @@ namespace kotor_Randomizer_2
             374, 375, 379, 380, 383, 384, 385,                  // die3, dead3, g0a1, b0a1, kd, kdtlkangry, kdtlksad
         };
 
-        /// <summary> Creature animations. </summary>
+        /// <summary>
+        /// Creature animations.
+        /// </summary>
         private static readonly List<int> AniCreatures = new List<int>()
         {
             125, 126, 127, 128, 129, 130, 166, 167, 168, 169,   // m2a1, m2a2, m2g1, m2g2, m2d1, m2d2, m3a1, m3a2, m3g1, m3g2
@@ -56,33 +180,8 @@ namespace kotor_Randomizer_2
             277, 278, 279, 280, 281, 282, 283, 284, 285, 286,   // g0a2, creadyr, creadyrtw, cdamages, cdodgeg, m0a1, m0a2, m0p1, m0p2, m0d1
             287,                                                // m0d2
         };
-
-        public static RandomizationLevel AnimationAttack { get; set; }
-        public static RandomizationLevel AnimationDamage { get; set; }
-        public static RandomizationLevel AnimationFire { get; set; }
-        public static RandomizationLevel AnimationLoop { get; set; }
-        public static RandomizationLevel AnimationParry { get; set; }
-        public static RandomizationLevel AnimationPause { get; set; }
-        public static RandomizationLevel AnimationMove { get; set; }
-
-        public static bool IsAnimationRandomized
-        {
-            get
-            {
-                RandomizationLevel full = AnimationAttack | AnimationDamage | AnimationFire | AnimationLoop | AnimationParry | AnimationPause | AnimationMove;
-                return full != RandomizationLevel.None;
-            }
-        }
-
-        /// <summary>
-        /// Creates backups for files modified during this randomization.
-        /// </summary>
-        /// <param name="paths"></param>
-        internal static void CreateTwoDABackups(KPaths paths)
-        {
-            paths.BackUpChitinFile();
-            paths.BackUpOverrideDirectory();
-        }
+        #endregion
+        #endregion
 
         public static void Twoda_rando(KPaths paths, Kotor1Randomizer k1rando = null)
         {
@@ -168,73 +267,176 @@ namespace kotor_Randomizer_2
         }
 
         /// <summary>
-        /// Perform requested animation randomizations by category.
+        /// Grabs table related settings from the Kotor1Randomizer object.
         /// </summary>
-        /// <param name="t">Table containing "animations"</param>
-        private static void RandomizeAnimations(TwoDA t)
+        /// <param name="k1rando">Randomizer settings object.</param>
+        private static void AssignSettings(Kotor1Randomizer k1rando)
         {
-            // Parse animations into a usable structure.
-            List<Animation> animations = ParseAnimations(t);
-            var animationLookup = new List<Tuple<string, string>>();
-
-            // Remove animations that shouldn't be randomized.
-            animations.RemoveAll(a => AniUnused.Contains(a.Id));    // Remove unused or unknown animations.
-            animations = animations.GroupBy(a => a.Name).Select(g => g.First()).ToList();   // Remove duplicates.
-
-            /// Handle animation categories. The order here matters because they are removed from "animations" each time they are handled.
-            /// Creatures are handled before humanoids to keep them separate. Max rando lists are separate as well.
-            // Handle attacks.
-            animations = HandleCategory(animations, AnimationAttack, animations.Where(a => a.Attack == "1" && AniCreatures.Contains(a.Id)).ToList(), true);
-            animations = HandleCategory(animations, AnimationAttack, animations.Where(a => a.Attack == "1").ToList());
-
-            // Handle damage.
-            animations = HandleCategory(animations, AnimationDamage, animations.Where(a => a.Damage == "1" && AniCreatures.Contains(a.Id)).ToList(), true);
-            animations = HandleCategory(animations, AnimationDamage, animations.Where(a => a.Damage == "1").ToList());
-
-            // Handle parry.
-            animations = HandleCategory(animations, AnimationParry, animations.Where(a => a.Parry == "1" && AniCreatures.Contains(a.Id)).ToList(), true);
-            animations = HandleCategory(animations, AnimationParry, animations.Where(a => a.Parry == "1").ToList());
-
-            // Handle pause.
-            animations = HandleCategory(animations, AnimationPause, animations.Where(a => a.Pause == "1" && AniCreatures.Contains(a.Id)).ToList(), true);
-            animations = HandleCategory(animations, AnimationPause, animations.Where(a => a.Pause == "1").ToList());
-
-            // Handle movement.
-            animations = HandleCategory(animations, AnimationMove, animations.Where(a => (a.Run == "1" || a.Walk == "1") && AniCreatures.Contains(a.Id)).ToList(), true);
-            animations = HandleCategory(animations, AnimationMove, animations.Where(a => a.Run == "1" || a.Walk == "1").ToList());
-
-            // Handle looping.
-            animations = HandleCategory(animations, AnimationLoop, animations.Where(a => a.Loop == "1" && AniCreatures.Contains(a.Id)).ToList(), true);
-            animations = HandleCategory(animations, AnimationLoop, animations.Where(a => a.Loop == "1" && AniAlignment.Contains(a.Name)).ToList());
-            animations = HandleCategory(animations, AnimationLoop, animations.Where(a => a.Loop == "1").ToList());
-
-            // Handle fire and forget.
-            animations = HandleCategory(animations, AnimationFire, animations.Where(a => a.Fire == "1" && AniCreatures.Contains(a.Id)).ToList(), true);
-            animations = HandleCategory(animations, AnimationFire, animations.Where(a => a.Fire == "1").ToList());
-
-            // Perform max rando.
-            var oldMax = AniMaxRando.ToList();
-            Randomize.FisherYatesShuffle(AniMaxRando);
-            for (int i = 0; i < oldMax.Count; i++)
+            if (k1rando == null)
             {
-                animationLookup.Add(new Tuple<string, string>(oldMax[i].Name, AniMaxRando[i].Name));
-                t.Data["name"][oldMax[i].Id] = AniMaxRando[i].Name.ToString();
+                Selected2DAs = Globals.Selected2DAs;
             }
-
-            // Perform type rando.
-            foreach (var typeList in AnimationTypeLists)
+            else
             {
-                var randoType = typeList.ToList();
-                Randomize.FisherYatesShuffle(randoType);
-                for (int i = 0; i < typeList.Count; i++)
+                Selected2DAs = new Dictionary<string, List<string>>();
+                foreach (var table in k1rando.Table2DAs.Where(rt => rt.IsRandomized))
                 {
-                    animationLookup.Add(new Tuple<string, string>(typeList[i].Name, randoType[i].Name));
-                    t.Data["name"][typeList[i].Id] = randoType[i].Name.ToString();
+                    Selected2DAs.Add(table.Name, table.Randomized.ToList());
                 }
+
+                AnimationAttack = k1rando.AnimationAttack;
+                AnimationDamage = k1rando.AnimationDamage;
+                AnimationFire = k1rando.AnimationFire;
+                AnimationLoop = k1rando.AnimationLoop;
+                AnimationParry = k1rando.AnimationParry;
+                AnimationPause = k1rando.AnimationPause;
+                AnimationMove = k1rando.AnimationMove;
+            }
+        }
+
+        /// <summary>
+        /// Creates a worksheet containing the spoiler information for this TwoDA randomization.
+        /// </summary>
+        /// <param name="workbook">Workbook to add the new worksheet to.</param>
+        internal static void CreateSpoilerLog(XLWorkbook workbook)
+        {
+            const string ORIGINAL = "Orig";
+            const string RANDOM = "Rand";
+
+            if (LookupTable.Count == 0) { return; }
+            var ws = workbook.Worksheets.Add("TwoDA");
+            int i = 1;
+
+            // TwoDA Randomization Settings
+            ws.Cell(i, 1).Value = "Animation Type";
+            ws.Cell(i, 2).Value = "Rando Level";
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 1).Style.Font.Bold = true;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Style.Font.Bold = true;
+            i++;
+
+            var settings = new List<Tuple<string, string>>()
+            {
+                new Tuple<string, string>("Attack", AnimationAttack.ToString()),
+                new Tuple<string, string>("Damage", AnimationDamage.ToString()),
+                new Tuple<string, string>("Fire",   AnimationFire.ToString()),
+                new Tuple<string, string>("Loop",   AnimationLoop.ToString()),
+                new Tuple<string, string>("Parry",  AnimationParry.ToString()),
+                new Tuple<string, string>("Pause",  AnimationPause.ToString()),
+                new Tuple<string, string>("Move",   AnimationMove.ToString()),
+                new Tuple<string, string>("", ""),  // Skip a row.
+            };
+
+            foreach (var setting in settings)
+            {
+                ws.Cell(i, 1).Value = setting.Item1;
+                ws.Cell(i, 2).Value = setting.Item2;
+                ws.Cell(i, 1).Style.Font.Italic = true;
+                i++;
             }
 
-            // Add animation table changes to LookupTable.
-            LookupTable[t.Name].Add("name", animationLookup);
+            i++;    // Skip a row.
+
+            // TwoDA Randomization
+            int iDone = i;
+            int j = 1;
+            int jMax = 1;
+
+            foreach (var twoDA in LookupTable)
+            {
+                // TwoDA Table Header
+                ws.Cell(i, 1).Value = twoDA.Key;
+                ws.Cell(i, 1).Style.Font.Bold = true;
+                ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Range(i, 1, i, 2).Merge();
+                i++;
+
+                var iStart = i;
+
+                foreach (var col in twoDA.Value)
+                {
+                    if (jMax < j) jMax = j + 1;     // Remember the width of the widest table.
+
+                    // Column Headers
+                    i = iStart;
+                    ws.Cell(i, j).Value = $"{col.Key} {ORIGINAL}";
+                    ws.Cell(i, j).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                    ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                    ws.Cell(i, j).Style.Font.Italic = true;
+                    ws.Cell(i, j + 1).Value = $"{col.Key} {RANDOM}";
+                    ws.Cell(i, j + 1).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                    ws.Cell(i, j + 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                    ws.Cell(i, j + 1).Style.Font.Italic = true;
+                    i++;
+
+                    foreach (var row in col.Value)
+                    {
+                        // Row Data
+                        ws.Cell(i, j).Value = row.Item1;
+                        ws.Cell(i, j).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j + 1).Value = row.Item2;
+                        ws.Cell(i, j + 1).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                        i++;
+                    }
+
+                    j += 2;     // Move to the next pair of columns.
+                    if (iDone < i) iDone = i;   // Remember the length of this table.
+                }
+
+                i = iDone + 1;  // Skip a row.
+                j = 1;          // Reset to column A.
+            }
+
+            // Adjust columns.
+            for (int c = 1; c <= jMax; c++)
+            {
+                ws.Column(c).AdjustToContents();
+            }
+        }
+
+        /// <summary>
+        /// Creates backups for files modified during this randomization.
+        /// </summary>
+        /// <param name="paths"></param>
+        internal static void CreateTwoDABackups(KPaths paths)
+        {
+            paths.BackUpChitinFile();
+            paths.BackUpOverrideDirectory();
+        }
+
+        /// <summary>
+        /// Sorts animations into type or max randomization based on the RandomizationLevel and if it is a creature animation.
+        /// </summary>
+        /// <param name="fullList">Full list of animations from which to remove the short list.</param>
+        /// <param name="level">Randomization level for this category.</param>
+        /// <param name="shortList">List of animations for this category.</param>
+        /// <param name="isCreature">Is this a set of creature animations?</param>
+        /// <returns>Full list of animations with this category of animations removed.</returns>
+        private static List<Animation> HandleCategory(List<Animation> fullList, RandomizationLevel level, List<Animation> shortList, bool isCreature = false)
+        {
+            switch (level)
+            {
+                default:
+                case RandomizationLevel.None:
+                case RandomizationLevel.Subtype:
+                    break;  // Do nothing.
+                case RandomizationLevel.Type:
+                    AnimationTypeLists.Add(shortList);
+                    break;
+                case RandomizationLevel.Max:
+                    if (isCreature)
+                    {
+                        AniMaxRandoCreatures.AddRange(shortList);
+                    }
+                    else
+                    {
+                        AniMaxRando.AddRange(shortList);
+                    }
+                    break;
+            }
+
+            return fullList.Except(shortList).ToList();
         }
 
         /// <summary>
@@ -311,65 +513,76 @@ namespace kotor_Randomizer_2
         }
 
         /// <summary>
-        /// Sorts animations into type or max randomization based on the RandomizationLevel and if it is a creature animation.
+        /// Perform requested animation randomizations by category.
         /// </summary>
-        /// <param name="fullList">Full list of animations from which to remove the short list.</param>
-        /// <param name="level">Randomization level for this category.</param>
-        /// <param name="shortList">List of animations for this category.</param>
-        /// <param name="isCreature">Is this a set of creature animations?</param>
-        /// <returns>Full list of animations with this category of animations removed.</returns>
-        private static List<Animation> HandleCategory(List<Animation> fullList, RandomizationLevel level, List<Animation> shortList, bool isCreature = false)
+        /// <param name="t">Table containing "animations"</param>
+        private static void RandomizeAnimations(TwoDA t)
         {
-            switch (level)
+            // Parse animations into a usable structure.
+            List<Animation> animations = ParseAnimations(t);
+            var animationLookup = new List<Tuple<string, string>>();
+
+            // Remove animations that shouldn't be randomized.
+            animations.RemoveAll(a => AniUnused.Contains(a.Id));    // Remove unused or unknown animations.
+            animations = animations.GroupBy(a => a.Name).Select(g => g.First()).ToList();   // Remove duplicates.
+
+            /// Handle animation categories. The order here matters because they are removed from "animations" each time they are handled.
+            /// Creatures are handled before humanoids to keep them separate. Max rando lists are separate as well.
+            // Handle attacks.
+            animations = HandleCategory(animations, AnimationAttack, animations.Where(a => RegexAniCrAttack.IsMatch(a.Name) || (a.Attack == "1" && AniCreatures.Contains(a.Id))).ToList(), true);
+            animations = HandleCategory(animations, AnimationAttack, animations.Where(a => RegexAniAttack.IsMatch(a.Name) || a.Attack == "1").ToList());
+
+            // Handle damage.
+            animations = HandleCategory(animations, AnimationDamage, animations.Where(a => RegexAniCrDamage.IsMatch(a.Name) || (a.Damage == "1" && AniCreatures.Contains(a.Id))).ToList(), true);
+            animations = HandleCategory(animations, AnimationDamage, animations.Where(a => RegexAniDamage.IsMatch(a.Name) || a.Damage == "1").ToList());
+
+            // Handle parry.
+            animations = HandleCategory(animations, AnimationParry, animations.Where(a => RegexAniCrParry.IsMatch(a.Name) || (a.Parry == "1" && AniCreatures.Contains(a.Id))).ToList(), true);
+            animations = HandleCategory(animations, AnimationParry, animations.Where(a => RegexAniParry.IsMatch(a.Name) || a.Parry == "1").ToList());
+
+            // Handle pause.
+            animations = HandleCategory(animations, AnimationPause, animations.Where(a => a.Pause == "1" && AniCreatures.Contains(a.Id)).ToList(), true);
+            animations = HandleCategory(animations, AnimationPause, animations.Where(a => a.Pause == "1" || a.Name == "listen").ToList());
+
+            // Handle movement.
+            animations = HandleCategory(animations, AnimationMove, animations.Where(a => (a.Run == "1" || a.Walk == "1") && AniCreatures.Contains(a.Id)).ToList(), true);
+            animations = HandleCategory(animations, AnimationMove, animations.Where(a => a.Run == "1" || a.Walk == "1").ToList());
+
+            // Handle looping.
+            animations = HandleCategory(animations, AnimationLoop, animations.Where(a => a.Loop == "1" && AniCreatures.Contains(a.Id)).ToList(), true);
+            animations = HandleCategory(animations, AnimationLoop, animations.Where(a => a.Loop == "1" && AniAlignment.Contains(a.Name)).ToList());
+            animations = HandleCategory(animations, AnimationLoop, animations.Where(a => a.Loop == "1").ToList());
+
+            // Handle fire and forget.
+            animations = HandleCategory(animations, AnimationFire, animations.Where(a => a.Fire == "1" && AniCreatures.Contains(a.Id)).ToList(), true);
+            animations = HandleCategory(animations, AnimationFire, animations.Where(a => a.Fire == "1").ToList());
+
+            // Handle overlay.
+            animations = HandleCategory(animations, RandomizationLevel.Type, animations.Where(a => a.Overlay == "1").ToList());
+
+            // Perform max rando.
+            var oldMax = AniMaxRando.ToList();
+            Randomize.FisherYatesShuffle(AniMaxRando);
+            for (int i = 0; i < oldMax.Count; i++)
             {
-                default:
-                case RandomizationLevel.None:
-                case RandomizationLevel.Subtype:
-                    break;  // Do nothing.
-                case RandomizationLevel.Type:
-                    AnimationTypeLists.Add(shortList);
-                    break;
-                case RandomizationLevel.Max:
-                    if (isCreature)
-                    {
-                        AniMaxRandoCreatures.AddRange(shortList);
-                    }
-                    else
-                    {
-                        AniMaxRando.AddRange(shortList);
-                    }
-                    break;
+                animationLookup.Add(new Tuple<string, string>(oldMax[i].Name, AniMaxRando[i].Name));
+                t.Data["name"][oldMax[i].Id] = AniMaxRando[i].Name.ToString();
             }
 
-            return fullList.Except(shortList).ToList();
-        }
-
-        /// <summary>
-        /// Grabs table related settings from the Kotor1Randomizer object.
-        /// </summary>
-        /// <param name="k1rando">Randomizer settings object.</param>
-        private static void AssignSettings(Kotor1Randomizer k1rando)
-        {
-            if (k1rando == null)
+            // Perform type rando.
+            foreach (var typeList in AnimationTypeLists)
             {
-                Selected2DAs = Globals.Selected2DAs;
-            }
-            else
-            {
-                Selected2DAs = new Dictionary<string, List<string>>();
-                foreach (var table in k1rando.Table2DAs.Where(rt => rt.IsRandomized))
+                var randoType = typeList.ToList();
+                Randomize.FisherYatesShuffle(randoType);
+                for (int i = 0; i < typeList.Count; i++)
                 {
-                    Selected2DAs.Add(table.Name, table.Randomized.ToList());
+                    animationLookup.Add(new Tuple<string, string>(typeList[i].Name, randoType[i].Name));
+                    t.Data["name"][typeList[i].Id] = randoType[i].Name.ToString();
                 }
-
-                AnimationAttack = k1rando.AnimationAttack;
-                AnimationDamage = k1rando.AnimationDamage;
-                AnimationFire = k1rando.AnimationFire;
-                AnimationLoop = k1rando.AnimationLoop;
-                AnimationParry = k1rando.AnimationParry;
-                AnimationPause = k1rando.AnimationPause;
-                AnimationMove = k1rando.AnimationMove;
             }
+
+            // Add animation table changes to LookupTable.
+            LookupTable[t.Name].Add("name", animationLookup);
         }
 
         /// <summary>
@@ -382,107 +595,6 @@ namespace kotor_Randomizer_2
             AnimationTypeLists.Clear();
             LookupTable.Clear();
             Selected2DAs = null;
-        }
-
-        /// <summary>
-        /// Creates a worksheet containing the spoiler information for this TwoDA randomization.
-        /// </summary>
-        /// <param name="workbook">Workbook to add the new worksheet to.</param>
-        internal static void CreateSpoilerLog(XLWorkbook workbook)
-        {
-            const string ORIGINAL = "Orig";
-            const string RANDOM = "Rand";
-
-            if (LookupTable.Count == 0) { return; }
-            var ws = workbook.Worksheets.Add("TwoDA");
-            int i = 1;
-
-            // TwoDA Randomization Settings
-            ws.Cell(i, 1).Value = "Animation Type";
-            ws.Cell(i, 2).Value = "Rando Level";
-            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 2).Style.Font.Bold = true;
-            i++;
-
-            var settings = new List<Tuple<string, string>>()
-            {
-                new Tuple<string, string>("Attack", AnimationAttack.ToString()),
-                new Tuple<string, string>("Damage", AnimationDamage.ToString()),
-                new Tuple<string, string>("Fire",   AnimationFire.ToString()),
-                new Tuple<string, string>("Loop",   AnimationLoop.ToString()),
-                new Tuple<string, string>("Parry",  AnimationParry.ToString()),
-                new Tuple<string, string>("Pause",  AnimationPause.ToString()),
-                new Tuple<string, string>("Move",   AnimationMove.ToString()),
-                new Tuple<string, string>("", ""),  // Skip a row.
-            };
-
-            foreach (var setting in settings)
-            {
-                ws.Cell(i, 1).Value = setting.Item1;
-                ws.Cell(i, 2).Value = setting.Item2;
-                ws.Cell(i, 1).Style.Font.Italic = true;
-                i++;
-            }
-
-            i++;    // Skip a row.
-
-            // TwoDA Randomization
-            int iDone = i;
-            int j = 1;
-            int jMax = 1;
-
-            foreach (var twoDA in LookupTable)
-            {
-                // TwoDA Table Header
-                ws.Cell(i, 1).Value = twoDA.Key;
-                ws.Cell(i, 1).Style.Font.Bold = true;
-                ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                ws.Range(i, 1, i, 2).Merge();
-                i++;
-
-                var iStart = i;
-
-                foreach (var col in twoDA.Value)
-                {
-                    if (jMax < j) jMax = j + 1;     // Remember the width of the widest table.
-
-                    // Column Headers
-                    i = iStart;
-                    ws.Cell(i, j).Value = $"{col.Key} {ORIGINAL}";
-                    ws.Cell(i, j).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
-                    ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                    ws.Cell(i, j).Style.Font.Italic = true;
-                    ws.Cell(i, j+1).Value = $"{col.Key} {RANDOM}";
-                    ws.Cell(i, j+1).Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                    ws.Cell(i, j+1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                    ws.Cell(i, j+1).Style.Font.Italic = true;
-                    i++;
-
-                    foreach (var row in col.Value)
-                    {
-                        // Row Data
-                        ws.Cell(i, j).Value = row.Item1;
-                        ws.Cell(i, j).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
-                        ws.Cell(i, j+1).Value = row.Item2;
-                        ws.Cell(i, j+1).Style.Border.RightBorder = XLBorderStyleValues.Thin;
-                        i++;
-                    }
-
-                    j += 2;     // Move to the next pair of columns.
-                    if (iDone < i) iDone = i;   // Remember the length of this table.
-                }
-
-                i = iDone + 1;  // Skip a row.
-                j = 1;          // Reset to column A.
-            }
-
-            // Adjust columns.
-            for (int c = 1; c <= jMax; c++)
-            {
-                ws.Column(c).AdjustToContents();
-            }
         }
 
         #region Nested Classes
