@@ -6,10 +6,11 @@
              xmlns:base="clr-namespace:Randomizer_WPF"
              xmlns:model="clr-namespace:kotor_Randomizer_2.Models;assembly=KotorRandomizer"
              xmlns:local="clr-namespace:Randomizer_WPF.Views"
+             xmlns:rando="clr-namespace:kotor_Randomizer_2;assembly=KotorRandomizer"
              xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
              FontFamily="Microsoft Sans Serif" FontSize="12"
              x:Name="thisView" mc:Ignorable="d"
-             d:DesignHeight="950" d:DesignWidth="450"
+             d:DesignHeight="950" d:DesignWidth="475"
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
              DataContextChanged="View_DataContextChanged"
              Loaded="View_Loaded"
@@ -23,6 +24,7 @@
             
             <base:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <base:AddToDoubleConverter x:Key="AddToDoubleConverter" />
+            <base:VisibleIfRandoLevelMatchesMultiConverter x:Key="VisibleRandoMatchConverter" />
 
             <Style TargetType="ToolTip">
                 <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.FontSize}" />
@@ -90,11 +92,23 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.Resources>
                                 <Style TargetType="Button" BasedOn="{StaticResource K1RandoButtonStyle}">
                                     <Setter Property="Margin" Value="5,0" />
                                     <Setter Property="Padding" Value="8,1" />
+                                </Style>
+                                <Style x:Key="SpecialHidden" TargetType="Grid">
+                                    <Setter Property="Visibility">
+                                        <Setter.Value>
+                                            <MultiBinding Converter="{StaticResource VisibleRandoMatchConverter}" ConverterParameter="{x:Static rando:RandomizationLevel.Max}">
+                                                <Binding ElementName="thisView" Path="AnimationPause" Mode="OneWay" />
+                                                <Binding ElementName="thisView" Path="AnimationLoop" Mode="OneWay" />
+                                                <Binding ElementName="thisView" Path="AnimationFire" Mode="OneWay" />
+                                            </MultiBinding>
+                                        </Setter.Value>
+                                    </Setter>
                                 </Style>
                             </Grid.Resources>
 
@@ -109,7 +123,7 @@
 
                             <!--Toggle Buttons-->
                             <Button Margin="8,0,0,0" Grid.Row="1" Content="Toggle All" Click="BtnToggleAllAnimation_Click" />
-                            <StackPanel Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1"
+                            <StackPanel Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2"
                                         Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Button Content="Type" Click="BtnTypeAnimation_Click" />
                                 <Button Content="Max"  Click="BtnMaxAnimation_Click" />
@@ -131,6 +145,17 @@
                                 <uc:RandomizationLevelUserControl x:Name="rlucAnimationLoop"   CheckboxLabel="Looping"  SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationLoop}" />
                                 <uc:RandomizationLevelUserControl x:Name="rlucAnimationForget" CheckboxLabel="Various"  SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationFire}" />
                             </StackPanel>
+
+                            <!--Warning-->
+                            <Grid Grid.Row="3" Grid.ColumnSpan="3"
+                                  Style="{StaticResource SpecialHidden}">
+                                <Border BorderBrush="{StaticResource HarshYellowBrush}"
+                                        Margin="2,0" Padding="0">
+                                    <TextBlock Style="{StaticResource tbDescription}">
+                                        Warning: Randomizing pause, looping, and various at max may result in an unplayable seed.
+                                    </TextBlock>
+                                </Border>
+                            </Grid>
                         </Grid>
                     </Border>
 
@@ -150,7 +175,7 @@
                                 <Style TargetType="Border">
                                     <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
                                     <Setter Property="BorderThickness" Value="1" />
-                                    <Setter Property="Margin" Value="10,5" />
+                                    <Setter Property="Margin" Value="10,5,10,10" />
                                     <Setter Property="Padding" Value="2" />
                                 </Style>
                                 <Style TargetType="CheckBox">
@@ -289,7 +314,8 @@
                         <DockPanel Grid.ColumnSpan="2" Grid.RowSpan="2">
                             <!--Warning-->
                             <Border BorderBrush="{StaticResource HarshYellowBrush}"
-                                    Margin="3,0,5,5" DockPanel.Dock="Bottom">
+                                    Margin="3,0,5,5" Padding="0"
+                                    DockPanel.Dock="Bottom">
                                 <TextBlock Style="{StaticResource tbDescription}">
                                     Warning: The randomization of textures can create images and effects that may
                                     be problematic for photosensitive users. Use with caution.
