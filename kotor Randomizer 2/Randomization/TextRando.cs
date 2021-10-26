@@ -8,6 +8,7 @@ using KotOR_IO;
 using System.IO;
 using ClosedXML.Excel;
 using kotor_Randomizer_2.Models;
+using kotor_Randomizer_2.Extensions;
 
 namespace kotor_Randomizer_2
 {
@@ -291,7 +292,7 @@ namespace kotor_Randomizer_2
             foreach (var setting in settings)
             {
                 ws.Cell(i, 1).Value = setting.Item1;
-                ws.Cell(i, 2).Value = setting.Item2;
+                ws.Cell(i, 2).Value = setting.Item2.ToEnabledDisabled();
                 ws.Cell(i, 1).Style.Font.Italic = true;
                 i++;
             }

@@ -419,7 +419,9 @@ namespace kotor_Randomizer_2
                 //    randItemName = origItemName;
                 //}
 
-                ws.Cell(i, 1).Value = omitted ? "OMITTED" : changed.ToString();
+                ws.Cell(i, 1).Value = omitted ? "OMITTED" : changed.ToString().ToUpper();
+                ws.Cell(i, 1).DataType = XLDataType.Text;
+                ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 ws.Cell(i, 2).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                 ws.Cell(i, 2).Value = tpl.Item1;
                 ws.Cell(i, 3).Value = origItemName;

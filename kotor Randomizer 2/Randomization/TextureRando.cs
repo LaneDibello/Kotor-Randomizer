@@ -324,7 +324,9 @@ namespace kotor_Randomizer_2
             foreach (var kvp in LookupTable)
             {
                 var hasChanged = kvp.Key != kvp.Value;
-                ws.Cell(i, 1).Value = hasChanged;
+                ws.Cell(i, 1).Value = hasChanged.ToString().ToUpper();
+                ws.Cell(i, 1).DataType = XLDataType.Text;
+                ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 ws.Cell(i, 2).Value = kvp.Key;
                 if (NameLookup.ContainsKey(kvp.Key))
                     ws.Cell(i, 3).Value = NameLookup[kvp.Key];

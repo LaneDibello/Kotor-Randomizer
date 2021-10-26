@@ -23,6 +23,9 @@ namespace kotor_Randomizer_2
         /// </summary>
         public static Dictionary<string, List<string>> Selected2DAs { get; set; }
 
+        private const string ANIMATIONS_TABLE_NAME = "animations";
+        private const string ANIMATIONS_TABLE      = "animations.2da";
+
         #region Regexes
         // Weapon animation naming conventions (explained for Regexes)
         // A: animation category   1: item category
@@ -195,6 +198,34 @@ namespace kotor_Randomizer_2
 
             var filesInOverride = paths.FilesInOverride.ToList();
 
+            if (IsAnimationRandomized)
+            {
+                BIF.VariableResourceEntry VRE = b.VariableResourceTable.FirstOrDefault(x => x.ResRef == ANIMATIONS_TABLE_NAME);
+                if (VRE != null)
+                {
+                    TwoDA t;
+                    if (filesInOverride.Any(fi => fi.Name == ANIMATIONS_TABLE))
+                    {
+                        // Modify the existing table.
+                        t = new TwoDA(File.ReadAllBytes(filesInOverride.First(fi => fi.Name == ANIMATIONS_TABLE).FullName), VRE.ResRef);
+                    }
+                    else
+                    {
+                        // Fetch the table from the 2DA BIF file.
+                        t = new TwoDA(VRE.EntryData, VRE.ResRef);
+                    }
+
+                    if (!LookupTable.ContainsKey(VRE.ResRef))
+                    {
+                        // Add 2DA to the table.
+                        LookupTable.Add(VRE.ResRef, new Dictionary<string, List<Tuple<string, string>>>());
+                    }
+
+                    RandomizeAnimations(t);
+                    t.WriteToDirectory(paths.Override); // Write new 2DA data to file.
+                }
+            }
+
             foreach (BIF.VariableResourceEntry VRE in b.VariableResourceTable.Where(x => Selected2DAs.Keys.Contains(x.ResRef)))
             {
                 // Check to see if this table is already in the override directory.
@@ -235,34 +266,6 @@ namespace kotor_Randomizer_2
                 }
 
                 t.WriteToDirectory(paths.Override); // Write new 2DA data to file.
-            }
-
-            if (IsAnimationRandomized)
-            {
-                BIF.VariableResourceEntry VRE = b.VariableResourceTable.FirstOrDefault(x => x.ResRef == "animations");
-                if (VRE != null)
-                {
-                    TwoDA t;
-                    if (filesInOverride.Any(fi => fi.Name == "animations.2da"))
-                    {
-                        // Modify the existing table.
-                        t = new TwoDA(File.ReadAllBytes(filesInOverride.First(fi => fi.Name == "animations.2da").FullName), VRE.ResRef);
-                    }
-                    else
-                    {
-                        // Fetch the table from the 2DA BIF file.
-                        t = new TwoDA(VRE.EntryData, VRE.ResRef);
-                    }
-
-                    if (!LookupTable.ContainsKey(VRE.ResRef))
-                    {
-                        // Add 2DA to the table.
-                        LookupTable.Add(VRE.ResRef, new Dictionary<string, List<Tuple<string, string>>>());
-                    }
-
-                    RandomizeAnimations(t);
-                    t.WriteToDirectory(paths.Override); // Write new 2DA data to file.
-                }
             }
         }
 
@@ -307,36 +310,17 @@ namespace kotor_Randomizer_2
             var ws = workbook.Worksheets.Add("TwoDA");
             int i = 1;
 
-            // TwoDA Randomization Settings
-            ws.Cell(i, 1).Value = "Animation Type";
-            ws.Cell(i, 2).Value = "Rando Level";
-            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-            ws.Cell(i, 2).Style.Font.Bold = true;
-            i++;
-
-            var settings = new List<Tuple<string, string>>()
+            // Store animation settings to write later.
+            var animationSettings = new List<Tuple<string, RandomizationLevel>>()
             {
-                new Tuple<string, string>("Attack", AnimationAttack.ToString()),
-                new Tuple<string, string>("Damage", AnimationDamage.ToString()),
-                new Tuple<string, string>("Fire",   AnimationFire.ToString()),
-                new Tuple<string, string>("Loop",   AnimationLoop.ToString()),
-                new Tuple<string, string>("Parry",  AnimationParry.ToString()),
-                new Tuple<string, string>("Pause",  AnimationPause.ToString()),
-                new Tuple<string, string>("Move",   AnimationMove.ToString()),
-                new Tuple<string, string>("", ""),  // Skip a row.
+                new Tuple<string, RandomizationLevel>("Attack", AnimationAttack),
+                new Tuple<string, RandomizationLevel>("Damage", AnimationDamage),
+                new Tuple<string, RandomizationLevel>("Fire",   AnimationFire),
+                new Tuple<string, RandomizationLevel>("Loop",   AnimationLoop),
+                new Tuple<string, RandomizationLevel>("Parry",  AnimationParry),
+                new Tuple<string, RandomizationLevel>("Pause",  AnimationPause),
+                new Tuple<string, RandomizationLevel>("Move",   AnimationMove),
             };
-
-            foreach (var setting in settings)
-            {
-                ws.Cell(i, 1).Value = setting.Item1;
-                ws.Cell(i, 2).Value = setting.Item2;
-                ws.Cell(i, 1).Style.Font.Italic = true;
-                i++;
-            }
-
-            i++;    // Skip a row.
 
             // TwoDA Randomization
             int iDone = i;
@@ -345,6 +329,27 @@ namespace kotor_Randomizer_2
 
             foreach (var twoDA in LookupTable)
             {
+                if (twoDA.Key == ANIMATIONS_TABLE_NAME)
+                {
+                    // Write animation headings and settings.
+                    ws.Cell(i, 1).Value = "Animation Type";
+                    ws.Cell(i, 2).Value = "Rando Level";
+                    ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                    ws.Cell(i, 1).Style.Font.Bold = true;
+                    ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                    ws.Cell(i, 2).Style.Font.Bold = true;
+                    i++;
+
+                    foreach (var setting in animationSettings)
+                    {
+                        ws.Cell(i, 1).Value = setting.Item1;
+                        ws.Cell(i, 2).Value = setting.Item2.ToString();
+                        ws.Cell(i, 1).Style.Font.Italic = true;
+                        i++;
+                    }
+                    i++;    // Skip a row.
+                }
+
                 // TwoDA Table Header
                 ws.Cell(i, 1).Value = twoDA.Key;
                 ws.Cell(i, 1).Style.Font.Bold = true;

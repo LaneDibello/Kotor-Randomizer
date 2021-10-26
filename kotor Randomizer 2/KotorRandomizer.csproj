@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Digraph.cs" />
+    <Compile Include="Extensions\BooleanExtensions.cs" />
     <Compile Include="Models\Kotor1Randomizer.cs" />
     <Compile Include="Models\UnlockableDoor.cs" />
     <Compile Include="Forms\TwodaForm.cs">

@@ -4,6 +4,7 @@ using System.Linq;
 using System.IO;
 using System.Text.RegularExpressions;
 using ClosedXML.Excel;
+using kotor_Randomizer_2.Extensions;
 
 namespace kotor_Randomizer_2
 {
@@ -399,8 +400,8 @@ namespace kotor_Randomizer_2
                 new Tuple<string, string>("Cutscene Noise",    RandomizeCutsceneNoise.ToString()),
                 new Tuple<string, string>("NPC Sounds",        RandomizeNpcSounds.ToString()),
                 new Tuple<string, string>("Party Sounds",      RandomizePartySounds.ToString()),
-                new Tuple<string, string>("Remove DMCA",       RemoveDmcaMusic.ToString()),
-                new Tuple<string, string>("Mix NPC and Party", MixNpcAndPartySounds.ToString()),
+                new Tuple<string, string>("Remove DMCA",       RemoveDmcaMusic.ToEnabledDisabled()),
+                new Tuple<string, string>("Mix NPC and Party", MixNpcAndPartySounds.ToEnabledDisabled()),
                 new Tuple<string, string>("", ""),  // Skip a row.
             };
 
@@ -436,7 +437,9 @@ namespace kotor_Randomizer_2
                 foreach (var kvp in sortedLookup)
                 {
                     var hasChanged = kvp.Key != kvp.Value;
-                    ws.Cell(i, 1).Value = hasChanged;
+                    ws.Cell(i, 1).Value = hasChanged.ToString().ToUpper();
+                    ws.Cell(i, 1).DataType = XLDataType.Text;
+                    ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                     ws.Cell(i, 2).Value = kvp.Key;
                     ws.Cell(i, 3).Value = kvp.Value;
                     if (hasChanged) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
@@ -468,7 +471,9 @@ namespace kotor_Randomizer_2
                 foreach (var kvp in sortedLookup)
                 {
                     var hasChanged = kvp.Key != kvp.Value;
-                    ws.Cell(i, 1).Value = hasChanged;
+                    ws.Cell(i, 1).Value = hasChanged.ToString().ToUpper();
+                    ws.Cell(i, 1).DataType = XLDataType.Text;
+                    ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                     ws.Cell(i, 2).Value = kvp.Key;
                     ws.Cell(i, 3).Value = kvp.Value;
                     if (hasChanged) ws.Cell(i, 1).Style.Font.FontColor = XLColor.Green;
