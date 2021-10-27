@@ -70,7 +70,7 @@
                              PreviewTextInput="TbSeedHex_PreviewTextInput"
                              TextChanged="TbSeedHex_TextChanged"
                              Visibility="{Binding ElementName=cbDisplayAsHex, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}" />
-                    <CheckBox Name="cbDisplayAsHex" VerticalAlignment="Center" Margin="5,0,0,0" Visibility="Collapsed">
+                    <CheckBox Name="cbDisplayAsHex" VerticalContentAlignment="Center" Margin="5,0,0,0" Visibility="Collapsed">
                         <TextBlock Text="Display Hex" />
                     </CheckBox>
                     <Button Name="btnNewSeed" Content="New Seed"
@@ -79,9 +79,9 @@
                             Margin="5,0,0,0" Click="BtnNewSeed_Click" />
                     <Border Margin="5,0,0,0" BorderThickness="1,0,0,0"
                             BorderBrush="{StaticResource HarshBlueBrush}" />
-                    <CheckBox Name="cbCreateSpoilers" VerticalAlignment="Center" Margin="5,0,0,0"
+                    <CheckBox Name="cbCreateSpoilers" VerticalContentAlignment="Center" Margin="5,0,0,0"
                               IsChecked="{Binding ElementName=thisView, Path=CreateSpoilers, Mode=TwoWay}">
-                        <TextBlock Text="Create Spoilers" />
+                        <TextBlock Margin="0" Text="Create Spoilers" />
                     </CheckBox>
                 </WrapPanel>
 

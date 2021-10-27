@@ -89,6 +89,7 @@
                         <Style TargetType="CheckBox">
                             <Setter Property="Margin" Value="16,5,0,0" />
                             <Setter Property="Padding" Value="5,0,0,0" />
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
                             <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:AudioView}}" />
                         </Style>
                         <Style TargetType="uc:RandomizationLevelUserControl">
