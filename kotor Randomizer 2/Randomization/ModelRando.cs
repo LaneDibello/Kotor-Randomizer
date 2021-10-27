@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using ClosedXML.Excel;
 using kotor_Randomizer_2.Models;
+using kotor_Randomizer_2.Extensions;
 
 namespace kotor_Randomizer_2
 {
@@ -15,7 +16,7 @@ namespace kotor_Randomizer_2
         /// Usage: LookupTable[MapName][ModelType][Label] = (OriginalID, RandomizedID);
         /// </summary>
         private static Dictionary<string, Dictionary<string, Dictionary<string, Tuple<int, string, int, string>>>> LookupTable { get; set; } = new Dictionary<string, Dictionary<string, Dictionary<string, Tuple<int, string, int, string>>>>();
-
+        
         private const string CHARACTER = "Character";
         private const string DOOR = "Door";
         private const string PLACEABLE = "Placeable";
@@ -291,54 +292,63 @@ namespace kotor_Randomizer_2
             // Character Randomization Settings
             ws.Cell(i, 1).Value = "Character Models";
             ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = ((RandomizeCharModels & 1) > 0).ToString();
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Value = ((RandomizeCharModels & 1) > 0).ToEnabledDisabled();
+            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             i++;
 
             ws.Cell(i, 1).Value = "Omit Large";
             ws.Cell(i, 1).Style.Font.Italic = true;
-            ws.Cell(i, 2).Value = ((RandomizeCharModels & 2) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizeCharModels & 2) > 0).ToEnabledDisabled();
             i++;
 
             ws.Cell(i, 1).Value = "Omit Broken";
             ws.Cell(i, 1).Style.Font.Italic = true;
-            ws.Cell(i, 2).Value = ((RandomizeCharModels & 4) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizeCharModels & 4) > 0).ToEnabledDisabled();
             i += 2;     // Skip a row.
 
             // Placeable Randomization Settings
             ws.Cell(i, 1).Value = "Placeable Models";
             ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = ((RandomizePlaceModels & 1) > 0).ToString();
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Value = ((RandomizePlaceModels & 1) > 0).ToEnabledDisabled();
+            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             i++;
 
             ws.Cell(i, 1).Value = "Omit Large";
             ws.Cell(i, 1).Style.Font.Italic = true;
-            ws.Cell(i, 2).Value = ((RandomizePlaceModels & 2) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizePlaceModels & 2) > 0).ToEnabledDisabled();
             i++;
 
             ws.Cell(i, 1).Value = "Omit Broken";
             ws.Cell(i, 1).Style.Font.Italic = true;
-            ws.Cell(i, 2).Value = ((RandomizePlaceModels & 4) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizePlaceModels & 4) > 0).ToEnabledDisabled();
             i++;
 
             ws.Cell(i, 1).Value = "Easy Panels";
             ws.Cell(i, 1).Style.Font.Italic = true;
-            ws.Cell(i, 2).Value = ((RandomizePlaceModels & 8) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizePlaceModels & 8) > 0).ToEnabledDisabled();
             i += 2;     // Skip a row.
 
             // Door Randomization Settings
             ws.Cell(i, 1).Value = "Door Models";
             ws.Cell(i, 1).Style.Font.Bold = true;
-            ws.Cell(i, 2).Value = ((RandomizeDoorModels & 1) > 0).ToString();
+            ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(i, 2).Value = ((RandomizeDoorModels & 1) > 0).ToEnabledDisabled();
+            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             i++;
 
             ws.Cell(i, 1).Value = "Omit Airlocks";
             ws.Cell(i, 1).Style.Font.Italic = true;
-            ws.Cell(i, 2).Value = ((RandomizeDoorModels & 2) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizeDoorModels & 2) > 0).ToEnabledDisabled();
             i++;
 
             ws.Cell(i, 1).Value = "Omit Broken";
             ws.Cell(i, 1).Style.Font.Italic = true;
-            ws.Cell(i, 2).Value = ((RandomizeDoorModels & 4) > 0).ToString();
+            ws.Cell(i, 2).Value = ((RandomizeDoorModels & 4) > 0).ToEnabledDisabled();
             i += 3;         // Skip two rows.
 
             int j = 1;      // Start at column A.
@@ -387,6 +397,7 @@ namespace kotor_Randomizer_2
             j++;
 
             ws.Cell(i, j).Value = "Changed";
+            ws.Cell(i, j).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, j).Style.Border.RightBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, j).Style.Font.Bold = true;
@@ -454,7 +465,9 @@ namespace kotor_Randomizer_2
                         ws.Cell(i, j++).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                         ws.Cell(i, j++).Value = kvp.Value.Item2;
 
-                        ws.Cell(i, j).Value = hasChanged;
+                        ws.Cell(i, j).Value = hasChanged.ToString().ToUpper();
+                        ws.Cell(i, j).DataType = XLDataType.Text;
+                        ws.Cell(i, j).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                         ws.Cell(i, j).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                         ws.Cell(i, j).Style.Border.RightBorder = XLBorderStyleValues.Thin;
                         if (hasChanged) ws.Cell(i, j++).Style.Font.FontColor = XLColor.Green;

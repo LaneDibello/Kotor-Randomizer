@@ -188,4 +188,36 @@ namespace Randomizer_WPF
         }
         #endregion
     }
+
+    [ValueConversion(typeof(RandomizationLevel), typeof(Visibility))]
+    public class VisibleIfRandoLevelMatchesMultiConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (targetType != typeof(Visibility)) return Visibility.Collapsed;
+            if (!values.Any()) return Visibility.Visible;
+
+            foreach (var value in values)
+            {
+                try
+                { 
+                    if ((RandomizationLevel)value == (RandomizationLevel)parameter)
+                    {
+                        return Visibility.Visible;
+                    }
+                }
+                catch
+                {
+                    return Visibility.Visible;
+                }
+            }
+
+            return Visibility.Collapsed;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

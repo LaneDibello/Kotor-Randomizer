@@ -161,7 +161,9 @@ namespace Randomizer_WPF.Views
 
                 // If creating spoilers, make sure the directory exists.
                 if (CreateSpoilers && !string.IsNullOrWhiteSpace(SpoilerPath) && !System.IO.Directory.Exists(SpoilerPath))
+                {
                     System.IO.Directory.CreateDirectory(SpoilerPath);
+                }
 
                 bwDoRando.RunWorkerAsync(new kotor_Randomizer_2.Models.RandoArgs()
                 {
@@ -174,7 +176,7 @@ namespace Randomizer_WPF.Views
 
         private static void HandleGamePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RandomizeView thisView = d as RandomizeView;
+            var thisView = d as RandomizeView;
             var newValue = e.NewValue?.ToString() ?? null;
 
             if (string.IsNullOrWhiteSpace(newValue))
@@ -199,14 +201,9 @@ namespace Randomizer_WPF.Views
             if (!thisView.IsBusy)
             {
                 thisView.btnRandomize.IsEnabled = true;
-
-                // If randomized, change the button to read "Unrandomize"
-                if (thisView.isRandomized)
-                    thisView.btnRandomize.Content = "Unrandomize Game";
-
-                // If not randomized, change the button to read "Randomize"
-                else
-                    thisView.btnRandomize.Content = "Randomize Game";
+                thisView.btnRandomize.Content = thisView.isRandomized
+                    ? "Unrandomize Game"    // If randomized, change the button to read "Unrandomize"
+                    : "Randomize Game";     // If not randomized, change the button to read "Randomize"
             }
         }
 
@@ -316,6 +313,9 @@ namespace Randomizer_WPF.Views
                     case kotor_Randomizer_2.Models.BusyState.Unrandomizing:
                         statusFormat = "Unrandomizing ... [{0:F1}%] {1}";
                         break;
+                    case kotor_Randomizer_2.Models.BusyState.BackingUp:
+                        statusFormat = "Backing up ... [{0:F1}%] {1}";
+                        break;
                     case kotor_Randomizer_2.Models.BusyState.Unknown:
                     default:
                         statusFormat = "Processing ... [{0:F1}%] {1}";
@@ -345,7 +345,7 @@ namespace Randomizer_WPF.Views
             // Was there an error?
             else if (e.Error != null)
             {
-                WriteLineToLog($"Error during {(isRandoWorker ? "randomization" : "unrandomization")}: {e.Error.ToString()}");
+                WriteLineToLog($"Error during {(isRandoWorker ? "randomization" : "unrandomization")}: {e.Error}");
                 CurrentState = $"Error encountered during {(isRandoWorker ? "randomization" : "unrandomization")}. See log for details...";
             }
 

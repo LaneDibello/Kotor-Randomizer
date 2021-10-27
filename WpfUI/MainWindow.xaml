@@ -36,10 +36,10 @@
     </Window.Resources>
 
     <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.New"   Executed="NewCommand_Executed"   CanExecute="NewCommand_CanExecute"  />
-        <CommandBinding Command="ApplicationCommands.Open"  Executed="OpenCommand_Executed"  CanExecute="OpenCommand_CanExecute" />
-        <CommandBinding Command="ApplicationCommands.Save"  Executed="SaveCommand_Executed"  CanExecute="SaveCommand_CanExecute" />
-        <CommandBinding Command="local:CustomCommands.Exit" Executed="ExitCommand_Executed"  CanExecute="ExitCommand_CanExecute" />
+        <CommandBinding Command="ApplicationCommands.New"   Executed="NewCommand_Executed"  CanExecute="NewCommand_CanExecute"  />
+        <CommandBinding Command="ApplicationCommands.Open"  Executed="OpenCommand_Executed" CanExecute="OpenCommand_CanExecute" />
+        <CommandBinding Command="ApplicationCommands.Save"  Executed="SaveCommand_Executed" CanExecute="SaveCommand_CanExecute" />
+        <CommandBinding Command="local:CustomCommands.Exit" Executed="ExitCommand_Executed" CanExecute="ExitCommand_CanExecute" />
     </Window.CommandBindings>
 
     <Window.Background>
@@ -69,9 +69,9 @@
                     </Style>
                 </Menu.Resources>
                 <MenuItem Header="_File">
-                    <MenuItem Header="_New (Default Settings)" Command="ApplicationCommands.New"   MinWidth="150" />
-                    <MenuItem Header="_Open Settings File..."     Command="ApplicationCommands.Open"  />
-                    <MenuItem Header="_Save Current Settings..."  Command="ApplicationCommands.Save"  />
+                    <MenuItem Header="_New (Default Settings)"   Command="ApplicationCommands.New"   MinWidth="150" />
+                    <MenuItem Header="_Open Settings File..."    Command="ApplicationCommands.Open"  />
+                    <MenuItem Header="_Save Current Settings..." Command="ApplicationCommands.Save"  />
                     <Separator />
                     <MenuItem Header="E_xit" Command="local:CustomCommands.Exit" />
                 </MenuItem>
@@ -244,6 +244,14 @@
                 <TabItem Header="_Cosmetics" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
                     <v:CosmeticView x:Name="CosmeticView"
                                     FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+                                    
+                                    AnimationAttack    ="{Binding AnimationAttack,     Mode=TwoWay}"
+                                    AnimationDamage    ="{Binding AnimationDamage,     Mode=TwoWay}"
+                                    AnimationFire      ="{Binding AnimationFire,       Mode=TwoWay}"
+                                    AnimationLoop      ="{Binding AnimationLoop,       Mode=TwoWay}"
+                                    AnimationParry     ="{Binding AnimationParry,      Mode=TwoWay}"
+                                    AnimationPause     ="{Binding AnimationPause,      Mode=TwoWay}"
+                                    AnimationMove      ="{Binding AnimationMove,       Mode=TwoWay}"
                                     
                                     TexturePack        ="{Binding TextureSelectedPack, Mode=TwoWay}"
                                     TextureCubeMaps    ="{Binding TextureCubeMaps    , Mode=TwoWay}"

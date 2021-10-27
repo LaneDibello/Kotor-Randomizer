@@ -23,6 +23,7 @@ namespace Randomizer_WPF.Views
     public partial class CosmeticView : UserControl
     {
         #region Members
+        private List<RandomizationLevelUserControl> AnimationControls;
         private List<RandomizationLevelUserControl> TextureControls;
         #endregion
 
@@ -30,6 +31,16 @@ namespace Randomizer_WPF.Views
         public CosmeticView()
         {
             InitializeComponent();
+            AnimationControls = new List<RandomizationLevelUserControl>()
+            {
+                rlucAnimationAttack,
+                rlucAnimationDamage,
+                rlucAnimationForget,
+                rlucAnimationLoop,
+                rlucAnimationParry,
+                rlucAnimationPause,
+                rlucAnimationMove,
+            };
             TextureControls = new List<RandomizationLevelUserControl>()
             {
                 rlucCreatures,
@@ -51,6 +62,14 @@ namespace Randomizer_WPF.Views
         #endregion
 
         #region Dependency Properties
+        public static readonly DependencyProperty AnimationAttackProperty = DependencyProperty.Register("AnimationAttack", typeof(RandomizationLevel), typeof(CosmeticView));
+        public static readonly DependencyProperty AnimationDamageProperty = DependencyProperty.Register("AnimationDamage", typeof(RandomizationLevel), typeof(CosmeticView));
+        public static readonly DependencyProperty AnimationFireProperty   = DependencyProperty.Register("AnimationFire",   typeof(RandomizationLevel), typeof(CosmeticView));
+        public static readonly DependencyProperty AnimationLoopProperty   = DependencyProperty.Register("AnimationLoop",   typeof(RandomizationLevel), typeof(CosmeticView));
+        public static readonly DependencyProperty AnimationParryProperty  = DependencyProperty.Register("AnimationParry",  typeof(RandomizationLevel), typeof(CosmeticView));
+        public static readonly DependencyProperty AnimationPauseProperty  = DependencyProperty.Register("AnimationPause",  typeof(RandomizationLevel), typeof(CosmeticView));
+        public static readonly DependencyProperty AnimationMoveProperty   = DependencyProperty.Register("AnimationMove",   typeof(RandomizationLevel), typeof(CosmeticView));
+
         public static readonly DependencyProperty TexturePackProperty = DependencyProperty.Register("TexturePack", typeof(TexturePack), typeof(CosmeticView), new PropertyMetadata(TexturePack.LowQuality, HandleTexturePackChanged));
 
         public static readonly DependencyProperty TextureCubeMapsProperty     = DependencyProperty.Register("TextureCubeMaps",     typeof(RandomizationLevel), typeof(CosmeticView));
@@ -70,6 +89,49 @@ namespace Randomizer_WPF.Views
         #endregion
 
         #region Properties
+
+        public RandomizationLevel AnimationAttack
+        {
+            get { return (RandomizationLevel)GetValue(AnimationAttackProperty); }
+            set { SetValue(AnimationAttackProperty, value); }
+        }
+
+        public RandomizationLevel AnimationDamage
+        {
+            get { return (RandomizationLevel)GetValue(AnimationDamageProperty); }
+            set { SetValue(AnimationDamageProperty, value); }
+        }
+
+        public RandomizationLevel AnimationFire
+        {
+            get { return (RandomizationLevel)GetValue(AnimationFireProperty); }
+            set { SetValue(AnimationFireProperty, value); }
+        }
+
+        public RandomizationLevel AnimationLoop
+        {
+            get { return (RandomizationLevel)GetValue(AnimationLoopProperty); }
+            set { SetValue(AnimationLoopProperty, value); }
+        }
+
+        public RandomizationLevel AnimationParry
+        {
+            get { return (RandomizationLevel)GetValue(AnimationParryProperty); }
+            set { SetValue(AnimationParryProperty, value); }
+        }
+
+        public RandomizationLevel AnimationPause
+        {
+            get { return (RandomizationLevel)GetValue(AnimationPauseProperty); }
+            set { SetValue(AnimationPauseProperty, value); }
+        }
+
+        public RandomizationLevel AnimationMove
+        {
+            get { return (RandomizationLevel)GetValue(AnimationMoveProperty); }
+            set { SetValue(AnimationMoveProperty, value); }
+        }
+
         public TexturePack TexturePack
         {
             get { return (TexturePack)GetValue(TexturePackProperty); }
@@ -200,6 +262,31 @@ namespace Randomizer_WPF.Views
         private void BtnMax_Click(object sender, RoutedEventArgs e)
         {
             foreach (var item in TextureControls)
+            {
+                item.SelectedLevel = RandomizationLevel.Max;
+            }
+        }
+
+        private void BtnToggleAllAnimation_Click(object sender, RoutedEventArgs e)
+        {
+            bool CheckAllBoxes = AnimationControls.Any(rluc => !rluc.IsChecked);
+            foreach (var item in AnimationControls)
+            {
+                item.IsChecked = CheckAllBoxes;
+            }
+        }
+
+        private void BtnTypeAnimation_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in AnimationControls)
+            {
+                item.SelectedLevel = RandomizationLevel.Type;
+            }
+        }
+
+        private void BtnMaxAnimation_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in AnimationControls)
             {
                 item.SelectedLevel = RandomizationLevel.Max;
             }

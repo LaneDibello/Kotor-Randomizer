@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System;
+using kotor_Randomizer_2.Extensions;
 
 namespace kotor_Randomizer_2
 {
@@ -114,9 +115,9 @@ namespace kotor_Randomizer_2
 
             List<Tuple<string, string>> settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Prevent Milestone Save Data Deletion", ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete  ).ToString()),
-                new Tuple<string, string>("Include Minigames in Save",            ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames ).ToString()),
-                new Tuple<string, string>("Include All Modules in Save",          ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules).ToString()),
+                new Tuple<string, string>("Prevent Milestone Save Data Deletion", ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete  ).ToEnabledDisabled()),
+                new Tuple<string, string>("Include Minigames in Save",            ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames ).ToEnabledDisabled()),
+                new Tuple<string, string>("Include All Modules in Save",          ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules).ToEnabledDisabled()),
                 new Tuple<string, string>("", ""),  // Skip a row.
             };
 
@@ -125,6 +126,8 @@ namespace kotor_Randomizer_2
                 ws.Cell(i, 1).Value = setting.Item1;
                 ws.Cell(i, 2).Value = setting.Item2;
                 ws.Cell(i, 1).Style.Font.Italic = true;
+                ws.Cell(i, 2).DataType = XLDataType.Text;
+                ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 i++;
             }
 
@@ -139,11 +142,11 @@ namespace kotor_Randomizer_2
 
             settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Add Spice Lab Load Zone", ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ      ).ToString()),
-                new Tuple<string, string>("Fix Dream Sequence",      ModuleExtrasValue.HasFlag(ModuleExtras.FixDream           ).ToString()),
-                new Tuple<string, string>("Fix Fighter Encounter",   ModuleExtrasValue.HasFlag(ModuleExtras.FixFighterEncounter).ToString()),
-                new Tuple<string, string>("Fix Mind Prison",         ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison      ).ToString()),
-                new Tuple<string, string>("Fix Module Coordinates",  ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates     ).ToString()),
+                new Tuple<string, string>("Add Spice Lab Load Zone", ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ      ).ToEnabledDisabled()),
+                new Tuple<string, string>("Fix Dream Sequence",      ModuleExtrasValue.HasFlag(ModuleExtras.FixDream           ).ToEnabledDisabled()),
+                new Tuple<string, string>("Fix Fighter Encounter",   ModuleExtrasValue.HasFlag(ModuleExtras.FixFighterEncounter).ToEnabledDisabled()),
+                new Tuple<string, string>("Fix Mind Prison",         ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison      ).ToEnabledDisabled()),
+                new Tuple<string, string>("Fix Module Coordinates",  ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates     ).ToEnabledDisabled()),
                 new Tuple<string, string>("", ""),  // Skip a row.
             };
 
@@ -152,6 +155,8 @@ namespace kotor_Randomizer_2
                 ws.Cell(i, 1).Value = setting.Item1;
                 ws.Cell(i, 2).Value = setting.Item2;
                 ws.Cell(i, 1).Style.Font.Italic = true;
+                ws.Cell(i, 2).DataType = XLDataType.Text;
+                ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 i++;
             }
 
@@ -166,18 +171,18 @@ namespace kotor_Randomizer_2
 
             settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Unlock DAN Ruins Door",      ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins     ) ? "Unlocked" : "Locked"),
-                new Tuple<string, string>("Unlock EBO Galaxy Map",      ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap    ) ? "Unlocked" : "Locked"),
-                new Tuple<string, string>("Unlock KOR Valley",          ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley    ) ? "Unlocked" : "Locked"),
-                new Tuple<string, string>("Unlock LEV Hangar Access",   ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev    ) ? "Unlocked" : "Locked"),
-                new Tuple<string, string>("Enable LEV Hangar Elevator", ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev) ? "Enabled"  : "Disabled"),
-                new Tuple<string, string>("Unlock MAN Embassy",         ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy   ) ? "Unlocked" : "Locked"),
-                new Tuple<string, string>("Unlock MAN Hangar",          ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar    ) ? "Unlocked" : "Locked"),
-                new Tuple<string, string>("Unlock STA Door to Bastila", ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila   ) ? "Unlocked" : "Locked"),
-                new Tuple<string, string>("Unlock TAR Undercity",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity ) ? "Unlocked" : "Locked"),
-                new Tuple<string, string>("Unlock TAR Vulkar",          ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar    ) ? "Unlocked" : "Locked"),
-                new Tuple<string, string>("Unlock UNK Summit Exit",     ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit    ) ? "Unlocked" : "Locked"),
-                new Tuple<string, string>("Unlock UNK Temple Exit",     ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit) ? "Unlocked" : "Locked"),
+                new Tuple<string, string>("Unlock DAN Ruins Door",      ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins     ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock EBO Galaxy Map",      ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap    ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock KOR Valley",          ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley    ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock LEV Hangar Access",   ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev      ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Enable LEV Hangar Elevator", ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev).ToEnabledDisabled()),
+                new Tuple<string, string>("Unlock MAN Embassy",         ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy   ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock MAN Hangar",          ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar    ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock STA Door to Bastila", ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila   ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock TAR Undercity",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock TAR Vulkar",          ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar    ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock UNK Summit Exit",     ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit    ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock UNK Temple Exit",     ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit).ToLockedUnlocked(true)),
             };
 
             foreach (var setting in settings)
@@ -185,6 +190,7 @@ namespace kotor_Randomizer_2
                 ws.Cell(i, 1).Value = setting.Item1;
                 ws.Cell(i, 2).Value = setting.Item2;
                 ws.Cell(i, 1).Style.Font.Italic = true;
+                ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 i++;
             }
 
@@ -230,28 +236,28 @@ namespace kotor_Randomizer_2
 
                 settings = new List<Tuple<string, string>>()
                 {
-                    new Tuple<string, string>("Delete Milestone Save Data", (!ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete)).ToString()),
-                    new Tuple<string, string>("Include Minigames in Save",    ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames).ToString()),
-                    new Tuple<string, string>("Include All Modules in Save",  ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules).ToString()),
+                    new Tuple<string, string>("Delete Milestone Save Data", (!ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete )).ToEnabledDisabled()),
+                    new Tuple<string, string>("Include Minigames in Save",    ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames ).ToEnabledDisabled()),
+                    new Tuple<string, string>("Include All Modules in Save",  ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules).ToEnabledDisabled()),
                     new Tuple<string, string>("", ""),  // Skip a row.
-                    new Tuple<string, string>("Add Spice Lab Load Zone",      ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ).ToString()),
-                    new Tuple<string, string>("Fix Dream Sequence",           ModuleExtrasValue.HasFlag(ModuleExtras.FixDream).ToString()),
-                    new Tuple<string, string>("Fix Fighter Encounter",        ModuleExtrasValue.HasFlag(ModuleExtras.FixFighterEncounter).ToString()),
-                    new Tuple<string, string>("Fix Mind Prison",              ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison).ToString()),
-                    new Tuple<string, string>("Fix Module Coordinates",       ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates).ToString()),
+                    new Tuple<string, string>("Add Spice Lab Load Zone",      ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ      ).ToEnabledDisabled()),
+                    new Tuple<string, string>("Fix Dream Sequence",           ModuleExtrasValue.HasFlag(ModuleExtras.FixDream           ).ToEnabledDisabled()),
+                    new Tuple<string, string>("Fix Fighter Encounter",        ModuleExtrasValue.HasFlag(ModuleExtras.FixFighterEncounter).ToEnabledDisabled()),
+                    new Tuple<string, string>("Fix Mind Prison",              ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison      ).ToEnabledDisabled()),
+                    new Tuple<string, string>("Fix Module Coordinates",       ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates     ).ToEnabledDisabled()),
                     new Tuple<string, string>("", ""),  // Skip a row.
-                    new Tuple<string, string>("Unlock DAN Ruins Door",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins     ) ? "Unlocked" : "Locked"),
-                    new Tuple<string, string>("Unlock EBO Galaxy Map",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap    ) ? "Unlocked" : "Locked"),
-                    new Tuple<string, string>("Unlock KOR Valley",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley    ) ? "Unlocked" : "Locked"),
-                    new Tuple<string, string>("Unlock LEV Hangar Access",     ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev      ) ? "Unlocked" : "Locked"),
-                    new Tuple<string, string>("Enable LEV Hangar Elevator",   ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev) ? "Enabled"  : "Disabled"),
-                    new Tuple<string, string>("Unlock MAN Embassy",           ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy   ) ? "Unlocked" : "Locked"),
-                    new Tuple<string, string>("Unlock MAN Hangar",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar    ) ? "Unlocked" : "Locked"),
-                    new Tuple<string, string>("Unlock STA Door to Bastila",   ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila   ) ? "Unlocked" : "Locked"),
-                    new Tuple<string, string>("Unlock TAR Undercity",         ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity ) ? "Unlocked" : "Locked"),
-                    new Tuple<string, string>("Unlock TAR Vulkar",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar    ) ? "Unlocked" : "Locked"),
-                    new Tuple<string, string>("Unlock UNK Summit Exit",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit    ) ? "Unlocked" : "Locked"),
-                    new Tuple<string, string>("Unlock UNK Temple Exit",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit) ? "Unlocked" : "Locked"),
+                    new Tuple<string, string>("Unlock DAN Ruins Door",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins     ).ToLockedUnlocked(true)),
+                    new Tuple<string, string>("Unlock EBO Galaxy Map",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap    ).ToLockedUnlocked(true)),
+                    new Tuple<string, string>("Unlock KOR Valley",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley    ).ToLockedUnlocked(true)),
+                    new Tuple<string, string>("Unlock LEV Hangar Access",     ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev      ).ToLockedUnlocked(true)),
+                    new Tuple<string, string>("Enable LEV Hangar Elevator",   ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev).ToEnabledDisabled()),
+                    new Tuple<string, string>("Unlock MAN Embassy",           ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy   ).ToLockedUnlocked(true)),
+                    new Tuple<string, string>("Unlock MAN Hangar",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar    ).ToLockedUnlocked(true)),
+                    new Tuple<string, string>("Unlock STA Door to Bastila",   ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila   ).ToLockedUnlocked(true)),
+                    new Tuple<string, string>("Unlock TAR Undercity",         ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity ).ToLockedUnlocked(true)),
+                    new Tuple<string, string>("Unlock TAR Vulkar",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar    ).ToLockedUnlocked(true)),
+                    new Tuple<string, string>("Unlock UNK Summit Exit",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit    ).ToLockedUnlocked(true)),
+                    new Tuple<string, string>("Unlock UNK Temple Exit",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit).ToLockedUnlocked(true)),
                     new Tuple<string, string>("", ""),  // Skip a row.
                 };
 
@@ -260,18 +266,22 @@ namespace kotor_Randomizer_2
                     ws.Cell(i, 1).Value = setting.Item1;
                     ws.Cell(i, 2).Value = setting.Item2;
                     ws.Cell(i, 1).Style.Font.Italic = true;
+                    ws.Cell(i, 2).DataType = XLDataType.Text;
+                    ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                     i++;
                 }
             }
 
             // Write logic settings.
             ws.Cell(i, 1).Value = "Reachability Logic";
-            ws.Cell(i, 2).Value = "Is Enabled";
+            ws.Cell(i, 2).Value = "Setting";
+            ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 1).Style.Font.Bold = true;
             ws.Cell(i, 2).Style.Font.Bold = true;
-            i += 2;     // Skip a row.
+            i++;    // Skip a row.
 
             string presetName = ShufflePreset;
             bool isCustomPreset = false;
@@ -283,16 +293,16 @@ namespace kotor_Randomizer_2
 
             settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Use Rando Exclusion Rules", UseRandoRules.ToString()),
-                new Tuple<string, string>("Verify Reachability",       VerifyReachability.ToString()),
-                new Tuple<string, string>("Goal Is Malak",             Digraph.GoalIsMalak.ToString()),
-                new Tuple<string, string>("Goal Is Star Maps",         Digraph.GoalIsStarMap.ToString()),
-                new Tuple<string, string>("Goal Is Pazaak",            Digraph.GoalIsPazaak.ToString()),
-                new Tuple<string, string>("Allow Glitch Clipping",     Digraph.AllowGlitchClip.ToString()),
-                new Tuple<string, string>("Allow Glitch DLZ",          Digraph.AllowGlitchDlz.ToString()),
-                new Tuple<string, string>("Allow Glitch FLU",          Digraph.AllowGlitchFlu.ToString()),
-                new Tuple<string, string>("Allow Glitch GPW",          Digraph.AllowGlitchGpw.ToString()),
-                new Tuple<string, string>("Ignore Single-Use Edges",   Digraph.IgnoreOnceEdges.ToString()),
+                new Tuple<string, string>("Use Rando Exclusion Rules", UseRandoRules          .ToEnabledDisabled()),
+                new Tuple<string, string>("Verify Reachability",       VerifyReachability     .ToEnabledDisabled()),
+                new Tuple<string, string>("Goal Is Malak",             Digraph.GoalIsMalak    .ToEnabledDisabled()),
+                new Tuple<string, string>("Goal Is Star Maps",         Digraph.GoalIsStarMap  .ToEnabledDisabled()),
+                new Tuple<string, string>("Goal Is Pazaak",            Digraph.GoalIsPazaak   .ToEnabledDisabled()),
+                new Tuple<string, string>("Allow Glitch Clipping",     Digraph.AllowGlitchClip.ToEnabledDisabled()),
+                new Tuple<string, string>("Allow Glitch DLZ",          Digraph.AllowGlitchDlz .ToEnabledDisabled()),
+                new Tuple<string, string>("Allow Glitch FLU",          Digraph.AllowGlitchFlu .ToEnabledDisabled()),
+                new Tuple<string, string>("Allow Glitch GPW",          Digraph.AllowGlitchGpw .ToEnabledDisabled()),
+                new Tuple<string, string>("Ignore Single-Use Edges",   Digraph.IgnoreOnceEdges.ToEnabledDisabled()),
                 new Tuple<string, string>("", ""),  // Skip a row.
                 new Tuple<string, string>("Shuffle Preset",            presetName),
                 new Tuple<string, string>("", ""),  // Skip a row.
@@ -303,6 +313,7 @@ namespace kotor_Randomizer_2
                 ws.Cell(i, 1).Value = setting.Item1;
                 ws.Cell(i, 2).Value = setting.Item2;
                 ws.Cell(i, 1).Style.Font.Italic = true;
+                ws.Cell(i, 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 i++;
             }
 
@@ -322,6 +333,8 @@ namespace kotor_Randomizer_2
 
                 ws.Cell(i, 4).Value = "Warp Code";
                 ws.Cell(i, 5).Value = "Common Name";
+                ws.Cell(i, 4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Cell(i, 5).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 ws.Cell(i, 4).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
                 ws.Cell(i, 5).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
                 ws.Cell(i, 4).Style.Font.Italic = true;
@@ -390,7 +403,9 @@ namespace kotor_Randomizer_2
                 var omitted = omittedModules.Any(x => x.WarpCode == kvp.Key);   // Was the module omitted from the shuffle?
                 var changed = kvp.Key != kvp.Value; // Has the shuffle changed this module?
 
-                ws.Cell(i, 1).Value = omitted ? "OMITTED" : changed.ToString();
+                ws.Cell(i, 1).Value = omitted ? "OMITTED" : changed.ToString().ToUpper();
+                ws.Cell(i, 1).DataType = XLDataType.Text;
+                ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 ws.Cell(i, 2).Value = kvp.Key;
                 ws.Cell(i, 2).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
                 ws.Cell(i, 3).Value = defaultName;
