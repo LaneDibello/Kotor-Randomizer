@@ -26,6 +26,8 @@ namespace kotor_Randomizer_2.Models
         Spoiling,
         /// <summary> Unrandomization is in progress. </summary>
         Unrandomizing,
+        /// <summary> Back up is in progress. </summary>
+        BackingUp,
     }
 
     /// <summary>

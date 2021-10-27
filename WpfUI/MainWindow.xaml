@@ -36,10 +36,10 @@
     </Window.Resources>
 
     <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.New"   Executed="NewCommand_Executed"   CanExecute="NewCommand_CanExecute"  />
-        <CommandBinding Command="ApplicationCommands.Open"  Executed="OpenCommand_Executed"  CanExecute="OpenCommand_CanExecute" />
-        <CommandBinding Command="ApplicationCommands.Save"  Executed="SaveCommand_Executed"  CanExecute="SaveCommand_CanExecute" />
-        <CommandBinding Command="local:CustomCommands.Exit" Executed="ExitCommand_Executed"  CanExecute="ExitCommand_CanExecute" />
+        <CommandBinding Command="ApplicationCommands.New"   Executed="NewCommand_Executed"  CanExecute="NewCommand_CanExecute"  />
+        <CommandBinding Command="ApplicationCommands.Open"  Executed="OpenCommand_Executed" CanExecute="OpenCommand_CanExecute" />
+        <CommandBinding Command="ApplicationCommands.Save"  Executed="SaveCommand_Executed" CanExecute="SaveCommand_CanExecute" />
+        <CommandBinding Command="local:CustomCommands.Exit" Executed="ExitCommand_Executed" CanExecute="ExitCommand_CanExecute" />
     </Window.CommandBindings>
 
     <Window.Background>
@@ -69,9 +69,9 @@
                     </Style>
                 </Menu.Resources>
                 <MenuItem Header="_File">
-                    <MenuItem Header="_New (Default Settings)" Command="ApplicationCommands.New"   MinWidth="150" />
-                    <MenuItem Header="_Open Settings File..."     Command="ApplicationCommands.Open"  />
-                    <MenuItem Header="_Save Current Settings..."  Command="ApplicationCommands.Save"  />
+                    <MenuItem Header="_New (Default Settings)"   Command="ApplicationCommands.New"   MinWidth="150" />
+                    <MenuItem Header="_Open Settings File..."    Command="ApplicationCommands.Open"  />
+                    <MenuItem Header="_Save Current Settings..." Command="ApplicationCommands.Save"  />
                     <Separator />
                     <MenuItem Header="E_xit" Command="local:CustomCommands.Exit" />
                 </MenuItem>

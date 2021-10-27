@@ -202,9 +202,11 @@
             <Grid Grid.Row="2" Margin="3">
                 <Grid.Resources>
                     <Style x:Key="RandomizedItemStyle" TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Foreground" Value="Black" />
                         <EventSetter Event="MouseDoubleClick" Handler="LvRandomized_DoubleClick" />
                     </Style>
                     <Style x:Key="OmittedItemStyle" TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Foreground" Value="Black" />
                         <EventSetter Event="MouseDoubleClick" Handler="LvOmitted_DoubleClick" />
                     </Style>
                     <Style TargetType="ScrollBar">

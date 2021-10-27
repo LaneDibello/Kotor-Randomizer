@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Xml;
 using System.Xml.Linq;
 using ClosedXML.Excel;
@@ -30,101 +26,109 @@ namespace kotor_Randomizer_2.Models
                                                  ModuleExtras.UnlockTarVulkar  | ModuleExtras.UnlockUnkSummit     | ModuleExtras.UnlockUnkTempleExit;
 
         #region XML Consts
-        const string XML_AMBIENT        = "Ambient";
-        const string XML_AREA           = "Area";
-        const string XML_ARMBAND        = "Armband";
-        const string XML_ARMOR          = "Armor";
-        const string XML_ATTACK         = "Attack";
-        const string XML_AUDIO          = "Audio";
-        const string XML_BATTLE         = "Battle";
-        const string XML_BELT           = "Belt";
-        const string XML_BLASTER        = "Blaster";
-        const string XML_BODY           = "PBody";
-        const string XML_CHAR           = "Character";
-        const string XML_CHIDE          = "CHide";
-        const string XML_CLIP           = "Clip";
-        const string XML_CODE           = "Code";
-        const string XML_COLUMN         = "Column";
-        const string XML_COLUMNS        = "Columns";
-        const string XML_CREATURE       = "Creature";
-        const string XML_CUBE_MAP       = "CubeMap";
-        const string XML_CUTSCENE       = "Cutscene";
-        const string XML_CWEAPON        = "CWeapon";
-        const string XML_DAMAGE         = "Damage";
-        const string XML_DLZ            = "DLZ";
-        const string XML_DOOR           = "Door";
-        const string XML_DROID          = "Droid";
-        const string XML_EASY_PANELS    = "EasyPanels";
-        const string XML_EFFECT         = "Effect";
-        const string XML_FIRE           = "Fire";
-        const string XML_FIRST_NAME_F   = "FirstF";
-        const string XML_FIRST_NAME_M   = "FirstM";
-        const string XML_FLU            = "FLU";
-        const string XML_GENERAL        = "General";
-        const string XML_GLITCHES       = "Glitches";
-        const string XML_GLOVE          = "Glove";
-        const string XML_GOALS          = "Goals";
-        const string XML_GPW            = "GPW";
-        const string XML_GRENADE        = "Grenade";
-        const string XML_HEAD           = "PHead";
-        const string XML_IGNORE_ONCE    = "IgnoreOnce";
-        const string XML_IMPLANT        = "Implant";
-        const string XML_ITEM           = "Item";
-        const string XML_LAST_NAME      = "Last";
-        const string XML_LIGHTSABER     = "Lightsaber";
-        const string XML_LOGIC          = "Logic";
-        const string XML_LOOP           = "Loop";
-        const string XML_MALAK          = "Malak";
-        const string XML_MAPS           = "StarMaps";
-        const string XML_MASK           = "Mask";
-        const string XML_MEDICAL        = "Medical";
-        const string XML_MELEE          = "Melee";
-        const string XML_MINE           = "Mine";
-        const string XML_MIXNPCPARTY    = "MixNpcParty";
-        const string XML_MODEL          = "Model";
-        const string XML_MODULE         = "Module";
-        const string XML_MOVE           = "Move";
-        const string XML_NAME           = "Name";
-        const string XML_NAMES          = "Names";
-        const string XML_NPC            = "Npc";
-        const string XML_OMIT           = "Omit";
-        const string XML_OMIT_AIRLOCK   = "OmitAirlock";
-        const string XML_OMIT_BROKEN    = "OmitBroken";
-        const string XML_OMIT_LARGE     = "OmitLarge";
-        const string XML_OTHER          = "Other";
-        const string XML_PACK           = "Pack";
-        const string XML_PARRY          = "Parry";
-        const string XML_PARTY          = "Party";
-        const string XML_PAUSE          = "Pause";
-        const string XML_PAZAAK         = "Pazaak";
-        const string XML_PLAC           = "Placeable";
-        const string XML_PLACE          = "Placeable";
-        const string XML_PLANETARY      = "Planetary";
-        const string XML_POLYMORPH      = "Polymorph";
-        const string XML_PRESET         = "Preset";
-        const string XML_QOL            = "QoL";
-        const string XML_REACHABLE      = "Reachable";
-        const string XML_REMOVE_DMCA    = "RemoveDmca";
-        const string XML_RULES          = "Rules";
-        const string XML_SETTINGS       = "Settings";
-        const string XML_STRONG_GOALS   = "StrongGoals";
-        const string XML_STUNT          = "Stunt";
-        const string XML_SWOOP_BOOSTERS = "SwoopBoosters";
-        const string XML_SWOOP_OBSTACLE = "SwoopObstacle";
-        const string XML_TABLE          = "Table";
-        const string XML_TABLES         = "Tables";
-        const string XML_TAG            = "Tag";
-        const string XML_TEXT           = "Text";
-        const string XML_TEXTURE        = "Texture";
-        const string XML_UNLOCK         = "Unlock";
-        const string XML_UNLOCKS        = "Unlocks";
-        const string XML_UPGRADE        = "Upgrade";
-        const string XML_VARIOUS        = "Various";
-        const string XML_VERSION        = "Version";
-        const string XML_VEHICLE        = "Vehicle";
-        const string XML_WALK           = "Walk";
-        const string XML_WEAPON         = "Weapon";
+        private const string XML_AMBIENT        = "Ambient";
+        private const string XML_AREA           = "Area";
+        private const string XML_ARMBAND        = "Armband";
+        private const string XML_ARMOR          = "Armor";
+        private const string XML_ATTACK         = "Attack";
+        private const string XML_AUDIO          = "Audio";
+        private const string XML_BATTLE         = "Battle";
+        private const string XML_BELT           = "Belt";
+        private const string XML_BLASTER        = "Blaster";
+        private const string XML_BODY           = "PBody";
+        private const string XML_CHAR           = "Character";
+        private const string XML_CHIDE          = "CHide";
+        private const string XML_CLIP           = "Clip";
+        private const string XML_CODE           = "Code";
+        private const string XML_COLUMNS        = "Columns";
+        private const string XML_CREATURE       = "Creature";
+        private const string XML_CUBE_MAP       = "CubeMap";
+        private const string XML_CUTSCENE       = "Cutscene";
+        private const string XML_CWEAPON        = "CWeapon";
+        private const string XML_DAMAGE         = "Damage";
+        private const string XML_DLZ            = "DLZ";
+        private const string XML_DOOR           = "Door";
+        private const string XML_DROID          = "Droid";
+        private const string XML_EASY_PANELS    = "EasyPanels";
+        private const string XML_EFFECT         = "Effect";
+        private const string XML_FIRE           = "Fire";
+        private const string XML_FIRST_NAME_F   = "FirstF";
+        private const string XML_FIRST_NAME_M   = "FirstM";
+        private const string XML_FLU            = "FLU";
+        private const string XML_GENERAL        = "General";
+        private const string XML_GLITCHES       = "Glitches";
+        private const string XML_GLOVE          = "Glove";
+        private const string XML_GOALS          = "Goals";
+        private const string XML_GPW            = "GPW";
+        private const string XML_GRENADE        = "Grenade";
+        private const string XML_HEAD           = "PHead";
+        private const string XML_IGNORE_ONCE    = "IgnoreOnce";
+        private const string XML_IMPLANT        = "Implant";
+        private const string XML_ITEM           = "Item";
+        private const string XML_LAST_NAME      = "Last";
+        private const string XML_LIGHTSABER     = "Lightsaber";
+        private const string XML_LOGIC          = "Logic";
+        private const string XML_LOOP           = "Loop";
+        private const string XML_MALAK          = "Malak";
+        private const string XML_MAPS           = "StarMaps";
+        private const string XML_MASK           = "Mask";
+        private const string XML_MEDICAL        = "Medical";
+        private const string XML_MELEE          = "Melee";
+        private const string XML_MINE           = "Mine";
+        private const string XML_MIXNPCPARTY    = "MixNpcParty";
+        private const string XML_MODEL          = "Model";
+        private const string XML_MODULE         = "Module";
+        private const string XML_MOVE           = "Move";
+        private const string XML_NAME           = "Name";
+        private const string XML_NAMES          = "Names";
+        private const string XML_NPC            = "Npc";
+        private const string XML_OMIT           = "Omit";
+        private const string XML_OMIT_AIRLOCK   = "OmitAirlock";
+        private const string XML_OMIT_BROKEN    = "OmitBroken";
+        private const string XML_OMIT_LARGE     = "OmitLarge";
+        private const string XML_OTHER          = "Other";
+        private const string XML_PACK           = "Pack";
+        private const string XML_PARRY          = "Parry";
+        private const string XML_PARTY          = "Party";
+        private const string XML_PAUSE          = "Pause";
+        private const string XML_PAZAAK         = "Pazaak";
+        private const string XML_PLAC           = "Placeable";
+        private const string XML_PLACE          = "Placeable";
+        private const string XML_PLANETARY      = "Planetary";
+        private const string XML_POLYMORPH      = "Polymorph";
+        private const string XML_PRESET         = "Preset";
+        private const string XML_QOL            = "QoL";
+        private const string XML_REACHABLE      = "Reachable";
+        private const string XML_REMOVE_DMCA    = "RemoveDmca";
+        private const string XML_RULES          = "Rules";
+        private const string XML_SETTINGS       = "Settings";
+        private const string XML_STRONG_GOALS   = "StrongGoals";
+        private const string XML_STUNT          = "Stunt";
+        private const string XML_SWOOP_BOOSTERS = "SwoopBoosters";
+        private const string XML_SWOOP_OBSTACLE = "SwoopObstacle";
+        private const string XML_TABLE          = "Table";
+        private const string XML_TABLES         = "Tables";
+        private const string XML_TEXT           = "Text";
+        private const string XML_TEXTURE        = "Texture";
+        private const string XML_UNLOCKS        = "Unlocks";
+        private const string XML_UPGRADE        = "Upgrade";
+        private const string XML_VARIOUS        = "Various";
+        private const string XML_VERSION        = "Version";
+        private const string XML_VEHICLE        = "Vehicle";
+        private const string XML_WEAPON         = "Weapon";
         #endregion XML Consts
+
+        #region Category Names
+        private const string CATEGORY_OVERRIDES = "Overrides";
+        private const string CATEGORY_MODULES   = "Modules and General";
+        private const string CATEGORY_ITEMS     = "Items";
+        private const string CATEGORY_AUDIO     = "Audio";
+        private const string CATEGORY_MODELS    = "Models";
+        private const string CATEGORY_TEXTURES  = "Textures";
+        private const string CATEGORY_TABLES    = "Tables";
+        private const string CATEGORY_TEXT      = "Text";
+        private const string CATEGORY_OTHER     = "Other";
+        #endregion
         #endregion
 
         #region Constructors
@@ -889,89 +893,48 @@ namespace kotor_Randomizer_2.Models
         #endregion Texture Properties
 
         #region Active Rando Properties
-        public bool DoRandomizeAnimation
-        {
-            get
-            {
-                return
-                    (AnimationAttack | AnimationDamage | AnimationFire | AnimationLoop
-                    | AnimationParry | AnimationPause  | AnimationMove)
-                    != RandomizationLevel.None;
-            }
-        }
+        public bool DoRandomizeAnimation =>
+            (AnimationAttack | AnimationDamage | AnimationFire | AnimationLoop
+            | AnimationParry | AnimationPause  | AnimationMove)
+            != RandomizationLevel.None;
 
-        public bool DoRandomizeAudio
-        {
-            get
-            {
-                return
-                    AudioAmbientNoise  != RandomizationLevel.None ||
-                    AudioAreaMusic     != RandomizationLevel.None ||
-                    AudioBattleMusic   != RandomizationLevel.None ||
-                    AudioCutsceneNoise != RandomizationLevel.None ||
-                    AudioNpcSounds     != RandomizationLevel.None ||
-                    AudioPartySounds   != RandomizationLevel.None ||
-                    AudioRemoveDmcaMusic;
-            }
-        }
-        public bool DoRandomizeItems
-        {
-            get
-            {
-                return
-                    ItemArmbands        != RandomizationLevel.None ||
-                    ItemArmor           != RandomizationLevel.None ||
-                    ItemBelts           != RandomizationLevel.None ||
-                    ItemBlasters        != RandomizationLevel.None ||
-                    ItemCreatureHides   != RandomizationLevel.None ||
-                    ItemCreatureWeapons != RandomizationLevel.None ||
-                    ItemDroidEquipment  != RandomizationLevel.None ||
-                    ItemGloves          != RandomizationLevel.None ||
-                    ItemGrenades        != RandomizationLevel.None ||
-                    ItemImplants        != RandomizationLevel.None ||
-                    ItemLightsabers     != RandomizationLevel.None ||
-                    ItemMasks           != RandomizationLevel.None ||
-                    ItemMedical         != RandomizationLevel.None ||
-                    ItemMeleeWeapons    != RandomizationLevel.None ||
-                    ItemMines           != RandomizationLevel.None ||
-                    ItemPazaakCards     != RandomizationLevel.None ||
-                    ItemUpgrades        != RandomizationLevel.None ||
-                    ItemVarious         != RandomizationLevel.None;
-            }
-        }
-        public bool DoRandomizeModels
-        {
-            get
-            {
-                return
-                    ModelCharacterRando ||
-                    ModelDoorRando      ||
-                    ModelPlaceableRando;
-            }
-        }
-        public bool DoRandomizeModules
-        {
-            get
-            {
-                // A couple of general options are handled by module randomization.
-                return (_moduleRandomizedList?.Count ?? 0) > 1 ||
-                        GeneralModuleExtrasValue   != ModuleExtras.Default ||
-                        GeneralUnlockedDoors.Count != 0;
-            }
-        }
-        public bool DoRandomizeOther
-        {
-            get
-            {
-                return
-                    OtherNameGeneration ||
-                    OtherPartyMembers ||
-                    OtherPazaakDecks ||
-                    OtherPolymorphMode ||
-                    OtherSwoopBoosters ||
-                    OtherSwoopObstacles;
-            }
-        }
+        public bool DoRandomizeAudio => DoRandomizeMusic || DoRandomizeSound;
+
+        public bool DoRandomizeMusic =>
+            (AudioAreaMusic | AudioAmbientNoise | AudioBattleMusic | AudioCutsceneNoise)
+            != RandomizationLevel.None
+            || AudioRemoveDmcaMusic;
+
+        public bool DoRandomizeSound =>
+            (AudioAmbientNoise | AudioBattleMusic | AudioNpcSounds | AudioPartySounds)
+            != RandomizationLevel.None;
+
+        public bool DoRandomizeItems =>
+            (ItemArmbands       | ItemArmor           | ItemBelts          | ItemBlasters
+            | ItemCreatureHides | ItemCreatureWeapons | ItemDroidEquipment | ItemGloves
+            | ItemGrenades      | ItemImplants        | ItemLightsabers    | ItemMasks
+            | ItemMedical       | ItemMeleeWeapons    | ItemMines          | ItemPazaakCards
+            | ItemUpgrades      | ItemVarious)
+            != RandomizationLevel.None;
+
+        public bool DoRandomizeModels =>
+            ModelCharacterRando ||
+            ModelDoorRando      ||
+            ModelPlaceableRando;
+
+        public bool DoRandomizeModules =>   // A couple of general options are handled by module randomization.
+            (_moduleRandomizedList?.Count ?? 0) > 1
+            || GeneralModuleExtrasValue   != ModuleExtras.Default
+            || GeneralUnlockedDoors.Count != 0;
+
+        public bool DoRandomizeOther =>
+            OtherNameGeneration ||
+            OtherPartyMembers   ||
+            OtherPazaakDecks    ||
+            OtherPolymorphMode  ||
+            OtherSwoopBoosters  ||
+            OtherSwoopObstacles;
+
         //public bool DoRandomizeParty
         //{
         //    get
@@ -979,44 +942,22 @@ namespace kotor_Randomizer_2.Models
         //        return false;   // Not yet implemented.
         //    }
         //}
-        public bool DoRandomizeTables
-        {
-            get
-            {
-                return Table2DAs.Any(rt => rt.IsRandomized) ||
-                       DoRandomizeAnimation;
-            }
-        }
-        public bool DoRandomizeText
-        {
-            get
-            {
-                return TextSettingsValue.HasFlag(TextSettings.RandoDialogEntries) ||
-                       TextSettingsValue.HasFlag(TextSettings.RandoDialogReplies) ||
-                       TextSettingsValue.HasFlag(TextSettings.RandoFullTLK);
-            }
-        }
-        public bool DoRandomizeTextures
-        {
-            get
-            {
-                return
-                    TextureCreatures    != RandomizationLevel.None ||
-                    TextureCubeMaps     != RandomizationLevel.None ||
-                    TextureEffects      != RandomizationLevel.None ||
-                    TextureItems        != RandomizationLevel.None ||
-                    TextureNPC          != RandomizationLevel.None ||
-                    TextureOther        != RandomizationLevel.None ||
-                    TextureParty        != RandomizationLevel.None ||
-                    TexturePlaceables   != RandomizationLevel.None ||
-                    TexturePlanetary    != RandomizationLevel.None ||
-                    TexturePlayerBodies != RandomizationLevel.None ||
-                    TexturePlayerHeads  != RandomizationLevel.None ||
-                    TextureStunt        != RandomizationLevel.None ||
-                    TextureVehicles     != RandomizationLevel.None ||
-                    TextureWeapons      != RandomizationLevel.None;
-            }
-        }
+
+        public bool DoRandomizeTables =>
+            Table2DAs.Any(rt => rt.IsRandomized) ||
+            DoRandomizeAnimation;
+
+        public bool DoRandomizeText =>
+            TextSettingsValue.HasFlag(TextSettings.RandoDialogEntries) ||
+            TextSettingsValue.HasFlag(TextSettings.RandoDialogReplies) ||
+            TextSettingsValue.HasFlag(TextSettings.RandoFullTLK);
+
+        public bool DoRandomizeTextures =>
+            (TextureCreatures  | TextureCubeMaps     | TextureEffects     | TextureItems
+            | TextureNPC       | TextureOther        | TextureParty       | TexturePlaceables
+            | TexturePlanetary | TexturePlayerBodies | TexturePlayerHeads | TextureStunt
+            | TextureVehicles  | TextureWeapons)
+            != RandomizationLevel.None;
         #endregion Active Rando Properties
         #endregion Properties
 
@@ -1050,12 +991,16 @@ namespace kotor_Randomizer_2.Models
             {
                 // GamePath can't be empty.
                 if (string.IsNullOrWhiteSpace(args.GamePath))
+                {
                     throw new ArgumentException("Game path not given.", "RandoArgs.GamePath");
+                }
 
                 // Final check for already randomized game before randomizing.
                 var paths = new KPaths(args.GamePath);
                 if (File.Exists(paths.RANDOMIZED_LOG))
+                {
                     throw new InvalidOperationException(Properties.Resources.AlreadyRandomized);
+                }
 
                 if (args.Seed < 0) args.Seed *= -1; // Seed must be non-negative.
                 Randomize.SetSeed(args.Seed);       // Set the seed.
@@ -1065,7 +1010,9 @@ namespace kotor_Randomizer_2.Models
 
                 // If SpoilersPath is given, create spoiler logs.
                 if (!string.IsNullOrWhiteSpace(args.SpoilersPath))
+                {
                     DoSpoil(bw, args.SpoilersPath, args.Seed);
+                }
             }
             else
             {
@@ -1090,11 +1037,11 @@ namespace kotor_Randomizer_2.Models
                     throw new ArgumentException("Game path not given.", "RandoArgs.GamePath");
 
                 // Final check for already unrandomized game before unrandomizing.
-                KPaths paths = new KPaths(args.GamePath);
+                var paths = new KPaths(args.GamePath);
                 if (!File.Exists(paths.RANDOMIZED_LOG))
                     throw new InvalidOperationException(Properties.Resources.ErrorNotRandomized);
 
-                double stepSize = 100.0 / 8.0;  // Calculation: 100 / (# of things to restore)
+                var stepSize = 100.0 / 8.0;  // Calculation: 100 / (# of things to restore)
                 double progress = 0;
 
                 try
@@ -1148,29 +1095,29 @@ namespace kotor_Randomizer_2.Models
         {
             ResetSettingsToDefault();
 
-            XDocument doc = XDocument.Load(path);
+            var doc = XDocument.Load(path);
             var element = doc.Descendants(XML_GENERAL).FirstOrDefault();
             if (element != null) ReadGeneralSettings(element);
 
-            element = doc.Descendants(XML_AUDIO  ).FirstOrDefault();
+            element = doc.Descendants(XML_AUDIO).FirstOrDefault();
             if (element != null) ReadAudioSettings(element);
 
-            element = doc.Descendants(XML_ITEM   ).FirstOrDefault();
+            element = doc.Descendants(XML_ITEM).FirstOrDefault();
             if (element != null) ReadItemSettings(element);
 
-            element = doc.Descendants(XML_MODEL  ).FirstOrDefault();
+            element = doc.Descendants(XML_MODEL).FirstOrDefault();
             if (element != null) ReadModelSettings(element);
 
-            element = doc.Descendants(XML_MODULE ).FirstOrDefault();
+            element = doc.Descendants(XML_MODULE).FirstOrDefault();
             if (element != null) ReadModuleSettings(element);
 
-            element = doc.Descendants(XML_OTHER  ).FirstOrDefault();
+            element = doc.Descendants(XML_OTHER).FirstOrDefault();
             if (element != null) ReadOtherSettings(element);
 
-            element = doc.Descendants(XML_TABLES ).FirstOrDefault();
+            element = doc.Descendants(XML_TABLES).FirstOrDefault();
             if (element != null) ReadTableSettings(element);
 
-            element = doc.Descendants(XML_TEXT   ).FirstOrDefault();
+            element = doc.Descendants(XML_TEXT).FirstOrDefault();
             if (element != null) ReadTextSettings(element);
 
             element = doc.Descendants(XML_TEXTURE).FirstOrDefault();
@@ -1212,7 +1159,7 @@ namespace kotor_Randomizer_2.Models
         /// <param name="s"></param>
         protected override void ReadKRP(Stream s)
         {
-            if (KRP.ReadKRP(s) == true)
+            if (KRP.ReadKRP(s)) // If read KRP is successful ...
             {
                 var doRandoModule  = Properties.Settings.Default.DoRandomization_Module;
                 var doRandoItem    = Properties.Settings.Default.DoRandomization_Item;
@@ -1250,7 +1197,7 @@ namespace kotor_Randomizer_2.Models
             }
             else
             {
-                // Expected KRP version didn't match the file.
+                // KRP version didn't match the file. Exception thrown will be caught above.
             }
         }
         #endregion Public/Protected Methods
@@ -1282,16 +1229,95 @@ namespace kotor_Randomizer_2.Models
         private void DoRandomize(BackgroundWorker bw, KPaths paths)
         {
             // Determine step size and throw error if no categories are selected.
-            int activeCategories = CountActiveCategories();
-            if (activeCategories == 0)
-                throw new InvalidOperationException(Properties.Resources.ErrorNoRandomization);
+            if (CountActiveCategories() == 0) { throw new InvalidOperationException(Properties.Resources.ErrorNoRandomization); }
+            BackUpGame(bw, paths);
+            RandomizeGame(bw, paths);
+        }
 
-            activeCategories = activeCategories * 2 + 1; // Double the steps for backing up files, add one for finishing up.
+        private void BackUpGame(BackgroundWorker bw, KPaths paths)
+        {
+            int activeCategories = CountActiveCategories() + 2; // Add one for overrides and one for finishing up.
             double stepSize = 100.0 / activeCategories;  // Calculate step size.
             double progress = 0 - stepSize;
 
+            try
+            {
+                ReportProgress(bw, progress, BusyState.BackingUp, message: "Backing up game files.");
+
+                // Backup each category being randomized.
+                string form = "... backing up {0}.";
+
+                // Back up current override files.
+                ReportProgress(bw, progress += stepSize, BusyState.BackingUp, CATEGORY_OVERRIDES, string.Format(form, CATEGORY_OVERRIDES));
+                paths.BackUpOverrideDirectory();
+
+                if (DoRandomizeModules)     // Back up Modules
+                {
+                    ReportProgress(bw, progress += stepSize, BusyState.BackingUp, CATEGORY_MODULES, string.Format(form, CATEGORY_MODULES));
+                    ModuleRando.CreateBackups(paths);
+                }
+
+                if (DoRandomizeItems)       // Back up Items
+                {
+                    ReportProgress(bw, progress += stepSize, BusyState.BackingUp, CATEGORY_ITEMS, string.Format(form, CATEGORY_ITEMS));
+                    ItemRando.CreateItemBackups(paths);
+                }
+
+                if (DoRandomizeAudio)       // Back up Audio
+                {
+                    ReportProgress(bw, progress += stepSize, BusyState.BackingUp, CATEGORY_AUDIO, string.Format(form, CATEGORY_AUDIO));
+                    if (DoRandomizeMusic) { SoundRando.CreateMusicBackups(paths); }
+                    if (DoRandomizeSound) { SoundRando.CreateSoundBackups(paths); }
+                }
+
+                if (DoRandomizeModels)      // Back up Models (Cosmetics)
+                {
+                    ReportProgress(bw, progress += stepSize, BusyState.BackingUp, CATEGORY_MODELS, string.Format(form, CATEGORY_MODELS));
+                    ModelRando.CreateModelBackups(paths);
+                }
+
+                if (DoRandomizeTextures)    // Back up Textures (Cosmetics)
+                {
+                    ReportProgress(bw, progress += stepSize, BusyState.BackingUp, CATEGORY_TEXTURES, string.Format(form, CATEGORY_TEXTURES));
+                    TextureRando.CreateTextureBackups(paths);
+                }
+
+                if (DoRandomizeTables)      // Back up Tables
+                {
+                    ReportProgress(bw, progress += stepSize, BusyState.BackingUp, CATEGORY_TABLES, string.Format(form, CATEGORY_TABLES));
+                    TwodaRandom.CreateTwoDABackups(paths);
+                }
+
+                if (DoRandomizeText)        // Back up Text
+                {
+                    ReportProgress(bw, progress += stepSize, BusyState.BackingUp, CATEGORY_TEXT, string.Format(form, CATEGORY_TEXT));
+                    TextRando.CreateTextBackups(paths);
+                }
+
+                if (DoRandomizeOther)       // Back up Other
+                {
+                    ReportProgress(bw, progress += stepSize, BusyState.BackingUp, CATEGORY_OTHER, string.Format(form, CATEGORY_OTHER));
+                    OtherRando.CreateOtherBackups(paths);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error encountered during backup: {ex.Message}", ex);
+            }
+            finally
+            {
+                ReportProgress(bw, 100, BusyState.BackingUp);
+            }
+        }
+
+        private void RandomizeGame(BackgroundWorker bw, KPaths paths)
+        {
+            var activeCategories = CountActiveCategories() + 2; // Add one for overrides and one for finishing up.
+            var stepSize = 100.0 / activeCategories;  // Calculate step size.
+            var progress = 0.0 - stepSize;
+
             // Begin randomization process.
-            using (StreamWriter sw = new StreamWriter(paths.RANDOMIZED_LOG))
+            using (var sw = new StreamWriter(paths.RANDOMIZED_LOG))
             {
                 sw.WriteLine(DateTime.Now.ToString());
                 sw.WriteLine(Properties.Resources.LogHeader);
@@ -1299,138 +1325,91 @@ namespace kotor_Randomizer_2.Models
 
                 try
                 {
+                    ReportProgress(bw, progress, BusyState.Randomizing, message: "Randomizing game files.");
+
                     // Write general override files.
-                    paths.BackUpOverrideDirectory();
+                    ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_OVERRIDES, "... writing Override files.");
                     File.WriteAllBytes(Path.Combine(paths.Override, "k_pdan_13_area.ncs"), Properties.Resources.k_pdan_13_area);
 
                     // Write appearance override.
                     if (GeneralModuleExtrasValue.HasFlag(ModuleExtras.FastEnvirosuit))
+                    {
                         File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance_speedysuit);
+                    }
                     else
+                    {
                         File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance);
+                    }
 
                     // Write early T3 override.
                     if (GeneralModuleExtrasValue.HasFlag(ModuleExtras.EarlyT3))
+                    {
                         File.WriteAllBytes(Path.Combine(paths.Override, "tar02_janice021.dlg"), Properties.Resources.tar02_janice021);
+                    }
 
                     // Perform category-based randomization.
-                    string category;
-                    string backupFormat      = "... backing up {0}.";
-                    string randomizingFormat = "... randomizing {0}.";
+                    var form = "... randomizing {0}.";
 
                     if (DoRandomizeModules)     // Randomize Modules
                     {
-                        category = "Modules and General";
                         Randomize.RestartRng();
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
-
-                        ModuleRando.CreateBackups(paths);
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
-
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_MODULES, string.Format(form, CATEGORY_MODULES));
                         ModuleRando.Module_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogModulesDone);
                     }
 
                     if (DoRandomizeItems)       // Randomize Items
                     {
-                        category = "Items";
                         Randomize.RestartRng();
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
-
-                        ItemRando.CreateItemBackups(paths);
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
-
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_ITEMS, string.Format(form, CATEGORY_ITEMS));
                         ItemRando.item_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogItemsDone);
                     }
 
                     if (DoRandomizeAudio)       // Randomize Audio
                     {
-                        category = "Audio";
                         Randomize.RestartRng();
-
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
-                        // If music files are to be randomized, create backups.
-                        if (AudioAreaMusic   != RandomizationLevel.None || AudioAmbientNoise  != RandomizationLevel.None ||
-                            AudioBattleMusic != RandomizationLevel.None || AudioCutsceneNoise != RandomizationLevel.None ||
-                            AudioRemoveDmcaMusic)
-                        {
-                            SoundRando.CreateMusicBackups(paths);
-                        }
-
-                        // If sound files are to be randomized, create backups.
-                        if (AudioAmbientNoise != RandomizationLevel.None || AudioBattleMusic != RandomizationLevel.None ||
-                            AudioNpcSounds    != RandomizationLevel.None || AudioPartySounds != RandomizationLevel.None)
-                        {
-                            SoundRando.CreateSoundBackups(paths);
-                        }
-
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_AUDIO, string.Format(form, CATEGORY_AUDIO));
                         SoundRando.sound_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogMusicSoundDone);
                     }
 
                     if (DoRandomizeModels)      // Randomize Cosmetics (Models)
                     {
-                        category = "Models";
                         Randomize.RestartRng();
-
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
-                        ModelRando.CreateModelBackups(paths);
-
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_MODELS, string.Format(form, CATEGORY_MODELS));
                         ModelRando.model_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogItemsDone);
                     }
 
                     if (DoRandomizeTextures)    // Randomize Cosmetics (Textures)
                     {
-                        category = "Textures";
                         Randomize.RestartRng();
-
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
-                        TextureRando.CreateTextureBackups(paths);
-
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_TEXTURES, string.Format(form, CATEGORY_TEXTURES));
                         TextureRando.texture_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogTexturesDone);
                     }
 
                     if (DoRandomizeTables)      // Randomize Tables
                     {
-                        category = "Tables";
                         Randomize.RestartRng();
-
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
-                        TwodaRandom.CreateTwoDABackups(paths);
-
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_TABLES, string.Format(form, CATEGORY_TABLES));
                         TwodaRandom.Twoda_rando(paths, this);
                         sw.WriteLine(Properties.Resources.Log2DADone);
                     }
 
                     if (DoRandomizeText)        // Randomize Text
                     {
-                        category = "Text";
                         Randomize.RestartRng();
-
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
-                        TextRando.CreateTextBackups(paths);
-
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_TEXT, string.Format(form, CATEGORY_TEXT));
                         TextRando.text_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogTextDone);
                     }
 
                     if (DoRandomizeOther)       // Randomize Other
                     {
-                        category = "Other";
                         Randomize.RestartRng();
-
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(backupFormat, category));
-                        OtherRando.CreateOtherBackups(paths);
-
-                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, category, string.Format(randomizingFormat, category));
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_OTHER, string.Format(form, CATEGORY_OTHER));
                         OtherRando.other_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogOtherDone);
                     }
@@ -1442,7 +1421,7 @@ namespace kotor_Randomizer_2.Models
                 finally
                 {
                     ReportProgress(bw, 100, BusyState.Randomizing, message: Properties.Resources.TaskFinishing);
-                    sw.WriteLine("\nThe Kotor Randomizer was created by Lane Dibello, with help from Glasnonck, and the greater Kotor Speedrunning community.");
+                    sw.WriteLine("\nThe Kotor Randomizer was created by Lane Dibello and Glasnonck, with help from the greater Kotor Speedrunning community.");
                     sw.WriteLine("If you encounter any issues please try to contact me @Lane#5847 on Discord");
                 }
             }
@@ -1456,7 +1435,7 @@ namespace kotor_Randomizer_2.Models
         private void DoSpoil(BackgroundWorker bw, string spoilersDirectory, int seed)
         {
             double progress = 0;
-            double stepSize = 100.0 / (CountActiveCategories() + 2);    // Active categories + General + Saving
+            var stepSize = 100.0 / (CountActiveCategories() + 2);    // Active categories + General + Saving
 
             var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
             var filename = $"{timestamp}, Seed {Randomize.Seed}.xlsx";
@@ -1477,8 +1456,8 @@ namespace kotor_Randomizer_2.Models
                 {
                     ReportProgress(bw, progress, BusyState.Spoiling, message: "Starting to write spoilers to log.");
 
-                    string category = "General";
-                    string spoilFormat = "... spoiling {0}.";
+                    var category = "General";
+                    var spoilFormat = "... spoiling {0}.";
 
                     ReportProgress(bw, 0, BusyState.Spoiling, category, string.Format(spoilFormat, category));
                     ModuleRando.CreateGeneralSpoilerLog(workbook, seed);
@@ -1751,7 +1730,17 @@ namespace kotor_Randomizer_2.Models
         /// </summary>
         private void ResetTables()
         {
+            // Reset tables.
             foreach (var table in Table2DAs) table.Reset();
+
+            // Reset animations.
+            AnimationAttack = RandomizationLevel.None;
+            AnimationDamage = RandomizationLevel.None;
+            AnimationFire   = RandomizationLevel.None;
+            AnimationLoop   = RandomizationLevel.None;
+            AnimationMove   = RandomizationLevel.None;
+            AnimationParry  = RandomizationLevel.None;
+            AnimationPause  = RandomizationLevel.None;
         }
 
         /// <summary>
@@ -2224,7 +2213,7 @@ namespace kotor_Randomizer_2.Models
             { if (element.Attribute(XML_LOOP  ) is XAttribute attr) AnimationLoop   = ParseEnum<RandomizationLevel>(attr.Value); }
             { if (element.Attribute(XML_PARRY ) is XAttribute attr) AnimationParry  = ParseEnum<RandomizationLevel>(attr.Value); }
             { if (element.Attribute(XML_PAUSE ) is XAttribute attr) AnimationPause  = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_MOVE   ) is XAttribute attr) AnimationMove   = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_MOVE  ) is XAttribute attr) AnimationMove   = ParseEnum<RandomizationLevel>(attr.Value); }
 
             foreach (var tbl in element.Descendants(XML_TABLE))
             {
