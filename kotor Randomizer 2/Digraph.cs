@@ -460,12 +460,22 @@ namespace kotor_Randomizer_2
             // Any tags associated with this vertex are also reachable.
             foreach (var t in v.Tags)
             {
-                if (!Reachable.ContainsKey(t)) Reachable.Add(t, true);
-                else Reachable[t] = true;
+                if (!Reachable.ContainsKey(t))
+                {
+                    ReachableUpdated = true;
+                    Reachable.Add(t, true);
+                }
+                else if (Reachable[t] == false)
+                {
+                    ReachableUpdated = true;
+                    Reachable[t] = true;
+                }
             }
 
-            // Check to see if the locked tag is reachable too.
-            if (!string.IsNullOrWhiteSpace(v.LockedTag))
+            // Check to see if the locked tag is reachable too. If there is one AND
+            // that tag is not already reachable, determine if the tag can be unlocked.
+            if (!string.IsNullOrWhiteSpace(v.LockedTag) &&
+                (!Reachable.ContainsKey(v.LockedTag) || !Reachable[v.LockedTag]))
             {
                 var isUnlocked = true;
 
@@ -479,7 +489,6 @@ namespace kotor_Randomizer_2
                     foreach (var target in set)
                     {
                         // If the tag is not in Reachable or it is not reachable, then the tag is still locked.
-                        //if (Reachable.ContainsKey(target) && Reachable[target]) isUnlocked = true;
                         if (!Reachable.ContainsKey(target) || !Reachable[target])
                         {
                             isUnlocked = false;
@@ -490,9 +499,21 @@ namespace kotor_Randomizer_2
                     // If a reachable set has been found, break out of the loop.
                     if (isUnlocked) break;
                 }
-                
-                if (!Reachable.ContainsKey(v.LockedTag)) Reachable.Add(v.LockedTag, isUnlocked);
-                else Reachable[v.LockedTag] = isUnlocked;
+
+                // If unlocked, update reachable.
+                if (isUnlocked)
+                {
+                    if (!Reachable.ContainsKey(v.LockedTag))    // If not added, add to reachable.
+                    {
+                        ReachableUpdated = true;
+                        Reachable.Add(v.LockedTag, isUnlocked);
+                    }
+                    else if (Reachable[v.LockedTag] == false)   // Else if false in reachable, set to true.
+                    {
+                        ReachableUpdated = true;
+                        Reachable[v.LockedTag] = isUnlocked;
+                    }
+                }
             }
 
             // Check each edge that hasn't been reached already.
@@ -606,7 +627,7 @@ namespace kotor_Randomizer_2
                             // If the tag is not in Reachable, then it's one that we haven't seen and the edge is still locked.
                             if (!Reachable.ContainsKey(target))
                             {
-                                Reachable.Add(target, false);
+                                //Reachable.Add(target, false);
                                 unlocked = false;
                                 break;
                             }
@@ -840,10 +861,12 @@ namespace kotor_Randomizer_2
             var unlocks = element.Attribute(XmlConsts.ATTR_UNLOCK);
             if (unlocks != null && !string.IsNullOrWhiteSpace(unlocks.Value))
             {
-                foreach (var set in unlocks.Value.Split(XmlConsts.TAG_SEPARATOR_SEMICOLON))
+                var unlockSplit = unlocks.Value.Split(XmlConsts.TAG_SEPARATOR_SEMICOLON);
+                foreach (var set in unlockSplit)
                 {
                     var unlockSet = new List<string>();
-                    foreach (var unlock in unlocks.Value.Split(XmlConsts.TAG_SEPARATOR_COMMA))
+                    var setSplit = set.Split(XmlConsts.TAG_SEPARATOR_COMMA);
+                    foreach (var unlock in setSplit)
                         unlockSet.Add(unlock);
                     UnlockSets.Add(unlockSet);
                 }
@@ -882,6 +905,7 @@ namespace kotor_Randomizer_2
                 {
                     sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
                 }
+                sb.Remove(sb.Length - 1, 1);    // Remove trailing ';'
                 sb.Append("]");
             }
 

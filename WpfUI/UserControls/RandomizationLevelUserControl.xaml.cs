@@ -49,6 +49,8 @@ namespace Randomizer_WPF.UserControls
             typeof(RandomizationLevelUserControl), new PropertyMetadata(RandomizationLevel.None, new PropertyChangedCallback(OnSelectedLevelChanged)));
 
         public static readonly DependencyProperty CheckboxLabelProperty = DependencyProperty.Register("CheckboxLabel", typeof(string), typeof(RandomizationLevelUserControl), new PropertyMetadata("Hello World"));
+        public static readonly DependencyProperty CheckboxToolTipProperty = DependencyProperty.Register("CheckboxToolTip", typeof(ToolTip), typeof(RandomizationLevelUserControl));
+
         public static readonly DependencyProperty SubtypeLabelProperty = DependencyProperty.Register("SubtypeLabel", typeof(string), typeof(RandomizationLevelUserControl), new PropertyMetadata("Subtype"));
         public static readonly DependencyProperty TypeLabelProperty = DependencyProperty.Register("TypeLabel", typeof(string), typeof(RandomizationLevelUserControl), new PropertyMetadata("Type"));
         public static readonly DependencyProperty MaxLabelProperty = DependencyProperty.Register("MaxLabel", typeof(string), typeof(RandomizationLevelUserControl), new PropertyMetadata("Max"));
@@ -86,6 +88,16 @@ namespace Randomizer_WPF.UserControls
             get { return (string)GetValue(CheckboxLabelProperty); }
             set { SetValue(CheckboxLabelProperty, value); }
         }
+
+
+
+        public ToolTip CheckboxToolTip
+        {
+            get { return (ToolTip)GetValue(CheckboxToolTipProperty); }
+            set { SetValue(CheckboxToolTipProperty, value); }
+        }
+
+
 
         public string SubtypeLabel
         {

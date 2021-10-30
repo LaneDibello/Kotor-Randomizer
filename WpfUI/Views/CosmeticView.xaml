@@ -30,6 +30,28 @@
                 <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.FontSize}" />
             </Style>
 
+            <ToolTip x:Key="ttAnimationAttack">
+                Weapon attack animations.
+            </ToolTip>
+            <ToolTip x:Key="ttAnimationDamage">
+                Taking damage animations.
+            </ToolTip>
+            <ToolTip x:Key="ttAnimationParry">
+                Parry and dodge animations.
+            </ToolTip>
+            <ToolTip x:Key="ttAnimationMovement">
+                Walk and run animations.
+            </ToolTip>
+            <ToolTip x:Key="ttAnimationPause">
+                Idle animations.
+            </ToolTip>
+            <ToolTip x:Key="ttAnimationLoop">
+                Other animations that loop (talk, stun, etc.)
+            </ToolTip>
+            <ToolTip x:Key="ttAnimationVarious">
+                Animations not in other categories.
+            </ToolTip>
+            
             <ToolTip x:Key="ttLargeModels">
                 "Large Models" are those that don't fit in most circumstances and thus cause
                 playability issues (krayt dragon, rancor, etc).
@@ -135,15 +157,37 @@
                                     <Style TargetType="uc:RandomizationLevelUserControl">
                                         <Setter Property="Margin" Value="0,1" />
                                         <Setter Property="SubtypeVisible" Value="Collapsed" />
+                                        <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:CosmeticView}}" />
                                     </Style>
                                 </StackPanel.Resources>
-                                <uc:RandomizationLevelUserControl x:Name="rlucAnimationAttack" CheckboxLabel="Attack"   SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationAttack}" />
-                                <uc:RandomizationLevelUserControl x:Name="rlucAnimationDamage" CheckboxLabel="Damage"   SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationDamage}" />
-                                <uc:RandomizationLevelUserControl x:Name="rlucAnimationParry"  CheckboxLabel="Parry"    SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationParry}" />
-                                <uc:RandomizationLevelUserControl x:Name="rlucAnimationMove"   CheckboxLabel="Movement" SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationMove}" />
-                                <uc:RandomizationLevelUserControl x:Name="rlucAnimationPause"  CheckboxLabel="Pause"    SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationPause}" />
-                                <uc:RandomizationLevelUserControl x:Name="rlucAnimationLoop"   CheckboxLabel="Looping"  SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationLoop}" />
-                                <uc:RandomizationLevelUserControl x:Name="rlucAnimationForget" CheckboxLabel="Various"  SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationFire}" />
+                                <uc:RandomizationLevelUserControl
+                                    x:Name="rlucAnimationAttack" CheckboxLabel="Attack"
+                                    CheckboxToolTip="{StaticResource ttAnimationAttack}"
+                                    SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationAttack}" />
+                                <uc:RandomizationLevelUserControl
+                                    x:Name="rlucAnimationDamage" CheckboxLabel="Damage"
+                                    CheckboxToolTip="{StaticResource ttAnimationDamage}"
+                                    SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationDamage}" />
+                                <uc:RandomizationLevelUserControl
+                                    x:Name="rlucAnimationParry"  CheckboxLabel="Parry"
+                                    CheckboxToolTip="{StaticResource ttAnimationParry}"
+                                    SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationParry}" />
+                                <uc:RandomizationLevelUserControl
+                                    x:Name="rlucAnimationMove"   CheckboxLabel="Movement"
+                                    CheckboxToolTip="{StaticResource ttAnimationMovement}"
+                                    SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationMove}" />
+                                <uc:RandomizationLevelUserControl
+                                    x:Name="rlucAnimationPause"  CheckboxLabel="Pause"
+                                    CheckboxToolTip="{StaticResource ttAnimationPause}"
+                                    SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationPause}" />
+                                <uc:RandomizationLevelUserControl
+                                    x:Name="rlucAnimationLoop"   CheckboxLabel="Looping"
+                                    CheckboxToolTip="{StaticResource ttAnimationLoop}"
+                                    SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationLoop}" />
+                                <uc:RandomizationLevelUserControl
+                                    x:Name="rlucAnimationForget" CheckboxLabel="Various"
+                                    CheckboxToolTip="{StaticResource ttAnimationVarious}"
+                                    SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationFire}" />
                             </StackPanel>
 
                             <!--Warning-->

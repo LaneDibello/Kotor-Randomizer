@@ -392,7 +392,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:KotorRandomizer, Version=2.6.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:KotorRandomizer, Version=2.6.1.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                 }
@@ -734,15 +734,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Kotor Randomizer"
-        "ProductCode" = "8:{83B54671-B8C5-49D0-8A3C-B9F942106B43}"
-        "PackageCode" = "8:{1028B3C6-2FDE-4E9D-93BD-259A59DD5DBD}"
+        "ProductCode" = "8:{44AB30A7-158C-4060-81A9-B44B1E754626}"
+        "PackageCode" = "8:{6260ED12-2A29-45A3-AA35-409E29573FE4}"
         "UpgradeCode" = "8:{3DA44908-725D-48AE-860D-C34768CFA05C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.6.0"
+        "ProductVersion" = "8:2.6.1"
         "Manufacturer" = "8:Kotor Speedrun Community"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

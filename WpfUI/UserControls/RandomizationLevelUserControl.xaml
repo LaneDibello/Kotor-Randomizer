@@ -12,6 +12,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="ToolTip">
+                <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.FontSize}" />
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -50,7 +54,9 @@
                   VerticalAlignment="Center"
                   VerticalContentAlignment="Center"
                   Checked="CheckBox_Checked"
-                  Unchecked="CheckBox_Unchecked">
+                  Unchecked="CheckBox_Unchecked"
+                  ToolTip="{Binding CheckboxToolTip}"
+                  Tag="{Binding RelativeSource={RelativeSource AncestorType=local:RandomizationLevelUserControl}}">
             <TextBlock Text="{Binding CheckboxLabel}" />
         </CheckBox>
         <Border Grid.Column="1" BorderThickness="1" Padding="5">
