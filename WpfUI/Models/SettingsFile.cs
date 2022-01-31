@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -20,6 +18,10 @@ namespace Randomizer_WPF
         public const string ATTR_FONT_SIZE = "FontSizeIndex";
         public const string ATTR_HEIGHT = "Height";
         public const string ATTR_WIDTH  = "Width";
+
+        public static string DEFAULT_PRESET_PATH => Path.Combine(Environment.CurrentDirectory, "Presets");
+
+        public static string DEFAULT_SPOILER_PATH => Path.Combine(Environment.CurrentDirectory, "Spoilers");
         #endregion
 
         #region Constructors

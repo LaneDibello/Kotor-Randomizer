@@ -1,19 +1,10 @@
-﻿using kotor_Randomizer_2;
-using kotor_Randomizer_2.Models;
+﻿using kotor_Randomizer_2.Models;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace Randomizer_WPF
 {
@@ -48,7 +39,7 @@ namespace Randomizer_WPF
 
             // If startup file path given, load it -- primarily used for debugging.
             if (!string.IsNullOrEmpty(startupFilePath)) LoadPresetFile(startupFilePath);
-            else GetLastUsedPreset();      // Always load the last settings.
+            else GetLastUsedPreset();       // Always load the last settings.
 
             DataContext = K1Randomizer;     // Set window data context.
             WriteLineToLog($"{Environment.NewLine}Once you are satisfied, click the button below to randomize your game.{Environment.NewLine}");
@@ -71,59 +62,53 @@ namespace Randomizer_WPF
 
         public string Kotor1Path
         {
-            get { return (string)GetValue(Kotor1PathProperty); }
-            set { SetValue(Kotor1PathProperty, value); }
+            get => (string)GetValue(Kotor1PathProperty);
+            set => SetValue(Kotor1PathProperty, value);
         }
 
         public string Kotor2Path
         {
-            get { return (string)GetValue(Kotor2PathProperty); }
-            set { SetValue(Kotor2PathProperty, value); }
+            get => (string)GetValue(Kotor2PathProperty);
+            set => SetValue(Kotor2PathProperty, value);
         }
 
         public string PresetPath
         {
-            get { return (string)GetValue(PresetPathProperty); }
-            set { SetValue(PresetPathProperty, value); }
+            get => (string)GetValue(PresetPathProperty);
+            set => SetValue(PresetPathProperty, value);
         }
 
         public string SpoilerPath
         {
-            get { return (string)GetValue(SpoilerPathProperty); }
-            set { SetValue(SpoilerPathProperty, value); }
+            get => (string)GetValue(SpoilerPathProperty);
+            set => SetValue(SpoilerPathProperty, value);
         }
 
         public int SelectedFontIndex
         {
-            get { return (int)GetValue(SelectedFontIndexProperty); }
-            set { SetValue(SelectedFontIndexProperty, value); }
+            get => (int)GetValue(SelectedFontIndexProperty);
+            set => SetValue(SelectedFontIndexProperty, value);
         }
 
         public double CurrentHeight
         {
-            get { return (double)GetValue(CurrentHeightProperty); }
-            set { SetValue(CurrentHeightProperty, value); }
+            get => (double)GetValue(CurrentHeightProperty);
+            set => SetValue(CurrentHeightProperty, value);
         }
 
         public double CurrentWidth
         {
-            get { return (double)GetValue(CurrentWidthProperty); }
-            set { SetValue(CurrentWidthProperty, value); }
+            get => (double)GetValue(CurrentWidthProperty);
+            set => SetValue(CurrentWidthProperty, value);
         }
 
-        public bool IsRandomizeViewBusy
-        {
-            get
-            {
-                return (RandomizeView != null) && (RandomizeView.IsBusy);
-            }
-        }
+        public bool IsRandomizeViewBusy => (RandomizeView != null) && RandomizeView.IsBusy;
 
         public string WindowTitle
         {
             get
             {
-                Version v = System.Reflection.Assembly.GetAssembly(typeof(Kotor1Randomizer)).GetName().Version;
+                var v = System.Reflection.Assembly.GetAssembly(typeof(Kotor1Randomizer)).GetName().Version;
                 return $"Kotor Randomizer (v{v.Major}.{v.Minor}.{v.Build})";
             }
         }
@@ -134,16 +119,16 @@ namespace Randomizer_WPF
         {
             if (string.IsNullOrWhiteSpace(SpoilerPath))
             {
-                MessageBox.Show(this, "Spoiler path is empty. Please enter a valid directory path on the General tab.", "Spoilers Directory Error", MessageBoxButton.OK);
+                SpoilerPath = SettingsFile.DEFAULT_SPOILER_PATH;
             }
-            else if (Directory.Exists(SpoilerPath))
+            if (Directory.Exists(SpoilerPath))
             {
                 System.Diagnostics.Process.Start(SpoilerPath);
             }
             else if (MessageBox.Show(this,
-                        $"Spoilers directory \"{SpoilerPath}\" does not exist. Would you like to create this directory?",
-                        "Spoilers Directory Missing", MessageBoxButton.YesNo, MessageBoxImage.Question
-                        ) == MessageBoxResult.Yes)
+                $"Spoilers directory \"{SpoilerPath}\" does not exist. Would you like to create this directory?",
+                "Spoilers Directory Missing", MessageBoxButton.YesNo, MessageBoxImage.Question
+                ) == MessageBoxResult.Yes)
             {
                 Directory.CreateDirectory(SpoilerPath);
                 System.Diagnostics.Process.Start(SpoilerPath);
@@ -164,6 +149,12 @@ namespace Randomizer_WPF
         {
             WriteToLog("Saving current settings ... ");
             if (RandomizeView != null) RandomizeView.CurrentState = "Saving ...";
+
+            if (string.IsNullOrWhiteSpace(PresetPath))
+                PresetPath = SettingsFile.DEFAULT_PRESET_PATH;
+
+            if (string.IsNullOrWhiteSpace(SpoilerPath))
+                SpoilerPath = SettingsFile.DEFAULT_SPOILER_PATH;
 
             var file = new SettingsFile()
             {
@@ -189,7 +180,7 @@ namespace Randomizer_WPF
             // If the data is a file drop, verify that it is in a usable format.
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 var info = new FileInfo(files.First());
                 if (info.Extension.ToLower() == ".xkrp" || info.Extension.ToLower() == ".krp")
                 {
@@ -204,7 +195,7 @@ namespace Randomizer_WPF
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 var path = files.First();
                 if (MessageBox.Show(this, $"Do you wish to open this file?{Environment.NewLine}\"{path}\"{Environment.NewLine}Current randomization settings will be lost.",
                     "Load Dragged File?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -244,12 +235,22 @@ namespace Randomizer_WPF
 
         private void OpenCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!Directory.Exists(PresetPath)) Directory.CreateDirectory(PresetPath);
+            // Reset to default if path is empty.
+            if (string.IsNullOrWhiteSpace(PresetPath))
+                PresetPath = SettingsFile.DEFAULT_PRESET_PATH;
+
+            // Create the directory if it doesn't exist.
+            if (!Directory.Exists(PresetPath))
+                Directory.CreateDirectory(PresetPath);
+
+            // Set dialog options.
             var dialog = new OpenFileDialog
             {
                 Filter = "XML Kotor Rando Preset (*.xkrp)|*.xkrp|Kotor Rando Preset (*.krp)|*.krp",
                 InitialDirectory = PresetPath,
             };
+
+            // Show open file dialog.
             if (dialog.ShowDialog() == true)
             {
                 WriteLineToLog($"Opening settings file: \"{dialog.FileName}\"");
@@ -264,12 +265,22 @@ namespace Randomizer_WPF
 
         private void SaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!Directory.Exists(PresetPath)) Directory.CreateDirectory(PresetPath);
+            // Reset to default if path is empty.
+            if (string.IsNullOrWhiteSpace(PresetPath))
+                PresetPath = SettingsFile.DEFAULT_PRESET_PATH;
+
+            // Create the directory if it doesn't exist.
+            if (!Directory.Exists(PresetPath))
+                Directory.CreateDirectory(PresetPath);
+
+            // Set dialog options.
             var dialog = new SaveFileDialog
             {
                 Filter = "XML Kotor Rando Preset (*.xkrp)|*.xkrp",
                 InitialDirectory = PresetPath,
             };
+
+            // Show open file dialog.
             if (dialog.ShowDialog() == true)
             {
                 K1Randomizer.Save(dialog.FileName);
@@ -284,7 +295,7 @@ namespace Randomizer_WPF
 
         private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
         #endregion Commands
 

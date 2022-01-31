@@ -313,7 +313,7 @@
                                      CreateSpoilers ="{Binding ElementName=miCreateSpoilers,  Path=IsChecked,   Mode=TwoWay}"
                                      CurrentProgress="{Binding ElementName=pbCurrentProgress, Path=Value,       Mode=TwoWay}"
                                      GamePath       ="{Binding ElementName=window,            Path=Kotor1Path,  Mode=OneWay}"
-                                     SpoilerPath    ="{Binding ElementName=window,            Path=SpoilerPath, Mode=OneWay}"
+                                     SpoilerPath    ="{Binding ElementName=window,            Path=SpoilerPath, Mode=TwoWay}"
                                      />
                 </TabItem>
             </TabControl>

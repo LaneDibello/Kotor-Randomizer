@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Randomizer_WPF.Views
 {
@@ -69,38 +59,38 @@ namespace Randomizer_WPF.Views
         #region Public Properties
         public bool CreateSpoilers
         {
-            get { return (bool)GetValue(CreateSpoilersProperty); }
-            set { SetValue(CreateSpoilersProperty, value); }
+            get => (bool)GetValue(CreateSpoilersProperty);
+            set => SetValue(CreateSpoilersProperty, value);
         }
 
         public double CurrentProgress
         {
-            get { return (double)GetValue(CurrentProgressProperty); }
-            set { SetValue(CurrentProgressProperty, value); }
+            get => (double)GetValue(CurrentProgressProperty);
+            set => SetValue(CurrentProgressProperty, value);
         }
 
         public string CurrentState
         {
-            get { return (string)GetValue(CurrentStateProperty); }
-            set { SetValue(CurrentStateProperty, value); }
+            get => (string)GetValue(CurrentStateProperty);
+            set => SetValue(CurrentStateProperty, value);
         }
 
         public bool IsBusy
         {
-            get { return (bool)GetValue(IsBusyProperty); }
-            set { SetValue(IsBusyProperty, value); }
+            get => (bool)GetValue(IsBusyProperty);
+            set => SetValue(IsBusyProperty, value);
         }
 
         public string GamePath
         {
-            get { return (string)GetValue(GamePathProperty); }
-            set { SetValue(GamePathProperty, value); }
+            get => (string)GetValue(GamePathProperty);
+            set => SetValue(GamePathProperty, value);
         }
 
         public string SpoilerPath
         {
-            get { return (string)GetValue(SpoilerPathProperty); }
-            set { SetValue(SpoilerPathProperty, value); }
+            get => (string)GetValue(SpoilerPathProperty);
+            set => SetValue(SpoilerPathProperty, value);
         }
         #endregion
 
@@ -142,6 +132,7 @@ namespace Randomizer_WPF.Views
 
                 SetBusy("Unrandomization in Progress ...");
 
+                // Start unrandomization background worker.
                 bwUnRando.RunWorkerAsync(new kotor_Randomizer_2.Models.RandoArgs()
                 {
                     Seed = -1,
@@ -152,6 +143,18 @@ namespace Randomizer_WPF.Views
             // If game is not randomized, use BwDoRando.
             else
             {
+                // If creating spoilers...
+                if (CreateSpoilers)
+                {
+                    // Reset path to default if it is empty.
+                    if (string.IsNullOrWhiteSpace(SpoilerPath))
+                        SpoilerPath = SettingsFile.DEFAULT_SPOILER_PATH;
+
+                    // Make sure the directory exists.
+                    if (!System.IO.Directory.Exists(SpoilerPath))
+                        System.IO.Directory.CreateDirectory(SpoilerPath);
+                }
+
                 CurrentProgress = 0;
 
                 WriteLineToLog("Starting randomization!");
@@ -159,12 +162,7 @@ namespace Randomizer_WPF.Views
 
                 SetBusy("Randomization in Progress ...");
 
-                // If creating spoilers, make sure the directory exists.
-                if (CreateSpoilers && !string.IsNullOrWhiteSpace(SpoilerPath) && !System.IO.Directory.Exists(SpoilerPath))
-                {
-                    System.IO.Directory.CreateDirectory(SpoilerPath);
-                }
-
+                // Start randomization background worker.
                 bwDoRando.RunWorkerAsync(new kotor_Randomizer_2.Models.RandoArgs()
                 {
                     Seed = (int)tbSeed.Tag,
