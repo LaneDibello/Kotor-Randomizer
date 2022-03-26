@@ -821,19 +821,34 @@ namespace kotor_Randomizer_2
             foreach (var kvp in shuffleFileLookup)
             {
                 // Set up objects.
-                RIM r = new RIM(kvp.Value.FullName);
-                RIM.rFile rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.IFO);
+                var rim = new RIM(kvp.Value.FullName);
+                var rfile = rim.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.IFO);
+                if (rfile == null) throw new Exception($"IFO file not found in rim '{kvp.Value.Name}'.");
 
-                GFF g = new GFF(rf.File_Data);
+                var gff = new GFF(rfile.File_Data);
+                var ignoreCase = StringComparison.CurrentCultureIgnoreCase;
 
-                // Update coordinate data.
-                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == Properties.Resources.ModuleEntryX) as GFF.FLOAT).Value = Globals.FIXED_COORDINATES[kvp.Key].Item1;
-                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == Properties.Resources.ModuleEntryY) as GFF.FLOAT).Value = Globals.FIXED_COORDINATES[kvp.Key].Item2;
-                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == Properties.Resources.ModuleEntryZ) as GFF.FLOAT).Value = Globals.FIXED_COORDINATES[kvp.Key].Item3;
+                // Update x coordinate data.
+                if (gff.Top_Level.Fields.FirstOrDefault(x => x.Label.Equals(Properties.Resources.ModuleEntryX, ignoreCase)) is GFF.FIELD xfield)
+                    if (xfield is GFF.FLOAT xval) xval.Value = Globals.FIXED_COORDINATES[kvp.Key].Item1;
+                    else throw new Exception($"Field '{Properties.Resources.ModuleEntryX}' is not of type FLOAT in the IFO of '{kvp.Value.Name}'.");
+                else throw new Exception($"Field '{Properties.Resources.ModuleEntryX}' is missing from IFO of '{kvp.Value.Name}'.");
+
+                // Update y coordinate data.
+                if (gff.Top_Level.Fields.FirstOrDefault(x => x.Label.Equals(Properties.Resources.ModuleEntryY, ignoreCase)) is GFF.FIELD yfield)
+                    if (yfield is GFF.FLOAT yval) yval.Value = Globals.FIXED_COORDINATES[kvp.Key].Item2;
+                    else throw new Exception($"Field '{Properties.Resources.ModuleEntryY}' is not of type FLOAT in the IFO of '{kvp.Value.Name}'.");
+                else throw new Exception($"Field '{Properties.Resources.ModuleEntryY}' is missing from IFO of '{kvp.Value.Name}'.");
+
+                // Update z coordinate data.
+                if (gff.Top_Level.Fields.FirstOrDefault(x => x.Label.Equals(Properties.Resources.ModuleEntryZ, ignoreCase)) is GFF.FIELD zfield)
+                    if (zfield is GFF.FLOAT zval) zval.Value = Globals.FIXED_COORDINATES[kvp.Key].Item3;
+                    else throw new Exception($"Field '{Properties.Resources.ModuleEntryZ}' is not of type FLOAT in the IFO of '{kvp.Value.Name}'.");
+                else throw new Exception($"Field '{Properties.Resources.ModuleEntryZ}' is missing from IFO of '{kvp.Value.Name}'.");
 
                 // Write updated data to RIM file.
-                rf.File_Data = g.ToRawData();
-                r.WriteToFile(kvp.Value.FullName);
+                rfile.File_Data = gff.ToRawData();
+                rim.WriteToFile(kvp.Value.FullName);
             }
         }
 
