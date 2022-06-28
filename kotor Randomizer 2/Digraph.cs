@@ -92,7 +92,7 @@ namespace kotor_Randomizer_2
     {
         #region Properties
         /// <summary> Collection of parsed modules that are the unrandomized vertices of the digraph. </summary>
-        public List<ModuleVertex> Modules { get; }
+        public List<ModuleVertex> Modules { get; private set; }
         /// <summary> Lookup that indicates which modules are reachable. Keys used are the original warp code. Reachable[Original.WarpCode] = isReachable; </summary>
         public Dictionary<string, bool> Reachable { get; private set; }
         /// <summary>
@@ -115,6 +115,15 @@ namespace kotor_Randomizer_2
         public bool GoalIsStarMap { get; set; } = false;
         /// <summary> Reaching the tags of each party member is a goal for this randomization. </summary>
         public bool GoalIsFullParty   { get; set; } = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool GoalIsKreia { get; set; } = false;
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool GoalIsMasters { get; set; } = false;
 
         /// <summary> Setting used to verify that all active goals can reach all other active goals. </summary>
         public bool EnabledStrongGoals { get; set; } = false;
@@ -175,12 +184,12 @@ namespace kotor_Randomizer_2
         /// </summary>
         /// <param name="path">Full path to the XML file to parse.</param>
         /// <param name="lookup">Lookup dictionary from original code to a randomized code.</param>
-        public ModuleDigraph(string path)
+        public ModuleDigraph(string path, Models.Game game = Models.Game.Kotor1)
         {
             // Parse XML document containing game modules.
-            XDocument doc = XDocument.Load(path);
-            var game = doc.Descendants(XmlConsts.ELEM_MODULES).FirstOrDefault(x => x.Attributes().Where(a => a.Name == XmlConsts.ATTR_GAME && a.Value == XmlConsts.GAME_KOTOR_1).Any());
-            Modules = game.Descendants(XmlConsts.ELEM_MODULE).Select(x => new ModuleVertex(x)).ToList();
+            var doc = XDocument.Load(path);
+            var xmlModules = doc.Descendants(XmlConsts.ELEM_MODULES).FirstOrDefault(x => x.Attributes().Any(a => a.Name == XmlConsts.ATTR_GAME && a.Value == game.ToString()));
+            Modules = xmlModules.Descendants(XmlConsts.ELEM_MODULE).Select(x => new ModuleVertex(x)).ToList();
 
             // Create a fake lookup (original -> original).
             RandomLookup = Modules.ToDictionary(m => m.WarpCode, m => m.WarpCode);
@@ -189,9 +198,21 @@ namespace kotor_Randomizer_2
             ResetSettings();
         }
 
-        public void ResetSettings(Models.Kotor1Randomizer k1rando = null)
+        public void ResetSettings(Models.RandomizerBase rando = null, string moduleFile = null)
         {
-            if (k1rando == null)
+            // Refresh the list of modules.
+            if (!string.IsNullOrEmpty(moduleFile) && rando != null)
+            {
+                // Parse XML document containing game modules.
+                var doc = XDocument.Load(moduleFile);
+                var xmlModules = doc.Descendants(XmlConsts.ELEM_MODULES).FirstOrDefault(x => x.Attributes().Any(a => a.Name == XmlConsts.ATTR_GAME && a.Value == rando.Game.ToString()));
+                Modules = xmlModules.Descendants(XmlConsts.ELEM_MODULE).Select(x => new ModuleVertex(x)).ToList();
+
+                // Create a fake lookup (original -> original).
+                RandomLookup = Modules.ToDictionary(m => m.WarpCode, m => m.WarpCode);
+            }
+
+            if (rando == null)
             {
                 // Get currently enabled settings.
                 AllowGlitchClip            = Properties.Settings.Default.AllowGlitchClip;
@@ -216,39 +237,48 @@ namespace kotor_Randomizer_2
                 EnforceEdgeTagLocked       = true;
                 IgnoreOnceEdges            = Properties.Settings.Default.IgnoreOnceEdges;
                 GoalIsMalak                = Properties.Settings.Default.GoalIsMalak;
-                GoalIsPazaak               = Properties.Settings.Default.GoalIsPazaak;
                 GoalIsStarMap              = Properties.Settings.Default.GoalIsStarMaps;
                 GoalIsFullParty            = Properties.Settings.Default.GoalIsParty;
+                GoalIsPazaak               = Properties.Settings.Default.GoalIsPazaak;
                 EnabledStrongGoals         = Properties.Settings.Default.StrongGoals;
             }
             else
             {
-                AllowGlitchClip            = k1rando.ModuleAllowGlitchClip;
-                AllowGlitchDlz             = k1rando.ModuleAllowGlitchDlz;
-                AllowGlitchFlu             = k1rando.ModuleAllowGlitchFlu;
-                AllowGlitchGpw             = k1rando.ModuleAllowGlitchGpw;
-                EnabledFixBox              = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
-                EnabledHangarAccess        = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
-                EnabledFixHangarElev       = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev);
-                EnabledFixMap              = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
-                EnabledFixSpice            = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
-                EnabledUnlockDanRuins      = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
-                EnabledUnlockKorAcademy    = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley);
-                EnabledUnlockManEmbassy    = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy);
-                EnabledUnlockManHangar     = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar);
-                EnabledUnlockStaBastila    = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
-                EnabledUnlockTarUndercity  = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity);
-                EnabledUnlockTarVulkar     = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar);
-                EnabledUnlockUnkSummit     = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
-                EnabledUnlockUnkTempleExit = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit);
-                EnabledEarlyT3M4           = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.EarlyT3);
+                var moduleRando = rando as Models.IRandomizeModules;
+                var genSettings = rando as Models.IGeneralSettings;
+                var k1rando = rando as Models.Kotor1Randomizer;
+                var k2rando = rando as Models.Kotor2Randomizer;
+
+                AllowGlitchClip            = moduleRando.ModuleAllowGlitchClip;
+                AllowGlitchDlz             = moduleRando.ModuleAllowGlitchDlz;
+                AllowGlitchFlu             = moduleRando.ModuleAllowGlitchFlu;
+                AllowGlitchGpw             = moduleRando.ModuleAllowGlitchGpw;
+                EnabledFixBox              = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
+                EnabledHangarAccess        = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
+                EnabledFixHangarElev       = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev);
+                EnabledFixMap              = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
+                EnabledFixSpice            = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
+                EnabledUnlockDanRuins      = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
+                EnabledUnlockKorAcademy    = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley);
+                EnabledUnlockManEmbassy    = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy);
+                EnabledUnlockManHangar     = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar);
+                EnabledUnlockStaBastila    = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
+                EnabledUnlockTarUndercity  = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity);
+                EnabledUnlockTarVulkar     = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar);
+                EnabledUnlockUnkSummit     = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
+                EnabledUnlockUnkTempleExit = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit);
+                EnabledEarlyT3M4           = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.EarlyT3);
                 EnforceEdgeTagLocked       = true;
-                IgnoreOnceEdges            = k1rando.ModuleLogicIgnoreOnceEdges;
-                GoalIsMalak                = k1rando.ModuleGoalIsMalak;
-                GoalIsPazaak               = k1rando.ModuleGoalIsPazaak;
-                GoalIsStarMap              = k1rando.ModuleGoalIsStarMap;
-                GoalIsFullParty            = k1rando.ModuleGoalIsFullParty;
-                EnabledStrongGoals         = k1rando.ModuleLogicStrongGoals;
+                IgnoreOnceEdges            = moduleRando.ModuleLogicIgnoreOnceEdges;
+                GoalIsMalak                = k1rando?.ModuleGoalIsMalak ?? false;
+                GoalIsStarMap              = k1rando?.ModuleGoalIsStarMap ?? false;
+                GoalIsFullParty            = k1rando?.ModuleGoalIsFullParty ?? false;
+                GoalIsPazaak               = k1rando?.ModuleGoalIsPazaak ?? false;
+                GoalIsKreia                = k2rando?.ModuleGoalIsKreia ?? false;
+                GoalIsMasters              = k2rando?.ModuleGoalIsMasters ?? false;
+                GoalIsFullParty            = k2rando?.ModuleGoalIsFullParty ?? false;
+                GoalIsPazaak               = k2rando?.ModuleGoalIsPazaak ?? false;
+                EnabledStrongGoals         = moduleRando.ModuleLogicStrongGoals;
             }
         }
 

@@ -24,10 +24,11 @@ namespace Randomizer_WPF
         {
             InitializeComponent();
 
-            CurrentSettings = GetSettingsFile();
-
             // Create objects and pull settings from file.
             K1Randomizer = new Kotor1Randomizer();
+            K2Randomizer = new Kotor2Randomizer();
+
+            CurrentSettings = GetSettingsFile();
             miCreateSpoilers.IsChecked = CurrentSettings.CreateSpoilers;
             Kotor1Path = CurrentSettings.Kotor1Path;
             Kotor2Path = CurrentSettings.Kotor2Path;
@@ -37,11 +38,14 @@ namespace Randomizer_WPF
             CurrentHeight = CurrentSettings.Height;
             CurrentWidth = CurrentSettings.Width;
 
+            IsKotor2Selected = CurrentSettings.IsKotor2Selected;
+            if (IsKotor2Selected == false)
+                DataContext = K1Randomizer; // Set window data context.
+
             // If startup file path given, load it -- primarily used for debugging.
             if (!string.IsNullOrEmpty(startupFilePath)) LoadPresetFile(startupFilePath);
             else GetLastUsedPreset();       // Always load the last settings.
 
-            DataContext = K1Randomizer;     // Set window data context.
             WriteLineToLog($"{Environment.NewLine}Once you are satisfied, click the button below to randomize your game.{Environment.NewLine}");
         }
         #endregion Constructors
@@ -58,7 +62,34 @@ namespace Randomizer_WPF
 
         #region Properties
         public Kotor1Randomizer K1Randomizer { get; set; }
+        public Kotor2Randomizer K2Randomizer { get; set; }
+
         public SettingsFile CurrentSettings { get; set; }
+
+
+
+        public bool IsKotor2Selected
+        {
+            get => (bool)GetValue(IsKotor2SelectedProperty);
+            set => SetValue(IsKotor2SelectedProperty, value);
+        }
+
+        public static readonly DependencyProperty IsKotor2SelectedProperty = DependencyProperty.Register("IsKotor2Selected", typeof(bool), typeof(MainWindow), new PropertyMetadata(OnGameChanged));
+
+        private static void OnGameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var win = d as MainWindow;
+            if ((bool)e.NewValue)
+            {
+                // Kotor 2 is now the selected game.
+                win.DataContext = win.K2Randomizer;
+            }
+            else
+            {
+                // Kotor 1 is now the selected game.
+                win.DataContext = win.K1Randomizer;
+            }
+        }
 
         public string Kotor1Path
         {
@@ -158,14 +189,15 @@ namespace Randomizer_WPF
 
             var file = new SettingsFile()
             {
-                CreateSpoilers = miCreateSpoilers.IsChecked,
-                Kotor1Path     = Kotor1Path,
-                Kotor2Path     = Kotor2Path,
-                PresetPath     = PresetPath,
-                SpoilerPath    = SpoilerPath,
-                FontSizeIndex  = SelectedFontIndex,
-                Height         = CurrentHeight,
-                Width          = CurrentWidth,
+                CreateSpoilers   = miCreateSpoilers.IsChecked,
+                IsKotor2Selected = IsKotor2Selected,
+                Kotor1Path       = Kotor1Path,
+                Kotor2Path       = Kotor2Path,
+                PresetPath       = PresetPath,
+                SpoilerPath      = SpoilerPath,
+                FontSizeIndex    = SelectedFontIndex,
+                Height           = CurrentHeight,
+                Width            = CurrentWidth,
             };
             file.WriteFile(Path.Combine(Environment.CurrentDirectory, SETTINGS_FILENAME));
 

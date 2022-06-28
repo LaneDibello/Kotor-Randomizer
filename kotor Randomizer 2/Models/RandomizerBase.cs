@@ -13,6 +13,13 @@ using ClosedXML.Excel;
 
 namespace kotor_Randomizer_2.Models
 {
+    public enum Game
+    {
+        Unsupported,
+        Kotor1,
+        Kotor2,
+    }
+
     /// <summary>
     /// Enumeration of the possible busy states.
     /// </summary>
@@ -63,8 +70,21 @@ namespace kotor_Randomizer_2.Models
     /// </summary>
     public abstract class RandomizerBase : INotifyPropertyChanged
     {
+        public virtual Game Game { get; }
+
         /// <summary> Name of the settings file. </summary>
         public string SettingsFileName { get; protected set; }
+
+        public virtual bool SupportsAnimation => false;
+        public virtual bool SupportsAudio => false;
+        public virtual bool SupportsCosmetics => SupportsAnimation || SupportsModels || SupportsTextures;
+        public virtual bool SupportsItems => false;
+        public virtual bool SupportsModels => false;
+        public virtual bool SupportsModules => false;
+        public virtual bool SupportsOther => false;
+        public virtual bool SupportsText => false;
+        public virtual bool SupportsTextures => false;
+        public virtual bool SupportsTables => false;
 
         #region Events
         public event PropertyChangedEventHandler PropertyChanged;
@@ -124,5 +144,24 @@ namespace kotor_Randomizer_2.Models
         /// <summary> Writes a KRP file using the old, compact format. </summary>
         //protected abstract void WriteKRP(Stream s);
         #endregion Public Methods
+
+        #region Protected Methods
+
+        /// <summary>
+        /// Reset static randomization classes for a new randomization.
+        /// </summary>
+        protected virtual void ResetStaticRandomizationClasses()
+        {
+            ModuleRando.Reset(this);
+            ItemRando.Reset();
+            SoundRando.Reset();
+            ModelRando.Reset();
+            TextureRando.Reset();
+            TwodaRandom.Reset();
+            TextRando.Reset();
+            OtherRando.Reset();
+        }
+
+        #endregion
     }
 }

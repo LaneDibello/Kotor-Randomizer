@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -13,8 +14,10 @@ namespace kotor_Randomizer_2.Models
     /// <summary>
     /// Encapsulates the settings and processes used to randomize Kotor 1.
     /// </summary>
-    public class Kotor1Randomizer : RandomizerBase
+    public class Kotor1Randomizer : RandomizerBase, IGeneralSettings, IRandomizeModules, IRandomizeItems
     {
+        public override Game Game => Game.Kotor1;
+
         #region Constants
         public const ModuleExtras EXTRAS_MASK = ModuleExtras.NoSaveDelete   | ModuleExtras.SaveMiniGames | ModuleExtras.SaveAllModules |
                                                 ModuleExtras.FixCoordinates | ModuleExtras.FixDream      | ModuleExtras.FixMindPrison  |
@@ -143,6 +146,14 @@ namespace kotor_Randomizer_2.Models
         /// <param name="path">Full path to a randomizer preset file.</param>
         public Kotor1Randomizer(string path)
         {
+            ModuleGoalList = new ObservableCollection<ReachabilityGoal>
+            {
+                new ReachabilityGoal { GoalID = 0, Caption = "Defeat Malak" },
+                new ReachabilityGoal { GoalID = 1, Caption = "Star Maps" },
+                new ReachabilityGoal { GoalID = 2, Caption = "Full Party" },
+                new ReachabilityGoal { GoalID = 3, Caption = "Pazaak Champion" },
+            };
+
             // Create list of unlockable doors.
             GeneralLockedDoors.Add(new UnlockableDoor()
             {
@@ -217,7 +228,7 @@ namespace kotor_Randomizer_2.Models
             ModuleRandomizedList = new ObservableCollection<ModuleVertex>(graph.Modules);
 
             // Get list of randomizable items.
-            ItemRandomizedList = new ObservableCollection<RandomizableItem>(Globals.ITEM_LIST_FULL);
+            ItemRandomizedList = new ObservableCollection<RandomizableItem>(RandomizableItem.KOTOR1_ITEMS);
 
             // Get list of randomizable tables.
             Table2DAs = new ObservableCollection<RandomizableTable>(Globals.TWODA_COLLUMNS.Select(table => new RandomizableTable(table.Key, table.Value)));
@@ -236,6 +247,8 @@ namespace kotor_Randomizer_2.Models
 
         #region Properties
         #region Animation Properties
+        public override bool SupportsAnimation => true;
+
         private RandomizationLevel _animationAttack;
         public RandomizationLevel AnimationAttack
         {
@@ -287,6 +300,8 @@ namespace kotor_Randomizer_2.Models
         #endregion
 
         #region Audio Properties
+        public override bool SupportsAudio => true;
+
         private RandomizationLevel _audioAmbientNoise;
         public RandomizationLevel AudioAmbientNoise
         {
@@ -368,6 +383,8 @@ namespace kotor_Randomizer_2.Models
         #endregion General Properties
 
         #region Item Properties
+        public override bool SupportsItems => true;
+
         private RandomizationLevel _itemArmbands;
         public RandomizationLevel ItemArmbands
         {
@@ -508,7 +525,7 @@ namespace kotor_Randomizer_2.Models
             set => SetField(ref _itemRandomizedList, value);
         }
 
-        private string _itemOmittedPreset = Globals.OMIT_ITEM_PRESETS.First().Key;
+        private string _itemOmittedPreset = RandomizableItem.KOTOR1_OMIT_PRESETS.First().Key;
         public string ItemOmittedPreset
         {
             get => _itemOmittedPreset;
@@ -517,6 +534,8 @@ namespace kotor_Randomizer_2.Models
         #endregion Item Properties
 
         #region Model Properties
+        public override bool SupportsModels => true;
+
         private bool _modelCharacterRando;
         public bool ModelCharacterRando
         {
@@ -589,6 +608,8 @@ namespace kotor_Randomizer_2.Models
         #endregion Model Properties
 
         #region Module Properties
+        public override bool SupportsModules => true;
+
         private bool _moduleAllowGlitchClip;
         public bool ModuleAllowGlitchClip
         {
@@ -617,11 +638,11 @@ namespace kotor_Randomizer_2.Models
             set => SetField(ref _moduleAllowGlitchGpw, value);
         }
 
-        private bool _moduleLogicStrongGoals;
-        public bool ModuleLogicStrongGoals
+        private ObservableCollection<ReachabilityGoal> _moduleGoalList;
+        public ObservableCollection<ReachabilityGoal> ModuleGoalList
         {
-            get => _moduleLogicStrongGoals;
-            set => SetField(ref _moduleLogicStrongGoals, value);
+            get => _moduleGoalList;
+            set => SetField(ref _moduleGoalList, value);
         }
 
         private bool _moduleGoalIsMalak = true;
@@ -650,6 +671,13 @@ namespace kotor_Randomizer_2.Models
         {
             get => _moduleGoalIsFullParty;
             set => SetField(ref _moduleGoalIsFullParty, value);
+        }
+
+        private bool _moduleLogicStrongGoals;
+        public bool ModuleLogicStrongGoals
+        {
+            get => _moduleLogicStrongGoals;
+            set => SetField(ref _moduleLogicStrongGoals, value);
         }
 
         private bool _moduleLogicIgnoreOnceEdges = true;
@@ -687,7 +715,16 @@ namespace kotor_Randomizer_2.Models
             set => SetField(ref _moduleOmittedList, value);
         }
 
-        private string _moduleShufflePreset = Globals.OMIT_PRESETS.First().Key;
+        private ObservableCollection<string> _modulePresetOptions = new ObservableCollection<string>(Globals.K1_MODULE_OMIT_PRESETS.Keys);
+        public ObservableCollection<string> ModulePresetOptions
+        {
+            get => _modulePresetOptions;
+            set => SetField(ref _modulePresetOptions, value);
+        }
+
+        public Dictionary<string, List<string>> ModuleOmitPresets => Globals.K1_MODULE_OMIT_PRESETS;
+
+        private string _moduleShufflePreset = Globals.K1_MODULE_OMIT_PRESETS.First().Key;
         public string ModuleShufflePreset
         {
             get => _moduleShufflePreset;
@@ -696,6 +733,8 @@ namespace kotor_Randomizer_2.Models
         #endregion Module Properties
 
         #region Other Properties
+        public override bool SupportsOther => true;
+
         private string _otherFirstNamesF;
         public string OtherFirstNamesF
         {
@@ -761,6 +800,8 @@ namespace kotor_Randomizer_2.Models
         #endregion Other Properties
 
         #region Table Properties
+        public override bool SupportsTables => true;
+
         private ObservableCollection<RandomizableTable> _table2DAs;
         public ObservableCollection<RandomizableTable> Table2DAs
         {
@@ -777,6 +818,8 @@ namespace kotor_Randomizer_2.Models
         #endregion
 
         #region Text Properties
+        public override bool SupportsText => true;
+
         private TextSettings _textSettingsValue;
         public TextSettings TextSettingsValue
         {
@@ -786,6 +829,8 @@ namespace kotor_Randomizer_2.Models
         #endregion Text Properties
 
         #region Texture Properties
+        public override bool SupportsTextures => true;
+
         private RandomizationLevel _textureCreatures;
         public RandomizationLevel TextureCreatures
         {
@@ -1583,21 +1628,6 @@ namespace kotor_Randomizer_2.Models
         }
 
         /// <summary>
-        /// Reset static randomization classes for a new randomization.
-        /// </summary>
-        private void ResetStaticRandomizationClasses()
-        {
-            ModuleRando.Reset(this);
-            ItemRando.Reset();
-            SoundRando.Reset();
-            ModelRando.Reset();
-            TextureRando.Reset();
-            TwodaRandom.Reset();
-            TextRando.Reset();
-            OtherRando.Reset();
-        }
-
-        /// <summary>
         /// Reset General settings to default.
         /// </summary>
         private void ResetGeneral()
@@ -1652,14 +1682,14 @@ namespace kotor_Randomizer_2.Models
             ItemOmittedList.Clear();
 
             // Grab omitted list from globals.
-            var omitItems = ItemRandomizedList.Where(ri => Globals.OMIT_ITEM_PRESETS.First().Value.Contains(ri.Code)).ToList();
+            var omitItems = ItemRandomizedList.Where(ri => RandomizableItem.KOTOR1_OMIT_PRESETS.First().Value.Contains(ri.Code)).ToList();
             foreach (var item in omitItems)
             {
                 ItemOmittedList.Add(item);
                 ItemRandomizedList.Remove(item);
             }
 
-            ItemOmittedPreset = Globals.OMIT_ITEM_PRESETS.First().Key;
+            ItemOmittedPreset = RandomizableItem.KOTOR1_OMIT_PRESETS.First().Key;
         }
 
         /// <summary>
@@ -1706,7 +1736,7 @@ namespace kotor_Randomizer_2.Models
 
             foreach (var item in ModuleRandomizedList) ModuleOmittedList.Add(item);
             ModuleRandomizedList.Clear();
-            ModuleShufflePreset = Globals.OMIT_PRESETS.First().Key;
+            ModuleShufflePreset = Globals.K1_MODULE_OMIT_PRESETS.First().Key;
         }
 
         /// <summary>

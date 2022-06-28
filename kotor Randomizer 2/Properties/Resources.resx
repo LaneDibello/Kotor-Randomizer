@@ -379,4 +379,19 @@
   <data name="k_pebo_mgheart" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\k_pebo_mgheart.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="a_disc_join" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\a_disc_join.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="a_galaxymap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\a_galaxymap.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ebo_elev" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\ebo_elev.utp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="modulesave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\modulesave.2da;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="r_to003EBO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\r_to003EBO.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

@@ -66,7 +66,7 @@ namespace Randomizer_WPF.Views
                 rlucUpgrades,
                 rlucVarious,
             });
-            cbbItemPresetOptions = new ObservableCollection<string>(Globals.OMIT_ITEM_PRESETS.Keys);
+            cbbItemPresetOptions = new ObservableCollection<string>(RandomizableItem.KOTOR1_OMIT_PRESETS.Keys);
             cbbOmitPreset.ItemsSource = cbbItemPresetOptions;
         }
         #endregion
@@ -324,10 +324,10 @@ namespace Randomizer_WPF.Views
             {
                 // Do nothing.
             }
-            else if (!Globals.OMIT_ITEM_PRESETS.ContainsKey(cbbOmitPreset.SelectedItem.ToString()))
+            else if (!RandomizableItem.KOTOR1_OMIT_PRESETS.ContainsKey(cbbOmitPreset.SelectedItem.ToString()))
             {
                 // If key is invalid, set to default. This method will trigger again and run the code below.
-                cbbOmitPreset.SelectedItem = Globals.OMIT_ITEM_PRESETS.Keys.FirstOrDefault();
+                cbbOmitPreset.SelectedItem = RandomizableItem.KOTOR1_OMIT_PRESETS.Keys.FirstOrDefault();
             }
             else
             {
@@ -338,7 +338,7 @@ namespace Randomizer_WPF.Views
                 }
                 lvOmittedItemSource.Clear();
 
-                var codes = Globals.OMIT_ITEM_PRESETS[cbbOmitPreset.SelectedItem.ToString()];
+                var codes = RandomizableItem.KOTOR1_OMIT_PRESETS[cbbOmitPreset.SelectedItem.ToString()];
                 var omits = lvRandomizedItemSource.Where(x => codes.Contains(x.Code)).ToList();
 
                 foreach (var omit in omits)
@@ -404,6 +404,10 @@ namespace Randomizer_WPF.Views
                 lvRandomizedItemSource = k1rand.ItemRandomizedList;
                 lvOmittedItemSource = k1rand.ItemOmittedList;
             }
+
+            if (lvRandomizedItemSource is null ||
+                lvOmittedItemSource is null)
+                return;
 
             _fullItemList.Clear();
             _fullItemList.AddRange(lvRandomizedItemSource);

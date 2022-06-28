@@ -6,12 +6,15 @@ using System.IO;
 using System.Linq;
 using System;
 using kotor_Randomizer_2.Extensions;
+using System.Threading.Tasks;
 
 namespace kotor_Randomizer_2
 {
     public static class ModuleRando
     {
         #region Consts
+        #region K1 Consts
+
         private const string AREA_DAN_COURTYARD = "danm14aa";
         private const string AREA_EBO_BOX = "ebo_m46ab";
         private const string AREA_EBO_HAWK = "ebo_m12aa";
@@ -27,8 +30,10 @@ namespace kotor_Randomizer_2
         private const string AREA_TAR_VULK_BASE = "tar_m10aa";
         private const string AREA_UNK_MAIN_FLOOR = "unk_m44aa";
         private const string AREA_UNK_SUMMIT = "unk_m44ac";
+
         private const string FIXED_DREAM_OVERRIDE = "k_ren_visionland.ncs";
         private const string FIXED_FIGHTER_OVERRIDE = "k_pebo_mgheart.ncs";
+
         private const string LABEL_DANT_DOOR = "man14aa_door04";
         private const string LABEL_EBO_BOX = "pebn_mystery";
         private const string LABEL_EBO_PRISON = "g_brakatan003";
@@ -51,12 +56,64 @@ namespace kotor_Randomizer_2
         private const string LABEL_UNK_DOOR = "unk44_tpllckdoor";
         private const string LABEL_UNK_EXIT_DOOR = "unk44_exitdoor";
 
-        private const int MAX_ITERATIONS = 10000;   // A large number to give enough chances to find a valid shuffle.
-
-        private const string TwoDA_MODULE_SAVE = "modulesave.2da";
         private const string UNLOCK_MAP_OVERRIDE = "k_pebn_galaxy.ncs";
         private const string KOR_OPEN_ACADEMY = "k33b_openacademy.ncs";
         private const string KOR_VALLEY_ENTER = "k36_pkor_enter.ncs";
+
+        #endregion
+
+        #region K2 Consts
+
+        // Zones
+        private const string AREA_K2_PER_ADMIN     = "101PER";
+        private const string AREA_K2_PER_FUEL      = "103PER";
+        private const string AREA_K2_PER_ASTROID   = "104PER";
+        private const string AREA_K2_PER_DORMS     = "105PER";
+        private const string AREA_K2_PER_HANGER    = "106PER";
+        private const string AREA_K2_TEL_RES       = "203TEL";
+        private const string AREA_K2_TEL_ENTER_WAR = "222TEL";
+        private const string AREA_K2_TEL_ACAD      = "262TEL";
+        private const string AREA_K2_NAR_DOCKS     = "303NAR";
+        private const string AREA_K2_NAR_JEKK      = "304NAR";
+        private const string AREA_K2_NAR_J_TUNNELS = "305NAR";
+        private const string AREA_K2_NAR_G0T0      = "351NAR";
+        private const string AREA_K2_DAN_COURTYARD = "605DAN";
+        private const string AREA_K2_KOR_ACAD      = "702KOR";
+        private const string AREA_K2_KOR_SHY       = "710KOR";
+        private const string AREA_K2_MAL_SURFACE   = "901MAL";
+
+        // Locked Doors
+        private const string LABEL_K2_101PERTODORMS         = "sw_door_per006";     // Dorms from Admin
+        private const string LABEL_K2_101PERTOMININGTUNNELS = "sw_door_per004";     // Mining Tunnels from Admin
+        private const string LABEL_K2_101PERTOFUELDEPOT     = "sw_door_per007";     // Fuel Depot from Admin
+        private const string LABEL_K2_101PERTOHARBINGER     = "sw_door_taris009";   // Though the docking bay form Admin
+        private const string LABEL_K2_103PERTOMININGTUNNELS = "sw_door_per006";     // Explosion door at start of module
+        private const string LABEL_K2_103PERFORCESHIELDS    = "sw_door_per005";     // Force fields splitting fuel depot into two sections
+        private const string LABEL_K2_103PERSHIELD2         = "sw_door_per010";     // Secondary Fuel Depot Shield blocking way down
+        private const string LABEL_K2_105PERTOASTROID       = "sw_door_per005";     // Return to astroid exterior from Dormitory
+        private const string LABEL_K2_106PEREASTDOOR        = "sw_door_per003";     // Door leading to Ebon Hawk
+        private const string LABEL_K2_203TELAPPTDOOR        = "adoor_intro";        // Appartment door we spawn behind
+        private const string LABEL_K2_203TELEXCHANGE        = "sw_door_telos002";   // Entacnce to Exchange base
+        private const string LABEL_K2_222TELRAVAGER         = "d_222doorseal001";   // Board the ravager with mandalore, Visas, or the horrid DLZ
+        private const string LABEL_K2_262TELPLATEAU         = "sw_door_sforg001";   // Polar Plateau from Atris's academy
+        private const string LABEL_K2_303NARZEZDOOR         = "door_flophouse_s";   // Into the Secret zone with Mira and Zez that frequently breaks even in normal gameplay
+        private const string LABEL_K2_304NARBACKROOM        = "visquisdoor";        // Door in Jekk'Jekk Tarr leading to Visquis's private suit, and the Tunnels
+        private const string LABEL_K2_305NARTOJEKKJEKK      = "door_narshad002";    // Leave the tunnels and return to the cantina for once
+        private const string LABEL_K2_351NARG0T0EBONHAWK    = "door_narshad008";    // Reboard the Ebon Hawk without doing the entirity of G0T0's yacht, though the CS it leads to breaks frequently, look into other options
+        private const string LABEL_K2_605DANREBUILTENCLAVE  = "door_650";           // Enter the Rebuilt Jedi Enclave Early
+        private const string LABEL_K2_702KORVALLEY          = "door_enter";         // Leave the Sith acadmeny without doing 10 minutes of puzzles or a DLZ
+        private const string LABEL_K2_710KORLUDOKRESSH      = "sealeddoor";         // Enter the secret tomb in the shyrack cave without heavy alignment
+
+        // Patches
+        private const string PATCH_K2_MODULESAVE = "modulesave.2da";
+        private const string PATCH_K2_GALAXYMAP = "a_galaxymap.ncs";
+        private const string PATCH_K2_DISC_JOIN = "a_disc_join.ncs";
+
+        #endregion
+
+        private const int MAX_ITERATIONS = 10000;   // A large number to give enough chances to find a valid shuffle.
+        private const string TwoDA_MODULE_SAVE = "modulesave.2da";
+
         #endregion Consts
 
         #region Properties
@@ -77,6 +134,9 @@ namespace kotor_Randomizer_2
         public static List<string> RandomizedModules { get; set; }
         public static List<string> OmittedModules { get; set; }
         private static string ShufflePreset { get; set; }
+
+        public static Models.Game GameRandomized { get; set; }
+
         #endregion Properties
 
         #region Methods
@@ -207,7 +267,7 @@ namespace kotor_Randomizer_2
         {
             if (LookupTable.Count == 0) { return; }
             var ws = workbook.Worksheets.Add("Module");
-            int i = 1;
+            var i = 1;
 
             List<Tuple<string, string>> settings;
 
@@ -219,7 +279,7 @@ namespace kotor_Randomizer_2
                 ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
                 i++;
 
-                Version version = typeof(StartForm).Assembly.GetName().Version;
+                var version = typeof(StartForm).Assembly.GetName().Version;
                 ws.Cell(i, 1).Value = "Version";
                 ws.Cell(i, 1).Style.Font.Bold = true;
                 ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
@@ -234,32 +294,39 @@ namespace kotor_Randomizer_2
                 ws.Cell(i, 2).Style.Font.Bold = true;
                 i++;
 
-                settings = new List<Tuple<string, string>>()
-                {
-                    new Tuple<string, string>("Delete Milestone Save Data", (!ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete )).ToEnabledDisabled()),
-                    new Tuple<string, string>("Include Minigames in Save",    ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames ).ToEnabledDisabled()),
-                    new Tuple<string, string>("Include All Modules in Save",  ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules).ToEnabledDisabled()),
-                    new Tuple<string, string>("", ""),  // Skip a row.
-                    new Tuple<string, string>("Add Spice Lab Load Zone",      ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ      ).ToEnabledDisabled()),
-                    new Tuple<string, string>("Fix Dream Sequence",           ModuleExtrasValue.HasFlag(ModuleExtras.FixDream           ).ToEnabledDisabled()),
-                    new Tuple<string, string>("Fix Fighter Encounter",        ModuleExtrasValue.HasFlag(ModuleExtras.FixFighterEncounter).ToEnabledDisabled()),
-                    new Tuple<string, string>("Fix Mind Prison",              ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison      ).ToEnabledDisabled()),
-                    new Tuple<string, string>("Fix Module Coordinates",       ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates     ).ToEnabledDisabled()),
-                    new Tuple<string, string>("", ""),  // Skip a row.
-                    new Tuple<string, string>("Unlock DAN Ruins Door",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins     ).ToLockedUnlocked(true)),
-                    new Tuple<string, string>("Unlock EBO Galaxy Map",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap    ).ToLockedUnlocked(true)),
-                    new Tuple<string, string>("Unlock KOR Valley",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley    ).ToLockedUnlocked(true)),
-                    new Tuple<string, string>("Unlock LEV Hangar Access",     ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev      ).ToLockedUnlocked(true)),
-                    new Tuple<string, string>("Enable LEV Hangar Elevator",   ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev).ToEnabledDisabled()),
-                    new Tuple<string, string>("Unlock MAN Embassy",           ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy   ).ToLockedUnlocked(true)),
-                    new Tuple<string, string>("Unlock MAN Hangar",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar    ).ToLockedUnlocked(true)),
-                    new Tuple<string, string>("Unlock STA Door to Bastila",   ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila   ).ToLockedUnlocked(true)),
-                    new Tuple<string, string>("Unlock TAR Undercity",         ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity ).ToLockedUnlocked(true)),
-                    new Tuple<string, string>("Unlock TAR Vulkar",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar    ).ToLockedUnlocked(true)),
-                    new Tuple<string, string>("Unlock UNK Summit Exit",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit    ).ToLockedUnlocked(true)),
-                    new Tuple<string, string>("Unlock UNK Temple Exit",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit).ToLockedUnlocked(true)),
-                    new Tuple<string, string>("", ""),  // Skip a row.
-                };
+                settings = GameRandomized == Models.Game.Kotor1
+                    ? new List<Tuple<string, string>>()
+                    {
+                        new Tuple<string, string>("Delete Milestone Save Data", (!ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete )).ToEnabledDisabled()),
+                        new Tuple<string, string>("Include Minigames in Save",    ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Include All Modules in Save",  ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules).ToEnabledDisabled()),
+                        new Tuple<string, string>("", ""),  // Skip a row.
+                        new Tuple<string, string>("Add Spice Lab Load Zone",      ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ      ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Fix Dream Sequence",           ModuleExtrasValue.HasFlag(ModuleExtras.FixDream           ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Fix Fighter Encounter",        ModuleExtrasValue.HasFlag(ModuleExtras.FixFighterEncounter).ToEnabledDisabled()),
+                        new Tuple<string, string>("Fix Mind Prison",              ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison      ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Fix Module Coordinates",       ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates     ).ToEnabledDisabled()),
+                        new Tuple<string, string>("", ""),  // Skip a row.
+                        new Tuple<string, string>("Unlock DAN Ruins Door",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins     ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock EBO Galaxy Map",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap    ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock KOR Valley",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley    ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock LEV Hangar Access",     ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev      ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Enable LEV Hangar Elevator",   ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev).ToEnabledDisabled()),
+                        new Tuple<string, string>("Unlock MAN Embassy",           ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy   ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock MAN Hangar",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar    ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock STA Door to Bastila",   ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila   ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock TAR Undercity",         ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock TAR Vulkar",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar    ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock UNK Summit Exit",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit    ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock UNK Temple Exit",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("", ""),  // Skip a row.
+                    }
+                    : new List<Tuple<string, string>>()
+                    {
+                        new Tuple<string, string>("Prevent Save Deletion", ModuleExtrasValue.HasFlag(ModuleExtras.K2SavePatch    ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Unlock Galaxy Map",     ModuleExtrasValue.HasFlag(ModuleExtras.K2GalaxyMap    ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Patch Disciple Crash",  ModuleExtrasValue.HasFlag(ModuleExtras.K2DisciplePatch).ToEnabledDisabled()),
+                    };
 
                 foreach (var setting in settings)
                 {
@@ -291,22 +358,41 @@ namespace kotor_Randomizer_2
                 isCustomPreset = true;
             }
 
-            settings = new List<Tuple<string, string>>()
-            {
-                new Tuple<string, string>("Use Rando Exclusion Rules", UseRandoRules          .ToEnabledDisabled()),
-                new Tuple<string, string>("Verify Reachability",       VerifyReachability     .ToEnabledDisabled()),
-                new Tuple<string, string>("Goal Is Malak",             Digraph.GoalIsMalak    .ToEnabledDisabled()),
-                new Tuple<string, string>("Goal Is Star Maps",         Digraph.GoalIsStarMap  .ToEnabledDisabled()),
-                new Tuple<string, string>("Goal Is Pazaak",            Digraph.GoalIsPazaak   .ToEnabledDisabled()),
-                new Tuple<string, string>("Allow Glitch Clipping",     Digraph.AllowGlitchClip.ToEnabledDisabled()),
-                new Tuple<string, string>("Allow Glitch DLZ",          Digraph.AllowGlitchDlz .ToEnabledDisabled()),
-                new Tuple<string, string>("Allow Glitch FLU",          Digraph.AllowGlitchFlu .ToEnabledDisabled()),
-                new Tuple<string, string>("Allow Glitch GPW",          Digraph.AllowGlitchGpw .ToEnabledDisabled()),
-                new Tuple<string, string>("Ignore Single-Use Edges",   Digraph.IgnoreOnceEdges.ToEnabledDisabled()),
-                new Tuple<string, string>("", ""),  // Skip a row.
-                new Tuple<string, string>("Shuffle Preset",            presetName),
-                new Tuple<string, string>("", ""),  // Skip a row.
-            };
+            settings = GameRandomized == Models.Game.Kotor1
+                ? new List<Tuple<string, string>>()
+                {
+                    new Tuple<string, string>("Use Rando Exclusion Rules", UseRandoRules          .ToEnabledDisabled()),
+                    new Tuple<string, string>("Verify Reachability",       VerifyReachability     .ToEnabledDisabled()),
+                    new Tuple<string, string>("Goal Is Malak",             Digraph.GoalIsMalak    .ToEnabledDisabled()),
+                    new Tuple<string, string>("Goal Is Star Maps",         Digraph.GoalIsStarMap  .ToEnabledDisabled()),
+                    new Tuple<string, string>("Goal Is Full Party",        Digraph.GoalIsFullParty.ToEnabledDisabled()),
+                    new Tuple<string, string>("Goal Is Pazaak",            Digraph.GoalIsPazaak   .ToEnabledDisabled()),
+                    new Tuple<string, string>("Allow Glitch Clipping",     Digraph.AllowGlitchClip.ToEnabledDisabled()),
+                    new Tuple<string, string>("Allow Glitch DLZ",          Digraph.AllowGlitchDlz .ToEnabledDisabled()),
+                    new Tuple<string, string>("Allow Glitch FLU",          Digraph.AllowGlitchFlu .ToEnabledDisabled()),
+                    new Tuple<string, string>("Allow Glitch GPW",          Digraph.AllowGlitchGpw .ToEnabledDisabled()),
+                    new Tuple<string, string>("Ignore Single-Use Edges",   Digraph.IgnoreOnceEdges.ToEnabledDisabled()),
+                    new Tuple<string, string>("", ""),  // Skip a row.
+                    new Tuple<string, string>("Shuffle Preset",            presetName),
+                    new Tuple<string, string>("", ""),  // Skip a row.
+                }
+                : new List<Tuple<string, string>>()
+                {
+                    new Tuple<string, string>("Use Rando Exclusion Rules", UseRandoRules          .ToEnabledDisabled()),
+                    new Tuple<string, string>("Verify Reachability",       VerifyReachability     .ToEnabledDisabled()),
+                    new Tuple<string, string>("Goal Is Kreia",             Digraph.GoalIsMalak    .ToEnabledDisabled()),
+                    new Tuple<string, string>("Goal Is Jedi Masters",      Digraph.GoalIsStarMap  .ToEnabledDisabled()),
+                    new Tuple<string, string>("Goal Is Full Party",        Digraph.GoalIsFullParty.ToEnabledDisabled()),
+                    new Tuple<string, string>("Goal Is Pazaak",            Digraph.GoalIsPazaak   .ToEnabledDisabled()),
+                    new Tuple<string, string>("Allow Glitch Clipping",     Digraph.AllowGlitchClip.ToEnabledDisabled()),
+                    new Tuple<string, string>("Allow Glitch DLZ",          Digraph.AllowGlitchDlz .ToEnabledDisabled()),
+                    new Tuple<string, string>("Allow Glitch FLU",          Digraph.AllowGlitchFlu .ToEnabledDisabled()),
+                    new Tuple<string, string>("Allow Glitch GPW",          Digraph.AllowGlitchGpw .ToEnabledDisabled()),
+                    new Tuple<string, string>("Ignore Single-Use Edges",   Digraph.IgnoreOnceEdges.ToEnabledDisabled()),
+                    new Tuple<string, string>("", ""),  // Skip a row.
+                    new Tuple<string, string>("Shuffle Preset",            presetName),
+                    new Tuple<string, string>("", ""),  // Skip a row.
+                };
 
             foreach (var setting in settings)
             {
@@ -323,7 +409,7 @@ namespace kotor_Randomizer_2
             if (isCustomPreset)
             {
                 // List the omitted modules if the omitted modules have been customized.
-                int iMax = i;
+                var iMax = i;
                 i = 1;  // Restart at the top of the settings list.
 
                 ws.Cell(i, 4).Value = "Omitted Modules";
@@ -439,23 +525,23 @@ namespace kotor_Randomizer_2
         /// Populates and shuffles the the modules flagged to be randomized. Returns true if override files should be added.
         /// </summary>
         /// <param name="paths">KPaths object for this game.</param>
-        /// <param name="k1rando">Kotor1Randomizer object that contains settings to use.</param>
-        public static void Module_rando(KPaths paths, Models.Kotor1Randomizer k1rando = null)
+        /// <param name="rando">Kotor1Randomizer object that contains settings to use.</param>
+        public static void Module_rando(KPaths paths, Models.RandomizerBase rando = null)
         {
             // Prepare for a new randomization.
-            Reset(k1rando);
-            AssignSettings(k1rando);
+            Reset(rando);
+            AssignSettings(rando);
 
             // Split the Bound modules into their respective lists.
-            bool reachable = false;
-            int iterations = 0;
+            var reachable = false;
+            var iterations = 0;
 
             // Only shuffle if there is more than 1 module in the shuffle.
             if (RandomizedModules.Count > 1)
             {
                 if (UseRandoRules || VerifyReachability)
                 {
-                    System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+                    var sw = new System.Diagnostics.Stopwatch();
                     sw.Start();
 
                     while (!reachable && iterations < MAX_ITERATIONS)
@@ -532,7 +618,10 @@ namespace kotor_Randomizer_2
             }
 
             // Unlock locked doors or elevators.
-            UnlockDoors(paths);
+            if (rando.Game == Models.Game.Kotor1)
+                UnlockK1Doors(paths);
+            else
+                UnlockK2Doors(paths);
 
             // Vulkar Spice Lab Transition
             if (ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ))
@@ -551,30 +640,35 @@ namespace kotor_Randomizer_2
             }
         }
 
-        private static void AssignSettings(Models.Kotor1Randomizer k1rando)
+        private static void AssignSettings(Models.RandomizerBase rando)
         {
-            if (k1rando == null)
+            if (rando == null)
             {
+                GameRandomized     = Models.Game.Kotor1;
                 UseRandoRules      = Properties.Settings.Default.UseRandoRules;
                 VerifyReachability = Properties.Settings.Default.VerifyReachability;
                 ModuleExtrasValue  = Properties.Settings.Default.ModuleExtrasValue;
                 RandomizedModules  = Globals.BoundModules.Where(x => !x.Omitted).Select(x => x.Code).ToList();
                 OmittedModules     = Globals.BoundModules.Where(x =>  x.Omitted).Select(x => x.Code).ToList();
                 if (Properties.Settings.Default.LastPresetComboIndex >= 0)
-                    ShufflePreset  = Globals.OMIT_PRESETS.Keys.ToList()[Properties.Settings.Default.LastPresetComboIndex];
+                    ShufflePreset  = Globals.K1_MODULE_OMIT_PRESETS.Keys.ToList()[Properties.Settings.Default.LastPresetComboIndex];
                 else
                     ShufflePreset  = "";
             }
             else
             {
-                UseRandoRules      = k1rando.ModuleLogicRandoRules;
-                VerifyReachability = k1rando.ModuleLogicReachability;
-                ModuleExtrasValue  = k1rando.GeneralModuleExtrasValue;
-                foreach (var door in k1rando.GeneralUnlockedDoors)
+                var moduleRando = rando as Models.IRandomizeModules;
+                var genSettings = rando as Models.IGeneralSettings;
+
+                GameRandomized     = rando.Game;
+                UseRandoRules      = moduleRando.ModuleLogicRandoRules;
+                VerifyReachability = moduleRando.ModuleLogicReachability;
+                ModuleExtrasValue  = genSettings.GeneralModuleExtrasValue;
+                foreach (var door in genSettings.GeneralUnlockedDoors)
                     ModuleExtrasValue |= door.Tag;
-                RandomizedModules  = k1rando.ModuleRandomizedList.Select(x => x.WarpCode).ToList();
-                OmittedModules     = k1rando.ModuleOmittedList.Select(x => x.WarpCode).ToList();
-                ShufflePreset      = k1rando.ModuleShufflePreset;
+                RandomizedModules  = moduleRando.ModuleRandomizedList.Select(x => x.WarpCode).ToList();
+                OmittedModules     = moduleRando.ModuleOmittedList.Select(x => x.WarpCode).ToList();
+                ShufflePreset      = moduleRando.ModuleShufflePreset;
             }
         }
 
@@ -602,10 +696,13 @@ namespace kotor_Randomizer_2
         /// <summary>
         /// Resets any fields to prepare for a new shuffle.
         /// </summary>
-        internal static void Reset(Models.Kotor1Randomizer k1rando = null)
+        internal static void Reset(Models.RandomizerBase rando = null)
         {
             // Reset digraph reachability settings.
-            Digraph.ResetSettings(k1rando);
+            var modulesPath = GameRandomized == Models.Game.Kotor1
+                ? Path.Combine(Environment.CurrentDirectory, "Xml", "KotorModules.xml")
+                : Path.Combine(Environment.CurrentDirectory, "Xml", "Kotor2Modules.xml");
+            Digraph.ResetSettings(rando, modulesPath);
             // Prepare lists for new randomization.
             LookupTable.Clear();
         }
@@ -823,28 +920,46 @@ namespace kotor_Randomizer_2
                 // Set up objects.
                 var rim = new RIM(kvp.Value.FullName);
                 var rfile = rim.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.IFO);
-                if (rfile == null) throw new Exception($"IFO file not found in rim '{kvp.Value.Name}'.");
+                if (rfile == null) throw new Exception($"IFO file not found in rim '{kvp.Key}'.");
 
                 var gff = new GFF(rfile.File_Data);
+                var fields = gff.Top_Level.Fields;
                 var ignoreCase = StringComparison.CurrentCultureIgnoreCase;
+                var invalidType = "Field '{0}' is not of type FLOAT in the IFO of " + $"'{kvp.Key}'.";
+                var fieldMissing = "Field '{0}' is missing from IFO of " + $"'{kvp.Key}'.";
 
                 // Update x coordinate data.
-                if (gff.Top_Level.Fields.FirstOrDefault(x => x.Label.Equals(Properties.Resources.ModuleEntryX, ignoreCase)) is GFF.FIELD xfield)
+                if (fields.FirstOrDefault(x => x.Label.Equals(Properties.Resources.ModuleEntryX, ignoreCase)) is GFF.FIELD xfield)
+                {
                     if (xfield is GFF.FLOAT xval) xval.Value = Globals.FIXED_COORDINATES[kvp.Key].Item1;
-                    else throw new Exception($"Field '{Properties.Resources.ModuleEntryX}' is not of type FLOAT in the IFO of '{kvp.Value.Name}'.");
-                else throw new Exception($"Field '{Properties.Resources.ModuleEntryX}' is missing from IFO of '{kvp.Value.Name}'.");
+                    else throw new Exception(string.Format(invalidType, Properties.Resources.ModuleEntryX));
+                }
+                else
+                {
+                    throw new Exception(string.Format(fieldMissing, Properties.Resources.ModuleEntryX));
+                }
 
                 // Update y coordinate data.
-                if (gff.Top_Level.Fields.FirstOrDefault(x => x.Label.Equals(Properties.Resources.ModuleEntryY, ignoreCase)) is GFF.FIELD yfield)
+                if (fields.FirstOrDefault(x => x.Label.Equals(Properties.Resources.ModuleEntryY, ignoreCase)) is GFF.FIELD yfield)
+                {
                     if (yfield is GFF.FLOAT yval) yval.Value = Globals.FIXED_COORDINATES[kvp.Key].Item2;
-                    else throw new Exception($"Field '{Properties.Resources.ModuleEntryY}' is not of type FLOAT in the IFO of '{kvp.Value.Name}'.");
-                else throw new Exception($"Field '{Properties.Resources.ModuleEntryY}' is missing from IFO of '{kvp.Value.Name}'.");
+                    else throw new Exception(string.Format(invalidType, Properties.Resources.ModuleEntryY));
+                }
+                else
+                {
+                    throw new Exception(string.Format(fieldMissing, Properties.Resources.ModuleEntryY));
+                }
 
                 // Update z coordinate data.
-                if (gff.Top_Level.Fields.FirstOrDefault(x => x.Label.Equals(Properties.Resources.ModuleEntryZ, ignoreCase)) is GFF.FIELD zfield)
+                if (fields.FirstOrDefault(x => x.Label.Equals(Properties.Resources.ModuleEntryZ, ignoreCase)) is GFF.FIELD zfield)
+                {
                     if (zfield is GFF.FLOAT zval) zval.Value = Globals.FIXED_COORDINATES[kvp.Key].Item3;
-                    else throw new Exception($"Field '{Properties.Resources.ModuleEntryZ}' is not of type FLOAT in the IFO of '{kvp.Value.Name}'.");
-                else throw new Exception($"Field '{Properties.Resources.ModuleEntryZ}' is missing from IFO of '{kvp.Value.Name}'.");
+                    else throw new Exception(string.Format(invalidType, Properties.Resources.ModuleEntryZ));
+                }
+                else
+                {
+                    throw new Exception(string.Format(fieldMissing, Properties.Resources.ModuleEntryZ));
+                }
 
                 // Write updated data to RIM file.
                 rfile.File_Data = gff.ToRawData();
@@ -920,7 +1035,7 @@ namespace kotor_Randomizer_2
         /// Unlock the doors requested by the user.
         /// </summary>
         /// <param name="paths">KPaths object for this game.</param>
-        private static void UnlockDoors(KPaths paths)
+        private static void UnlockK1Doors(KPaths paths)
         {
             var extrasValue = ModuleExtrasValue;
 
@@ -997,24 +1112,201 @@ namespace kotor_Randomizer_2
         }
 
         /// <summary>
+        /// Unlock the doors requested by the user.
+        /// </summary>
+        /// <param name="paths">KPaths object for this game.</param>
+        private static void UnlockK2Doors(KPaths paths)
+        {
+            // In the future these'll be split into options, but for now here's all of them
+            UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTODORMS);
+            UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOMININGTUNNELS);
+            UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOFUELDEPOT);
+            UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOHARBINGER);
+            UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERTOMININGTUNNELS);
+            UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERFORCESHIELDS);
+            UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERSHIELD2);
+            UnlockDoorInFile(paths, AREA_K2_PER_DORMS,     LABEL_K2_105PERTOASTROID);
+            UnlockDoorInFile(paths, AREA_K2_PER_HANGER,    LABEL_K2_106PEREASTDOOR);
+            UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELAPPTDOOR);
+            UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELEXCHANGE);
+            UnlockDoorInFile(paths, AREA_K2_TEL_ENTER_WAR, LABEL_K2_222TELRAVAGER);
+            UnlockDoorInFile(paths, AREA_K2_TEL_ACAD,      LABEL_K2_262TELPLATEAU);
+            UnlockDoorInFile(paths, AREA_K2_NAR_DOCKS,     LABEL_K2_303NARZEZDOOR);
+            UnlockDoorInFile(paths, AREA_K2_NAR_JEKK,      LABEL_K2_304NARBACKROOM);
+            UnlockDoorInFile(paths, AREA_K2_NAR_J_TUNNELS, LABEL_K2_305NARTOJEKKJEKK);
+            UnlockDoorInFile(paths, AREA_K2_NAR_G0T0,      LABEL_K2_351NARG0T0EBONHAWK);
+            UnlockDoorInFile(paths, AREA_K2_DAN_COURTYARD, LABEL_K2_605DANREBUILTENCLAVE);
+            UnlockDoorInFile(paths, AREA_K2_KOR_ACAD,      LABEL_K2_702KORVALLEY);
+            UnlockDoorInFile(paths, AREA_K2_KOR_SHY,       LABEL_K2_710KORLUDOKRESSH);
+
+            // Enable tranistions for these doors with linking modules but no flags
+            EnableDoorTransition(paths, AREA_K2_PER_FUEL,  LABEL_K2_103PERTOMININGTUNNELS);
+            EnableDoorTransition(paths, AREA_K2_PER_DORMS, LABEL_K2_105PERTOASTROID, AREA_K2_PER_ASTROID);
+            EnableDoorTransition(paths, AREA_K2_TEL_ACAD,  LABEL_K2_262TELPLATEAU);
+
+            // Add a transition to the Astroid Exterior
+            Add104PERTransition(paths);
+
+            // Add elevator to 901MAL
+            Add901MALEbonElevator(paths);
+        }
+
+        /// <summary>
+        /// Allows a door to transition to its listed module
+        /// </summary>
+        /// <param name="paths">KPaths object for this game.</param>
+        /// <param name="area">Name of the SRim file to modify.</param>
+        /// <param name="label">Label of the door to unlock.</param>
+        /// <param name="destination">The module this will transition to, if null then leave field unchanged.</param>
+        private static void EnableDoorTransition(KPaths paths, string area, string label, string destination = null)
+        {
+            var areaFiles = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[area]));
+            foreach (var fi in areaFiles)
+            {
+                // Skip any files that aren't the default format.
+                if (fi.Name.Length > 10) { continue; }
+
+                var r = new RIM(fi.FullName);   // Open what replaced this area.
+                var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.GIT);
+                var g = new GFF(rf.File_Data);  // Grab the git out of the file.
+
+                // Get ready for the nastiest Linq query you've ever seen, we may want to clean this up some
+                var fields = (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Door List") as GFF.LIST).Structs   // from the door list struct
+                    .FirstOrDefault(y => (y.Fields.FirstOrDefault(z => z.Label == "TemplateResRef") as GFF.ResRef).Reference == label).Fields;  // grab the fields for this door
+                (fields.FirstOrDefault(a => a.Label == "LinkedToFlags") as GFF.BYTE).Value = 2; // set LinkedToFlags to 2.
+
+                // Change the destination module if provided.
+                if (destination != null)
+                    (fields.FirstOrDefault(a => a.Label == "LinkedToModule") as GFF.ResRef).Reference = destination;
+
+                // Write change(s) to file.
+                rf.File_Data = g.ToRawData();
+                r.WriteToFile(fi.FullName);
+            }
+        }
+
+        private static void Add104PERTransition(KPaths paths)
+        {
+            var filename = LookupTable[AREA_K2_PER_ASTROID] + ".rim";
+            var fi = paths.FilesInModules.FirstOrDefault(f => f.Name == filename);
+            if (fi.Exists)
+            {
+                var r = new RIM(fi.FullName);   // Open what replaced this the astroid exterior.
+                var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.GIT);
+                var g = new GFF(rf.File_Data);  // Grab the git out of the file.
+
+                //Create Tranistion Struct
+                var TransitionStruct = new GFF.STRUCT("", 1, new List<GFF.FIELD>()
+                {
+                    new GFF.LIST("Geometry", new List<GFF.STRUCT>()
+                    {
+                        new GFF.STRUCT("", 3, new List<GFF.FIELD>()
+                        {
+                            new GFF.FLOAT("PointX", 0.0f),
+                            new GFF.FLOAT("PointY", 0.0f),
+                            new GFF.FLOAT("PointZ", 0.0f)
+                        }),
+                        new GFF.STRUCT("", 3, new List<GFF.FIELD>()
+                        {
+                            new GFF.FLOAT("PointX", 0.0f),
+                            new GFF.FLOAT("PointY", -1.4f),
+                            new GFF.FLOAT("PointZ", 2.0f)
+                        }),
+                        new GFF.STRUCT("", 3, new List<GFF.FIELD>()
+                        {
+                            new GFF.FLOAT("PointX", 6.0f),
+                            new GFF.FLOAT("PointY", -1.4f),
+                            new GFF.FLOAT("PointZ", 2.0f)
+                        }),
+                        new GFF.STRUCT("", 3, new List<GFF.FIELD>()
+                        {
+                            new GFF.FLOAT("PointX", 6.0f),
+                            new GFF.FLOAT("PointY", 0.0f),
+                            new GFF.FLOAT("PointZ", 0.0f)
+                        })
+                    }),
+                    new GFF.CExoString("LinkedTo", "From_104PER"),
+                    new GFF.BYTE("LinkedToFlags", 2),
+                    new GFF.ResRef("LinkedToModule", AREA_K2_PER_FUEL),
+                    new GFF.CExoString("Tag", "To_103PER"),
+                    new GFF.ResRef("TemplateResRef", "newtransition"),
+                    new GFF.CExoLocString("TransitionDestin", 75950, new List<GFF.SubString>()),
+                    new GFF.FLOAT("XOrientation", 0.0f),
+                    new GFF.FLOAT("YOrientation", 0.0f),
+                    new GFF.FLOAT("ZOrientation", 0.0f),
+                    new GFF.FLOAT("XPosition", 70.6f),
+                    new GFF.FLOAT("YPosition", -115.1f),
+                    new GFF.FLOAT("ZPosition", 255.0f)
+                });
+
+                (g.Top_Level.Fields.FirstOrDefault(f => f.Label == "TriggerList") as GFF.LIST).Structs.Add(TransitionStruct);
+
+                // Write change(s) to file.
+                rf.File_Data = g.ToRawData();
+                r.WriteToFile(fi.FullName);
+            }
+        }
+
+        private static void Add901MALEbonElevator(KPaths paths)
+        {
+            var filename = LookupTable[AREA_K2_MAL_SURFACE] + ".rim";
+            var fi = paths.FilesInModules.FirstOrDefault(f => f.Name == filename);
+            if (fi.Exists)
+            {
+                var r = new RIM(fi.FullName);   // Open what replaced this the astroid exterior.
+                var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.GIT);
+                var g = new GFF(rf.File_Data);  // Grab the git out of the file.
+
+                //Create Tranistion Struct
+                var PlaceStruct = new GFF.STRUCT("", 9, new List<GFF.FIELD>()
+                {
+                    new GFF.FLOAT("Bearing", 0.0f),
+                    new GFF.ResRef("TemplateResRef", "ebo_elev"),
+                    new GFF.DWORD("TweakColor",0),
+                    new GFF.BYTE("UseTweakColor",0),
+                    new GFF.FLOAT("X", 6.23f),
+                    new GFF.FLOAT("Y", -24.63f),
+                    new GFF.FLOAT("Z", 84.43f)
+                });
+                (g.Top_Level.Fields.FirstOrDefault(f => f.Label == "Placeable List") as GFF.LIST).Structs.Add(PlaceStruct);
+
+                //Add Placeable and script to overide
+                File.WriteAllBytes(paths.Override + "ebo_elev.utp", Properties.Resources.ebo_elev);
+                File.WriteAllBytes(paths.Override + "r_to003EBO.ncs", Properties.Resources.r_to003EBO);
+
+                // Write change(s) to file.
+                rf.File_Data = g.ToRawData();
+                r.WriteToFile(fi.FullName);
+            }
+        }
+
+        /// <summary>
         /// Copy backup module files to the modules directory based on the current shuffle.
         /// </summary>
         /// <param name="paths">KPaths object for this game.</param>
         private static void WriteFilesToModulesDirectory(KPaths paths)
         {
+            var tasks = new List<Task>();
+
             // Copy shuffled modules into the base directory.
             foreach (var name in LookupTable)
             {
-                File.Copy($"{paths.modules_backup}{name.Key}.rim", $"{paths.modules}{name.Value}.rim", true);
-                File.Copy($"{paths.modules_backup}{name.Key}_s.rim", $"{paths.modules}{name.Value}_s.rim", true);
-                File.Copy($"{paths.lips_backup}{name.Key}_loc.mod", $"{paths.lips}{name.Value}_loc.mod", true);
+                tasks.Add(Task.Run(() => File.Copy($"{paths.modules_backup}{name.Key}.rim", $"{paths.modules}{name.Value}.rim", true)));
+                tasks.Add(Task.Run(() => File.Copy($"{paths.modules_backup}{name.Key}_s.rim", $"{paths.modules}{name.Value}_s.rim", true)));
+                if (File.Exists($"{paths.lips_backup}{name.Key}_loc.mod"))
+                    tasks.Add(Task.Run(() => File.Copy($"{paths.lips_backup}{name.Key}_loc.mod", $"{paths.lips}{name.Value}_loc.mod", true)));
+                if (File.Exists($"{paths.modules_backup}{name.Key}_dlg.erf"))
+                    tasks.Add(Task.Run(() => File.Copy($"{paths.modules_backup}{name.Key}_dlg.erf", $"{paths.modules}{name.Value}_dlg.erf", true)));
             }
 
             // Copy lips extras into the base directory.
-            foreach (string name in Globals.lipXtras)
+            foreach (var name in Globals.lipXtras)
             {
-                File.Copy($"{paths.lips_backup}{name}", $"{paths.lips}{name}", true);
+                if (File.Exists($"{paths.lips_backup}{name}"))
+                    tasks.Add(Task.Run(() => File.Copy($"{paths.lips_backup}{name}", $"{paths.lips}{name}", true)));
             }
+
+            Task.WhenAll(tasks).Wait();
         }
 
         /// <summary>
@@ -1023,8 +1315,9 @@ namespace kotor_Randomizer_2
         /// <param name="paths">KPaths object for this game.</param>
         private static void WriteOverrideFiles(KPaths paths)
         {
-            string moduleSavePath = Path.Combine(paths.Override, TwoDA_MODULE_SAVE);
-            ModuleExtras saveFileExtras = ModuleExtrasValue & (ModuleExtras.SaveAllModules | ModuleExtras.SaveMiniGames | ModuleExtras.NoSaveDelete);
+            var moduleSavePath = Path.Combine(paths.Override, TwoDA_MODULE_SAVE);
+            var saveFileExtras = ModuleExtrasValue & (ModuleExtras.SaveAllModules | ModuleExtras.SaveMiniGames | ModuleExtras.NoSaveDelete);
+            var tasks = new List<Task>();
 
             // Save Data File
             switch ((int)saveFileExtras)
@@ -1036,17 +1329,17 @@ namespace kotor_Randomizer_2
 
                 case (int)(ModuleExtras.NoSaveDelete):
                     // 0b001 - No Milestone Delete
-                    File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_modulesave);
+                    tasks.Add(Task.Run(() => File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_modulesave)));
                     break;
 
                 case (int)(ModuleExtras.SaveMiniGames):
                     // 0b010 - Save Minigames | Milestone Delete
-                    File.WriteAllBytes(moduleSavePath, Properties.Resources.MGINCLUDED_modulesave);
+                    tasks.Add(Task.Run(() => File.WriteAllBytes(moduleSavePath, Properties.Resources.MGINCLUDED_modulesave)));
                     break;
 
                 case (int)(ModuleExtras.NoSaveDelete | ModuleExtras.SaveMiniGames):
                     // 0b011 - Save Minigames | No Milestone Delete
-                    File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_MGINCLUDED_modulesave);
+                    tasks.Add(Task.Run(() => File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_MGINCLUDED_modulesave)));
                     break;
 
                 case (int)(ModuleExtras.SaveAllModules):
@@ -1054,7 +1347,7 @@ namespace kotor_Randomizer_2
                     // Treat both the same.
                     // 0b100 - Save All Modules | Milestone Delete
                     // 0b110 - Save All Modules | Save Minigames | Milestone Delete
-                    File.WriteAllBytes(moduleSavePath, Properties.Resources.ALLINCLUDED_modulesave);
+                    tasks.Add(Task.Run(() => File.WriteAllBytes(moduleSavePath, Properties.Resources.ALLINCLUDED_modulesave)));
                     break;
 
                 case (int)(ModuleExtras.NoSaveDelete | ModuleExtras.SaveAllModules):
@@ -1062,34 +1355,49 @@ namespace kotor_Randomizer_2
                     // Treat both the same.
                     // 0b101 - Save All Modules | No Milestone Delete
                     // 0b111 - Save All Modules | Save Minigames | No Milestone Delete
-                    File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_ALLINCLUDED_modulesave);
+                    tasks.Add(Task.Run(() => File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_ALLINCLUDED_modulesave)));
                     break;
             }
 
             // Fix Dream File
             if (ModuleExtrasValue.HasFlag(ModuleExtras.FixDream))
             {
-                File.WriteAllBytes(Path.Combine(paths.Override, FIXED_DREAM_OVERRIDE), Properties.Resources.k_ren_visionland);
+                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, FIXED_DREAM_OVERRIDE), Properties.Resources.k_ren_visionland)));
             }
 
             // Fix Fighter Encounter
             if (ModuleExtrasValue.HasFlag(ModuleExtras.FixFighterEncounter))
             {
-                File.WriteAllBytes(Path.Combine(paths.Override, FIXED_FIGHTER_OVERRIDE), Properties.Resources.k_pebo_mgheart);
+                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, FIXED_FIGHTER_OVERRIDE), Properties.Resources.k_pebo_mgheart)));
             }
 
             // Unlock Galaxy Map File
             if (ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap))
             {
-                File.WriteAllBytes(Path.Combine(paths.Override, UNLOCK_MAP_OVERRIDE), Properties.Resources.k_pebn_galaxy);
+                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, UNLOCK_MAP_OVERRIDE), Properties.Resources.k_pebn_galaxy)));
             }
 
             // Keep Korriban Doors Unlocked
             if (ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley))
             {
-                File.WriteAllBytes(Path.Combine(paths.Override, KOR_OPEN_ACADEMY), Properties.Resources.k33b_openacademy);
-                File.WriteAllBytes(Path.Combine(paths.Override, KOR_VALLEY_ENTER), Properties.Resources.k36_pkor_enter);
+                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, KOR_OPEN_ACADEMY), Properties.Resources.k33b_openacademy)));
+                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, KOR_VALLEY_ENTER), Properties.Resources.k36_pkor_enter)));
             }
+
+            /// KotOR 2 Settings
+            // Save Patch
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2SavePatch))
+                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_MODULESAVE), Properties.Resources.modulesave)));
+
+            // Unlock Galaxy Map
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2GalaxyMap))
+                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_GALAXYMAP), Properties.Resources.a_galaxymap)));
+
+            // Patch Disciple Crash
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2DisciplePatch))
+                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_DISC_JOIN), Properties.Resources.a_disc_join)));
+
+            Task.WhenAll(tasks).Wait();
         }
 
         #endregion Methods

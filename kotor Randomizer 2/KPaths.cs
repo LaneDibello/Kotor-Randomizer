@@ -130,8 +130,7 @@ namespace kotor_Randomizer_2
         { get { return new DirectoryInfo(Override).GetFiles(); } }
 
         /// <summary> Returns a list of the current files in the swkotor\rims directory. </summary>
-        public FileInfo[] FilesInRims
-        { get { return new DirectoryInfo(rims).GetFiles(); } }
+        public FileInfo[] FilesInRims => Directory.Exists(rims) ? new DirectoryInfo(rims).GetFiles() : null;
 
         /// <summary> Returns a list of the current files in the swkotor\TexturePacks directory. </summary>
         public FileInfo[] FilesInTexturePacks

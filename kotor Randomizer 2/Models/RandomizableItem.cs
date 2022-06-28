@@ -9,7 +9,7 @@ namespace kotor_Randomizer_2.Models
     /// <summary>
     /// Encapsulates template items that can be randomized within the game.
     /// </summary>
-    public class RandomizableItem
+    public partial class RandomizableItem
     {
         /// <summary>
         /// UNUSED. Constructs the object by parsing the ID and Tags from strings.

@@ -1,4 +1,5 @@
 ﻿using kotor_Randomizer_2;
+using kotor_Randomizer_2.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -156,6 +157,38 @@ namespace Randomizer_WPF
         #endregion
     }
 
+    [ValueConversion(typeof(Type), typeof(Visibility))]
+    public class TypeToVisibilityConverter : IValueConverter
+    {
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value.GetType() == parameter.GetType() ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return Visibility.Visible == (Visibility)value ? parameter.GetType() : null;
+        }
+        #endregion
+    }
+
+    [ValueConversion(typeof(Game), typeof(Visibility))]
+    public class GameToVisibilityConverter : IValueConverter
+    {
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (Game)value == (Game)parameter ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return Visibility.Visible == (Visibility)value ? (Game)parameter : Game.Unsupported;
+        }
+        #endregion
+    }
+
     [ValueConversion(typeof(TextSettings), typeof(bool))]
     public class TextSettingsToBoolConverter : IValueConverter
     {
@@ -192,6 +225,7 @@ namespace Randomizer_WPF
     [ValueConversion(typeof(RandomizationLevel), typeof(Visibility))]
     public class VisibleIfRandoLevelMatchesMultiConverter : IMultiValueConverter
     {
+        #region IMultiValueConverter Members
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             if (targetType != typeof(Visibility)) return Visibility.Collapsed;
@@ -200,7 +234,7 @@ namespace Randomizer_WPF
             foreach (var value in values)
             {
                 try
-                { 
+                {
                     if ((RandomizationLevel)value == (RandomizationLevel)parameter)
                     {
                         return Visibility.Visible;
@@ -219,5 +253,6 @@ namespace Randomizer_WPF
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }

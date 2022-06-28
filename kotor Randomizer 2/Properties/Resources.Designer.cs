@@ -19,7 +19,7 @@ namespace kotor_Randomizer_2.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -57,6 +57,26 @@ namespace kotor_Randomizer_2.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] a_disc_join {
+            get {
+                object obj = ResourceManager.GetObject("a_disc_join", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] a_galaxymap {
+            get {
+                object obj = ResourceManager.GetObject("a_galaxymap", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -163,6 +183,16 @@ namespace kotor_Randomizer_2.Properties {
         internal static string Done {
             get {
                 return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ebo_elev {
+            get {
+                object obj = ResourceManager.GetObject("ebo_elev", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -483,6 +513,16 @@ namespace kotor_Randomizer_2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] modulesave {
+            get {
+                object obj = ResourceManager.GetObject("modulesave", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preset Loaded.
         /// </summary>
         internal static string MsgPresetLoaded {
@@ -564,6 +604,16 @@ namespace kotor_Randomizer_2.Properties {
         internal static string PresetHelp {
             get {
                 return ResourceManager.GetString("PresetHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] r_to003EBO {
+            get {
+                object obj = ResourceManager.GetObject("r_to003EBO", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

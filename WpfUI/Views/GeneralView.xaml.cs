@@ -40,6 +40,8 @@ namespace Randomizer_WPF.Views
         #endregion
 
         #region Dependency Properties
+
+        public static readonly DependencyProperty IsKotor2SelectedProperty = DependencyProperty.Register("IsKotor2Selected", typeof(bool), typeof(GeneralView), new PropertyMetadata(false));
         public static readonly DependencyProperty Kotor1PathProperty  = DependencyProperty.Register("Kotor1Path",  typeof(string), typeof(GeneralView));
         public static readonly DependencyProperty Kotor2PathProperty  = DependencyProperty.Register("Kotor2Path",  typeof(string), typeof(GeneralView));
         public static readonly DependencyProperty PresetPathProperty  = DependencyProperty.Register("PresetPath",  typeof(string), typeof(GeneralView));
@@ -55,9 +57,22 @@ namespace Randomizer_WPF.Views
         public static readonly DependencyProperty QolFixFighterEncounterProperty    = DependencyProperty.Register("QolFixFighterEncounter",   typeof(bool), typeof(GeneralView));
         public static readonly DependencyProperty QolFixMindPrisonProperty          = DependencyProperty.Register("QolFixMindPrison",         typeof(bool), typeof(GeneralView));
         public static readonly DependencyProperty QolFixModuleCoordinatesProperty   = DependencyProperty.Register("QolFixModuleCoordinates",  typeof(bool), typeof(GeneralView));
+
+        public static readonly DependencyProperty K2SavePatchProperty     = DependencyProperty.Register(nameof(K2SavePatch),     typeof(bool), typeof(GeneralView));
+        public static readonly DependencyProperty K2GalaxyMapProperty     = DependencyProperty.Register(nameof(K2GalaxyMap),     typeof(bool), typeof(GeneralView));
+        public static readonly DependencyProperty K2DisciplePatchProperty = DependencyProperty.Register(nameof(K2DisciplePatch), typeof(bool), typeof(GeneralView));
+
         #endregion
 
         #region Public Properties
+
+
+        public bool IsKotor2Selected
+        {
+            get { return (bool)GetValue(IsKotor2SelectedProperty); }
+            set { SetValue(IsKotor2SelectedProperty, value); }
+        }
+
         public string Kotor1Path
         {
             get { return (string)GetValue(Kotor1PathProperty); }
@@ -141,6 +156,25 @@ namespace Randomizer_WPF.Views
             get { return (bool)GetValue(QolFixModuleCoordinatesProperty); }
             set { SetValue(QolFixModuleCoordinatesProperty, value); }
         }
+
+        public bool K2SavePatch
+        {
+            get => (bool)GetValue(K2SavePatchProperty);
+            set => SetValue(K2SavePatchProperty, value);
+        }
+
+        public bool K2GalaxyMap
+        {
+            get => (bool)GetValue(K2GalaxyMapProperty);
+            set => SetValue(K2GalaxyMapProperty, value);
+        }
+
+        public bool K2DisciplePatch
+        {
+            get => (bool)GetValue(K2DisciplePatchProperty);
+            set => SetValue(K2DisciplePatchProperty, value);
+        }
+
         #endregion
 
         #region Events
@@ -200,45 +234,44 @@ namespace Randomizer_WPF.Views
 
         private void BtnAutoFindPaths_Click(object sender, RoutedEventArgs e)
         {
-            bool K1PathFound = false;
-            List<string> Kotor1Paths = new List<string>()
-            {
+            // Find K1 Path
+            Kotor1Path = FindGoodPathWithFile("swkotor.exe",
                 @"C:\Program Files (x86)\Steam\steamapps\common\swkotor",
                 @"C:\Program Files\Steam\steamapps\common\swkotor",
                 @"C:\Program Files (x86)\LucasArts\SWKotOR",
-                @"C:\Program Files\LucasArts\SWKotOR",
-            };
-            foreach (string path in Kotor1Paths)
+                @"C:\Program Files\LucasArts\SWKotOR"
+            );
+
+            // Find K2 Path
+            Kotor2Path = FindGoodPathWithFile("swkotor2.exe",
+                @"C:\Program Files (x86)\Steam\steamapps\common\Knights of the Old Republic II",
+                @"C:\Program Files\Steam\steamapps\common\Knights of the Old Republic II",
+                @"C:\Program Files (x86)\LucasArts\Knights of the Old Republic II",
+                @"C:\Program Files\LucasArts\Knights of the Old Republic II"
+            );
+        }
+
+        /// <summary>
+        /// Searchs through a sequence of paths and returns the first one that contains a file with the specified name.
+        /// </summary>
+        /// <param name="filename">Name of the file to search for.</param>
+        /// <param name="paths">Sequence of paths to search.</param>
+        /// <returns>First path that contains the specified filename.</returns>
+        private string FindGoodPathWithFile(string filename, params string[] paths)
+        {
+            if (paths.Any())
             {
-                DirectoryInfo di = new DirectoryInfo(path);
-                if (di.Exists)
+                foreach (var path in paths)
                 {
-                    Kotor1Path = path;
-                    K1PathFound = true;
-                    break;
+                    var di = new DirectoryInfo(path);
+                    if (di.Exists && di.EnumerateFiles().Any(fi => fi.Name.Equals(filename, StringComparison.CurrentCultureIgnoreCase)))
+                    {
+                        return path;
+                    }
                 }
             }
-            if (K1PathFound == false) Kotor1Path = string.Empty;
 
-            //bool K2PathFound = false;
-            //List<string> Kotor2Paths = new List<string>()
-            //{
-            //    @"C:\Program Files (x86)\Steam\steamapps\common\Knights of the Old Republic II",
-            //    @"C:\Program Files\Steam\steamapps\common\Knights of the Old Republic II",
-            //    @"C:\Program Files (x86)\LucasArts\Knights of the Old Republic II",
-            //    @"C:\Program Files\LucasArts\Knights of the Old Republic II",
-            //};
-            //foreach (string path in Kotor2Paths)
-            //{
-            //    DirectoryInfo di = new DirectoryInfo(path);
-            //    if (di.Exists)
-            //    {
-            //        Kotor2Path = path;
-            //        K2PathFound = true;
-            //        break;
-            //    }
-            //}
-            //if (K2PathFound == false) Kotor2Path = string.Empty;
+            return string.Empty;
         }
 
         private void CbSaveAllModules_Checked(object sender, RoutedEventArgs e)

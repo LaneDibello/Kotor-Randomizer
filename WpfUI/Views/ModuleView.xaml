@@ -8,7 +8,7 @@
              xmlns:model="clr-namespace:kotor_Randomizer_2.Models;assembly=KotorRandomizer"
              mc:Ignorable="d" 
              d:DesignHeight="620" d:DesignWidth="600"
-             d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance model:Kotor2Randomizer, IsDesignTimeCreatable=True}"
              FontFamily="Microsoft Sans Serif" FontSize="12"
              Name="thisView"
              DataContextChanged="View_DataContextChanged"
@@ -21,6 +21,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <base:AddToDoubleConverter x:Key="AddToDoubleConverter" />
+            <base:GameToVisibilityConverter x:Key="GameToVisibilityConverter" />
 
             <Style TargetType="ToolTip">
                 <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.FontSize}" />
@@ -56,6 +57,12 @@
             </ToolTip>
             <ToolTip x:Key="ttGoalMaps">
                 Collect the 5 star maps from Dantooine, Kashyyyk, Korriban, Manaan, and Tatooine.
+            </ToolTip>
+            <ToolTip x:Key="ttGoalKreia">
+                Defeat Kreia in the Trayus Core on Malachor V.
+            </ToolTip>
+            <ToolTip x:Key="ttGoalMasters">
+                Meet all 4 Jedi Masters on Dantooine, Korriban, Nar Shaddaa, and Onderon.
             </ToolTip>
             <ToolTip x:Key="ttGoalPazaak">
                 Defeat all pazaak players across the galaxy.
@@ -139,7 +146,7 @@
                             Style="{StaticResource tbHeader4}" />
 
                 <Border BorderBrush="{StaticResource HarshBlueBrush}"
-                        BorderThickness="1" Margin="0,5">
+                        BorderThickness="1" Margin="0,5" CornerRadius="3">
                     <!-- Custom Module Shuffle -->
                     <Grid Margin="5,0,5,5">
                         <Grid.ColumnDefinitions>
@@ -263,8 +270,10 @@
                 </Border>
 
                 <!-- Logic -->
-                <TextBlock Style="{StaticResource tbHeader4}" Margin="0,5" Text="Shuffle Logic:" />
-                <StackPanel Margin="10,0,0,0">
+                <TextBlock Style="{StaticResource tbHeader4}" Margin="0,5" Text="Shuffle Logic:"
+                           Visibility="{Binding Game, Converter={StaticResource GameToVisibilityConverter}, ConverterParameter={x:Static model:Game.Kotor1}}"/>
+                <StackPanel Margin="10,0,0,0"
+                            Visibility="{Binding Game, Converter={StaticResource GameToVisibilityConverter}, ConverterParameter={x:Static model:Game.Kotor1}}">
                     <StackPanel.Resources>
                         <Style TargetType="TextBlock">
                             <Setter Property="Margin" Value="3" />
@@ -321,8 +330,10 @@
                 </StackPanel>
 
                 <!-- Goals -->
-                <TextBlock Style="{StaticResource tbHeader4}" Margin="0,5" Text="Goal(s):" />
-                <WrapPanel Margin="10,0,0,0">
+                <TextBlock Style="{StaticResource tbHeader4}" Margin="0,5" Text="Goal(s):"
+                           Visibility="{Binding Game, Converter={StaticResource GameToVisibilityConverter}, ConverterParameter={x:Static model:Game.Kotor1}}"/>
+                <WrapPanel x:Name="k1Goals" Margin="10,0,0,0"
+                           Visibility="{Binding Game, Converter={StaticResource GameToVisibilityConverter}, ConverterParameter={x:Static model:Game.Kotor1}}">
                     <WrapPanel.Resources>
                         <Style TargetType="TextBlock">
                             <Setter Property="Margin" Value="3" />
@@ -342,19 +353,52 @@
                               ToolTip="{StaticResource ttGoalMaps}">
                         <TextBlock Text="Collect Star Maps" />
                     </CheckBox>
+                    <CheckBox IsChecked="{Binding ModuleGoalIsFullParty, Mode=TwoWay}"
+                              ToolTip="{StaticResource ttGoalParty}">
+                        <TextBlock Text="Recruit Party Members" />
+                    </CheckBox>
                     <CheckBox IsChecked="{Binding ModuleGoalIsPazaak, Mode=TwoWay}"
                               ToolTip="{StaticResource ttGoalPazaak}">
                         <TextBlock Text="Pazaak Champion" />
+                    </CheckBox>
+                </WrapPanel>
+                <WrapPanel x:Name="k2Goals" Margin="10,0,0,0"
+                           Visibility="Collapsed">
+                    <!--Visibility="{Binding Game, Converter={StaticResource GameToVisibilityConverter}, ConverterParameter={x:Static model:Game.Kotor2}}"-->
+                    <WrapPanel.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="3" />
+                            <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </WrapPanel.Resources>
+                    <CheckBox IsChecked="{Binding ModuleGoalIsKreia, Mode=TwoWay}"
+                              ToolTip="{StaticResource ttGoalKreia}">
+                        <TextBlock Text="Defeat Kreia" />
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding ModuleGoalIsMasters, Mode=TwoWay}"
+                              ToolTip="{StaticResource ttGoalMasters}">
+                        <TextBlock Text="Meet Jedi Masters" />
                     </CheckBox>
                     <CheckBox IsChecked="{Binding ModuleGoalIsFullParty, Mode=TwoWay}"
                               ToolTip="{StaticResource ttGoalParty}">
                         <TextBlock Text="Recruit Party Members" />
                     </CheckBox>
+                    <CheckBox IsChecked="{Binding ModuleGoalIsPazaak, Mode=TwoWay}"
+                              ToolTip="{StaticResource ttGoalPazaak}">
+                        <TextBlock Text="Pazaak Champion" />
+                    </CheckBox>
                 </WrapPanel>
 
                 <!-- Glitches -->
-                <TextBlock Style="{StaticResource tbHeader4}" Margin="0,5" Text="Potentially Required Glitches:" />
-                <WrapPanel Margin="10,0,0,0">
+                <TextBlock Style="{StaticResource tbHeader4}" Margin="0,5" Text="Potentially Required Glitches:"
+                           Visibility="{Binding Game, Converter={StaticResource GameToVisibilityConverter}, ConverterParameter={x:Static model:Game.Kotor1}}"/>
+                <WrapPanel Margin="10,0,0,0"
+                           Visibility="{Binding Game, Converter={StaticResource GameToVisibilityConverter}, ConverterParameter={x:Static model:Game.Kotor1}}">
                     <WrapPanel.Resources>
                         <Style TargetType="TextBlock">
                             <Setter Property="Margin" Value="3" />

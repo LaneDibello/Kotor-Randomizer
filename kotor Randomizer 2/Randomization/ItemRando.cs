@@ -56,15 +56,15 @@ namespace kotor_Randomizer_2
         /// Randomizes the types of items requested.
         /// </summary>
         /// <param name="paths">KPaths object for this game.</param>
-        /// <param name="k1rando">Kotor1Randomizer object that contains settings to use.</param>
-        public static void item_rando(KPaths paths, Kotor1Randomizer k1rando = null)
+        /// <param name="rando">Object that contains item rando settings to use.</param>
+        public static void item_rando(KPaths paths, IRandomizeItems rando = null)
         {
             // Prepare for new randomization.
             Reset();
-            AssignSettings(k1rando);
+            AssignSettings(rando);
 
             // Load KEY file.
-            KEY k = new KEY(paths.chitin);
+            var k = new KEY(paths.chitin);
 
             // Handle categories
             HandleCategory(k, ArmbandsRegs,    RandomizeArmbands);
@@ -134,9 +134,9 @@ namespace kotor_Randomizer_2
             k.WriteToFile(paths.chitin);
         }
 
-        private static void AssignSettings(Kotor1Randomizer k1rando)
+        private static void AssignSettings(IRandomizeItems rando)
         {
-            if (k1rando == null)
+            if (rando == null)
             {
                 //Paths = new KPaths(Properties.Settings.Default.Kotor1Path);
                 RandomizeArmbands = Properties.Settings.Default.RandomizeArmbands;
@@ -163,26 +163,26 @@ namespace kotor_Randomizer_2
             else
             {
                 //Paths = k1rando.Paths;
-                RandomizeArmbands = k1rando.ItemArmbands;
-                RandomizeArmor = k1rando.ItemArmor;
-                RandomizeBelts = k1rando.ItemBelts;
-                RandomizeBlasters = k1rando.ItemBlasters;
-                RandomizeHides = k1rando.ItemCreatureHides;
-                RandomizeCreature = k1rando.ItemCreatureWeapons;
-                RandomizeDroid = k1rando.ItemDroidEquipment;
-                RandomizeGloves = k1rando.ItemGloves;
-                RandomizeGrenades = k1rando.ItemGrenades;
-                RandomizeImplants = k1rando.ItemImplants;
-                RandomizeLightsabers = k1rando.ItemLightsabers;
-                RandomizeMask = k1rando.ItemMasks;
-                RandomizeMelee = k1rando.ItemMeleeWeapons;
-                RandomizeMines = k1rando.ItemMines;
-                RandomizePaz = k1rando.ItemPazaakCards;
-                RandomizeStims = k1rando.ItemMedical;
-                RandomizeUpgrade = k1rando.ItemUpgrades;
-                RandomizeVarious = k1rando.ItemVarious;
-                OmittedItems = k1rando.ItemOmittedList.Select(x => x.Code).ToList();
-                OmitPreset = k1rando.ItemOmittedPreset;
+                RandomizeArmbands = rando.ItemArmbands;
+                RandomizeArmor = rando.ItemArmor;
+                RandomizeBelts = rando.ItemBelts;
+                RandomizeBlasters = rando.ItemBlasters;
+                RandomizeHides = rando.ItemCreatureHides;
+                RandomizeCreature = rando.ItemCreatureWeapons;
+                RandomizeDroid = rando.ItemDroidEquipment;
+                RandomizeGloves = rando.ItemGloves;
+                RandomizeGrenades = rando.ItemGrenades;
+                RandomizeImplants = rando.ItemImplants;
+                RandomizeLightsabers = rando.ItemLightsabers;
+                RandomizeMask = rando.ItemMasks;
+                RandomizeMelee = rando.ItemMeleeWeapons;
+                RandomizeMines = rando.ItemMines;
+                RandomizePaz = rando.ItemPazaakCards;
+                RandomizeStims = rando.ItemMedical;
+                RandomizeUpgrade = rando.ItemUpgrades;
+                RandomizeVarious = rando.ItemVarious;
+                OmittedItems = rando.ItemOmittedList.Select(x => x.Code).ToList();
+                OmitPreset = rando.ItemOmittedPreset;
             }
         }
 
@@ -334,7 +334,7 @@ namespace kotor_Randomizer_2
                 foreach (var item in sortedList)
                 {
                     ws.Cell(i, 4).Value = item;
-                    var origItemName = Globals.ITEM_LIST_FULL.FirstOrDefault(ri => ri.Code == item)?.Label ?? "";
+                    var origItemName = RandomizableItem.KOTOR1_ITEMS.FirstOrDefault(ri => ri.Code == item)?.Label ?? "";
 
                     //var origItemVre = items.FirstOrDefault(x => x.ResRef == item);
                     //if (origItemVre != null)
@@ -393,8 +393,8 @@ namespace kotor_Randomizer_2
             {
                 var omitted = OmittedItems.Any(x => x == tpl.Item1);
                 var changed = tpl.Item1 != tpl.Item2;   // Has the shuffle changed this item?
-                string origItemName = Globals.ITEM_LIST_FULL.FirstOrDefault(ri => ri.Code == tpl.Item1)?.Label ?? "";
-                string randItemName = changed ? Globals.ITEM_LIST_FULL.FirstOrDefault(ri => ri.Code == tpl.Item2)?.Label ?? "" : origItemName;
+                var origItemName = RandomizableItem.KOTOR1_ITEMS.FirstOrDefault(ri => ri.Code == tpl.Item1)?.Label ?? "";
+                var randItemName = changed ? RandomizableItem.KOTOR1_ITEMS.FirstOrDefault(ri => ri.Code == tpl.Item2)?.Label ?? "" : origItemName;
 
                 //var origItemVre = items.FirstOrDefault(x => x.ResRef == tpl.Item1);
                 //if (origItemVre != null)

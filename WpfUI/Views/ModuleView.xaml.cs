@@ -1,4 +1,5 @@
 ﻿using kotor_Randomizer_2;
+using kotor_Randomizer_2.Models;
 using Randomizer_WPF.UserControls;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace Randomizer_WPF.Views
         public ModuleView()
         {
             InitializeComponent();
-            cbbModulePresetOptions = new ObservableCollection<string>(Globals.OMIT_PRESETS.Keys);
+            cbbModulePresetOptions = new ObservableCollection<string>(Globals.K1_MODULE_OMIT_PRESETS.Keys);
 
             //ModuleDigraph graph;
             //var path = System.IO.Path.Combine(Environment.CurrentDirectory, "Xml", "KotorModules.xml");
@@ -187,6 +188,7 @@ namespace Randomizer_WPF.Views
 
         private void CbbShufflePreset_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var randmod = DataContext as IRandomizeModules;
             if (cbbShufflePreset.SelectedItem == null)
             {
                 // Do nothing. Custom settings are in use.
@@ -200,7 +202,7 @@ namespace Randomizer_WPF.Views
                 }
                 lvRandomizedModulesSource.Clear();
             }
-            else if (!Globals.OMIT_PRESETS.ContainsKey(cbbShufflePreset.SelectedItem.ToString()))
+            else if (!randmod.ModuleOmitPresets.ContainsKey(cbbShufflePreset.SelectedItem.ToString()))
             {
                 // If key is invalid, set to off. This method will trigger again and run the code above.
                 cbbShufflePreset.SelectedItem = "Off";
@@ -214,7 +216,7 @@ namespace Randomizer_WPF.Views
                 }
                 lvOmittedModulesSource.Clear();
 
-                var codes = Globals.OMIT_PRESETS[cbbShufflePreset.SelectedItem.ToString()];
+                var codes = randmod.ModuleOmitPresets[cbbShufflePreset.SelectedItem.ToString()];
                 var omits = lvRandomizedModulesSource.Where(x => codes.Contains(x.WarpCode)).ToList();
 
                 foreach (var omit in omits)
@@ -277,7 +279,13 @@ namespace Randomizer_WPF.Views
                 lvRandomizedModulesSource = k1rand.ModuleRandomizedList;
                 lvOmittedModulesSource = k1rand.ModuleOmittedList;
             }
-
+            if (DataContext is kotor_Randomizer_2.Models.Kotor2Randomizer k2rand)
+            {
+                lvRandomizedModulesSource = k2rand.ModuleRandomizedList;
+                lvOmittedModulesSource = k2rand.ModuleOmittedList;
+                cbbShufflePreset.ItemsSource = k2rand.ModulePresetOptions;
+                //cbbShufflePreset.SelectedItem = k2rand.ModulePresetOptions.First();
+            }
             //cbbShufflePreset.ItemsSource = cbbModulePresetOptions;
             //cbbShufflePreset.SelectedItem = cbbModulePresetOptions.First();
         }
