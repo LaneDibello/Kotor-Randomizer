@@ -342,23 +342,16 @@ namespace kotor_Randomizer_2.Models
 
                     // Write general override files.
                     ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_OVERRIDES, "... writing Override files.");
-                    File.WriteAllBytes(Path.Combine(paths.Override, "k_pdan_13_area.ncs"), Properties.Resources.k_pdan_13_area);
 
-                    // Write appearance override.
-                    if (GeneralModuleExtrasValue.HasFlag(ModuleExtras.FastEnvirosuit))
-                    {
-                        File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance_speedysuit);
-                    }
-                    else
-                    {
-                        File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance);
-                    }
-
-                    // Write early T3 override.
-                    if (GeneralModuleExtrasValue.HasFlag(ModuleExtras.EarlyT3))
-                    {
-                        File.WriteAllBytes(Path.Combine(paths.Override, "tar02_janice021.dlg"), Properties.Resources.tar02_janice021);
-                    }
+                    //// Write appearance override.
+                    //if (GeneralModuleExtrasValue.HasFlag(ModuleExtras.FastEnvirosuit))
+                    //{
+                    //    File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance_speedysuit);
+                    //}
+                    //else
+                    //{
+                    //    File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance);
+                    //}
 
                     // Perform category-based randomization.
                     var form = "... randomizing {0}.";

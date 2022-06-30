@@ -627,12 +627,12 @@ namespace kotor_Randomizer_2
             if (ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ))
             {
                 var vulk_files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_TAR_VULK_BASE]));
-                foreach (FileInfo fi in vulk_files)
+                foreach (var fi in vulk_files)
                 {
                     // Skip any files that end in "s.rim".
                     if (fi.Name[fi.Name.Length - 5] == 's') { continue; }
 
-                    RIM r_vul = new RIM(fi.FullName);
+                    var r_vul = new RIM(fi.FullName);
                     r_vul.File_Table.FirstOrDefault(x => x.Label == LABEL_TAR_VULK_GIT && x.TypeID == (int)ResourceType.GIT).File_Data = Properties.Resources.m10aa;
 
                     r_vul.WriteToFile(fi.FullName);
@@ -778,17 +778,17 @@ namespace kotor_Randomizer_2
         private static void CreateLookupTableShuffle()
         {
             // Shuffle the list of included modules.
-            List<string> shuffle = new List<string>(RandomizedModules);
+            var shuffle = new List<string>(RandomizedModules);
             Randomize.FisherYatesShuffle(shuffle);
             LookupTable.Clear();
 
-            for (int i = 0; i < RandomizedModules.Count; i++)
+            for (var i = 0; i < RandomizedModules.Count; i++)
             {
                 LookupTable.Add(RandomizedModules[i], shuffle[i]);
             }
 
             // Include the unmodified list of excluded modules.
-            foreach (string name in OmittedModules)
+            foreach (var name in OmittedModules)
             {
                 LookupTable.Add(name, name);
             }
