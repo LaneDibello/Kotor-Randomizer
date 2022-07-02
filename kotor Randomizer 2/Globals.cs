@@ -45,6 +45,68 @@ namespace kotor_Randomizer_2
     }
 
     [Flags]
+    public enum SavePatchOptions
+    {
+        Default        = 0b000,     // Default behavior - milestone save deletion.
+        NoSaveDelete   = 0b001,     // Do not delete milestone save data.
+        SaveMiniGames  = 0b010,     // Include minigame data in the save file.
+        SaveAllModules = 0b100,     // Include all module data in the save file.
+    }
+
+    public enum QualityOfLife
+    {
+        Unknown = 0,
+
+        //  KOTOR 1 PATCHES
+        FixDream                                    = 00005,
+        FixCoordinates                              = 00010,
+        FixMindPrison                               = 00015,
+        VulkarSpiceLZ                               = 00020,
+        FastEnvirosuit                              = 00025,
+        FixFighterEncounter                         = 00030,
+        EarlyT3                                     = 00035,
+
+        //  KOTOR 1 DOORS
+        EnableLevHangarElev                         = 01040,
+        UnlockGalaxyMap                             = 01045,
+        UnlockDanRuins                              = 01050,
+        UnlockLevElev                               = 01055,
+        UnlockManEmbassy                            = 01060,
+        UnlockStaBastila                            = 01065,
+        UnlockUnkSummit                             = 01070,
+        UnlockKorValley                             = 01075,
+        UnlockManHangar                             = 01080,
+        UnlockTarUndercity                          = 01085,
+        UnlockTarVulkar                             = 01090,
+        UnlockUnkTempleExit                         = 01095,
+
+        // KOTOR 2 PATCHES
+        K2_UnlockGalaxyMap                          = 20000,
+        K2_PreventDiscipleCrash                     = 20005,
+
+        //  KOTOR 2 DOORS
+        K2_PerAdmin_ToDorms                         = 21000,
+        K2_PerAdmin_ToTunnels                       = 21005,
+        K2_PerAdmin_ToHarbinger                     = 21010,
+        K2_PerAdmin_ToDepot                         = 21015,
+        K2_PerDorms_ToExterior                      = 21020,
+        K2_PerDepot_ToTunnels                       = 21025,
+        K2_PerDepot_ForceFields                     = 21030,
+        K2_PerHangar_ToHawk                         = 21035,
+        K2_CitResidential_AptDoor                   = 21040,
+        K2_CitResidential_ToExchange                = 21045,
+        K2_TelAcademy_ToPlateau                     = 21050,
+        K2_NarDocks_ZezDoor                         = 21055,
+        K2_NarJekk_VipRoom                          = 21060,
+        K2_NarTunnels_ToJekk                        = 21065,
+        K2_NarYacht_ToHawk                          = 21070,
+        K2_DanCourtyard_ToEnclave                   = 21075,
+        K2_KorAcademy_ToValley                      = 21080,
+        K2_KorCave_ToTomb                           = 21085,
+        K2_WarEntertain_ToRavager                   = 21090,
+    }
+
+    [Flags]
     [Serializable]
     public enum ModuleExtras : ulong
     {
@@ -94,26 +156,71 @@ namespace kotor_Randomizer_2
         EnableLevHangarElev = 0x100000, // 0b00010000 00000000 00000000
         /// <summary> Prevents the fighter encounter from getting stuck after fighters are destroyed. </summary>
         FixFighterEncounter = 0x200000, // 0b00100000 00000000 00000000
+
         /// <summary> Patches the save file deletion in kotor 2. </summary>
-        K2SavePatch = 0x00400000,
+        K2Patch_SaveDeletion             = 0x0000000000400000,
         /// <summary> Unlocks the galaxy map in kotor 2. </summary>
-        K2GalaxyMap = 0x00800000,
+        K2Patch_GalaxyMap                = 0x0000000000800000,
         /// <summary> Patches a crash related to the disciple in kotor 2. </summary>
-        K2DisciplePatch = 0x01000000,
-        /// <summary>  </summary>
-        Kotor2Setting3 = 0x02000000,
-        /// <summary>  </summary>
-        Kotor2Setting4 = 0x04000000,
-        /// <summary>  </summary>
-        Kotor2Setting5 = 0x08000000,
-        /// <summary>  </summary>
-        Kotor2Setting6 = 0x10000000,
-        /// <summary>  </summary>
-        Kotor2Setting7 = 0x20000000,
-        /// <summary>  </summary>
-        Kotor2Setting8 = 0x40000000,
-        /// <summary>  </summary>
-        Kotor2Setting9 = 0x80000000,
+        K2Patch_Disciple                 = 0x0000000001000000,
+        /// <summary> Unlocks the door leading from Administration to the Dormitories. </summary>
+        K2Door_PerAdmin_ToDorms          = 0x0000000002000000,
+        /// <summary> Unlocks the door leading from Administration to the Mining Tunnels. </summary>
+        K2Door_PerAdmin_ToTunnels        = 0x0000000004000000,
+        /// <summary> Unlocks the door leading from Administration to the Harbinger Command Deck. </summary>
+        K2Door_PerAdmin_ToHarbinger      = 0x0000000008000000,
+        /// <summary> Unlocks the door leading from Administration to the Fuel Depot. </summary>
+        K2Door_PerAdmin_ToDepot          = 0x0000000010000000,
+        /// <summary> Unlocks the door leading from the Dormitories the the Asteroid Exterior. </summary>
+        K2Door_PerDorms_ToExterior       = 0x0000000020000000,
+        /// <summary> Unlocks the door leading from the Fuel Depot to the Mining Tunnels. </summary>
+        K2Door_PerDepot_ToTunnels        = 0x0000000040000000,
+        /// <summary> Unlocks the force fields inside the fuel depot. </summary>
+        K2Door_PerDepot_ForceFields      = 0x0000000080000000,
+        /// <summary> Unlocks the door leading from the Hangar to the Ebon Hawk. </summary>
+        K2Door_PerHangar_ToHawk          = 0x0000000100000000,
+        /// <summary> Unlocks the door preventing you from leaving your apartment in the Citadel Station Residential District. </summary>
+        K2Door_CitResidential_AptDoor    = 0x0000000200000000,
+        /// <summary> Unlocks the door leading from the Residential District to the Bumani Exchange Corp. </summary>
+        K2Door_CitResidential_ToExchange = 0x0000000400000000,
+        /// <summary> Unlocks the door leading from Secret Academy to the Polar Plateau. </summary>
+        K2Door_TelAcademy_ToPlateau      = 0x0000000800000000,
+        /// <summary> Unlocks the door of Zez Kai El's apartment. </summary>
+        K2Door_NarDocks_ZezDoor          = 0x0000001000000000,
+        /// <summary> Unlocks the door to the VIP room of the Jekk'Jekk Tarr. </summary>
+        K2Door_NarJekk_VipRoom           = 0x0000002000000000,
+        /// <summary> Unlocks the door leading from the Jekk'Jekk Tarr Tunnels to the Jekk'Jekk Tarr. </summary>
+        K2Door_NarTunnels_ToJekk         = 0x0000004000000000,
+        /// <summary> Unlocks the door leading from G0T0's Yacht to a broken version of the Ebon Hawk. </summary>
+        K2Door_NarYacht_ToHawk           = 0x0000008000000000,
+        /// <summary> Unlocks the door leading from the Courtyard to the Rebuilt Enclave. </summary>
+        K2Door_DanCourtyard_ToEnclave    = 0x0000010000000000,
+        /// <summary> Unlocks the door leading from the Sith Academy to the Valley of the Dark Lords. </summary>
+        K2Door_KorAcademy_ToValley       = 0x0000020000000000,
+        /// <summary> Deactivates the trigger preventing entry into the Secret Tomb within the Shyrack Cave. </summary>
+        K2Door_KorCave_ToTomb            = 0x0000040000000000,
+        /// <summary> Unlocks the door leading from the Wartime Entertainment Module to the Ravager. </summary>
+        K2Door_WarEntertain_ToRavager    = 0x0000080000000000,
+        K2Setting00                      = 0x0000100000000000,
+        K2Setting01                      = 0x0000200000000000,
+        K2Setting02                      = 0x0000400000000000,
+        K2Setting03                      = 0x0000800000000000,
+        K2Setting04                      = 0x0001000000000000,
+        K2Setting05                      = 0x0002000000000000,
+        K2Setting06                      = 0x0004000000000000,
+        K2Setting07                      = 0x0008000000000000,
+        K2Setting08                      = 0x0010000000000000,
+        K2Setting09                      = 0x0020000000000000,
+        K2Setting10                      = 0x0040000000000000,
+        K2Setting11                      = 0x0080000000000000,
+        K2Setting12                      = 0x0100000000000000,
+        K2Setting13                      = 0x0200000000000000,
+        K2Setting14                      = 0x0400000000000000,
+        K2Setting15                      = 0x0800000000000000,
+        K2Setting16                      = 0x1000000000000000,
+        K2Setting17                      = 0x2000000000000000,
+        K2Setting18                      = 0x4000000000000000,
+        K2Setting19                      = 0x8000000000000000,
     }
 
     [Flags]

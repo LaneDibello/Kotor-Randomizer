@@ -49,88 +49,98 @@ namespace kotor_Randomizer_2.Models
             {
                 new UnlockableDoor
                 {
-                    Area = "PER", Label = "Admin to Dorms", Tag = ModuleExtras.Default,
+                    Area = "PER", Label = "Admin to Dorms", Tag = ModuleExtras.K2Door_PerAdmin_ToDorms,
                     ToolTipMessage = "Unlocks the door leading from Administration to the Dormitories."
                 },
                 new UnlockableDoor
                 {
-                    Area = "PER", Label = "Admin to Tunnels", Tag = ModuleExtras.Default,
+                    Area = "PER", Label = "Admin to Tunnels", Tag = ModuleExtras.K2Door_PerAdmin_ToTunnels,
                     ToolTipMessage = "Unlocks the door leading from Administration to the Mining Tunnels."
                 },
                 new UnlockableDoor
                 {
-                    Area = "PER", Label = "Admin to Harbinger", Tag = ModuleExtras.Default,
+                    Area = "PER", Label = "Admin to Harbinger", Tag = ModuleExtras.K2Door_PerAdmin_ToHarbinger,
                     ToolTipMessage = "Unlocks the door leading from Administration to the Harbinger Command Deck."
                 },
                 new UnlockableDoor
                 {
-                    Area = "PER", Label = "Admin to Depot", Tag = ModuleExtras.Default,
+                    Area = "PER", Label = "Admin to Depot", Tag = ModuleExtras.K2Door_PerAdmin_ToDepot,
                     ToolTipMessage = "Unlocks the door leading from Administration to the Fuel Depot."
                 },
                 new UnlockableDoor
                 {
-                    Area = "PER", Label = "Depot to Tunnels", Tag = ModuleExtras.Default,
+                    Area = "PER", Label = "Dorms to Exterior", Tag = ModuleExtras.K2Door_PerDorms_ToExterior,
+                    ToolTipMessage = "Unlocks the door leading from the Dormitories the the Asteroid Exterior."
+                },
+                new UnlockableDoor
+                {
+                    Area = "PER", Label = "Depot to Tunnels", Tag = ModuleExtras.K2Door_PerDepot_ToTunnels,
                     ToolTipMessage = "Unlocks the door leading from the Fuel Depot to the Mining Tunnels."
                 },
                 new UnlockableDoor
                 {
-                    Area = "PER", Label = "Depot Force Fields", Tag = ModuleExtras.Default,
+                    Area = "PER", Label = "Depot Force Fields", Tag = ModuleExtras.K2Door_PerDepot_ForceFields,
                     ToolTipMessage = "Unlocks the force fields inside the fuel depot."
                 },
                 new UnlockableDoor
                 {
-                    Area = "PER", Label = "Hanger to Ebon Hawk", Tag = ModuleExtras.Default,
-                    ToolTipMessage = "Unlocks the door leading from the Hanger to the Ebon Hawk."
+                    Area = "PER", Label = "Hangar to Ebon Hawk", Tag = ModuleExtras.K2Door_PerHangar_ToHawk,
+                    ToolTipMessage = "Unlocks the door leading from the Hangar to the Ebon Hawk."
                 },
                 new UnlockableDoor
                 {
-                    Area = "CIT", Label = "Residential Apartment Door", Tag = ModuleExtras.Default,
+                    Area = "CIT", Label = "Residential Apartment Door", Tag = ModuleExtras.K2Door_CitResidential_AptDoor,
                     ToolTipMessage = "Unlocks the door preventing you from leaving your apartment in the Citadel Station Residential District."
                 },
                 new UnlockableDoor
                 {
-                    Area = "CIT", Label = "Residential to Exchange Corp", Tag = ModuleExtras.Default,
+                    Area = "CIT", Label = "Residential to Exchange Corp", Tag = ModuleExtras.K2Door_CitResidential_ToExchange,
                     ToolTipMessage = "Unlocks the door leading from the Residential District to the Bumani Exchange Corp."
                 },
                 new UnlockableDoor
                 {
-                    Area = "TEL", Label = "Academy to Plateau", Tag = ModuleExtras.Default,
+                    Area = "TEL", Label = "Academy to Plateau", Tag = ModuleExtras.K2Door_TelAcademy_ToPlateau,
                     ToolTipMessage = "Unlocks the door leading from Secret Academy to the Polar Plateau."
                 },
                 new UnlockableDoor
                 {
-                    Area = "NAR", Label = "Docks Zez Kai El's Door", Tag = ModuleExtras.Default,
+                    Area = "NAR", Label = "Docks Zez Kai El's Door", Tag = ModuleExtras.K2Door_NarDocks_ZezDoor,
                     ToolTipMessage = "Unlocks the door of Zez Kai El's apartment."
                 },
                 new UnlockableDoor
                 {
-                    Area = "NAR", Label = "Jekk'Jekk VIP Room", Tag = ModuleExtras.Default,
+                    Area = "NAR", Label = "Jekk'Jekk VIP Room", Tag = ModuleExtras.K2Door_NarJekk_VipRoom,
                     ToolTipMessage = "Unlocks the door to the VIP room of the Jekk'Jekk Tarr."
                 },
                 new UnlockableDoor
                 {
-                    Area = "NAR", Label = "Jekk Tunnels to Jekk'Jekk", Tag = ModuleExtras.Default,
+                    Area = "NAR", Label = "Jekk Tunnels to Jekk'Jekk", Tag = ModuleExtras.K2Door_NarTunnels_ToJekk,
                     ToolTipMessage = "Unlocks the door leading from the Jekk'Jekk Tarr Tunnels to the Jekk'Jekk Tarr."
                 },
                 new UnlockableDoor
                 {
-                    Area = "NAR", Label = "G0T0's Yacht to Broken Hawk", Tag = ModuleExtras.Default,
+                    Area = "NAR", Label = "G0T0's Yacht to Broken Hawk", Tag = ModuleExtras.K2Door_NarYacht_ToHawk,
                     ToolTipMessage = "Unlocks the door leading from G0T0's Yacht to a broken version of the Ebon Hawk."
                 },
                 new UnlockableDoor
                 {
-                    Area = "DAN", Label = "Courtyard to Rebuilt Enclave", Tag = ModuleExtras.Default,
+                    Area = "DAN", Label = "Courtyard to Rebuilt Enclave", Tag = ModuleExtras.K2Door_DanCourtyard_ToEnclave,
                     ToolTipMessage = "Unlocks the door leading from the Courtyard to the Rebuilt Enclave."
                 },
                 new UnlockableDoor
                 {
-                    Area = "KOR", Label = "Academy to Valley", Tag = ModuleExtras.Default,
+                    Area = "KOR", Label = "Academy to Valley", Tag = ModuleExtras.K2Door_KorAcademy_ToValley,
                     ToolTipMessage = "Unlocks the door leading from the Sith Academy to the Valley of the Dark Lords."
                 },
                 new UnlockableDoor
                 {
-                    Area = "KOR", Label = "Cave to Tomb", Tag = ModuleExtras.Default,
+                    Area = "KOR", Label = "Cave to Tomb", Tag = ModuleExtras.K2Door_KorCave_ToTomb,
                     ToolTipMessage = "Deactivates the trigger preventing entry into the Secret Tomb within the Shyrack Cave."
+                },
+                new UnlockableDoor
+                {
+                    Area = "WAR", Label = "Entertainment to Ravager", Tag = ModuleExtras.K2Door_WarEntertain_ToRavager,
+                    ToolTipMessage = "Unlocks the door leading from the Wartime Entertainment Module to the Ravager."
                 },
             };
 

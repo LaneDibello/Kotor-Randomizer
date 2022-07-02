@@ -69,7 +69,7 @@ namespace kotor_Randomizer_2
         private const string AREA_K2_PER_FUEL      = "103PER";
         private const string AREA_K2_PER_ASTROID   = "104PER";
         private const string AREA_K2_PER_DORMS     = "105PER";
-        private const string AREA_K2_PER_HANGER    = "106PER";
+        private const string AREA_K2_PER_HANGAR    = "106PER";
         private const string AREA_K2_TEL_RES       = "203TEL";
         private const string AREA_K2_TEL_ENTER_WAR = "222TEL";
         private const string AREA_K2_TEL_ACAD      = "262TEL";
@@ -147,17 +147,16 @@ namespace kotor_Randomizer_2
         public static void CreateGeneralSpoilerLog(XLWorkbook workbook, int seed = -1)
         {
             var ws = workbook.Worksheets.Add("General");
-            int i = 1;
+            var i = 1;
 
             // Write randomization seed.
             ws.Cell(i, 1).Value = "Seed";
             ws.Cell(i, 1).Style.Font.Bold = true;
-            if (seed < 0) ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
-            else          ws.Cell(i, 2).Value = seed;
+            ws.Cell(i, 2).Value = seed < 0 ? Properties.Settings.Default.Seed : seed;
             i++;
 
             // Write assembly version.
-            Version version = typeof(StartForm).Assembly.GetName().Version;
+            var version = typeof(StartForm).Assembly.GetName().Version;
             ws.Cell(i, 1).Value = "Version";
             ws.Cell(i, 1).Style.Font.Bold = true;
             ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
@@ -173,7 +172,7 @@ namespace kotor_Randomizer_2
             ws.Cell(i, 2).Style.Font.Bold = true;
             i++;
 
-            List<Tuple<string, string>> settings = new List<Tuple<string, string>>()
+            var settings = new List<Tuple<string, string>>()
             {
                 new Tuple<string, string>("Prevent Milestone Save Data Deletion", ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete  ).ToEnabledDisabled()),
                 new Tuple<string, string>("Include Minigames in Save",            ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames ).ToEnabledDisabled()),
@@ -323,9 +322,9 @@ namespace kotor_Randomizer_2
                     }
                     : new List<Tuple<string, string>>()
                     {
-                        new Tuple<string, string>("Prevent Save Deletion", ModuleExtrasValue.HasFlag(ModuleExtras.K2SavePatch    ).ToEnabledDisabled()),
-                        new Tuple<string, string>("Unlock Galaxy Map",     ModuleExtrasValue.HasFlag(ModuleExtras.K2GalaxyMap    ).ToEnabledDisabled()),
-                        new Tuple<string, string>("Patch Disciple Crash",  ModuleExtrasValue.HasFlag(ModuleExtras.K2DisciplePatch).ToEnabledDisabled()),
+                        new Tuple<string, string>("Prevent Save Deletion", ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_SaveDeletion    ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Unlock Galaxy Map",     ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_GalaxyMap    ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Patch Disciple Crash",  ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_Disciple).ToEnabledDisabled()),
                     };
 
                 foreach (var setting in settings)
@@ -350,8 +349,8 @@ namespace kotor_Randomizer_2
             ws.Cell(i, 2).Style.Font.Bold = true;
             i++;    // Skip a row.
 
-            string presetName = ShufflePreset;
-            bool isCustomPreset = false;
+            var presetName = ShufflePreset;
+            var isCustomPreset = false;
             if (string.IsNullOrWhiteSpace(ShufflePreset))
             {
                 presetName = "Custom";
@@ -699,7 +698,7 @@ namespace kotor_Randomizer_2
         internal static void Reset(Models.RandomizerBase rando = null)
         {
             // Reset digraph reachability settings.
-            var modulesPath = GameRandomized == Models.Game.Kotor1
+            var modulesPath = rando.Game == Models.Game.Kotor1
                 ? Path.Combine(Environment.CurrentDirectory, "Xml", "KotorModules.xml")
                 : Path.Combine(Environment.CurrentDirectory, "Xml", "Kotor2Modules.xml");
             Digraph.ResetSettings(rando, modulesPath);
@@ -804,13 +803,13 @@ namespace kotor_Randomizer_2
             var lev_files_b = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_LEV_COMMAND]));
 
             // Prison Block Fix - Unlock option to visit Hangar.
-            foreach (FileInfo fi in lev_files_a)
+            foreach (var fi in lev_files_a)
             {
                 // Skip any files that don't end in "s.rim".
                 if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
 
-                RIM r_lev = new RIM(fi.FullName);
-                GFF g_lev = new GFF(r_lev.File_Table.FirstOrDefault(x => x.Label == LABEL_LEV_ELEVATOR_A).File_Data);
+                var r_lev = new RIM(fi.FullName);
+                var g_lev = new GFF(r_lev.File_Table.FirstOrDefault(x => x.Label == LABEL_LEV_ELEVATOR_A).File_Data);
 
                 // Change Entry connecting for bridge option Index to 3, which will transition to the command deck
                 (((g_lev.Top_Level.Fields.FirstOrDefault(x => x.Label == "ReplyList")
@@ -830,13 +829,13 @@ namespace kotor_Randomizer_2
             }
 
             // Command Deck Fix - Unlock option to visit Hangar.
-            foreach (FileInfo fi in lev_files_b)
+            foreach (var fi in lev_files_b)
             {
                 // Skip any files that don't end in "s.rim".
                 if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
 
-                RIM r_lev = new RIM(fi.FullName);
-                GFF g_lev = new GFF(r_lev.File_Table.FirstOrDefault(x => x.Label == LABEL_LEV_ELEVATOR_B).File_Data);
+                var r_lev = new RIM(fi.FullName);
+                var g_lev = new GFF(r_lev.File_Table.FirstOrDefault(x => x.Label == LABEL_LEV_ELEVATOR_B).File_Data);
 
                 // Sets the active reference for the hangar option to nothing, meaning there is no requirement to transition to the hangar
                 (((g_lev.Top_Level.Fields.FirstOrDefault(x => x.Label == "ReplyList")
@@ -859,12 +858,12 @@ namespace kotor_Randomizer_2
             var lev_files_c = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_LEV_HANGAR]));
 
             // Hangar Fix - Enable the elevator so it can be used.
-            foreach (FileInfo fi in lev_files_c)
+            foreach (var fi in lev_files_c)
             {
                 // Skip any files that don't end in "s.rim".
                 if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
 
-                RIM r_lev = new RIM(fi.FullName);
+                var r_lev = new RIM(fi.FullName);
 
                 // While I possess the ability to edit this file programmatically, due to the complexity I have opted to just load the modded file into resources.
                 r_lev.File_Table.FirstOrDefault(x => x.Label == LABEL_LEV_ELEVATOR_C).File_Data = Properties.Resources.lev40_accntl_dlg;
@@ -978,15 +977,15 @@ namespace kotor_Randomizer_2
         {
             // Find the files associated with this area.
             var area_files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[area]));
-            foreach (FileInfo file in area_files)
+            foreach (var file in area_files)
             {
                 // Skip any files that don't end in "s.rim".
                 if (file.Name[file.Name.Length - 5] != 's') { continue; }
 
                 // Check the RIM's File_Table for any rFiles with the given label.
-                RIM rim = new RIM(file.FullName);
+                var rim = new RIM(file.FullName);
                 var rFiles = rim.File_Table.Where(x => x.Label == label);
-                foreach (RIM.rFile rFile in rFiles)
+                foreach (var rFile in rFiles)
                 {
                     rFile.File_Data = rawData;
                 }
@@ -1004,14 +1003,14 @@ namespace kotor_Randomizer_2
         private static void UnlockDoorInFile(KPaths paths, string area, string label)
         {
             var areaFiles = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[area]));
-            foreach (FileInfo fi in areaFiles)
+            foreach (var fi in areaFiles)
             {
                 // Skip any files that don't end in "s.rim".
                 if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
 
-                RIM r = new RIM(fi.FullName);   // Open what replaced this area.
-                RIM.rFile rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.UTD && x.Label == label);
-                GFF g = new GFF(rf.File_Data);  // Grab the door out of the file.
+                var r = new RIM(fi.FullName);   // Open what replaced this area.
+                var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.UTD && x.Label == label);
+                var g = new GFF(rf.File_Data);  // Grab the door out of the file.
 
                 // Set fields related to opening and unlocking.
                 (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "KeyRequired") as GFF.BYTE).Value = 0;
@@ -1117,27 +1116,28 @@ namespace kotor_Randomizer_2
         /// <param name="paths">KPaths object for this game.</param>
         private static void UnlockK2Doors(KPaths paths)
         {
+            var ex = ModuleExtrasValue;
             // In the future these'll be split into options, but for now here's all of them
-            UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTODORMS);
-            UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOMININGTUNNELS);
-            UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOFUELDEPOT);
-            UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOHARBINGER);
-            UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERTOMININGTUNNELS);
-            UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERFORCESHIELDS);
-            UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERSHIELD2);
-            UnlockDoorInFile(paths, AREA_K2_PER_DORMS,     LABEL_K2_105PERTOASTROID);
-            UnlockDoorInFile(paths, AREA_K2_PER_HANGER,    LABEL_K2_106PEREASTDOOR);
-            UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELAPPTDOOR);
-            UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELEXCHANGE);
-            UnlockDoorInFile(paths, AREA_K2_TEL_ENTER_WAR, LABEL_K2_222TELRAVAGER);
-            UnlockDoorInFile(paths, AREA_K2_TEL_ACAD,      LABEL_K2_262TELPLATEAU);
-            UnlockDoorInFile(paths, AREA_K2_NAR_DOCKS,     LABEL_K2_303NARZEZDOOR);
-            UnlockDoorInFile(paths, AREA_K2_NAR_JEKK,      LABEL_K2_304NARBACKROOM);
-            UnlockDoorInFile(paths, AREA_K2_NAR_J_TUNNELS, LABEL_K2_305NARTOJEKKJEKK);
-            UnlockDoorInFile(paths, AREA_K2_NAR_G0T0,      LABEL_K2_351NARG0T0EBONHAWK);
-            UnlockDoorInFile(paths, AREA_K2_DAN_COURTYARD, LABEL_K2_605DANREBUILTENCLAVE);
-            UnlockDoorInFile(paths, AREA_K2_KOR_ACAD,      LABEL_K2_702KORVALLEY);
-            UnlockDoorInFile(paths, AREA_K2_KOR_SHY,       LABEL_K2_710KORLUDOKRESSH);
+            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToDorms         )) UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTODORMS);
+            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToTunnels       )) UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOMININGTUNNELS);
+            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToDepot         )) UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOFUELDEPOT);
+            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToHarbinger     )) UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOHARBINGER);
+            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ToTunnels       )) UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERTOMININGTUNNELS);
+            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ForceFields     )) UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERFORCESHIELDS);
+            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ForceFields     )) UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERSHIELD2);
+            if (ex.HasFlag(ModuleExtras.K2Door_PerDorms_ToExterior      )) UnlockDoorInFile(paths, AREA_K2_PER_DORMS,     LABEL_K2_105PERTOASTROID);
+            if (ex.HasFlag(ModuleExtras.K2Door_PerHangar_ToHawk         )) UnlockDoorInFile(paths, AREA_K2_PER_HANGAR,    LABEL_K2_106PEREASTDOOR);
+            if (ex.HasFlag(ModuleExtras.K2Door_CitResidential_AptDoor   )) UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELAPPTDOOR);
+            if (ex.HasFlag(ModuleExtras.K2Door_CitResidential_ToExchange)) UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELEXCHANGE);
+            if (ex.HasFlag(ModuleExtras.K2Door_WarEntertain_ToRavager   )) UnlockDoorInFile(paths, AREA_K2_TEL_ENTER_WAR, LABEL_K2_222TELRAVAGER);
+            if (ex.HasFlag(ModuleExtras.K2Door_TelAcademy_ToPlateau     )) UnlockDoorInFile(paths, AREA_K2_TEL_ACAD,      LABEL_K2_262TELPLATEAU);
+            if (ex.HasFlag(ModuleExtras.K2Door_NarDocks_ZezDoor         )) UnlockDoorInFile(paths, AREA_K2_NAR_DOCKS,     LABEL_K2_303NARZEZDOOR);
+            if (ex.HasFlag(ModuleExtras.K2Door_NarJekk_VipRoom          )) UnlockDoorInFile(paths, AREA_K2_NAR_JEKK,      LABEL_K2_304NARBACKROOM);
+            if (ex.HasFlag(ModuleExtras.K2Door_NarTunnels_ToJekk        )) UnlockDoorInFile(paths, AREA_K2_NAR_J_TUNNELS, LABEL_K2_305NARTOJEKKJEKK);
+            if (ex.HasFlag(ModuleExtras.K2Door_NarYacht_ToHawk          )) UnlockDoorInFile(paths, AREA_K2_NAR_G0T0,      LABEL_K2_351NARG0T0EBONHAWK);
+            if (ex.HasFlag(ModuleExtras.K2Door_DanCourtyard_ToEnclave   )) UnlockDoorInFile(paths, AREA_K2_DAN_COURTYARD, LABEL_K2_605DANREBUILTENCLAVE);
+            if (ex.HasFlag(ModuleExtras.K2Door_KorAcademy_ToValley      )) UnlockDoorInFile(paths, AREA_K2_KOR_ACAD,      LABEL_K2_702KORVALLEY);
+            if (ex.HasFlag(ModuleExtras.K2Door_KorCave_ToTomb           )) UnlockDoorInFile(paths, AREA_K2_KOR_SHY,       LABEL_K2_710KORLUDOKRESSH);
 
             // Enable tranistions for these doors with linking modules but no flags
             EnableDoorTransition(paths, AREA_K2_PER_FUEL,  LABEL_K2_103PERTOMININGTUNNELS);
@@ -1386,15 +1386,15 @@ namespace kotor_Randomizer_2
 
             /// KotOR 2 Settings
             // Save Patch
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2SavePatch))
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_SaveDeletion))
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_MODULESAVE), Properties.Resources.modulesave)));
 
             // Unlock Galaxy Map
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2GalaxyMap))
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_GalaxyMap))
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_GALAXYMAP), Properties.Resources.a_galaxymap)));
 
             // Patch Disciple Crash
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2DisciplePatch))
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_Disciple))
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_DISC_JOIN), Properties.Resources.a_disc_join)));
 
             Task.WhenAll(tasks).Wait();

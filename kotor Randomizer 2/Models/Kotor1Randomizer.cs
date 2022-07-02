@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -1394,69 +1395,87 @@ namespace kotor_Randomizer_2.Models
 
                     // Perform category-based randomization.
                     var form = "... randomizing {0}.";
+                    var timer = new Stopwatch();
+                    timer.Start();
 
                     if (DoRandomizeModules)     // Randomize Modules
                     {
+                        timer.Restart();
                         Randomize.RestartRng();
                         ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_MODULES, string.Format(form, CATEGORY_MODULES));
                         ModuleRando.Module_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogModulesDone);
+                        Console.WriteLine($"===== MODULE RANDO COMPLETE: {timer.Elapsed}");
                     }
 
                     if (DoRandomizeItems)       // Randomize Items
                     {
+                        timer.Restart();
                         Randomize.RestartRng();
                         ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_ITEMS, string.Format(form, CATEGORY_ITEMS));
                         ItemRando.item_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogItemsDone);
+                        Console.WriteLine($"===== ITEM RANDO COMPLETE: {timer.Elapsed}");
                     }
 
                     if (DoRandomizeAudio)       // Randomize Audio
                     {
+                        timer.Restart();
                         Randomize.RestartRng();
                         ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_AUDIO, string.Format(form, CATEGORY_AUDIO));
                         SoundRando.sound_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogMusicSoundDone);
+                        Console.WriteLine($"===== AUDIO RANDO COMPLETE: {timer.Elapsed}");
                     }
 
                     if (DoRandomizeModels)      // Randomize Cosmetics (Models)
                     {
+                        timer.Restart();
                         Randomize.RestartRng();
                         ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_MODELS, string.Format(form, CATEGORY_MODELS));
                         ModelRando.model_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogItemsDone);
+                        Console.WriteLine($"===== MODEL RANDO COMPLETE: {timer.Elapsed}");
                     }
 
                     if (DoRandomizeTextures)    // Randomize Cosmetics (Textures)
                     {
+                        timer.Restart();
                         Randomize.RestartRng();
                         ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_TEXTURES, string.Format(form, CATEGORY_TEXTURES));
                         TextureRando.texture_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogTexturesDone);
+                        Console.WriteLine($"===== TEXTURE RANDO COMPLETE: {timer.Elapsed}");
                     }
 
                     if (DoRandomizeTables)      // Randomize Tables
                     {
+                        timer.Restart();
                         Randomize.RestartRng();
                         ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_TABLES, string.Format(form, CATEGORY_TABLES));
                         TwodaRandom.Twoda_rando(paths, this);
                         sw.WriteLine(Properties.Resources.Log2DADone);
+                        Console.WriteLine($"===== TABLE RANDO COMPLETE: {timer.Elapsed}");
                     }
 
                     if (DoRandomizeText)        // Randomize Text
                     {
+                        timer.Restart();
                         Randomize.RestartRng();
                         ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_TEXT, string.Format(form, CATEGORY_TEXT));
                         TextRando.text_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogTextDone);
+                        Console.WriteLine($"===== TEXT RANDO COMPLETE: {timer.Elapsed}");
                     }
 
                     if (DoRandomizeOther)       // Randomize Other
                     {
+                        timer.Restart();
                         Randomize.RestartRng();
                         ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_OTHER, string.Format(form, CATEGORY_OTHER));
                         OtherRando.other_rando(paths, this);
                         sw.WriteLine(Properties.Resources.LogOtherDone);
+                        Console.WriteLine($"===== OTHER RANDO COMPLETE: {timer.Elapsed}");
                     }
                 }
                 catch (Exception ex)

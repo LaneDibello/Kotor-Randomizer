@@ -116,12 +116,12 @@
     <Compile Include="KPaths.cs" />
     <Compile Include="Models\RandomizableItem.cs" />
     <Compile Include="Models\RandomizableTable.cs" />
+    <Compile Include="Models\RandomizerBase.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Models\RandomizerBase.cs" />
     <Compile Include="Randomization\TextRando.cs" />
     <Compile Include="Randomization\TwodaRandom.cs" />
     <Compile Include="Globals.cs" />
@@ -275,10 +275,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\ALLINCLUDED_modulesave.2da" />
-    <None Include="Resources\appearance.2da" />
-    <None Include="Resources\appearance_speedysuit.2da" />
-    <None Include="Resources\g_brakatan003.utc" />
+    <None Include="Resources\k1patch\ALLINCLUDED_modulesave.2da" />
+    <None Include="Resources\k1patch\appearance.2da" />
+    <None Include="Resources\k1patch\appearance_speedysuit.2da" />
+    <None Include="Resources\k1patch\g_brakatan003.utc" />
     <None Include="Resources\k2patch\a_disc_join.ncs" />
     <None Include="Resources\k2patch\a_disc_join.nss" />
     <None Include="Resources\k2patch\a_galaxymap.ncs" />
@@ -287,22 +287,22 @@
     <None Include="Resources\k2patch\modulesave.2da" />
     <None Include="Resources\k2patch\r_to003EBO.ncs" />
     <None Include="Resources\k2patch\r_to003EBO.nss" />
-    <None Include="Resources\k33b_openacademy.ncs" />
-    <None Include="Resources\k36_pkor_enter.ncs" />
-    <None Include="Resources\k_pdan_13_area.ncs" />
-    <None Include="Resources\k_pebn_galaxy.ncs" />
-    <None Include="Resources\k_pebo_mgheart.ncs" />
-    <None Include="Resources\k_plev_goto40aa.ncs" />
-    <None Include="Resources\k_plev_goto40ab.ncs" />
-    <None Include="Resources\k_ren_visionland.ncs" />
-    <None Include="Resources\lev40_accntl_dlg.dlg" />
-    <None Include="Resources\m10aa.git" />
-    <None Include="Resources\MGINCLUDED_modulesave.2da" />
-    <None Include="Resources\NODELETE_ALLINCLUDED_modulesave.2da" />
-    <None Include="Resources\NODELETE_MGINCLUDED_modulesave.2da" />
-    <None Include="Resources\NODELETE_modulesave.2da" />
-    <None Include="Resources\pebn_mystery.dlg" />
-    <None Include="Resources\tar02_janice021.dlg" />
+    <None Include="Resources\k1patch\k33b_openacademy.ncs" />
+    <None Include="Resources\k1patch\k36_pkor_enter.ncs" />
+    <None Include="Resources\k1patch\k_pdan_13_area.ncs" />
+    <None Include="Resources\k1patch\k_pebn_galaxy.ncs" />
+    <None Include="Resources\k1patch\k_pebo_mgheart.ncs" />
+    <None Include="Resources\k1patch\k_plev_goto40aa.ncs" />
+    <None Include="Resources\k1patch\k_plev_goto40ab.ncs" />
+    <None Include="Resources\k1patch\k_ren_visionland.ncs" />
+    <None Include="Resources\k1patch\lev40_accntl_dlg.dlg" />
+    <None Include="Resources\k1patch\m10aa.git" />
+    <None Include="Resources\k1patch\MGINCLUDED_modulesave.2da" />
+    <None Include="Resources\k1patch\NODELETE_ALLINCLUDED_modulesave.2da" />
+    <None Include="Resources\k1patch\NODELETE_MGINCLUDED_modulesave.2da" />
+    <None Include="Resources\k1patch\NODELETE_modulesave.2da" />
+    <None Include="Resources\k1patch\pebn_mystery.dlg" />
+    <None Include="Resources\k1patch\tar02_janice021.dlg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

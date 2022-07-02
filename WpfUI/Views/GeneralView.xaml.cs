@@ -22,6 +22,7 @@ namespace Randomizer_WPF.Views
     public partial class GeneralView : UserControl
     {
         #region Members
+
         private ObservableCollection<UnlockableDoor> lvLockedItemSource = new ObservableCollection<UnlockableDoor>();
         private SortAdorner lvLockedSortAdorner = null;
         private GridViewColumnHeader lvLockedSortCol = null;
@@ -29,14 +30,17 @@ namespace Randomizer_WPF.Views
         private SortAdorner lvUnlockedSortAdorner = null;
         private GridViewColumnHeader lvUnlockedSortCol = null;
 
-        bool Constructed = false;
+        private bool Constructed = false;
+
         #endregion
 
         #region Constructors
+
         public GeneralView()
         {
             InitializeComponent();
         }
+
         #endregion
 
         #region Dependency Properties
@@ -66,95 +70,94 @@ namespace Randomizer_WPF.Views
 
         #region Public Properties
 
-
         public bool IsKotor2Selected
         {
-            get { return (bool)GetValue(IsKotor2SelectedProperty); }
-            set { SetValue(IsKotor2SelectedProperty, value); }
+            get => (bool)GetValue(IsKotor2SelectedProperty);
+            set => SetValue(IsKotor2SelectedProperty, value);
         }
 
         public string Kotor1Path
         {
-            get { return (string)GetValue(Kotor1PathProperty); }
-            set { SetValue(Kotor1PathProperty, value); }
+            get => (string)GetValue(Kotor1PathProperty);
+            set => SetValue(Kotor1PathProperty, value);
         }
 
         public string Kotor2Path
         {
-            get { return (string)GetValue(Kotor2PathProperty); }
-            set { SetValue(Kotor2PathProperty, value); }
+            get => (string)GetValue(Kotor2PathProperty);
+            set => SetValue(Kotor2PathProperty, value);
         }
 
         public string PresetPath
         {
-            get { return (string)GetValue(PresetPathProperty); }
-            set { SetValue(PresetPathProperty, value); }
+            get => (string)GetValue(PresetPathProperty);
+            set => SetValue(PresetPathProperty, value);
         }
 
         public string SpoilerPath
         {
-            get { return (string)GetValue(SpoilerPathProperty); }
-            set { SetValue(SpoilerPathProperty, value); }
+            get => (string)GetValue(SpoilerPathProperty);
+            set => SetValue(SpoilerPathProperty, value);
         }
 
         public bool SaveDataDeleteMilestone
         {
-            get { return (bool)GetValue(SaveDataDeleteMilestoneProperty); }
-            set { SetValue(SaveDataDeleteMilestoneProperty, value); }
+            get => (bool)GetValue(SaveDataDeleteMilestoneProperty);
+            set => SetValue(SaveDataDeleteMilestoneProperty, value);
         }
 
         public bool SaveDataIncludeMinigames
         {
-            get { return (bool)GetValue(SaveDataIncludeMinigamesProperty); }
-            set { SetValue(SaveDataIncludeMinigamesProperty, value); }
+            get => (bool)GetValue(SaveDataIncludeMinigamesProperty);
+            set => SetValue(SaveDataIncludeMinigamesProperty, value);
         }
 
         public bool SaveDataIncludeAll
         {
-            get { return (bool)GetValue(SaveDataIncludeAllProperty); }
-            set { SetValue(SaveDataIncludeAllProperty, value); }
+            get => (bool)GetValue(SaveDataIncludeAllProperty);
+            set => SetValue(SaveDataIncludeAllProperty, value);
         }
 
         public bool QolAddSpiceLab
         {
-            get { return (bool)GetValue(QolAddSpiceLabProperty); }
-            set { SetValue(QolAddSpiceLabProperty, value); }
+            get => (bool)GetValue(QolAddSpiceLabProperty);
+            set => SetValue(QolAddSpiceLabProperty, value);
         }
 
         public bool QolFastEnvirosuit
         {
-            get { return (bool)GetValue(QolFastEnvirosuitProperty); }
-            set { SetValue(QolFastEnvirosuitProperty, value); }
+            get => (bool)GetValue(QolFastEnvirosuitProperty);
+            set => SetValue(QolFastEnvirosuitProperty, value);
         }
 
         public bool QolEarlyT3
         {
-            get { return (bool)GetValue(QolEarlyT3Property); }
-            set { SetValue(QolEarlyT3Property, value); }
+            get => (bool)GetValue(QolEarlyT3Property);
+            set => SetValue(QolEarlyT3Property, value);
         }
 
         public bool QolFixDreamSequence
         {
-            get { return (bool)GetValue(QolFixDreamSequenceProperty); }
-            set { SetValue(QolFixDreamSequenceProperty, value); }
+            get => (bool)GetValue(QolFixDreamSequenceProperty);
+            set => SetValue(QolFixDreamSequenceProperty, value);
         }
 
         public bool QolFixFighterEncounter
         {
-            get { return (bool)GetValue(QolFixFighterEncounterProperty); }
-            set { SetValue(QolFixFighterEncounterProperty, value); }
+            get => (bool)GetValue(QolFixFighterEncounterProperty);
+            set => SetValue(QolFixFighterEncounterProperty, value);
         }
 
         public bool QolFixMindPrison
         {
-            get { return (bool)GetValue(QolFixMindPrisonProperty); }
-            set { SetValue(QolFixMindPrisonProperty, value); }
+            get => (bool)GetValue(QolFixMindPrisonProperty);
+            set => SetValue(QolFixMindPrisonProperty, value);
         }
 
         public bool QolFixModuleCoordinates
         {
-            get { return (bool)GetValue(QolFixModuleCoordinatesProperty); }
-            set { SetValue(QolFixModuleCoordinatesProperty, value); }
+            get => (bool)GetValue(QolFixModuleCoordinatesProperty);
+            set => SetValue(QolFixModuleCoordinatesProperty, value);
         }
 
         public bool K2SavePatch
@@ -178,6 +181,7 @@ namespace Randomizer_WPF.Views
         #endregion
 
         #region Events
+
         private void BtnLockAll_Click(object sender, RoutedEventArgs e)
         {
             var view = CollectionViewSource.GetDefaultView(lvUnlocked.ItemsSource);
@@ -191,17 +195,17 @@ namespace Randomizer_WPF.Views
 
             foreach (var item in toRemove)
             {
-                lvUnlockedItemSource.Remove(item);
+                _ = lvUnlockedItemSource.Remove(item);
             }
         }
 
         private void BtnLockSelected_Click(object sender, RoutedEventArgs e)
         {
             var selected = lvUnlocked.SelectedItems.OfType<UnlockableDoor>().ToList();
-            foreach (UnlockableDoor item in selected)
+            foreach (var item in selected)
             {
                 lvLockedItemSource.Add(item);
-                lvUnlockedItemSource.Remove(item);
+                _ = lvUnlockedItemSource.Remove(item);
             }
         }
 
@@ -218,17 +222,17 @@ namespace Randomizer_WPF.Views
 
             foreach (var item in toRemove)
             {
-                lvLockedItemSource.Remove(item);
+                _ = lvLockedItemSource.Remove(item);
             }
         }
 
         private void BtnUnlockSelected_Click(object sender, RoutedEventArgs e)
         {
             var selected = lvLocked.SelectedItems.OfType<UnlockableDoor>().ToList();
-            foreach (UnlockableDoor item in selected)
+            foreach (var item in selected)
             {
                 lvUnlockedItemSource.Add(item);
-                lvLockedItemSource.Remove(item);
+                _ = lvLockedItemSource.Remove(item);
             }
         }
 
@@ -296,7 +300,7 @@ namespace Randomizer_WPF.Views
             // Locked item clicked... move it to the Unlocked list.
             var item = ((ListViewItem)sender).Content as UnlockableDoor;
             lvUnlockedItemSource.Add(item);
-            lvLockedItemSource.Remove(item);
+            _ = lvLockedItemSource.Remove(item);
         }
 
         private void LvUnlockedColumnHeader_Click(object sender, RoutedEventArgs e)
@@ -316,7 +320,7 @@ namespace Randomizer_WPF.Views
             // Unlocked item clicked... move it to the Locked list.
             var item = ((ListViewItem)sender).Content as UnlockableDoor;
             lvLockedItemSource.Add(item);
-            lvUnlockedItemSource.Remove(item);
+            _ = lvUnlockedItemSource.Remove(item);
         }
 
         private void TxtFilter_TextChanged(object sender, TextChangedEventArgs e)
@@ -327,10 +331,15 @@ namespace Randomizer_WPF.Views
 
         private void View_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (DataContext is Kotor1Randomizer k1rand)
+            //if (DataContext is Kotor1Randomizer k1rand)
+            //{
+            //    lvLockedItemSource = k1rand.GeneralLockedDoors;
+            //    lvUnlockedItemSource = k1rand.GeneralUnlockedDoors;
+            //}
+            if (DataContext is IGeneralSettings settings)
             {
-                lvLockedItemSource = k1rand.GeneralLockedDoors;
-                lvUnlockedItemSource = k1rand.GeneralUnlockedDoors;
+                lvLockedItemSource = settings.GeneralLockedDoors;
+                lvUnlockedItemSource = settings.GeneralUnlockedDoors;
             }
         }
 
@@ -372,12 +381,14 @@ namespace Randomizer_WPF.Views
         #endregion
 
         #region Methods
+
         private bool UnlockFilter(object item)
         {
             if (string.IsNullOrEmpty(txtFilter.Text)) return true;
             else return (item as UnlockableDoor).Label.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0 ||
                         (item as UnlockableDoor).Area.IndexOf( txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0;
         }
+
         #endregion
     }
 }
