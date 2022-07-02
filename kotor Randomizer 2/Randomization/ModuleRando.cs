@@ -65,22 +65,22 @@ namespace kotor_Randomizer_2
         #region K2 Consts
 
         // Zones
-        private const string AREA_K2_PER_ADMIN     = "101PER";
-        private const string AREA_K2_PER_FUEL      = "103PER";
-        private const string AREA_K2_PER_ASTROID   = "104PER";
-        private const string AREA_K2_PER_DORMS     = "105PER";
-        private const string AREA_K2_PER_HANGAR    = "106PER";
-        private const string AREA_K2_TEL_RES       = "203TEL";
-        private const string AREA_K2_TEL_ENTER_WAR = "222TEL";
-        private const string AREA_K2_TEL_ACAD      = "262TEL";
-        private const string AREA_K2_NAR_DOCKS     = "303NAR";
-        private const string AREA_K2_NAR_JEKK      = "304NAR";
-        private const string AREA_K2_NAR_J_TUNNELS = "305NAR";
-        private const string AREA_K2_NAR_G0T0      = "351NAR";
-        private const string AREA_K2_DAN_COURTYARD = "605DAN";
-        private const string AREA_K2_KOR_ACAD      = "702KOR";
-        private const string AREA_K2_KOR_SHY       = "710KOR";
-        private const string AREA_K2_MAL_SURFACE   = "901MAL";
+        private static readonly string AREA_K2_PER_ADMIN     = "101PER";
+        private static readonly string AREA_K2_PER_FUEL      = "103PER";
+        private static readonly string AREA_K2_PER_ASTROID   = "104PER";
+        private static readonly string AREA_K2_PER_DORMS     = "105PER";
+        private static readonly string AREA_K2_PER_HANGAR    = "106PER";
+        private static readonly string AREA_K2_TEL_RES       = "203TEL";
+        private static readonly string AREA_K2_TEL_ENTER_WAR = "222TEL";
+        private static readonly string AREA_K2_TEL_ACAD      = "262TEL";
+        private static readonly string AREA_K2_NAR_DOCKS     = "303NAR";
+        private static readonly string AREA_K2_NAR_JEKK      = "304NAR";
+        private static readonly string AREA_K2_NAR_J_TUNNELS = "305NAR";
+        private static readonly string AREA_K2_NAR_G0T0      = "351NAR";
+        private static readonly string AREA_K2_DAN_COURTYARD = "605DAN";
+        private static readonly string AREA_K2_KOR_ACAD      = "702KOR";
+        private static readonly string AREA_K2_KOR_SHY       = "710KOR";
+        private static readonly string AREA_K2_MAL_SURFACE   = "901MAL";
 
         // Locked Doors
         private const string LABEL_K2_101PERTODORMS         = "sw_door_per006";     // Dorms from Admin
@@ -1008,25 +1008,31 @@ namespace kotor_Randomizer_2
                 // Skip any files that don't end in "s.rim".
                 if (fi.Name[fi.Name.Length - 5] != 's') { continue; }
 
-                var r = new RIM(fi.FullName);   // Open what replaced this area.
-                var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.UTD && x.Label == label);
-                var g = new GFF(rf.File_Data);  // Grab the door out of the file.
+                lock (area)
+                {
+                    var r = new RIM(fi.FullName);   // Open what replaced this area.
+                    var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.UTD && x.Label == label);
+                    var g = new GFF(rf.File_Data);  // Grab the door out of the file.
 
-                // Set fields related to opening and unlocking.
-                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "KeyRequired") as GFF.BYTE).Value = 0;
-                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Locked") as GFF.BYTE).Value = 0;
-                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "OpenLockDC") as GFF.BYTE).Value = 0;
-                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Plot") as GFF.BYTE).Value = 0;
+                    // Set fields related to opening and unlocking.
+                    (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "KeyRequired") as GFF.BYTE ).Value = 0;
+                    (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Locked"     ) as GFF.BYTE ).Value = 0;
+                    (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "OpenLockDC" ) as GFF.BYTE ).Value = 0;
+                    (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Plot"       ) as GFF.BYTE ).Value = 0;
 
-                // Set fields related to bashing open.
-                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Hardness") as GFF.BYTE).Value = 0;
-                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "HP") as GFF.SHORT).Value = 1;
-                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "CurrentHP") as GFF.SHORT).Value = 1;
-                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Min1HP") as GFF.BYTE).Value = 0;
+                    // Set fields related to bashing open.
+                    (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Hardness"   ) as GFF.BYTE ).Value = 0;
+                    (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "HP"         ) as GFF.SHORT).Value = 1;
+                    (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "CurrentHP"  ) as GFF.SHORT).Value = 1;
+                    (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Min1HP"     ) as GFF.BYTE ).Value = 0;
 
-                // Write change(s) to file.
-                rf.File_Data = g.ToRawData();
-                r.WriteToFile(fi.FullName);
+                    // Set fields related to interacting.
+                    (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Static"     ) as GFF.BYTE ).Value = 0;
+
+                    // Write change(s) to file.
+                    rf.File_Data = g.ToRawData();
+                    r.WriteToFile(fi.FullName);
+                }
             }
         }
 
@@ -1036,24 +1042,24 @@ namespace kotor_Randomizer_2
         /// <param name="paths">KPaths object for this game.</param>
         private static void UnlockK1Doors(KPaths paths)
         {
+            var tasks = new List<Task>();
             var extrasValue = ModuleExtrasValue;
 
             // Dantooine Ruins
             if (extrasValue.HasFlag(ModuleExtras.UnlockDanRuins))
             {
-                UnlockDoorInFile(paths, AREA_DAN_COURTYARD, LABEL_DANT_DOOR);
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_DAN_COURTYARD, LABEL_DANT_DOOR)));
             }
 
             // Korriban After the Tomb Encounter
             if (extrasValue.HasFlag(ModuleExtras.UnlockKorValley))
             {
-                UnlockDoorInFile(paths, AREA_KOR_ENTRANCE, LABEL_KOR_ENTRANCE_ACADEMY);
-                UnlockDoorInFile(paths, AREA_KOR_VALLEY, LABEL_KOR_VALLEY_ACADEMY);
-                UnlockDoorInFile(paths, AREA_KOR_VALLEY, LABEL_KOR_VALLEY_AJUNTA);
-                UnlockDoorInFile(paths, AREA_KOR_VALLEY, LABEL_KOR_VALLEY_MARKA);
-                UnlockDoorInFile(paths, AREA_KOR_VALLEY, LABEL_KOR_VALLEY_NAGA);
-                UnlockDoorInFile(paths, AREA_KOR_VALLEY, LABEL_KOR_VALLEY_TULAK);
-
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_KOR_ENTRANCE, LABEL_KOR_ENTRANCE_ACADEMY)));
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_KOR_VALLEY,   LABEL_KOR_VALLEY_ACADEMY  )));
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_KOR_VALLEY,   LABEL_KOR_VALLEY_AJUNTA   )));
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_KOR_VALLEY,   LABEL_KOR_VALLEY_MARKA    )));
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_KOR_VALLEY,   LABEL_KOR_VALLEY_NAGA     )));
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_KOR_VALLEY,   LABEL_KOR_VALLEY_TULAK    )));
             }
 
             // Leviathan Elevators
@@ -1069,45 +1075,47 @@ namespace kotor_Randomizer_2
             // Manaan Embassy Door to Submersible
             if (extrasValue.HasFlag(ModuleExtras.UnlockManEmbassy))
             {
-                UnlockDoorInFile(paths, AREA_MAN_EAST_CENTRAL, LABEL_MAN_SUB_DOOR03);   // Unlock door into Republic Embassy.
-                UnlockDoorInFile(paths, AREA_MAN_EAST_CENTRAL, LABEL_MAN_SUB_DOOR05);   // Unlock door to submersible.
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_MAN_EAST_CENTRAL, LABEL_MAN_SUB_DOOR03)));    // Unlock door into Republic Embassy.
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_MAN_EAST_CENTRAL, LABEL_MAN_SUB_DOOR05)));    // Unlock door to submersible.
             }
 
             // Manaan Sith Hangar Door
             if (extrasValue.HasFlag(ModuleExtras.UnlockManHangar))
             {
-                UnlockDoorInFile(paths, AREA_MAN_DOCKING_BAY, LABEL_MAN_SITH_HANGAR);   // Unlock door into Republic Embassy.
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_MAN_DOCKING_BAY, LABEL_MAN_SITH_HANGAR)));    // Unlock door into Republic Embassy.
             }
 
             // Star Forge Door to Bastila
             if (extrasValue.HasFlag(ModuleExtras.UnlockStaBastila))
             {
-                UnlockDoorInFile(paths, AREA_STA_DECK3, LABEL_STA_BAST_DOOR);
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_STA_DECK3, LABEL_STA_BAST_DOOR)));
             }
 
             // Taris Lower City Door to Undercity
             if (extrasValue.HasFlag(ModuleExtras.UnlockTarUndercity))
             {
-                UnlockDoorInFile(paths, AREA_TAR_LOWER_CITY, LABEL_TAR_UNDERCITY);
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_TAR_LOWER_CITY, LABEL_TAR_UNDERCITY)));
             }
 
             // Taris Lower City Door to Vulkar Base
             if (extrasValue.HasFlag(ModuleExtras.UnlockTarVulkar))
             {
-                UnlockDoorInFile(paths, AREA_TAR_LOWER_CITY, LABEL_TAR_VULKAR);
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_TAR_LOWER_CITY, LABEL_TAR_VULKAR)));
             }
 
             // Lehon Temple Roof
             if (extrasValue.HasFlag(ModuleExtras.UnlockUnkSummit))
             {
-                UnlockDoorInFile(paths, AREA_UNK_SUMMIT, LABEL_UNK_DOOR);
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_UNK_SUMMIT, LABEL_UNK_DOOR)));
             }
 
             // Lehon Temple Main Floor
             if (extrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit))
             {
-                UnlockDoorInFile(paths, AREA_UNK_MAIN_FLOOR, LABEL_UNK_EXIT_DOOR);
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_UNK_MAIN_FLOOR, LABEL_UNK_EXIT_DOOR)));
             }
+
+            Task.WhenAll(tasks).Wait();
         }
 
         /// <summary>
@@ -1116,28 +1124,32 @@ namespace kotor_Randomizer_2
         /// <param name="paths">KPaths object for this game.</param>
         private static void UnlockK2Doors(KPaths paths)
         {
+            var tasks = new List<Task>();
             var ex = ModuleExtrasValue;
+
             // In the future these'll be split into options, but for now here's all of them
-            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToDorms         )) UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTODORMS);
-            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToTunnels       )) UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOMININGTUNNELS);
-            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToDepot         )) UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOFUELDEPOT);
-            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToHarbinger     )) UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOHARBINGER);
-            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ToTunnels       )) UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERTOMININGTUNNELS);
-            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ForceFields     )) UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERFORCESHIELDS);
-            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ForceFields     )) UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERSHIELD2);
-            if (ex.HasFlag(ModuleExtras.K2Door_PerDorms_ToExterior      )) UnlockDoorInFile(paths, AREA_K2_PER_DORMS,     LABEL_K2_105PERTOASTROID);
-            if (ex.HasFlag(ModuleExtras.K2Door_PerHangar_ToHawk         )) UnlockDoorInFile(paths, AREA_K2_PER_HANGAR,    LABEL_K2_106PEREASTDOOR);
-            if (ex.HasFlag(ModuleExtras.K2Door_CitResidential_AptDoor   )) UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELAPPTDOOR);
-            if (ex.HasFlag(ModuleExtras.K2Door_CitResidential_ToExchange)) UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELEXCHANGE);
-            if (ex.HasFlag(ModuleExtras.K2Door_WarEntertain_ToRavager   )) UnlockDoorInFile(paths, AREA_K2_TEL_ENTER_WAR, LABEL_K2_222TELRAVAGER);
-            if (ex.HasFlag(ModuleExtras.K2Door_TelAcademy_ToPlateau     )) UnlockDoorInFile(paths, AREA_K2_TEL_ACAD,      LABEL_K2_262TELPLATEAU);
-            if (ex.HasFlag(ModuleExtras.K2Door_NarDocks_ZezDoor         )) UnlockDoorInFile(paths, AREA_K2_NAR_DOCKS,     LABEL_K2_303NARZEZDOOR);
-            if (ex.HasFlag(ModuleExtras.K2Door_NarJekk_VipRoom          )) UnlockDoorInFile(paths, AREA_K2_NAR_JEKK,      LABEL_K2_304NARBACKROOM);
-            if (ex.HasFlag(ModuleExtras.K2Door_NarTunnels_ToJekk        )) UnlockDoorInFile(paths, AREA_K2_NAR_J_TUNNELS, LABEL_K2_305NARTOJEKKJEKK);
-            if (ex.HasFlag(ModuleExtras.K2Door_NarYacht_ToHawk          )) UnlockDoorInFile(paths, AREA_K2_NAR_G0T0,      LABEL_K2_351NARG0T0EBONHAWK);
-            if (ex.HasFlag(ModuleExtras.K2Door_DanCourtyard_ToEnclave   )) UnlockDoorInFile(paths, AREA_K2_DAN_COURTYARD, LABEL_K2_605DANREBUILTENCLAVE);
-            if (ex.HasFlag(ModuleExtras.K2Door_KorAcademy_ToValley      )) UnlockDoorInFile(paths, AREA_K2_KOR_ACAD,      LABEL_K2_702KORVALLEY);
-            if (ex.HasFlag(ModuleExtras.K2Door_KorCave_ToTomb           )) UnlockDoorInFile(paths, AREA_K2_KOR_SHY,       LABEL_K2_710KORLUDOKRESSH);
+            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToDorms         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTODORMS        )));
+            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToTunnels       )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOMININGTUNNELS)));
+            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToDepot         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOFUELDEPOT    )));
+            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToHarbinger     )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOHARBINGER    )));
+            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ToTunnels       )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERTOMININGTUNNELS)));
+            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ForceFields     )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERFORCESHIELDS   )));
+            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ForceFields     )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERSHIELD2        )));
+            if (ex.HasFlag(ModuleExtras.K2Door_PerDorms_ToExterior      )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_DORMS,     LABEL_K2_105PERTOASTROID      )));
+            if (ex.HasFlag(ModuleExtras.K2Door_PerHangar_ToHawk         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_HANGAR,    LABEL_K2_106PEREASTDOOR       )));
+            if (ex.HasFlag(ModuleExtras.K2Door_CitResidential_AptDoor   )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELAPPTDOOR       )));
+            if (ex.HasFlag(ModuleExtras.K2Door_CitResidential_ToExchange)) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELEXCHANGE       )));
+            if (ex.HasFlag(ModuleExtras.K2Door_WarEntertain_ToRavager   )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_TEL_ENTER_WAR, LABEL_K2_222TELRAVAGER        )));
+            if (ex.HasFlag(ModuleExtras.K2Door_TelAcademy_ToPlateau     )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_TEL_ACAD,      LABEL_K2_262TELPLATEAU        )));
+            if (ex.HasFlag(ModuleExtras.K2Door_NarDocks_ZezDoor         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_DOCKS,     LABEL_K2_303NARZEZDOOR        )));
+            if (ex.HasFlag(ModuleExtras.K2Door_NarJekk_VipRoom          )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_JEKK,      LABEL_K2_304NARBACKROOM       )));
+            if (ex.HasFlag(ModuleExtras.K2Door_NarTunnels_ToJekk        )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_J_TUNNELS, LABEL_K2_305NARTOJEKKJEKK     )));
+            if (ex.HasFlag(ModuleExtras.K2Door_NarYacht_ToHawk          )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_G0T0,      LABEL_K2_351NARG0T0EBONHAWK   )));
+            if (ex.HasFlag(ModuleExtras.K2Door_DanCourtyard_ToEnclave   )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_DAN_COURTYARD, LABEL_K2_605DANREBUILTENCLAVE )));
+            if (ex.HasFlag(ModuleExtras.K2Door_KorAcademy_ToValley      )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_KOR_ACAD,      LABEL_K2_702KORVALLEY         )));
+            if (ex.HasFlag(ModuleExtras.K2Door_KorCave_ToTomb           )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_KOR_SHY,       LABEL_K2_710KORLUDOKRESSH     )));
+
+            Task.WhenAll(tasks).Wait();
 
             // Enable tranistions for these doors with linking modules but no flags
             EnableDoorTransition(paths, AREA_K2_PER_FUEL,  LABEL_K2_103PERTOMININGTUNNELS);
@@ -1384,7 +1396,7 @@ namespace kotor_Randomizer_2
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, KOR_VALLEY_ENTER), Properties.Resources.k36_pkor_enter)));
             }
 
-            /// KotOR 2 Settings
+            /// *** KOTOR 2 SETTINGS ***
             // Save Patch
             if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_SaveDeletion))
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_MODULESAVE), Properties.Resources.modulesave)));
