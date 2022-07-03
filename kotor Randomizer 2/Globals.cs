@@ -204,7 +204,7 @@ namespace kotor_Randomizer_2
 
         K2Patch_TelAcademy_ToHawk        = 0x0000100000000000,
         K2Patch_MalSurface_ToHawk        = 0x0000200000000000,
-        K2Settings05                     = 0x0000400000000000,
+        K2Patch_CitTerminals             = 0x0000400000000000,
         K2Door_DxnMando_Basalisk         = 0x0000800000000000,
         K2Patch_PerAsteroid_ToTunnels    = 0x0001000000000000,
         K2Patch_DxnCamp_ToIziz           = 0x0002000000000000,

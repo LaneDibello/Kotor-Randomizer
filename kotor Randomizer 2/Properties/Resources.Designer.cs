@@ -63,6 +63,16 @@ namespace kotor_Randomizer_2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _200_info_term {
+            get {
+                object obj = ResourceManager.GetObject("_200_info_term", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] _262exit {
             get {
                 object obj = ResourceManager.GetObject("_262exit", resourceCulture);
@@ -86,6 +96,16 @@ namespace kotor_Randomizer_2.Properties {
         internal static byte[] a_galaxymap {
             get {
                 object obj = ResourceManager.GetObject("a_galaxymap", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] a_tel_globalset {
+            get {
+                object obj = ResourceManager.GetObject("a_tel_globalset", resourceCulture);
                 return ((byte[])(obj));
             }
         }

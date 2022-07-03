@@ -393,6 +393,9 @@
   <data name="tar02_janice021" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\k1patch\tar02_janice021.dlg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="a_tel_globalset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\a_tel_globalset.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="r_to003EBOelev" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\k2patch\r_to003EBOelev.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -404,6 +407,9 @@
   </data>
   <data name="shuttle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\k2patch\shuttle.dlg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_200_info_term" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\200_info_term.dlg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="_262exit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\k2patch\262exit.dlg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

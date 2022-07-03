@@ -1583,7 +1583,51 @@ namespace kotor_Randomizer_2
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_COR_CUTSCENE), Properties.Resources.r_to950COR)));
             }
 
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_CitTerminals))
+                tasks.Add(Task.Run(() => FixCitInfoTerminals(paths)));
+
             Task.WhenAll(tasks).Wait();
+        }
+
+        private static void FixCitInfoTerminals(KPaths paths)
+        {
+            // Grab the info terminal dialog
+            var g = new GFF(Properties.Resources._200_info_term);
+
+            // Loop through the conversation reply list
+            foreach (var reply in (g.Top_Level.Fields.FirstOrDefault(f => f.Label == "ReplyList") as GFF.LIST).Structs)
+            {
+                // Loop through entries tied to this reply that run the conditional script 'c_modname_comp'
+                foreach (var entry in (reply.Fields.FirstOrDefault(
+                    f => f.Label == "EntriesList") as GFF.LIST).Structs.Where(
+                        s => s.Fields.Any(
+                            f => f.Type == GffFieldType.ResRef && (f as GFF.ResRef).Reference == "c_modname_comp"
+                            )
+                        )
+                    )
+                {
+                    // Use the look-up table to update the scritp parameter
+                    var old = (entry.Fields.FirstOrDefault(f => f.Label == "ParamStrA") as GFF.CExoString).CEString;
+                    if (old != null && old.Length > 1)
+                        (entry.Fields.FirstOrDefault(f => f.Label == "ParamStrA") as GFF.CExoString).CEString = LookupTable[old];
+
+                    old = (entry.Fields.FirstOrDefault(f => f.Label == "ParamStrB") as GFF.CExoString).CEString;
+                    if (old != null && old.Length > 1)
+                        (entry.Fields.FirstOrDefault(f => f.Label == "ParamStrB") as GFF.CExoString).CEString = LookupTable[old];
+                }
+            }
+            File.WriteAllBytes(paths.Override + "200_info_term.dlg", g.ToRawData());
+
+            // Next we doctor the script that sets the modules available to travel to
+            var globalsetscript = Properties.Resources.a_tel_globalset;
+            for (var i = 0; i < 6; i++)
+            {
+                globalsetscript[54  + i] = (byte)LookupTable["201TEL"][i];  // Seek to and overwrite 201TEL module identifier
+                globalsetscript[117 + i] = (byte)LookupTable["202TEL"][i];  // Seek to and overwrite 202TEL module identifier
+                globalsetscript[180 + i] = (byte)LookupTable["203TEL"][i];  // Seek to and overwrite 203TEL module identifier
+                globalsetscript[243 + i] = (byte)LookupTable["204TEL"][i];  // Seek to and overwrite 204TEL module identifier
+            }
+            File.WriteAllBytes(paths.Override + "a_tel_globalset.ncs", globalsetscript);
         }
 
         #endregion Methods

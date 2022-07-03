@@ -279,11 +279,13 @@
     <None Include="Resources\k1patch\appearance.2da" />
     <None Include="Resources\k1patch\appearance_speedysuit.2da" />
     <None Include="Resources\k1patch\g_brakatan003.utc" />
+    <None Include="Resources\k2patch\200_info_term.dlg" />
     <None Include="Resources\k2patch\262exit.dlg" />
     <None Include="Resources\k2patch\a_disc_join.ncs" />
     <None Include="Resources\k2patch\a_disc_join.nss" />
     <None Include="Resources\k2patch\a_galaxymap.ncs" />
     <None Include="Resources\k2patch\a_galaxymap.nss" />
+    <None Include="Resources\k2patch\a_tel_globalset.ncs" />
     <None Include="Resources\k2patch\ebo_elev.utp" />
     <None Include="Resources\k2patch\modulesave.2da" />
     <None Include="Resources\k2patch\r_to003EBOelev.ncs" />

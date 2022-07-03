@@ -108,6 +108,11 @@ namespace kotor_Randomizer_2.Models
                 },
                 new UnlockableDoor
                 {
+                    Area = "CIT", Label = "Unlock Info Terminals", Tag = ModuleExtras.K2Patch_CitTerminals,
+                    ToolTipMessage = "Unlocks access to all destinations of the info terminals."
+                },
+                new UnlockableDoor
+                {
                     Area = "TEL", Label = "Academy to Plateau", Tag = ModuleExtras.K2Door_TelAcademy_ToPlateau,
                     ToolTipMessage = "Unlocks the door leading from Secret Academy to the Polar Plateau."
                 },
