@@ -14,92 +14,139 @@ namespace kotor_Randomizer_2.Digraph
     public class ModuleDigraph
     {
         #region Properties
+
+        /// <summary> The game being graphed. </summary>
+        public Models.Game Game { get; set; }
+
         /// <summary> Collection of parsed modules that are the unrandomized vertices of the digraph. </summary>
         public List<ModuleVertex> Modules { get; private set; }
+
         /// <summary> Lookup that indicates which modules are reachable. Keys used are the original warp code. Reachable[Original.WarpCode] = isReachable; </summary>
         public Dictionary<string, bool> Reachable { get; private set; }
+
         /// <summary>
         /// Lookup that forms a 2-dimensional table of reachability. The first module is considered the starting point for the DFS.
         /// ReachableTable[Start.WarpCode][Destination.WarpCode] = isReachable;
         /// </summary>
         public Dictionary<string, Dictionary<string, bool>> ReachableTable { get; private set; } = new Dictionary<string, Dictionary<string, bool>>();
+
         /// <summary> Flag indicating that the Reachable lookup table has been updated in the latest cycle of DFS. </summary>
         private bool ReachableUpdated { get; set; } = false;
+
         /// <summary> Queue containing edges labeled with the Once tag. These will be checked after every other option has been taken during a cycle. </summary>
         public Queue<ModuleEdge> OnceQueue { get; } = new Queue<ModuleEdge>();
-        /// <summary> Lookup table for the randomization. Noteably, it is the reverse of ModuleRando.LookupTable. RandomLookup[Randomized.WarpCode] = Original.WarpCode; </summary>
-        public Dictionary<string, string> RandomLookup  { get; set; }
 
+        /// <summary> Lookup table for the randomization. Noteably, it is the reverse of ModuleRando.LookupTable. RandomLookup[Randomized.WarpCode] = Original.WarpCode; </summary>
+        public Dictionary<string, string> RandomLookup { get; set; }
+
+        #region Goals
         /// <summary> Reaching the tag Malak is a goal for this randomization. </summary>
-        public bool GoalIsMalak   { get; set; } = true;
-        /// <summary> Reaching the tags Pazaak is a goal for this randomization. </summary>
-        public bool GoalIsPazaak  { get; set; } = false;
+        public bool GoalIsMalak { get; set; } = true;
+
         /// <summary> Reaching the tags StarMap is a goal for this randomization. </summary>
         public bool GoalIsStarMap { get; set; } = false;
-        /// <summary> Reaching the tags of each party member is a goal for this randomization. </summary>
-        public bool GoalIsFullParty   { get; set; } = false;
 
-        /// <summary>
-        /// 
-        /// </summary>
+        /// <summary> Reaching the tag Kreia is the goal for this randomization. </summary>
         public bool GoalIsKreia { get; set; } = false;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary> Reaching the modules tagged with Master is the goal for this randomization. </summary>
         public bool GoalIsMasters { get; set; } = false;
 
-        /// <summary> Setting used to verify that all active goals can reach all other active goals. </summary>
-        public bool EnabledStrongGoals { get; set; } = false;
+        /// <summary> Reaching the tags Pazaak is a goal for this randomization. </summary>
+        public bool GoalIsPazaak { get; set; } = false;
+
+        /// <summary> Reaching the tags of each party member is a goal for this randomization. </summary>
+        public bool GoalIsFullParty { get; set; } = false;
 
         /// <summary> List of all party member tags. </summary>
         public readonly List<string> PARTY_MEMBERS = new List<string>() { "Bastila", "Canderous", "Carth", "HK47", "Jolee", "Juhani", "Mission", "T3M4", "Zaalbar" };
 
+        /// <summary> List of all party member tags, separated by game. </summary>
+        public readonly Dictionary<Models.Game, List<string>> GamePartyMembers = new Dictionary<Models.Game, List<string>>()
+        {
+            { Models.Game.Kotor1, new List<string>() { "Bastila", "Canderous", "Carth", "HK47", "Jolee", "Juhani", "Mission", "T3M4", "Zaalbar" } },
+            { Models.Game.Kotor2, new List<string>() { "Atton", "BaoDur", "Disciple", "G0T0", "Handmaiden", "Hanharr", "HK47", "Kreia", "Mandalore", "Mira", "T3M4", "Visas" } },
+        };
+        #endregion
+
+        #region Glitches
         /// <summary> Allow usage of the glitch Clipping to bypass locked edges. </summary>
         public bool AllowGlitchClip { get; set; } = false;
+
         /// <summary> Allow usage of the glitch DLZ to bypass locked edges. </summary>
         public bool AllowGlitchDlz { get; set; } = false;
+
         /// <summary> Allow usage of the glitch FLU to bypass locked edges. </summary>
         public bool AllowGlitchFlu { get; set; } = false;
+
         /// <summary> Allow usage of the glitch GPW to bypass locked edges. </summary>
         public bool AllowGlitchGpw { get; set; } = false;
+        #endregion
+
+        #region Reachability Logic
+        /// <summary> Setting used to verify that all active goals can reach all other active goals. </summary>
+        public bool EnabledStrongGoals { get; set; } = false;
 
         /// <summary> Locked edges will be ignored until they are unlocked. </summary>
         public bool EnforceEdgeTagLocked { get; set; } = true;
-        /// <summary> Allow usage of Once edges. If false, they will be fully blocked as they can be unreliable. </summary>
-        public bool IgnoreOnceEdges      { get; set; } = true;
 
+        /// <summary> Allow usage of Once edges. If false, they will be fully blocked as they can be unreliable. </summary>
+        public bool IgnoreOnceEdges { get; set; } = true;
+        #endregion
+
+        #region Common Fixes & Unlocks
+        /// <summary> FixMap is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
+        public bool EnabledFixMap { get; set; } = false;
+        #endregion
+
+        #region Kotor 1 Fixes & Unlocks
         /// <summary> FixBox is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledFixBox   { get; set; } = false;
+        public bool EnabledFixBox { get; set; } = false;
+
         /// <summary> HangarAccess is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
         public bool EnabledHangarAccess { get; set; } = false;
+
         /// <summary> FixElev is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledFixHangarElev  { get; set; } = false;
-        /// <summary> FixMap is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledFixMap   { get; set; } = false;
+        public bool EnabledFixHangarElev { get; set; } = false;
+
         /// <summary> FixSpice is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
         public bool EnabledFixSpice { get; set; } = false;
 
         /// <summary> UnlockDanRuins is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledUnlockDanRuins      { get; set; } = false;
+        public bool EnabledUnlockDanRuins { get; set; } = false;
+
         /// <summary> UnlockKorValley is enabled for this randomization. </summary>
-        public bool EnabledUnlockKorAcademy    { get; set; } = false;
+        public bool EnabledUnlockKorAcademy { get; set; } = false;
+
         /// <summary> UnlockManEmbassy is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledUnlockManEmbassy    { get; set; } = false;
+        public bool EnabledUnlockManEmbassy { get; set; } = false;
+
         /// <summary> UnlockManHangar is enabled for this randomization. </summary>
-        public bool EnabledUnlockManHangar     { get; set; } = false;
+        public bool EnabledUnlockManHangar { get; set; } = false;
+
         /// <summary> UnlockStaBastila is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledUnlockStaBastila    { get; set; } = false;
+        public bool EnabledUnlockStaBastila { get; set; } = false;
+
         /// <summary> UnlockTarUndercity is enabled for this randomization. </summary>
-        public bool EnabledUnlockTarUndercity  { get; set; } = false;
+        public bool EnabledUnlockTarUndercity { get; set; } = false;
+
         /// <summary> UnlockTarVulkar is enabled for this randomization. </summary>
-        public bool EnabledUnlockTarVulkar     { get; set; } = false;
+        public bool EnabledUnlockTarVulkar { get; set; } = false;
+
         /// <summary> UnlockUnkSummit is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledUnlockUnkSummit     { get; set; } = false;
+        public bool EnabledUnlockUnkSummit { get; set; } = false;
+
         /// <summary> UnlockeUnkTempleExit is enabled for this randomization. </summary>
         public bool EnabledUnlockUnkTempleExit { get; set; } = false;
 
         /// <summary> Early T3M4 is enabled for this randomization. </summary>
         public bool EnabledEarlyT3M4 { get; set; } = false;
+        #endregion
+
+        #region Kotor 2 Fixes & Unlocks
+
+        #endregion
+
         #endregion
 
         /// <summary>
@@ -109,6 +156,8 @@ namespace kotor_Randomizer_2.Digraph
         /// <param name="lookup">Lookup dictionary from original code to a randomized code.</param>
         public ModuleDigraph(string path, Models.Game game = Models.Game.Kotor1)
         {
+            Game = game;
+
             // Parse XML document containing game modules.
             var doc = XDocument.Load(path);
             var xmlModules = doc.Descendants(XmlConsts.ELEM_MODULES).FirstOrDefault(x => x.Attributes().Any(a => a.Name == XmlConsts.ATTR_GAME && a.Value == game.ToString()));
@@ -215,41 +264,41 @@ namespace kotor_Randomizer_2.Digraph
                 if (!Modules.Any(v => v.WarpCode == vertex.Key)) continue;
                 var module = Modules.Find(v => v.WarpCode == vertex.Key);
 
-                StringBuilder sb = new StringBuilder();
-                sb.Append($"{module.WarpCode}");
+                var sb = new StringBuilder();
+                _ = sb.Append($"{module.WarpCode}");
 
                 if (module.Tags.Count > 0)
-                    sb.Append($" [{module.Tags.Aggregate((i, j) => $"{i},{j}")}]");
+                    _ = sb.Append($" [{module.Tags.Aggregate((i, j) => $"{i},{j}")}]");
 
                 if (!string.IsNullOrWhiteSpace(module.LockedTag))
-                    sb.Append($" -[{module.LockedTag}]-");
+                    _ = sb.Append($" -[{module.LockedTag}]-");
 
                 if (module.UnlockSets.Count > 0)
                 {
-                    sb.Append($" =[");
+                    _ = sb.Append($" =[");
                     foreach (var set in module.UnlockSets)
-                        sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
-                    sb.Append($"]=");
+                        _ = sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
+                    _ = sb.Append($"]=");
                 }
 
-                sb.AppendLine();
+                _ = sb.AppendLine();
 
                 foreach (var edge in module.LeadsTo)
                 {
-                    sb.Append($"-> {edge.WarpCode} ({RandomLookup[edge.WarpCode]})");
+                    _ = sb.Append($"-> {edge.WarpCode} ({RandomLookup[edge.WarpCode]})");
 
                     if (edge.Tags.Count > 0)
-                        sb.Append($" [{edge.Tags.Aggregate((i, j) => $"{i},{j}")}]");
+                        _ = sb.Append($" [{edge.Tags.Aggregate((i, j) => $"{i},{j}")}]");
 
                     if (edge.UnlockSets.Count > 0)
                     {
-                        sb.Append(" =[");
+                        _ = sb.Append(" =[");
                         foreach (var set in edge.UnlockSets)
-                            sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
-                        sb.Append("]=");
+                            _ = sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
+                        _ = sb.Append("]=");
                     }
 
-                    sb.AppendLine();
+                    _ = sb.AppendLine();
                 }
 
                 Console.Write(sb.ToString());
@@ -263,10 +312,9 @@ namespace kotor_Randomizer_2.Digraph
         /// <param name="lookup">New lookup table.</param>
         public void SetRandomizationLookup(Dictionary<string, string> lookup)
         {
-            if (lookup.Values.Distinct().Count() == lookup.Values.Count)
-                RandomLookup = lookup.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
-            else
-                throw new ArgumentException("Lookup table does not have both a distinct set of keys and values.");
+            RandomLookup = lookup.Values.Distinct().Count() == lookup.Values.Count
+                ? lookup.ToDictionary(kvp => kvp.Value, kvp => kvp.Key)
+                : throw new ArgumentException("Lookup table does not have both a distinct set of keys and values.");
         }
 
         /// <summary>
@@ -287,7 +335,7 @@ namespace kotor_Randomizer_2.Digraph
             ReachableTable = new Dictionary<string, Dictionary<string, bool>>();
 
             Console.WriteLine($" > Checking reachability for {modulesToCheck.Count} module(s).");
-            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            var sw = new System.Diagnostics.Stopwatch();
             sw.Start();
 
             // Perform reachability testing for each module.
@@ -308,7 +356,7 @@ namespace kotor_Randomizer_2.Digraph
                     var touched = Reachable.ToDictionary(kvp => kvp.Key, kvp => false);
                     CheckReachabilityDFS(touched, startModule);
                 } while (ReachableUpdated);
-                
+
                 // Store the reachability array for the starting module.
                 ReachableTable[startModule.WarpCode] = Reachable.ToDictionary(r => r.Key, r => r.Value);
             }
@@ -334,6 +382,10 @@ namespace kotor_Randomizer_2.Digraph
 
             if (GoalIsMalak    ) modList.AddRange(Modules.Where(v => v.IsMalak  ));
             if (GoalIsStarMap  ) modList.AddRange(Modules.Where(v => v.IsStarMap));
+
+            if (GoalIsKreia    ) modList.AddRange(Modules.Where(v => v.IsTraya  ));
+            if (GoalIsMasters  ) modList.AddRange(Modules.Where(v => v.IsMaster ));
+
             if (GoalIsPazaak   ) modList.AddRange(Modules.Where(v => v.IsPazaak ));
             if (GoalIsFullParty) modList.AddRange(Modules.Where(v => v.IsParty  ));
 
@@ -375,10 +427,10 @@ namespace kotor_Randomizer_2.Digraph
             }
 
             // Check edges marked as Once for reachability.
-            for (int i = 0; i < OnceQueue.Count; i++)
+            for (var i = 0; i < OnceQueue.Count; i++)
             {
                 var once = OnceQueue.Dequeue();
-                
+
                 // Remove if already reachable.
                 if (Reachable[RandomLookup[once.WarpCode]]) continue;
 
@@ -500,7 +552,7 @@ namespace kotor_Randomizer_2.Digraph
         /// <returns>True if the edge can be skipped.</returns>
         private bool IsOnceEdge(ModuleEdge edge)
         {
-            bool isOnce = false;
+            bool isOnce;
             if (edge.IsOnce)
             {
                 if ((EnabledFixBox              && edge.IsFixBox             ) ||
@@ -540,7 +592,7 @@ namespace kotor_Randomizer_2.Digraph
         /// <returns>True if the edge can be skipped.</returns>
         private bool IsLockedEdge(ModuleEdge edge)
         {
-            bool isLocked = false;
+            bool isLocked;
             if (edge.IsLocked)
             {
                 // Check to see if we can bypass this lock with an allowed glitch or enabled fix.

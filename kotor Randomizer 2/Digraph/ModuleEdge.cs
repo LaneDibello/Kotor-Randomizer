@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace kotor_Randomizer_2.Digraph
@@ -55,19 +54,17 @@ namespace kotor_Randomizer_2.Digraph
             if (element == null)
                 throw new ArgumentException("Parameter \'element\' can't be null.", "element");
 
-            // Get WarpCode
+            // Get WarpCode [REQUIRED]
             var code = element.Attribute(XmlConsts.ATTR_CODE);
-            if (code == null || string.IsNullOrEmpty(code.Value))
-                throw new ArgumentException("No \'WarpCode\' attribute found in the XML element.");
-            else
-                WarpCode = code.Value;
+            WarpCode = code == null || string.IsNullOrEmpty(code.Value)
+                ? throw new ArgumentException("No \'WarpCode\' attribute found in the XML element.")
+                : code.Value;
 
-            // Get CommonName
+            // Get CommonName [REQUIRED]
             var name = element.Attribute(XmlConsts.ATTR_NAME);
-            if (name == null || string.IsNullOrEmpty(name.Value))
-                throw new ArgumentException("No \'CommonName\' attribute found in the XML element.");
-            else
-                CommonName = name.Value;
+            CommonName = name == null || string.IsNullOrEmpty(name.Value)
+                ? throw new ArgumentException("No \'CommonName\' attribute found in the XML element.")
+                : name.Value;
 
             // Get list of Tags
             var tags = element.Attribute(XmlConsts.ATTR_TAGS);
@@ -97,6 +94,16 @@ namespace kotor_Randomizer_2.Digraph
             IsLocked = Tags.Contains(XmlConsts.TAG_LOCKED);
             IsOnce   = Tags.Contains(XmlConsts.TAG_ONCE);
 
+            // Check for the boolean Locked attribute.
+            var locked = element.Attribute(XmlConsts.TAG_LOCKED);
+            if (locked != null && !string.IsNullOrWhiteSpace(locked.Value))
+                IsLocked = bool.Parse(locked.Value);
+
+            // Check for the boolean Once attribute.
+            var once = element.Attribute(XmlConsts.TAG_ONCE);
+            if (once != null && !string.IsNullOrWhiteSpace(once.Value))
+                IsOnce = bool.Parse(once.Value);
+
             IsClip = Tags.Contains(XmlConsts.TAG_CLIP);
             IsDlz = Tags.Contains(XmlConsts.TAG_DLZ);
             IsFlu = Tags.Contains(XmlConsts.TAG_FLU);
@@ -117,29 +124,26 @@ namespace kotor_Randomizer_2.Digraph
             IsUnlockTarUndercity  = Tags.Contains(XmlConsts.TAG_UNLOCK_TAR_UNDERCITY);
             IsUnlockUnkSummit     = Tags.Contains(XmlConsts.TAG_UNLOCK_UNK_SUMMIT);
             IsUnlockUnkTempleExit = Tags.Contains(XmlConsts.TAG_UNLOCK_UNK_TEMPLE_EXIT);
+
+            //UnlockSets.Any(uls => uls.Contains(XmlConsts.TAG_T3M4));
         }
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append($"Code: {WarpCode}, Name: {CommonName}");
-            if (Tags.Count > 0)
-            {
-                sb.Append($", Tags: [{Tags.Aggregate((i, j) => $"{i},{j}")}]");
-            }
-            else
-            {
-                sb.Append(", Tags: []");
-            }
+            var sb = new StringBuilder();
+            _ = sb.Append($"Code: {WarpCode}, Name: {CommonName}");
+            _ = Tags.Count > 0
+                ? sb.Append($", Tags: [{Tags.Aggregate((i, j) => $"{i},{j}")}]")
+                : sb.Append(", Tags: []");
 
             if (UnlockSets.Count > 0)
             {
-                sb.Append($", Unlock: [");
+                _ = sb.Append($", Unlock: [");
                 foreach (var set in UnlockSets)
                 {
-                    sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
+                    _ = sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
                 }
-                sb.Append("]");
+                _ = sb.Append("]");
             }
 
             return sb.ToString();

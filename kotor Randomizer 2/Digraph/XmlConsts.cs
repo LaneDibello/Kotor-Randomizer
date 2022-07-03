@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace kotor_Randomizer_2.Digraph
+﻿namespace kotor_Randomizer_2.Digraph
 {
     /// <summary>
     /// Collection of constants used for parsing modules and edges from an XML file.
@@ -39,10 +33,12 @@ namespace kotor_Randomizer_2.Digraph
         public const string TAG_ONCE      = "Once";
 
         // Goal Tags ... Vertex (Tags)
-        public const string TAG_MALAK    = "Malak";
-        public const string TAG_PAZAAK   = "Pazaak";
         public const string TAG_START    = "Start";
+        public const string TAG_MALAK    = "Malak";
         public const string TAG_STAR_MAP = "StarMap";
+        public const string TAG_TRAYA    = "Traya";
+        public const string TAG_MASTER   = "Master";
+        public const string TAG_PAZAAK   = "Pazaak";
 
         // Party Tags ... Vertex (Tags, LockedTag), Edge (Unlock)
         public const string TAG_BASTILA   = "Bastila";
@@ -54,6 +50,17 @@ namespace kotor_Randomizer_2.Digraph
         public const string TAG_MISSION   = "Mission";
         public const string TAG_T3M4      = "T3M4";
         public const string TAG_ZAALBAR   = "Zaalbar";
+
+        public const string TAG_ATTON      = "Atton";
+        public const string TAG_BAODUR     = "BaoDur";
+        public const string TAG_DISCIPLE   = "Disciple";
+        public const string TAG_G0T0       = "G0T0";
+        public const string TAG_HANDMAIDEN = "Handmaiden";
+        public const string TAG_HANHARR    = "Hanharr";
+        public const string TAG_KREIA      = "Kreia";
+        public const string TAG_MANDALORE  = "Mandalore";
+        public const string TAG_MIRA       = "Mira";
+        public const string TAG_VISAS      = "Visas";
 
         // Glitch Tags ... Edge (Tags)
         public const string TAG_CLIP = "Clip";
