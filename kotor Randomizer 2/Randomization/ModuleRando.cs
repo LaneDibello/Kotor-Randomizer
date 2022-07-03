@@ -1185,6 +1185,9 @@ namespace kotor_Randomizer_2
             // Add transition to 410DXN
             if (ex.HasFlag(ModuleExtras.K2_DxnTomb_ToMando)) tasks.Add(Task.Run(() => Add410DXNTransition(paths)));
 
+            // Activate Onderon Shuttle
+            if (ex.HasFlag(ModuleExtras.K2_OndPort_ToCamp)) tasks.Add(Task.Run(() => Fix501ONDShuttle(paths)));
+
             // Add elevator to 901MAL
             if (ex.HasFlag(ModuleExtras.K2Patch_MalSurface_ToHawk)) tasks.Add(Task.Run(() => Add901MALEbonElevator(paths)));
 

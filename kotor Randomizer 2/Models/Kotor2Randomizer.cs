@@ -163,6 +163,11 @@ namespace kotor_Randomizer_2.Models
                 },
                 new UnlockableDoor
                 {
+                    Area = "OND", Label = "Spaceport to Camp", Tag = ModuleExtras.K2_OndPort_ToCamp,
+                    ToolTipMessage = "Unlocks the shuttle from the Iziz Spaceport to the Mandalorian Camp."
+                },
+                new UnlockableDoor
+                {
                     Area = "DAN", Label = "Courtyard to Rebuilt Enclave", Tag = ModuleExtras.K2Door_DanCourtyard_ToEnclave,
                     ToolTipMessage = "Unlocks the door leading from the Courtyard to the Rebuilt Enclave."
                 },
