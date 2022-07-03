@@ -63,6 +63,16 @@ namespace kotor_Randomizer_2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] _262exit {
+            get {
+                object obj = ResourceManager.GetObject("_262exit", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] a_disc_join {
             get {
                 object obj = ResourceManager.GetObject("a_disc_join", resourceCulture);
@@ -610,9 +620,29 @@ namespace kotor_Randomizer_2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] r_to003EBO {
+        internal static byte[] r_to003EBOelev {
             get {
-                object obj = ResourceManager.GetObject("r_to003EBO", resourceCulture);
+                object obj = ResourceManager.GetObject("r_to003EBOelev", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] r_to003EBOentr {
+            get {
+                object obj = ResourceManager.GetObject("r_to003EBOentr", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] r_to950COR {
+            get {
+                object obj = ResourceManager.GetObject("r_to950COR", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -733,6 +763,16 @@ namespace kotor_Randomizer_2.Properties {
         internal static string SeedHelp {
             get {
                 return ResourceManager.GetString("SeedHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] shuttle {
+            get {
+                object obj = ResourceManager.GetObject("shuttle", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

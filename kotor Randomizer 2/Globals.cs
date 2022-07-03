@@ -172,7 +172,7 @@ namespace kotor_Randomizer_2
         /// <summary> Unlocks the door leading from Administration to the Fuel Depot. </summary>
         K2Door_PerAdmin_ToDepot          = 0x0000000010000000,
         /// <summary> Unlocks the door leading from the Dormitories the the Asteroid Exterior. </summary>
-        K2Door_PerDorms_ToExterior       = 0x0000000020000000,
+        K2Door_PerDorms_ToAsteroid       = 0x0000000020000000,
         /// <summary> Unlocks the door leading from the Fuel Depot to the Mining Tunnels. </summary>
         K2Door_PerDepot_ToTunnels        = 0x0000000040000000,
         /// <summary> Unlocks the force fields inside the fuel depot. </summary>
@@ -201,12 +201,15 @@ namespace kotor_Randomizer_2
         K2Door_KorCave_ToTomb            = 0x0000040000000000,
         /// <summary> Unlocks the door leading from the Wartime Entertainment Module to the Ravager. </summary>
         K2Door_WarEntertain_ToRavager    = 0x0000080000000000,
-        K2Setting00                      = 0x0000100000000000,
-        K2Setting01                      = 0x0000200000000000,
-        K2Setting02                      = 0x0000400000000000,
-        K2Setting03                      = 0x0000800000000000,
-        K2Setting04                      = 0x0001000000000000,
-        K2Setting05                      = 0x0002000000000000,
+
+        K2Patch_TelAcademy_ToHawk        = 0x0000100000000000,
+        K2Patch_MalSurface_ToHawk        = 0x0000200000000000,
+        K2Settings05                     = 0x0000400000000000,
+        K2Door_DxnMando_Basalisk         = 0x0000800000000000,
+        K2Patch_PerAsteroid_ToTunnels    = 0x0001000000000000,
+        K2Patch_DxnCamp_ToIziz           = 0x0002000000000000,
+
+        // Still need to add to GUI
         K2Setting06                      = 0x0004000000000000,
         K2Setting07                      = 0x0008000000000000,
         K2Setting08                      = 0x0010000000000000,

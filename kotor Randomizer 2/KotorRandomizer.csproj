@@ -279,14 +279,15 @@
     <None Include="Resources\k1patch\appearance.2da" />
     <None Include="Resources\k1patch\appearance_speedysuit.2da" />
     <None Include="Resources\k1patch\g_brakatan003.utc" />
+    <None Include="Resources\k2patch\262exit.dlg" />
     <None Include="Resources\k2patch\a_disc_join.ncs" />
     <None Include="Resources\k2patch\a_disc_join.nss" />
     <None Include="Resources\k2patch\a_galaxymap.ncs" />
     <None Include="Resources\k2patch\a_galaxymap.nss" />
     <None Include="Resources\k2patch\ebo_elev.utp" />
     <None Include="Resources\k2patch\modulesave.2da" />
-    <None Include="Resources\k2patch\r_to003EBO.ncs" />
-    <None Include="Resources\k2patch\r_to003EBO.nss" />
+    <None Include="Resources\k2patch\r_to003EBOelev.ncs" />
+    <None Include="Resources\k2patch\r_to003EBOelev.nss" />
     <None Include="Resources\k1patch\k33b_openacademy.ncs" />
     <None Include="Resources\k1patch\k36_pkor_enter.ncs" />
     <None Include="Resources\k1patch\k_pdan_13_area.ncs" />
@@ -303,6 +304,11 @@
     <None Include="Resources\k1patch\NODELETE_modulesave.2da" />
     <None Include="Resources\k1patch\pebn_mystery.dlg" />
     <None Include="Resources\k1patch\tar02_janice021.dlg" />
+    <None Include="Resources\k2patch\r_to003EBOentr.ncs" />
+    <None Include="Resources\k2patch\r_to003EBOentr.nss" />
+    <None Include="Resources\k2patch\r_to950COR.ncs" />
+    <None Include="Resources\k2patch\r_to950COR.nss" />
+    <None Include="Resources\k2patch\shuttle.dlg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

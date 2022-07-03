@@ -133,6 +133,16 @@ namespace kotor_Randomizer_2.Models
         private const string CATEGORY_TEXT      = "Text";
         private const string CATEGORY_OTHER     = "Other";
         #endregion
+
+        #region Areas
+        public const string AREA_UNDERCITY = "tar_m04aa";
+        public const string AREA_TOMB_TULAK = "korr_m38ab";
+        public const string AREA_LEVI_HANGAR = "lev_m40ac";
+        public const string AREA_AHTO_WEST = "manm26aa";
+        public const string AREA_MANAAN_SITH = "manm27aa";
+        public const string AREA_RAKA_SETTLE = "unk_m43aa";
+        public const string AREA_TEMPLE_MAIN = "unk_m44aa";
+        #endregion
         #endregion
 
         #region Constructors
@@ -361,6 +371,17 @@ namespace kotor_Randomizer_2.Models
         #endregion Audio Properties
 
         #region General Properties
+        public Dictionary<string, Tuple<float, float, float>> FixedCoordinates => new Dictionary<string, Tuple<float, float, float>>()
+        {
+            { AREA_UNDERCITY,   new Tuple<float, float, float>(183.5f, 167.4f,  1.50f) },
+            { AREA_TOMB_TULAK,  new Tuple<float, float, float>( 15.8f,  55.6f,  0.75f) },
+            { AREA_LEVI_HANGAR, new Tuple<float, float, float>( 12.5f, 155.2f,  3.00f) },
+            { AREA_AHTO_WEST,   new Tuple<float, float, float>(  5.7f, -10.7f, 59.20f) },
+            { AREA_MANAAN_SITH, new Tuple<float, float, float>(112.8f,   2.4f,  0.00f) },
+            { AREA_RAKA_SETTLE, new Tuple<float, float, float>(202.2f,  31.5f, 40.70f) },
+            { AREA_TEMPLE_MAIN, new Tuple<float, float, float>( 95.3f,  42.0f,  0.44f) },
+        };
+
         private ModuleExtras _generalModuleExtrasValue;
         public ModuleExtras GeneralModuleExtrasValue
         {

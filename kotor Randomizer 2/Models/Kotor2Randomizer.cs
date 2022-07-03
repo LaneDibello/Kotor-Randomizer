@@ -24,6 +24,10 @@ namespace kotor_Randomizer_2.Models
         private const string CATEGORY_OTHER     = "Other";
         #endregion
 
+        #region Area Names
+        private const string AREA_CIT_ENTERTAIN = "202TEL";
+        #endregion
+
         #region Constructors
 
         /// <summary>
@@ -69,8 +73,13 @@ namespace kotor_Randomizer_2.Models
                 },
                 new UnlockableDoor
                 {
-                    Area = "PER", Label = "Dorms to Exterior", Tag = ModuleExtras.K2Door_PerDorms_ToExterior,
-                    ToolTipMessage = "Unlocks the door leading from the Dormitories the the Asteroid Exterior."
+                    Area = "PER", Label = "Dorms to Exterior", Tag = ModuleExtras.K2Door_PerDorms_ToAsteroid,
+                    ToolTipMessage = "Unlocks the door leading from the Dormitories to the Asteroid Exterior."
+                },
+                new UnlockableDoor
+                {
+                    Area = "PER", Label = "Exterior to Dorms", Tag = ModuleExtras.K2Patch_PerAsteroid_ToTunnels,
+                    ToolTipMessage = "Adds a loading zone leading from the Asteroid Exterior to the Dormitories."
                 },
                 new UnlockableDoor
                 {
@@ -104,6 +113,11 @@ namespace kotor_Randomizer_2.Models
                 },
                 new UnlockableDoor
                 {
+                    Area = "TEL", Label = "Academy to Ebon Hawk", Tag = ModuleExtras.K2Patch_TelAcademy_ToHawk,
+                    ToolTipMessage = "Unlocks the door leading from the Polar Academy to the Ebon Hawk."
+                },
+                new UnlockableDoor
+                {
                     Area = "NAR", Label = "Docks Zez Kai El's Door", Tag = ModuleExtras.K2Door_NarDocks_ZezDoor,
                     ToolTipMessage = "Unlocks the door of Zez Kai El's apartment."
                 },
@@ -124,6 +138,16 @@ namespace kotor_Randomizer_2.Models
                 },
                 new UnlockableDoor
                 {
+                    Area = "DXN", Label = "Camp to Onderon", Tag = ModuleExtras.K2Patch_DxnCamp_ToIziz,
+                    ToolTipMessage = "Unlocks the door leading from the Mandalorian Camp to the Onderon Docking Bay."
+                },
+                new UnlockableDoor
+                {
+                    Area = "DXN", Label = "Camp to Wartime Onderon", Tag = ModuleExtras.K2Door_DxnMando_Basalisk,
+                    ToolTipMessage = "Unlocks the door leading from the Mandalorian Camp to the Wartime Onderon."
+                },
+                new UnlockableDoor
+                {
                     Area = "DAN", Label = "Courtyard to Rebuilt Enclave", Tag = ModuleExtras.K2Door_DanCourtyard_ToEnclave,
                     ToolTipMessage = "Unlocks the door leading from the Courtyard to the Rebuilt Enclave."
                 },
@@ -141,6 +165,11 @@ namespace kotor_Randomizer_2.Models
                 {
                     Area = "WAR", Label = "Entertainment to Ravager", Tag = ModuleExtras.K2Door_WarEntertain_ToRavager,
                     ToolTipMessage = "Unlocks the door leading from the Wartime Entertainment Module to the Ravager."
+                },
+                new UnlockableDoor
+                {
+                    Area = "MAL", Label = "Surface to Ebon Hawk", Tag = ModuleExtras.K2Patch_MalSurface_ToHawk,
+                    ToolTipMessage = "Adds an elevator and a loading zone from Malachor V Surface to the Ebon Hawk."
                 },
             };
 
@@ -642,6 +671,11 @@ namespace kotor_Randomizer_2.Models
         private ObservableCollection<UnlockableDoor> _generalUnlockedDoors = new ObservableCollection<UnlockableDoor>();
         private ObservableCollection<UnlockableDoor> _generalLockedDoors = new ObservableCollection<UnlockableDoor>();
         #endregion
+
+        public Dictionary<string, Tuple<float, float, float>> FixedCoordinates => new Dictionary<string, Tuple<float, float, float>>()
+        {
+            { AREA_CIT_ENTERTAIN, new Tuple<float, float, float>(-13.5f, -63.4f,  11.51f) },
+        };
 
         public ModuleExtras GeneralModuleExtrasValue
         {

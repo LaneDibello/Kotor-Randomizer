@@ -9,6 +9,7 @@ namespace kotor_Randomizer_2.Models
 {
     public interface IGeneralSettings
     {
+        Dictionary<string, Tuple<float, float, float>> FixedCoordinates { get; }
         ModuleExtras GeneralModuleExtrasValue { get; set; }
         ObservableCollection<UnlockableDoor> GeneralUnlockedDoors { get; set; }
         ObservableCollection<UnlockableDoor> GeneralLockedDoors { get; set; }

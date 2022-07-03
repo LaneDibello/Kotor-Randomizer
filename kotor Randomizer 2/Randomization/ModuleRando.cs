@@ -77,10 +77,15 @@ namespace kotor_Randomizer_2
         private static readonly string AREA_K2_NAR_JEKK      = "304NAR";
         private static readonly string AREA_K2_NAR_J_TUNNELS = "305NAR";
         private static readonly string AREA_K2_NAR_G0T0      = "351NAR";
+        private static readonly string AREA_K2_DXN_MANDO     = "403DXN";
+        private static readonly string AREA_K2_DXN_NADDEXT   = "410DXN";
+        private static readonly string AREA_K2_OND_SPACEPORT = "501OND";
         private static readonly string AREA_K2_DAN_COURTYARD = "605DAN";
         private static readonly string AREA_K2_KOR_ACAD      = "702KOR";
         private static readonly string AREA_K2_KOR_SHY       = "710KOR";
         private static readonly string AREA_K2_MAL_SURFACE   = "901MAL";
+        private static readonly string AREA_K2_MAL_ACADEMY   = "903MAL";
+        private static readonly string AREA_K2_MAL_TRAYCORE  = "904MAL";
 
         // Locked Doors
         private const string LABEL_K2_101PERTODORMS         = "sw_door_per006";     // Dorms from Admin
@@ -90,6 +95,7 @@ namespace kotor_Randomizer_2
         private const string LABEL_K2_103PERTOMININGTUNNELS = "sw_door_per006";     // Explosion door at start of module
         private const string LABEL_K2_103PERFORCESHIELDS    = "sw_door_per005";     // Force fields splitting fuel depot into two sections
         private const string LABEL_K2_103PERSHIELD2         = "sw_door_per010";     // Secondary Fuel Depot Shield blocking way down
+        private const string LABEL_K2_103HKTRIGGER          = "newgeneric010";      // HK-50 Conversation trigger
         private const string LABEL_K2_105PERTOASTROID       = "sw_door_per005";     // Return to astroid exterior from Dormitory
         private const string LABEL_K2_106PEREASTDOOR        = "sw_door_per003";     // Door leading to Ebon Hawk
         private const string LABEL_K2_203TELAPPTDOOR        = "adoor_intro";        // Appartment door we spawn behind
@@ -100,6 +106,9 @@ namespace kotor_Randomizer_2
         private const string LABEL_K2_304NARBACKROOM        = "visquisdoor";        // Door in Jekk'Jekk Tarr leading to Visquis's private suit, and the Tunnels
         private const string LABEL_K2_305NARTOJEKKJEKK      = "door_narshad002";    // Leave the tunnels and return to the cantina for once
         private const string LABEL_K2_351NARG0T0EBONHAWK    = "door_narshad008";    // Reboard the Ebon Hawk without doing the entirity of G0T0's yacht, though the CS it leads to breaks frequently, look into other options
+        private const string LABEL_K2_403BASALISKDOOR       = "hangar_door2";       // Door to access the Basilisk War droid hanger
+        private const string LABEL_K2_403SHUTTLEIZIZ        = "shuttle_iziz";       // Shuttle Mandalore takes to Iziz
+        private const string LABEL_K2_501SHUTTLEIZIZ        = "shuttle_iziz";       // Shuttle Mandalore takes to Iziz
         private const string LABEL_K2_605DANREBUILTENCLAVE  = "door_650";           // Enter the Rebuilt Jedi Enclave Early
         private const string LABEL_K2_702KORVALLEY          = "door_enter";         // Leave the Sith acadmeny without doing 10 minutes of puzzles or a DLZ
         private const string LABEL_K2_710KORLUDOKRESSH      = "sealeddoor";         // Enter the secret tomb in the shyrack cave without heavy alignment
@@ -108,6 +117,9 @@ namespace kotor_Randomizer_2
         private const string PATCH_K2_MODULESAVE = "modulesave.2da";
         private const string PATCH_K2_GALAXYMAP = "a_galaxymap.ncs";
         private const string PATCH_K2_DISC_JOIN = "a_disc_join.ncs";
+        private const string PATCH_K2_TELACADEMY_TOHAWK = "262exit.dlg";
+        private const string PATCH_K2_TELACADEMY_TOHAWK_ENTR = "r_to003EBOentr.ncs";
+        private const string PATCH_K2_COR_CUTSCENE = "r_to950COR.ncs";
 
         #endregion
 
@@ -607,7 +619,7 @@ namespace kotor_Randomizer_2
             // Fix warp coordinates.
             if (ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates))
             {
-                FixWarpCoordinates(paths);
+                FixWarpCoordinates(paths, rando as Models.IGeneralSettings);
             }
 
             // Fixed Rakata riddle Man in Mind Prison.
@@ -905,11 +917,13 @@ namespace kotor_Randomizer_2
         /// Update warp coordinates that are in bad locations by default.
         /// </summary>
         /// <param name="paths">KPaths object for this game.</param>
-        private static void FixWarpCoordinates(KPaths paths)
+        private static void FixWarpCoordinates(KPaths paths, Models.IGeneralSettings rando = null)
         {
             // Create a lookup for modules needing coordinate fix with their newly shuffled FileInfos.
             var shuffleFileLookup = new Dictionary<string, FileInfo>();
-            foreach (var key in Globals.FIXED_COORDINATES.Keys)
+            var coords = rando?.FixedCoordinates ?? Globals.FIXED_COORDINATES;
+
+            foreach (var key in coords.Keys)
             {
                 shuffleFileLookup.Add(key, paths.FilesInModules.FirstOrDefault(fi => fi.Name.Contains(LookupTable[key])));
             }
@@ -930,7 +944,7 @@ namespace kotor_Randomizer_2
                 // Update x coordinate data.
                 if (fields.FirstOrDefault(x => x.Label.Equals(Properties.Resources.ModuleEntryX, ignoreCase)) is GFF.FIELD xfield)
                 {
-                    if (xfield is GFF.FLOAT xval) xval.Value = Globals.FIXED_COORDINATES[kvp.Key].Item1;
+                    if (xfield is GFF.FLOAT xval) xval.Value = coords[kvp.Key].Item1;
                     else throw new Exception(string.Format(invalidType, Properties.Resources.ModuleEntryX));
                 }
                 else
@@ -941,7 +955,7 @@ namespace kotor_Randomizer_2
                 // Update y coordinate data.
                 if (fields.FirstOrDefault(x => x.Label.Equals(Properties.Resources.ModuleEntryY, ignoreCase)) is GFF.FIELD yfield)
                 {
-                    if (yfield is GFF.FLOAT yval) yval.Value = Globals.FIXED_COORDINATES[kvp.Key].Item2;
+                    if (yfield is GFF.FLOAT yval) yval.Value = coords[kvp.Key].Item2;
                     else throw new Exception(string.Format(invalidType, Properties.Resources.ModuleEntryY));
                 }
                 else
@@ -952,7 +966,7 @@ namespace kotor_Randomizer_2
                 // Update z coordinate data.
                 if (fields.FirstOrDefault(x => x.Label.Equals(Properties.Resources.ModuleEntryZ, ignoreCase)) is GFF.FIELD zfield)
                 {
-                    if (zfield is GFF.FLOAT zval) zval.Value = Globals.FIXED_COORDINATES[kvp.Key].Item3;
+                    if (zfield is GFF.FLOAT zval) zval.Value = coords[kvp.Key].Item3;
                     else throw new Exception(string.Format(invalidType, Properties.Resources.ModuleEntryZ));
                 }
                 else
@@ -1132,10 +1146,17 @@ namespace kotor_Randomizer_2
             if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToTunnels       )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOMININGTUNNELS)));
             if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToDepot         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOFUELDEPOT    )));
             if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToHarbinger     )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOHARBINGER    )));
-            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ToTunnels       )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERTOMININGTUNNELS)));
-            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ForceFields     )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERFORCESHIELDS   )));
-            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ForceFields     )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_FUEL,      LABEL_K2_103PERSHIELD2        )));
-            if (ex.HasFlag(ModuleExtras.K2Door_PerDorms_ToExterior      )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_DORMS,     LABEL_K2_105PERTOASTROID      )));
+            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ToTunnels))
+            {
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_FUEL, LABEL_K2_103PERTOMININGTUNNELS)));
+                tasks.Add(Task.Run(() => EnableDoorTransition(paths, AREA_K2_PER_FUEL, LABEL_K2_103PERTOMININGTUNNELS)));
+            }
+            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ForceFields))
+            {
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_FUEL, LABEL_K2_103PERFORCESHIELDS)));
+                tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_FUEL, LABEL_K2_103PERSHIELD2)));
+            }
+            if (ex.HasFlag(ModuleExtras.K2Door_PerDorms_ToAsteroid      )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_DORMS,     LABEL_K2_105PERTOASTROID      )));
             if (ex.HasFlag(ModuleExtras.K2Door_PerHangar_ToHawk         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_HANGAR,    LABEL_K2_106PEREASTDOOR       )));
             if (ex.HasFlag(ModuleExtras.K2Door_CitResidential_AptDoor   )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELAPPTDOOR       )));
             if (ex.HasFlag(ModuleExtras.K2Door_CitResidential_ToExchange)) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELEXCHANGE       )));
@@ -1145,22 +1166,25 @@ namespace kotor_Randomizer_2
             if (ex.HasFlag(ModuleExtras.K2Door_NarJekk_VipRoom          )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_JEKK,      LABEL_K2_304NARBACKROOM       )));
             if (ex.HasFlag(ModuleExtras.K2Door_NarTunnels_ToJekk        )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_J_TUNNELS, LABEL_K2_305NARTOJEKKJEKK     )));
             if (ex.HasFlag(ModuleExtras.K2Door_NarYacht_ToHawk          )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_G0T0,      LABEL_K2_351NARG0T0EBONHAWK   )));
+            if (ex.HasFlag(ModuleExtras.K2Door_DxnMando_Basalisk        )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_DXN_MANDO,     LABEL_K2_403BASALISKDOOR      )));
             if (ex.HasFlag(ModuleExtras.K2Door_DanCourtyard_ToEnclave   )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_DAN_COURTYARD, LABEL_K2_605DANREBUILTENCLAVE )));
             if (ex.HasFlag(ModuleExtras.K2Door_KorAcademy_ToValley      )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_KOR_ACAD,      LABEL_K2_702KORVALLEY         )));
             if (ex.HasFlag(ModuleExtras.K2Door_KorCave_ToTomb           )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_KOR_SHY,       LABEL_K2_710KORLUDOKRESSH     )));
 
-            Task.WhenAll(tasks).Wait();
-
             // Enable tranistions for these doors with linking modules but no flags
-            EnableDoorTransition(paths, AREA_K2_PER_FUEL,  LABEL_K2_103PERTOMININGTUNNELS);
-            EnableDoorTransition(paths, AREA_K2_PER_DORMS, LABEL_K2_105PERTOASTROID, AREA_K2_PER_ASTROID);
-            EnableDoorTransition(paths, AREA_K2_TEL_ACAD,  LABEL_K2_262TELPLATEAU);
+            if (ex.HasFlag(ModuleExtras.K2Door_PerDorms_ToAsteroid )) tasks.Add(Task.Run(() => EnableDoorTransition(paths, AREA_K2_PER_DORMS, LABEL_K2_105PERTOASTROID, AREA_K2_PER_ASTROID)));
+            if (ex.HasFlag(ModuleExtras.K2Door_TelAcademy_ToPlateau)) tasks.Add(Task.Run(() => EnableDoorTransition(paths, AREA_K2_TEL_ACAD,  LABEL_K2_262TELPLATEAU)));
 
             // Add a transition to the Astroid Exterior
-            Add104PERTransition(paths);
+            if (ex.HasFlag(ModuleExtras.K2Patch_PerAsteroid_ToTunnels)) tasks.Add(Task.Run(() => Add104PERTransition(paths)));
+
+            // Enable the shuttle from the Mandalorian Camp to Iziz.
+            if (ex.HasFlag(ModuleExtras.K2Patch_DxnCamp_ToIziz)) tasks.Add(Task.Run(() => Add403DXNShuttleIziz(paths)));
 
             // Add elevator to 901MAL
-            Add901MALEbonElevator(paths);
+            if (ex.HasFlag(ModuleExtras.K2Patch_MalSurface_ToHawk)) tasks.Add(Task.Run(() => Add901MALEbonElevator(paths)));
+
+            Task.WhenAll(tasks).Wait();
         }
 
         /// <summary>
@@ -1178,22 +1202,25 @@ namespace kotor_Randomizer_2
                 // Skip any files that aren't the default format.
                 if (fi.Name.Length > 10) { continue; }
 
-                var r = new RIM(fi.FullName);   // Open what replaced this area.
-                var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.GIT);
-                var g = new GFF(rf.File_Data);  // Grab the git out of the file.
+                lock (area)
+                {
+                    var r = new RIM(fi.FullName);   // Open what replaced this area.
+                    var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.GIT);
+                    var g = new GFF(rf.File_Data);  // Grab the git out of the file.
 
-                // Get ready for the nastiest Linq query you've ever seen, we may want to clean this up some
-                var fields = (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Door List") as GFF.LIST).Structs   // from the door list struct
-                    .FirstOrDefault(y => (y.Fields.FirstOrDefault(z => z.Label == "TemplateResRef") as GFF.ResRef).Reference == label).Fields;  // grab the fields for this door
-                (fields.FirstOrDefault(a => a.Label == "LinkedToFlags") as GFF.BYTE).Value = 2; // set LinkedToFlags to 2.
+                    // Get ready for the nastiest Linq query you've ever seen, we may want to clean this up some
+                    var fields = (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Door List") as GFF.LIST).Structs   // from the door list struct
+                        .FirstOrDefault(y => (y.Fields.FirstOrDefault(z => z.Label == "TemplateResRef") as GFF.ResRef).Reference == label).Fields;  // grab the fields for this door
+                    (fields.FirstOrDefault(a => a.Label == "LinkedToFlags") as GFF.BYTE).Value = 2; // set LinkedToFlags to 2.
 
-                // Change the destination module if provided.
-                if (destination != null)
-                    (fields.FirstOrDefault(a => a.Label == "LinkedToModule") as GFF.ResRef).Reference = destination;
+                    // Change the destination module if provided.
+                    if (destination != null)
+                        (fields.FirstOrDefault(a => a.Label == "LinkedToModule") as GFF.ResRef).Reference = destination;
 
-                // Write change(s) to file.
-                rf.File_Data = g.ToRawData();
-                r.WriteToFile(fi.FullName);
+                    // Write change(s) to file.
+                    rf.File_Data = g.ToRawData();
+                    r.WriteToFile(fi.FullName);
+                }
             }
         }
 
@@ -1201,7 +1228,8 @@ namespace kotor_Randomizer_2
         {
             var filename = LookupTable[AREA_K2_PER_ASTROID] + ".rim";
             var fi = paths.FilesInModules.FirstOrDefault(f => f.Name == filename);
-            if (fi.Exists)
+            if (!fi.Exists) return;
+            lock (AREA_K2_PER_ASTROID)
             {
                 var r = new RIM(fi.FullName);   // Open what replaced this the astroid exterior.
                 var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.GIT);
@@ -1259,32 +1287,170 @@ namespace kotor_Randomizer_2
             }
         }
 
+        private static void Add403DXNShuttleIziz(KPaths paths)
+        {
+            var filename = LookupTable[AREA_K2_DXN_MANDO] + "_s.rim";
+            var fi = paths.FilesInModules.FirstOrDefault(f => f.Name == filename);
+            if (!fi.Exists) return;
+            lock (AREA_K2_DXN_MANDO)
+            {
+                var r = new RIM(fi.FullName);   // Open what replaced this the astroid exterior.
+                var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.UTP && x.Label == LABEL_K2_403SHUTTLEIZIZ);
+                var g = new GFF(rf.File_Data);  // Grab the git out of the file.
+
+                //Just set clicking to take to iziz
+                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "OnUsed") as GFF.ResRef).Reference = "a_to_iziz2";
+
+                // Write change(s) to file.
+                rf.File_Data = g.ToRawData();
+                r.WriteToFile(fi.FullName);
+            }
+        }
+
+        private static void Add410DXNTransition(KPaths paths)
+        {
+            var filename = LookupTable[AREA_K2_DXN_NADDEXT] + ".rim";
+            var fi = paths.FilesInModules.FirstOrDefault(f => f.Name == filename);
+            if (!fi.Exists) return;
+            lock (AREA_K2_DXN_NADDEXT)
+            {
+                var r = new RIM(fi.FullName);   // Open what replaced this the astroid exterior.
+                var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.GIT);
+                var g = new GFF(rf.File_Data);  // Grab the git out of the file.
+
+                var transition = (g.Top_Level.Fields.FirstOrDefault(
+                    f => f.Label == "TriggerList") as GFF.LIST).Structs.FirstOrDefault(
+                        y => (y.Fields.FirstOrDefault(
+                            z => z.Label == "TemplateResRef") as GFF.ResRef).Reference == "newtransition002");
+
+                (transition.Fields.FirstOrDefault(a => a.Label == "LinkedToFlags") as GFF.BYTE).Value = 2;
+                (transition.Fields.FirstOrDefault(a => a.Label == "LinkedToModule") as GFF.ResRef).Reference = AREA_K2_DXN_MANDO;
+                (transition.Fields.FirstOrDefault(a => a.Label == "TransitionDestin") as GFF.CExoLocString).StringRef = 87533;
+                (transition.Fields.FirstOrDefault(a => a.Label == "LinkedTo") as GFF.CExoString).CEString = "From_402DXN";
+
+                // Write change(s) to file.
+                rf.File_Data = g.ToRawData();
+                r.WriteToFile(fi.FullName);
+            }
+        }
+
+        private static void Fix501ONDShuttle(KPaths paths)
+        {
+            /* 
+             We rename shuttle.dlg to shuttle501.dlg so it doesn't conflict for 403DXN's convo of the same name
+             */
+            File.WriteAllBytes(paths.Override + "shuttle501.dlg", Properties.Resources.shuttle); // Shuttle convo back to onderon
+
+            var filename = LookupTable[AREA_K2_OND_SPACEPORT] + "_s.rim";
+            var fi = paths.FilesInModules.FirstOrDefault(f => f.Name == filename);
+            if (!fi.Exists) return;
+            lock (AREA_K2_OND_SPACEPORT)
+            {
+                var r = new RIM(fi.FullName);   // Open what replaced this the astroid exterior.
+                var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.UTP && x.Label == LABEL_K2_501SHUTTLEIZIZ);
+                var g = new GFF(rf.File_Data);  // Grab the git out of the file.
+
+                //Just set clicking to take to iziz
+                (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "Conversation") as GFF.ResRef).Reference = "shuttle501";
+
+                // Write change(s) to file.
+                rf.File_Data = g.ToRawData();
+                r.WriteToFile(fi.FullName);
+            }
+        }
+
         private static void Add901MALEbonElevator(KPaths paths)
         {
             var filename = LookupTable[AREA_K2_MAL_SURFACE] + ".rim";
             var fi = paths.FilesInModules.FirstOrDefault(f => f.Name == filename);
             if (fi.Exists)
             {
+                lock (AREA_K2_MAL_SURFACE)
+                {
+                    var r = new RIM(fi.FullName);   // Open what replaced this the astroid exterior.
+                    var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.GIT);
+                    var g = new GFF(rf.File_Data);  // Grab the git out of the file.
+
+                    //Create Tranistion Struct
+                    var PlaceStruct = new GFF.STRUCT("", 9, new List<GFF.FIELD>()
+                    {
+                        new GFF.FLOAT("Bearing", 0.0f),
+                        new GFF.ResRef("TemplateResRef", "ebo_elev"),
+                        new GFF.DWORD("TweakColor",0),
+                        new GFF.BYTE("UseTweakColor",0),
+                        new GFF.FLOAT("X", 6.23f),
+                        new GFF.FLOAT("Y", -24.63f),
+                        new GFF.FLOAT("Z", 84.43f)
+                    });
+                    (g.Top_Level.Fields.FirstOrDefault(f => f.Label == "Placeable List") as GFF.LIST).Structs.Add(PlaceStruct);
+
+                    //Add Placeable and script to overide
+                    File.WriteAllBytes(paths.Override + "ebo_elev.utp", Properties.Resources.ebo_elev);
+                    File.WriteAllBytes(paths.Override + "r_to003EBOelev.ncs", Properties.Resources.r_to003EBOelev);
+
+                    // Write change(s) to file.
+                    rf.File_Data = g.ToRawData();
+                    r.WriteToFile(fi.FullName);
+                }
+            }
+        }
+
+        private static void Add904MALTransition(KPaths paths)
+        {
+            var filename = LookupTable[AREA_K2_MAL_TRAYCORE] + ".rim";
+            var fi = paths.FilesInModules.FirstOrDefault(f => f.Name == filename);
+            if (!fi.Exists) return;
+            lock (AREA_K2_MAL_TRAYCORE)
+            {
                 var r = new RIM(fi.FullName);   // Open what replaced this the astroid exterior.
                 var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.GIT);
                 var g = new GFF(rf.File_Data);  // Grab the git out of the file.
 
                 //Create Tranistion Struct
-                var PlaceStruct = new GFF.STRUCT("", 9, new List<GFF.FIELD>()
+                var TransitionStruct = new GFF.STRUCT("", 1, new List<GFF.FIELD>()
                 {
-                    new GFF.FLOAT("Bearing", 0.0f),
-                    new GFF.ResRef("TemplateResRef", "ebo_elev"),
-                    new GFF.DWORD("TweakColor",0),
-                    new GFF.BYTE("UseTweakColor",0),
-                    new GFF.FLOAT("X", 6.23f),
-                    new GFF.FLOAT("Y", -24.63f),
-                    new GFF.FLOAT("Z", 84.43f)
+                    new GFF.LIST("Geometry", new List<GFF.STRUCT>()
+                    {
+                        new GFF.STRUCT("", 3, new List<GFF.FIELD>()
+                        {
+                            new GFF.FLOAT("PointX", 0.0f),
+                            new GFF.FLOAT("PointY", -10.0f),
+                            new GFF.FLOAT("PointZ", 0.0f)
+                        }),
+                        new GFF.STRUCT("", 3, new List<GFF.FIELD>()
+                        {
+                            new GFF.FLOAT("PointX", 0.0f),
+                            new GFF.FLOAT("PointY", 0.0f),
+                            new GFF.FLOAT("PointZ", 2.0f)
+                        }),
+                        new GFF.STRUCT("", 3, new List<GFF.FIELD>()
+                        {
+                            new GFF.FLOAT("PointX", 4.0f),
+                            new GFF.FLOAT("PointY", 0.0f),
+                            new GFF.FLOAT("PointZ", 2.0f)
+                        }),
+                        new GFF.STRUCT("", 3, new List<GFF.FIELD>()
+                        {
+                            new GFF.FLOAT("PointX", 4.0f),
+                            new GFF.FLOAT("PointY", -10.0f),
+                            new GFF.FLOAT("PointZ", 0.0f)
+                        })
+                    }),
+                    new GFF.CExoString("LinkedTo", "FROM_904MAL"),
+                    new GFF.BYTE("LinkedToFlags", 2),
+                    new GFF.ResRef("LinkedToModule", AREA_K2_MAL_ACADEMY),
+                    new GFF.CExoString("Tag", "To_904MAL"),
+                    new GFF.ResRef("TemplateResRef", "newtransition"),
+                    new GFF.CExoLocString("TransitionDestin", 101046, new List<GFF.SubString>()),
+                    new GFF.FLOAT("XOrientation", 0.0f),
+                    new GFF.FLOAT("YOrientation", 0.0f),
+                    new GFF.FLOAT("ZOrientation", 0.0f),
+                    new GFF.FLOAT("XPosition", -2.0f),
+                    new GFF.FLOAT("YPosition", -60.0f),
+                    new GFF.FLOAT("ZPosition", 0.0f)
                 });
-                (g.Top_Level.Fields.FirstOrDefault(f => f.Label == "Placeable List") as GFF.LIST).Structs.Add(PlaceStruct);
 
-                //Add Placeable and script to overide
-                File.WriteAllBytes(paths.Override + "ebo_elev.utp", Properties.Resources.ebo_elev);
-                File.WriteAllBytes(paths.Override + "r_to003EBO.ncs", Properties.Resources.r_to003EBO);
+                (g.Top_Level.Fields.FirstOrDefault(f => f.Label == "TriggerList") as GFF.LIST).Structs.Add(TransitionStruct);
 
                 // Write change(s) to file.
                 rf.File_Data = g.ToRawData();
@@ -1408,6 +1574,14 @@ namespace kotor_Randomizer_2
             // Patch Disciple Crash
             if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_Disciple))
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_DISC_JOIN), Properties.Resources.a_disc_join)));
+
+            // Telos Academy to Ebon Hawk patches
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_TelAcademy_ToHawk))
+            {
+                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_TELACADEMY_TOHAWK), Properties.Resources._262exit)));
+                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_TELACADEMY_TOHAWK_ENTR), Properties.Resources.r_to003EBOentr)));
+                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_COR_CUTSCENE), Properties.Resources.r_to950COR)));
+            }
 
             Task.WhenAll(tasks).Wait();
         }
