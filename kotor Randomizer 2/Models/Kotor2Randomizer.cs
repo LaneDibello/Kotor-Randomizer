@@ -186,6 +186,11 @@ namespace kotor_Randomizer_2.Models
                     Area = "MAL", Label = "Surface to Ebon Hawk", Tag = ModuleExtras.K2Patch_MalSurface_ToHawk,
                     ToolTipMessage = "Adds an elevator and a loading zone from Malachor V Surface to the Ebon Hawk."
                 },
+                new UnlockableDoor
+                {
+                    Area = "MAL", Label = "Core to Academy", Tag = ModuleExtras.K2_MalCore_ToAcademy,
+                    ToolTipMessage = "Adds a transition from the Trayus Core to the Trayus Academy."
+                },
             };
 
             ModuleDigraph graph;

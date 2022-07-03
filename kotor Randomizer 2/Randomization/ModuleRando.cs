@@ -1188,6 +1188,9 @@ namespace kotor_Randomizer_2
             // Add elevator to 901MAL
             if (ex.HasFlag(ModuleExtras.K2Patch_MalSurface_ToHawk)) tasks.Add(Task.Run(() => Add901MALEbonElevator(paths)));
 
+            // Add transition to 904MAL - Core to Academy
+            if (ex.HasFlag(ModuleExtras.K2_MalCore_ToAcademy)) tasks.Add(Task.Run(() => Add904MALTransition(paths)));
+
             Task.WhenAll(tasks).Wait();
         }
 
@@ -1302,7 +1305,7 @@ namespace kotor_Randomizer_2
                 var rf = r.File_Table.FirstOrDefault(x => x.TypeID == (int)ResourceType.UTP && x.Label == LABEL_K2_403SHUTTLEIZIZ);
                 var g = new GFF(rf.File_Data);  // Grab the git out of the file.
 
-                //Just set clicking to take to iziz
+                // Just set clicking to take to iziz
                 (g.Top_Level.Fields.FirstOrDefault(x => x.Label == "OnUsed") as GFF.ResRef).Reference = "a_to_iziz2";
 
                 // Write change(s) to file.
