@@ -5,8 +5,9 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System;
-using kotor_Randomizer_2.Extensions;
 using System.Threading.Tasks;
+using kotor_Randomizer_2.Extensions;
+using kotor_Randomizer_2.Digraph;
 
 namespace kotor_Randomizer_2
 {

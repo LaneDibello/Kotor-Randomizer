@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kotor_Randomizer_2.Digraph;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;

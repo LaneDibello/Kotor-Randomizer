@@ -63,7 +63,6 @@ namespace Randomizer_WPF.Views
         public static readonly DependencyProperty QolFixModuleCoordinatesProperty   = DependencyProperty.Register("QolFixModuleCoordinates",  typeof(bool), typeof(GeneralView));
 
         public static readonly DependencyProperty K2SavePatchProperty     = DependencyProperty.Register(nameof(K2SavePatch),     typeof(bool), typeof(GeneralView));
-        public static readonly DependencyProperty K2GalaxyMapProperty     = DependencyProperty.Register(nameof(K2GalaxyMap),     typeof(bool), typeof(GeneralView));
         public static readonly DependencyProperty K2DisciplePatchProperty = DependencyProperty.Register(nameof(K2DisciplePatch), typeof(bool), typeof(GeneralView));
 
         #endregion
@@ -164,12 +163,6 @@ namespace Randomizer_WPF.Views
         {
             get => (bool)GetValue(K2SavePatchProperty);
             set => SetValue(K2SavePatchProperty, value);
-        }
-
-        public bool K2GalaxyMap
-        {
-            get => (bool)GetValue(K2GalaxyMapProperty);
-            set => SetValue(K2GalaxyMapProperty, value);
         }
 
         public bool K2DisciplePatch

@@ -53,57 +53,58 @@ namespace kotor_Randomizer_2
         SaveAllModules = 0b100,     // Include all module data in the save file.
     }
 
-    public enum QualityOfLife
+    public enum QualityOfLife : int
     {
-        Unknown = 0,
+        Unknown = 0,    // Default to an invalid value.
 
-        //  KOTOR 1 PATCHES
-        FixDream                                    = 00005,
-        FixCoordinates                              = 00010,
-        FixMindPrison                               = 00015,
-        VulkarSpiceLZ                               = 00020,
-        FastEnvirosuit                              = 00025,
-        FixFighterEncounter                         = 00030,
-        EarlyT3                                     = 00035,
+        //  COMMON PATCHES
+        CO_FixCoordinates                           = 00050,
+        CO_GalaxyMap                                = 00100,
 
-        //  KOTOR 1 DOORS
-        EnableLevHangarElev                         = 01040,
-        UnlockGalaxyMap                             = 01045,
-        UnlockDanRuins                              = 01050,
-        UnlockLevElev                               = 01055,
-        UnlockManEmbassy                            = 01060,
-        UnlockStaBastila                            = 01065,
-        UnlockUnkSummit                             = 01070,
-        UnlockKorValley                             = 01075,
-        UnlockManHangar                             = 01080,
-        UnlockTarUndercity                          = 01085,
-        UnlockTarVulkar                             = 01090,
-        UnlockUnkTempleExit                         = 01095,
+        //  KOTOR 1 FIXES & PATCHES
+        K1_EarlyT3                                  = 10000,
+        K1_FastEnvirosuit                           = 10050,
+        K1_FixDream                                 = 10100,
+        K1_FixMindPrison                            = 10150,
+        K1_FixFighterEncounter                      = 10200,
 
-        // KOTOR 2 PATCHES
-        K2_UnlockGalaxyMap                          = 20000,
-        K2_PreventDiscipleCrash                     = 20005,
+        //  KOTOR 1 DOOR UNLOCKS & TRANSITIONS
+        K1_DanCourtyard_ToRuins                     = 11000,
+        K1_KorValley_UnlockAll                      = 11050,
+        K1_LevElev_Unlock                           = 11100,
+        K1_LevHangar_EnableElev                     = 11150,
+        K1_ManEstCntrl_EmbassyDoor                  = 11200,
+        K1_ManHangar_ToSith                         = 11250,
+        K1_TarLower_ToUnder                         = 11300,
+        K1_TarLower_ToVulkar                        = 11350,
+        K1_TarVulkar_ToSpice                        = 11400,
+        K1_StaDeck3_BastilaDoor                     = 11450,
+        K1_UnkSummit_ToTemple                       = 11500,
+        K1_UnkTemple_ToEntrance                     = 11550,
 
-        //  KOTOR 2 DOORS
-        K2_PerAdmin_ToDorms                         = 21000,
-        K2_PerAdmin_ToTunnels                       = 21005,
-        K2_PerAdmin_ToHarbinger                     = 21010,
-        K2_PerAdmin_ToDepot                         = 21015,
-        K2_PerDorms_ToExterior                      = 21020,
-        K2_PerDepot_ToTunnels                       = 21025,
-        K2_PerDepot_ForceFields                     = 21030,
-        K2_PerHangar_ToHawk                         = 21035,
-        K2_CitResidential_AptDoor                   = 21040,
-        K2_CitResidential_ToExchange                = 21045,
-        K2_TelAcademy_ToPlateau                     = 21050,
-        K2_NarDocks_ZezDoor                         = 21055,
-        K2_NarJekk_VipRoom                          = 21060,
-        K2_NarTunnels_ToJekk                        = 21065,
-        K2_NarYacht_ToHawk                          = 21070,
-        K2_DanCourtyard_ToEnclave                   = 21075,
-        K2_KorAcademy_ToValley                      = 21080,
-        K2_KorCave_ToTomb                           = 21085,
-        K2_WarEntertain_ToRavager                   = 21090,
+        // KOTOR 2 PATCHES & FIXES
+        K2_PreventDiscipleCrash                     = 20000,
+
+        //  KOTOR 2 DOOR UNLOCKS & TRANSITIONS
+        K2_CitResidential_AptDoor                   = 21000,
+        K2_CitResidential_ToExchange                = 21050,
+        K2_DanCourtyard_ToEnclave                   = 21100,
+        K2_KorAcademy_ToValley                      = 21150,
+        K2_KorCave_ToTomb                           = 21200,
+        K2_PerAdmin_ToDepot                         = 21250,
+        K2_PerAdmin_ToDorms                         = 21300,
+        K2_PerAdmin_ToHarbinger                     = 21350,
+        K2_PerAdmin_ToTunnels                       = 21400,
+        K2_PerDepot_ForceFields                     = 21450,
+        K2_PerDepot_ToTunnels                       = 21500,
+        K2_PerDorms_ToExterior                      = 21550,
+        K2_PerHangar_ToHawk                         = 21600,
+        K2_NarDocks_ZezDoor                         = 21650,
+        K2_NarJekk_VipRoom                          = 21700,
+        K2_NarTunnels_ToJekk                        = 21750,
+        K2_NarYacht_ToHawk                          = 21800,
+        K2_TelAcademy_ToPlateau                     = 21850,
+        K2_WarEntertain_ToRavager                   = 21900,
     }
 
     [Flags]

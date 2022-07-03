@@ -1,4 +1,5 @@
 ﻿using kotor_Randomizer_2;
+using kotor_Randomizer_2.Digraph;
 using kotor_Randomizer_2.Models;
 using Randomizer_WPF.UserControls;
 using System;

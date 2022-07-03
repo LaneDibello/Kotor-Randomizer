@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using kotor_Randomizer_2.Digraph;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -196,7 +197,12 @@ namespace kotor_Randomizer_2.Models
                     Area = "MAL", Label = "Core to Academy", Tag = ModuleExtras.K2_MalCore_ToAcademy,
                     ToolTipMessage = "Adds a transition from the Trayus Core to the Trayus Academy."
                 },
-            };
+                new UnlockableDoor()
+                {
+                    Area = "EBO", Label = "Galaxy Map", Tag = ModuleExtras.K2Patch_GalaxyMap,
+                    ToolTipMessage = "Unlock all destinations on the Ebon Hawk galaxy map from the start of the game."
+                }
+        };
 
             ModuleDigraph graph;
             var modulesPath = Path.Combine(Environment.CurrentDirectory, "Xml", "Kotor2Modules.xml");

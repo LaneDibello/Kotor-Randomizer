@@ -12,7 +12,7 @@
              FontFamily="Microsoft Sans Serif" FontSize="12"
              x:Name="thisView"
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
-             d:DesignHeight="800" d:DesignWidth="600"
+             d:DesignHeight="800" d:DesignWidth="630"
              DataContextChanged="View_DataContextChanged"
              Loaded="View_Loaded"
              >
@@ -67,6 +67,11 @@
                 Updates the Mystery Box in the Ebon Hawk so it can be used multiple times.
             </ToolTip>
             <ToolTip x:Key="ttQolCoordinates">
+                Fixes the warp coordinates of several modules that would lead to potential softlocks otherwise:
+                Undercity, Tulak Horde, Leviathan Hangar, Ahto West, Manaan Sith Base, Rakatan Settlement, and
+                Temple Main Floor.
+            </ToolTip>
+            <ToolTip x:Key="ttQolCoordinatesK2">
                 Fixes the warp coordinates of several modules that would lead to potential softlocks otherwise:
                 Undercity, Tulak Horde, Leviathan Hangar, Ahto West, Manaan Sith Base, Rakatan Settlement, and
                 Temple Main Floor.
@@ -340,14 +345,15 @@
                                         <CheckBox IsChecked="{Binding ElementName=thisView, Mode=TwoWay, Path=K2SavePatch}">
                                             <TextBlock Text="Prevent Milestone Save Deletion" />
                                         </CheckBox>
-                                        <CheckBox IsChecked="{Binding ElementName=thisView, Mode=TwoWay, Path=K2GalaxyMap}">
-                                            <TextBlock Text="Unlock Galaxy Map" />
+                                        <CheckBox IsChecked="{Binding ElementName=thisView, Mode=TwoWay, Path=QolFixModuleCoordinates}"
+                                                  ToolTip="{StaticResource ttQolCoordinatesK2}">
+                                            <TextBlock Text="Fix Module Coordinates" />
                                         </CheckBox>
                                         <CheckBox IsChecked="{Binding ElementName=thisView, Mode=TwoWay, Path=K2DisciplePatch}">
                                             <TextBlock Text="Patch Disciple Crash" />
                                         </CheckBox>
                                     </StackPanel>
-                                    <StackPanel Margin="5,0">
+                                    <StackPanel Margin="5,0" Visibility="Collapsed">
                                         <CheckBox>
                                             <TextBlock Text="[Placeholder]" />
                                         </CheckBox>
