@@ -158,6 +158,11 @@ namespace kotor_Randomizer_2.Models
                 },
                 new UnlockableDoor
                 {
+                    Area = "DXN", Label = "Tomb to Camp", Tag = ModuleExtras.K2_DxnTomb_ToMando,
+                    ToolTipMessage = "Enables the loading zone from Freedon Nadd's Tomb to the Mandalorian Camp."
+                },
+                new UnlockableDoor
+                {
                     Area = "DAN", Label = "Courtyard to Rebuilt Enclave", Tag = ModuleExtras.K2Door_DanCourtyard_ToEnclave,
                     ToolTipMessage = "Unlocks the door leading from the Courtyard to the Rebuilt Enclave."
                 },

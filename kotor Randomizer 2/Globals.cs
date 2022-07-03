@@ -211,7 +211,7 @@ namespace kotor_Randomizer_2
         K2Patch_TelBaoDurConvo           = 0x0004000000000000,
 
         // Still need to add to GUI
-        K2Setting07                      = 0x0008000000000000,
+        K2_DxnTomb_ToMando               = 0x0008000000000000,
         K2Setting08                      = 0x0010000000000000,
         K2Setting09                      = 0x0020000000000000,
         K2Setting10                      = 0x0040000000000000,

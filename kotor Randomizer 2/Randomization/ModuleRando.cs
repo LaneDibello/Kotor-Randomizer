@@ -1182,6 +1182,9 @@ namespace kotor_Randomizer_2
             // Enable the shuttle from the Mandalorian Camp to Iziz.
             if (ex.HasFlag(ModuleExtras.K2Patch_DxnCamp_ToIziz)) tasks.Add(Task.Run(() => Add403DXNShuttleIziz(paths)));
 
+            // Add transition to 410DXN
+            if (ex.HasFlag(ModuleExtras.K2_DxnTomb_ToMando)) tasks.Add(Task.Run(() => Add410DXNTransition(paths)));
+
             // Add elevator to 901MAL
             if (ex.HasFlag(ModuleExtras.K2Patch_MalSurface_ToHawk)) tasks.Add(Task.Run(() => Add901MALEbonElevator(paths)));
 
