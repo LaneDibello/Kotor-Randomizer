@@ -120,6 +120,7 @@ namespace kotor_Randomizer_2
         private const string PATCH_K2_TELACADEMY_TOHAWK = "262exit.dlg";
         private const string PATCH_K2_TELACADEMY_TOHAWK_ENTR = "r_to003EBOentr.ncs";
         private const string PATCH_K2_COR_CUTSCENE = "r_to950COR.ncs";
+        private const string PATCH_K2_BAODUR_CONVO = "231sntry.dlg";
 
         #endregion
 
@@ -1585,6 +1586,9 @@ namespace kotor_Randomizer_2
 
             if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_CitTerminals))
                 tasks.Add(Task.Run(() => FixCitInfoTerminals(paths)));
+
+            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_TelBaoDurConvo))
+                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_BAODUR_CONVO), Properties.Resources._231sntry)));
 
             Task.WhenAll(tasks).Wait();
         }

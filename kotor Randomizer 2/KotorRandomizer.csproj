@@ -280,6 +280,7 @@
     <None Include="Resources\k1patch\appearance_speedysuit.2da" />
     <None Include="Resources\k1patch\g_brakatan003.utc" />
     <None Include="Resources\k2patch\200_info_term.dlg" />
+    <None Include="Resources\k2patch\231sntry.dlg" />
     <None Include="Resources\k2patch\262exit.dlg" />
     <None Include="Resources\k2patch\a_disc_join.ncs" />
     <None Include="Resources\k2patch\a_disc_join.nss" />

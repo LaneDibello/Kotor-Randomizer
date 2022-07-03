@@ -208,9 +208,9 @@ namespace kotor_Randomizer_2
         K2Door_DxnMando_Basalisk         = 0x0000800000000000,
         K2Patch_PerAsteroid_ToTunnels    = 0x0001000000000000,
         K2Patch_DxnCamp_ToIziz           = 0x0002000000000000,
+        K2Patch_TelBaoDurConvo           = 0x0004000000000000,
 
         // Still need to add to GUI
-        K2Setting06                      = 0x0004000000000000,
         K2Setting07                      = 0x0008000000000000,
         K2Setting08                      = 0x0010000000000000,
         K2Setting09                      = 0x0020000000000000,

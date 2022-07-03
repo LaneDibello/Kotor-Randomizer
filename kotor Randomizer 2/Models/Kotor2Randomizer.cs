@@ -123,6 +123,11 @@ namespace kotor_Randomizer_2.Models
                 },
                 new UnlockableDoor
                 {
+                    Area = "TEL", Label = "Patch Bao Dur Conversation", Tag = ModuleExtras.K2Patch_TelBaoDurConvo,
+                    ToolTipMessage = "Patches the Bao Dur intro convo when landing on Telos."
+                },
+                new UnlockableDoor
+                {
                     Area = "NAR", Label = "Docks Zez Kai El's Door", Tag = ModuleExtras.K2Door_NarDocks_ZezDoor,
                     ToolTipMessage = "Unlocks the door of Zez Kai El's apartment."
                 },
