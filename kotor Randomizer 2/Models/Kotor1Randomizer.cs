@@ -19,6 +19,7 @@ namespace kotor_Randomizer_2.Models
     public class Kotor1Randomizer : RandomizerBase, IGeneralSettings, IRandomizeModules, IRandomizeItems
     {
         public override Game Game => Game.Kotor1;
+        public override string Extension => "xkrp";
 
         #region Constants
         public const ModuleExtras EXTRAS_MASK = ModuleExtras.NoSaveDelete   | ModuleExtras.SaveMiniGames | ModuleExtras.SaveAllModules |
@@ -1657,21 +1658,9 @@ namespace kotor_Randomizer_2.Models
         }
 
         /// <summary>
-        /// Converts the string representation of the name or numeric value of enumerated constants
-        /// to an equivalent enumerated object of the provided enumeration type.
-        /// </summary>
-        /// <typeparam name="T">An enumeration type.</typeparam>
-        /// <param name="value">A string containing the name or value to convert.</param>
-        /// <returns>An object of type T whose value is represented by value.</returns>
-        private static T ParseEnum<T>(string value)
-        {
-            return (T)Enum.Parse(typeof(T), value);
-        }
-
-        /// <summary>
         /// Reset General settings to default.
         /// </summary>
-        private void ResetGeneral()
+        public void ResetGeneral()
         {
             GeneralModuleExtrasValue = ModuleExtras.Default;
             foreach (var door in GeneralUnlockedDoors)

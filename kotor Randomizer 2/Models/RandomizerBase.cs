@@ -71,6 +71,7 @@ namespace kotor_Randomizer_2.Models
     public abstract class RandomizerBase : INotifyPropertyChanged
     {
         public virtual Game Game { get; }
+        public virtual string Extension { get; }
 
         /// <summary> Name of the settings file. </summary>
         public string SettingsFileName { get; protected set; }
@@ -160,6 +161,18 @@ namespace kotor_Randomizer_2.Models
             TwodaRandom.Reset();
             TextRando.Reset();
             OtherRando.Reset();
+        }
+
+        /// <summary>
+        /// Converts the string representation of the name or numeric value of enumerated constants
+        /// to an equivalent enumerated object of the provided enumeration type.
+        /// </summary>
+        /// <typeparam name="T">An enumeration type.</typeparam>
+        /// <param name="value">A string containing the name or value to convert.</param>
+        /// <returns>An object of type T whose value is represented by value.</returns>
+        protected static T ParseEnum<T>(string value)
+        {
+            return (T)Enum.Parse(typeof(T), value);
         }
 
         #endregion

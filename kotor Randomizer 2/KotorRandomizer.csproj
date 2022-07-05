@@ -120,6 +120,7 @@
     <Compile Include="Models\RandomizableItem.cs" />
     <Compile Include="Models\RandomizableTable.cs" />
     <Compile Include="Models\RandomizerBase.cs" />
+    <Compile Include="Models\XKRP.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

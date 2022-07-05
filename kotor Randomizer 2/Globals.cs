@@ -224,7 +224,7 @@ namespace kotor_Randomizer_2
         K2Setting16                      = 0x1000000000000000,
         K2Setting17                      = 0x2000000000000000,
         K2Setting18                      = 0x4000000000000000,
-        K2Setting19                      = 0x8000000000000000,
+        //K2Setting19                      = 0x8000000000000000,    // Too big.
     }
 
     [Flags]

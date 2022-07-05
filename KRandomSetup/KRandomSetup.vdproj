@@ -536,7 +536,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_BE42B29A0F47FAF1EADAFBAD5EC14118"
@@ -598,7 +598,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_E09C5AED8BBFCFAB6139F897DD0BBD05"
@@ -643,6 +643,29 @@
                 "Verbs"
                 {
                     "{95C0C507-CBF0-42B8-B119-07219E384A4A}:_BA3B490FC8C840B7A103828CC686A501"
+                    {
+                    "Command" = "8:&Open"
+                    "Verb" = "8:open"
+                    "Arguments" = "8:\"%1\""
+                    "Order" = "3:0"
+                    }
+                }
+            }
+            "{5EB83D71-FA18-4901-BE56-DE22E13CC478}:_77D73BFDCB0043EA9AD0411529E10C02"
+            {
+            "Name" = "8:Extensible Preset 2"
+            "Description" = "8:Extensible Kotor 2 Randomizer Preset"
+            "Extensions" = "8:xk2rp"
+            "MIME" = "8:"
+            "Icon" = "8:_2B9129C3D1F4408E8CCCE0A421EE5646"
+            "IconIndex" = "3:0"
+                "Command"
+                {
+                "Command" = "8:_B9088CB4A4744E418EC868D5607D735E"
+                }
+                "Verbs"
+                {
+                    "{95C0C507-CBF0-42B8-B119-07219E384A4A}:_D40581F2E2B1435189A884FC285A54C2"
                     {
                     "Command" = "8:&Open"
                     "Verb" = "8:open"

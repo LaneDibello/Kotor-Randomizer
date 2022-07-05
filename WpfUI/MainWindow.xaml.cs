@@ -44,7 +44,7 @@ namespace Randomizer_WPF
 
             // If startup file path given, load it -- primarily used for debugging.
             if (!string.IsNullOrEmpty(startupFilePath)) LoadPresetFile(startupFilePath);
-            else GetLastUsedPreset();       // Always load the last settings.
+            else GetLastUsedPresets();      // Always load the last settings.
 
             WriteLineToLog($"{Environment.NewLine}Once you are satisfied, click the button below to randomize your game.{Environment.NewLine}");
         }
@@ -201,7 +201,8 @@ namespace Randomizer_WPF
             };
             file.WriteFile(Path.Combine(Environment.CurrentDirectory, SETTINGS_FILENAME));
 
-            K1Randomizer.Save(Path.Combine(Environment.CurrentDirectory, "last.xkrp"));
+            K1Randomizer.Save(Path.Combine(Environment.CurrentDirectory, $"last.{K1Randomizer.Extension}"));
+            K2Randomizer.Save(Path.Combine(Environment.CurrentDirectory, $"last.{K2Randomizer.Extension}"));
             WriteToLog("done.");
         }
 
@@ -233,7 +234,11 @@ namespace Randomizer_WPF
                     "Load Dragged File?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     WriteLineToLog($"Opening settings file: \"{path}\"");
-                    K1Randomizer.Load(path);
+                    var fi = new FileInfo(path);
+                    if (fi.Extension == K2Randomizer.Extension)
+                        K2Randomizer.Load(path);
+                    else
+                        K1Randomizer.Load(path);
                 }
             }
         }
@@ -256,7 +261,10 @@ namespace Randomizer_WPF
             if (MessageBox.Show(this, "Are you sure you wish to clear the current settings? This cannot be undone.", "Clear Settings?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 WriteLineToLog("Clearing randomization settings.");
-                K1Randomizer.ResetSettingsToDefault();
+                if (IsKotor2Selected)
+                    K2Randomizer.ResetSettingsToDefault();
+                else
+                    K1Randomizer.ResetSettingsToDefault();
             }
         }
 
@@ -275,10 +283,15 @@ namespace Randomizer_WPF
             if (!Directory.Exists(PresetPath))
                 Directory.CreateDirectory(PresetPath);
 
+            // Filter based on selected game.
+            var filter = IsKotor2Selected
+                ? $"XML Kotor 2 Rando Preset (*.{K2Randomizer.Extension})|*.{K2Randomizer.Extension}"
+                : $"XML Kotor Rando Preset (*.{K1Randomizer.Extension})|*.{K1Randomizer.Extension}|Kotor Rando Preset (*.krp)|*.krp";
+
             // Set dialog options.
             var dialog = new OpenFileDialog
             {
-                Filter = "XML Kotor Rando Preset (*.xkrp)|*.xkrp|Kotor Rando Preset (*.krp)|*.krp",
+                Filter = filter,
                 InitialDirectory = PresetPath,
             };
 
@@ -286,7 +299,10 @@ namespace Randomizer_WPF
             if (dialog.ShowDialog() == true)
             {
                 WriteLineToLog($"Opening settings file: \"{dialog.FileName}\"");
-                K1Randomizer.Load(dialog.FileName);
+                if (IsKotor2Selected)
+                    K2Randomizer.Load(dialog.FileName);
+                else
+                    K1Randomizer.Load(dialog.FileName);
             }
         }
 
@@ -305,17 +321,25 @@ namespace Randomizer_WPF
             if (!Directory.Exists(PresetPath))
                 Directory.CreateDirectory(PresetPath);
 
+            // Filter based on selected game.
+            var filter = IsKotor2Selected
+                ? $"XML Kotor 2 Rando Preset (*.{K2Randomizer.Extension})|*.{K2Randomizer.Extension}"
+                : $"XML Kotor Rando Preset (*.{K1Randomizer.Extension})|*.{K1Randomizer.Extension}";
+
             // Set dialog options.
             var dialog = new SaveFileDialog
             {
-                Filter = "XML Kotor Rando Preset (*.xkrp)|*.xkrp",
+                Filter = filter,
                 InitialDirectory = PresetPath,
             };
 
             // Show open file dialog.
             if (dialog.ShowDialog() == true)
             {
-                K1Randomizer.Save(dialog.FileName);
+                if (IsKotor2Selected)
+                    K2Randomizer.Save(dialog.FileName);
+                else
+                    K1Randomizer.Save(dialog.FileName);
                 WriteLineToLog($"Settings saved to file: \"{dialog.FileName}\"");
             }
         }
@@ -390,18 +414,41 @@ namespace Randomizer_WPF
             RandomizeView?.WriteLineToLog(message);
         }
 
-        private void GetLastUsedPreset()
+        private void GetLastUsedPresets()
         {
-            var lastPath = Path.Combine(Environment.CurrentDirectory, "last.xkrp");
+            var lastPath = Path.Combine(Environment.CurrentDirectory, $"last.{K1Randomizer.Extension}");
             if (File.Exists(lastPath))
             {
                 try
                 {
                     // Write message to log about loading startup file.
-                    WriteToLog("Reading last used preset ... ");
+                    WriteToLog("Reading last used K1 preset ... ");
 
                     // Load the file that was requested.
                     K1Randomizer.Load(lastPath);
+
+                    // Make a note that the file was loaded successfully.
+                    WriteLineToLog("done.");
+                }
+                catch (Exception e)
+                {
+                    // Write message to log about failure.
+                    WriteLineToLog("error.");
+                    WriteLineToLog($"Failed to read last used preset: {e.Message}");
+                    MessageBox.Show($"Failed to read last used preset: {e.Message}", "Read Error");
+                }
+            }
+
+            lastPath = Path.Combine(Environment.CurrentDirectory, $"last.{K2Randomizer.Extension}");
+            if (File.Exists(lastPath))
+            {
+                try
+                {
+                    // Write message to log about loading startup file.
+                    WriteToLog("Reading last used K2 preset ... ");
+
+                    // Load the file that was requested.
+                    K2Randomizer.Load(lastPath);
 
                     // Make a note that the file was loaded successfully.
                     WriteLineToLog("done.");
@@ -424,7 +471,17 @@ namespace Randomizer_WPF
                 WriteLineToLog($"Reading preset from file: {presetFilePath}");
 
                 // Load the file that was requested.
-                K1Randomizer.Load(presetFilePath);
+                var fi = new FileInfo(presetFilePath);
+                if (fi.Extension == K2Randomizer.Extension)
+                {
+                    K2Randomizer.Load(presetFilePath);
+                    IsKotor2Selected = true;
+                }
+                else
+                {
+                    K1Randomizer.Load(presetFilePath);
+                    IsKotor2Selected = false;
+                }
 
                 // Make a note that the file was loaded successfully.
                 WriteLineToLog("Preset loaded sucessfully.");
