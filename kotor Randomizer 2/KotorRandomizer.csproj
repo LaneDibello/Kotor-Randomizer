@@ -110,7 +110,7 @@
     <Compile Include="Models\Kotor1Randomizer.cs" />
     <Compile Include="Models\Kotor2Randomizer.cs" />
     <Compile Include="Models\ReachabilityGoal.cs" />
-    <Compile Include="Models\UnlockableDoor.cs" />
+    <Compile Include="Models\QualityOfLifeOption.cs" />
     <Compile Include="Forms\TwodaForm.cs">
       <SubType>Form</SubType>
     </Compile>

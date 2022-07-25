@@ -11,7 +11,7 @@ namespace kotor_Randomizer_2.Models
     {
         Dictionary<string, Tuple<float, float, float>> FixedCoordinates { get; }
         SavePatchOptions GeneralSaveOptions { get; set; }
-        ObservableCollection<UnlockableDoor> GeneralUnlockedDoors { get; set; }
-        ObservableCollection<UnlockableDoor> GeneralLockedDoors { get; set; }
+        ObservableCollection<QualityOfLifeOption> GeneralUnlockedDoors { get; set; }
+        ObservableCollection<QualityOfLifeOption> GeneralLockedDoors { get; set; }
     }
 }

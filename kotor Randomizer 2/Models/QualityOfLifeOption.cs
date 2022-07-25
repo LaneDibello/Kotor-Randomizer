@@ -4,13 +4,13 @@ using kotor_Randomizer_2.Extensions;
 namespace kotor_Randomizer_2.Models
 {
     /// <summary>
-    /// Encapsulates an unlockable door within the game.
+    /// Encapsulates quality of life option within the game.
     /// </summary>
-    public class UnlockableDoor
+    public class QualityOfLifeOption
     {
-        public UnlockableDoor() { }
+        public QualityOfLifeOption() { }
 
-        public UnlockableDoor(QualityOfLife qol)
+        public QualityOfLifeOption(QualityOfLife qol)
         {
             QoL = qol;
             Area = qol.ToArea();
@@ -35,7 +35,7 @@ namespace kotor_Randomizer_2.Models
         /// </summary>
         public override string ToString()
         {
-            return $"[{Area}] {Label} ({QoL})";
+            return $"[{Area}] {Label} ({QoL} = {(int)QoL})";
         }
     }
 }

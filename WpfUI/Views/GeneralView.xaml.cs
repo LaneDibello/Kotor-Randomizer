@@ -23,10 +23,10 @@ namespace Randomizer_WPF.Views
     {
         #region Members
 
-        private ObservableCollection<UnlockableDoor> lvLockedItemSource = new ObservableCollection<UnlockableDoor>();
+        private ObservableCollection<QualityOfLifeOption> lvLockedItemSource = new ObservableCollection<QualityOfLifeOption>();
         private SortAdorner lvLockedSortAdorner = null;
         private GridViewColumnHeader lvLockedSortCol = null;
-        private ObservableCollection<UnlockableDoor> lvUnlockedItemSource = new ObservableCollection<UnlockableDoor>();
+        private ObservableCollection<QualityOfLifeOption> lvUnlockedItemSource = new ObservableCollection<QualityOfLifeOption>();
         private SortAdorner lvUnlockedSortAdorner = null;
         private GridViewColumnHeader lvUnlockedSortCol = null;
 
@@ -178,9 +178,9 @@ namespace Randomizer_WPF.Views
         private void BtnLockAll_Click(object sender, RoutedEventArgs e)
         {
             var view = CollectionViewSource.GetDefaultView(lvUnlocked.ItemsSource);
-            var toRemove = new List<UnlockableDoor>();
+            var toRemove = new List<QualityOfLifeOption>();
 
-            foreach (UnlockableDoor item in view)
+            foreach (QualityOfLifeOption item in view)
             {
                 lvLockedItemSource.Add(item);
                 toRemove.Add(item);
@@ -194,7 +194,7 @@ namespace Randomizer_WPF.Views
 
         private void BtnLockSelected_Click(object sender, RoutedEventArgs e)
         {
-            var selected = lvUnlocked.SelectedItems.OfType<UnlockableDoor>().ToList();
+            var selected = lvUnlocked.SelectedItems.OfType<QualityOfLifeOption>().ToList();
             foreach (var item in selected)
             {
                 lvLockedItemSource.Add(item);
@@ -205,9 +205,9 @@ namespace Randomizer_WPF.Views
         private void BtnUnlockAll_Click(object sender, RoutedEventArgs e)
         {
             var view = CollectionViewSource.GetDefaultView(lvLocked.ItemsSource);
-            var toRemove = new List<UnlockableDoor>();
+            var toRemove = new List<QualityOfLifeOption>();
 
-            foreach (UnlockableDoor item in view)
+            foreach (QualityOfLifeOption item in view)
             {
                 lvUnlockedItemSource.Add(item);
                 toRemove.Add(item);
@@ -221,7 +221,7 @@ namespace Randomizer_WPF.Views
 
         private void BtnUnlockSelected_Click(object sender, RoutedEventArgs e)
         {
-            var selected = lvLocked.SelectedItems.OfType<UnlockableDoor>().ToList();
+            var selected = lvLocked.SelectedItems.OfType<QualityOfLifeOption>().ToList();
             foreach (var item in selected)
             {
                 lvUnlockedItemSource.Add(item);
@@ -291,7 +291,7 @@ namespace Randomizer_WPF.Views
         private void LvLockedItem_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             // Locked item clicked... move it to the Unlocked list.
-            var item = ((ListViewItem)sender).Content as UnlockableDoor;
+            var item = ((ListViewItem)sender).Content as QualityOfLifeOption;
             lvUnlockedItemSource.Add(item);
             _ = lvLockedItemSource.Remove(item);
         }
@@ -311,7 +311,7 @@ namespace Randomizer_WPF.Views
         private void LvUnlockedItem_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             // Unlocked item clicked... move it to the Locked list.
-            var item = ((ListViewItem)sender).Content as UnlockableDoor;
+            var item = ((ListViewItem)sender).Content as QualityOfLifeOption;
             lvLockedItemSource.Add(item);
             _ = lvUnlockedItemSource.Remove(item);
         }
@@ -378,8 +378,8 @@ namespace Randomizer_WPF.Views
         private bool UnlockFilter(object item)
         {
             if (string.IsNullOrEmpty(txtFilter.Text)) return true;
-            else return (item as UnlockableDoor).Label.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                        (item as UnlockableDoor).Area.IndexOf( txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0;
+            else return (item as QualityOfLifeOption).Label.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        (item as QualityOfLifeOption).Area.IndexOf( txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         #endregion

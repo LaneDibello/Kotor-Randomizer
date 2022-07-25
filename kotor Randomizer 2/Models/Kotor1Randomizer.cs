@@ -171,27 +171,27 @@ namespace kotor_Randomizer_2.Models
             };
 
             // Create list of unlockable doors.
-            GeneralLockedDoors = new ObservableCollection<UnlockableDoor>
+            GeneralLockedDoors = new ObservableCollection<QualityOfLifeOption>
             {
-                new UnlockableDoor(QualityOfLife.CO_FixCoordinates),
-                new UnlockableDoor(QualityOfLife.K1_DanCourtyard_ToRuins),
-                new UnlockableDoor(QualityOfLife.CO_GalaxyMap),
-                new UnlockableDoor(QualityOfLife.K1_FixDream),
-                new UnlockableDoor(QualityOfLife.K1_FixFighterEncounter),
-                new UnlockableDoor(QualityOfLife.K1_FixMindPrison),
-                new UnlockableDoor(QualityOfLife.K1_KorValley_UnlockAll),
-                new UnlockableDoor(QualityOfLife.K1_LevElev_ToHangar),
-                new UnlockableDoor(QualityOfLife.K1_LevHangar_EnableElev),
-                new UnlockableDoor(QualityOfLife.K1_FastEnvirosuit),
-                new UnlockableDoor(QualityOfLife.K1_ManEstCntrl_EmbassyDoor),
-                new UnlockableDoor(QualityOfLife.K1_ManHangar_ToSith),
-                new UnlockableDoor(QualityOfLife.K1_StaDeck3_BastilaDoor),
-                new UnlockableDoor(QualityOfLife.K1_TarLower_ToUnder),
-                new UnlockableDoor(QualityOfLife.K1_TarLower_ToVulkar),
-                new UnlockableDoor(QualityOfLife.K1_TarVulkar_ToSpice),
-                new UnlockableDoor(QualityOfLife.K1_EarlyT3),
-                new UnlockableDoor(QualityOfLife.K1_UnkSummit_ToTemple),
-                new UnlockableDoor(QualityOfLife.K1_UnkTemple_ToEntrance),
+                new QualityOfLifeOption(QualityOfLife.CO_FixCoordinates),
+                new QualityOfLifeOption(QualityOfLife.K1_DanCourtyard_ToRuins),
+                new QualityOfLifeOption(QualityOfLife.CO_GalaxyMap),
+                new QualityOfLifeOption(QualityOfLife.K1_FixDream),
+                new QualityOfLifeOption(QualityOfLife.K1_FixFighterEncounter),
+                new QualityOfLifeOption(QualityOfLife.K1_FixMindPrison),
+                new QualityOfLifeOption(QualityOfLife.K1_KorValley_UnlockAll),
+                new QualityOfLifeOption(QualityOfLife.K1_LevElev_ToHangar),
+                new QualityOfLifeOption(QualityOfLife.K1_LevHangar_EnableElev),
+                new QualityOfLifeOption(QualityOfLife.K1_FastEnvirosuit),
+                new QualityOfLifeOption(QualityOfLife.K1_ManEstCntrl_EmbassyDoor),
+                new QualityOfLifeOption(QualityOfLife.K1_ManHangar_ToSith),
+                new QualityOfLifeOption(QualityOfLife.K1_StaDeck3_BastilaDoor),
+                new QualityOfLifeOption(QualityOfLife.K1_TarLower_ToUnder),
+                new QualityOfLifeOption(QualityOfLife.K1_TarLower_ToVulkar),
+                new QualityOfLifeOption(QualityOfLife.K1_TarVulkar_ToSpice),
+                new QualityOfLifeOption(QualityOfLife.K1_EarlyT3),
+                new QualityOfLifeOption(QualityOfLife.K1_UnkSummit_ToTemple),
+                new QualityOfLifeOption(QualityOfLife.K1_UnkTemple_ToEntrance),
             };
 
             // Create module digraph and get the list of modules.
@@ -356,15 +356,15 @@ namespace kotor_Randomizer_2.Models
             set => SetField(ref _generalSaveOptions, value);
         }
 
-        private ObservableCollection<UnlockableDoor> _generalUnlockedDoors = new ObservableCollection<UnlockableDoor>();
-        public ObservableCollection<UnlockableDoor> GeneralUnlockedDoors
+        private ObservableCollection<QualityOfLifeOption> _generalUnlockedDoors = new ObservableCollection<QualityOfLifeOption>();
+        public ObservableCollection<QualityOfLifeOption> GeneralUnlockedDoors
         {
             get => _generalUnlockedDoors;
             set => SetField(ref _generalUnlockedDoors, value);
         }
 
-        private ObservableCollection<UnlockableDoor> _generalLockedDoors = new ObservableCollection<UnlockableDoor>();
-        public ObservableCollection<UnlockableDoor> GeneralLockedDoors
+        private ObservableCollection<QualityOfLifeOption> _generalLockedDoors = new ObservableCollection<QualityOfLifeOption>();
+        public ObservableCollection<QualityOfLifeOption> GeneralLockedDoors
         {
             get => _generalLockedDoors;
             set => SetField(ref _generalLockedDoors, value);

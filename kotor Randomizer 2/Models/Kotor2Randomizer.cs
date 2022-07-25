@@ -147,39 +147,39 @@ namespace kotor_Randomizer_2.Models
                 new ReachabilityGoal { GoalID = 3, Caption = "Pazaak Champion" },
             };
 
-            GeneralLockedDoors = new ObservableCollection<UnlockableDoor>
+            GeneralLockedDoors = new ObservableCollection<QualityOfLifeOption>
             {
-                new UnlockableDoor(QualityOfLife.CO_GalaxyMap),                 // General
-                new UnlockableDoor(QualityOfLife.K2_PreventDiscipleCrash),
-                new UnlockableDoor(QualityOfLife.K2_CitResidential_AptDoor),    // Citadel Station
-                new UnlockableDoor(QualityOfLife.K2_CitResidential_ToExchange),
-                new UnlockableDoor(QualityOfLife.K2_CitStation_Terminals),
-                new UnlockableDoor(QualityOfLife.K2_DanCourtyard_ToEnclave),    // Dantooine
-                new UnlockableDoor(QualityOfLife.K2_DxnCamp_ToIziz),            // Dxun
-                new UnlockableDoor(QualityOfLife.K2_DxnCamp_Basalisk),
-                new UnlockableDoor(QualityOfLife.K2_DxnTomb_ToCamp),
-                new UnlockableDoor(QualityOfLife.K2_KorAcademy_ToValley),       // Korriban
-                new UnlockableDoor(QualityOfLife.K2_KorCave_ToTomb),
-                new UnlockableDoor(QualityOfLife.K2_MalSurface_ToHawk),         // Malachor V
-                new UnlockableDoor(QualityOfLife.K2_MalCore_ToAcademy),
-                new UnlockableDoor(QualityOfLife.K2_NarDocks_ZezDoor),          // Nar Shaddaa
-                new UnlockableDoor(QualityOfLife.K2_NarJekk_VipRoom),
-                new UnlockableDoor(QualityOfLife.K2_NarTunnels_ToJekk),
-                new UnlockableDoor(QualityOfLife.K2_NarYacht_ToHawk),
-                new UnlockableDoor(QualityOfLife.K2_OndPort_ToCamp),            // Onderon
-                new UnlockableDoor(QualityOfLife.K2_PerAdmin_ToDorms),          // Peragus
-                new UnlockableDoor(QualityOfLife.K2_PerAdmin_ToTunnels),
-                new UnlockableDoor(QualityOfLife.K2_PerAdmin_ToHarbinger),
-                new UnlockableDoor(QualityOfLife.K2_PerAdmin_ToDepot),
-                new UnlockableDoor(QualityOfLife.K2_PerDorms_ToExterior),
-                new UnlockableDoor(QualityOfLife.K2_PerExterior_ToDorms),
-                new UnlockableDoor(QualityOfLife.K2_PerDepot_ToTunnels),
-                new UnlockableDoor(QualityOfLife.K2_PerDepot_ForceFields),
-                new UnlockableDoor(QualityOfLife.K2_PerHangar_ToHawk),
-                new UnlockableDoor(QualityOfLife.K2_TelAcademy_ToPlateau),      // Telos
-                new UnlockableDoor(QualityOfLife.K2_TelAcademy_ToHawk),
-                new UnlockableDoor(QualityOfLife.K2_TelBaoDurConvo),
-                new UnlockableDoor(QualityOfLife.K2_WarEntertain_ToRavager),    // Wartime Telos
+                new QualityOfLifeOption(QualityOfLife.CO_GalaxyMap),                 // General
+                new QualityOfLifeOption(QualityOfLife.K2_PreventDiscipleCrash),
+                new QualityOfLifeOption(QualityOfLife.K2_CitResidential_AptDoor),    // Citadel Station
+                new QualityOfLifeOption(QualityOfLife.K2_CitResidential_ToExchange),
+                new QualityOfLifeOption(QualityOfLife.K2_CitStation_Terminals),
+                new QualityOfLifeOption(QualityOfLife.K2_DanCourtyard_ToEnclave),    // Dantooine
+                new QualityOfLifeOption(QualityOfLife.K2_DxnCamp_ToIziz),            // Dxun
+                new QualityOfLifeOption(QualityOfLife.K2_DxnCamp_Basalisk),
+                new QualityOfLifeOption(QualityOfLife.K2_DxnTomb_ToCamp),
+                new QualityOfLifeOption(QualityOfLife.K2_KorAcademy_ToValley),       // Korriban
+                new QualityOfLifeOption(QualityOfLife.K2_KorCave_ToTomb),
+                new QualityOfLifeOption(QualityOfLife.K2_MalSurface_ToHawk),         // Malachor V
+                new QualityOfLifeOption(QualityOfLife.K2_MalCore_ToAcademy),
+                new QualityOfLifeOption(QualityOfLife.K2_NarDocks_ZezDoor),          // Nar Shaddaa
+                new QualityOfLifeOption(QualityOfLife.K2_NarJekk_VipRoom),
+                new QualityOfLifeOption(QualityOfLife.K2_NarTunnels_ToJekk),
+                new QualityOfLifeOption(QualityOfLife.K2_NarYacht_ToHawk),
+                new QualityOfLifeOption(QualityOfLife.K2_OndPort_ToCamp),            // Onderon
+                new QualityOfLifeOption(QualityOfLife.K2_PerAdmin_ToDorms),          // Peragus
+                new QualityOfLifeOption(QualityOfLife.K2_PerAdmin_ToTunnels),
+                new QualityOfLifeOption(QualityOfLife.K2_PerAdmin_ToHarbinger),
+                new QualityOfLifeOption(QualityOfLife.K2_PerAdmin_ToDepot),
+                new QualityOfLifeOption(QualityOfLife.K2_PerDorms_ToExterior),
+                new QualityOfLifeOption(QualityOfLife.K2_PerExterior_ToDorms),
+                new QualityOfLifeOption(QualityOfLife.K2_PerDepot_ToTunnels),
+                new QualityOfLifeOption(QualityOfLife.K2_PerDepot_ForceFields),
+                new QualityOfLifeOption(QualityOfLife.K2_PerHangar_ToHawk),
+                new QualityOfLifeOption(QualityOfLife.K2_TelAcademy_ToPlateau),      // Telos
+                new QualityOfLifeOption(QualityOfLife.K2_TelAcademy_ToHawk),
+                new QualityOfLifeOption(QualityOfLife.K2_TelBaoDurConvo),
+                new QualityOfLifeOption(QualityOfLife.K2_WarEntertain_ToRavager),    // Wartime Telos
         };
 
             ModuleDigraph graph;
@@ -1059,8 +1059,8 @@ namespace kotor_Randomizer_2.Models
 
         #region Backing Fields
         private SavePatchOptions _generalSaveOptions;
-        private ObservableCollection<UnlockableDoor> _generalUnlockedDoors = new ObservableCollection<UnlockableDoor>();
-        private ObservableCollection<UnlockableDoor> _generalLockedDoors = new ObservableCollection<UnlockableDoor>();
+        private ObservableCollection<QualityOfLifeOption> _generalUnlockedDoors = new ObservableCollection<QualityOfLifeOption>();
+        private ObservableCollection<QualityOfLifeOption> _generalLockedDoors = new ObservableCollection<QualityOfLifeOption>();
         #endregion
 
         public Dictionary<string, Tuple<float, float, float>> FixedCoordinates => new Dictionary<string, Tuple<float, float, float>>()
@@ -1074,13 +1074,13 @@ namespace kotor_Randomizer_2.Models
             set => SetField(ref _generalSaveOptions, value);
         }
 
-        public ObservableCollection<UnlockableDoor> GeneralUnlockedDoors
+        public ObservableCollection<QualityOfLifeOption> GeneralUnlockedDoors
         {
             get => _generalUnlockedDoors;
             set => SetField(ref _generalUnlockedDoors, value);
         }
 
-        public ObservableCollection<UnlockableDoor> GeneralLockedDoors
+        public ObservableCollection<QualityOfLifeOption> GeneralLockedDoors
         {
             get => _generalLockedDoors;
             set => SetField(ref _generalLockedDoors, value);
