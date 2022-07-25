@@ -122,7 +122,7 @@
   </metadata>
   <data name="label2.Text" xml:space="preserve">
     <value>Notice:
-The stability of this feature is still questionable. If you recieve any pop-ups or warnings about "invalid bumpmaps", please contact Lane Dibello with the texture name, so he can omit it from randomization. If you encounter issues mid-run, change your quality settings.
+The stability of this feature is still questionable. If you recieve any pop-ups or warnings about "invalid bumpmaps", please contact Lane with the texture name, so he can omit it from randomization. If you encounter issues mid-run, change your quality settings.
 </value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

@@ -10,6 +10,7 @@ using System.Xml;
 using System.Xml.Linq;
 using ClosedXML.Excel;
 using kotor_Randomizer_2.Digraph;
+using kotor_Randomizer_2.Extensions;
 
 namespace kotor_Randomizer_2.Models
 {
@@ -22,6 +23,7 @@ namespace kotor_Randomizer_2.Models
         public override string Extension => "xkrp";
 
         #region Constants
+        public const ModuleExtras SAVE_MASK = ModuleExtras.NoSaveDelete | ModuleExtras.SaveMiniGames | ModuleExtras.SaveAllModules;
         public const ModuleExtras EXTRAS_MASK = ModuleExtras.NoSaveDelete   | ModuleExtras.SaveMiniGames | ModuleExtras.SaveAllModules |
                                                 ModuleExtras.FixCoordinates | ModuleExtras.FixDream      | ModuleExtras.FixMindPrison  |
                                                 ModuleExtras.FastEnvirosuit | ModuleExtras.EarlyT3       | ModuleExtras.VulkarSpiceLZ  |
@@ -107,6 +109,7 @@ namespace kotor_Randomizer_2.Models
         private const string XML_REACHABLE      = "Reachable";
         private const string XML_REMOVE_DMCA    = "RemoveDmca";
         private const string XML_RULES          = "Rules";
+        private const string XML_SAVE_OPS       = "SaveOps";
         private const string XML_SETTINGS       = "Settings";
         private const string XML_STRONG_GOALS   = "StrongGoals";
         private const string XML_STUNT          = "Stunt";
@@ -168,66 +171,28 @@ namespace kotor_Randomizer_2.Models
             };
 
             // Create list of unlockable doors.
-            GeneralLockedDoors.Add(new UnlockableDoor()
+            GeneralLockedDoors = new ObservableCollection<UnlockableDoor>
             {
-                Area = "LEV", Label = "Hangar Access",     Tag = ModuleExtras.UnlockLevElev,
-                ToolTipMessage = "The Leviathan elevator will not restrict you from going to the Hangar early."
-            });
-            GeneralLockedDoors.Add(new UnlockableDoor()
-            {
-                Area = "LEV", Label = "Enable Hangar Elevator", Tag = ModuleExtras.EnableLevHangarElev,
-                ToolTipMessage = "The Leviathan Hangar elevator will now be usable."
-            });
-            GeneralLockedDoors.Add(new UnlockableDoor()
-            {
-                Area = "MAN", Label = "Republic Embassy",  Tag = ModuleExtras.UnlockManEmbassy,
-                ToolTipMessage = "Unlocks the Republic Embassy door and the door to the submersible."
-            });
-            GeneralLockedDoors.Add(new UnlockableDoor()
-            {
-                Area = "MAN", Label = "Sith Hangar",       Tag = ModuleExtras.UnlockManHangar,
-                ToolTipMessage = "Unlocks the Sith Hangar door before visiting Roland."
-            });
-            GeneralLockedDoors.Add(new UnlockableDoor()
-            {
-                Area = "STA", Label = "Door to Bastila",   Tag = ModuleExtras.UnlockStaBastila,
-                ToolTipMessage = "Unlocks the door leading to the Bastila fight, allowing it to be opened after fighting her."
-            });
-            GeneralLockedDoors.Add(new UnlockableDoor()
-            {
-                Area = "TAR", Label = "Undercity",         Tag = ModuleExtras.UnlockTarUndercity,
-                ToolTipMessage = "Unlocks the Undercity door in the Lower City."
-            });
-            GeneralLockedDoors.Add(new UnlockableDoor()
-            {
-                Area = "TAR", Label = "Vulkar Base",       Tag = ModuleExtras.UnlockTarVulkar,
-                ToolTipMessage = "Unlocks the Vulkar Base in the Lower City."
-            });
-            GeneralLockedDoors.Add(new UnlockableDoor()
-            {
-                Area = "UNK", Label = "Summit Exit",       Tag = ModuleExtras.UnlockUnkSummit,
-                ToolTipMessage = "Unlocks the exit door from the Temple Summit."
-            });
-            GeneralLockedDoors.Add(new UnlockableDoor()
-            {
-                Area = "UNK", Label = "Temple Exit",       Tag = ModuleExtras.UnlockUnkTempleExit,
-                ToolTipMessage = "Unlocks the exit door from the Temple Main Floor."
-            });
-            GeneralLockedDoors.Add(new UnlockableDoor()
-            {
-                Area = "DAN", Label = "Ruins Door",        Tag = ModuleExtras.UnlockDanRuins,
-                ToolTipMessage = "Unlocks the door into the Dantooine Ruins."
-            });
-            GeneralLockedDoors.Add(new UnlockableDoor()
-            {
-                Area = "EBO", Label = "Galaxy Map",        Tag = ModuleExtras.UnlockGalaxyMap,
-                ToolTipMessage = "Unlock all destinations on the Ebon Hawk galaxy map from the start of the game."
-            });
-            GeneralLockedDoors.Add(new UnlockableDoor()
-            {
-                Area = "KOR", Label = "Valley After Tomb", Tag = ModuleExtras.UnlockKorValley,
-                ToolTipMessage = "Ensures the Sith Tomb and Sith Academy remain unlocked regardless of the Uthar / Yuthura outcome in Naga Sadow."
-            });
+                new UnlockableDoor(QualityOfLife.CO_FixCoordinates),
+                new UnlockableDoor(QualityOfLife.K1_DanCourtyard_ToRuins),
+                new UnlockableDoor(QualityOfLife.CO_GalaxyMap),
+                new UnlockableDoor(QualityOfLife.K1_FixDream),
+                new UnlockableDoor(QualityOfLife.K1_FixFighterEncounter),
+                new UnlockableDoor(QualityOfLife.K1_FixMindPrison),
+                new UnlockableDoor(QualityOfLife.K1_KorValley_UnlockAll),
+                new UnlockableDoor(QualityOfLife.K1_LevElev_ToHangar),
+                new UnlockableDoor(QualityOfLife.K1_LevHangar_EnableElev),
+                new UnlockableDoor(QualityOfLife.K1_FastEnvirosuit),
+                new UnlockableDoor(QualityOfLife.K1_ManEstCntrl_EmbassyDoor),
+                new UnlockableDoor(QualityOfLife.K1_ManHangar_ToSith),
+                new UnlockableDoor(QualityOfLife.K1_StaDeck3_BastilaDoor),
+                new UnlockableDoor(QualityOfLife.K1_TarLower_ToUnder),
+                new UnlockableDoor(QualityOfLife.K1_TarLower_ToVulkar),
+                new UnlockableDoor(QualityOfLife.K1_TarVulkar_ToSpice),
+                new UnlockableDoor(QualityOfLife.K1_EarlyT3),
+                new UnlockableDoor(QualityOfLife.K1_UnkSummit_ToTemple),
+                new UnlockableDoor(QualityOfLife.K1_UnkTemple_ToEntrance),
+            };
 
             // Create module digraph and get the list of modules.
             ModuleDigraph graph;
@@ -384,11 +349,11 @@ namespace kotor_Randomizer_2.Models
             { AREA_TEMPLE_MAIN, new Tuple<float, float, float>( 95.3f,  42.0f,  0.44f) },
         };
 
-        private ModuleExtras _generalModuleExtrasValue;
-        public ModuleExtras GeneralModuleExtrasValue
+        private SavePatchOptions _generalSaveOptions;
+        public SavePatchOptions GeneralSaveOptions
         {
-            get => _generalModuleExtrasValue;
-            set => SetField(ref _generalModuleExtrasValue, value);
+            get => _generalSaveOptions;
+            set => SetField(ref _generalSaveOptions, value);
         }
 
         private ObservableCollection<UnlockableDoor> _generalUnlockedDoors = new ObservableCollection<UnlockableDoor>();
@@ -993,7 +958,7 @@ namespace kotor_Randomizer_2.Models
 
         public bool DoRandomizeModules =>   // A couple of general options are handled by module randomization.
             (_moduleRandomizedList?.Count ?? 0) > 1
-            || GeneralModuleExtrasValue   != ModuleExtras.Default
+            || GeneralSaveOptions != SavePatchOptions.Default
             || GeneralUnlockedDoors.Count != 0;
 
         public bool DoRandomizeOther =>
@@ -1228,6 +1193,8 @@ namespace kotor_Randomizer_2.Models
         /// <param name="s"></param>
         protected override void ReadKRP(Stream s)
         {
+            ResetSettingsToDefault();
+
             if (KRP.ReadKRP(s)) // If read KRP is successful ...
             {
                 var doRandoModule  = Properties.Settings.Default.DoRandomization_Module;
@@ -1401,7 +1368,7 @@ namespace kotor_Randomizer_2.Models
                     File.WriteAllBytes(Path.Combine(paths.Override, "k_pdan_13_area.ncs"), Properties.Resources.k_pdan_13_area);
 
                     // Write appearance override.
-                    if (GeneralModuleExtrasValue.HasFlag(ModuleExtras.FastEnvirosuit))
+                    if (GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_FastEnvirosuit))
                     {
                         File.WriteAllBytes(Path.Combine(paths.Override, "appearance.2da"), Properties.Resources.appearance_speedysuit);
                     }
@@ -1411,7 +1378,7 @@ namespace kotor_Randomizer_2.Models
                     }
 
                     // Write early T3 override.
-                    if (GeneralModuleExtrasValue.HasFlag(ModuleExtras.EarlyT3))
+                    if (GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_EarlyT3))
                     {
                         File.WriteAllBytes(Path.Combine(paths.Override, "tar02_janice021.dlg"), Properties.Resources.tar02_janice021);
                     }
@@ -1508,7 +1475,7 @@ namespace kotor_Randomizer_2.Models
                 finally
                 {
                     ReportProgress(bw, 100, BusyState.Randomizing, message: Properties.Resources.TaskFinishing);
-                    sw.WriteLine("\nThe Kotor Randomizer was created by Lane Dibello and Glasnonck, with help from the greater Kotor Speedrunning community.");
+                    sw.WriteLine("\nThe Kotor Randomizer was created by Lane and Glasnonck, with help from the greater Kotor Speedrunning community.");
                     sw.WriteLine("If you encounter any issues please try to contact me @Lane#5847 on Discord");
                 }
             }
@@ -1662,7 +1629,7 @@ namespace kotor_Randomizer_2.Models
         /// </summary>
         public void ResetGeneral()
         {
-            GeneralModuleExtrasValue = ModuleExtras.Default;
+            GeneralSaveOptions = SavePatchOptions.Default;
             foreach (var door in GeneralUnlockedDoors)
                 GeneralLockedDoors.Add(door);
             GeneralUnlockedDoors.Clear();
@@ -1746,7 +1713,7 @@ namespace kotor_Randomizer_2.Models
         /// </summary>
         private void ResetModules()
         {
-            GeneralModuleExtrasValue = ModuleExtras.Default;
+            GeneralSaveOptions = SavePatchOptions.Default;
 
             foreach (var item in GeneralUnlockedDoors) GeneralLockedDoors.Add(item);
             GeneralUnlockedDoors.Clear();
@@ -1839,21 +1806,16 @@ namespace kotor_Randomizer_2.Models
         /// </summary>
         private void ReadKRPModules()
         {
-            // Grab QoL from module extras.
-            GeneralModuleExtrasValue = Properties.Settings.Default.ModuleExtrasValue & EXTRAS_MASK;
+            // Grab Save Options from module extras.
+            ExtractSaveOptions(Properties.Settings.Default.ModuleExtrasValue);
 
             // Move unlocks into the locked list.
             foreach (var item in GeneralUnlockedDoors) GeneralLockedDoors.Add(item);
             GeneralUnlockedDoors.Clear();
 
             // Grab unlocks from module extras.
-            ModuleExtras unlocks = Properties.Settings.Default.ModuleExtrasValue & UNLOCKS_MASK;
-            var toUnlock = GeneralLockedDoors.Where(du => unlocks.HasFlag(du.Tag)).ToList();
-            foreach (var item in toUnlock)
-            {
-                GeneralUnlockedDoors.Add(item);
-                GeneralLockedDoors.Remove(item);
-            }
+            var unlocks = Properties.Settings.Default.ModuleExtrasValue & ((SAVE_MASK ^ EXTRAS_MASK) | UNLOCKS_MASK);
+            ExtractUnlockOptions(unlocks);
 
             // Read module settings.
             ModuleAllowGlitchClip      = Properties.Settings.Default.AllowGlitchClip;
@@ -1882,6 +1844,17 @@ namespace kotor_Randomizer_2.Models
             {
                 ModuleOmittedList.Add(item);
                 ModuleRandomizedList.Remove(item);
+            }
+        }
+
+        private void ExtractSaveOptions(ModuleExtras extras)
+        {
+            var savesList = (extras & SAVE_MASK).ToList();
+            foreach (var save in savesList)
+            {
+                var spo = save.ToSPO();     // Find SPO for this ModuleExtra.
+                if (spo == SavePatchOptions.Invalid) continue;  // Ignore invalid items.
+                GeneralSaveOptions |= spo;  // Enable each flag.
             }
         }
 
@@ -2041,18 +2014,61 @@ namespace kotor_Randomizer_2.Models
         /// <param name="element">XML element containing the general settings.</param>
         private void ReadGeneralSettings(XElement element)
         {   // Inside General
-            { if (element.Attribute(XML_QOL    ) is XAttribute attr) GeneralModuleExtrasValue = ParseEnum<ModuleExtras>(attr.Value); }
-
-            var unlocks = ModuleExtras.Default;
-            { if (element.Attribute(XML_UNLOCKS) is XAttribute attr) unlocks = ParseEnum<ModuleExtras>(attr.Value); }
-
-            foreach (var door in GeneralLockedDoors.ToList())
+            // Check for new version of enumerations.
+            if (element.Attributes().Any(a => a.Name == XML_SAVE_OPS))
             {
-                if (unlocks.HasFlag(door.Tag))
-                {
-                    GeneralUnlockedDoors.Add(door);
-                    GeneralLockedDoors.Remove(door);
+                { if (element.Attribute(XML_SAVE_OPS) is XAttribute attr) GeneralSaveOptions = ParseEnum<SavePatchOptions>(attr.Value); }
+
+                {   // Extra block used to encapsulate the reused variable name "attr".
+                    if (element.Attribute(XML_QOL) is XAttribute attr)
+                    {
+                        var qols = attr.Value
+                            .Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                            .Select(s => (QualityOfLife)int.Parse(s));
+
+                        foreach (var door in GeneralLockedDoors.ToList())   // Use a new list so we can modify this one in the loop.
+                        {
+                            if (qols.Any(qol => qol == door.QoL))   // If this "door" should be enabled, enable it.
+                            {
+                                GeneralUnlockedDoors.Add(door);
+                                _ = GeneralLockedDoors.Remove(door);
+                            }
+                        }
+                    }
                 }
+            }
+            else    // Load save file with old enumerations.
+            {
+                var extras = ModuleExtras.Default;
+                { if (element.Attribute(XML_QOL) is XAttribute attr) extras = ParseEnum<ModuleExtras>(attr.Value); }
+
+                var unlocks = ModuleExtras.Default;
+                { if (element.Attribute(XML_UNLOCKS) is XAttribute attr) unlocks = ParseEnum<ModuleExtras>(attr.Value); }
+
+                ExtractSaveOptions(extras);
+
+                extras &= SAVE_MASK ^ EXTRAS_MASK;      // Exclude save related settings.
+                unlocks |= extras;  // Combine all quality of life settings.
+
+                // Split qol related flags into a list.
+                ExtractUnlockOptions(unlocks);
+            }
+        }
+
+        private void ExtractUnlockOptions(ModuleExtras unlocks)
+        {
+            var extrasList = unlocks.ToList();
+            foreach (var extra in extrasList)
+            {
+                var qol = extra.ToQoL();    // Find QoL for this ModuleExtra.
+                if (qol == QualityOfLife.Unknown) continue;     // Skip unknowns.
+
+                var door = GeneralLockedDoors.FirstOrDefault(d => d.QoL == qol);    // Find door for this ModuleExtra.
+                if (door == null) continue;     // Skip doors without a match.
+
+                // Unlock the associated door.
+                GeneralUnlockedDoors.Add(door);
+                _ = GeneralLockedDoors.Remove(door);
             }
         }
 
@@ -2333,18 +2349,16 @@ namespace kotor_Randomizer_2.Models
         {
             w.WriteStartElement(XML_GENERAL);  // Begin General
 
-            Version v = System.Reflection.Assembly.GetAssembly(typeof(Kotor1Randomizer)).GetName().Version;
+            var v = System.Reflection.Assembly.GetAssembly(typeof(Kotor1Randomizer)).GetName().Version;
             w.WriteAttributeString(XML_VERSION, $"v{v.Major}.{v.Minor}.{v.Build}");
 
-            var activeUnlocks = ModuleExtras.Default;
-            foreach (var item in GeneralUnlockedDoors)
-                activeUnlocks |= item.Tag;
+            //if (GeneralSaveOptions != SavePatchOptions.Default)
+            w.WriteAttributeString(XML_SAVE_OPS, ((int)GeneralSaveOptions).ToString()); // Always write save options.
 
-            if (GeneralModuleExtrasValue != ModuleExtras.Default)
-                w.WriteAttributeString(XML_QOL, ((int)GeneralModuleExtrasValue).ToString());
-
-            if (activeUnlocks != ModuleExtras.Default)
-                w.WriteAttributeString(XML_UNLOCKS, ((int)activeUnlocks).ToString());
+            var qols = GeneralUnlockedDoors.Select(d => (int)d.QoL).ToList();
+            qols.Sort();
+            if (qols.Any())
+                w.WriteAttributeString(XML_QOL, string.Join(",", qols));
 
             w.WriteEndElement();                // End General
         }

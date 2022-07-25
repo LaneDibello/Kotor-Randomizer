@@ -12,7 +12,7 @@
         Title="{Binding WindowTitle, RelativeSource={RelativeSource Self}}"
         Height="{Binding ElementName=window, Path=CurrentHeight, Mode=TwoWay}"
         Width="{Binding ElementName=window, Path=CurrentWidth, Mode=TwoWay}"
-        MinHeight="475" MinWidth="575"
+        MinHeight="475" MinWidth="700"
         FontFamily="Microsoft Sans Serif" FontSize="12"
         Name="window"
         d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
@@ -30,6 +30,7 @@
             
             <local:StringDoubleConverter x:Key="StringDoubleConverter" />
             <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <local:SavePatchOptionsToBoolConverter x:Key="SaveOptionsToBool" />
             <local:ModuleExtrasToBoolConverter x:Key="ExtrasToBool" />
             <local:TextSettingsToBoolConverter x:Key="TextSettingsToBool" />
             <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
@@ -170,32 +171,23 @@
                 <!-- General Settings -->
                 <TabItem Header="_General" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
                     <!-- DataContext inherited from the window. Locked and Unlocked door lists bound from data context. -->
-                    <v:GeneralView x:Name="GeneralView"
-                                   FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+                    <v:GeneralView
+                        x:Name="GeneralView"
+                        FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
 
-                                   IsKotor2Selected="{Binding ElementName=window, Mode=TwoWay, Path=IsKotor2Selected}"
+                        IsKotor2Selected="{Binding ElementName=window, Mode=TwoWay, Path=IsKotor2Selected}"
                                    
-                                   Kotor1Path ="{Binding ElementName=window, Mode=TwoWay, Path=Kotor1Path}"
-                                   Kotor2Path ="{Binding ElementName=window, Mode=TwoWay, Path=Kotor2Path}"
-                                   PresetPath ="{Binding ElementName=window, Mode=TwoWay, Path=PresetPath}"
-                                   SpoilerPath="{Binding ElementName=window, Mode=TwoWay, Path=SpoilerPath}"
+                        Kotor1Path ="{Binding ElementName=window, Mode=TwoWay, Path=Kotor1Path}"
+                        Kotor2Path ="{Binding ElementName=window, Mode=TwoWay, Path=Kotor2Path}"
+                        PresetPath ="{Binding ElementName=window, Mode=TwoWay, Path=PresetPath}"
+                        SpoilerPath="{Binding ElementName=window, Mode=TwoWay, Path=SpoilerPath}"
                                    
-                                   SaveDataDeleteMilestone ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.NoSaveDelete}}"
-                                   SaveDataIncludeMinigames="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.SaveMiniGames}}"
-                                   SaveDataIncludeAll      ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.SaveAllModules}}"
+                        SaveDataDeleteMilestone ="{Binding GeneralSaveOptions, Mode=TwoWay, Converter={StaticResource SaveOptionsToBool}, ConverterParameter={x:Static rando:SavePatchOptions.NoSaveDelete}}"
+                        SaveDataIncludeMinigames="{Binding GeneralSaveOptions, Mode=TwoWay, Converter={StaticResource SaveOptionsToBool}, ConverterParameter={x:Static rando:SavePatchOptions.SaveMiniGames}}"
+                        SaveDataIncludeAll      ="{Binding GeneralSaveOptions, Mode=TwoWay, Converter={StaticResource SaveOptionsToBool}, ConverterParameter={x:Static rando:SavePatchOptions.SaveAllModules}}"
                                    
-                                   QolAddSpiceLab          ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.VulkarSpiceLZ}}"
-                                   QolFastEnvirosuit       ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FastEnvirosuit}}"
-                                   QolEarlyT3              ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.EarlyT3}}"
-                                   QolFixDreamSequence     ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FixDream}}"
-                                   QolFixFighterEncounter  ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FixFighterEncounter}}"
-                                   QolFixMindPrison        ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FixMindPrison}}"
-                                   QolFixModuleCoordinates ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FixCoordinates}}"
-                                   
-                                   K2SavePatch    ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.K2Patch_SaveDeletion}}"
-                                   K2DisciplePatch="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.K2Patch_Disciple}}"
-                                   
-                                   />
+                        K2SavePatch    ="{Binding GeneralSaveOptions, Mode=TwoWay, Converter={StaticResource SaveOptionsToBool}, ConverterParameter={x:Static rando:SavePatchOptions.K2NoSaveDelete}}"
+                        />
                 </TabItem>
 
                 <!-- Hidden tab items for space -->

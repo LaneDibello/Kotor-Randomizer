@@ -144,7 +144,8 @@ namespace kotor_Randomizer_2
 
         public static bool UseRandoRules { get; set; }
         public static bool VerifyReachability { get; set; }
-        public static ModuleExtras ModuleExtrasValue { get; set; }
+        public static SavePatchOptions SaveOptionsValue { get; set; }
+        public static List<QualityOfLife> EnabledQoLs { get; set; }
         public static List<string> RandomizedModules { get; set; }
         public static List<string> OmittedModules { get; set; }
         private static string ShufflePreset { get; set; }
@@ -188,9 +189,9 @@ namespace kotor_Randomizer_2
 
             var settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Prevent Milestone Save Data Deletion", ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete  ).ToEnabledDisabled()),
-                new Tuple<string, string>("Include Minigames in Save",            ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames ).ToEnabledDisabled()),
-                new Tuple<string, string>("Include All Modules in Save",          ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules).ToEnabledDisabled()),
+                new Tuple<string, string>("Prevent Milestone Save Data Deletion", SaveOptionsValue.HasFlag(SavePatchOptions.NoSaveDelete  ).ToEnabledDisabled()),
+                new Tuple<string, string>("Include Minigames in Save",            SaveOptionsValue.HasFlag(SavePatchOptions.SaveMiniGames ).ToEnabledDisabled()),
+                new Tuple<string, string>("Include All Modules in Save",          SaveOptionsValue.HasFlag(SavePatchOptions.SaveAllModules).ToEnabledDisabled()),
                 new Tuple<string, string>("", ""),  // Skip a row.
             };
 
@@ -215,11 +216,11 @@ namespace kotor_Randomizer_2
 
             settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Add Spice Lab Load Zone", ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ      ).ToEnabledDisabled()),
-                new Tuple<string, string>("Fix Dream Sequence",      ModuleExtrasValue.HasFlag(ModuleExtras.FixDream           ).ToEnabledDisabled()),
-                new Tuple<string, string>("Fix Fighter Encounter",   ModuleExtrasValue.HasFlag(ModuleExtras.FixFighterEncounter).ToEnabledDisabled()),
-                new Tuple<string, string>("Fix Mind Prison",         ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison      ).ToEnabledDisabled()),
-                new Tuple<string, string>("Fix Module Coordinates",  ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates     ).ToEnabledDisabled()),
+                new Tuple<string, string>("Add Spice Lab Load Zone", EnabledQoLs.Contains(QualityOfLife.K1_TarVulkar_ToSpice  ).ToEnabledDisabled()),
+                new Tuple<string, string>("Fix Dream Sequence",      EnabledQoLs.Contains(QualityOfLife.K1_FixDream           ).ToEnabledDisabled()),
+                new Tuple<string, string>("Fix Fighter Encounter",   EnabledQoLs.Contains(QualityOfLife.K1_FixFighterEncounter).ToEnabledDisabled()),
+                new Tuple<string, string>("Fix Mind Prison",         EnabledQoLs.Contains(QualityOfLife.K1_FixMindPrison      ).ToEnabledDisabled()),
+                new Tuple<string, string>("Fix Module Coordinates",  EnabledQoLs.Contains(QualityOfLife.CO_FixCoordinates     ).ToEnabledDisabled()),
                 new Tuple<string, string>("", ""),  // Skip a row.
             };
 
@@ -244,18 +245,18 @@ namespace kotor_Randomizer_2
 
             settings = new List<Tuple<string, string>>()
             {
-                new Tuple<string, string>("Unlock DAN Ruins Door",      ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins     ).ToLockedUnlocked(true)),
-                new Tuple<string, string>("Unlock EBO Galaxy Map",      ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap    ).ToLockedUnlocked(true)),
-                new Tuple<string, string>("Unlock KOR Valley",          ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley    ).ToLockedUnlocked(true)),
-                new Tuple<string, string>("Unlock LEV Hangar Access",   ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev      ).ToLockedUnlocked(true)),
-                new Tuple<string, string>("Enable LEV Hangar Elevator", ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev).ToEnabledDisabled()),
-                new Tuple<string, string>("Unlock MAN Embassy",         ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy   ).ToLockedUnlocked(true)),
-                new Tuple<string, string>("Unlock MAN Hangar",          ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar    ).ToLockedUnlocked(true)),
-                new Tuple<string, string>("Unlock STA Door to Bastila", ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila   ).ToLockedUnlocked(true)),
-                new Tuple<string, string>("Unlock TAR Undercity",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity ).ToLockedUnlocked(true)),
-                new Tuple<string, string>("Unlock TAR Vulkar",          ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar    ).ToLockedUnlocked(true)),
-                new Tuple<string, string>("Unlock UNK Summit Exit",     ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit    ).ToLockedUnlocked(true)),
-                new Tuple<string, string>("Unlock UNK Temple Exit",     ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock DAN Ruins Door",      EnabledQoLs.Contains(QualityOfLife.K1_DanCourtyard_ToRuins   ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock EBO Galaxy Map",      EnabledQoLs.Contains(QualityOfLife.CO_GalaxyMap              ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock KOR Valley",          EnabledQoLs.Contains(QualityOfLife.K1_KorValley_UnlockAll    ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock LEV Hangar Access",   EnabledQoLs.Contains(QualityOfLife.K1_LevElev_ToHangar       ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Enable LEV Hangar Elevator", EnabledQoLs.Contains(QualityOfLife.K1_LevHangar_EnableElev   ).ToEnabledDisabled()),
+                new Tuple<string, string>("Unlock MAN Embassy",         EnabledQoLs.Contains(QualityOfLife.K1_ManEstCntrl_EmbassyDoor).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock MAN Hangar",          EnabledQoLs.Contains(QualityOfLife.K1_ManHangar_ToSith       ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock STA Door to Bastila", EnabledQoLs.Contains(QualityOfLife.K1_StaDeck3_BastilaDoor   ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock TAR Undercity",       EnabledQoLs.Contains(QualityOfLife.K1_TarLower_ToUnder       ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock TAR Vulkar",          EnabledQoLs.Contains(QualityOfLife.K1_TarLower_ToVulkar      ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock UNK Summit Exit",     EnabledQoLs.Contains(QualityOfLife.K1_UnkSummit_ToTemple     ).ToLockedUnlocked(true)),
+                new Tuple<string, string>("Unlock UNK Temple Exit",     EnabledQoLs.Contains(QualityOfLife.K1_UnkTemple_ToEntrance   ).ToLockedUnlocked(true)),
             };
 
             foreach (var setting in settings)
@@ -310,35 +311,35 @@ namespace kotor_Randomizer_2
                 settings = GameRandomized == Models.Game.Kotor1
                     ? new List<Tuple<string, string>>()
                     {
-                        new Tuple<string, string>("Delete Milestone Save Data", (!ModuleExtrasValue.HasFlag(ModuleExtras.NoSaveDelete )).ToEnabledDisabled()),
-                        new Tuple<string, string>("Include Minigames in Save",    ModuleExtrasValue.HasFlag(ModuleExtras.SaveMiniGames ).ToEnabledDisabled()),
-                        new Tuple<string, string>("Include All Modules in Save",  ModuleExtrasValue.HasFlag(ModuleExtras.SaveAllModules).ToEnabledDisabled()),
+                        new Tuple<string, string>("Delete Milestone Save Data", (!SaveOptionsValue.HasFlag(SavePatchOptions.NoSaveDelete )).ToEnabledDisabled()),
+                        new Tuple<string, string>("Include Minigames in Save",    SaveOptionsValue.HasFlag(SavePatchOptions.SaveMiniGames ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Include All Modules in Save",  SaveOptionsValue.HasFlag(SavePatchOptions.SaveAllModules).ToEnabledDisabled()),
                         new Tuple<string, string>("", ""),  // Skip a row.
-                        new Tuple<string, string>("Add Spice Lab Load Zone",      ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ      ).ToEnabledDisabled()),
-                        new Tuple<string, string>("Fix Dream Sequence",           ModuleExtrasValue.HasFlag(ModuleExtras.FixDream           ).ToEnabledDisabled()),
-                        new Tuple<string, string>("Fix Fighter Encounter",        ModuleExtrasValue.HasFlag(ModuleExtras.FixFighterEncounter).ToEnabledDisabled()),
-                        new Tuple<string, string>("Fix Mind Prison",              ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison      ).ToEnabledDisabled()),
-                        new Tuple<string, string>("Fix Module Coordinates",       ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates     ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Add Spice Lab Load Zone",      EnabledQoLs.Contains(QualityOfLife.K1_TarVulkar_ToSpice  ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Fix Dream Sequence",           EnabledQoLs.Contains(QualityOfLife.K1_FixDream           ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Fix Fighter Encounter",        EnabledQoLs.Contains(QualityOfLife.K1_FixFighterEncounter).ToEnabledDisabled()),
+                        new Tuple<string, string>("Fix Mind Prison",              EnabledQoLs.Contains(QualityOfLife.K1_FixMindPrison      ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Fix Module Coordinates",       EnabledQoLs.Contains(QualityOfLife.CO_FixCoordinates     ).ToEnabledDisabled()),
                         new Tuple<string, string>("", ""),  // Skip a row.
-                        new Tuple<string, string>("Unlock DAN Ruins Door",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins     ).ToLockedUnlocked(true)),
-                        new Tuple<string, string>("Unlock EBO Galaxy Map",        ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap    ).ToLockedUnlocked(true)),
-                        new Tuple<string, string>("Unlock KOR Valley",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley    ).ToLockedUnlocked(true)),
-                        new Tuple<string, string>("Unlock LEV Hangar Access",     ModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev      ).ToLockedUnlocked(true)),
-                        new Tuple<string, string>("Enable LEV Hangar Elevator",   ModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev).ToEnabledDisabled()),
-                        new Tuple<string, string>("Unlock MAN Embassy",           ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy   ).ToLockedUnlocked(true)),
-                        new Tuple<string, string>("Unlock MAN Hangar",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar    ).ToLockedUnlocked(true)),
-                        new Tuple<string, string>("Unlock STA Door to Bastila",   ModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila   ).ToLockedUnlocked(true)),
-                        new Tuple<string, string>("Unlock TAR Undercity",         ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity ).ToLockedUnlocked(true)),
-                        new Tuple<string, string>("Unlock TAR Vulkar",            ModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar    ).ToLockedUnlocked(true)),
-                        new Tuple<string, string>("Unlock UNK Summit Exit",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit    ).ToLockedUnlocked(true)),
-                        new Tuple<string, string>("Unlock UNK Temple Exit",       ModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock DAN Ruins Door",        EnabledQoLs.Contains(QualityOfLife.K1_DanCourtyard_ToRuins   ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock EBO Galaxy Map",        EnabledQoLs.Contains(QualityOfLife.CO_GalaxyMap              ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock KOR Valley",            EnabledQoLs.Contains(QualityOfLife.K1_KorValley_UnlockAll    ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock LEV Hangar Access",     EnabledQoLs.Contains(QualityOfLife.K1_LevElev_ToHangar       ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Enable LEV Hangar Elevator",   EnabledQoLs.Contains(QualityOfLife.K1_LevHangar_EnableElev   ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Unlock MAN Embassy",           EnabledQoLs.Contains(QualityOfLife.K1_ManEstCntrl_EmbassyDoor).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock MAN Hangar",            EnabledQoLs.Contains(QualityOfLife.K1_ManHangar_ToSith       ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock STA Door to Bastila",   EnabledQoLs.Contains(QualityOfLife.K1_StaDeck3_BastilaDoor   ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock TAR Undercity",         EnabledQoLs.Contains(QualityOfLife.K1_TarLower_ToUnder       ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock TAR Vulkar",            EnabledQoLs.Contains(QualityOfLife.K1_TarLower_ToVulkar      ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock UNK Summit Exit",       EnabledQoLs.Contains(QualityOfLife.K1_UnkSummit_ToTemple     ).ToLockedUnlocked(true)),
+                        new Tuple<string, string>("Unlock UNK Temple Exit",       EnabledQoLs.Contains(QualityOfLife.K1_UnkTemple_ToEntrance   ).ToLockedUnlocked(true)),
                         new Tuple<string, string>("", ""),  // Skip a row.
                     }
                     : new List<Tuple<string, string>>()
                     {
-                        new Tuple<string, string>("Prevent Save Deletion", ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_SaveDeletion    ).ToEnabledDisabled()),
-                        new Tuple<string, string>("Unlock Galaxy Map",     ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_GalaxyMap    ).ToEnabledDisabled()),
-                        new Tuple<string, string>("Patch Disciple Crash",  ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_Disciple).ToEnabledDisabled()),
+                        new Tuple<string, string>("Prevent Save Deletion", SaveOptionsValue.HasFlag(SavePatchOptions.K2NoSaveDelete  ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Unlock Galaxy Map",     EnabledQoLs.Contains(QualityOfLife.CO_GalaxyMap           ).ToEnabledDisabled()),
+                        new Tuple<string, string>("Patch Disciple Crash",  EnabledQoLs.Contains(QualityOfLife.K2_PreventDiscipleCrash).ToEnabledDisabled()),
                     };
 
                 foreach (var setting in settings)
@@ -619,13 +620,13 @@ namespace kotor_Randomizer_2
             WriteOverrideFiles(paths);
 
             // Fix warp coordinates.
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.FixCoordinates))
+            if (EnabledQoLs.Contains(QualityOfLife.CO_FixCoordinates))
             {
                 FixWarpCoordinates(paths, rando as Models.IGeneralSettings);
             }
 
             // Fixed Rakata riddle Man in Mind Prison.
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_FixMindPrison))
             {
                 FixMindPrison(paths);
             }
@@ -637,7 +638,7 @@ namespace kotor_Randomizer_2
                 UnlockK2Doors(paths);
 
             // Vulkar Spice Lab Transition
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_TarVulkar_ToSpice))
             {
                 var vulk_files = paths.FilesInModules.Where(fi => fi.Name.Contains(LookupTable[AREA_TAR_VULK_BASE]));
                 foreach (var fi in vulk_files)
@@ -660,7 +661,7 @@ namespace kotor_Randomizer_2
                 GameRandomized     = Models.Game.Kotor1;
                 UseRandoRules      = Properties.Settings.Default.UseRandoRules;
                 VerifyReachability = Properties.Settings.Default.VerifyReachability;
-                ModuleExtrasValue  = Properties.Settings.Default.ModuleExtrasValue;
+                //ModuleExtrasValue  = Properties.Settings.Default.ModuleExtrasValue;
                 RandomizedModules  = Globals.BoundModules.Where(x => !x.Omitted).Select(x => x.Code).ToList();
                 OmittedModules     = Globals.BoundModules.Where(x =>  x.Omitted).Select(x => x.Code).ToList();
                 if (Properties.Settings.Default.LastPresetComboIndex >= 0)
@@ -676,9 +677,8 @@ namespace kotor_Randomizer_2
                 GameRandomized     = rando.Game;
                 UseRandoRules      = moduleRando.ModuleLogicRandoRules;
                 VerifyReachability = moduleRando.ModuleLogicReachability;
-                ModuleExtrasValue  = genSettings.GeneralModuleExtrasValue;
-                foreach (var door in genSettings.GeneralUnlockedDoors)
-                    ModuleExtrasValue |= door.Tag;
+                SaveOptionsValue   = genSettings.GeneralSaveOptions;
+                EnabledQoLs        = genSettings.GeneralUnlockedDoors.Select(d => d.QoL).ToList();
                 RandomizedModules  = moduleRando.ModuleRandomizedList.Select(x => x.WarpCode).ToList();
                 OmittedModules     = moduleRando.ModuleOmittedList.Select(x => x.WarpCode).ToList();
                 ShufflePreset      = moduleRando.ModuleShufflePreset;
@@ -919,11 +919,11 @@ namespace kotor_Randomizer_2
         /// Update warp coordinates that are in bad locations by default.
         /// </summary>
         /// <param name="paths">KPaths object for this game.</param>
-        private static void FixWarpCoordinates(KPaths paths, Models.IGeneralSettings rando = null)
+        private static void FixWarpCoordinates(KPaths paths, Models.IGeneralSettings rando)
         {
             // Create a lookup for modules needing coordinate fix with their newly shuffled FileInfos.
             var shuffleFileLookup = new Dictionary<string, FileInfo>();
-            var coords = rando?.FixedCoordinates ?? Globals.FIXED_COORDINATES;
+            var coords = rando.FixedCoordinates;
 
             foreach (var key in coords.Keys)
             {
@@ -1059,16 +1059,15 @@ namespace kotor_Randomizer_2
         private static void UnlockK1Doors(KPaths paths)
         {
             var tasks = new List<Task>();
-            var extrasValue = ModuleExtrasValue;
 
             // Dantooine Ruins
-            if (extrasValue.HasFlag(ModuleExtras.UnlockDanRuins))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_DanCourtyard_ToRuins))
             {
                 tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_DAN_COURTYARD, LABEL_DANT_DOOR)));
             }
 
             // Korriban After the Tomb Encounter
-            if (extrasValue.HasFlag(ModuleExtras.UnlockKorValley))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_KorValley_UnlockAll))
             {
                 tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_KOR_ENTRANCE, LABEL_KOR_ENTRANCE_ACADEMY)));
                 tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_KOR_VALLEY,   LABEL_KOR_VALLEY_ACADEMY  )));
@@ -1079,54 +1078,54 @@ namespace kotor_Randomizer_2
             }
 
             // Leviathan Elevators
-            if (extrasValue.HasFlag(ModuleExtras.UnlockLevElev))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_LevElev_ToHangar))
             {
                 FixLeviathanHangarAccess(paths);
             }
-            if (extrasValue.HasFlag(ModuleExtras.EnableLevHangarElev))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_LevHangar_EnableElev))
             {
                 FixLeviathanHangarElevator(paths);
             }
 
             // Manaan Embassy Door to Submersible
-            if (extrasValue.HasFlag(ModuleExtras.UnlockManEmbassy))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_ManEstCntrl_EmbassyDoor))
             {
                 tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_MAN_EAST_CENTRAL, LABEL_MAN_SUB_DOOR03)));    // Unlock door into Republic Embassy.
                 tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_MAN_EAST_CENTRAL, LABEL_MAN_SUB_DOOR05)));    // Unlock door to submersible.
             }
 
             // Manaan Sith Hangar Door
-            if (extrasValue.HasFlag(ModuleExtras.UnlockManHangar))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_ManHangar_ToSith))
             {
                 tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_MAN_DOCKING_BAY, LABEL_MAN_SITH_HANGAR)));    // Unlock door into Republic Embassy.
             }
 
             // Star Forge Door to Bastila
-            if (extrasValue.HasFlag(ModuleExtras.UnlockStaBastila))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_StaDeck3_BastilaDoor))
             {
                 tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_STA_DECK3, LABEL_STA_BAST_DOOR)));
             }
 
             // Taris Lower City Door to Undercity
-            if (extrasValue.HasFlag(ModuleExtras.UnlockTarUndercity))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_TarLower_ToUnder))
             {
                 tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_TAR_LOWER_CITY, LABEL_TAR_UNDERCITY)));
             }
 
             // Taris Lower City Door to Vulkar Base
-            if (extrasValue.HasFlag(ModuleExtras.UnlockTarVulkar))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_TarLower_ToVulkar))
             {
                 tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_TAR_LOWER_CITY, LABEL_TAR_VULKAR)));
             }
 
             // Lehon Temple Roof
-            if (extrasValue.HasFlag(ModuleExtras.UnlockUnkSummit))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_UnkSummit_ToTemple))
             {
                 tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_UNK_SUMMIT, LABEL_UNK_DOOR)));
             }
 
             // Lehon Temple Main Floor
-            if (extrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_UnkTemple_ToEntrance))
             {
                 tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_UNK_MAIN_FLOOR, LABEL_UNK_EXIT_DOOR)));
             }
@@ -1141,59 +1140,58 @@ namespace kotor_Randomizer_2
         private static void UnlockK2Doors(KPaths paths)
         {
             var tasks = new List<Task>();
-            var ex = ModuleExtrasValue;
 
             // In the future these'll be split into options, but for now here's all of them
-            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToDorms         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTODORMS        )));
-            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToTunnels       )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOMININGTUNNELS)));
-            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToDepot         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOFUELDEPOT    )));
-            if (ex.HasFlag(ModuleExtras.K2Door_PerAdmin_ToHarbinger     )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOHARBINGER    )));
-            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ToTunnels))
+            if (EnabledQoLs.Contains(QualityOfLife.K2_PerAdmin_ToDorms         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTODORMS        )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_PerAdmin_ToTunnels       )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOMININGTUNNELS)));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_PerAdmin_ToDepot         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOFUELDEPOT    )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_PerAdmin_ToHarbinger     )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_ADMIN,     LABEL_K2_101PERTOHARBINGER    )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_PerDepot_ToTunnels))
             {
                 tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_FUEL, LABEL_K2_103PERTOMININGTUNNELS)));
                 tasks.Add(Task.Run(() => EnableDoorTransition(paths, AREA_K2_PER_FUEL, LABEL_K2_103PERTOMININGTUNNELS)));
             }
-            if (ex.HasFlag(ModuleExtras.K2Door_PerDepot_ForceFields))
+            if (EnabledQoLs.Contains(QualityOfLife.K2_PerDepot_ForceFields))
             {
                 tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_FUEL, LABEL_K2_103PERFORCESHIELDS)));
                 tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_FUEL, LABEL_K2_103PERSHIELD2)));
             }
-            if (ex.HasFlag(ModuleExtras.K2Door_PerDorms_ToAsteroid      )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_DORMS,     LABEL_K2_105PERTOASTROID      )));
-            if (ex.HasFlag(ModuleExtras.K2Door_PerHangar_ToHawk         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_HANGAR,    LABEL_K2_106PEREASTDOOR       )));
-            if (ex.HasFlag(ModuleExtras.K2Door_CitResidential_AptDoor   )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELAPPTDOOR       )));
-            if (ex.HasFlag(ModuleExtras.K2Door_CitResidential_ToExchange)) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELEXCHANGE       )));
-            if (ex.HasFlag(ModuleExtras.K2Door_WarEntertain_ToRavager   )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_TEL_ENTER_WAR, LABEL_K2_222TELRAVAGER        )));
-            if (ex.HasFlag(ModuleExtras.K2Door_TelAcademy_ToPlateau     )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_TEL_ACAD,      LABEL_K2_262TELPLATEAU        )));
-            if (ex.HasFlag(ModuleExtras.K2Door_NarDocks_ZezDoor         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_DOCKS,     LABEL_K2_303NARZEZDOOR        )));
-            if (ex.HasFlag(ModuleExtras.K2Door_NarJekk_VipRoom          )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_JEKK,      LABEL_K2_304NARBACKROOM       )));
-            if (ex.HasFlag(ModuleExtras.K2Door_NarTunnels_ToJekk        )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_J_TUNNELS, LABEL_K2_305NARTOJEKKJEKK     )));
-            if (ex.HasFlag(ModuleExtras.K2Door_NarYacht_ToHawk          )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_G0T0,      LABEL_K2_351NARG0T0EBONHAWK   )));
-            if (ex.HasFlag(ModuleExtras.K2Door_DxnMando_Basalisk        )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_DXN_MANDO,     LABEL_K2_403BASALISKDOOR      )));
-            if (ex.HasFlag(ModuleExtras.K2Door_DanCourtyard_ToEnclave   )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_DAN_COURTYARD, LABEL_K2_605DANREBUILTENCLAVE )));
-            if (ex.HasFlag(ModuleExtras.K2Door_KorAcademy_ToValley      )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_KOR_ACAD,      LABEL_K2_702KORVALLEY         )));
-            if (ex.HasFlag(ModuleExtras.K2Door_KorCave_ToTomb           )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_KOR_SHY,       LABEL_K2_710KORLUDOKRESSH     )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_PerDorms_ToExterior      )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_DORMS,     LABEL_K2_105PERTOASTROID      )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_PerHangar_ToHawk         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_PER_HANGAR,    LABEL_K2_106PEREASTDOOR       )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_CitResidential_AptDoor   )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELAPPTDOOR       )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_CitResidential_ToExchange)) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_TEL_RES,       LABEL_K2_203TELEXCHANGE       )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_WarEntertain_ToRavager   )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_TEL_ENTER_WAR, LABEL_K2_222TELRAVAGER        )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_TelAcademy_ToPlateau     )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_TEL_ACAD,      LABEL_K2_262TELPLATEAU        )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_NarDocks_ZezDoor         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_DOCKS,     LABEL_K2_303NARZEZDOOR        )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_NarJekk_VipRoom          )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_JEKK,      LABEL_K2_304NARBACKROOM       )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_NarTunnels_ToJekk        )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_J_TUNNELS, LABEL_K2_305NARTOJEKKJEKK     )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_NarYacht_ToHawk          )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_NAR_G0T0,      LABEL_K2_351NARG0T0EBONHAWK   )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_DxnCamp_Basalisk         )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_DXN_MANDO,     LABEL_K2_403BASALISKDOOR      )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_DanCourtyard_ToEnclave   )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_DAN_COURTYARD, LABEL_K2_605DANREBUILTENCLAVE )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_KorAcademy_ToValley      )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_KOR_ACAD,      LABEL_K2_702KORVALLEY         )));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_KorCave_ToTomb           )) tasks.Add(Task.Run(() => UnlockDoorInFile(paths, AREA_K2_KOR_SHY,       LABEL_K2_710KORLUDOKRESSH     )));
 
             // Enable tranistions for these doors with linking modules but no flags
-            if (ex.HasFlag(ModuleExtras.K2Door_PerDorms_ToAsteroid )) tasks.Add(Task.Run(() => EnableDoorTransition(paths, AREA_K2_PER_DORMS, LABEL_K2_105PERTOASTROID, AREA_K2_PER_ASTROID)));
-            if (ex.HasFlag(ModuleExtras.K2Door_TelAcademy_ToPlateau)) tasks.Add(Task.Run(() => EnableDoorTransition(paths, AREA_K2_TEL_ACAD,  LABEL_K2_262TELPLATEAU)));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_PerDorms_ToExterior )) tasks.Add(Task.Run(() => EnableDoorTransition(paths, AREA_K2_PER_DORMS, LABEL_K2_105PERTOASTROID, AREA_K2_PER_ASTROID)));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_TelAcademy_ToPlateau)) tasks.Add(Task.Run(() => EnableDoorTransition(paths, AREA_K2_TEL_ACAD,  LABEL_K2_262TELPLATEAU)));
 
             // Add a transition to the Astroid Exterior
-            if (ex.HasFlag(ModuleExtras.K2Patch_PerAsteroid_ToTunnels)) tasks.Add(Task.Run(() => Add104PERTransition(paths)));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_PerExterior_ToDorms)) tasks.Add(Task.Run(() => Add104PERTransition(paths)));
 
             // Enable the shuttle from the Mandalorian Camp to Iziz.
-            if (ex.HasFlag(ModuleExtras.K2Patch_DxnCamp_ToIziz)) tasks.Add(Task.Run(() => Add403DXNShuttleIziz(paths)));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_DxnCamp_ToIziz)) tasks.Add(Task.Run(() => Add403DXNShuttleIziz(paths)));
 
             // Add transition to 410DXN
-            if (ex.HasFlag(ModuleExtras.K2_DxnTomb_ToMando)) tasks.Add(Task.Run(() => Add410DXNTransition(paths)));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_DxnTomb_ToCamp)) tasks.Add(Task.Run(() => Add410DXNTransition(paths)));
 
             // Activate Onderon Shuttle
-            if (ex.HasFlag(ModuleExtras.K2_OndPort_ToCamp)) tasks.Add(Task.Run(() => Fix501ONDShuttle(paths)));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_OndPort_ToCamp)) tasks.Add(Task.Run(() => Fix501ONDShuttle(paths)));
 
             // Add elevator to 901MAL
-            if (ex.HasFlag(ModuleExtras.K2Patch_MalSurface_ToHawk)) tasks.Add(Task.Run(() => Add901MALEbonElevator(paths)));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_MalSurface_ToHawk)) tasks.Add(Task.Run(() => Add901MALEbonElevator(paths)));
 
             // Add transition to 904MAL - Core to Academy
-            if (ex.HasFlag(ModuleExtras.K2_MalCore_ToAcademy)) tasks.Add(Task.Run(() => Add904MALTransition(paths)));
+            if (EnabledQoLs.Contains(QualityOfLife.K2_MalCore_ToAcademy)) tasks.Add(Task.Run(() => Add904MALTransition(paths)));
 
             Task.WhenAll(tasks).Wait();
         }
@@ -1504,103 +1502,122 @@ namespace kotor_Randomizer_2
         /// <param name="paths">KPaths object for this game.</param>
         private static void WriteOverrideFiles(KPaths paths)
         {
-            var moduleSavePath = Path.Combine(paths.Override, TwoDA_MODULE_SAVE);
-            var saveFileExtras = ModuleExtrasValue & (ModuleExtras.SaveAllModules | ModuleExtras.SaveMiniGames | ModuleExtras.NoSaveDelete);
             var tasks = new List<Task>();
 
-            // Save Data File
-            switch ((int)saveFileExtras)
+            WriteSaveOverrides(paths, ref tasks);   // Save override files
+
+            // Unlock Galaxy Map
+            if (EnabledQoLs.Contains(QualityOfLife.CO_GalaxyMap))
+            {
+                if (GameRandomized == Models.Game.Kotor1)
+                    tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, UNLOCK_MAP_OVERRIDE), Properties.Resources.k_pebn_galaxy)));
+
+                if (GameRandomized == Models.Game.Kotor2)
+                    tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_GALAXYMAP), Properties.Resources.a_galaxymap)));
+            }
+
+            if (GameRandomized == Models.Game.Kotor1) WriteK1Overrides(paths, ref tasks); // Kotor 1 override files
+            if (GameRandomized == Models.Game.Kotor2) WriteK2Overrides(paths, ref tasks); // Kotor 2 override files
+
+            Task.WhenAll(tasks).Wait();
+        }
+
+        private static void WriteSaveOverrides(KPaths paths, ref List<Task> tasks)
+        {
+            var moduleSavePath = Path.Combine(paths.Override, TwoDA_MODULE_SAVE);
+
+            // Handle Kotor 2 overrides
+            if (GameRandomized == Models.Game.Kotor2)
+            {
+                if (SaveOptionsValue.HasFlag(SavePatchOptions.K2NoSaveDelete))
+                    tasks.Add(Task.Run(() => File.WriteAllBytes(moduleSavePath, Properties.Resources.modulesave)));
+                return;
+            }
+
+            // Handle Kotor 1 overrides
+            switch ((int)SaveOptionsValue)
             {
                 default:
                     // 0b000 - Milestone Delete (Default)
                     // Do nothing.
                     break;
 
-                case (int)(ModuleExtras.NoSaveDelete):
+                case (int)(SavePatchOptions.NoSaveDelete):
                     // 0b001 - No Milestone Delete
                     tasks.Add(Task.Run(() => File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_modulesave)));
                     break;
 
-                case (int)(ModuleExtras.SaveMiniGames):
+                case (int)(SavePatchOptions.SaveMiniGames):
                     // 0b010 - Save Minigames | Milestone Delete
                     tasks.Add(Task.Run(() => File.WriteAllBytes(moduleSavePath, Properties.Resources.MGINCLUDED_modulesave)));
                     break;
 
-                case (int)(ModuleExtras.NoSaveDelete | ModuleExtras.SaveMiniGames):
+                case (int)(SavePatchOptions.NoSaveDelete | SavePatchOptions.SaveMiniGames):
                     // 0b011 - Save Minigames | No Milestone Delete
                     tasks.Add(Task.Run(() => File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_MGINCLUDED_modulesave)));
                     break;
 
-                case (int)(ModuleExtras.SaveAllModules):
-                case (int)(ModuleExtras.SaveMiniGames | ModuleExtras.SaveAllModules):
+                case (int)(SavePatchOptions.SaveAllModules):
+                case (int)(SavePatchOptions.SaveMiniGames | SavePatchOptions.SaveAllModules):
                     // Treat both the same.
                     // 0b100 - Save All Modules | Milestone Delete
                     // 0b110 - Save All Modules | Save Minigames | Milestone Delete
                     tasks.Add(Task.Run(() => File.WriteAllBytes(moduleSavePath, Properties.Resources.ALLINCLUDED_modulesave)));
                     break;
 
-                case (int)(ModuleExtras.NoSaveDelete | ModuleExtras.SaveAllModules):
-                case (int)(ModuleExtras.NoSaveDelete | ModuleExtras.SaveMiniGames | ModuleExtras.SaveAllModules):
+                case (int)(SavePatchOptions.NoSaveDelete | SavePatchOptions.SaveAllModules):
+                case (int)(SavePatchOptions.NoSaveDelete | SavePatchOptions.SaveMiniGames | SavePatchOptions.SaveAllModules):
                     // Treat both the same.
                     // 0b101 - Save All Modules | No Milestone Delete
                     // 0b111 - Save All Modules | Save Minigames | No Milestone Delete
                     tasks.Add(Task.Run(() => File.WriteAllBytes(moduleSavePath, Properties.Resources.NODELETE_ALLINCLUDED_modulesave)));
                     break;
             }
+        }
 
+        private static void WriteK1Overrides(KPaths paths, ref List<Task> tasks)
+        {
             // Fix Dream File
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.FixDream))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_FixDream))
             {
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, FIXED_DREAM_OVERRIDE), Properties.Resources.k_ren_visionland)));
             }
 
             // Fix Fighter Encounter
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.FixFighterEncounter))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_FixFighterEncounter))
             {
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, FIXED_FIGHTER_OVERRIDE), Properties.Resources.k_pebo_mgheart)));
             }
 
-            // Unlock Galaxy Map File
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap))
-            {
-                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, UNLOCK_MAP_OVERRIDE), Properties.Resources.k_pebn_galaxy)));
-            }
-
             // Keep Korriban Doors Unlocked
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley))
+            if (EnabledQoLs.Contains(QualityOfLife.K1_KorValley_UnlockAll))
             {
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, KOR_OPEN_ACADEMY), Properties.Resources.k33b_openacademy)));
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, KOR_VALLEY_ENTER), Properties.Resources.k36_pkor_enter)));
             }
+        }
 
-            /// *** KOTOR 2 SETTINGS ***
-            // Save Patch
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_SaveDeletion))
-                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_MODULESAVE), Properties.Resources.modulesave)));
-
-            // Unlock Galaxy Map
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_GalaxyMap))
-                tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_GALAXYMAP), Properties.Resources.a_galaxymap)));
-
+        private static void WriteK2Overrides(KPaths paths, ref List<Task> tasks)
+        {
             // Patch Disciple Crash
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_Disciple))
+            if (EnabledQoLs.Contains(QualityOfLife.K2_PreventDiscipleCrash))
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_DISC_JOIN), Properties.Resources.a_disc_join)));
 
             // Telos Academy to Ebon Hawk patches
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_TelAcademy_ToHawk))
+            if (EnabledQoLs.Contains(QualityOfLife.K2_TelAcademy_ToHawk))
             {
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_TELACADEMY_TOHAWK), Properties.Resources._262exit)));
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_TELACADEMY_TOHAWK_ENTR), Properties.Resources.r_to003EBOentr)));
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_COR_CUTSCENE), Properties.Resources.r_to950COR)));
             }
 
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_CitTerminals))
+            // Citadel Station Terminals
+            if (EnabledQoLs.Contains(QualityOfLife.K2_CitStation_Terminals))
                 tasks.Add(Task.Run(() => FixCitInfoTerminals(paths)));
 
-            if (ModuleExtrasValue.HasFlag(ModuleExtras.K2Patch_TelBaoDurConvo))
+            // Bao Dur Conversation Fix
+            if (EnabledQoLs.Contains(QualityOfLife.K2_TelBaoDurConvo))
                 tasks.Add(Task.Run(() => File.WriteAllBytes(Path.Combine(paths.Override, PATCH_K2_BAODUR_CONVO), Properties.Resources._231sntry)));
-
-            Task.WhenAll(tasks).Wait();
         }
 
         private static void FixCitInfoTerminals(KPaths paths)
@@ -1630,6 +1647,7 @@ namespace kotor_Randomizer_2
                         (entry.Fields.FirstOrDefault(f => f.Label == "ParamStrB") as GFF.CExoString).CEString = LookupTable[old];
                 }
             }
+
             File.WriteAllBytes(paths.Override + "200_info_term.dlg", g.ToRawData());
 
             // Next we doctor the script that sets the modules available to travel to

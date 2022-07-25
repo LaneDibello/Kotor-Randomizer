@@ -1,13 +1,12 @@
 ﻿using ClosedXML.Excel;
 using kotor_Randomizer_2.Digraph;
+using kotor_Randomizer_2.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -93,6 +92,7 @@ namespace kotor_Randomizer_2.Models
         private const string XML_REACHABLE      = "Reachable";
         private const string XML_REMOVE_DMCA    = "RemoveDmca";
         private const string XML_RULES          = "Rules";
+        private const string XML_SAVE_OPS       = "SaveOps";
         private const string XML_SETTINGS       = "Settings";
         private const string XML_STRONG_GOALS   = "StrongGoals";
         private const string XML_STUNT          = "Stunt";
@@ -149,156 +149,37 @@ namespace kotor_Randomizer_2.Models
 
             GeneralLockedDoors = new ObservableCollection<UnlockableDoor>
             {
-                new UnlockableDoor
-                {
-                    Area = "PER", Label = "Admin to Dorms", Tag = ModuleExtras.K2Door_PerAdmin_ToDorms,
-                    ToolTipMessage = "Unlocks the door leading from Administration to the Dormitories."
-                },
-                new UnlockableDoor
-                {
-                    Area = "PER", Label = "Admin to Tunnels", Tag = ModuleExtras.K2Door_PerAdmin_ToTunnels,
-                    ToolTipMessage = "Unlocks the door leading from Administration to the Mining Tunnels."
-                },
-                new UnlockableDoor
-                {
-                    Area = "PER", Label = "Admin to Harbinger", Tag = ModuleExtras.K2Door_PerAdmin_ToHarbinger,
-                    ToolTipMessage = "Unlocks the door leading from Administration to the Harbinger Command Deck."
-                },
-                new UnlockableDoor
-                {
-                    Area = "PER", Label = "Admin to Depot", Tag = ModuleExtras.K2Door_PerAdmin_ToDepot,
-                    ToolTipMessage = "Unlocks the door leading from Administration to the Fuel Depot."
-                },
-                new UnlockableDoor
-                {
-                    Area = "PER", Label = "Dorms to Exterior", Tag = ModuleExtras.K2Door_PerDorms_ToAsteroid,
-                    ToolTipMessage = "Unlocks the door leading from the Dormitories to the Asteroid Exterior."
-                },
-                new UnlockableDoor
-                {
-                    Area = "PER", Label = "Exterior to Dorms", Tag = ModuleExtras.K2Patch_PerAsteroid_ToTunnels,
-                    ToolTipMessage = "Adds a loading zone leading from the Asteroid Exterior to the Dormitories."
-                },
-                new UnlockableDoor
-                {
-                    Area = "PER", Label = "Depot to Tunnels", Tag = ModuleExtras.K2Door_PerDepot_ToTunnels,
-                    ToolTipMessage = "Unlocks the door leading from the Fuel Depot to the Mining Tunnels."
-                },
-                new UnlockableDoor
-                {
-                    Area = "PER", Label = "Depot Force Fields", Tag = ModuleExtras.K2Door_PerDepot_ForceFields,
-                    ToolTipMessage = "Unlocks the force fields inside the fuel depot."
-                },
-                new UnlockableDoor
-                {
-                    Area = "PER", Label = "Hangar to Ebon Hawk", Tag = ModuleExtras.K2Door_PerHangar_ToHawk,
-                    ToolTipMessage = "Unlocks the door leading from the Hangar to the Ebon Hawk."
-                },
-                new UnlockableDoor
-                {
-                    Area = "CIT", Label = "Residential Apartment Door", Tag = ModuleExtras.K2Door_CitResidential_AptDoor,
-                    ToolTipMessage = "Unlocks the door preventing you from leaving your apartment in the Citadel Station Residential District."
-                },
-                new UnlockableDoor
-                {
-                    Area = "CIT", Label = "Residential to Exchange Corp", Tag = ModuleExtras.K2Door_CitResidential_ToExchange,
-                    ToolTipMessage = "Unlocks the door leading from the Residential District to the Bumani Exchange Corp."
-                },
-                new UnlockableDoor
-                {
-                    Area = "CIT", Label = "Unlock Info Terminals", Tag = ModuleExtras.K2Patch_CitTerminals,
-                    ToolTipMessage = "Unlocks access to all destinations of the info terminals."
-                },
-                new UnlockableDoor
-                {
-                    Area = "TEL", Label = "Academy to Plateau", Tag = ModuleExtras.K2Door_TelAcademy_ToPlateau,
-                    ToolTipMessage = "Unlocks the door leading from Secret Academy to the Polar Plateau."
-                },
-                new UnlockableDoor
-                {
-                    Area = "TEL", Label = "Academy to Ebon Hawk", Tag = ModuleExtras.K2Patch_TelAcademy_ToHawk,
-                    ToolTipMessage = "Unlocks the door leading from the Polar Academy to the Ebon Hawk."
-                },
-                new UnlockableDoor
-                {
-                    Area = "TEL", Label = "Patch Bao Dur Conversation", Tag = ModuleExtras.K2Patch_TelBaoDurConvo,
-                    ToolTipMessage = "Patches the Bao Dur intro convo when landing on Telos."
-                },
-                new UnlockableDoor
-                {
-                    Area = "NAR", Label = "Docks Zez Kai El's Door", Tag = ModuleExtras.K2Door_NarDocks_ZezDoor,
-                    ToolTipMessage = "Unlocks the door of Zez Kai El's apartment."
-                },
-                new UnlockableDoor
-                {
-                    Area = "NAR", Label = "Jekk'Jekk VIP Room", Tag = ModuleExtras.K2Door_NarJekk_VipRoom,
-                    ToolTipMessage = "Unlocks the door to the VIP room of the Jekk'Jekk Tarr."
-                },
-                new UnlockableDoor
-                {
-                    Area = "NAR", Label = "Jekk Tunnels to Jekk'Jekk", Tag = ModuleExtras.K2Door_NarTunnels_ToJekk,
-                    ToolTipMessage = "Unlocks the door leading from the Jekk'Jekk Tarr Tunnels to the Jekk'Jekk Tarr."
-                },
-                new UnlockableDoor
-                {
-                    Area = "NAR", Label = "G0T0's Yacht to Broken Hawk", Tag = ModuleExtras.K2Door_NarYacht_ToHawk,
-                    ToolTipMessage = "Unlocks the door leading from G0T0's Yacht to a broken version of the Ebon Hawk."
-                },
-                new UnlockableDoor
-                {
-                    Area = "DXN", Label = "Camp to Onderon", Tag = ModuleExtras.K2Patch_DxnCamp_ToIziz,
-                    ToolTipMessage = "Unlocks the door leading from the Mandalorian Camp to the Onderon Docking Bay."
-                },
-                new UnlockableDoor
-                {
-                    Area = "DXN", Label = "Camp to Wartime Onderon", Tag = ModuleExtras.K2Door_DxnMando_Basalisk,
-                    ToolTipMessage = "Unlocks the door leading from the Mandalorian Camp to the Wartime Onderon."
-                },
-                new UnlockableDoor
-                {
-                    Area = "DXN", Label = "Tomb to Camp", Tag = ModuleExtras.K2_DxnTomb_ToMando,
-                    ToolTipMessage = "Enables the loading zone from Freedon Nadd's Tomb to the Mandalorian Camp."
-                },
-                new UnlockableDoor
-                {
-                    Area = "OND", Label = "Spaceport to Camp", Tag = ModuleExtras.K2_OndPort_ToCamp,
-                    ToolTipMessage = "Unlocks the shuttle from the Iziz Spaceport to the Mandalorian Camp."
-                },
-                new UnlockableDoor
-                {
-                    Area = "DAN", Label = "Courtyard to Rebuilt Enclave", Tag = ModuleExtras.K2Door_DanCourtyard_ToEnclave,
-                    ToolTipMessage = "Unlocks the door leading from the Courtyard to the Rebuilt Enclave."
-                },
-                new UnlockableDoor
-                {
-                    Area = "KOR", Label = "Academy to Valley", Tag = ModuleExtras.K2Door_KorAcademy_ToValley,
-                    ToolTipMessage = "Unlocks the door leading from the Sith Academy to the Valley of the Dark Lords."
-                },
-                new UnlockableDoor
-                {
-                    Area = "KOR", Label = "Cave to Tomb", Tag = ModuleExtras.K2Door_KorCave_ToTomb,
-                    ToolTipMessage = "Deactivates the trigger preventing entry into the Secret Tomb within the Shyrack Cave."
-                },
-                new UnlockableDoor
-                {
-                    Area = "WAR", Label = "Entertainment to Ravager", Tag = ModuleExtras.K2Door_WarEntertain_ToRavager,
-                    ToolTipMessage = "Unlocks the door leading from the Wartime Entertainment Module to the Ravager."
-                },
-                new UnlockableDoor
-                {
-                    Area = "MAL", Label = "Surface to Ebon Hawk", Tag = ModuleExtras.K2Patch_MalSurface_ToHawk,
-                    ToolTipMessage = "Adds an elevator and a loading zone from Malachor V Surface to the Ebon Hawk."
-                },
-                new UnlockableDoor
-                {
-                    Area = "MAL", Label = "Core to Academy", Tag = ModuleExtras.K2_MalCore_ToAcademy,
-                    ToolTipMessage = "Adds a transition from the Trayus Core to the Trayus Academy."
-                },
-                new UnlockableDoor()
-                {
-                    Area = "EBO", Label = "Galaxy Map", Tag = ModuleExtras.K2Patch_GalaxyMap,
-                    ToolTipMessage = "Unlock all destinations on the Ebon Hawk galaxy map from the start of the game."
-                }
+                new UnlockableDoor(QualityOfLife.CO_GalaxyMap),                 // General
+                new UnlockableDoor(QualityOfLife.K2_PreventDiscipleCrash),
+                new UnlockableDoor(QualityOfLife.K2_CitResidential_AptDoor),    // Citadel Station
+                new UnlockableDoor(QualityOfLife.K2_CitResidential_ToExchange),
+                new UnlockableDoor(QualityOfLife.K2_CitStation_Terminals),
+                new UnlockableDoor(QualityOfLife.K2_DanCourtyard_ToEnclave),    // Dantooine
+                new UnlockableDoor(QualityOfLife.K2_DxnCamp_ToIziz),            // Dxun
+                new UnlockableDoor(QualityOfLife.K2_DxnCamp_Basalisk),
+                new UnlockableDoor(QualityOfLife.K2_DxnTomb_ToCamp),
+                new UnlockableDoor(QualityOfLife.K2_KorAcademy_ToValley),       // Korriban
+                new UnlockableDoor(QualityOfLife.K2_KorCave_ToTomb),
+                new UnlockableDoor(QualityOfLife.K2_MalSurface_ToHawk),         // Malachor V
+                new UnlockableDoor(QualityOfLife.K2_MalCore_ToAcademy),
+                new UnlockableDoor(QualityOfLife.K2_NarDocks_ZezDoor),          // Nar Shaddaa
+                new UnlockableDoor(QualityOfLife.K2_NarJekk_VipRoom),
+                new UnlockableDoor(QualityOfLife.K2_NarTunnels_ToJekk),
+                new UnlockableDoor(QualityOfLife.K2_NarYacht_ToHawk),
+                new UnlockableDoor(QualityOfLife.K2_OndPort_ToCamp),            // Onderon
+                new UnlockableDoor(QualityOfLife.K2_PerAdmin_ToDorms),          // Peragus
+                new UnlockableDoor(QualityOfLife.K2_PerAdmin_ToTunnels),
+                new UnlockableDoor(QualityOfLife.K2_PerAdmin_ToHarbinger),
+                new UnlockableDoor(QualityOfLife.K2_PerAdmin_ToDepot),
+                new UnlockableDoor(QualityOfLife.K2_PerDorms_ToExterior),
+                new UnlockableDoor(QualityOfLife.K2_PerExterior_ToDorms),
+                new UnlockableDoor(QualityOfLife.K2_PerDepot_ToTunnels),
+                new UnlockableDoor(QualityOfLife.K2_PerDepot_ForceFields),
+                new UnlockableDoor(QualityOfLife.K2_PerHangar_ToHawk),
+                new UnlockableDoor(QualityOfLife.K2_TelAcademy_ToPlateau),      // Telos
+                new UnlockableDoor(QualityOfLife.K2_TelAcademy_ToHawk),
+                new UnlockableDoor(QualityOfLife.K2_TelBaoDurConvo),
+                new UnlockableDoor(QualityOfLife.K2_WarEntertain_ToRavager),    // Wartime Telos
         };
 
             ModuleDigraph graph;
@@ -334,9 +215,12 @@ namespace kotor_Randomizer_2.Models
             //ResetTextures();
         }
 
+        /// <summary>
+        /// Reset general settings to defaults.
+        /// </summary>
         private void ResetGeneral()
         {
-            GeneralModuleExtrasValue = ModuleExtras.Default;
+            GeneralSaveOptions = SavePatchOptions.Default;
             foreach (var door in GeneralUnlockedDoors)
                 GeneralLockedDoors.Add(door);
             GeneralUnlockedDoors.Clear();
@@ -380,7 +264,7 @@ namespace kotor_Randomizer_2.Models
 
         private void ResetModules()
         {
-            GeneralModuleExtrasValue = ModuleExtras.Default;
+            GeneralSaveOptions = SavePatchOptions.Default;
 
             foreach (var item in GeneralUnlockedDoors) GeneralLockedDoors.Add(item);
             GeneralUnlockedDoors.Clear();
@@ -676,7 +560,7 @@ namespace kotor_Randomizer_2.Models
                 finally
                 {
                     ReportProgress(bw, 100, BusyState.Randomizing, message: Properties.Resources.TaskFinishing);
-                    sw.WriteLine("\nThe Kotor Randomizer was created by Lane Dibello and Glasnonck, with help from the greater Kotor Speedrunning community.");
+                    sw.WriteLine("\nThe Kotor Randomizer was created by Lane and Glasnonck, with help from the greater Kotor Speedrunning community.");
                     sw.WriteLine("If you encounter any issues please try to contact me @Lane#5847 on Discord");
                 }
             }
@@ -901,17 +785,23 @@ namespace kotor_Randomizer_2.Models
         /// <param name="element">XML element containing the general settings.</param>
         private void ReadGeneralSettings(XElement element)
         {
-            { if (element.Attribute(XML_QOL) is XAttribute attr) GeneralModuleExtrasValue = ParseEnum<ModuleExtras>(attr.Value); }
+            { if (element.Attribute(XML_SAVE_OPS) is XAttribute attr) GeneralSaveOptions = ParseEnum<SavePatchOptions>(attr.Value); }
 
-            var unlocks = ModuleExtras.Default;
-            { if (element.Attribute(XML_UNLOCKS) is XAttribute attr) unlocks = ParseEnum<ModuleExtras>(attr.Value); }
-
-            foreach (var door in GeneralLockedDoors.ToList())
-            {
-                if (unlocks.HasFlag(door.Tag))
+            {   // Extra block used to encapsulate the reused variable name "attr".
+                if (element.Attribute(XML_QOL) is XAttribute attr)
                 {
-                    GeneralUnlockedDoors.Add(door);
-                    GeneralLockedDoors.Remove(door);
+                    var qols = attr.Value
+                        .Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                        .Select(s => (QualityOfLife)Enum.Parse(typeof(QualityOfLife), s));
+
+                    foreach (var door in GeneralLockedDoors.ToList())   // Use a new list so we can modify this one in the loop.
+                    {
+                        if (qols.Any(qol => qol == door.QoL))   // If this "door" should be enabled, enable it.
+                        {
+                            GeneralUnlockedDoors.Add(door);
+                            _ = GeneralLockedDoors.Remove(door);
+                        }
+                    }
                 }
             }
         }
@@ -1057,18 +947,15 @@ namespace kotor_Randomizer_2.Models
         {
             w.WriteStartElement(XML_GENERAL);  // Begin General
 
-            Version v = System.Reflection.Assembly.GetAssembly(typeof(Kotor1Randomizer)).GetName().Version;
+            var v = System.Reflection.Assembly.GetAssembly(typeof(Kotor1Randomizer)).GetName().Version;
             w.WriteAttributeString(XML_VERSION, $"v{v.Major}.{v.Minor}.{v.Build}");
 
-            var activeUnlocks = ModuleExtras.Default;
-            foreach (var item in GeneralUnlockedDoors)
-                activeUnlocks |= item.Tag;
+            if (GeneralSaveOptions != SavePatchOptions.Default)
+                w.WriteAttributeString(XML_SAVE_OPS, ((int)GeneralSaveOptions).ToString());
 
-            if (GeneralModuleExtrasValue != ModuleExtras.Default)
-                w.WriteAttributeString(XML_QOL, ((ulong)GeneralModuleExtrasValue).ToString());
-
-            if (activeUnlocks != ModuleExtras.Default)
-                w.WriteAttributeString(XML_UNLOCKS, ((ulong)activeUnlocks).ToString());
+            var qols = GeneralUnlockedDoors.Select(d => d.QoL);
+            if (qols.Any())
+                w.WriteAttributeString(XML_QOL, string.Join(",", qols));
 
             w.WriteEndElement();                // End General
         }
@@ -1171,7 +1058,7 @@ namespace kotor_Randomizer_2.Models
         #region IGeneralSettings Implementation
 
         #region Backing Fields
-        private ModuleExtras _generalModuleExtrasValue;
+        private SavePatchOptions _generalSaveOptions;
         private ObservableCollection<UnlockableDoor> _generalUnlockedDoors = new ObservableCollection<UnlockableDoor>();
         private ObservableCollection<UnlockableDoor> _generalLockedDoors = new ObservableCollection<UnlockableDoor>();
         #endregion
@@ -1181,10 +1068,10 @@ namespace kotor_Randomizer_2.Models
             { AREA_CIT_ENTERTAIN, new Tuple<float, float, float>(-13.5f, -63.4f,  11.51f) },
         };
 
-        public ModuleExtras GeneralModuleExtrasValue
+        public SavePatchOptions GeneralSaveOptions
         {
-            get => _generalModuleExtrasValue;
-            set => SetField(ref _generalModuleExtrasValue, value);
+            get => _generalSaveOptions;
+            set => SetField(ref _generalSaveOptions, value);
         }
 
         public ObservableCollection<UnlockableDoor> GeneralUnlockedDoors
@@ -1227,7 +1114,7 @@ namespace kotor_Randomizer_2.Models
 
         public bool DoRandomizeModules =>   // A couple of general options are handled by module randomization.
             (ModuleRandomizedList?.Count ?? 0) > 1
-            || GeneralModuleExtrasValue   != ModuleExtras.Default
+            || GeneralSaveOptions != SavePatchOptions.Default
             || GeneralUnlockedDoors.Count != 0
             ;
 

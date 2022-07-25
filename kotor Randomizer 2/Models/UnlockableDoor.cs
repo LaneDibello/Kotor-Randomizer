@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KotOR_IO;
+using kotor_Randomizer_2.Extensions;
 
 namespace kotor_Randomizer_2.Models
 {
@@ -11,12 +8,25 @@ namespace kotor_Randomizer_2.Models
     /// </summary>
     public class UnlockableDoor
     {
+        public UnlockableDoor() { }
+
+        public UnlockableDoor(QualityOfLife qol)
+        {
+            QoL = qol;
+            Area = qol.ToArea();
+            Label = qol.ToLabel();
+            ToolTipMessage = qol.ToDescription();
+        }
+
         /// <summary> Description of what is unlocked. </summary>
         public string Label { get; set; }
+
         /// <summary> Area where the "door" exists. </summary>
         public string Area { get; set; }
-        /// <summary> Associated ModuleExtras value. </summary>
-        public ModuleExtras Tag { get; set; }
+
+        /// <summary> Quality of Life option to enable / disable. </summary>
+        public QualityOfLife QoL { get; set; }
+
         /// <summary> Message to display as a ToolTip. </summary>
         public string ToolTipMessage { get; set; }
 
@@ -25,7 +35,7 @@ namespace kotor_Randomizer_2.Models
         /// </summary>
         public override string ToString()
         {
-            return $"[{Area}] {Label} ({Tag.ToString()})";
+            return $"[{Area}] {Label} ({QoL})";
         }
     }
 }

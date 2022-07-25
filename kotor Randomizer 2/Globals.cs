@@ -1,4 +1,5 @@
-﻿using kotor_Randomizer_2.Models;
+﻿using kotor_Randomizer_2.Extensions;
+using kotor_Randomizer_2.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -44,67 +45,179 @@ namespace kotor_Randomizer_2
         Other   = 0x80, // 0b10000000
     }
 
+    /// <summary>
+    /// Flag based enumeration of options for handling saves.
+    /// </summary>
     [Flags]
     public enum SavePatchOptions
     {
-        Default        = 0b000,     // Default behavior - milestone save deletion.
-        NoSaveDelete   = 0b001,     // Do not delete milestone save data.
-        SaveMiniGames  = 0b010,     // Include minigame data in the save file.
-        SaveAllModules = 0b100,     // Include all module data in the save file.
+        Default        = 0b0000,    // Default behavior - milestone save deletion.
+        NoSaveDelete   = 0b0001,    // Do not delete milestone save data.
+        SaveMiniGames  = 0b0010,    // Include minigame data in the save file.
+        SaveAllModules = 0b0100,    // Include all module data in the save file.
+        K2NoSaveDelete = 0b1000,    // Include all module data in save file for K2.
+        Invalid        = 0x8000
     }
 
+    /// <summary>
+    /// Enumeration of the various game changes that can be applied. This includes bug fixes or patches (non-save related),
+    /// new module transitions, door unlocks, etc. Common options (0-10000), K1 options [10000-20000), K2 options [20000-30000).
+    /// </summary>
     public enum QualityOfLife : int
     {
         Unknown = 0,    // Default to an invalid value.
 
         //  COMMON PATCHES
+        [QoLInfo("ALL", "Fix Coordinates", "Fix warp spawn coordinates in certain modules.")]
         CO_FixCoordinates                           = 00050,
+
+        [QoLInfo("EBO", "Galaxy Map", "Unlock all destinations on the Ebon Hawk galaxy map from the start of the game.")]
         CO_GalaxyMap                                = 00100,
 
         //  KOTOR 1 FIXES & PATCHES
+        [QoLInfo("TAR", "Early T3-M4", "Allows T3M4 to be purchased before winning the Taris Swoop Race and speaking with Canderous.")]
         K1_EarlyT3                                  = 10000,
+
+        [QoLInfo("MAN", "Fast Envirosuit", "Speeds up the envirosuit to match normal run speed.")]
         K1_FastEnvirosuit                           = 10050,
+
+        [QoLInfo("EBO", "Fix Dream Sequence", "Fix dream cutscenes to prevent softlocks.")]
         K1_FixDream                                 = 10100,
+
+        [QoLInfo("EBO", "Fix Mind Prison", "Fix Rakatan mind prison to prevent soft-locks.")]
         K1_FixMindPrison                            = 10150,
+
+        [QoLInfo("EBO", "Fix Fighter Encounter", "Prevents the fighter encounter from getting stuck after fighters are destroyed.")]
         K1_FixFighterEncounter                      = 10200,
 
         //  KOTOR 1 DOOR UNLOCKS & TRANSITIONS
-        K1_DanCourtyard_ToRuins                     = 11000,
-        K1_KorValley_UnlockAll                      = 11050,
-        K1_LevElev_Unlock                           = 11100,
-        K1_LevHangar_EnableElev                     = 11150,
-        K1_ManEstCntrl_EmbassyDoor                  = 11200,
-        K1_ManHangar_ToSith                         = 11250,
-        K1_TarLower_ToUnder                         = 11300,
-        K1_TarLower_ToVulkar                        = 11350,
-        K1_TarVulkar_ToSpice                        = 11400,
-        K1_StaDeck3_BastilaDoor                     = 11450,
-        K1_UnkSummit_ToTemple                       = 11500,
-        K1_UnkTemple_ToEntrance                     = 11550,
+        [QoLInfo("DAN", "Courtyard to Ruins", "Unlocks the door into the Dantooine Ruins.")]
+        K1_DanCourtyard_ToRuins                     = 11100,
 
-        // KOTOR 2 PATCHES & FIXES
+        [QoLInfo("KOR", "Valley After Tomb", "Ensures the Sith Tomb and Sith Academy remain unlocked regardless of the Uthar / Yuthura outcome in Naga Sadow.")]
+        K1_KorValley_UnlockAll                      = 11150,
+
+        [QoLInfo("LEV", "Elev to Hangar", "The Leviathan elevator will not restrict you from going to the Hangar early.")]
+        K1_LevElev_ToHangar                         = 11200,
+
+        [QoLInfo("LEV", "Enable Hangar Elevator", "The Leviathan Hangar elevator will now be usable.")]
+        K1_LevHangar_EnableElev                     = 11250,
+
+        [QoLInfo("MAN", "East Central Embassy Door", "Unlocks the Republic Embassy door and the door to the submersible.")]
+        K1_ManEstCntrl_EmbassyDoor                  = 11300,
+
+        [QoLInfo("MAN", "Hangar to Sith Embassy", "Unlocks the Sith Hangar door before visiting Roland.")]
+        K1_ManHangar_ToSith                         = 11350,
+
+        [QoLInfo("STA", "Deck 3 Door to Bastila", "Unlocks the door leading to the Bastila fight, allowing it to be opened after fighting her.")]
+        K1_StaDeck3_BastilaDoor                     = 11400,
+
+        [QoLInfo("TAR", "Lower City to Undercity", "Unlocks the Undercity door in the Lower City.")]
+        K1_TarLower_ToUnder                         = 11450,
+
+        [QoLInfo("TAR", "Lower City to Vulkar Base", "Unlocks the Vulkar Base in the Lower City.")]
+        K1_TarLower_ToVulkar                        = 11500,
+
+        [QoLInfo("TAR", "Vulkar to Spice", "Adds a Load Zone leading the the Vulkar Spice in the rear of the Vulkar base main floor, next to the pool.")]
+        K1_TarVulkar_ToSpice                        = 11550,
+
+        [QoLInfo("UNK", "Summit to Temple", "Unlocks the exit door from the Temple Summit.")]
+        K1_UnkSummit_ToTemple                       = 11600,
+
+        [QoLInfo("UNK", "Temple to Entrance", "Unlocks the exit door from the Temple Main Floor.")]
+        K1_UnkTemple_ToEntrance                     = 11650,
+
+        //  KOTOR 2 PATCHES & FIXES
+        [QoLInfo("DAN", "Prevent Disciple Crash", "Prevents a crash with the disciple on Dantooine.")]
         K2_PreventDiscipleCrash                     = 20000,
 
+        [QoLInfo("TEL", "Patch Bao Dur Conversation", "Patches the Bao Dur intro convo when landing on Telos.")]
+        K2_TelBaoDurConvo                           = 20050,
+
         //  KOTOR 2 DOOR UNLOCKS & TRANSITIONS
-        K2_CitResidential_AptDoor                   = 21000,
-        K2_CitResidential_ToExchange                = 21050,
-        K2_DanCourtyard_ToEnclave                   = 21100,
-        K2_KorAcademy_ToValley                      = 21150,
-        K2_KorCave_ToTomb                           = 21200,
-        K2_PerAdmin_ToDepot                         = 21250,
-        K2_PerAdmin_ToDorms                         = 21300,
-        K2_PerAdmin_ToHarbinger                     = 21350,
-        K2_PerAdmin_ToTunnels                       = 21400,
-        K2_PerDepot_ForceFields                     = 21450,
-        K2_PerDepot_ToTunnels                       = 21500,
-        K2_PerDorms_ToExterior                      = 21550,
-        K2_PerHangar_ToHawk                         = 21600,
+        [QoLInfo("CIT", "Residential Apartment Door", "Unlocks the door preventing you from leaving your apartment in the Citadel Station Residential District.")]
+        K2_CitResidential_AptDoor                   = 21100,
+
+        [QoLInfo("CIT", "Residential to Exchange Corp", "Unlocks the door leading from the Residential District to the Bumani Exchange Corp.")]
+        K2_CitResidential_ToExchange                = 21150,
+
+        [QoLInfo("CIT", "Unlock Info Terminals", "Unlocks access to all destinations of the info terminals.")]
+        K2_CitStation_Terminals                     = 21200,
+
+        [QoLInfo("DAN", "Courtyard to Rebuilt Enclave", "Unlocks the door leading from the Courtyard to the Rebuilt Enclave.")]
+        K2_DanCourtyard_ToEnclave                   = 21250,
+
+        [QoLInfo("DXN", "Camp to Wartime Onderon", "Unlocks the door leading from the Mandalorian Camp to the Wartime Onderon.")]
+        K2_DxnCamp_Basalisk                         = 21300,
+
+        [QoLInfo("DXN", "Camp to Onderon", "Unlocks the door leading from the Mandalorian Camp to the Onderon Docking Bay.")]
+        K2_DxnCamp_ToIziz                           = 21350,
+
+        [QoLInfo("DXN", "Tomb to Camp", "Enables the loading zone from Freedon Nadd's Tomb to the Mandalorian Camp.")]
+        K2_DxnTomb_ToCamp                           = 21400,
+
+        [QoLInfo("KOR", "Academy to Valley", "Unlocks the door leading from the Sith Academy to the Valley of the Dark Lords.")]
+        K2_KorAcademy_ToValley                      = 21450,
+
+        [QoLInfo("KOR", "Cave to Tomb", "Deactivates the trigger preventing entry into the Secret Tomb within the Shyrack Cave.")]
+        K2_KorCave_ToTomb                           = 21500,
+
+        [QoLInfo("MAL", "Core to Academy", "Adds a transition from the Trayus Core to the Trayus Academy.")]
+        K2_MalCore_ToAcademy                        = 21550,
+
+        [QoLInfo("MAL", "Surface to Ebon Hawk", "Adds an elevator and a loading zone from Malachor V Surface to the Ebon Hawk.")]
+        K2_MalSurface_ToHawk                        = 21600,
+
+        [QoLInfo("NAR", "Docks Zez Kai El's Door", "Unlocks the door of Zez Kai El's apartment.")]
         K2_NarDocks_ZezDoor                         = 21650,
+
+        [QoLInfo("NAR", "Jekk'Jekk VIP Room", "Unlocks the door to the VIP room of the Jekk'Jekk Tarr.")]
         K2_NarJekk_VipRoom                          = 21700,
+
+        [QoLInfo("NAR", "Jekk Tunnels to Jekk'Jekk", "Unlocks the door leading from the Jekk'Jekk Tarr Tunnels to the Jekk'Jekk Tarr.")]
         K2_NarTunnels_ToJekk                        = 21750,
+
+        [QoLInfo("NAR", "G0T0's Yacht to Broken Hawk", "Unlocks the door leading from G0T0's Yacht to a broken version of the Ebon Hawk.")]
         K2_NarYacht_ToHawk                          = 21800,
-        K2_TelAcademy_ToPlateau                     = 21850,
-        K2_WarEntertain_ToRavager                   = 21900,
+
+        [QoLInfo("OND", "Spaceport to Camp", "Unlocks the shuttle from the Iziz Spaceport to the Mandalorian Camp.")]
+        K2_OndPort_ToCamp                           = 21850,
+
+        [QoLInfo("PER", "Admin to Depot", "Unlocks the door leading from Administration to the Fuel Depot.")]
+        K2_PerAdmin_ToDepot                         = 21900,
+
+        [QoLInfo("PER", "Admin to Dorms", "Unlocks the door leading from Administration to the Dormitories.")]
+        K2_PerAdmin_ToDorms                         = 21950,
+
+        [QoLInfo("PER", "Admin to Harbinger", "Unlocks the door leading from Administration to the Harbinger Command Deck.")]
+        K2_PerAdmin_ToHarbinger                     = 22000,
+
+        [QoLInfo("PER", "Admin to Tunnels", "Unlocks the door leading from Administration to the Mining Tunnels.")]
+        K2_PerAdmin_ToTunnels                       = 22050,
+
+        [QoLInfo("PER", "Exterior to Dorms", "Adds a loading zone leading from the Asteroid Exterior to the Dormitories.")]
+        K2_PerExterior_ToDorms                      = 22100,
+
+        [QoLInfo("PER", "Depot Force Fields", "Unlocks the force fields inside the fuel depot.")]
+        K2_PerDepot_ForceFields                     = 22150,
+
+        [QoLInfo("PER", "Depot to Tunnels", "Unlocks the door leading from the Fuel Depot to the Mining Tunnels.")]
+        K2_PerDepot_ToTunnels                       = 22200,
+
+        [QoLInfo("PER", "Dorms to Exterior", "Unlocks the door leading from the Dormitories to the Asteroid Exterior.")]
+        K2_PerDorms_ToExterior                      = 22250,
+
+        [QoLInfo("PER", "Hangar to Ebon Hawk", "Unlocks the door leading from the Hangar to the Ebon Hawk.")]
+        K2_PerHangar_ToHawk                         = 22300,
+
+        [QoLInfo("TEL", "Academy to Plateau", "Unlocks the door leading from Secret Academy to the Polar Plateau.")]
+        K2_TelAcademy_ToPlateau                     = 22350,
+
+        [QoLInfo("TEL", "Academy to Ebon Hawk", "Unlocks the door leading from the Polar Academy to the Ebon Hawk.")]
+        K2_TelAcademy_ToHawk                        = 22400,
+
+        [QoLInfo("WAR", "Entertainment to Ravager", "Unlocks the door leading from the Wartime Entertainment Module to the Ravager.")]
+        K2_WarEntertain_ToRavager                   = 22450,
     }
 
     [Flags]
@@ -112,50 +225,73 @@ namespace kotor_Randomizer_2
     public enum ModuleExtras : ulong
     {
         /// <summary> (Default Behavior) Delete milestone save data. </summary>
+        [SavePatchOption(SavePatchOptions.Default)]
         Default             = 0x000000, // 0b00000000 00000000 00000000
         /// <summary> Do not delete milestone save data. </summary>
+        [SavePatchOption(SavePatchOptions.NoSaveDelete)]
         NoSaveDelete        = 0x000001, // 0b00000000 00000000 00000001
         /// <summary> Include minigame data in the save file. </summary>
+        [SavePatchOption(SavePatchOptions.SaveMiniGames)]
         SaveMiniGames       = 0x000002, // 0b00000000 00000000 00000010
         /// <summary> Include all module data in the save file. </summary>
+        [SavePatchOption(SavePatchOptions.SaveAllModules)]
         SaveAllModules      = 0x000004, // 0b00000000 00000000 00000100
         /// <summary> Fix dream cutscenes. </summary>
+        [QualityOfLife(QualityOfLife.K1_FixDream)]
         FixDream            = 0x000008, // 0b00000000 00000000 00001000
         /// <summary> Unlock all destinations on the galaxy map. </summary>
+        [QualityOfLife(QualityOfLife.CO_GalaxyMap)]
         UnlockGalaxyMap     = 0x000010, // 0b00000000 00000000 00010000
         /// <summary> Fix warp spawn coordinates in certain modules. </summary>
+        [QualityOfLife(QualityOfLife.CO_FixCoordinates)]
         FixCoordinates      = 0x000020, // 0b00000000 00000000 00100000
         /// <summary> Fix Rakatan mind prison to prevent soft-locks. </summary>
+        [QualityOfLife(QualityOfLife.K1_FixMindPrison)]
         FixMindPrison       = 0x000040, // 0b00000000 00000000 01000000
         /// <summary> Unlock ancient doors to Dantooine ruins, and on the Lehon Temple roof. </summary>
+        [QualityOfLife(QualityOfLife.K1_DanCourtyard_ToRuins)]
         UnlockDanRuins      = 0x000080, // 0b00000000 00000000 10000000
         /// <summary> Allows Leviathan elevators to go to the hangar without prerequisites. </summary>
+        [QualityOfLife(QualityOfLife.K1_LevElev_ToHangar)]
         UnlockLevElev       = 0x000100, // 0b00000000 00000001 00000000
         /// <summary> Adds a Load Zone leading the the Vulkar Spice in the rear of the Vulkar base main floor, next to the pool. </summary>
+        [QualityOfLife(QualityOfLife.K1_TarVulkar_ToSpice)]
         VulkarSpiceLZ       = 0x000200, // 0b00000000 00000010 00000000
         /// <summary> Unlock the Republic Embassy door and the door to the submersible in Manaan's republic embassy. </summary>
+        [QualityOfLife(QualityOfLife.K1_ManEstCntrl_EmbassyDoor)]
         UnlockManEmbassy    = 0x000400, // 0b00000000 00000100 00000000
         /// <summary> Keep the door to Bastila on the Command Center (Deck 3) of the Star Forge unlocked, even after fighting her. </summary>
+        [QualityOfLife(QualityOfLife.K1_StaDeck3_BastilaDoor)]
         UnlockStaBastila    = 0x000800, // 0b00000000 00001000 00000000
         /// <summary> Unlock the door that exits from the Temple Summit on the Unknown World. </summary>
+        [QualityOfLife(QualityOfLife.K1_UnkSummit_ToTemple)]
         UnlockUnkSummit     = 0x001000, // 0b00000000 00010000 00000000
         /// <summary> Ensure Sith Tomb and Sith Academy stay unlocked regardless of Uthar/Yuthura outcome. </summary>
+        [QualityOfLife(QualityOfLife.K1_KorValley_UnlockAll)]
         UnlockKorValley     = 0x002000, // 0b00000000 00100000 00000000
         /// <summary> Unlock the Sith Hangar door on Manaan. </summary>
+        [QualityOfLife(QualityOfLife.K1_ManHangar_ToSith)]
         UnlockManHangar     = 0x004000, // 0b00000000 01000000 00000000
         /// <summary> Unlock Undercity door in the Lower City. </summary>
+        [QualityOfLife(QualityOfLife.K1_TarLower_ToUnder)]
         UnlockTarUndercity  = 0x008000, // 0b00000000 10000000 00000000
         /// <summary> Unlock Vulkar Base door in the Lower City. </summary>
+        [QualityOfLife(QualityOfLife.K1_TarLower_ToVulkar)]
         UnlockTarVulkar     = 0x010000, // 0b00000001 00000000 00000000
         /// <summary> Unlock the Lehon Temple exit on the Main Floor. </summary>
+        [QualityOfLife(QualityOfLife.K1_UnkTemple_ToEntrance)]
         UnlockUnkTempleExit = 0x020000, // 0b00000010 00000000 00000000
         /// <summary> Speeds up the envirosuit to match normal run speed. </summary>
+        [QualityOfLife(QualityOfLife.K1_FastEnvirosuit)]
         FastEnvirosuit      = 0x040000, // 0b00000100 00000000 00000000
         /// <summary> Allows T3M4 to be purchased before winning the Taris Swoop Race and speaking with Canderous. </summary>
+        [QualityOfLife(QualityOfLife.K1_EarlyT3)]
         EarlyT3             = 0x080000, // 0b00001000 00000000 00000000
         /// <summary> Enables the elevator on the Leviathan Hangar to go to other levels. </summary>
+        [QualityOfLife(QualityOfLife.K1_LevHangar_EnableElev)]
         EnableLevHangarElev = 0x100000, // 0b00010000 00000000 00000000
         /// <summary> Prevents the fighter encounter from getting stuck after fighters are destroyed. </summary>
+        [QualityOfLife(QualityOfLife.K1_FixFighterEncounter)]
         FixFighterEncounter = 0x200000, // 0b00100000 00000000 00000000
 
         /// <summary> Patches the save file deletion in kotor 2. </summary>
@@ -269,41 +405,6 @@ namespace kotor_Randomizer_2
         public const string AREA_MANAAN_SITH = "manm27aa";
         public const string AREA_RAKA_SETTLE = "unk_m43aa";
         public const string AREA_TEMPLE_MAIN = "unk_m44aa";
-
-        /// <summary>
-        /// New coordinates for bad randomizer spawn locations.
-        /// </summary>
-        public static readonly Dictionary<string, Tuple<float, float, float>> FIXED_COORDINATES = new Dictionary<string, Tuple<float, float, float>>()
-        {
-            { AREA_UNDERCITY, new Tuple<float, float, float>(
-                (183.5f),
-                (167.4f),
-                (1.5f)) },
-            { AREA_TOMB_TULAK, new Tuple<float, float, float>(
-                (15.8f),
-                (55.6f),
-                (0.75f)) },
-            { AREA_LEVI_HANGAR, new Tuple<float, float, float>(
-                (12.5f),
-                (155.2f),
-                (3.0f)) },
-            { AREA_AHTO_WEST, new Tuple<float, float, float>(
-                (5.7f),
-                (-10.7f),
-                (59.2f)) },
-            { AREA_MANAAN_SITH, new Tuple<float, float, float>(
-                (112.8f),
-                (2.4f),
-                (0f)) },
-            { AREA_RAKA_SETTLE, new Tuple<float, float, float>(
-                (202.2f),
-                (31.5f),
-                (40.7f)) },
-            { AREA_TEMPLE_MAIN, new Tuple<float, float, float>(
-                (95.3f),
-                (42.0f),
-                (0.44f)) },
-        };
 
         /// <summary>
         /// Large Creature Models

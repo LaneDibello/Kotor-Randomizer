@@ -97,6 +97,8 @@ namespace kotor_Randomizer_2.Digraph
         #region Common Fixes & Unlocks
         /// <summary> FixMap is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
         public bool EnabledFixMap { get; set; } = false;
+
+        public List<QualityOfLife> EnabledQoL { get; set; } = new List<QualityOfLife>();
         #endregion
 
         #region Kotor 1 Fixes & Unlocks
@@ -184,6 +186,8 @@ namespace kotor_Randomizer_2.Digraph
                 RandomLookup = Modules.ToDictionary(m => m.WarpCode, m => m.WarpCode);
             }
 
+            EnabledQoL.Clear();
+
             if (rando == null)
             {
                 // Get currently enabled settings.
@@ -225,21 +229,22 @@ namespace kotor_Randomizer_2.Digraph
                 AllowGlitchDlz             = moduleRando.ModuleAllowGlitchDlz;
                 AllowGlitchFlu             = moduleRando.ModuleAllowGlitchFlu;
                 AllowGlitchGpw             = moduleRando.ModuleAllowGlitchGpw;
-                EnabledFixBox              = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
-                EnabledHangarAccess        = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
-                EnabledFixHangarElev       = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev);
-                EnabledFixMap              = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
-                EnabledFixSpice            = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
-                EnabledUnlockDanRuins      = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
-                EnabledUnlockKorAcademy    = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley);
-                EnabledUnlockManEmbassy    = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy);
-                EnabledUnlockManHangar     = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar);
-                EnabledUnlockStaBastila    = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
-                EnabledUnlockTarUndercity  = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity);
-                EnabledUnlockTarVulkar     = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar);
-                EnabledUnlockUnkSummit     = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
-                EnabledUnlockUnkTempleExit = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit);
-                EnabledEarlyT3M4           = genSettings.GeneralModuleExtrasValue.HasFlag(ModuleExtras.EarlyT3);
+                //EnabledQoL                 = genSettings.GeneralUnlockedDoors.Select(d => d.QoL).ToList();
+                EnabledFixBox              = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_FixMindPrison);
+                EnabledHangarAccess        = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_LevElev_ToHangar);
+                EnabledFixHangarElev       = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_LevHangar_EnableElev);
+                EnabledFixMap              = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.CO_GalaxyMap);
+                EnabledFixSpice            = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_TarVulkar_ToSpice);
+                EnabledUnlockDanRuins      = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_DanCourtyard_ToRuins);
+                EnabledUnlockKorAcademy    = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_KorValley_UnlockAll);
+                EnabledUnlockManEmbassy    = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_ManEstCntrl_EmbassyDoor);
+                EnabledUnlockManHangar     = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_ManHangar_ToSith);
+                EnabledUnlockStaBastila    = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_StaDeck3_BastilaDoor);
+                EnabledUnlockTarUndercity  = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_TarLower_ToUnder);
+                EnabledUnlockTarVulkar     = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_TarLower_ToVulkar);
+                EnabledUnlockUnkSummit     = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_UnkSummit_ToTemple);
+                EnabledUnlockUnkTempleExit = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_UnkTemple_ToEntrance);
+                EnabledEarlyT3M4           = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_EarlyT3);
                 EnforceEdgeTagLocked       = true;
                 IgnoreOnceEdges            = moduleRando.ModuleLogicIgnoreOnceEdges;
                 GoalIsMalak                = k1rando?.ModuleGoalIsMalak ?? false;

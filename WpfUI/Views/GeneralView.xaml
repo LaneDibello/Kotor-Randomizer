@@ -46,6 +46,11 @@
                 Enabling this allows you to save and load within any module (minigames and cutscenes included).
                 This is sometimes needed for certain module randomizations.
             </ToolTip>
+            <ToolTip x:Key="ttQolMilestoneK2">
+                Save data is normally deleted at cetrain milestones. This can cause loss of progress if module
+                randomization is active. Enable this feature to prevent deleting this data. This option will
+                also allow you to save and load within any module (minigames and cutscenes included).
+            </ToolTip>
             <ToolTip x:Key="ttQolSpice">
                 Adds a new loading zone to the far west end of the Vulkar Base leading to the unused module
                 Vulkar Spice Lab.
@@ -102,7 +107,7 @@
                            />
                 <TextBlock Style="{StaticResource tbDescription}">
                         This randomizer will shuffle game files within the Kotor 1 directory to provide
-                        a new experience each time you play. Created by Lane Dibello and Glasnonck.
+                        a new experience each time you play. Created by Lane and Glasnonck.
                 </TextBlock>
             </StackPanel>
         </Border>
@@ -218,6 +223,7 @@
                         BorderThickness="1" Padding="3,5" Margin="0,0,0,5"
                         CornerRadius="3">
                     <StackPanel>
+                        <!-- Title - Description -->
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -237,6 +243,8 @@
                                 actually randomizing anything else.
                             </TextBlock>
                         </Grid>
+                        
+                        <!-- Save Data Options -->
                         <Grid Margin="5,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -271,20 +279,17 @@
                                     Grid.ColumnSpan="3"
                                     Margin="0,0,0,5"/>
 
-                            <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource tbHeader4}"
+                            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
+                                       Style="{StaticResource tbHeader4}"
                                        Text="Save Data" HorizontalAlignment="Center"
-                                       Visibility="{Binding ElementName=thisView, Path=IsKotor2Selected, Converter={StaticResource InverseBoolToVisibilityConverter}}"
                                        />
-                            <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource tbHeader4}"
-                                       Text="Quality of Life" HorizontalAlignment="Center"
-                                       Width="170" TextAlignment="Center" />
 
                             <StackPanel Grid.Column="0" Grid.Row="2"
                                         Visibility="{Binding ElementName=thisView, Path=IsKotor2Selected, Converter={StaticResource InverseBoolToVisibilityConverter}}"
                                         >
                                 <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataDeleteMilestone, Mode=TwoWay}"
                                           ToolTip="{StaticResource ttQolMilestone}">
-                                    <TextBlock Text="Prevent Milestone Save Data Deletion" />
+                                    <TextBlock Text="Prevent Milestone Save Deletion" />
                                 </CheckBox>
                                 <CheckBox IsChecked="{Binding ElementName=thisView, Path=SaveDataIncludeMinigames, Mode=TwoWay}"
                                           IsEnabled="{Binding ElementName=cbSaveAllModules, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}"
@@ -300,100 +305,22 @@
                                 </CheckBox>
                             </StackPanel>
 
-                            <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2">
-                                <WrapPanel x:Name="k1QoL"  Orientation="Horizontal"
-                                           Visibility="{Binding ElementName=thisView, Path=IsKotor2Selected, Converter={StaticResource InverseBoolToVisibilityConverter}}"
-                                           >
-                                    <StackPanel Margin="5,0">
-                                        <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolAddSpiceLab, Mode=TwoWay}"
-                                                  ToolTip="{StaticResource ttQolSpice}">
-                                            <TextBlock Text="Add Spice Lab Load Zone" />
-                                        </CheckBox>
-                                        <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFastEnvirosuit, Mode=TwoWay}"
-                                                  ToolTip="{StaticResource ttQolEnvirosuit}">
-                                            <TextBlock Text="Fast Envirosuit" />
-                                        </CheckBox>
-                                        <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolEarlyT3, Mode=TwoWay}"
-                                                  ToolTip="{StaticResource ttQolEarlyT3}">
-                                            <TextBlock Text="T3M4 Purchasable Early" />
-                                        </CheckBox>
-                                    </StackPanel>
-                                    <StackPanel Margin="5,0">
-                                        <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixDreamSequence, Mode=TwoWay}"
-                                                  ToolTip="{StaticResource ttQolDream}">
-                                            <TextBlock Text="Fix Dream Sequence" />
-                                        </CheckBox>
-                                        <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixFighterEncounter, Mode=TwoWay}"
-                                                  ToolTip="{StaticResource ttQolFighters}">
-                                            <TextBlock Text="Fix Fighter Encounter" />
-                                        </CheckBox>
-                                        <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixMindPrison, Mode=TwoWay}"
-                                                  ToolTip="{StaticResource ttQolMystery}">
-                                            <TextBlock Text="Fix Mind Prison" />
-                                        </CheckBox>
-                                        <CheckBox IsChecked="{Binding ElementName=thisView, Path=QolFixModuleCoordinates, Mode=TwoWay}"
-                                                  ToolTip="{StaticResource ttQolCoordinates}">
-                                            <TextBlock Text="Fix Module Coordinates" />
-                                        </CheckBox>
-                                    </StackPanel>
-                                </WrapPanel>
-
+                            <StackPanel Grid.Column="1" Grid.Row="2">
                                 <WrapPanel Name="k2QoL" Orientation="Horizontal"
                                            Visibility="{Binding ElementName=thisView, Path=IsKotor2Selected, Converter={StaticResource BoolToVisibilityConverter}}"
                                            >
-                                    <StackPanel Margin="5,0">
-                                        <CheckBox IsChecked="{Binding ElementName=thisView, Mode=TwoWay, Path=K2SavePatch}">
+                                    <StackPanel>
+                                        <CheckBox IsChecked="{Binding ElementName=thisView, Mode=TwoWay, Path=K2SavePatch}"
+                                                  ToolTip="{StaticResource ttQolMilestoneK2}">
                                             <TextBlock Text="Prevent Milestone Save Deletion" />
-                                        </CheckBox>
-                                        <CheckBox IsChecked="{Binding ElementName=thisView, Mode=TwoWay, Path=QolFixModuleCoordinates}"
-                                                  ToolTip="{StaticResource ttQolCoordinatesK2}">
-                                            <TextBlock Text="Fix Module Coordinates" />
-                                        </CheckBox>
-                                        <CheckBox IsChecked="{Binding ElementName=thisView, Mode=TwoWay, Path=K2DisciplePatch}">
-                                            <TextBlock Text="Patch Disciple Crash" />
-                                        </CheckBox>
-                                    </StackPanel>
-                                    <StackPanel Margin="5,0" Visibility="Collapsed">
-                                        <CheckBox>
-                                            <TextBlock Text="[Placeholder]" />
-                                        </CheckBox>
-                                        <CheckBox>
-                                            <TextBlock Text="[Placeholder]" />
-                                        </CheckBox>
-                                        <CheckBox>
-                                            <TextBlock Text="[Placeholder]" />
                                         </CheckBox>
                                     </StackPanel>
                                 </WrapPanel>
                             </StackPanel>
                         </Grid>
-                    </StackPanel>
-                </Border>
-                
-                <!-- Unlock Doors -->
-                <Border BorderBrush="{StaticResource HarshBlueBrush}"
-                        BorderThickness="1" Padding="3" Margin="0,0,0,5" CornerRadius="3">
-                    <StackPanel>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="Unlock Doors"
-                                       Style="{StaticResource tbHeader3}"
-                                       FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=2}"
-                                       TextDecorations="Underline"
-                                       Margin="5,2,5,10"
-                                       VerticalAlignment="Center"
-                                       />
-                            <TextBlock Style="{StaticResource tbDescription}"
-                                       Grid.Column="1" Margin="5,0,5,5"
-                                       VerticalAlignment="Center">
-                                Unlock certain doors that can be troublesome to handle during a module shuffled playthrough.
-                            </TextBlock>
-
-                        </Grid>
-                        <Grid Margin="5,0">
+                        
+                        <!-- Quality of Life Options -->
+                        <Grid Margin="5,5,5,0">
                             <Grid.Resources>
                                 <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
                                     <Setter Property="ToolTip" Value="{Binding ToolTipMessage}" />
@@ -435,10 +362,10 @@
                                     BorderThickness="0,1,0,0"
                                     Grid.ColumnSpan="3"
                                     Margin="0,0,0,5"/>
-
+                            
                             <!--Titles-->
-                            <TextBlock Style="{StaticResource tbHeader4}" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Margin="0,0,0,5" Text="Unlocked" />
-                            <TextBlock Style="{StaticResource tbHeader4}" HorizontalAlignment="Center" Grid.Column="4" Grid.Row="1" Margin="0,0,0,5" Text="Locked" />
+                            <TextBlock Style="{StaticResource tbHeader4}" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1" Margin="0,0,0,5" Text="Enabled / Unlocked" />
+                            <TextBlock Style="{StaticResource tbHeader4}" HorizontalAlignment="Center" Grid.Column="4" Grid.Row="1" Margin="0,0,0,5" Text="Disabled / Locked" />
 
                             <!--Unlocked List-->
                             <ListView Grid.Column="0" Grid.Row="2" x:Name="lvUnlocked"
@@ -452,7 +379,7 @@
                                                 <GridViewColumnHeader x:Name="gvchUnlockedArea" Tag="Area" Click="LvUnlockedColumnHeader_Click" Content="Area" HorizontalContentAlignment="Left" />
                                             </GridViewColumn.Header>
                                         </GridViewColumn>
-                                        <GridViewColumn Width="180" DisplayMemberBinding="{Binding Label}">
+                                        <GridViewColumn Width="200" DisplayMemberBinding="{Binding Label}">
                                             <GridViewColumn.Header>
                                                 <GridViewColumnHeader x:Name="gvchUnlockedLabel" Tag="Label" Click="LvUnlockedColumnHeader_Click" Content="Label" />
                                             </GridViewColumn.Header>
@@ -490,7 +417,7 @@
                                                 <GridViewColumnHeader x:Name="gvchLockedArea" Tag="Area" Click="LvLockedColumnHeader_Click" Content="Area" HorizontalContentAlignment="Left" />
                                             </GridViewColumn.Header>
                                         </GridViewColumn>
-                                        <GridViewColumn Width="180" DisplayMemberBinding="{Binding Label}">
+                                        <GridViewColumn Width="200" DisplayMemberBinding="{Binding Label}">
                                             <GridViewColumn.Header>
                                                 <GridViewColumnHeader x:Name="gvchLockedLabel" Tag="Label" Click="LvLockedColumnHeader_Click" Content="Label" />
                                             </GridViewColumn.Header>

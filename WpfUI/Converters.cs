@@ -157,6 +157,39 @@ namespace Randomizer_WPF
         #endregion
     }
 
+    [ValueConversion(typeof(SavePatchOptions), typeof(bool))]
+    public class SavePatchOptionsToBoolConverter : IValueConverter
+    {
+        private SavePatchOptions target;
+        public SavePatchOptionsToBoolConverter() { }
+
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            target = (SavePatchOptions)value;
+            return target.HasFlag((SavePatchOptions)parameter);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (target.HasFlag((SavePatchOptions)parameter))
+            {
+                if ((bool)value)
+                    return target;
+                else
+                    return target ^= (SavePatchOptions)parameter;
+            }
+            else
+            {
+                if ((bool)value)
+                    return target |= (SavePatchOptions)parameter;
+                else
+                    return target;
+            }
+        }
+        #endregion
+    }
+
     [ValueConversion(typeof(Type), typeof(Visibility))]
     public class TypeToVisibilityConverter : IValueConverter
     {

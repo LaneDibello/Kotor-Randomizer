@@ -429,8 +429,8 @@
                             <TextBlock Style="{StaticResource tbDescription}" TextWrapping="Wrap"
                                        Margin="0,0,0,0" Padding="0,0,0,0">
                                 Notice: The stability of this feature is still questionable. If you receive
-                                any pop-ups or warnings about "invalid bumpmaps" please contact Lane Dibello
-                                with the texture name so he can omit it from the randomization. If you encounter
+                                any pop-ups or warnings about "invalid bumpmaps" please contact Lane with
+                                the texture name so he can omit it from the randomization. If you encounter
                                 issues mid-run, change your quality settings to revert to normal.
                             </TextBlock>
                         </Border>
