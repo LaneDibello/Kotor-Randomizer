@@ -2023,7 +2023,7 @@ namespace kotor_Randomizer_2.Models
                     if (element.Attribute(XML_QOL) is XAttribute attr)
                     {
                         var qols = attr.Value
-                            .Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                            .Split(", ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
                             .Select(s => (QualityOfLife)int.Parse(s));
 
                         foreach (var door in GeneralLockedDoors.ToList())   // Use a new list so we can modify this one in the loop.
@@ -2358,7 +2358,7 @@ namespace kotor_Randomizer_2.Models
             var qols = GeneralUnlockedDoors.Select(d => (int)d.QoL).ToList();
             qols.Sort();
             if (qols.Any())
-                w.WriteAttributeString(XML_QOL, string.Join(",", qols));
+                w.WriteAttributeString(XML_QOL, string.Join(", ", qols));
 
             w.WriteEndElement();                // End General
         }

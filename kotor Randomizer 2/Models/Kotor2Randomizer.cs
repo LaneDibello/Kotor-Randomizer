@@ -142,9 +142,10 @@ namespace kotor_Randomizer_2.Models
             ModuleGoalList = new ObservableCollection<ReachabilityGoal>
             {
                 new ReachabilityGoal { GoalID = 0, Caption = "Defeat Traya" },
-                new ReachabilityGoal { GoalID = 1, Caption = "Meet Jedi Masters" },
-                new ReachabilityGoal { GoalID = 2, Caption = "Recruit Party Members" },
-                new ReachabilityGoal { GoalID = 3, Caption = "Pazaak Champion" },
+                new ReachabilityGoal { GoalID = 1, Caption = "Defeat All Sith Lords" },
+                new ReachabilityGoal { GoalID = 2, Caption = "Meet Jedi Masters" },
+                new ReachabilityGoal { GoalID = 3, Caption = "Recruit Party Members" },
+                new ReachabilityGoal { GoalID = 4, Caption = "Pazaak Champion" },
             };
 
             GeneralLockedDoors = new ObservableCollection<QualityOfLifeOption>
@@ -791,7 +792,7 @@ namespace kotor_Randomizer_2.Models
                 if (element.Attribute(XML_QOL) is XAttribute attr)
                 {
                     var qols = attr.Value
-                        .Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                        .Split(", ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
                         .Select(s => (QualityOfLife)Enum.Parse(typeof(QualityOfLife), s));
 
                     foreach (var door in GeneralLockedDoors.ToList())   // Use a new list so we can modify this one in the loop.
@@ -950,12 +951,13 @@ namespace kotor_Randomizer_2.Models
             var v = System.Reflection.Assembly.GetAssembly(typeof(Kotor1Randomizer)).GetName().Version;
             w.WriteAttributeString(XML_VERSION, $"v{v.Major}.{v.Minor}.{v.Build}");
 
-            if (GeneralSaveOptions != SavePatchOptions.Default)
-                w.WriteAttributeString(XML_SAVE_OPS, ((int)GeneralSaveOptions).ToString());
+            //if (GeneralSaveOptions != SavePatchOptions.Default)
+            w.WriteAttributeString(XML_SAVE_OPS, ((int)GeneralSaveOptions).ToString()); // Always write save options.
 
-            var qols = GeneralUnlockedDoors.Select(d => d.QoL);
+            var qols = GeneralUnlockedDoors.Select(d => (int)d.QoL).ToList();
+            qols.Sort();
             if (qols.Any())
-                w.WriteAttributeString(XML_QOL, string.Join(",", qols));
+                w.WriteAttributeString(XML_QOL, string.Join(", ", qols));
 
             w.WriteEndElement();                // End General
         }
@@ -1250,7 +1252,7 @@ namespace kotor_Randomizer_2.Models
         private string _itemOmittedPreset;
         #endregion
 
-        public override bool SupportsItems => true;
+        public override bool SupportsItems => false;
 
         public bool DoRandomizeItems =>
             (ItemArmbands       | ItemArmor           | ItemBelts          | ItemBlasters

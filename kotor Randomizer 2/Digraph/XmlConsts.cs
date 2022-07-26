@@ -37,6 +37,7 @@
         public const string TAG_MALAK    = "Malak";
         public const string TAG_STAR_MAP = "StarMap";
         public const string TAG_TRAYA    = "Traya";
+        public const string TAG_SITH     = "Sith";
         public const string TAG_MASTER   = "Master";
         public const string TAG_PAZAAK   = "Pazaak";
 
