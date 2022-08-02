@@ -30,7 +30,7 @@
                 <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.FontSize}" />
             </Style>
 
-            <ToolTip x:Key="ttAnimationAttack">
+            <!--<ToolTip x:Key="ttAnimationAttack">
                 Weapon attack animations.
             </ToolTip>
             <ToolTip x:Key="ttAnimationDamage">
@@ -50,7 +50,7 @@
             </ToolTip>
             <ToolTip x:Key="ttAnimationVarious">
                 Animations not in other categories.
-            </ToolTip>
+            </ToolTip>-->
             
             <ToolTip x:Key="ttLargeModels">
                 "Large Models" are those that don't fit in most circumstances and thus cause
@@ -162,32 +162,32 @@
                                 </StackPanel.Resources>
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationAttack" CheckboxLabel="Attack"
-                                    CheckboxToolTip="{StaticResource ttAnimationAttack}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationAttack}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationAttack}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationDamage" CheckboxLabel="Damage"
-                                    CheckboxToolTip="{StaticResource ttAnimationDamage}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationDamage}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationDamage}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationParry"  CheckboxLabel="Parry"
-                                    CheckboxToolTip="{StaticResource ttAnimationParry}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationParry}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationParry}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationMove"   CheckboxLabel="Movement"
-                                    CheckboxToolTip="{StaticResource ttAnimationMovement}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationMove}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationMovement}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationPause"  CheckboxLabel="Pause"
-                                    CheckboxToolTip="{StaticResource ttAnimationPause}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationPause}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationPause}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationLoop"   CheckboxLabel="Looping"
-                                    CheckboxToolTip="{StaticResource ttAnimationLoop}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationLoop}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationLoop}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationForget" CheckboxLabel="Various"
-                                    CheckboxToolTip="{StaticResource ttAnimationVarious}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationFire}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationVarious}"-->
                             </StackPanel>
 
                             <!--Warning-->

@@ -6,9 +6,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 using ClosedXML.Excel;
+using kotor_Randomizer_2.DBOs;
 using kotor_Randomizer_2.Digraph;
 using kotor_Randomizer_2.Extensions;
 
@@ -194,6 +196,9 @@ namespace kotor_Randomizer_2.Models
                 new QualityOfLifeOption(QualityOfLife.K1_UnkTemple_ToEntrance),
             };
 
+            // Create list of item rando options.
+            ItemCategoryOptions = GenerateItemOptionsList();
+
             // Create module digraph and get the list of modules.
             ModuleDigraph graph;
             var modulesPath = Path.Combine(Environment.CurrentDirectory, "Xml", "KotorModules.xml");
@@ -219,7 +224,32 @@ namespace kotor_Randomizer_2.Models
             if (!string.IsNullOrWhiteSpace(path) && File.Exists(path))
                 Load(path);
             else
-                SettingsFileName = string.Empty;
+                SettingsFilePath = string.Empty;
+        }
+
+        public static ObservableCollection<ItemRandoCategoryOption> GenerateItemOptionsList()
+        {
+            return new ObservableCollection<ItemRandoCategoryOption>
+            {
+                new ItemRandoCategoryOption(ItemRandoCategory.Armbands, ArmbandsRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Armor, ArmorRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Belts, BeltsRegs) { SubtypeVisible = false },
+                new ItemRandoCategoryOption(ItemRandoCategory.Blasters, BlastersRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.CreatureHides, HidesRegs) { SubtypeVisible = false },
+                new ItemRandoCategoryOption(ItemRandoCategory.CreatureWeapons, CreatureRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.DroidEquipment, DroidRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Gloves, GlovesRegs) { SubtypeVisible = false },
+                new ItemRandoCategoryOption(ItemRandoCategory.Grenades, GrenadesRegs) { SubtypeVisible = false },
+                new ItemRandoCategoryOption(ItemRandoCategory.Implants, ImplantsRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Lightsabers, LightsabersRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Masks, MaskRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.MeleeWeapons, MeleeRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Mines, MinesRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.PazaakCards, PazRegs) { SubtypeVisible = false },
+                new ItemRandoCategoryOption(ItemRandoCategory.Medical, StimsRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Upgrades, UpgradeRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Various, null) { SubtypeVisible = false },
+            };
         }
         #endregion Constructors
 
@@ -374,130 +404,139 @@ namespace kotor_Randomizer_2.Models
         #region Item Properties
         public override bool SupportsItems => true;
 
-        private RandomizationLevel _itemArmbands;
+        private RandomizationLevel GetIRCOLevel(ItemRandoCategory category)
+        {
+            return ItemCategoryOptions.First(op => op.Category == category) is ItemRandoCategoryOption irco
+                ? irco.Level
+                : throw new InvalidEnumArgumentException($"ItemRandoCategory.{category} does not exist.");
+        }
+
+        private void SetIRCOLevel(ItemRandoCategory category, RandomizationLevel level)
+        {
+            if (ItemCategoryOptions.First(op => op.Category == category) is ItemRandoCategoryOption irco)
+            {
+                irco.Level = level;
+                NotifyPropertyChanged(nameof(ItemCategoryOptions));
+            }
+            else
+            {
+                throw new InvalidEnumArgumentException($"ItemRandoCategory.{category} does not exist.");
+            }
+        }
+
         public RandomizationLevel ItemArmbands
         {
-            get => _itemArmbands;
-            set => SetField(ref _itemArmbands, value);
+            get => GetIRCOLevel(ItemRandoCategory.Armbands);
+            set => SetIRCOLevel(ItemRandoCategory.Armbands, value);
         }
 
-        private RandomizationLevel _itemArmor;
         public RandomizationLevel ItemArmor
         {
-            get => _itemArmor;
-            set => SetField(ref _itemArmor, value);
+            get => GetIRCOLevel(ItemRandoCategory.Armor);
+            set => SetIRCOLevel(ItemRandoCategory.Armor, value);
         }
 
-        private RandomizationLevel _itemBelts;
         public RandomizationLevel ItemBelts
         {
-            get => _itemBelts;
-            set => SetField(ref _itemBelts, value);
+            get => GetIRCOLevel(ItemRandoCategory.Belts);
+            set => SetIRCOLevel(ItemRandoCategory.Belts, value);
         }
 
-        private RandomizationLevel _itemBlasters;
         public RandomizationLevel ItemBlasters
         {
-            get => _itemBlasters;
-            set => SetField(ref _itemBlasters, value);
+            get => GetIRCOLevel(ItemRandoCategory.Blasters);
+            set => SetIRCOLevel(ItemRandoCategory.Blasters, value);
         }
 
-        private RandomizationLevel _itemCreatureHides;
         public RandomizationLevel ItemCreatureHides
         {
-            get => _itemCreatureHides;
-            set => SetField(ref _itemCreatureHides, value);
+            get => GetIRCOLevel(ItemRandoCategory.CreatureHides);
+            set => SetIRCOLevel(ItemRandoCategory.CreatureHides, value);
         }
 
-        private RandomizationLevel _itemCreatureWeapons;
         public RandomizationLevel ItemCreatureWeapons
         {
-            get => _itemCreatureWeapons;
-            set => SetField(ref _itemCreatureWeapons, value);
+            get => GetIRCOLevel(ItemRandoCategory.CreatureWeapons);
+            set => SetIRCOLevel(ItemRandoCategory.CreatureWeapons, value);
         }
 
-        private RandomizationLevel _itemDroidEquipment;
         public RandomizationLevel ItemDroidEquipment
         {
-            get => _itemDroidEquipment;
-            set => SetField(ref _itemDroidEquipment, value);
+            get => GetIRCOLevel(ItemRandoCategory.DroidEquipment);
+            set => SetIRCOLevel(ItemRandoCategory.DroidEquipment, value);
         }
 
-        private RandomizationLevel _itemGloves;
         public RandomizationLevel ItemGloves
         {
-            get => _itemGloves;
-            set => SetField(ref _itemGloves, value);
+            get => GetIRCOLevel(ItemRandoCategory.Gloves);
+            set => SetIRCOLevel(ItemRandoCategory.Gloves, value);
         }
 
-        private RandomizationLevel _itemGrenades;
         public RandomizationLevel ItemGrenades
         {
-            get => _itemGrenades;
-            set => SetField(ref _itemGrenades, value);
+            get => GetIRCOLevel(ItemRandoCategory.Grenades);
+            set => SetIRCOLevel(ItemRandoCategory.Grenades, value);
         }
 
-        private RandomizationLevel _itemImplants;
         public RandomizationLevel ItemImplants
         {
-            get => _itemImplants;
-            set => SetField(ref _itemImplants, value);
+            get => GetIRCOLevel(ItemRandoCategory.Implants);
+            set => SetIRCOLevel(ItemRandoCategory.Implants, value);
         }
 
-        private RandomizationLevel _itemLightsabers;
         public RandomizationLevel ItemLightsabers
         {
-            get => _itemLightsabers;
-            set => SetField(ref _itemLightsabers, value);
+            get => GetIRCOLevel(ItemRandoCategory.Lightsabers);
+            set => SetIRCOLevel(ItemRandoCategory.Lightsabers, value);
         }
 
-        private RandomizationLevel _itemMasks;
         public RandomizationLevel ItemMasks
         {
-            get => _itemMasks;
-            set => SetField(ref _itemMasks, value);
+            get => GetIRCOLevel(ItemRandoCategory.Masks);
+            set => SetIRCOLevel(ItemRandoCategory.Masks, value);
         }
 
-        private RandomizationLevel _itemMeleeWeapons;
         public RandomizationLevel ItemMeleeWeapons
         {
-            get => _itemMeleeWeapons;
-            set => SetField(ref _itemMeleeWeapons, value);
+            get => GetIRCOLevel(ItemRandoCategory.MeleeWeapons);
+            set => SetIRCOLevel(ItemRandoCategory.MeleeWeapons, value);
         }
 
-        private RandomizationLevel _itemMines;
         public RandomizationLevel ItemMines
         {
-            get => _itemMines;
-            set => SetField(ref _itemMines, value);
+            get => GetIRCOLevel(ItemRandoCategory.Mines);
+            set => SetIRCOLevel(ItemRandoCategory.Mines, value);
         }
 
-        private RandomizationLevel _itemPazaakCards;
         public RandomizationLevel ItemPazaakCards
         {
-            get => _itemPazaakCards;
-            set => SetField(ref _itemPazaakCards, value);
+            get => GetIRCOLevel(ItemRandoCategory.PazaakCards);
+            set => SetIRCOLevel(ItemRandoCategory.PazaakCards, value);
         }
 
-        private RandomizationLevel _itemMedical;
         public RandomizationLevel ItemMedical
         {
-            get => _itemMedical;
-            set => SetField(ref _itemMedical, value);
+            get => GetIRCOLevel(ItemRandoCategory.Medical);
+            set => SetIRCOLevel(ItemRandoCategory.Medical, value);
         }
 
-        private RandomizationLevel _itemUpgrades;
         public RandomizationLevel ItemUpgrades
         {
-            get => _itemUpgrades;
-            set => SetField(ref _itemUpgrades, value);
+            get => GetIRCOLevel(ItemRandoCategory.Upgrades);
+            set => SetIRCOLevel(ItemRandoCategory.Upgrades, value);
         }
 
-        private RandomizationLevel _itemVarious;
         public RandomizationLevel ItemVarious
         {
-            get => _itemVarious;
-            set => SetField(ref _itemVarious, value);
+            get => GetIRCOLevel(ItemRandoCategory.Various);
+            set => SetIRCOLevel(ItemRandoCategory.Various, value);
+        }
+
+        private ObservableCollection<ItemRandoCategoryOption> _itemCategoryOptions = new ObservableCollection<ItemRandoCategoryOption>();
+        public ObservableCollection<ItemRandoCategoryOption> ItemCategoryOptions
+        {
+            get => _itemCategoryOptions;
+            set => SetField(ref _itemCategoryOptions, value);
         }
 
         private ObservableCollection<RandomizableItem> _itemOmittedList = new ObservableCollection<RandomizableItem>();
@@ -514,12 +553,184 @@ namespace kotor_Randomizer_2.Models
             set => SetField(ref _itemRandomizedList, value);
         }
 
-        private string _itemOmittedPreset = RandomizableItem.KOTOR1_OMIT_PRESETS.First().Key;
+        private string _itemOmittedPreset = null;
         public string ItemOmittedPreset
         {
             get => _itemOmittedPreset;
             set => SetField(ref _itemOmittedPreset, value);
         }
+
+
+        #region Item Regexes
+        //Armor Regexes
+        private static readonly List<Regex> ArmorRegs = new List<Regex>()
+        {
+            new Regex("^g1*_a_|^geno_armor", RegexOptions.Compiled | RegexOptions.IgnoreCase),// All Armor
+
+            new Regex("^g1*_a_class4|^geno_armor", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 4
+            new Regex("^g1*_a_class5", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 5
+            new Regex("^g1*_a_class6", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 6
+            new Regex("^g1*_a_class7", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 7
+            new Regex("^g1*_a_class8", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 8
+            new Regex("^g1*_a_class9", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Armor Class 9
+            new Regex("^g1*_a_clothes", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Clothes
+            new Regex("^g1*_a_jedi", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Basic Robes
+            new Regex("^g1*_a_kght", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Knight Robes
+            new Regex("^g1*_a_mstr", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Master Robes
+
+        };
+
+        //Stims Regexes
+        private static readonly List<Regex> StimsRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_(adrn|cmbt|medeq)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Stims/Medpacs
+
+            new Regex("^g1*_i_adrn", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Adrenals
+            new Regex("^g1*_i_cmbt", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Battle Stims
+            new Regex("^g1*_i_medeq", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Medpacs
+        };
+
+        //Belt Regexs
+        private static readonly List<Regex> BeltsRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_belt|^geno_stealth", RegexOptions.Compiled | RegexOptions.IgnoreCase)//All Belts
+        };
+
+        ////Various Regexes
+        //private static Regex RegexBith { get { return new Regex("^g1*_i_bith", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Bith items
+        //private static Regex Regexcredits { get { return new Regex("^g1*_i_credit", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }//Credits
+
+        //Creature Hides
+        private static readonly List<Regex> HidesRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_crhide", RegexOptions.Compiled | RegexOptions.IgnoreCase)//Creature Hides
+        };
+
+        //Droid equipment 
+        private static readonly List<Regex> DroidRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_drd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Droid Equipment
+
+            new Regex("^g1*_i_drd.{0,2}plat", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid Plating
+            new Regex("^g1*_i_drd(comspk|secspk)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid probes
+            new Regex("^g1*_i_drd(mtn|snc)sen", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid Sensors
+            new Regex("^g1*_i_drdrep", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid repair kits
+            new Regex("^g1*_i_drdshld", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid Shields
+            new Regex("^g1*_i_drdsrc", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid Equipment
+            new Regex("^g1*_i_drdtrgcom", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid Computers
+            new Regex("^g1*_i_drdutldev", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Droid Devices
+        };
+
+        //Armbands
+        private static readonly List<Regex> ArmbandsRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_frarmbnds", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Armbands
+
+            new Regex("^g1*_i_frarmbnds0", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Shields
+            new Regex("^g1*_i_frarmbnds(1|2)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Stats
+        };
+
+        //Gauntlets
+        private static readonly List<Regex> GlovesRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_gauntlet|^geno_gloves", RegexOptions.Compiled | RegexOptions.IgnoreCase)//Gloves
+        };
+
+        //Implants
+        private static readonly List<Regex> ImplantsRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_implant", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Implants
+
+            new Regex("^g1*_i_implant1", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Implant level 1
+            new Regex("^g1*_i_implant2", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Implant level 2
+            new Regex("^g1*_i_implant3", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Implant level 3
+        };
+
+        //Mask
+        private static readonly List<Regex> MaskRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_mask|^geno_visor", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Masks
+
+            new Regex("^g1*_i_mask(08|09|10|11|13|16|17|18|22|23|24)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Mask No Armor Prof
+            new Regex("^g1*_i_mask(01|02|03|04|05|07|19|20|21)|^geno_visor", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Mask Light
+            new Regex("^g1*_i_mask(06|12|15)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Mask Medium
+            new Regex("^g1*_i_mask14", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Mask Heavy
+        };
+
+        //Paz
+        private static readonly List<Regex> PazRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_pazcard", RegexOptions.Compiled | RegexOptions.IgnoreCase)//Pazaak Cards
+        };
+
+        //Mines
+        private static readonly List<Regex> MinesRegs = new List<Regex>()
+        {
+            new Regex("^g1*_i_trapkit", RegexOptions.Compiled | RegexOptions.IgnoreCase)//Mines
+        };
+
+        //Upgrades/Crystals
+        private static readonly List<Regex> UpgradeRegs = new List<Regex>()
+        {
+            new Regex("^g1*_(i_upgrade|w_sbrcrstl)|^kas25_wookcrysta|^tat18_dragonprl", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Upgrades
+
+            new Regex("^g1*_i_upgrade", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Normal Upgrades
+            new Regex("(^g1*_w_sbrcrstl(0|1([1-3]|9))|^kas25_wookcrysta|^tat18_dragonprl)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Crystal Upgrades
+            new Regex("^g1*_w_sbrcrstl(1[4-8]|2)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Crystal Colors
+        };
+
+        //Blaster
+        private static readonly List<Regex> BlastersRegs = new List<Regex>()
+        {
+            new Regex("^g1*_(w_.*(bls*tr*|rfl|pstl|cstr)|i_bithitem)|geno_blaster", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Blasters
+
+            new Regex("^g1*_w_.*(rptn)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Heavy Weapons
+            new Regex("^g1*_(w_.*(pstl|hldoblst|hvyblstr|ionblstr)|i_bithitem)|geno_blaster", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Blaster Pistols
+            new Regex("^g1*_w_.*(crbn|rfl|cstr)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Blaster Rifles
+        };
+
+        //Creature Weapons
+        private static readonly List<Regex> CreatureRegs = new List<Regex>()
+        {
+            new Regex("^g1*_w_cr(go|sl)", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Creature weapons
+
+            new Regex("^g1*_w_crgore", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Piercing Creature Weapons
+            new Regex("^g1*_w_crslash", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Slashing Creature Weapons
+            new Regex("^g1*_w_crslprc", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Piercing/slashing Creature weapons
+        };
+
+        //Lightsabers
+        private static readonly List<Regex> LightsabersRegs = new List<Regex>()
+        {
+            new Regex("^g1*_w_.{1,}sbr", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Lightsabers
+
+            new Regex("^g1*_w_dblsbr", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Double Lightsabers
+            new Regex("^g1*_w_(lght|drkjdi)sbr", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Regular Lightsabers
+            new Regex("^g1*_w_shortsbr", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Short Lightsabers
+        };
+
+        //Grenades
+        private static readonly List<Regex> GrenadesRegs = new List<Regex>()
+        {
+            new Regex("^g1*_w_(.*gren|thermldet)", RegexOptions.Compiled | RegexOptions.IgnoreCase)//Grenades
+        };
+
+        //Melee
+        private static readonly List<Regex> MeleeRegs = new List<Regex>()
+        {
+            new Regex("^g1*_w_(stunbaton|war|.*swr*d|vi*bro|gaffi|qtrstaff)|^geno_blade", RegexOptions.Compiled | RegexOptions.IgnoreCase),//All Melee Weapons
+
+            new Regex("^g1*_w_stunbaton", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Stun Batons
+            new Regex("^g1*_w_lngswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Long Swords
+            new Regex("^g1*_w_shortswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Short Swords
+            new Regex("^g1*_w_vbroshort", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Vibro Shortblades
+            new Regex("^g1*_w_vbroswrd|^geno_blade", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Vibroblades
+            new Regex("^g1*_w_dblswrd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Double Swords
+            new Regex("^g1*_w_qtrstaff", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Quarter Staves
+            new Regex("^g1*_w_vbrdblswd", RegexOptions.Compiled | RegexOptions.IgnoreCase),//Vibro Doubleblades
+            new Regex("^g1*_w_war", RegexOptions.Compiled | RegexOptions.IgnoreCase),//War blade/axes
+        };
+        #endregion
         #endregion Item Properties
 
         #region Model Properties
@@ -944,12 +1155,13 @@ namespace kotor_Randomizer_2.Models
             != RandomizationLevel.None;
 
         public bool DoRandomizeItems =>
-            (ItemArmbands       | ItemArmor           | ItemBelts          | ItemBlasters
-            | ItemCreatureHides | ItemCreatureWeapons | ItemDroidEquipment | ItemGloves
-            | ItemGrenades      | ItemImplants        | ItemLightsabers    | ItemMasks
-            | ItemMedical       | ItemMeleeWeapons    | ItemMines          | ItemPazaakCards
-            | ItemUpgrades      | ItemVarious)
-            != RandomizationLevel.None;
+            //(ItemArmbands       | ItemArmor           | ItemBelts          | ItemBlasters
+            //| ItemCreatureHides | ItemCreatureWeapons | ItemDroidEquipment | ItemGloves
+            //| ItemGrenades      | ItemImplants        | ItemLightsabers    | ItemMasks
+            //| ItemMedical       | ItemMeleeWeapons    | ItemMines          | ItemPazaakCards
+            //| ItemUpgrades      | ItemVarious)
+            //!= RandomizationLevel.None;
+            ItemCategoryOptions.Any(irco => irco.Level != RandomizationLevel.None);
 
         public bool DoRandomizeModels =>
             ModelCharacterRando ||
@@ -1655,38 +1867,44 @@ namespace kotor_Randomizer_2.Models
         /// </summary>
         private void ResetItems()
         {
-            ItemArmbands        = RandomizationLevel.None;
-            ItemArmor           = RandomizationLevel.None;
-            ItemBelts           = RandomizationLevel.None;
-            ItemBlasters        = RandomizationLevel.None;
-            ItemCreatureHides   = RandomizationLevel.None;
-            ItemCreatureWeapons = RandomizationLevel.None;
-            ItemDroidEquipment  = RandomizationLevel.None;
-            ItemGloves          = RandomizationLevel.None;
-            ItemGrenades        = RandomizationLevel.None;
-            ItemImplants        = RandomizationLevel.None;
-            ItemLightsabers     = RandomizationLevel.None;
-            ItemMasks           = RandomizationLevel.None;
-            ItemMeleeWeapons    = RandomizationLevel.None;
-            ItemMines           = RandomizationLevel.None;
-            ItemPazaakCards     = RandomizationLevel.None;
-            ItemMedical         = RandomizationLevel.None;
-            ItemUpgrades        = RandomizationLevel.None;
-            ItemVarious         = RandomizationLevel.None;
+            //foreach (var item in ItemCategoryOptions)
+            //    item.Level = RandomizationLevel.None;
+
+            // Does this work? If not, just use above.
+            ItemCategoryOptions.AsParallel().ForAll(op => op.Level = RandomizationLevel.None);
+
+            //ItemArmbands        = RandomizationLevel.None;
+            //ItemArmor           = RandomizationLevel.None;
+            //ItemBelts           = RandomizationLevel.None;
+            //ItemBlasters        = RandomizationLevel.None;
+            //ItemCreatureHides   = RandomizationLevel.None;
+            //ItemCreatureWeapons = RandomizationLevel.None;
+            //ItemDroidEquipment  = RandomizationLevel.None;
+            //ItemGloves          = RandomizationLevel.None;
+            //ItemGrenades        = RandomizationLevel.None;
+            //ItemImplants        = RandomizationLevel.None;
+            //ItemLightsabers     = RandomizationLevel.None;
+            //ItemMasks           = RandomizationLevel.None;
+            //ItemMeleeWeapons    = RandomizationLevel.None;
+            //ItemMines           = RandomizationLevel.None;
+            //ItemPazaakCards     = RandomizationLevel.None;
+            //ItemMedical         = RandomizationLevel.None;
+            //ItemUpgrades        = RandomizationLevel.None;
+            //ItemVarious         = RandomizationLevel.None;
 
             // Move all items to randomized list.
             foreach (var item in ItemOmittedList) ItemRandomizedList.Add(item);
             ItemOmittedList.Clear();
 
-            // Grab omitted list from globals.
-            var omitItems = ItemRandomizedList.Where(ri => RandomizableItem.KOTOR1_OMIT_PRESETS.First().Value.Contains(ri.Code)).ToList();
-            foreach (var item in omitItems)
-            {
-                ItemOmittedList.Add(item);
-                ItemRandomizedList.Remove(item);
-            }
+            //// Grab omitted list from globals.
+            //var omitItems = ItemRandomizedList.Where(ri => RandomizableItem.KOTOR1_OMIT_PRESETS.First().Value.Contains(ri.Code)).ToList();
+            //foreach (var item in omitItems)
+            //{
+            //    ItemOmittedList.Add(item);
+            //    ItemRandomizedList.Remove(item);
+            //}
 
-            ItemOmittedPreset = RandomizableItem.KOTOR1_OMIT_PRESETS.First().Key;
+            //ItemOmittedPreset = RandomizableItem.KOTOR1_OMIT_PRESETS.First().Key;
         }
 
         /// <summary>
@@ -2116,9 +2334,10 @@ namespace kotor_Randomizer_2.Models
             { if (element.Attribute(XML_VARIOUS   ) is XAttribute attr) ItemVarious         = ParseEnum<RandomizationLevel>(attr.Value); }
 
             // Reset omitted items list. -- May no longer be necessary.
-            foreach (var item in ItemOmittedList)
-                ItemRandomizedList.Add(item);
-            ItemOmittedList.Clear();
+            //foreach (var item in ItemOmittedList)
+            //    ItemRandomizedList.Add(item);
+            //ItemRandomizedList = new ObservableCollection<RandomizableItem>(RandomizableItem.KOTOR1_ITEMS);
+            //ItemOmittedList.Clear();
 
             // Read omitted item preset.
             //var omit = element.Descendants(XML_OMIT).FirstOrDefault();
@@ -2134,10 +2353,21 @@ namespace kotor_Randomizer_2.Models
                     if (item != null)
                     {
                         ItemOmittedList.Add(item);
-                        ItemRandomizedList.Remove(item);
+                        _ = ItemRandomizedList.Remove(item);
                     }
                 }
             }
+            else    // Otherwise, set the list of items based on the preset.
+            {
+                foreach (var i in RandomizableItem.KOTOR1_OMIT_PRESETS[ItemOmittedPreset])
+                {
+                    var item = ItemRandomizedList.FirstOrDefault(x => x.Code == i);
+                    ItemOmittedList.Add(item);
+                    _ = ItemRandomizedList.Remove(item);
+                }
+            }
+
+            NotifyPropertyChanged(nameof(ItemCategoryOptions));
         }
 
         /// <summary>

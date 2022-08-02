@@ -34,6 +34,28 @@ namespace Randomizer_WPF
         #endregion
     }
 
+    [ValueConversion(typeof(bool), typeof(Visibility))]
+    public class BoolToHiddenConverter : IValueConverter
+    {
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (targetType != typeof(Visibility)) throw new InvalidOperationException("The target must be of type Visibility.");
+
+            if ((bool)value) return Visibility.Visible;
+            else             return Visibility.Hidden;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (targetType != typeof(bool)) throw new InvalidOperationException("The target must be a boolean.");
+
+            if ((Visibility)value == Visibility.Visible) return true;
+            else                                         return false;
+        }
+        #endregion
+    }
+
     [ValueConversion(typeof(double), typeof(double))]
     public class AddToDoubleConverter : IValueConverter
     {
@@ -120,6 +142,43 @@ namespace Randomizer_WPF
 
             if ((Visibility)value == Visibility.Visible) return false;
             else                                         return true;
+        }
+        #endregion
+    }
+
+    [ValueConversion(typeof(RandoLevelFlags), typeof(bool))]
+    public class RandoLevelFlagsToBoolConverter : IValueConverter
+    {
+        private RandoLevelFlags target;
+        public delegate void NotifyOnChange(RandoLevelFlags oldValue, RandoLevelFlags newValue);
+        public event NotifyOnChange RandoLevelFlagsChanged;
+
+        public RandoLevelFlagsToBoolConverter() { }
+
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            target = (RandoLevelFlags)value;
+            return target.HasFlag((RandoLevelFlags)parameter);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var oldValue = target;
+            if (target.HasFlag((RandoLevelFlags)parameter))
+            {
+                // Target has the flag, so only update if the flag should be inactive.
+                if (!(bool)value) target ^= (RandoLevelFlags)parameter;
+            }
+            else
+            {
+                // Target doesn't have the flag, so only update if the flag should be active.
+                if ((bool)value) target |= (RandoLevelFlags)parameter;
+            }
+
+            // Notify if changed.
+            if (oldValue != target) RandoLevelFlagsChanged?.Invoke(oldValue, target);
+            return target;
         }
         #endregion
     }

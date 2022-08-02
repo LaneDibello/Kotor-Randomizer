@@ -21,6 +21,22 @@ namespace kotor_Randomizer_2
         Max = 3,
     }
 
+    /// <summary>
+    /// Flag based implementation of randomization level to handle the full set of options available in a RandomizationLevelUserControl.
+    /// This is used to simplify the data binding within the control, and can be converted easily into a discrete
+    /// <see cref="RandomizationLevel"/> value for use elsewhere in the solution.
+    /// </summary>
+    [Flags]
+    [Serializable]
+    public enum RandoLevelFlags : byte
+    {
+        AllOff  = 0b0000,
+        Enabled = 0b0001,
+        Subtype = 0b0010,
+        Type    = 0b0100,
+        Max     = 0b1000,
+    }
+
     [Flags]
     [Serializable]
     public enum RandomizationCategory
@@ -68,155 +84,155 @@ namespace kotor_Randomizer_2
         Unknown = 0,    // Default to an invalid value.
 
         //  COMMON PATCHES
-        [QoLInfo("ALL", "Fix Coordinates", "Fix warp spawn coordinates in certain modules.")]
+        [Info("ALL", "Fix Coordinates", "Fix warp spawn coordinates in certain modules.")]
         CO_FixCoordinates                           = 00050,
 
-        [QoLInfo("EBO", "Galaxy Map", "Unlock all destinations on the Ebon Hawk galaxy map from the start of the game.")]
+        [Info("EBO", "Galaxy Map", "Unlock all destinations on the Ebon Hawk galaxy map from the start of the game.")]
         CO_GalaxyMap                                = 00100,
 
         //  KOTOR 1 FIXES & PATCHES
-        [QoLInfo("TAR", "Early T3-M4", "Allows T3M4 to be purchased before winning the Taris Swoop Race and speaking with Canderous.")]
+        [Info("TAR", "Early T3-M4", "Allows T3M4 to be purchased before winning the Taris Swoop Race and speaking with Canderous.")]
         K1_EarlyT3                                  = 10000,
 
-        [QoLInfo("MAN", "Fast Envirosuit", "Speeds up the envirosuit to match normal run speed.")]
+        [Info("MAN", "Fast Envirosuit", "Speeds up the envirosuit to match normal run speed.")]
         K1_FastEnvirosuit                           = 10050,
 
-        [QoLInfo("EBO", "Fix Dream Sequence", "Fix dream cutscenes to prevent softlocks.")]
+        [Info("EBO", "Fix Dream Sequence", "Fix dream cutscenes to prevent softlocks.")]
         K1_FixDream                                 = 10100,
 
-        [QoLInfo("EBO", "Fix Mind Prison", "Fix Rakatan mind prison to prevent soft-locks.")]
+        [Info("EBO", "Fix Mind Prison", "Fix Rakatan mind prison to prevent soft-locks.")]
         K1_FixMindPrison                            = 10150,
 
-        [QoLInfo("EBO", "Fix Fighter Encounter", "Prevents the fighter encounter from getting stuck after fighters are destroyed.")]
+        [Info("EBO", "Fix Fighter Encounter", "Prevents the fighter encounter from getting stuck after fighters are destroyed.")]
         K1_FixFighterEncounter                      = 10200,
 
         //  KOTOR 1 DOOR UNLOCKS & TRANSITIONS
-        [QoLInfo("DAN", "Courtyard to Ruins", "Unlocks the door into the Dantooine Ruins.")]
+        [Info("DAN", "Courtyard to Ruins", "Unlocks the door into the Dantooine Ruins.")]
         K1_DanCourtyard_ToRuins                     = 11100,
 
-        [QoLInfo("KOR", "Valley After Tomb", "Ensures the Sith Tomb and Sith Academy remain unlocked regardless of the Uthar / Yuthura outcome in Naga Sadow.")]
+        [Info("KOR", "Valley After Tomb", "Ensures the Sith Tomb and Sith Academy remain unlocked regardless of the Uthar / Yuthura outcome in Naga Sadow.")]
         K1_KorValley_UnlockAll                      = 11150,
 
-        [QoLInfo("LEV", "Elev to Hangar", "The Leviathan elevator will not restrict you from going to the Hangar early.")]
+        [Info("LEV", "Elev to Hangar", "The Leviathan elevator will not restrict you from going to the Hangar early.")]
         K1_LevElev_ToHangar                         = 11200,
 
-        [QoLInfo("LEV", "Enable Hangar Elevator", "The Leviathan Hangar elevator will now be usable.")]
+        [Info("LEV", "Enable Hangar Elevator", "The Leviathan Hangar elevator will now be usable.")]
         K1_LevHangar_EnableElev                     = 11250,
 
-        [QoLInfo("MAN", "East Central Embassy Door", "Unlocks the Republic Embassy door and the door to the submersible.")]
+        [Info("MAN", "East Central Embassy Door", "Unlocks the Republic Embassy door and the door to the submersible.")]
         K1_ManEstCntrl_EmbassyDoor                  = 11300,
 
-        [QoLInfo("MAN", "Hangar to Sith Embassy", "Unlocks the Sith Hangar door before visiting Roland.")]
+        [Info("MAN", "Hangar to Sith Embassy", "Unlocks the Sith Hangar door before visiting Roland.")]
         K1_ManHangar_ToSith                         = 11350,
 
-        [QoLInfo("STA", "Deck 3 Door to Bastila", "Unlocks the door leading to the Bastila fight, allowing it to be opened after fighting her.")]
+        [Info("STA", "Deck 3 Door to Bastila", "Unlocks the door leading to the Bastila fight, allowing it to be opened after fighting her.")]
         K1_StaDeck3_BastilaDoor                     = 11400,
 
-        [QoLInfo("TAR", "Lower City to Undercity", "Unlocks the Undercity door in the Lower City.")]
+        [Info("TAR", "Lower City to Undercity", "Unlocks the Undercity door in the Lower City.")]
         K1_TarLower_ToUnder                         = 11450,
 
-        [QoLInfo("TAR", "Lower City to Vulkar Base", "Unlocks the Vulkar Base in the Lower City.")]
+        [Info("TAR", "Lower City to Vulkar Base", "Unlocks the Vulkar Base in the Lower City.")]
         K1_TarLower_ToVulkar                        = 11500,
 
-        [QoLInfo("TAR", "Vulkar to Spice", "Adds a Load Zone leading the the Vulkar Spice in the rear of the Vulkar base main floor, next to the pool.")]
+        [Info("TAR", "Vulkar to Spice", "Adds a Load Zone leading the the Vulkar Spice in the rear of the Vulkar base main floor, next to the pool.")]
         K1_TarVulkar_ToSpice                        = 11550,
 
-        [QoLInfo("UNK", "Summit to Temple", "Unlocks the exit door from the Temple Summit.")]
+        [Info("UNK", "Summit to Temple", "Unlocks the exit door from the Temple Summit.")]
         K1_UnkSummit_ToTemple                       = 11600,
 
-        [QoLInfo("UNK", "Temple to Entrance", "Unlocks the exit door from the Temple Main Floor.")]
+        [Info("UNK", "Temple to Entrance", "Unlocks the exit door from the Temple Main Floor.")]
         K1_UnkTemple_ToEntrance                     = 11650,
 
         //  KOTOR 2 PATCHES & FIXES
-        [QoLInfo("DAN", "Prevent Disciple Crash", "Prevents a crash with the disciple on Dantooine.")]
+        [Info("DAN", "Prevent Disciple Crash", "Prevents a crash with the disciple on Dantooine.")]
         K2_PreventDiscipleCrash                     = 20000,
 
-        [QoLInfo("TEL", "Patch Bao Dur Conversation", "Patches the Bao Dur intro convo when landing on Telos.")]
+        [Info("TEL", "Patch Bao Dur Conversation", "Patches the Bao Dur intro convo when landing on Telos.")]
         K2_TelBaoDurConvo                           = 20050,
 
         //  KOTOR 2 DOOR UNLOCKS & TRANSITIONS
-        [QoLInfo("CIT", "Residential Apartment Door", "Unlocks the door preventing you from leaving your apartment in the Citadel Station Residential District.")]
+        [Info("CIT", "Residential Apartment Door", "Unlocks the door preventing you from leaving your apartment in the Citadel Station Residential District.")]
         K2_CitResidential_AptDoor                   = 21100,
 
-        [QoLInfo("CIT", "Residential to Exchange Corp", "Unlocks the door leading from the Residential District to the Bumani Exchange Corp.")]
+        [Info("CIT", "Residential to Exchange Corp", "Unlocks the door leading from the Residential District to the Bumani Exchange Corp.")]
         K2_CitResidential_ToExchange                = 21150,
 
-        [QoLInfo("CIT", "Unlock Info Terminals", "Unlocks access to all destinations of the info terminals.")]
+        [Info("CIT", "Unlock Info Terminals", "Unlocks access to all destinations of the info terminals.")]
         K2_CitStation_Terminals                     = 21200,
 
-        [QoLInfo("DAN", "Courtyard to Rebuilt Enclave", "Unlocks the door leading from the Courtyard to the Rebuilt Enclave.")]
+        [Info("DAN", "Courtyard to Rebuilt Enclave", "Unlocks the door leading from the Courtyard to the Rebuilt Enclave.")]
         K2_DanCourtyard_ToEnclave                   = 21250,
 
-        [QoLInfo("DXN", "Camp to Wartime Onderon", "Unlocks the door leading from the Mandalorian Camp to the Wartime Onderon.")]
+        [Info("DXN", "Camp to Wartime Onderon", "Unlocks the door leading from the Mandalorian Camp to the Wartime Onderon.")]
         K2_DxnCamp_Basalisk                         = 21300,
 
-        [QoLInfo("DXN", "Camp to Onderon", "Unlocks the door leading from the Mandalorian Camp to the Onderon Docking Bay.")]
+        [Info("DXN", "Camp to Onderon", "Unlocks the door leading from the Mandalorian Camp to the Onderon Docking Bay.")]
         K2_DxnCamp_ToIziz                           = 21350,
 
-        [QoLInfo("DXN", "Tomb to Camp", "Enables the loading zone from Freedon Nadd's Tomb to the Mandalorian Camp.")]
+        [Info("DXN", "Tomb to Camp", "Enables the loading zone from Freedon Nadd's Tomb to the Mandalorian Camp.")]
         K2_DxnTomb_ToCamp                           = 21400,
 
-        [QoLInfo("KOR", "Academy to Valley", "Unlocks the door leading from the Sith Academy to the Valley of the Dark Lords.")]
+        [Info("KOR", "Academy to Valley", "Unlocks the door leading from the Sith Academy to the Valley of the Dark Lords.")]
         K2_KorAcademy_ToValley                      = 21450,
 
-        [QoLInfo("KOR", "Cave to Tomb", "Deactivates the trigger preventing entry into the Secret Tomb within the Shyrack Cave.")]
+        [Info("KOR", "Cave to Tomb", "Deactivates the trigger preventing entry into the Secret Tomb within the Shyrack Cave.")]
         K2_KorCave_ToTomb                           = 21500,
 
-        [QoLInfo("MAL", "Core to Academy", "Adds a transition from the Trayus Core to the Trayus Academy.")]
+        [Info("MAL", "Core to Academy", "Adds a transition from the Trayus Core to the Trayus Academy.")]
         K2_MalCore_ToAcademy                        = 21550,
 
-        [QoLInfo("MAL", "Surface to Ebon Hawk", "Adds an elevator and a loading zone from Malachor V Surface to the Ebon Hawk.")]
+        [Info("MAL", "Surface to Ebon Hawk", "Adds an elevator and a loading zone from Malachor V Surface to the Ebon Hawk.")]
         K2_MalSurface_ToHawk                        = 21600,
 
-        [QoLInfo("NAR", "Docks Zez Kai El's Door", "Unlocks the door of Zez Kai El's apartment.")]
+        [Info("NAR", "Docks Zez Kai El's Door", "Unlocks the door of Zez Kai El's apartment.")]
         K2_NarDocks_ZezDoor                         = 21650,
 
-        [QoLInfo("NAR", "Jekk'Jekk VIP Room", "Unlocks the door to the VIP room of the Jekk'Jekk Tarr.")]
+        [Info("NAR", "Jekk'Jekk VIP Room", "Unlocks the door to the VIP room of the Jekk'Jekk Tarr.")]
         K2_NarJekk_VipRoom                          = 21700,
 
-        [QoLInfo("NAR", "Jekk Tunnels to Jekk'Jekk", "Unlocks the door leading from the Jekk'Jekk Tarr Tunnels to the Jekk'Jekk Tarr.")]
+        [Info("NAR", "Jekk Tunnels to Jekk'Jekk", "Unlocks the door leading from the Jekk'Jekk Tarr Tunnels to the Jekk'Jekk Tarr.")]
         K2_NarTunnels_ToJekk                        = 21750,
 
-        [QoLInfo("NAR", "G0T0's Yacht to Broken Hawk", "Unlocks the door leading from G0T0's Yacht to a broken version of the Ebon Hawk.")]
+        [Info("NAR", "G0T0's Yacht to Broken Hawk", "Unlocks the door leading from G0T0's Yacht to a broken version of the Ebon Hawk.")]
         K2_NarYacht_ToHawk                          = 21800,
 
-        [QoLInfo("OND", "Spaceport to Camp", "Unlocks the shuttle from the Iziz Spaceport to the Mandalorian Camp.")]
+        [Info("OND", "Spaceport to Camp", "Unlocks the shuttle from the Iziz Spaceport to the Mandalorian Camp.")]
         K2_OndPort_ToCamp                           = 21850,
 
-        [QoLInfo("PER", "Admin to Depot", "Unlocks the door leading from Administration to the Fuel Depot.")]
+        [Info("PER", "Admin to Depot", "Unlocks the door leading from Administration to the Fuel Depot.")]
         K2_PerAdmin_ToDepot                         = 21900,
 
-        [QoLInfo("PER", "Admin to Dorms", "Unlocks the door leading from Administration to the Dormitories.")]
+        [Info("PER", "Admin to Dorms", "Unlocks the door leading from Administration to the Dormitories.")]
         K2_PerAdmin_ToDorms                         = 21950,
 
-        [QoLInfo("PER", "Admin to Harbinger", "Unlocks the door leading from Administration to the Harbinger Command Deck.")]
+        [Info("PER", "Admin to Harbinger", "Unlocks the door leading from Administration to the Harbinger Command Deck.")]
         K2_PerAdmin_ToHarbinger                     = 22000,
 
-        [QoLInfo("PER", "Admin to Tunnels", "Unlocks the door leading from Administration to the Mining Tunnels.")]
+        [Info("PER", "Admin to Tunnels", "Unlocks the door leading from Administration to the Mining Tunnels.")]
         K2_PerAdmin_ToTunnels                       = 22050,
 
-        [QoLInfo("PER", "Exterior to Dorms", "Adds a loading zone leading from the Asteroid Exterior to the Dormitories.")]
+        [Info("PER", "Exterior to Dorms", "Adds a loading zone leading from the Asteroid Exterior to the Dormitories.")]
         K2_PerExterior_ToDorms                      = 22100,
 
-        [QoLInfo("PER", "Depot Force Fields", "Unlocks the force fields inside the fuel depot.")]
+        [Info("PER", "Depot Force Fields", "Unlocks the force fields inside the fuel depot.")]
         K2_PerDepot_ForceFields                     = 22150,
 
-        [QoLInfo("PER", "Depot to Tunnels", "Unlocks the door leading from the Fuel Depot to the Mining Tunnels.")]
+        [Info("PER", "Depot to Tunnels", "Unlocks the door leading from the Fuel Depot to the Mining Tunnels.")]
         K2_PerDepot_ToTunnels                       = 22200,
 
-        [QoLInfo("PER", "Dorms to Exterior", "Unlocks the door leading from the Dormitories to the Asteroid Exterior.")]
+        [Info("PER", "Dorms to Exterior", "Unlocks the door leading from the Dormitories to the Asteroid Exterior.")]
         K2_PerDorms_ToExterior                      = 22250,
 
-        [QoLInfo("PER", "Hangar to Ebon Hawk", "Unlocks the door leading from the Hangar to the Ebon Hawk.")]
+        [Info("PER", "Hangar to Ebon Hawk", "Unlocks the door leading from the Hangar to the Ebon Hawk.")]
         K2_PerHangar_ToHawk                         = 22300,
 
-        [QoLInfo("TEL", "Academy to Plateau", "Unlocks the door leading from Secret Academy to the Polar Plateau.")]
+        [Info("TEL", "Academy to Plateau", "Unlocks the door leading from Secret Academy to the Polar Plateau.")]
         K2_TelAcademy_ToPlateau                     = 22350,
 
-        [QoLInfo("TEL", "Academy to Ebon Hawk", "Unlocks the door leading from the Polar Academy to the Ebon Hawk.")]
+        [Info("TEL", "Academy to Ebon Hawk", "Unlocks the door leading from the Polar Academy to the Ebon Hawk.")]
         K2_TelAcademy_ToHawk                        = 22400,
 
-        [QoLInfo("WAR", "Entertainment to Ravager", "Unlocks the door leading from the Wartime Entertainment Module to the Ravager.")]
+        [Info("WAR", "Entertainment to Ravager", "Unlocks the door leading from the Wartime Entertainment Module to the Ravager.")]
         K2_WarEntertain_ToRavager                   = 22450,
     }
 

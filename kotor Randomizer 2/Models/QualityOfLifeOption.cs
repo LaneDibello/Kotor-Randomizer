@@ -15,7 +15,7 @@ namespace kotor_Randomizer_2.Models
             QoL = qol;
             Area = qol.ToArea();
             Label = qol.ToLabel();
-            ToolTipMessage = qol.ToDescription();
+            ToolTipMessage = qol.ToToolTip();
         }
 
         /// <summary> Description of what is unlocked. </summary>

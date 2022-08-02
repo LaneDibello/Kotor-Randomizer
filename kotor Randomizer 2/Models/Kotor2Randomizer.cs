@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using kotor_Randomizer_2.DBOs;
 using kotor_Randomizer_2.Digraph;
 using kotor_Randomizer_2.Extensions;
 using System;
@@ -1387,6 +1388,7 @@ namespace kotor_Randomizer_2.Models
             get => _itemOmittedPreset;
             set => SetField(ref _itemOmittedPreset, value);
         }
+        public ObservableCollection<ItemRandoCategoryOption> ItemCategoryOptions { get; set; } = new ObservableCollection<ItemRandoCategoryOption>();
 
         #endregion
     }

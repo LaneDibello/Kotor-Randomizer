@@ -1,8 +1,6 @@
-﻿using System;
+﻿using kotor_Randomizer_2.DBOs;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace kotor_Randomizer_2.Models
 {
@@ -28,6 +26,8 @@ namespace kotor_Randomizer_2.Models
         public string Label { get; set; }
         /// <summary> Label used to group this item with other similar items. </summary>
         public string Category { get; set; }
+        /// <summary> Enum used to group this item with other similar items. </summary>
+        public ItemRandoCategory CategoryEnum { get; set; }
         /// <summary> UNUSED. Collection of tags that identify item groups. </summary>
         public List<string> Tags { get; set; } = new List<string>();
 

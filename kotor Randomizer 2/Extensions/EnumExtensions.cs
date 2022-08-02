@@ -39,30 +39,62 @@ namespace kotor_Randomizer_2.Extensions
         }
 
         /// <summary>
-        /// Retrieves the area value of the <see cref="QoLInfoAttribute"/> attached to this enum.
+        /// Retrieves the area value of the <see cref="InfoAttribute"/> attached to this enum.
         /// </summary>
         public static string ToArea(this Enum value)
         {
-            var attribute = value.GetAttributeOfType<QoLInfoAttribute>();
+            var attribute = value.GetAttributeOfType<InfoAttribute>();
             return attribute == null ? "[NAN]" : attribute.Area;
         }
 
         /// <summary>
-        /// Retrieves the label value of the <see cref="QoLInfoAttribute"/> attached to this enum.
+        /// Retrieves the label value of the <see cref="InfoAttribute"/> attached to this enum.
         /// </summary>
         public static string ToLabel(this Enum value)
         {
-            var attribute = value.GetAttributeOfType<QoLInfoAttribute>();
+            var attribute = value.GetAttributeOfType<InfoAttribute>();
             return attribute == null ? "[No Label]" : attribute.Label;
         }
 
         /// <summary>
-        /// Retrieves the tooltip value of the <see cref="QoLInfoAttribute"/> attached to this enum.
+        /// Retrieves the tooltip value of the <see cref="InfoAttribute"/> attached to this enum.
         /// </summary>
         public static string ToToolTip(this Enum value)
         {
-            var attribute = value.GetAttributeOfType<QoLInfoAttribute>();
+            var attribute = value.GetAttributeOfType<InfoAttribute>();
             return attribute == null ? "[No ToolTip]" : attribute.ToolTip;
+        }
+
+        /// <summary>
+        /// Converts the flags of <see cref="RandoLevelFlags"/> to a proper <see cref="RandomizationLevel"/>.
+        /// </summary>
+        public static RandomizationLevel ToRandomizationLevel(this RandoLevelFlags flags)
+        {
+            if (!flags.HasFlag(RandoLevelFlags.Enabled)) return RandomizationLevel.None;        // Check for enabled randomization first.
+            if (flags.HasFlag(RandoLevelFlags.Max))      return RandomizationLevel.Max;         // Prioritize higher levels of randomization.
+            if (flags.HasFlag(RandoLevelFlags.Type))     return RandomizationLevel.Type;
+            if (flags.HasFlag(RandoLevelFlags.Subtype))  return RandomizationLevel.Subtype;
+            return RandomizationLevel.None; // Enabled, but no level selected.
+        }
+
+        public static RandoLevelFlags ToRandoLevelFlags(this RandomizationLevel level, bool subtypeVisible = true)
+        {
+            switch (level)
+            {
+                case RandomizationLevel.None:
+                default:
+                    return subtypeVisible
+                        ? RandoLevelFlags.Subtype
+                        : RandoLevelFlags.Type;
+                case RandomizationLevel.Subtype:
+                    return subtypeVisible
+                        ? RandoLevelFlags.Enabled | RandoLevelFlags.Subtype
+                        : RandoLevelFlags.Type;
+                case RandomizationLevel.Type:
+                    return RandoLevelFlags.Enabled | RandoLevelFlags.Type;
+                case RandomizationLevel.Max:
+                    return RandoLevelFlags.Enabled | RandoLevelFlags.Max;
+            }
         }
     }
 
@@ -91,16 +123,25 @@ namespace kotor_Randomizer_2.Extensions
         }
     }
 
-    public class QoLInfoAttribute : Attribute
+    public class InfoAttribute : Attribute
     {
         public string Area { get; set; }
         public string Label { get; set; }
         public string ToolTip { get; set; }
-        public QoLInfoAttribute(string area, string label, string tooltip)
+        public InfoAttribute(string area, string label, string tooltip)
         {
             Area = area;
             Label = label;
             ToolTip = tooltip;
+        }
+        public InfoAttribute(string label, string tooltip)
+        {
+            Label = label;
+            ToolTip = tooltip;
+        }
+        public InfoAttribute(string label)
+        {
+            Label = label;
         }
     }
 }

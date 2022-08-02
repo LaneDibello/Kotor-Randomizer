@@ -73,8 +73,13 @@ namespace kotor_Randomizer_2.Models
         public virtual Game Game { get; }
         public virtual string Extension { get; }
 
-        /// <summary> Name of the settings file. </summary>
-        public string SettingsFileName { get; protected set; }
+        /// <summary> Path to the loaded settings file. </summary>
+        public string SettingsFilePath
+        {
+            get => _settingsFilePath;
+            protected set => SetField(ref _settingsFilePath, value);
+        }
+        private string _settingsFilePath = string.Empty;
 
         public virtual bool SupportsAnimation => false;
         public virtual bool SupportsAudio => false;
@@ -108,13 +113,14 @@ namespace kotor_Randomizer_2.Models
         public virtual void Load(string path)
         {
             var fi = new FileInfo(path);
-            SettingsFileName = fi.Name;
 
             // Is the file in KRP format?
             if (fi.Extension.ToLower() == ".krp")
                 ReadKRP(File.OpenRead(path));
             else
                 ReadFromFile(path);
+
+            SettingsFilePath = fi.FullName;
         }
 
         /// <summary>
@@ -124,7 +130,7 @@ namespace kotor_Randomizer_2.Models
         {
             if (File.Exists(path)) File.Delete(path);
             var fi = new FileInfo(path);
-            SettingsFileName = fi.Name;
+            SettingsFilePath = fi.FullName;
 
             //// Will the file be in KRP format?
             //if (path.ToLower().EndsWith(".krp"))

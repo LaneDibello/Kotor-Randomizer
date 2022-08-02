@@ -237,8 +237,9 @@
                          Randomized and Omitted item lists bound from data context. -->
                     <v:ItemView x:Name="ItemView"
                                 FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+                                />
                                 
-                                ItemLevelArmbands       ="{Binding ItemArmbands       , Mode=TwoWay}"
+                                <!--ItemLevelArmbands       ="{Binding ItemArmbands       , Mode=TwoWay}"
                                 ItemLevelArmor          ="{Binding ItemArmor          , Mode=TwoWay}"
                                 ItemLevelBelts          ="{Binding ItemBelts          , Mode=TwoWay}"
                                 ItemLevelBlasters       ="{Binding ItemBlasters       , Mode=TwoWay}"
@@ -255,8 +256,7 @@
                                 ItemLevelMines          ="{Binding ItemMines          , Mode=TwoWay}"
                                 ItemLevelPazaak         ="{Binding ItemPazaakCards    , Mode=TwoWay}"
                                 ItemLevelUpgrades       ="{Binding ItemUpgrades       , Mode=TwoWay}"
-                                ItemLevelVarious        ="{Binding ItemVarious        , Mode=TwoWay}"
-                                />
+                                ItemLevelVarious        ="{Binding ItemVarious        , Mode=TwoWay}"-->
                 </TabItem>
 
                 <!-- Audio Rando Settings -->
