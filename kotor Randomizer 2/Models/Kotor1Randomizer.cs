@@ -173,31 +173,10 @@ namespace kotor_Randomizer_2.Models
             };
 
             // Create list of unlockable doors.
-            GeneralLockedDoors = new ObservableCollection<QualityOfLifeOption>
-            {
-                new QualityOfLifeOption(QualityOfLife.CO_FixCoordinates),
-                new QualityOfLifeOption(QualityOfLife.K1_DanCourtyard_ToRuins),
-                new QualityOfLifeOption(QualityOfLife.CO_GalaxyMap),
-                new QualityOfLifeOption(QualityOfLife.K1_FixDream),
-                new QualityOfLifeOption(QualityOfLife.K1_FixFighterEncounter),
-                new QualityOfLifeOption(QualityOfLife.K1_FixMindPrison),
-                new QualityOfLifeOption(QualityOfLife.K1_KorValley_UnlockAll),
-                new QualityOfLifeOption(QualityOfLife.K1_LevElev_ToHangar),
-                new QualityOfLifeOption(QualityOfLife.K1_LevHangar_EnableElev),
-                new QualityOfLifeOption(QualityOfLife.K1_FastEnvirosuit),
-                new QualityOfLifeOption(QualityOfLife.K1_ManEstCntrl_EmbassyDoor),
-                new QualityOfLifeOption(QualityOfLife.K1_ManHangar_ToSith),
-                new QualityOfLifeOption(QualityOfLife.K1_StaDeck3_BastilaDoor),
-                new QualityOfLifeOption(QualityOfLife.K1_TarLower_ToUnder),
-                new QualityOfLifeOption(QualityOfLife.K1_TarLower_ToVulkar),
-                new QualityOfLifeOption(QualityOfLife.K1_TarVulkar_ToSpice),
-                new QualityOfLifeOption(QualityOfLife.K1_EarlyT3),
-                new QualityOfLifeOption(QualityOfLife.K1_UnkSummit_ToTemple),
-                new QualityOfLifeOption(QualityOfLife.K1_UnkTemple_ToEntrance),
-            };
+            GeneralLockedDoors = ConstructGeneralOptionsList();
 
             // Create list of item rando options.
-            ItemCategoryOptions = GenerateItemOptionsList();
+            ItemCategoryOptions = ConstructItemOptionsList();
 
             // Create module digraph and get the list of modules.
             ModuleDigraph graph;
@@ -227,7 +206,33 @@ namespace kotor_Randomizer_2.Models
                 SettingsFilePath = string.Empty;
         }
 
-        public static ObservableCollection<ItemRandoCategoryOption> GenerateItemOptionsList()
+        private static ObservableCollection<QualityOfLifeOption> ConstructGeneralOptionsList()
+        {
+            return new ObservableCollection<QualityOfLifeOption>
+            {
+                new QualityOfLifeOption(QualityOfLife.CO_FixCoordinates),
+                new QualityOfLifeOption(QualityOfLife.K1_DanCourtyard_ToRuins),
+                new QualityOfLifeOption(QualityOfLife.CO_GalaxyMap),
+                new QualityOfLifeOption(QualityOfLife.K1_FixDream),
+                new QualityOfLifeOption(QualityOfLife.K1_FixFighterEncounter),
+                new QualityOfLifeOption(QualityOfLife.K1_FixMindPrison),
+                new QualityOfLifeOption(QualityOfLife.K1_KorValley_UnlockAll),
+                new QualityOfLifeOption(QualityOfLife.K1_LevElev_ToHangar),
+                new QualityOfLifeOption(QualityOfLife.K1_LevHangar_EnableElev),
+                new QualityOfLifeOption(QualityOfLife.K1_FastEnvirosuit),
+                new QualityOfLifeOption(QualityOfLife.K1_ManEstCntrl_EmbassyDoor),
+                new QualityOfLifeOption(QualityOfLife.K1_ManHangar_ToSith),
+                new QualityOfLifeOption(QualityOfLife.K1_StaDeck3_BastilaDoor),
+                new QualityOfLifeOption(QualityOfLife.K1_TarLower_ToUnder),
+                new QualityOfLifeOption(QualityOfLife.K1_TarLower_ToVulkar),
+                new QualityOfLifeOption(QualityOfLife.K1_TarVulkar_ToSpice),
+                new QualityOfLifeOption(QualityOfLife.K1_EarlyT3),
+                new QualityOfLifeOption(QualityOfLife.K1_UnkSummit_ToTemple),
+                new QualityOfLifeOption(QualityOfLife.K1_UnkTemple_ToEntrance),
+            };
+        }
+
+        public static ObservableCollection<ItemRandoCategoryOption> ConstructItemOptionsList()
         {
             return new ObservableCollection<ItemRandoCategoryOption>
             {

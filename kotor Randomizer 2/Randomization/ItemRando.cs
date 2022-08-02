@@ -111,7 +111,7 @@ namespace kotor_Randomizer_2
         {
             if (rando == null)
             {
-                ItemCategories = Kotor1Randomizer.GenerateItemOptionsList().ToList();
+                ItemCategories = Kotor1Randomizer.ConstructItemOptionsList().ToList();
                 ItemCategories.First(irco => irco.Category == ItemRandoCategory.Armbands).Level = Properties.Settings.Default.RandomizeArmbands;
                 ItemCategories.First(irco => irco.Category == ItemRandoCategory.Armor).Level = Properties.Settings.Default.RandomizeArmor;
                 ItemCategories.First(irco => irco.Category == ItemRandoCategory.Belts).Level = Properties.Settings.Default.RandomizeBelts;

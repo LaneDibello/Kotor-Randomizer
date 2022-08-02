@@ -287,6 +287,12 @@ namespace Randomizer_WPF.Views
                 //((RandomizerBase)e.NewValue).PropertyChanged += View_ContextPropertyChanged;
             }
 
+            // Until K2 rando has item omission, use all space in the item view for category selection.
+            if (DataContext is Kotor2Randomizer)
+                Grid.SetRowSpan(svCategories, 3);
+            else
+                Grid.SetRowSpan(svCategories, 1);
+
             if (lvRandomizedItemSource is null || lvOmittedItemSource is null) return;
 
             fullItemList.Clear();
