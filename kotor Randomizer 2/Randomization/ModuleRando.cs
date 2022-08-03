@@ -8,6 +8,7 @@ using System;
 using System.Threading.Tasks;
 using kotor_Randomizer_2.Extensions;
 using kotor_Randomizer_2.Digraph;
+using kotor_Randomizer_2.Interfaces;
 
 namespace kotor_Randomizer_2
 {
@@ -622,7 +623,7 @@ namespace kotor_Randomizer_2
             // Fix warp coordinates.
             if (EnabledQoLs.Contains(QualityOfLife.CO_FixCoordinates))
             {
-                FixWarpCoordinates(paths, rando as Models.IGeneralSettings);
+                FixWarpCoordinates(paths, rando as IGeneralSettings);
             }
 
             // Fixed Rakata riddle Man in Mind Prison.
@@ -671,8 +672,8 @@ namespace kotor_Randomizer_2
             }
             else
             {
-                var moduleRando = rando as Models.IRandomizeModules;
-                var genSettings = rando as Models.IGeneralSettings;
+                var moduleRando = rando as IRandomizeModules;
+                var genSettings = rando as IGeneralSettings;
 
                 GameRandomized     = rando.Game;
                 UseRandoRules      = moduleRando.ModuleLogicRandoRules;
@@ -919,7 +920,7 @@ namespace kotor_Randomizer_2
         /// Update warp coordinates that are in bad locations by default.
         /// </summary>
         /// <param name="paths">KPaths object for this game.</param>
-        private static void FixWarpCoordinates(KPaths paths, Models.IGeneralSettings rando)
+        private static void FixWarpCoordinates(KPaths paths, IGeneralSettings rando)
         {
             // Create a lookup for modules needing coordinate fix with their newly shuffled FileInfos.
             var shuffleFileLookup = new Dictionary<string, FileInfo>();

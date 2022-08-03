@@ -1,4 +1,4 @@
-﻿using kotor_Randomizer_2.DBOs;
+﻿using kotor_Randomizer_2.DTOs;
 using System.Collections.Generic;
 
 namespace kotor_Randomizer_2.Models

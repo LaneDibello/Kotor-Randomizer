@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using kotor_Randomizer_2.Interfaces;
 
 namespace kotor_Randomizer_2.Digraph
 {
@@ -220,8 +221,8 @@ namespace kotor_Randomizer_2.Digraph
             }
             else
             {
-                var moduleRando = rando as Models.IRandomizeModules;
-                var genSettings = rando as Models.IGeneralSettings;
+                var moduleRando = rando as IRandomizeModules;
+                var genSettings = rando as IGeneralSettings;
                 var k1rando = rando as Models.Kotor1Randomizer;
                 var k2rando = rando as Models.Kotor2Randomizer;
 

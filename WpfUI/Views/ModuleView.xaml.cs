@@ -1,6 +1,7 @@
 ﻿using kotor_Randomizer_2;
 using kotor_Randomizer_2.Digraph;
 using kotor_Randomizer_2.Models;
+using kotor_Randomizer_2.Interfaces;
 using Randomizer_WPF.UserControls;
 using System;
 using System.Collections.Generic;

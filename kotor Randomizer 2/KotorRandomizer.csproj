@@ -95,25 +95,25 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBOs\ItemRandoCategoryOption.cs" />
-    <Compile Include="DBOs\RandomizationLevelOption.cs" />
+    <Compile Include="DTOs\ItemRandoCategoryOption.cs" />
+    <Compile Include="DTOs\RandomizationLevelOption.cs" />
     <Compile Include="Digraph\ModuleDigraph.cs" />
     <Compile Include="Digraph\ModuleEdge.cs" />
     <Compile Include="Digraph\ModuleVertex.cs" />
     <Compile Include="Digraph\XmlConsts.cs" />
     <Compile Include="Extensions\BooleanExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
-    <Compile Include="DBOs\ItemRandoCategory.cs" />
+    <Compile Include="DTOs\ItemRandoCategory.cs" />
     <Compile Include="Models\RandomizableItemsK2.cs" />
     <Compile Include="Models\RandomizableItemsK1.cs" />
-    <Compile Include="Models\IGeneralSettings.cs" />
-    <Compile Include="Models\IRandomizeAudio.cs" />
-    <Compile Include="Models\IRandomizeItems.cs" />
-    <Compile Include="Models\IRandomizeModules.cs" />
+    <Compile Include="Interfaces\IGeneralSettings.cs" />
+    <Compile Include="Interfaces\IRandomizeAudio.cs" />
+    <Compile Include="Interfaces\IRandomizeItems.cs" />
+    <Compile Include="Interfaces\IRandomizeModules.cs" />
     <Compile Include="Models\Kotor1Randomizer.cs" />
     <Compile Include="Models\Kotor2Randomizer.cs" />
-    <Compile Include="Models\ReachabilityGoal.cs" />
-    <Compile Include="Models\QualityOfLifeOption.cs" />
+    <Compile Include="DTOs\ReachabilityGoal.cs" />
+    <Compile Include="DTOs\QualityOfLifeOption.cs" />
     <Compile Include="Forms\TwodaForm.cs">
       <SubType>Form</SubType>
     </Compile>

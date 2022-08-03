@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using kotor_Randomizer_2.Interfaces;
 
 namespace kotor_Randomizer_2.Models
 {

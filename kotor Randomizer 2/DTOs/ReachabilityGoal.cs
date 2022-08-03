@@ -1,4 +1,4 @@
-﻿namespace kotor_Randomizer_2.Models
+﻿namespace kotor_Randomizer_2.DTOs
 {
     public class ReachabilityGoal
     {

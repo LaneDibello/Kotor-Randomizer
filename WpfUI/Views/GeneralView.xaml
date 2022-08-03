@@ -21,12 +21,15 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+
+            <!--#region Converters -->
             <base:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <base:AddToDoubleConverter x:Key="AddToDoubleConverter" />
             <base:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <base:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
+            <!--#endregion-->
 
+            <!--#region ToolTips -->
             <Style TargetType="ToolTip">
                 <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.FontSize}" />
             </Style>
@@ -81,6 +84,7 @@
                 Undercity, Tulak Horde, Leviathan Hangar, Ahto West, Manaan Sith Base, Rakatan Settlement, and
                 Temple Main Floor.
             </ToolTip>
+            <!--#endregion-->
         </ResourceDictionary>
     </UserControl.Resources>
 

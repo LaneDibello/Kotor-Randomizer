@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace kotor_Randomizer_2.DBOs
+namespace kotor_Randomizer_2.DTOs
 {
     public class ItemRandoCategoryOption : RandomizationLevelOption
     {

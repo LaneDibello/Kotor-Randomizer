@@ -1,7 +1,8 @@
-﻿using kotor_Randomizer_2.DBOs;
+﻿using kotor_Randomizer_2.DTOs;
+using kotor_Randomizer_2.Models;
 using System.Collections.ObjectModel;
 
-namespace kotor_Randomizer_2.Models
+namespace kotor_Randomizer_2.Interfaces
 {
     public interface IRandomizeItems
     {

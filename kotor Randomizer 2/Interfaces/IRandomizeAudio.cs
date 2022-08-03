@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace kotor_Randomizer_2.Models
+namespace kotor_Randomizer_2.Interfaces
 {
     interface IRandomizeAudio
     {

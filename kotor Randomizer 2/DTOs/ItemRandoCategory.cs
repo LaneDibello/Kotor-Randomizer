@@ -1,6 +1,7 @@
 ﻿using kotor_Randomizer_2.Extensions;
 
-namespace kotor_Randomizer_2.DBOs
+namespace kotor_Randomizer_2.DTOs
+
 {
     public enum ItemRandoCategory
     {

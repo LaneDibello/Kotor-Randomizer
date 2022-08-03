@@ -1,7 +1,6 @@
-﻿using KotOR_IO;
-using kotor_Randomizer_2.Extensions;
+﻿using kotor_Randomizer_2.Extensions;
 
-namespace kotor_Randomizer_2.Models
+namespace kotor_Randomizer_2.DTOs
 {
     /// <summary>
     /// Encapsulates quality of life option within the game.

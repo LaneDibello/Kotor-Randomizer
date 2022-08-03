@@ -1,7 +1,8 @@
 ﻿using ClosedXML.Excel;
-using kotor_Randomizer_2.DBOs;
+using kotor_Randomizer_2.DTOs;
 using kotor_Randomizer_2.Digraph;
 using kotor_Randomizer_2.Extensions;
+using kotor_Randomizer_2.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

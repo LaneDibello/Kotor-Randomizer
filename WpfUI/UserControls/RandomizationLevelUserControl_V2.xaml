@@ -4,12 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:base="clr-namespace:Randomizer_WPF"
-             xmlns:dbos="clr-namespace:kotor_Randomizer_2.DBOs;assembly=KotorRandomizer"
+             xmlns:dtos="clr-namespace:kotor_Randomizer_2.DTOs;assembly=KotorRandomizer"
              xmlns:local="clr-namespace:Randomizer_WPF.UserControls"
              xmlns:rando="clr-namespace:kotor_Randomizer_2;assembly=KotorRandomizer"
              mc:Ignorable="d" 
              d:DesignHeight="26" d:DesignWidth="350"
-             d:DataContext="{d:DesignInstance dbos:RandomizationLevelOption, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance dtos:RandomizationLevelOption, IsDesignTimeCreatable=True}"
              x:Name="thisView">
     <UserControl.Resources>
         <ResourceDictionary>
