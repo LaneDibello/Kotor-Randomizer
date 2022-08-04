@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace kotor_Randomizer_2.Models
 {
@@ -107,6 +108,8 @@ namespace kotor_Randomizer_2.Models
         private const string XML_TEXTURE        = "Texture";
         private const string XML_UNLOCKS        = "Unlocks";
         private const string XML_UPGRADE        = "Upgrade";
+        private const string XML_PCRYSTAL       = "PCrystal";
+        private const string XML_PROPS          = "Props";
         private const string XML_VARIOUS        = "Various";
         private const string XML_VERSION        = "Version";
         private const string XML_VEHICLE        = "Vehicle";
@@ -151,11 +154,8 @@ namespace kotor_Randomizer_2.Models
                 new ReachabilityGoal { GoalID = 4, Caption = "Pazaak Champion" },
             };
 
-            // Create list of unlockable doors.
-            GeneralLockedDoors = ConstructGeneralOptions();
-
-            // Create list of item rando options.
-            ItemCategoryOptions = ConstructItemOptionsList();
+            GeneralLockedDoors = ConstructGeneralOptions();     // Create list of unlockable doors.
+            ItemCategoryOptions = ConstructItemOptionsList();   // Create list of item rando options.
 
             ModuleDigraph graph;
             var modulesPath = Path.Combine(Environment.CurrentDirectory, "Xml", "Kotor2Modules.xml");
@@ -266,42 +266,9 @@ namespace kotor_Randomizer_2.Models
             GeneralUnlockedDoors.Clear();
         }
 
-        private void ResetItems()
-        {
-            ItemArmbands        = RandomizationLevel.None;
-            ItemArmor           = RandomizationLevel.None;
-            ItemBelts           = RandomizationLevel.None;
-            ItemBlasters        = RandomizationLevel.None;
-            ItemCreatureHides   = RandomizationLevel.None;
-            ItemCreatureWeapons = RandomizationLevel.None;
-            ItemDroidEquipment  = RandomizationLevel.None;
-            ItemGloves          = RandomizationLevel.None;
-            ItemGrenades        = RandomizationLevel.None;
-            ItemImplants        = RandomizationLevel.None;
-            ItemLightsabers     = RandomizationLevel.None;
-            ItemMasks           = RandomizationLevel.None;
-            ItemMeleeWeapons    = RandomizationLevel.None;
-            ItemMines           = RandomizationLevel.None;
-            ItemPazaakCards     = RandomizationLevel.None;
-            ItemMedical         = RandomizationLevel.None;
-            ItemUpgrades        = RandomizationLevel.None;
-            ItemVarious         = RandomizationLevel.None;
-
-            // Move all items to randomized list and clear omitted.
-            foreach (var item in ItemOmittedList) ItemRandomizedList.Add(item);
-            ItemOmittedList.Clear();
-
-            //// Grab omitted list from globals.
-            //var omitItems = ItemRandomizedList.Where(ri => RandomizableItem.KOTOR1_OMIT_PRESETS.First().Value.Contains(ri.Code)).ToList();
-            //foreach (var item in omitItems)
-            //{
-            //    ItemOmittedList.Add(item);
-            //    ItemRandomizedList.Remove(item);
-            //}
-
-            //ItemOmittedPreset = RandomizableItem.KOTOR1_OMIT_PRESETS.First().Key;
-        }
-
+        /// <summary>
+        /// Reset modules settings to defaults.
+        /// </summary>
         private void ResetModules()
         {
             GeneralSaveOptions = SavePatchOptions.Default;
@@ -325,6 +292,29 @@ namespace kotor_Randomizer_2.Models
             foreach (var item in ModuleRandomizedList) ModuleOmittedList.Add(item);
             ModuleRandomizedList.Clear();
             ModuleShufflePreset = Globals.K2_MODULE_OMIT_PRESETS.First().Key;
+        }
+
+        /// <summary>
+        /// Reset item settings to defaults.
+        /// </summary>
+        private void ResetItems()
+        {
+            // Disable all item randomization options.
+            ItemCategoryOptions.AsParallel().ForAll(op => op.Level = RandomizationLevel.None);
+
+            // Move all items to randomized list and clear omitted.
+            foreach (var item in ItemOmittedList) ItemRandomizedList.Add(item);
+            ItemOmittedList.Clear();
+
+            //// Grab omitted list from globals.
+            //var omitItems = ItemRandomizedList.Where(ri => RandomizableItem.KOTOR1_OMIT_PRESETS.First().Value.Contains(ri.Code)).ToList();
+            //foreach (var item in omitItems)
+            //{
+            //    ItemOmittedList.Add(item);
+            //    ItemRandomizedList.Remove(item);
+            //}
+
+            //ItemOmittedPreset = RandomizableItem.KOTOR1_OMIT_PRESETS.First().Key;
         }
 
         #endregion
@@ -870,6 +860,8 @@ namespace kotor_Randomizer_2.Models
             { if (element.Attribute(XML_MEDICAL   ) is XAttribute attr) ItemMedical         = ParseEnum<RandomizationLevel>(attr.Value); }
             { if (element.Attribute(XML_PAZAAK    ) is XAttribute attr) ItemPazaakCards     = ParseEnum<RandomizationLevel>(attr.Value); }
             { if (element.Attribute(XML_UPGRADE   ) is XAttribute attr) ItemUpgrades        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_PCRYSTAL  ) is XAttribute attr) ItemPCrystal        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_PROPS     ) is XAttribute attr) ItemProps           = ParseEnum<RandomizationLevel>(attr.Value); }
             { if (element.Attribute(XML_VARIOUS   ) is XAttribute attr) ItemVarious         = ParseEnum<RandomizationLevel>(attr.Value); }
 
             // Reset omitted items list. -- May no longer be necessary.
@@ -1025,6 +1017,8 @@ namespace kotor_Randomizer_2.Models
             if (ItemMedical         != RandomizationLevel.None) w.WriteAttributeString(XML_MEDICAL,    ItemMedical.ToString());
             if (ItemPazaakCards     != RandomizationLevel.None) w.WriteAttributeString(XML_PAZAAK,     ItemPazaakCards.ToString());
             if (ItemUpgrades        != RandomizationLevel.None) w.WriteAttributeString(XML_UPGRADE,    ItemUpgrades.ToString());
+            if (ItemPCrystal        != RandomizationLevel.None) w.WriteAttributeString(XML_PCRYSTAL,   ItemUpgrades.ToString());
+            if (ItemProps           != RandomizationLevel.None) w.WriteAttributeString(XML_PROPS,      ItemUpgrades.ToString());
             if (ItemVarious         != RandomizationLevel.None) w.WriteAttributeString(XML_VARIOUS,    ItemVarious.ToString());
 
             //if (!string.IsNullOrWhiteSpace(ItemOmittedPreset))
@@ -1488,14 +1482,7 @@ namespace kotor_Randomizer_2.Models
 
         public override bool SupportsItems => true;
 
-        public bool DoRandomizeItems =>
-            //(ItemArmbands       | ItemArmor           | ItemBelts          | ItemBlasters
-            //| ItemCreatureHides | ItemCreatureWeapons | ItemDroidEquipment | ItemGloves
-            //| ItemGrenades      | ItemImplants        | ItemLightsabers    | ItemMasks
-            //| ItemMedical       | ItemMeleeWeapons    | ItemMines          | ItemPazaakCards
-            //| ItemUpgrades      | ItemVarious)
-            //!= RandomizationLevel.None;
-            ItemCategoryOptions.Any(irco => irco.Level != RandomizationLevel.None);
+        public bool DoRandomizeItems => ItemCategoryOptions.Any(irco => irco.Level != RandomizationLevel.None);
 
         public RandomizationLevel ItemArmbands
         {

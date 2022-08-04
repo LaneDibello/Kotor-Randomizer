@@ -1873,30 +1873,8 @@ namespace kotor_Randomizer_2.Models
         /// </summary>
         private void ResetItems()
         {
-            //foreach (var item in ItemCategoryOptions)
-            //    item.Level = RandomizationLevel.None;
-
-            // Does this work? If not, just use above.
+            // Disable all item randomization options.
             ItemCategoryOptions.AsParallel().ForAll(op => op.Level = RandomizationLevel.None);
-
-            //ItemArmbands        = RandomizationLevel.None;
-            //ItemArmor           = RandomizationLevel.None;
-            //ItemBelts           = RandomizationLevel.None;
-            //ItemBlasters        = RandomizationLevel.None;
-            //ItemCreatureHides   = RandomizationLevel.None;
-            //ItemCreatureWeapons = RandomizationLevel.None;
-            //ItemDroidEquipment  = RandomizationLevel.None;
-            //ItemGloves          = RandomizationLevel.None;
-            //ItemGrenades        = RandomizationLevel.None;
-            //ItemImplants        = RandomizationLevel.None;
-            //ItemLightsabers     = RandomizationLevel.None;
-            //ItemMasks           = RandomizationLevel.None;
-            //ItemMeleeWeapons    = RandomizationLevel.None;
-            //ItemMines           = RandomizationLevel.None;
-            //ItemPazaakCards     = RandomizationLevel.None;
-            //ItemMedical         = RandomizationLevel.None;
-            //ItemUpgrades        = RandomizationLevel.None;
-            //ItemVarious         = RandomizationLevel.None;
 
             // Move all items to randomized list.
             foreach (var item in ItemOmittedList) ItemRandomizedList.Add(item);
