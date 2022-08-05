@@ -168,9 +168,7 @@ namespace kotor_Randomizer_2.Models
             ModuleRandomizedList = new ObservableCollection<ModuleVertex>(graph.Modules);
 
             // Get list of randomizable items.
-            ItemRandomizedList = new ObservableCollection<RandomizableItem>();
-            ItemOmittedList = new ObservableCollection<RandomizableItem>();
-            ItemOmittedPreset = string.Empty;
+            ItemRandomizedList = new ObservableCollection<RandomizableItem>(RandomizableItem.KOTOR2_ITEMS);
         }
 
         private static ObservableCollection<QualityOfLifeOption> ConstructGeneralOptions()
@@ -864,29 +862,40 @@ namespace kotor_Randomizer_2.Models
             { if (element.Attribute(XML_PROPS     ) is XAttribute attr) ItemProps           = ParseEnum<RandomizationLevel>(attr.Value); }
             { if (element.Attribute(XML_VARIOUS   ) is XAttribute attr) ItemVarious         = ParseEnum<RandomizationLevel>(attr.Value); }
 
-            // Reset omitted items list. -- May no longer be necessary.
-            foreach (var item in ItemOmittedList)
-                ItemRandomizedList.Add(item);
-            ItemOmittedList.Clear();
+            //// Reset omitted items list. -- May no longer be necessary.
+            //foreach (var item in ItemOmittedList)
+            //    ItemRandomizedList.Add(item);
+            //ItemOmittedList.Clear();
 
-            //// Read omitted item preset.
-            ////var omit = element.Descendants(XML_OMIT).FirstOrDefault();
-            //ItemOmittedPreset = element.Attribute(XML_PRESET)?.Value ?? null;
+            // Read omitted item preset.
+            //var omit = element.Descendants(XML_OMIT).FirstOrDefault();
+            ItemOmittedPreset = element.Attribute(XML_PRESET)?.Value ?? null;
 
-            //// If preset is null, read the list of omitted items.
-            //if (ItemOmittedPreset is null)
-            //{
-            //    foreach (var i in element.Descendants(XML_OMIT))
-            //    {
-            //        var code = i.Attribute(XML_CODE).Value;
-            //        var item = ItemRandomizedList.FirstOrDefault(x => x.Code == code);
-            //        if (item != null)
-            //        {
-            //            ItemOmittedList.Add(item);
-            //            ItemRandomizedList.Remove(item);
-            //        }
-            //    }
-            //}
+            // If preset is null, read the list of omitted items.
+            if (ItemOmittedPreset is null)
+            {
+                foreach (var i in element.Descendants(XML_OMIT))
+                {
+                    var code = i.Attribute(XML_CODE).Value;
+                    var item = ItemRandomizedList.FirstOrDefault(x => x.Code == code);
+                    if (item != null)
+                    {
+                        ItemOmittedList.Add(item);
+                        _ = ItemRandomizedList.Remove(item);
+                    }
+                }
+            }
+            else    // Otherwise, set the list of items based on the preset.
+            {
+                foreach (var i in RandomizableItem.KOTOR2_OMIT_PRESETS[ItemOmittedPreset])
+                {
+                    var item = ItemRandomizedList.FirstOrDefault(x => x.Code == i);
+                    ItemOmittedList.Add(item);
+                    _ = ItemRandomizedList.Remove(item);
+                }
+            }
+
+            NotifyPropertyChanged(nameof(ItemCategoryOptions));
         }
 
         /// <summary>
@@ -1021,21 +1030,21 @@ namespace kotor_Randomizer_2.Models
             if (ItemProps           != RandomizationLevel.None) w.WriteAttributeString(XML_PROPS,      ItemUpgrades.ToString());
             if (ItemVarious         != RandomizationLevel.None) w.WriteAttributeString(XML_VARIOUS,    ItemVarious.ToString());
 
-            //if (!string.IsNullOrWhiteSpace(ItemOmittedPreset))
-            //{
-            //    // Write omit preset string.
-            //    w.WriteAttributeString(XML_PRESET, ItemOmittedPreset);
-            //}
-            //else
-            //{
-            //    // Write each omitted item to the file.
-            //    foreach (var item in ItemOmittedList)
-            //    {
-            //        w.WriteStartElement(XML_OMIT);  // Begin Omit
-            //        w.WriteAttributeString(XML_CODE, item.Code);
-            //        w.WriteEndElement();            // End Omit
-            //    }
-            //}
+            if (!string.IsNullOrWhiteSpace(ItemOmittedPreset))
+            {
+                // Write omit preset string.
+                w.WriteAttributeString(XML_PRESET, ItemOmittedPreset);
+            }
+            else
+            {
+                // Write each omitted item to the file.
+                foreach (var item in ItemOmittedList)
+                {
+                    w.WriteStartElement(XML_OMIT);  // Begin Omit
+                    w.WriteAttributeString(XML_CODE, item.Code);
+                    w.WriteEndElement();            // End Omit
+                }
+            }
 
             w.WriteEndElement();                // End Item
         }
@@ -1263,9 +1272,9 @@ namespace kotor_Randomizer_2.Models
 
         #region Backing Fields
         private ObservableCollection<ItemRandoCategoryOption> _itemCategoryOptions = new ObservableCollection<ItemRandoCategoryOption>();
-        private ObservableCollection<RandomizableItem> _itemOmittedList;
+        private ObservableCollection<RandomizableItem> _itemOmittedList = new ObservableCollection<RandomizableItem>();
         private ObservableCollection<RandomizableItem> _itemRandomizedList;
-        private string _itemOmittedPreset;
+        private string _itemOmittedPreset = null;
         #endregion
 
         #region Methods
@@ -1400,7 +1409,7 @@ namespace kotor_Randomizer_2.Models
             new Regex("^u_a_over", RegexOptions.Compiled | RegexOptions.IgnoreCase), //Armor Over
             new Regex("^u_a_unde", RegexOptions.Compiled | RegexOptions.IgnoreCase), //Armor Under
             new Regex("^u_l_cell", RegexOptions.Compiled | RegexOptions.IgnoreCase), //Lightsaber Cell
-            new Regex("^u_l_colo", RegexOptions.Compiled | RegexOptions.IgnoreCase), //Lightsaber Color
+            new Regex("^u_l_colo|^g1_w_sbrcrstl(20|21)", RegexOptions.Compiled | RegexOptions.IgnoreCase), //Lightsaber Color
             new Regex("^u_l_crys", RegexOptions.Compiled | RegexOptions.IgnoreCase), //Lightsaber Crystal
             new Regex("^u_l_emit", RegexOptions.Compiled | RegexOptions.IgnoreCase), //Lightsaber Emiter
             new Regex("^u_l_lens", RegexOptions.Compiled | RegexOptions.IgnoreCase), //Lightsaber Lens
@@ -1627,6 +1636,8 @@ namespace kotor_Randomizer_2.Models
             get => _itemOmittedPreset;
             set => SetField(ref _itemOmittedPreset, value);
         }
+
+        public Dictionary<string, List<string>> ItemOmitPresets => RandomizableItem.KOTOR2_OMIT_PRESETS;
 
         #endregion
     }

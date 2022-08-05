@@ -42,8 +42,8 @@ namespace Randomizer_WPF.Views
         public ItemView()
         {
             InitializeComponent();
-            cbbItemPresetOptions = new ObservableCollection<string>(RandomizableItem.KOTOR1_OMIT_PRESETS.Keys);
-            cbbOmitPreset.ItemsSource = cbbItemPresetOptions;
+            //cbbItemPresetOptions = new ObservableCollection<string>(RandomizableItem.KOTOR1_OMIT_PRESETS.Keys);
+            //cbbOmitPreset.ItemsSource = cbbItemPresetOptions;
         }
         #endregion
 
@@ -200,14 +200,14 @@ namespace Randomizer_WPF.Views
 
         private void CbbOmitPreset_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cbbOmitPreset?.SelectedItem == null)
+            if (cbbOmitPreset?.SelectedItem == null || !(DataContext is IRandomizeItems itemRando))
             {
                 // If no preset is selected (custom item omits), do nothing.
             }
-            else if (!RandomizableItem.KOTOR1_OMIT_PRESETS.ContainsKey(cbbOmitPreset.SelectedItem.ToString()))
+            else if (!itemRando.ItemOmitPresets.ContainsKey(cbbOmitPreset.SelectedItem.ToString()))
             {
                 // If key is invalid, set to default. This method will trigger again and run the code below.
-                cbbOmitPreset.SelectedItem = RandomizableItem.KOTOR1_OMIT_PRESETS.Keys.FirstOrDefault();
+                cbbOmitPreset.SelectedItem = itemRando.ItemOmitPresets.Keys.FirstOrDefault();
             }
             else
             {
@@ -218,7 +218,7 @@ namespace Randomizer_WPF.Views
                 }
                 lvOmittedItemSource.Clear();
 
-                var codes = RandomizableItem.KOTOR1_OMIT_PRESETS[cbbOmitPreset.SelectedItem.ToString()];
+                var codes = itemRando.ItemOmitPresets[cbbOmitPreset.SelectedItem.ToString()];
                 var omits = lvRandomizedItemSource.Where(x => codes.Contains(x.Code)).ToList();
 
                 foreach (var omit in omits)
@@ -284,15 +284,11 @@ namespace Randomizer_WPF.Views
                 lvRandomizedItemSource = itemRando.ItemRandomizedList;
                 lvOmittedItemSource = itemRando.ItemOmittedList;
                 lvCategoriesSource = itemRando.ItemCategoryOptions;
+                cbbItemPresetOptions = new ObservableCollection<string>(itemRando.ItemOmitPresets.Keys);
+                cbbOmitPreset.ItemsSource = cbbItemPresetOptions;
                 //((RandomizerBase)e.OldValue).PropertyChanged -= View_ContextPropertyChanged;
                 //((RandomizerBase)e.NewValue).PropertyChanged += View_ContextPropertyChanged;
             }
-
-            // Until K2 rando has item omission, use all space in the item view for category selection.
-            if (DataContext is Kotor2Randomizer)
-                Grid.SetRowSpan(svCategories, 3);
-            else
-                Grid.SetRowSpan(svCategories, 1);
 
             if (lvRandomizedItemSource is null || lvOmittedItemSource is null) return;
 
@@ -392,6 +388,7 @@ namespace Randomizer_WPF.Views
                             }
                             else    // Otherwise, sort based on the selected preset.
                             {
+                                // Use itemRando.ItemOmitPresets instead...
                                 var preset = RandomizableItem.KOTOR1_OMIT_PRESETS[cbbOmitPreset.SelectedItem.ToString()];
                                 if (preset.Contains(item.Code))
                                     lvOmittedItemSource.Add(item);

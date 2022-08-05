@@ -566,6 +566,7 @@ namespace kotor_Randomizer_2.Models
             set => SetField(ref _itemOmittedPreset, value);
         }
 
+        public Dictionary<string, List<string>> ItemOmitPresets => RandomizableItem.KOTOR1_OMIT_PRESETS;
 
         #region Item Regexes
         //Armor Regexes
