@@ -140,6 +140,7 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <uc:RandomizationLevelUserControl_V2
+                                            IsEnabled="{Binding IsEnabled}"
                                             Tag="{Binding Category}"
                                             />
                                     </DataTemplate>

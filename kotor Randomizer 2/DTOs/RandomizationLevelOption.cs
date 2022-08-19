@@ -32,6 +32,7 @@ namespace kotor_Randomizer_2.DTOs
 
         #region Properties
         #region Backing Fields
+        private bool _isEnabled = true;
         private RandoLevelFlags _flags = RandoLevelFlags.Subtype;
         private string _checkboxLabel = "Default";
         private string _checkboxToolTip;
@@ -43,16 +44,22 @@ namespace kotor_Randomizer_2.DTOs
         private string _maxLabel = "Max";
         #endregion
 
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            set => SetField(ref _isEnabled, value);
+        }
+
         public RandomizationLevel Level
         {
-            get => Flags.ToRandomizationLevel();
-            set => Flags = value.ToRandoLevelFlags(SubtypeVisible);
+            get => IsEnabled ? Flags.ToRandomizationLevel() : RandomizationLevel.None;
+            set => Flags = IsEnabled ? value.ToRandoLevelFlags(SubtypeVisible) : RandomizationLevel.None.ToRandoLevelFlags(SubtypeVisible);
         }
 
         public RandoLevelFlags Flags
         {
-            get => _flags;
-            set => SetField(ref _flags, value);
+            get => IsEnabled ? _flags : RandoLevelFlags.AllOff;
+            set { if (IsEnabled) _ = SetField(ref _flags, value); }
         }
 
         public string CheckboxLabel

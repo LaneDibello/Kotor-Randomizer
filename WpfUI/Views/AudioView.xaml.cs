@@ -79,7 +79,7 @@ namespace Randomizer_WPF.Views
         private void BtnToggleAll_Click(object sender, RoutedEventArgs e)
         {
             var rlucs = GetRandomizationLevelUserControls();
-            var CheckAllBoxes = rlucs.Any(rluc => !rluc.IsActive);
+            var CheckAllBoxes = rlucs.Any(rluc => !rluc.IsActive && rluc.IsEnabled);
             foreach (var item in rlucs)
             {
                 item.IsActive = CheckAllBoxes;
