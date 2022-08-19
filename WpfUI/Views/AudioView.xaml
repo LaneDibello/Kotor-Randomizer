@@ -148,31 +148,6 @@
                         </ScrollViewer>
                     </Grid>
                     
-                    <!--<uc:RandomizationLevelUserControl x:Name="rlucAreaMusic"
-                                                      CheckboxLabel="Area Music"
-                                                      SelectedLevel="{Binding AudioAreaMusic, Mode=TwoWay}"
-                                                      />
-                    <uc:RandomizationLevelUserControl x:Name="rlucBattleMusic"
-                                                      CheckboxLabel="Battle Music"
-                                                      SelectedLevel="{Binding AudioBattleMusic, Mode=TwoWay}"
-                                                      />
-                    <uc:RandomizationLevelUserControl x:Name="rlucAmbientNoise"
-                                                      CheckboxLabel="Ambient Noise"
-                                                      SelectedLevel="{Binding AudioAmbientNoise, Mode=TwoWay}"
-                                                      />
-                    <uc:RandomizationLevelUserControl x:Name="rlucCutsceneNoise"
-                                                      CheckboxLabel="Cutscene Noise"
-                                                      SelectedLevel="{Binding AudioCutsceneNoise, Mode=TwoWay}"
-                                                      />
-                    <uc:RandomizationLevelUserControl x:Name="rlucNpcSounds"
-                                                      CheckboxLabel="NPC Sounds" IsEnabled="False"
-                                                      SelectedLevel="{Binding AudioNpcSounds, Mode=TwoWay}"
-                                                      />
-                    <uc:RandomizationLevelUserControl x:Name="rlucPartySounds"
-                                                      CheckboxLabel="Party Sounds" SubtypeVisible="Visible"
-                                                      SelectedLevel="{Binding AudioPartySounds, Mode=TwoWay}"
-                                                      />-->
-
                     <CheckBox IsChecked="{Binding AudioRemoveDmcaMusic, Mode=TwoWay}"
                               ToolTip="{StaticResource ttDMCA}">
                         <TextBlock Text="Overwrite likely DMCA music" />

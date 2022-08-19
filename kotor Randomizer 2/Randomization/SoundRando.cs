@@ -17,14 +17,7 @@ namespace kotor_Randomizer_2
         private static Dictionary<string, string> MusicLookupTable { get; set; } = new Dictionary<string, string>();
         private static Dictionary<string, string> SoundLookupTable { get; set; } = new Dictionary<string, string>();
 
-        //private static RandomizationLevel RandomizeAmbientNoise { get; set; }
-        //private static RandomizationLevel RandomizeAreaMusic { get; set; }
-        //private static RandomizationLevel RandomizeBattleMusic { get; set; }
-        //private static RandomizationLevel RandomizeCutsceneNoise { get; set; }
-        //private static RandomizationLevel RandomizeNpcSounds { get; set; }
-        //private static RandomizationLevel RandomizePartySounds { get; set; }
         private static List<AudioRandoCategoryOption> AudioOptions { get; set; }
-
         private static bool MixKotorGameMusic { get; set; }
         private static bool MixNpcAndPartySounds { get; set; }
         private static bool RemoveDmcaMusic { get; set; }
@@ -77,11 +70,6 @@ namespace kotor_Randomizer_2
             // TODO: Test this code ... not sure if it'll work.
             AudioOptions.AsParallel().ForAll((op) =>
             {
-                //music[op.Category] = new List<FileInfo>();
-                //sound[op.Category] = new List<FileInfo>();
-
-                //foreach (var prefix in op.Prefixes)
-                //    music[op.Category].AddRange(musicFiles.Where(f => f.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)));
                 if (op.Folders.HasFlag(AudioFolders.Music)) music[op.Category].AddRange(musicFiles.Where(f => op.Regex.IsMatch(f.Name)));
                 if (op.Folders.HasFlag(AudioFolders.Sounds)) sound[op.Category].AddRange(soundFiles.Where(f => op.Regex.IsMatch(f.Name)));
 
@@ -124,238 +112,6 @@ namespace kotor_Randomizer_2
             Console.WriteLine($"Time to randomize categories: {sw.Elapsed}");
             sw.Restart();
 
-            ////foreach (var op in AudioOptions)
-            ////{
-            ////    music[op.Category] = new List<FileInfo>();
-            ////    sound[op.Category] = new List<FileInfo>();
-
-            ////    //foreach (var prefix in op.Prefixes)
-            ////    //    music[op.Category].AddRange(musicFiles.Where(f => f.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)));
-            ////    if (op.Folders.HasFlag(AudioFolders.Music))  music[op.Category].AddRange(musicFiles.Where(f => op.Regex.IsMatch(f.Name)));
-            ////    if (op.Folders.HasFlag(AudioFolders.Sounds)) sound[op.Category].AddRange(soundFiles.Where(f => op.Regex.IsMatch(f.Name)));
-
-            ////    // Remove DMCA music.
-            ////    if (op.Category == AudioRandoCategory.AreaMusic)
-            ////        _ = music[op.Category].RemoveAll(f => DmcaAreaMusic.Contains(f.Name));
-
-            ////    switch (op.Level)
-            ////    {
-            ////        // Move to max lists.
-            ////        case RandomizationLevel.Max:
-            ////            maxMusic.AddRange(music[op.Category]);
-            ////            maxSound.AddRange(sound[op.Category]);
-            ////            break;
-
-            ////        // Randomize category files in a Task.
-            ////        case RandomizationLevel.Type:
-            ////            tasks.Add(Task.Run(() =>
-            ////            {
-            ////                var randList = Randomize.RandomizeFiles(music[op.Category], paths.music);
-            ////                AddToMusicLookup(music[op.Category], randList);
-            ////            }));
-            ////            break;
-
-            ////        // Do nothing.
-            ////        case RandomizationLevel.Subtype:
-            ////        case RandomizationLevel.None:
-            ////        default:
-            ////            break;
-            ////    }
-            ////}
-
-            ///**** Shuffle Area Music ****/
-            //// Find all files in StreamMusic that have a prefix found in PrefixListAreaMusic.
-            //var areaMusic = new List<FileInfo>();
-            //foreach (var prefix in PrefixListAreaMusic)
-            //    areaMusic.AddRange(musicFiles.Where(f => f.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)));
-
-            //// If requested, remove any music likely to trigger a DMCA strike.
-            //if (RemoveDmcaMusic)
-            //    _ = areaMusic.RemoveAll(f => DmcaAreaMusic.Contains(f.Name));
-
-            //// Based on randomization level ...
-            //switch (RandomizeAreaMusic)
-            //{
-            //    // Move to max music list.
-            //    case RandomizationLevel.Max:
-            //        maxMusic.AddRange(areaMusic);
-            //        break;
-
-            //    // Randomize area music files in a Task.
-            //    case RandomizationLevel.Type:
-            //        tasks.Add(Task.Run(() =>
-            //        {
-            //            var randList = Randomize.RandomizeFiles(areaMusic, paths.music);
-            //            AddToMusicLookup(areaMusic, randList);
-            //        }));
-            //        break;
-
-            //    // Do nothing.
-            //    case RandomizationLevel.Subtype:
-            //    case RandomizationLevel.None:
-            //    default:
-            //        break;
-            //}
-
-            //Console.WriteLine($"music randomized in {sw.Elapsed}");
-            //sw.Restart();
-
-            ///**** Shuffle Ambient Noise ****/
-            //// Find all files in StreamMusic that have a prefix found in PrefixListNoise.
-            //var ambientNoiseMusic = new List<FileInfo>();
-            //foreach (var prefix in PrefixListNoise)
-            //    ambientNoiseMusic.AddRange(musicFiles.Where(f => f.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)));
-
-            //// Find all files in StreamSounds that have a prefix found in PrefixListNoise.
-            //var ambientNoiseSound = new List<FileInfo>();
-            //foreach (var prefix in PrefixListNoise)
-            //    ambientNoiseSound.AddRange(soundFiles.Where(f => f.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)));
-
-            //// Based on randomization level ...
-            //switch (RandomizeAmbientNoise)
-            //{
-            //    // Move files in StreamMusic into max music and move files in StreamSounds into max sound.
-            //    case RandomizationLevel.Max:
-            //        maxMusic.AddRange(ambientNoiseMusic);
-            //        maxSound.AddRange(ambientNoiseSound);
-            //        break;
-
-            //    // Randomize noise in music and noise in sounds in a Task.
-            //    case RandomizationLevel.Type:
-            //        tasks.Add(Task.Run(() =>
-            //        {
-            //            var randList = Randomize.RandomizeFiles(ambientNoiseMusic, paths.music);
-            //            AddToMusicLookup(ambientNoiseMusic, randList);
-
-            //            randList = Randomize.RandomizeFiles(ambientNoiseSound, paths.sounds);
-            //            AddToSoundLookup(ambientNoiseSound, randList);
-            //        }));
-            //        break;
-
-            //    // Do nothing.
-            //    case RandomizationLevel.Subtype:
-            //    case RandomizationLevel.None:
-            //    default:
-            //        break;
-            //}
-
-            //Console.WriteLine($"ambient noise randomized in {sw.Elapsed}");
-            //sw.Restart();
-
-            ///**** Shuffle Battle Music ****/
-            //// Find all files in StreamMusic that match RegexBattleMusic.
-            //var battleMusic = new List<FileInfo>(musicFiles.Where(f => RegexBattleMusic.IsMatch(f.Name)));
-            //// Find all files in StreamSounds that match RegexBattleMusic.
-            //var battleMusicEnd = new List<FileInfo>(soundFiles.Where(f => RegexBattleMusic.IsMatch(f.Name)));
-
-            //// Based on randomization level ...
-            //switch (RandomizeBattleMusic)
-            //{
-            //    // Add files in StreamMusic to max music, and files in StreamSounds to max sound.
-            //    case RandomizationLevel.Max:
-            //        maxMusic.AddRange(battleMusic);
-            //        maxSound.AddRange(battleMusicEnd);
-            //        break;
-
-            //    // Randomize files separately in their folders in a Task.
-            //    case RandomizationLevel.Type:
-            //        tasks.Add(Task.Run(() =>
-            //        {
-            //            var randList = Randomize.RandomizeFiles(battleMusic, paths.music);
-            //            AddToMusicLookup(battleMusic, randList);
-
-            //            randList = Randomize.RandomizeFiles(battleMusicEnd, paths.sounds);
-            //            AddToSoundLookup(battleMusicEnd, randList);
-            //        }));
-            //        break;
-
-            //    // Do nothing.
-            //    case RandomizationLevel.Subtype:
-            //    case RandomizationLevel.None:
-            //    default:
-            //        break;
-            //}
-
-            //Console.WriteLine($"battle music randomized in {sw.Elapsed}");
-            //sw.Restart();
-
-            //// Cutscene Noise
-            //var cutsceneNoise = new List<FileInfo>(musicFiles.Where(f => RegexCutscene.IsMatch(f.Name)));
-            //_ = cutsceneNoise.RemoveAll(f => f.Name.StartsWith("57.")); // Remove specific exception
-
-            //switch (RandomizeCutsceneNoise)
-            //{
-            //    case RandomizationLevel.Max:
-            //        maxMusic.AddRange(cutsceneNoise);
-            //        break;
-            //    case RandomizationLevel.Type:
-            //        tasks.Add(Task.Run(() =>
-            //        {
-            //            var randList = Randomize.RandomizeFiles(cutsceneNoise, paths.music);
-            //            AddToMusicLookup(cutsceneNoise, randList);
-            //        }));
-            //        break;
-            //    case RandomizationLevel.Subtype:
-            //    case RandomizationLevel.None:
-            //    default:
-            //        break;
-            //}
-
-            //Console.WriteLine($"cutscene noise randomized in {sw.Elapsed}");
-            //sw.Restart();
-
-            //// Check if NPC and Party Sounds are combined
-            //var npcSounds = new List<FileInfo>(soundFiles.Where(f => RegexNPCSound.IsMatch(f.Name)));
-            //var partySounds = new List<FileInfo>(soundFiles.Where(f => RegexPartySound.IsMatch(f.Name)));
-
-            ////if (MixNpcAndPartySounds) // Functionality Disabled
-            ////{
-            ////    npcSounds.AddRange(partySounds);
-            ////}
-            ////else
-            //{
-            //    // Party Sounds (if not mixing)
-            //    switch (RandomizePartySounds)
-            //    {
-            //        case RandomizationLevel.Max:
-            //            maxSound.AddRange(partySounds);
-            //            break;
-            //        case RandomizationLevel.Type:
-            //            tasks.Add(Task.Run(() =>
-            //            {
-            //                var randList = Randomize.RandomizeFiles(partySounds, paths.sounds);
-            //                AddToSoundLookup(partySounds, randList);
-            //            }));
-            //            break;
-            //        case RandomizationLevel.Subtype:
-            //            RandomizeSoundActions(partySounds, paths.sounds);
-            //            break;
-            //        case RandomizationLevel.None:
-            //        default:
-            //            break;
-            //    }
-            //}
-
-            //Console.WriteLine($"party sounds randomized in {sw.Elapsed}");
-            //sw.Restart();
-
-            ////// NPC Sounds (or both if mixing) // Functionality Disabled
-            ////switch (RandomizeNpcSounds)
-            ////{
-            ////    case RandomizationLevel.Max:
-            ////        maxSound.AddRange(npcSounds);
-            ////        break;
-            ////    case RandomizationLevel.Type:
-            ////        Randomize.RandomizeFiles(npcSounds, SoundsPath);
-            ////        break;
-            ////    case RandomizationLevel.Subtype:
-            ////        RandomizeSoundActions(npcSounds, SoundsPath);
-            ////        break;
-            ////    case RandomizationLevel.None:
-            ////    default:
-            ////        break;
-            ////}
-
             // Max Randomizations
             if (maxMusic.Any())
             {
@@ -376,25 +132,6 @@ namespace kotor_Randomizer_2
 
             Console.WriteLine($"max audio randomized in {sw.Elapsed}");
             sw.Restart();
-
-            // Overwrite DMCA music with alternatives
-            //if (RemoveDmcaMusic)
-            //{
-            //    tasks.Add(Task.Run(() =>
-            //    {
-            //        var orig = new List<FileInfo>();
-            //        var rand = new List<FileInfo>();
-            //        foreach (var fi in musicFiles.Where(f => DmcaAreaMusic.Contains(f.Name)))
-            //        {
-            //            var replacement = areaMusic[Randomize.Rng.Next(areaMusic.Count)];
-            //            File.Copy(replacement.FullName, Path.Combine(paths.music, fi.Name), true);
-
-            //            orig.Add(fi);
-            //            rand.Add(replacement);
-            //        }
-            //        AddToMusicLookup(orig, rand);
-            //    }));
-            //}
 
             // Overwrite DMCA music with alternatives
             if (RemoveDmcaMusic)
@@ -431,13 +168,6 @@ namespace kotor_Randomizer_2
             // If rando is null, pull from settings.
             if (null == rando)
             {
-                //RandomizeAmbientNoise  = Properties.Settings.Default.RandomizeAmbientNoise;
-                //RandomizeAreaMusic     = Properties.Settings.Default.RandomizeAreaMusic;
-                //RandomizeBattleMusic   = Properties.Settings.Default.RandomizeBattleMusic;
-                //RandomizeCutsceneNoise = Properties.Settings.Default.RandomizeCutsceneNoise;
-                //RandomizeNpcSounds     = Properties.Settings.Default.RandomizeNpcSounds;
-                //RandomizePartySounds   = Properties.Settings.Default.RandomizePartySounds;
-
                 AudioOptions = Models.Kotor1Randomizer.ConstructAudioOptionsList().ToList();
                 AudioOptions.First(arco => arco.Category == AudioRandoCategory.AmbientNoise).Level = Properties.Settings.Default.RandomizeAmbientNoise;
                 AudioOptions.First(arco => arco.Category == AudioRandoCategory.AreaMusic).Level = Properties.Settings.Default.RandomizeAreaMusic;
@@ -453,13 +183,6 @@ namespace kotor_Randomizer_2
             // Otherwise, pull from the Kotor1Randomizer object.
             else
             {
-                //RandomizeAmbientNoise  = rando.AudioAmbientNoise;
-                //RandomizeAreaMusic     = rando.AudioAreaMusic;
-                //RandomizeBattleMusic   = rando.AudioBattleMusic;
-                //RandomizeCutsceneNoise = rando.AudioCutsceneNoise;
-                //RandomizeNpcSounds     = rando.AudioNpcSounds;
-                //RandomizePartySounds   = rando.AudioPartySounds;
-
                 AudioOptions         = rando.AudioCategoryOptions.ToList();
                 MixKotorGameMusic    = rando.AudioMixKotorGameMusic;
                 MixNpcAndPartySounds = rando.AudioMixNpcAndPartySounds;
@@ -605,17 +328,6 @@ namespace kotor_Randomizer_2
             {
                 settings.Add(new Tuple<string, string>(arco.Category.ToLabel(), arco.Level.ToString()));
             }
-            //{
-            //    new Tuple<string, string>("Area Music",        RandomizeAreaMusic.ToString()),
-            //    new Tuple<string, string>("Battle Music",      RandomizeBattleMusic.ToString()),
-            //    new Tuple<string, string>("Ambient Noise",     RandomizeAmbientNoise.ToString()),
-            //    new Tuple<string, string>("Cutscene Noise",    RandomizeCutsceneNoise.ToString()),
-            //    new Tuple<string, string>("NPC Sounds",        RandomizeNpcSounds.ToString()),
-            //    new Tuple<string, string>("Party Sounds",      RandomizePartySounds.ToString()),
-            //    new Tuple<string, string>("Remove DMCA",       RemoveDmcaMusic.ToEnabledDisabled()),
-            //    new Tuple<string, string>("Mix NPC and Party", MixNpcAndPartySounds.ToEnabledDisabled()),
-            //    new Tuple<string, string>("", ""),  // Skip a row.
-            //};
             settings.Add(new Tuple<string, string>("", ""));    // Skip a row.
             settings.Add(new Tuple<string, string>("Mix Kotor Game Music", MixKotorGameMusic.ToEnabledDisabled()));
             settings.Add(new Tuple<string, string>("Mix NPC and Party", MixNpcAndPartySounds.ToEnabledDisabled()));

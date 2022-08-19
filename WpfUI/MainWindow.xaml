@@ -248,16 +248,6 @@
                     <v:AudioView x:Name="AudioView"
                                  FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
                                  />
-                                 
-                                 <!--AreaMusic           ="{Binding AudioAreaMusic           , Mode=TwoWay}"
-                                 BattleMusic         ="{Binding AudioBattleMusic         , Mode=TwoWay}"
-                                 AmbientMusic        ="{Binding AudioAmbientNoise        , Mode=TwoWay}"
-                                 CutsceneNoise       ="{Binding AudioCutsceneNoise       , Mode=TwoWay}"
-                                 NpcSounds           ="{Binding AudioNpcSounds           , Mode=TwoWay}"
-                                 PartySounds         ="{Binding AudioPartySounds         , Mode=TwoWay}"
-                                 OverwriteDmcaMusic  ="{Binding AudioRemoveDmcaMusic     , Mode=TwoWay}"
-                                 MixKotorGameMusic   ="{Binding AudioMixKotorGameMusic   , Mode=TwoWay}"
-                                 MixNpcAndPartySounds="{Binding AudioMixNpcAndPartySounds, Mode=TwoWay}"-->
                 </TabItem>
 
                 <!-- Cosmetic Rando Settings -->
