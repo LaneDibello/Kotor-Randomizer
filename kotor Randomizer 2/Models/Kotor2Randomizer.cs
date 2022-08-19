@@ -16,7 +16,7 @@ using System.Diagnostics;
 
 namespace kotor_Randomizer_2.Models
 {
-    public class Kotor2Randomizer : RandomizerBase, IGeneralSettings, IRandomizeModules, IRandomizeItems
+    public class Kotor2Randomizer : RandomizerBase, IGeneralSettings, IRandomizeModules, IRandomizeItems, IRandomizeAudio
     {
         #region XML Consts
         private const string XML_AMBIENT        = "Ambient";
@@ -243,7 +243,7 @@ namespace kotor_Randomizer_2.Models
         public void ResetSettingsToDefault()
         {
             ResetGeneral();
-            //ResetAudio();
+            ResetAudio();
             ResetItems();
             //ResetModels();
             ResetModules();
@@ -313,6 +313,22 @@ namespace kotor_Randomizer_2.Models
             //}
 
             //ItemOmittedPreset = RandomizableItem.KOTOR1_OMIT_PRESETS.First().Key;
+        }
+
+        /// <summary>
+        /// Reset Audio settings to default.
+        /// </summary>
+        private void ResetAudio()
+        {
+            AudioAmbientNoise         = RandomizationLevel.None;
+            AudioAreaMusic            = RandomizationLevel.None;
+            AudioBattleMusic          = RandomizationLevel.None;
+            AudioCutsceneNoise        = RandomizationLevel.None;
+            AudioNpcSounds            = RandomizationLevel.None;
+            AudioPartySounds          = RandomizationLevel.None;
+            AudioRemoveDmcaMusic      = false;
+            AudioMixNpcAndPartySounds = false;
+            AudioMixKotorGameMusic    = false;
         }
 
         #endregion
@@ -1638,6 +1654,93 @@ namespace kotor_Randomizer_2.Models
         }
 
         public Dictionary<string, List<string>> ItemOmitPresets => RandomizableItem.KOTOR2_OMIT_PRESETS;
+
+        #endregion
+
+        #region IRandomizeAudio Implementation
+
+        #region Backing Fields
+        private RandomizationLevel _audioAmbientNoise;
+        private RandomizationLevel _audioAreaMusic;
+        private RandomizationLevel _audioBattleMusic;
+        private RandomizationLevel _audioCutsceneNoise;
+        private RandomizationLevel _audioNpcSounds;
+        private RandomizationLevel _audioPartySounds;
+        private bool _audioMixKotorGameMusic;
+        private bool _audioMixNpcAndPartySounds;
+        private bool _audioRemoveDmcaMusic;
+        #endregion
+
+        public override bool SupportsAudio => true;
+
+        public bool DoRandomizeAudio => DoRandomizeMusic || DoRandomizeSound;
+
+        public bool DoRandomizeMusic =>
+            (AudioAreaMusic | AudioAmbientNoise | AudioBattleMusic | AudioCutsceneNoise)
+            != RandomizationLevel.None
+            || AudioRemoveDmcaMusic;
+
+        public bool DoRandomizeSound =>
+            (AudioAmbientNoise | AudioBattleMusic | AudioNpcSounds | AudioPartySounds)
+            != RandomizationLevel.None;
+
+        public RandomizationLevel AudioAmbientNoise
+        {
+            get => _audioAmbientNoise;
+            set => SetField(ref _audioAmbientNoise, value);
+        }
+
+        public RandomizationLevel AudioAreaMusic
+        {
+            get => _audioAreaMusic;
+            set => SetField(ref _audioAreaMusic, value);
+        }
+
+        public RandomizationLevel AudioBattleMusic
+        {
+            get => _audioBattleMusic;
+            set => SetField(ref _audioBattleMusic, value);
+        }
+
+        public RandomizationLevel AudioCutsceneNoise
+        {
+            get => _audioCutsceneNoise;
+            set => SetField(ref _audioCutsceneNoise, value);
+        }
+
+        public RandomizationLevel AudioNpcSounds
+        {
+            get => _audioNpcSounds;
+            set => SetField(ref _audioNpcSounds, value);
+        }
+
+        public RandomizationLevel AudioPartySounds
+        {
+            get => _audioPartySounds;
+            set => SetField(ref _audioPartySounds, value);
+        }
+
+        public bool AudioMixKotorGameMusic
+        {
+            get => _audioMixKotorGameMusic;
+            set => SetField(ref _audioMixKotorGameMusic, value);
+        }
+
+        public bool AudioMixNpcAndPartySounds
+        {
+            get => _audioMixNpcAndPartySounds;
+            set => SetField(ref _audioMixNpcAndPartySounds, value);
+        }
+
+        public bool AudioRemoveDmcaMusic
+        {
+            get => _audioRemoveDmcaMusic;
+            set => SetField(ref _audioRemoveDmcaMusic, value);
+        }
+
+        public ObservableCollection<AudioRandoCategoryOption> AudioCategoryOptions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public Regex AudioDmcaMusicRegex => throw new NotImplementedException();
 
         #endregion
     }

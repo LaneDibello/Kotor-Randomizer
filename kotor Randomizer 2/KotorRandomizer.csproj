@@ -95,6 +95,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\AudioRandoCategory.cs" />
+    <Compile Include="DTOs\AudioRandoCategoryOption.cs" />
     <Compile Include="DTOs\ItemRandoCategoryOption.cs" />
     <Compile Include="DTOs\RandomizationLevelOption.cs" />
     <Compile Include="Digraph\ModuleDigraph.cs" />

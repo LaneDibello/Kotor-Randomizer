@@ -146,7 +146,7 @@ namespace kotor_Randomizer_2
         public static bool UseRandoRules { get; set; }
         public static bool VerifyReachability { get; set; }
         public static SavePatchOptions SaveOptionsValue { get; set; }
-        public static List<QualityOfLife> EnabledQoLs { get; set; }
+        public static List<QualityOfLife> EnabledQoLs { get; set; } = new List<QualityOfLife>();
         public static List<string> RandomizedModules { get; set; }
         public static List<string> OmittedModules { get; set; }
         private static string ShufflePreset { get; set; }

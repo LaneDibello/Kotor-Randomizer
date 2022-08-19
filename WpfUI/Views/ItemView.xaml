@@ -76,9 +76,6 @@
             <ScrollViewer Name="svCategories" Padding="5,0" VerticalScrollBarVisibility="Auto">
                 <ItemsControl Name="lvCategories" ItemsSource="{Binding ItemCategoryOptions}" Background="Transparent">
                     <ItemsControl.Resources>
-                        <Style TargetType="uc:RandomizationLevelUserControl">
-                            <Setter Property="Margin" Value="0,1" />
-                        </Style>
                         <Style TargetType="uc:RandomizationLevelUserControl_V2">
                             <Setter Property="Margin" Value="0,1" />
                         </Style>

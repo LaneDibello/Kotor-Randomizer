@@ -20,7 +20,7 @@ namespace kotor_Randomizer_2.Models
     /// <summary>
     /// Encapsulates the settings and processes used to randomize Kotor 1.
     /// </summary>
-    public class Kotor1Randomizer : RandomizerBase, IGeneralSettings, IRandomizeModules, IRandomizeItems
+    public class Kotor1Randomizer : RandomizerBase, IGeneralSettings, IRandomizeModules, IRandomizeItems, IRandomizeAudio
     {
         public override Game Game => Game.Kotor1;
         public override string Extension => "xkrp";
@@ -86,6 +86,7 @@ namespace kotor_Randomizer_2.Models
         private const string XML_MEDICAL        = "Medical";
         private const string XML_MELEE          = "Melee";
         private const string XML_MINE           = "Mine";
+        private const string XML_MIXGAMEAUDIO   = "MixGameAudio";
         private const string XML_MIXNPCPARTY    = "MixNpcParty";
         private const string XML_MODEL          = "Model";
         private const string XML_MODULE         = "Module";
@@ -154,6 +155,7 @@ namespace kotor_Randomizer_2.Models
         #endregion
 
         #region Constructors
+
         /// <summary>
         /// Constructs the randomizer with default settings.
         /// </summary>
@@ -173,11 +175,9 @@ namespace kotor_Randomizer_2.Models
                 new ReachabilityGoal { GoalID = 3, Caption = "Pazaak Champion" },
             };
 
-            // Create list of unlockable doors.
-            GeneralLockedDoors = ConstructGeneralOptionsList();
-
-            // Create list of item rando options.
-            ItemCategoryOptions = ConstructItemOptionsList();
+            GeneralLockedDoors = ConstructGeneralOptionsList(); // Create list of unlockable doors.
+            ItemCategoryOptions = ConstructItemOptionsList();   // Create list of item rando options.
+            AudioCategoryOptions = ConstructAudioOptionsList(); // Create list of audio rando options.
 
             // Create module digraph and get the list of modules.
             ModuleDigraph graph;
@@ -239,24 +239,39 @@ namespace kotor_Randomizer_2.Models
             {
                 new ItemRandoCategoryOption(ItemRandoCategory.Armbands, ArmbandsRegs),
                 new ItemRandoCategoryOption(ItemRandoCategory.Armor, ArmorRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.Belts, BeltsRegs) { SubtypeVisible = false },
+                new ItemRandoCategoryOption(ItemRandoCategory.Belts, BeltsRegs, subtypeVisible: false),
                 new ItemRandoCategoryOption(ItemRandoCategory.Blasters, BlastersRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.CreatureHides, HidesRegs) { SubtypeVisible = false },
+                new ItemRandoCategoryOption(ItemRandoCategory.CreatureHides, HidesRegs, subtypeVisible: false),
                 new ItemRandoCategoryOption(ItemRandoCategory.CreatureWeapons, CreatureRegs),
                 new ItemRandoCategoryOption(ItemRandoCategory.DroidEquipment, DroidRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.Gloves, GlovesRegs) { SubtypeVisible = false },
-                new ItemRandoCategoryOption(ItemRandoCategory.Grenades, GrenadesRegs) { SubtypeVisible = false },
+                new ItemRandoCategoryOption(ItemRandoCategory.Gloves, GlovesRegs, subtypeVisible: false),
+                new ItemRandoCategoryOption(ItemRandoCategory.Grenades, GrenadesRegs, subtypeVisible: false),
                 new ItemRandoCategoryOption(ItemRandoCategory.Implants, ImplantsRegs),
                 new ItemRandoCategoryOption(ItemRandoCategory.Lightsabers, LightsabersRegs),
                 new ItemRandoCategoryOption(ItemRandoCategory.Masks, MaskRegs),
                 new ItemRandoCategoryOption(ItemRandoCategory.MeleeWeapons, MeleeRegs),
                 new ItemRandoCategoryOption(ItemRandoCategory.Mines, MinesRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.PazaakCards, PazRegs) { SubtypeVisible = false },
+                new ItemRandoCategoryOption(ItemRandoCategory.PazaakCards, PazRegs, subtypeVisible: false),
                 new ItemRandoCategoryOption(ItemRandoCategory.Medical, StimsRegs),
                 new ItemRandoCategoryOption(ItemRandoCategory.Upgrades, UpgradeRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.Various, null) { SubtypeVisible = false },
+                new ItemRandoCategoryOption(ItemRandoCategory.Various, null, subtypeVisible: false),
             };
         }
+
+        public static ObservableCollection<AudioRandoCategoryOption> ConstructAudioOptionsList()
+        {
+            var bothFolders = AudioFolders.Music | AudioFolders.Sounds;
+            return new ObservableCollection<AudioRandoCategoryOption>
+            {
+                new AudioRandoCategoryOption(AudioRandoCategory.AreaMusic,     AudioFolders.Music,  RegexListAreaMusic, subtypeVisible: false, subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.BattleMusic,   bothFolders,         RegexBattleMusic,   subtypeVisible: false, subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.AmbientNoise,  bothFolders,         RegexListNoise,     subtypeVisible: false, subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.CutsceneNoise, AudioFolders.Music,  RegexCutscene,      subtypeVisible: false, subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.NpcSounds,     AudioFolders.Sounds, RegexNPCSound,      subtypeVisible: false, subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.PartySounds,   AudioFolders.Sounds, RegexPartySound,    subtypeVisible: true,  subtypeLabel: "Actions"),
+            };
+        }
+
         #endregion Constructors
 
         #region Properties
@@ -314,63 +329,108 @@ namespace kotor_Randomizer_2.Models
         #endregion
 
         #region Audio Properties
+
+        #region Audio Regexes
+        private static Regex RegexListAreaMusic => new Regex(@"^mus_(area|theme)_|^(57|credits|evil_ending)\.", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexBattleMusic => new Regex("mus_s?bat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexListNoise => new Regex(@"^(al_(an|el|en|me|nt|ot|vx)|as_el|cs|mgs|pl)_|^mus_loadscreen\.", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexCutscene => new Regex(@"^\d{2}[abc]?\.wav$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexNPCSound => new Regex("^n_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexPartySound => new Regex("^p_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        #endregion
+
+        #region Backing Fields
+        private ObservableCollection<AudioRandoCategoryOption> _audioCategoryOptions;
+        private bool _audioMixKotorGameMusic;
+        private bool _audioMixNpcAndPartySounds;
+        private bool _audioRemoveDmcaMusic;
+        #endregion
+
         public override bool SupportsAudio => true;
 
-        private RandomizationLevel _audioAmbientNoise;
+        private RandomizationLevel GetARCOLevel(AudioRandoCategory category)
+        {
+            return AudioCategoryOptions.First(op => op.Category == category) is AudioRandoCategoryOption arco
+                ? arco.Level
+                : throw new InvalidEnumArgumentException($"AudioRandoCategory.{category} does not exist.");
+        }
+
+        private void SetARCOLevel(AudioRandoCategory category, RandomizationLevel level)
+        {
+            if (AudioCategoryOptions.First(op => op.Category == category) is AudioRandoCategoryOption arco)
+            {
+                arco.Level = level;
+                NotifyPropertyChanged(nameof(AudioCategoryOptions));
+            }
+            else
+            {
+                throw new InvalidEnumArgumentException($"AudioRandoCategory.{category} does not exist.");
+            }
+        }
+
+
         public RandomizationLevel AudioAmbientNoise
         {
-            get => _audioAmbientNoise;
-            set => SetField(ref _audioAmbientNoise, value);
+            get => GetARCOLevel(AudioRandoCategory.AmbientNoise);
+            set => SetARCOLevel(AudioRandoCategory.AmbientNoise, value);
         }
 
-        private RandomizationLevel _audioAreaMusic;
         public RandomizationLevel AudioAreaMusic
         {
-            get => _audioAreaMusic;
-            set => SetField(ref _audioAreaMusic, value);
+            get => GetARCOLevel(AudioRandoCategory.AreaMusic);
+            set => SetARCOLevel(AudioRandoCategory.AreaMusic, value);
         }
 
-        private RandomizationLevel _audioBattleMusic;
         public RandomizationLevel AudioBattleMusic
         {
-            get => _audioBattleMusic;
-            set => SetField(ref _audioBattleMusic, value);
+            get => GetARCOLevel(AudioRandoCategory.BattleMusic);
+            set => SetARCOLevel(AudioRandoCategory.BattleMusic, value);
         }
 
-        private RandomizationLevel _audioCutsceneNoise;
         public RandomizationLevel AudioCutsceneNoise
         {
-            get => _audioCutsceneNoise;
-            set => SetField(ref _audioCutsceneNoise, value);
+            get => GetARCOLevel(AudioRandoCategory.CutsceneNoise);
+            set => SetARCOLevel(AudioRandoCategory.CutsceneNoise, value);
         }
 
-        private RandomizationLevel _audioNpcSounds;
         public RandomizationLevel AudioNpcSounds
         {
-            get => _audioNpcSounds;
-            set => SetField(ref _audioNpcSounds, value);
+            get => GetARCOLevel(AudioRandoCategory.NpcSounds);
+            set => SetARCOLevel(AudioRandoCategory.NpcSounds, value);
         }
 
-        private RandomizationLevel _audioPartySounds;
         public RandomizationLevel AudioPartySounds
         {
-            get => _audioPartySounds;
-            set => SetField(ref _audioPartySounds, value);
+            get => GetARCOLevel(AudioRandoCategory.PartySounds);
+            set => SetARCOLevel(AudioRandoCategory.PartySounds, value);
         }
 
-        private bool _audioMixNpcAndPartySounds;
+        public ObservableCollection<AudioRandoCategoryOption> AudioCategoryOptions
+        {
+            get => _audioCategoryOptions;
+            set => SetField(ref _audioCategoryOptions, value);
+        }
+
+        public bool AudioMixKotorGameMusic
+        {
+            get => _audioMixKotorGameMusic;
+            set => SetField(ref _audioMixKotorGameMusic, value);
+        }
+
         public bool AudioMixNpcAndPartySounds
         {
             get => _audioMixNpcAndPartySounds;
             set => SetField(ref _audioMixNpcAndPartySounds, value);
         }
 
-        private bool _audioRemoveDmcaMusic;
         public bool AudioRemoveDmcaMusic
         {
             get => _audioRemoveDmcaMusic;
             set => SetField(ref _audioRemoveDmcaMusic, value);
         }
+
+        public Regex AudioDmcaMusicRegex => new Regex(@"^(57|credits|evil_ending)\.wav$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
         #endregion Audio Properties
 
         #region General Properties
@@ -1867,6 +1927,7 @@ namespace kotor_Randomizer_2.Models
             AudioPartySounds          = RandomizationLevel.None;
             AudioRemoveDmcaMusic      = false;
             AudioMixNpcAndPartySounds = false;
+            AudioMixKotorGameMusic    = false;
         }
 
         /// <summary>
@@ -2282,14 +2343,15 @@ namespace kotor_Randomizer_2.Models
         private void ReadAudioSettings(XElement element)
         {
             // Read audio settings.
-            { if (element.Attribute(XML_AMBIENT    ) is XAttribute attr) AudioAmbientNoise         = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_AREA       ) is XAttribute attr) AudioAreaMusic            = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_BATTLE     ) is XAttribute attr) AudioBattleMusic          = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_CUTSCENE   ) is XAttribute attr) AudioCutsceneNoise        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_NPC        ) is XAttribute attr) AudioNpcSounds            = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_PARTY      ) is XAttribute attr) AudioPartySounds          = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_MIXNPCPARTY) is XAttribute attr) AudioMixNpcAndPartySounds = bool.Parse(attr.Value); }
-            { if (element.Attribute(XML_REMOVE_DMCA) is XAttribute attr) AudioRemoveDmcaMusic      = bool.Parse(attr.Value); }
+            { if (element.Attribute(XML_AMBIENT     ) is XAttribute attr) AudioAmbientNoise         = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_AREA        ) is XAttribute attr) AudioAreaMusic            = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_BATTLE      ) is XAttribute attr) AudioBattleMusic          = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_CUTSCENE    ) is XAttribute attr) AudioCutsceneNoise        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_NPC         ) is XAttribute attr) AudioNpcSounds            = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_PARTY       ) is XAttribute attr) AudioPartySounds          = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_MIXGAMEAUDIO) is XAttribute attr) AudioMixKotorGameMusic    = bool.Parse(attr.Value); }
+            { if (element.Attribute(XML_MIXNPCPARTY ) is XAttribute attr) AudioMixNpcAndPartySounds = bool.Parse(attr.Value); }
+            { if (element.Attribute(XML_REMOVE_DMCA ) is XAttribute attr) AudioRemoveDmcaMusic      = bool.Parse(attr.Value); }
         }
 
         /// <summary>
@@ -2591,8 +2653,9 @@ namespace kotor_Randomizer_2.Models
             if (AudioCutsceneNoise != RandomizationLevel.None) w.WriteAttributeString(XML_CUTSCENE, AudioCutsceneNoise.ToString());
             if (AudioNpcSounds     != RandomizationLevel.None) w.WriteAttributeString(XML_NPC,      AudioNpcSounds.ToString());
             if (AudioPartySounds   != RandomizationLevel.None) w.WriteAttributeString(XML_PARTY,    AudioPartySounds.ToString());
-            if (AudioMixNpcAndPartySounds) w.WriteAttributeString(XML_MIXNPCPARTY, AudioMixNpcAndPartySounds.ToString());
-            if (AudioRemoveDmcaMusic     ) w.WriteAttributeString(XML_REMOVE_DMCA, AudioRemoveDmcaMusic.ToString());
+            if (AudioMixKotorGameMusic   ) w.WriteAttributeString(XML_MIXGAMEAUDIO, AudioMixKotorGameMusic.ToString());
+            if (AudioMixNpcAndPartySounds) w.WriteAttributeString(XML_MIXNPCPARTY,  AudioMixNpcAndPartySounds.ToString());
+            if (AudioRemoveDmcaMusic     ) w.WriteAttributeString(XML_REMOVE_DMCA,  AudioRemoveDmcaMusic.ToString());
             w.WriteEndElement();                // End Audio
         }
 

@@ -10,84 +10,93 @@ namespace kotor_Randomizer_2.DTOs
         #region Constructors
         public RandomizationLevelOption() { }
 
-        public RandomizationLevelOption(string label, string toolTip)
+        public RandomizationLevelOption(
+            string label, string toolTip = "",
+            bool subtypeVisible = true, string subtypeLabel = "Subtype",
+            bool typeVisible = true, string typeLabel = "Type",
+            bool maxVisible = true, string maxLabel = "Max",
+            RandomizationLevel level = RandomizationLevel.None)
         {
             CheckboxLabel = label;
             CheckboxToolTip = toolTip;
+            SubtypeVisible = subtypeVisible;
+            SubtypeLabel = subtypeLabel;
+            TypeVisible = typeVisible;
+            TypeLabel = typeLabel;
+            MaxVisible = maxVisible;
+            MaxLabel = maxLabel;
+            Level = level;
         }
 
         #endregion
 
         #region Properties
+        #region Backing Fields
+        private RandoLevelFlags _flags = RandoLevelFlags.Subtype;
+        private string _checkboxLabel = "Default";
+        private string _checkboxToolTip;
+        private bool _subtypeVisible = true;
+        private string _subtypeLabel = "Subtype";
+        private bool _typeVisible = true;
+        private string _typeLabel = "Type";
+        private bool _maxVisible = true;
+        private string _maxLabel = "Max";
+        #endregion
+
         public RandomizationLevel Level
         {
             get => Flags.ToRandomizationLevel();
             set => Flags = value.ToRandoLevelFlags(SubtypeVisible);
         }
-        //private RandomizationLevel _level;
-        //public RandomizationLevel Level
-        //{
-        //    get => _level;
-        //    set => SetField(ref _level, value);
-        //}
 
-        private RandoLevelFlags _flags = RandoLevelFlags.Subtype;
         public RandoLevelFlags Flags
         {
             get => _flags;
             set => SetField(ref _flags, value);
         }
 
-        private string _checkboxLabel = "Default";
         public string CheckboxLabel
         {
             get => _checkboxLabel;
             set => SetField(ref _checkboxLabel, value);
         }
 
-        private string _checkboxToolTip;
         public string CheckboxToolTip
         {
             get => _checkboxToolTip;
             set => SetField(ref _checkboxToolTip, value);
         }
 
-        private bool _subtypeVisible = true;
         public bool SubtypeVisible
         {
             get => _subtypeVisible;
             set => SetField(ref _subtypeVisible, value);
         }
 
-        private string _subtypeLabel = "Subtype";
         public string SubtypeLabel
         {
             get => _subtypeLabel;
             set => SetField(ref _subtypeLabel, value);
         }
 
-        private bool _typeVisible = true;
         public bool TypeVisible
         {
             get => _typeVisible;
             set => SetField(ref _typeVisible, value);
         }
 
-        private string _typeLabel = "Type";
         public string TypeLabel
         {
             get => _typeLabel;
             set => SetField(ref _typeLabel, value);
         }
 
-        private bool _maxVisible = true;
         public bool MaxVisible
         {
             get => _maxVisible;
             set => SetField(ref _maxVisible, value);
         }
 
-        private string _maxLabel = "Max";
         public string MaxLabel
         {
             get => _maxLabel;

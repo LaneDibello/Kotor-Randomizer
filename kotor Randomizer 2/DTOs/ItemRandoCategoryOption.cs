@@ -9,11 +9,15 @@ namespace kotor_Randomizer_2.DTOs
         #region Constructors
         public ItemRandoCategoryOption() { }
 
-        public ItemRandoCategoryOption(ItemRandoCategory category, List<Regex> regex)
-            : base(category.ToLabel(), category.ToToolTip())
+        public ItemRandoCategoryOption(ItemRandoCategory category, List<Regex> regex,
+                bool subtypeVisible = true, string subtypeLabel = "Subtype",
+                bool typeVisible = true, string typeLabel = "Type",
+                bool maxVisible = true, string maxLabel = "Max",
+                RandomizationLevel level = RandomizationLevel.None)
+            : base(category.ToLabel(), category.ToToolTip(), subtypeVisible, subtypeLabel, typeVisible, typeLabel, maxVisible, maxLabel, level)
         {
-            Regex = regex;
             Category = category;
+            Regex = regex;
         }
         #endregion
 

@@ -28,7 +28,7 @@ namespace Randomizer_WPF.Views
         private ObservableCollection<RandomizableItem> lvOmittedItemSource;
         private SortAdorner lvOmittedSortAdorner;
         private GridViewColumnHeader lvOmittedSortCol;
-        private ObservableCollection<ItemRandoCategoryOption> lvCategoriesSource;
+        //private ObservableCollection<ItemRandoCategoryOption> lvCategoriesSource;
 
         private List<RandomizableItem> fullItemList = new List<RandomizableItem>();
         private List<RandomizableItem> initialOmitList = new List<RandomizableItem>();
@@ -283,7 +283,7 @@ namespace Randomizer_WPF.Views
             {
                 lvRandomizedItemSource = itemRando.ItemRandomizedList;
                 lvOmittedItemSource = itemRando.ItemOmittedList;
-                lvCategoriesSource = itemRando.ItemCategoryOptions;
+                //lvCategoriesSource = itemRando.ItemCategoryOptions;
                 cbbItemPresetOptions = new ObservableCollection<string>(itemRando.ItemOmitPresets.Keys);
                 cbbOmitPreset.ItemsSource = cbbItemPresetOptions;
                 //((RandomizerBase)e.OldValue).PropertyChanged -= View_ContextPropertyChanged;
@@ -356,95 +356,95 @@ namespace Randomizer_WPF.Views
             //PopulateOmitList();
         }
 
-        private void PopulateOmitList()
-        {
-            // TODO: Work on this... might be able to set visible omit items on initial load.
-            // It is currently adding duplicates when a settings file is saved or loaded.
-            // I think it might only be considering when an omit preset is selected.
+        //private void PopulateOmitList()
+        //{
+        //    // TODO: Work on this... might be able to set visible omit items on initial load.
+        //    // It is currently adding duplicates when a settings file is saved or loaded.
+        //    // I think it might only be considering when an omit preset is selected.
 
-            if (initializeOmits && lvCategoriesSource != null)
-            {
-                var rlucs = GetRandomizationLevelUserControls();
-                if (rlucs.Any())
-                {
-                    lvRandomizedItemSource.Clear();
-                    lvOmittedItemSource.Clear();
+        //    if (initializeOmits && lvCategoriesSource != null)
+        //    {
+        //        var rlucs = GetRandomizationLevelUserControls();
+        //        if (rlucs.Any())
+        //        {
+        //            lvRandomizedItemSource.Clear();
+        //            lvOmittedItemSource.Clear();
 
-                    foreach (var rluc in rlucs)
-                    {
-                        // Don't add this category of items if it's not active.
-                        if (!rluc.IsActive) continue;
+        //            foreach (var rluc in rlucs)
+        //            {
+        //                // Don't add this category of items if it's not active.
+        //                if (!rluc.IsActive) continue;
 
-                        // Add this category of items to the correct list.
-                        foreach (var item in fullItemList.Where(i => i.CategoryEnum == (ItemRandoCategory)rluc.Tag))
-                        {
-                            // If no preset is selected, sort based on IRandomizeItem's lists.
-                            if (cbbOmitPreset?.SelectedItem == null)
-                            {
-                                if (initialOmitList.Contains(item))
-                                    lvOmittedItemSource.Add(item);
-                                else
-                                    lvRandomizedItemSource.Add(item);
-                            }
-                            else    // Otherwise, sort based on the selected preset.
-                            {
-                                // Use itemRando.ItemOmitPresets instead...
-                                var preset = RandomizableItem.KOTOR1_OMIT_PRESETS[cbbOmitPreset.SelectedItem.ToString()];
-                                if (preset.Contains(item.Code))
-                                    lvOmittedItemSource.Add(item);
-                                else
-                                    lvRandomizedItemSource.Add(item);
-                            }
-                        }
-                    }
+        //                // Add this category of items to the correct list.
+        //                foreach (var item in fullItemList.Where(i => i.CategoryEnum == (ItemRandoCategory)rluc.Tag))
+        //                {
+        //                    // If no preset is selected, sort based on IRandomizeItem's lists.
+        //                    if (cbbOmitPreset?.SelectedItem == null)
+        //                    {
+        //                        if (initialOmitList.Contains(item))
+        //                            lvOmittedItemSource.Add(item);
+        //                        else
+        //                            lvRandomizedItemSource.Add(item);
+        //                    }
+        //                    else    // Otherwise, sort based on the selected preset.
+        //                    {
+        //                        // Use itemRando.ItemOmitPresets instead...
+        //                        var preset = RandomizableItem.KOTOR1_OMIT_PRESETS[cbbOmitPreset.SelectedItem.ToString()];
+        //                        if (preset.Contains(item.Code))
+        //                            lvOmittedItemSource.Add(item);
+        //                        else
+        //                            lvRandomizedItemSource.Add(item);
+        //                    }
+        //                }
+        //            }
 
-                    CbbOmitPreset_SelectionChanged(this, null);
+        //            CbbOmitPreset_SelectionChanged(this, null);
 
-                    initializeOmits = false;
-                }
-            }
-        }
+        //            initializeOmits = false;
+        //        }
+        //    }
+        //}
 
-        protected void RandomizationLevelChanged(object tag, RandomizationLevel oldValue, RandomizationLevel newValue)
-        {
-            var changed = false;
+        //protected void RandomizationLevelChanged(object tag, RandomizationLevel oldValue, RandomizationLevel newValue)
+        //{
+        //    var changed = false;
 
-            // Ignore if nothing has changed.
-            if (oldValue == newValue) return;
-            var category = (ItemRandoCategory)tag;
+        //    // Ignore if nothing has changed.
+        //    if (oldValue == newValue) return;
+        //    var category = (ItemRandoCategory)tag;
 
-            // Add items if enabling a randomization.
-            if (oldValue == RandomizationLevel.None)
-            {
-                foreach (var item in fullItemList.Where(i => i.CategoryEnum == category))
-                {
-                    // Only add it if it's not already in the list.
-                    if (!lvRandomizedItemSource.Contains(item))
-                        lvRandomizedItemSource.Add(item);
-                }
-                changed = true;
-            }
+        //    // Add items if enabling a randomization.
+        //    if (oldValue == RandomizationLevel.None)
+        //    {
+        //        foreach (var item in fullItemList.Where(i => i.CategoryEnum == category))
+        //        {
+        //            // Only add it if it's not already in the list.
+        //            if (!lvRandomizedItemSource.Contains(item))
+        //                lvRandomizedItemSource.Add(item);
+        //        }
+        //        changed = true;
+        //    }
 
-            // Remove items if disabling a randomization.
-            if (newValue == RandomizationLevel.None)
-            {
-                foreach (var item in fullItemList.Where(i => i.CategoryEnum == category))
-                {
-                    _ = lvOmittedItemSource.Remove(item);
-                    _ = lvRandomizedItemSource.Remove(item);
-                }
-                changed = true;
-            }
+        //    // Remove items if disabling a randomization.
+        //    if (newValue == RandomizationLevel.None)
+        //    {
+        //        foreach (var item in fullItemList.Where(i => i.CategoryEnum == category))
+        //        {
+        //            _ = lvOmittedItemSource.Remove(item);
+        //            _ = lvRandomizedItemSource.Remove(item);
+        //        }
+        //        changed = true;
+        //    }
 
-            //if (changed)
-            //{
-            //    // TODO: Fix databinding --- data binding is not linking the IRCO level to the RLUC level. This is a workaround.
-            //    lvCategoriesSource.First(op => op.Category == (ItemRandoCategory)tag).Level = newValue;
-            //}
+        //    //if (changed)
+        //    //{
+        //    //    // TODO: Fix databinding --- data binding is not linking the IRCO level to the RLUC level. This is a workaround.
+        //    //    lvCategoriesSource.First(op => op.Category == (ItemRandoCategory)tag).Level = newValue;
+        //    //}
 
-            // Sort items based on category selection.
-            if (changed && !delaySort) CbbOmitPreset_SelectionChanged(this, null);
-        }
+        //    // Sort items based on category selection.
+        //    if (changed && !delaySort) CbbOmitPreset_SelectionChanged(this, null);
+        //}
         #endregion
 
         #region Methods

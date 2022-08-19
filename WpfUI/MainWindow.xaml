@@ -238,25 +238,6 @@
                     <v:ItemView x:Name="ItemView"
                                 FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
                                 />
-                                
-                                <!--ItemLevelArmbands       ="{Binding ItemArmbands       , Mode=TwoWay}"
-                                ItemLevelArmor          ="{Binding ItemArmor          , Mode=TwoWay}"
-                                ItemLevelBelts          ="{Binding ItemBelts          , Mode=TwoWay}"
-                                ItemLevelBlasters       ="{Binding ItemBlasters       , Mode=TwoWay}"
-                                ItemLevelCreatureHides  ="{Binding ItemCreatureHides  , Mode=TwoWay}"
-                                ItemLevelCreatureWeapons="{Binding ItemCreatureWeapons, Mode=TwoWay}"
-                                ItemLevelDroidEquipment ="{Binding ItemDroidEquipment , Mode=TwoWay}"
-                                ItemLevelGauntlets      ="{Binding ItemGloves         , Mode=TwoWay}"
-                                ItemLevelGrenades       ="{Binding ItemGrenades       , Mode=TwoWay}"
-                                ItemLevelImplants       ="{Binding ItemImplants       , Mode=TwoWay}"
-                                ItemLevelLightsabers    ="{Binding ItemLightsabers    , Mode=TwoWay}"
-                                ItemLevelMasks          ="{Binding ItemMasks          , Mode=TwoWay}"
-                                ItemLevelMedical        ="{Binding ItemMedical        , Mode=TwoWay}"
-                                ItemLevelMelee          ="{Binding ItemMeleeWeapons   , Mode=TwoWay}"
-                                ItemLevelMines          ="{Binding ItemMines          , Mode=TwoWay}"
-                                ItemLevelPazaak         ="{Binding ItemPazaakCards    , Mode=TwoWay}"
-                                ItemLevelUpgrades       ="{Binding ItemUpgrades       , Mode=TwoWay}"
-                                ItemLevelVarious        ="{Binding ItemVarious        , Mode=TwoWay}"-->
                 </TabItem>
 
                 <!-- Audio Rando Settings -->
@@ -266,8 +247,9 @@
                          >
                     <v:AudioView x:Name="AudioView"
                                  FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+                                 />
                                  
-                                 AreaMusic           ="{Binding AudioAreaMusic           , Mode=TwoWay}"
+                                 <!--AreaMusic           ="{Binding AudioAreaMusic           , Mode=TwoWay}"
                                  BattleMusic         ="{Binding AudioBattleMusic         , Mode=TwoWay}"
                                  AmbientMusic        ="{Binding AudioAmbientNoise        , Mode=TwoWay}"
                                  CutsceneNoise       ="{Binding AudioCutsceneNoise       , Mode=TwoWay}"
@@ -275,8 +257,7 @@
                                  PartySounds         ="{Binding AudioPartySounds         , Mode=TwoWay}"
                                  OverwriteDmcaMusic  ="{Binding AudioRemoveDmcaMusic     , Mode=TwoWay}"
                                  MixKotorGameMusic   ="{Binding AudioMixKotorGameMusic   , Mode=TwoWay}"
-                                 MixNpcAndPartySounds="{Binding AudioMixNpcAndPartySounds, Mode=TwoWay}"
-                                 />
+                                 MixNpcAndPartySounds="{Binding AudioMixNpcAndPartySounds, Mode=TwoWay}"-->
                 </TabItem>
 
                 <!-- Cosmetic Rando Settings -->
