@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
-using System.Diagnostics;
 
 namespace kotor_Randomizer_2.Models
 {
@@ -70,6 +69,7 @@ namespace kotor_Randomizer_2.Models
         private const string XML_MEDICAL        = "Medical";
         private const string XML_MELEE          = "Melee";
         private const string XML_MINE           = "Mine";
+        private const string XML_MIXGAMEAUDIO   = "MixGameAudio";
         private const string XML_MIXNPCPARTY    = "MixNpcParty";
         private const string XML_MODEL          = "Model";
         private const string XML_MODULE         = "Module";
@@ -171,173 +171,20 @@ namespace kotor_Randomizer_2.Models
             ItemRandomizedList = new ObservableCollection<RandomizableItem>(RandomizableItem.KOTOR2_ITEMS);
         }
 
-        private static ObservableCollection<QualityOfLifeOption> ConstructGeneralOptions()
-        {
-            return new ObservableCollection<QualityOfLifeOption>
-            {
-                new QualityOfLifeOption(QualityOfLife.CO_GalaxyMap),                 // General
-                new QualityOfLifeOption(QualityOfLife.K2_PreventDiscipleCrash),
-                new QualityOfLifeOption(QualityOfLife.K2_CitResidential_AptDoor),    // Citadel Station
-                new QualityOfLifeOption(QualityOfLife.K2_CitResidential_ToExchange),
-                new QualityOfLifeOption(QualityOfLife.K2_CitStation_Terminals),
-                new QualityOfLifeOption(QualityOfLife.K2_DanCourtyard_ToEnclave),    // Dantooine
-                new QualityOfLifeOption(QualityOfLife.K2_DxnCamp_ToIziz),            // Dxun
-                new QualityOfLifeOption(QualityOfLife.K2_DxnCamp_Basalisk),
-                new QualityOfLifeOption(QualityOfLife.K2_DxnTomb_ToCamp),
-                new QualityOfLifeOption(QualityOfLife.K2_KorAcademy_ToValley),       // Korriban
-                new QualityOfLifeOption(QualityOfLife.K2_KorCave_ToTomb),
-                new QualityOfLifeOption(QualityOfLife.K2_MalSurface_ToHawk),         // Malachor V
-                new QualityOfLifeOption(QualityOfLife.K2_MalCore_ToAcademy),
-                new QualityOfLifeOption(QualityOfLife.K2_NarDocks_ZezDoor),          // Nar Shaddaa
-                new QualityOfLifeOption(QualityOfLife.K2_NarJekk_VipRoom),
-                new QualityOfLifeOption(QualityOfLife.K2_NarTunnels_ToJekk),
-                new QualityOfLifeOption(QualityOfLife.K2_NarYacht_ToHawk),
-                new QualityOfLifeOption(QualityOfLife.K2_OndPort_ToCamp),            // Onderon
-                new QualityOfLifeOption(QualityOfLife.K2_PerAdmin_ToDorms),          // Peragus
-                new QualityOfLifeOption(QualityOfLife.K2_PerAdmin_ToTunnels),
-                new QualityOfLifeOption(QualityOfLife.K2_PerAdmin_ToHarbinger),
-                new QualityOfLifeOption(QualityOfLife.K2_PerAdmin_ToDepot),
-                new QualityOfLifeOption(QualityOfLife.K2_PerDorms_ToExterior),
-                new QualityOfLifeOption(QualityOfLife.K2_PerExterior_ToDorms),
-                new QualityOfLifeOption(QualityOfLife.K2_PerDepot_ToTunnels),
-                new QualityOfLifeOption(QualityOfLife.K2_PerDepot_ForceFields),
-                new QualityOfLifeOption(QualityOfLife.K2_PerHangar_ToHawk),
-                new QualityOfLifeOption(QualityOfLife.K2_TelAcademy_ToPlateau),      // Telos
-                new QualityOfLifeOption(QualityOfLife.K2_TelAcademy_ToHawk),
-                new QualityOfLifeOption(QualityOfLife.K2_TelBaoDurConvo),
-                new QualityOfLifeOption(QualityOfLife.K2_WarEntertain_ToRavager),    // Wartime Telos
-            };
-        }
-
-        public static ObservableCollection<ItemRandoCategoryOption> ConstructItemOptionsList()
-        {
-            return new ObservableCollection<ItemRandoCategoryOption>
-            {
-                new ItemRandoCategoryOption(ItemRandoCategory.Armbands, ArmbandsRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.Armor, ArmorRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.Belts, BeltsRegs) { SubtypeVisible = false },
-                new ItemRandoCategoryOption(ItemRandoCategory.Blasters, BlastersRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.CreatureHides, HidesRegs) { SubtypeVisible = false },
-                new ItemRandoCategoryOption(ItemRandoCategory.CreatureWeapons, CreatureRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.DroidEquipment, DroidRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.Gloves, GlovesRegs) { SubtypeVisible = false },
-                new ItemRandoCategoryOption(ItemRandoCategory.Grenades, GrenadesRegs) { SubtypeVisible = false },
-                new ItemRandoCategoryOption(ItemRandoCategory.Implants, ImplantsRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.Lightsabers, LightsabersRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.Masks, MaskRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.MeleeWeapons, MeleeRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.Mines, MinesRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.PazaakCards, PazRegs) { SubtypeVisible = false },
-                new ItemRandoCategoryOption(ItemRandoCategory.Medical, StimsRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.Upgrades, UpgradeRegs),
-                new ItemRandoCategoryOption(ItemRandoCategory.PCrystal, PCrystalRegs) { SubtypeVisible = false },
-                new ItemRandoCategoryOption(ItemRandoCategory.Props, PropsRegs) { SubtypeVisible = false },
-                new ItemRandoCategoryOption(ItemRandoCategory.Various, null) { SubtypeVisible = false },
-            };
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        public void ResetSettingsToDefault()
-        {
-            ResetGeneral();
-            ResetAudio();
-            ResetItems();
-            //ResetModels();
-            ResetModules();
-            //ResetOther();
-            //ResetTables();
-            //ResetText();
-            //ResetTextures();
-        }
-
-        /// <summary>
-        /// Reset general settings to defaults.
-        /// </summary>
-        private void ResetGeneral()
-        {
-            GeneralSaveOptions = SavePatchOptions.Default;
-            foreach (var door in GeneralUnlockedDoors)
-                GeneralLockedDoors.Add(door);
-            GeneralUnlockedDoors.Clear();
-        }
-
-        /// <summary>
-        /// Reset modules settings to defaults.
-        /// </summary>
-        private void ResetModules()
-        {
-            GeneralSaveOptions = SavePatchOptions.Default;
-
-            foreach (var item in GeneralUnlockedDoors) GeneralLockedDoors.Add(item);
-            GeneralUnlockedDoors.Clear();
-
-            //ModuleAllowGlitchClip      = false;
-            //ModuleAllowGlitchDlz       = false;
-            //ModuleAllowGlitchFlu       = false;
-            //ModuleAllowGlitchGpw       = false;
-            //ModuleLogicStrongGoals     = false;
-            //ModuleGoalIsKreia          = true;
-            //ModuleGoalIsMasters        = false;
-            //ModuleGoalIsPazaak         = false;
-            //ModuleGoalIsFullParty      = false;
-            //ModuleLogicIgnoreOnceEdges = true;
-            //ModuleLogicRandoRules      = true;
-            //ModuleLogicReachability    = true;
-
-            foreach (var item in ModuleRandomizedList) ModuleOmittedList.Add(item);
-            ModuleRandomizedList.Clear();
-            ModuleShufflePreset = Globals.K2_MODULE_OMIT_PRESETS.First().Key;
-        }
-
-        /// <summary>
-        /// Reset item settings to defaults.
-        /// </summary>
-        private void ResetItems()
-        {
-            // Disable all item randomization options.
-            ItemCategoryOptions.AsParallel().ForAll(op => op.Level = RandomizationLevel.None);
-
-            // Move all items to randomized list and clear omitted.
-            foreach (var item in ItemOmittedList) ItemRandomizedList.Add(item);
-            ItemOmittedList.Clear();
-
-            //// Grab omitted list from globals.
-            //var omitItems = ItemRandomizedList.Where(ri => RandomizableItem.KOTOR1_OMIT_PRESETS.First().Value.Contains(ri.Code)).ToList();
-            //foreach (var item in omitItems)
-            //{
-            //    ItemOmittedList.Add(item);
-            //    ItemRandomizedList.Remove(item);
-            //}
-
-            //ItemOmittedPreset = RandomizableItem.KOTOR1_OMIT_PRESETS.First().Key;
-        }
-
-        /// <summary>
-        /// Reset Audio settings to default.
-        /// </summary>
-        private void ResetAudio()
-        {
-            AudioAmbientNoise         = RandomizationLevel.None;
-            AudioAreaMusic            = RandomizationLevel.None;
-            AudioBattleMusic          = RandomizationLevel.None;
-            AudioCutsceneNoise        = RandomizationLevel.None;
-            AudioNpcSounds            = RandomizationLevel.None;
-            AudioPartySounds          = RandomizationLevel.None;
-            AudioRemoveDmcaMusic      = false;
-            AudioMixNpcAndPartySounds = false;
-            AudioMixKotorGameMusic    = false;
-        }
-
         #endregion
 
         #region RandomizerBase Implementation
 
+        #region Base Properties
         public override Game Game => Game.Kotor2;
         public override string Extension => "xk2rp";
+        #endregion
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public override void Randomizer_DoWork(object sender, DoWorkEventArgs e)
         {
             var bw = sender as BackgroundWorker;
@@ -381,7 +228,7 @@ namespace kotor_Randomizer_2.Models
         private int CountActiveCategories()
         {
             var count = 0;
-            //if (DoRandomizeAudio) count++;
+            if (DoRandomizeAudio) count++;
             if (DoRandomizeItems) count++;
             //if (DoRandomizeModels) count++;
             if (DoRandomizeModules) count++;
@@ -424,6 +271,11 @@ namespace kotor_Randomizer_2.Models
             RandomizeGame(bw, paths);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bw"></param>
+        /// <param name="paths"></param>
         private void BackUpGame(BackgroundWorker bw, KPaths paths)
         {
             var activeCategories = CountActiveCategories() + 2; // Add one for overrides and one for finishing up.
@@ -453,12 +305,12 @@ namespace kotor_Randomizer_2.Models
                     ItemRando.CreateItemBackups(paths);
                 }
 
-                //if (DoRandomizeAudio)       // Back up Audio
-                //{
-                //    ReportProgress(bw, progress += stepSize, BusyState.BackingUp, CATEGORY_AUDIO, string.Format(form, CATEGORY_AUDIO));
-                //    if (DoRandomizeMusic) { SoundRando.CreateMusicBackups(paths); }
-                //    if (DoRandomizeSound) { SoundRando.CreateSoundBackups(paths); }
-                //}
+                if (DoRandomizeAudio)       // Back up Audio
+                {
+                    ReportProgress(bw, progress += stepSize, BusyState.BackingUp, CATEGORY_AUDIO, string.Format(form, CATEGORY_AUDIO));
+                    if (DoRandomizeMusic) { SoundRando.CreateMusicBackups(paths); }
+                    if (DoRandomizeSound) { SoundRando.CreateSoundBackups(paths); }
+                }
 
                 //if (DoRandomizeModels)      // Back up Models (Cosmetics)
                 //{
@@ -500,6 +352,11 @@ namespace kotor_Randomizer_2.Models
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bw"></param>
+        /// <param name="paths"></param>
         private void RandomizeGame(BackgroundWorker bw, KPaths paths)
         {
             var activeCategories = CountActiveCategories() + 2; // Add one for overrides and one for finishing up.
@@ -549,13 +406,13 @@ namespace kotor_Randomizer_2.Models
                         sw.WriteLine(Properties.Resources.LogItemsDone);
                     }
 
-                    //if (DoRandomizeAudio)       // Randomize Audio
-                    //{
-                    //    Randomize.RestartRng();
-                    //    ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_AUDIO, string.Format(form, CATEGORY_AUDIO));
-                    //    SoundRando.sound_rando(paths, this);
-                    //    sw.WriteLine(Properties.Resources.LogMusicSoundDone);
-                    //}
+                    if (DoRandomizeAudio)       // Randomize Audio
+                    {
+                        Randomize.RestartRng();
+                        ReportProgress(bw, progress += stepSize, BusyState.Randomizing, CATEGORY_AUDIO, string.Format(form, CATEGORY_AUDIO));
+                        SoundRando.sound_rando(paths, this);
+                        sw.WriteLine(Properties.Resources.LogMusicSoundDone);
+                    }
 
                     //if (DoRandomizeModels)      // Randomize Cosmetics (Models)
                     //{
@@ -666,12 +523,12 @@ namespace kotor_Randomizer_2.Models
                         ModuleRando.CreateSpoilerLog(workbook, false);
                     }
 
-                    //if (DoRandomizeAudio)
-                    //{
-                    //    category = "Audio";
-                    //    ReportProgress(bw, progress += stepSize, BusyState.Spoiling, category, string.Format(spoilFormat, category));
-                    //    SoundRando.CreateSpoilerLog(workbook);
-                    //}
+                    if (DoRandomizeAudio)
+                    {
+                        category = "Audio";
+                        ReportProgress(bw, progress += stepSize, BusyState.Spoiling, category, string.Format(spoilFormat, category));
+                        SoundRando.CreateSpoilerLog(workbook);
+                    }
 
                     //if (DoRandomizeOther)
                     //{
@@ -785,21 +642,43 @@ namespace kotor_Randomizer_2.Models
             }
         }
 
+        /// <summary>
+        /// Resets all randomization settings to the default value.
+        /// </summary>
+        public override void ResetAllSettings()
+        {
+            ResetGeneral();
+            ResetAudio();
+            ResetItems();
+            //ResetModels();
+            ResetModules();
+            //ResetOther();
+            //ResetTables();
+            //ResetText();
+            //ResetTextures();
+        }
+
+        /// <summary>
+        /// Reads a KRP file using the old, compact format.
+        /// </summary>
         protected override void ReadKRP(Stream s)
         {
             throw new NotImplementedException("KRP format is invalid for Kotor 2 Randomization.");
         }
 
+        /// <summary>
+        /// Reads an xml preset file.
+        /// </summary>
         protected override void ReadFromFile(string path)
         {
-            ResetSettingsToDefault();
+            ResetAllSettings();
 
             var doc = XDocument.Load(path);
             var element = doc.Descendants(XML_GENERAL).FirstOrDefault();
             if (element != null) ReadGeneralSettings(element);
 
-            //element = doc.Descendants(XML_AUDIO).FirstOrDefault();
-            //if (element != null) ReadAudioSettings(element);
+            element = doc.Descendants(XML_AUDIO).FirstOrDefault();
+            if (element != null) ReadAudioSettings(element);
 
             element = doc.Descendants(XML_ITEM).FirstOrDefault();
             if (element != null) ReadItemSettings(element);
@@ -821,6 +700,98 @@ namespace kotor_Randomizer_2.Models
 
             //element = doc.Descendants(XML_TEXTURE).FirstOrDefault();
             //if (element != null) ReadTextureSettings(element);
+        }
+
+        /// <summary>
+        /// Writes an xml preset file.
+        /// </summary>
+        protected override void WriteToFile(string path)
+        {
+            using (var w = new XmlTextWriter(path, null))
+            {
+                w.WriteStartDocument();
+                w.WriteStartElement(XML_SETTINGS); // Begin Settings
+
+                WriteGeneralSettings(w);
+
+                if (DoRandomizeAudio   ) WriteAudioSettings(w);
+                if (DoRandomizeItems   ) WriteItemSettings(w);
+                //if (DoRandomizeModels  ) WriteModelSettings(w);
+                if (DoRandomizeModules ) WriteModuleSettings(w);
+                //if (DoRandomizeOther   ) WriteOtherSettings(w);
+                //if (DoRandomizeParty   ) WritePartySettings(w);   // Not yet implemented.
+                //if (DoRandomizeTables  ) WriteTableSettings(w);
+                //if (DoRandomizeText    ) WriteTextSettings(w);
+                //if (DoRandomizeTextures) WriteTextureSettings(w);
+
+                w.WriteEndElement();                // End Settings
+                w.WriteEndDocument();
+                w.Flush();
+            }
+        }
+
+        #endregion
+
+        #region IGeneralSettings Implementation
+
+        #region Backing Fields
+        private SavePatchOptions _generalSaveOptions;
+        private ObservableCollection<QualityOfLifeOption> _generalUnlockedDoors = new ObservableCollection<QualityOfLifeOption>();
+        private ObservableCollection<QualityOfLifeOption> _generalLockedDoors = new ObservableCollection<QualityOfLifeOption>();
+        #endregion
+
+        #region General Methods
+
+        /// <summary>
+        /// Construct the list of K2 quality of life options.
+        /// </summary>
+        private static ObservableCollection<QualityOfLifeOption> ConstructGeneralOptions()
+        {
+            return new ObservableCollection<QualityOfLifeOption>
+            {
+                new QualityOfLifeOption(QualityOfLife.CO_GalaxyMap),                 // General
+                new QualityOfLifeOption(QualityOfLife.K2_PreventDiscipleCrash),
+                new QualityOfLifeOption(QualityOfLife.K2_CitResidential_AptDoor),    // Citadel Station
+                new QualityOfLifeOption(QualityOfLife.K2_CitResidential_ToExchange),
+                new QualityOfLifeOption(QualityOfLife.K2_CitStation_Terminals),
+                new QualityOfLifeOption(QualityOfLife.K2_DanCourtyard_ToEnclave),    // Dantooine
+                new QualityOfLifeOption(QualityOfLife.K2_DxnCamp_ToIziz),            // Dxun
+                new QualityOfLifeOption(QualityOfLife.K2_DxnCamp_Basalisk),
+                new QualityOfLifeOption(QualityOfLife.K2_DxnTomb_ToCamp),
+                new QualityOfLifeOption(QualityOfLife.K2_KorAcademy_ToValley),       // Korriban
+                new QualityOfLifeOption(QualityOfLife.K2_KorCave_ToTomb),
+                new QualityOfLifeOption(QualityOfLife.K2_MalSurface_ToHawk),         // Malachor V
+                new QualityOfLifeOption(QualityOfLife.K2_MalCore_ToAcademy),
+                new QualityOfLifeOption(QualityOfLife.K2_NarDocks_ZezDoor),          // Nar Shaddaa
+                new QualityOfLifeOption(QualityOfLife.K2_NarJekk_VipRoom),
+                new QualityOfLifeOption(QualityOfLife.K2_NarTunnels_ToJekk),
+                new QualityOfLifeOption(QualityOfLife.K2_NarYacht_ToHawk),
+                new QualityOfLifeOption(QualityOfLife.K2_OndPort_ToCamp),            // Onderon
+                new QualityOfLifeOption(QualityOfLife.K2_PerAdmin_ToDorms),          // Peragus
+                new QualityOfLifeOption(QualityOfLife.K2_PerAdmin_ToTunnels),
+                new QualityOfLifeOption(QualityOfLife.K2_PerAdmin_ToHarbinger),
+                new QualityOfLifeOption(QualityOfLife.K2_PerAdmin_ToDepot),
+                new QualityOfLifeOption(QualityOfLife.K2_PerDorms_ToExterior),
+                new QualityOfLifeOption(QualityOfLife.K2_PerExterior_ToDorms),
+                new QualityOfLifeOption(QualityOfLife.K2_PerDepot_ToTunnels),
+                new QualityOfLifeOption(QualityOfLife.K2_PerDepot_ForceFields),
+                new QualityOfLifeOption(QualityOfLife.K2_PerHangar_ToHawk),
+                new QualityOfLifeOption(QualityOfLife.K2_TelAcademy_ToPlateau),      // Telos
+                new QualityOfLifeOption(QualityOfLife.K2_TelAcademy_ToHawk),
+                new QualityOfLifeOption(QualityOfLife.K2_TelBaoDurConvo),
+                new QualityOfLifeOption(QualityOfLife.K2_WarEntertain_ToRavager),    // Wartime Telos
+            };
+        }
+
+        /// <summary>
+        /// Reset general settings to defaults.
+        /// </summary>
+        private void ResetGeneral()
+        {
+            GeneralSaveOptions = SavePatchOptions.Default;
+            foreach (var door in GeneralUnlockedDoors)
+                GeneralLockedDoors.Add(door);
+            GeneralUnlockedDoors.Clear();
         }
 
         /// <summary>
@@ -851,67 +822,108 @@ namespace kotor_Randomizer_2.Models
         }
 
         /// <summary>
-        /// Read item settings from an XML file.
+        /// Write General settings to an XML file.
         /// </summary>
-        /// <param name="element">XML element containing the item settings.</param>
-        private void ReadItemSettings(XElement element)
+        /// <param name="w"></param>
+        private void WriteGeneralSettings(XmlTextWriter w)
         {
-            // Read item settings. Note: we can assume element is not null.
-            { if (element.Attribute(XML_ARMBAND   ) is XAttribute attr) ItemArmbands        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_ARMOR     ) is XAttribute attr) ItemArmor           = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_BELT      ) is XAttribute attr) ItemBelts           = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_BLASTER   ) is XAttribute attr) ItemBlasters        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_CHIDE     ) is XAttribute attr) ItemCreatureHides   = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_CWEAPON   ) is XAttribute attr) ItemCreatureWeapons = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_DROID     ) is XAttribute attr) ItemDroidEquipment  = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_GLOVE     ) is XAttribute attr) ItemGloves          = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_GRENADE   ) is XAttribute attr) ItemGrenades        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_IMPLANT   ) is XAttribute attr) ItemImplants        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_LIGHTSABER) is XAttribute attr) ItemLightsabers     = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_MASK      ) is XAttribute attr) ItemMasks           = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_MELEE     ) is XAttribute attr) ItemMeleeWeapons    = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_MINE      ) is XAttribute attr) ItemMines           = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_MEDICAL   ) is XAttribute attr) ItemMedical         = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_PAZAAK    ) is XAttribute attr) ItemPazaakCards     = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_UPGRADE   ) is XAttribute attr) ItemUpgrades        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_PCRYSTAL  ) is XAttribute attr) ItemPCrystal        = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_PROPS     ) is XAttribute attr) ItemProps           = ParseEnum<RandomizationLevel>(attr.Value); }
-            { if (element.Attribute(XML_VARIOUS   ) is XAttribute attr) ItemVarious         = ParseEnum<RandomizationLevel>(attr.Value); }
+            w.WriteStartElement(XML_GENERAL);  // Begin General
 
-            //// Reset omitted items list. -- May no longer be necessary.
-            //foreach (var item in ItemOmittedList)
-            //    ItemRandomizedList.Add(item);
-            //ItemOmittedList.Clear();
+            var v = System.Reflection.Assembly.GetAssembly(typeof(Kotor1Randomizer)).GetName().Version;
+            w.WriteAttributeString(XML_VERSION, $"v{v.Major}.{v.Minor}.{v.Build}");
 
-            // Read omitted item preset.
-            //var omit = element.Descendants(XML_OMIT).FirstOrDefault();
-            ItemOmittedPreset = element.Attribute(XML_PRESET)?.Value ?? null;
+            //if (GeneralSaveOptions != SavePatchOptions.Default)
+            w.WriteAttributeString(XML_SAVE_OPS, ((int)GeneralSaveOptions).ToString()); // Always write save options.
 
-            // If preset is null, read the list of omitted items.
-            if (ItemOmittedPreset is null)
-            {
-                foreach (var i in element.Descendants(XML_OMIT))
-                {
-                    var code = i.Attribute(XML_CODE).Value;
-                    var item = ItemRandomizedList.FirstOrDefault(x => x.Code == code);
-                    if (item != null)
-                    {
-                        ItemOmittedList.Add(item);
-                        _ = ItemRandomizedList.Remove(item);
-                    }
-                }
-            }
-            else    // Otherwise, set the list of items based on the preset.
-            {
-                foreach (var i in RandomizableItem.KOTOR2_OMIT_PRESETS[ItemOmittedPreset])
-                {
-                    var item = ItemRandomizedList.FirstOrDefault(x => x.Code == i);
-                    ItemOmittedList.Add(item);
-                    _ = ItemRandomizedList.Remove(item);
-                }
-            }
+            var qols = GeneralUnlockedDoors.Select(d => (int)d.QoL).ToList();
+            qols.Sort();
+            if (qols.Any())
+                w.WriteAttributeString(XML_QOL, string.Join(", ", qols));
 
-            NotifyPropertyChanged(nameof(ItemCategoryOptions));
+            w.WriteEndElement();                // End General
+        }
+
+        #endregion
+
+        #region General Properties
+
+        public Dictionary<string, Tuple<float, float, float>> FixedCoordinates => new Dictionary<string, Tuple<float, float, float>>()
+        {
+            { AREA_CIT_ENTERTAIN, new Tuple<float, float, float>(-13.5f, -63.4f,  11.51f) },
+        };
+
+        public SavePatchOptions GeneralSaveOptions
+        {
+            get => _generalSaveOptions;
+            set => SetField(ref _generalSaveOptions, value);
+        }
+
+        public ObservableCollection<QualityOfLifeOption> GeneralUnlockedDoors
+        {
+            get => _generalUnlockedDoors;
+            set => SetField(ref _generalUnlockedDoors, value);
+        }
+
+        public ObservableCollection<QualityOfLifeOption> GeneralLockedDoors
+        {
+            get => _generalLockedDoors;
+            set => SetField(ref _generalLockedDoors, value);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region IRandomizeModules Implementation
+
+        #region Backing Fields
+        private bool _moduleAllowGlitchClip;
+        private bool _moduleAllowGlitchDlz;
+        private bool _moduleAllowGlitchFlu;
+        private bool _moduleAllowGlitchGpw;
+        private bool _moduleLogicStrongGoals;
+        private bool _moduleLogicIgnoreOnceEdges;
+        private bool _moduleLogicRandoRules;
+        private bool _moduleLogicReachability;
+        private ObservableCollection<ReachabilityGoal> _moduleGoalList;
+        private bool _moduleGoalIsKreia = true;
+        private bool _moduleGoalIsJediMasters;
+        private bool _moduleGoalIsPazaak;
+        private bool _moduleGoalIsFullParty;
+        private ObservableCollection<ModuleVertex> _moduleRandomizedList = new ObservableCollection<ModuleVertex>();
+        private ObservableCollection<ModuleVertex> _moduleOmittedList = new ObservableCollection<ModuleVertex>();
+        private ObservableCollection<string> _modulePresetOptions = new ObservableCollection<string>(Globals.K2_MODULE_OMIT_PRESETS.Keys);
+        private string _moduleShufflePreset = "Default";
+        #endregion
+
+        #region Module Methods
+
+        /// <summary>
+        /// Reset modules settings to defaults.
+        /// </summary>
+        private void ResetModules()
+        {
+            GeneralSaveOptions = SavePatchOptions.Default;
+
+            foreach (var item in GeneralUnlockedDoors) GeneralLockedDoors.Add(item);
+            GeneralUnlockedDoors.Clear();
+
+            //ModuleAllowGlitchClip      = false;
+            //ModuleAllowGlitchDlz       = false;
+            //ModuleAllowGlitchFlu       = false;
+            //ModuleAllowGlitchGpw       = false;
+            //ModuleLogicStrongGoals     = false;
+            //ModuleGoalIsKreia          = true;
+            //ModuleGoalIsMasters        = false;
+            //ModuleGoalIsPazaak         = false;
+            //ModuleGoalIsFullParty      = false;
+            //ModuleLogicIgnoreOnceEdges = true;
+            //ModuleLogicRandoRules      = true;
+            //ModuleLogicReachability    = true;
+
+            foreach (var item in ModuleRandomizedList) ModuleOmittedList.Add(item);
+            ModuleRandomizedList.Clear();
+            ModuleShufflePreset = Globals.K2_MODULE_OMIT_PRESETS.First().Key;
         }
 
         /// <summary>
@@ -924,26 +936,26 @@ namespace kotor_Randomizer_2.Models
             if (element.Descendants(XML_GLITCHES).FirstOrDefault() is XElement glitches)
             {
                 { if (glitches.Attribute(XML_CLIP) is XAttribute attr) ModuleAllowGlitchClip = bool.Parse(attr.Value); }
-                { if (glitches.Attribute(XML_DLZ ) is XAttribute attr) ModuleAllowGlitchDlz  = bool.Parse(attr.Value); }
-                { if (glitches.Attribute(XML_FLU ) is XAttribute attr) ModuleAllowGlitchFlu  = bool.Parse(attr.Value); }
-                { if (glitches.Attribute(XML_GPW ) is XAttribute attr) ModuleAllowGlitchGpw  = bool.Parse(attr.Value); }
+                { if (glitches.Attribute(XML_DLZ) is XAttribute attr) ModuleAllowGlitchDlz  = bool.Parse(attr.Value); }
+                { if (glitches.Attribute(XML_FLU) is XAttribute attr) ModuleAllowGlitchFlu  = bool.Parse(attr.Value); }
+                { if (glitches.Attribute(XML_GPW) is XAttribute attr) ModuleAllowGlitchGpw  = bool.Parse(attr.Value); }
             }
 
             // Read goal settings.
             if (element.Descendants(XML_GOALS).FirstOrDefault() is XElement goals)
             {
-                { if (goals.Attribute(XML_KREIA ) is XAttribute attr) ModuleGoalIsKreia     = bool.Parse(attr.Value); }
+                { if (goals.Attribute(XML_KREIA) is XAttribute attr) ModuleGoalIsKreia     = bool.Parse(attr.Value); }
                 { if (goals.Attribute(XML_MASTER) is XAttribute attr) ModuleGoalIsMasters   = bool.Parse(attr.Value); }
                 { if (goals.Attribute(XML_PAZAAK) is XAttribute attr) ModuleGoalIsPazaak    = bool.Parse(attr.Value); }
-                { if (goals.Attribute(XML_PARTY ) is XAttribute attr) ModuleGoalIsFullParty = bool.Parse(attr.Value); }
+                { if (goals.Attribute(XML_PARTY) is XAttribute attr) ModuleGoalIsFullParty = bool.Parse(attr.Value); }
             }
 
             // Read logic settings.
             if (element.Descendants(XML_LOGIC).FirstOrDefault() is XElement logic)
             {
-                { if (logic.Attribute(XML_RULES       ) is XAttribute attr) ModuleLogicRandoRules      = bool.Parse(attr.Value); }
-                { if (logic.Attribute(XML_REACHABLE   ) is XAttribute attr) ModuleLogicReachability    = bool.Parse(attr.Value); }
-                { if (logic.Attribute(XML_IGNORE_ONCE ) is XAttribute attr) ModuleLogicIgnoreOnceEdges = bool.Parse(attr.Value); }
+                { if (logic.Attribute(XML_RULES) is XAttribute attr) ModuleLogicRandoRules      = bool.Parse(attr.Value); }
+                { if (logic.Attribute(XML_REACHABLE) is XAttribute attr) ModuleLogicReachability    = bool.Parse(attr.Value); }
+                { if (logic.Attribute(XML_IGNORE_ONCE) is XAttribute attr) ModuleLogicIgnoreOnceEdges = bool.Parse(attr.Value); }
                 { if (logic.Attribute(XML_STRONG_GOALS) is XAttribute attr) ModuleLogicStrongGoals     = bool.Parse(attr.Value); }
             }
 
@@ -971,100 +983,6 @@ namespace kotor_Randomizer_2.Models
             }
         }
 
-        protected override void WriteToFile(string path)
-        {
-            using (var w = new XmlTextWriter(path, null))
-            {
-                w.WriteStartDocument();
-                w.WriteStartElement(XML_SETTINGS); // Begin Settings
-
-                WriteGeneralSettings(w);
-
-                //if (DoRandomizeAudio   ) WriteAudioSettings(w);
-                if (DoRandomizeItems   ) WriteItemSettings(w);
-                //if (DoRandomizeModels  ) WriteModelSettings(w);
-                if (DoRandomizeModules ) WriteModuleSettings(w);
-                //if (DoRandomizeOther   ) WriteOtherSettings(w);
-                //if (DoRandomizeParty   ) WritePartySettings(w);   // Not yet implemented.
-                //if (DoRandomizeTables  ) WriteTableSettings(w);
-                //if (DoRandomizeText    ) WriteTextSettings(w);
-                //if (DoRandomizeTextures) WriteTextureSettings(w);
-
-                w.WriteEndElement();                // End Settings
-                w.WriteEndDocument();
-                w.Flush();
-            }
-        }
-
-        /// <summary>
-        /// Write General settings to an XML file.
-        /// </summary>
-        /// <param name="w"></param>
-        private void WriteGeneralSettings(XmlTextWriter w)
-        {
-            w.WriteStartElement(XML_GENERAL);  // Begin General
-
-            var v = System.Reflection.Assembly.GetAssembly(typeof(Kotor1Randomizer)).GetName().Version;
-            w.WriteAttributeString(XML_VERSION, $"v{v.Major}.{v.Minor}.{v.Build}");
-
-            //if (GeneralSaveOptions != SavePatchOptions.Default)
-            w.WriteAttributeString(XML_SAVE_OPS, ((int)GeneralSaveOptions).ToString()); // Always write save options.
-
-            var qols = GeneralUnlockedDoors.Select(d => (int)d.QoL).ToList();
-            qols.Sort();
-            if (qols.Any())
-                w.WriteAttributeString(XML_QOL, string.Join(", ", qols));
-
-            w.WriteEndElement();                // End General
-        }
-
-        /// <summary>
-        /// Write Item settings to an XML file.
-        /// </summary>
-        /// <param name="w"></param>
-        private void WriteItemSettings(XmlTextWriter w)
-        {
-            w.WriteStartElement(XML_ITEM);      // Begin Item
-            if (ItemArmbands        != RandomizationLevel.None) w.WriteAttributeString(XML_ARMBAND,    ItemArmbands.ToString());
-            if (ItemArmor           != RandomizationLevel.None) w.WriteAttributeString(XML_ARMOR,      ItemArmor.ToString());
-            if (ItemBelts           != RandomizationLevel.None) w.WriteAttributeString(XML_BELT,       ItemBelts.ToString());
-            if (ItemBlasters        != RandomizationLevel.None) w.WriteAttributeString(XML_BLASTER,    ItemBlasters.ToString());
-            if (ItemCreatureHides   != RandomizationLevel.None) w.WriteAttributeString(XML_CHIDE,      ItemCreatureHides.ToString());
-            if (ItemCreatureWeapons != RandomizationLevel.None) w.WriteAttributeString(XML_CWEAPON,    ItemCreatureWeapons.ToString());
-            if (ItemDroidEquipment  != RandomizationLevel.None) w.WriteAttributeString(XML_DROID,      ItemDroidEquipment.ToString());
-            if (ItemGloves          != RandomizationLevel.None) w.WriteAttributeString(XML_GLOVE,      ItemGloves.ToString());
-            if (ItemGrenades        != RandomizationLevel.None) w.WriteAttributeString(XML_GRENADE,    ItemGrenades.ToString());
-            if (ItemImplants        != RandomizationLevel.None) w.WriteAttributeString(XML_IMPLANT,    ItemImplants.ToString());
-            if (ItemLightsabers     != RandomizationLevel.None) w.WriteAttributeString(XML_LIGHTSABER, ItemLightsabers.ToString());
-            if (ItemMasks           != RandomizationLevel.None) w.WriteAttributeString(XML_MASK,       ItemMasks.ToString());
-            if (ItemMeleeWeapons    != RandomizationLevel.None) w.WriteAttributeString(XML_MELEE,      ItemMeleeWeapons.ToString());
-            if (ItemMines           != RandomizationLevel.None) w.WriteAttributeString(XML_MINE,       ItemMines.ToString());
-            if (ItemMedical         != RandomizationLevel.None) w.WriteAttributeString(XML_MEDICAL,    ItemMedical.ToString());
-            if (ItemPazaakCards     != RandomizationLevel.None) w.WriteAttributeString(XML_PAZAAK,     ItemPazaakCards.ToString());
-            if (ItemUpgrades        != RandomizationLevel.None) w.WriteAttributeString(XML_UPGRADE,    ItemUpgrades.ToString());
-            if (ItemPCrystal        != RandomizationLevel.None) w.WriteAttributeString(XML_PCRYSTAL,   ItemUpgrades.ToString());
-            if (ItemProps           != RandomizationLevel.None) w.WriteAttributeString(XML_PROPS,      ItemUpgrades.ToString());
-            if (ItemVarious         != RandomizationLevel.None) w.WriteAttributeString(XML_VARIOUS,    ItemVarious.ToString());
-
-            if (!string.IsNullOrWhiteSpace(ItemOmittedPreset))
-            {
-                // Write omit preset string.
-                w.WriteAttributeString(XML_PRESET, ItemOmittedPreset);
-            }
-            else
-            {
-                // Write each omitted item to the file.
-                foreach (var item in ItemOmittedList)
-                {
-                    w.WriteStartElement(XML_OMIT);  // Begin Omit
-                    w.WriteAttributeString(XML_CODE, item.Code);
-                    w.WriteEndElement();            // End Omit
-                }
-            }
-
-            w.WriteEndElement();                // End Item
-        }
-
         /// <summary>
         /// Write Module settings to an XML file.
         /// </summary>
@@ -1073,23 +991,23 @@ namespace kotor_Randomizer_2.Models
         {
             w.WriteStartElement(XML_MODULE);   // Begin Module
             w.WriteStartElement(XML_GLITCHES); // Begin Glitches
-            w.WriteAttributeString(XML_CLIP,    ModuleAllowGlitchClip.ToString());
-            w.WriteAttributeString(XML_DLZ,     ModuleAllowGlitchDlz.ToString());
-            w.WriteAttributeString(XML_FLU,     ModuleAllowGlitchFlu.ToString());
-            w.WriteAttributeString(XML_GPW,     ModuleAllowGlitchGpw.ToString());
+            w.WriteAttributeString(XML_CLIP, ModuleAllowGlitchClip.ToString());
+            w.WriteAttributeString(XML_DLZ, ModuleAllowGlitchDlz.ToString());
+            w.WriteAttributeString(XML_FLU, ModuleAllowGlitchFlu.ToString());
+            w.WriteAttributeString(XML_GPW, ModuleAllowGlitchGpw.ToString());
             w.WriteEndElement();                // End Glitches
 
             w.WriteStartElement(XML_GOALS);    // Begin Goals
-            w.WriteAttributeString(XML_KREIA,   ModuleGoalIsKreia.ToString());
-            w.WriteAttributeString(XML_MASTER,  ModuleGoalIsMasters.ToString());
-            w.WriteAttributeString(XML_PAZAAK,  ModuleGoalIsPazaak.ToString());
-            w.WriteAttributeString(XML_PARTY,   ModuleGoalIsFullParty.ToString());
+            w.WriteAttributeString(XML_KREIA, ModuleGoalIsKreia.ToString());
+            w.WriteAttributeString(XML_MASTER, ModuleGoalIsMasters.ToString());
+            w.WriteAttributeString(XML_PAZAAK, ModuleGoalIsPazaak.ToString());
+            w.WriteAttributeString(XML_PARTY, ModuleGoalIsFullParty.ToString());
             w.WriteEndElement();                // End Goals
 
             w.WriteStartElement(XML_LOGIC);    // Begin Logic
-            w.WriteAttributeString(XML_RULES,        ModuleLogicRandoRules.ToString());
-            w.WriteAttributeString(XML_REACHABLE,    ModuleLogicReachability.ToString());
-            w.WriteAttributeString(XML_IGNORE_ONCE,  ModuleLogicIgnoreOnceEdges.ToString());
+            w.WriteAttributeString(XML_RULES, ModuleLogicRandoRules.ToString());
+            w.WriteAttributeString(XML_REACHABLE, ModuleLogicReachability.ToString());
+            w.WriteAttributeString(XML_IGNORE_ONCE, ModuleLogicIgnoreOnceEdges.ToString());
             w.WriteAttributeString(XML_STRONG_GOALS, ModuleLogicStrongGoals.ToString());
             w.WriteEndElement();                // End Logic
 
@@ -1115,60 +1033,7 @@ namespace kotor_Randomizer_2.Models
 
         #endregion
 
-        #region IGeneralSettings Implementation
-
-        #region Backing Fields
-        private SavePatchOptions _generalSaveOptions;
-        private ObservableCollection<QualityOfLifeOption> _generalUnlockedDoors = new ObservableCollection<QualityOfLifeOption>();
-        private ObservableCollection<QualityOfLifeOption> _generalLockedDoors = new ObservableCollection<QualityOfLifeOption>();
-        #endregion
-
-        public Dictionary<string, Tuple<float, float, float>> FixedCoordinates => new Dictionary<string, Tuple<float, float, float>>()
-        {
-            { AREA_CIT_ENTERTAIN, new Tuple<float, float, float>(-13.5f, -63.4f,  11.51f) },
-        };
-
-        public SavePatchOptions GeneralSaveOptions
-        {
-            get => _generalSaveOptions;
-            set => SetField(ref _generalSaveOptions, value);
-        }
-
-        public ObservableCollection<QualityOfLifeOption> GeneralUnlockedDoors
-        {
-            get => _generalUnlockedDoors;
-            set => SetField(ref _generalUnlockedDoors, value);
-        }
-
-        public ObservableCollection<QualityOfLifeOption> GeneralLockedDoors
-        {
-            get => _generalLockedDoors;
-            set => SetField(ref _generalLockedDoors, value);
-        }
-
-        #endregion
-
-        #region IRandomizeModules Implementation
-
-        #region Backing Fields
-        private bool _moduleAllowGlitchClip;
-        private bool _moduleAllowGlitchDlz;
-        private bool _moduleAllowGlitchFlu;
-        private bool _moduleAllowGlitchGpw;
-        private bool _moduleLogicStrongGoals;
-        private bool _moduleLogicIgnoreOnceEdges;
-        private bool _moduleLogicRandoRules;
-        private bool _moduleLogicReachability;
-        private ObservableCollection<ReachabilityGoal> _moduleGoalList;
-        private bool _moduleGoalIsKreia = true;
-        private bool _moduleGoalIsJediMasters;
-        private bool _moduleGoalIsPazaak;
-        private bool _moduleGoalIsFullParty;
-        private ObservableCollection<ModuleVertex> _moduleRandomizedList = new ObservableCollection<ModuleVertex>();
-        private ObservableCollection<ModuleVertex> _moduleOmittedList = new ObservableCollection<ModuleVertex>();
-        private ObservableCollection<string> _modulePresetOptions = new ObservableCollection<string>(Globals.K2_MODULE_OMIT_PRESETS.Keys);
-        private string _moduleShufflePreset = "Default";
-        #endregion
+        #region Module Properties
 
         public override bool SupportsModules => true;
 
@@ -1284,6 +1149,8 @@ namespace kotor_Randomizer_2.Models
 
         #endregion
 
+        #endregion
+
         #region IRandomizeItems Implementation
 
         #region Backing Fields
@@ -1293,7 +1160,171 @@ namespace kotor_Randomizer_2.Models
         private string _itemOmittedPreset = null;
         #endregion
 
-        #region Methods
+        #region Item Methods
+
+        /// <summary>
+        /// Construct the list of K2 item randomization options.
+        /// </summary>
+        public static ObservableCollection<ItemRandoCategoryOption> ConstructItemOptionsList()
+        {
+            return new ObservableCollection<ItemRandoCategoryOption>
+            {
+                new ItemRandoCategoryOption(ItemRandoCategory.Armbands, ArmbandsRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Armor, ArmorRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Belts, BeltsRegs, subtypeVisible: false),
+                new ItemRandoCategoryOption(ItemRandoCategory.Blasters, BlastersRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.CreatureHides, HidesRegs, subtypeVisible: false),
+                new ItemRandoCategoryOption(ItemRandoCategory.CreatureWeapons, CreatureRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.DroidEquipment, DroidRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Gloves, GlovesRegs, subtypeVisible: false),
+                new ItemRandoCategoryOption(ItemRandoCategory.Grenades, GrenadesRegs, subtypeVisible: false),
+                new ItemRandoCategoryOption(ItemRandoCategory.Implants, ImplantsRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Lightsabers, LightsabersRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Masks, MaskRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.MeleeWeapons, MeleeRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Mines, MinesRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.PazaakCards, PazRegs, subtypeVisible: false),
+                new ItemRandoCategoryOption(ItemRandoCategory.Medical, StimsRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.Upgrades, UpgradeRegs),
+                new ItemRandoCategoryOption(ItemRandoCategory.PCrystal, PCrystalRegs, subtypeVisible: false),
+                new ItemRandoCategoryOption(ItemRandoCategory.Props, PropsRegs, subtypeVisible: false),
+                new ItemRandoCategoryOption(ItemRandoCategory.Various, null, subtypeVisible: false),
+            };
+        }
+
+        /// <summary>
+        /// Reset item settings to defaults.
+        /// </summary>
+        private void ResetItems()
+        {
+            // Disable all item randomization options.
+            ItemCategoryOptions.AsParallel().ForAll(op => op.Level = RandomizationLevel.None);
+
+            // Move all items to randomized list and clear omitted.
+            foreach (var item in ItemOmittedList) ItemRandomizedList.Add(item);
+            ItemOmittedList.Clear();
+
+            //// Grab omitted list from globals.
+            //var omitItems = ItemRandomizedList.Where(ri => RandomizableItem.KOTOR1_OMIT_PRESETS.First().Value.Contains(ri.Code)).ToList();
+            //foreach (var item in omitItems)
+            //{
+            //    ItemOmittedList.Add(item);
+            //    ItemRandomizedList.Remove(item);
+            //}
+
+            //ItemOmittedPreset = RandomizableItem.KOTOR1_OMIT_PRESETS.First().Key;
+        }
+
+        /// <summary>
+        /// Read item settings from an XML file.
+        /// </summary>
+        /// <param name="element">XML element containing the item settings.</param>
+        private void ReadItemSettings(XElement element)
+        {
+            // Read item settings. Note: we can assume element is not null.
+            { if (element.Attribute(XML_ARMBAND) is XAttribute attr) ItemArmbands        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_ARMOR) is XAttribute attr) ItemArmor           = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_BELT) is XAttribute attr) ItemBelts           = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_BLASTER) is XAttribute attr) ItemBlasters        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_CHIDE) is XAttribute attr) ItemCreatureHides   = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_CWEAPON) is XAttribute attr) ItemCreatureWeapons = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_DROID) is XAttribute attr) ItemDroidEquipment  = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_GLOVE) is XAttribute attr) ItemGloves          = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_GRENADE) is XAttribute attr) ItemGrenades        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_IMPLANT) is XAttribute attr) ItemImplants        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_LIGHTSABER) is XAttribute attr) ItemLightsabers     = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_MASK) is XAttribute attr) ItemMasks           = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_MELEE) is XAttribute attr) ItemMeleeWeapons    = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_MINE) is XAttribute attr) ItemMines           = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_MEDICAL) is XAttribute attr) ItemMedical         = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_PAZAAK) is XAttribute attr) ItemPazaakCards     = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_UPGRADE) is XAttribute attr) ItemUpgrades        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_PCRYSTAL) is XAttribute attr) ItemPCrystal        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_PROPS) is XAttribute attr) ItemProps           = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_VARIOUS) is XAttribute attr) ItemVarious         = ParseEnum<RandomizationLevel>(attr.Value); }
+
+            //// Reset omitted items list. -- May no longer be necessary.
+            //foreach (var item in ItemOmittedList)
+            //    ItemRandomizedList.Add(item);
+            //ItemOmittedList.Clear();
+
+            // Read omitted item preset.
+            //var omit = element.Descendants(XML_OMIT).FirstOrDefault();
+            ItemOmittedPreset = element.Attribute(XML_PRESET)?.Value ?? null;
+
+            // If preset is null, read the list of omitted items.
+            if (ItemOmittedPreset is null)
+            {
+                foreach (var i in element.Descendants(XML_OMIT))
+                {
+                    var code = i.Attribute(XML_CODE).Value;
+                    var item = ItemRandomizedList.FirstOrDefault(x => x.Code == code);
+                    if (item != null)
+                    {
+                        ItemOmittedList.Add(item);
+                        _ = ItemRandomizedList.Remove(item);
+                    }
+                }
+            }
+            else    // Otherwise, set the list of items based on the preset.
+            {
+                foreach (var i in RandomizableItem.KOTOR2_OMIT_PRESETS[ItemOmittedPreset])
+                {
+                    var item = ItemRandomizedList.FirstOrDefault(x => x.Code == i);
+                    ItemOmittedList.Add(item);
+                    _ = ItemRandomizedList.Remove(item);
+                }
+            }
+
+            NotifyPropertyChanged(nameof(ItemCategoryOptions));
+        }
+
+        /// <summary>
+        /// Write Item settings to an XML file.
+        /// </summary>
+        /// <param name="w"></param>
+        private void WriteItemSettings(XmlTextWriter w)
+        {
+            w.WriteStartElement(XML_ITEM);      // Begin Item
+            if (ItemArmbands        != RandomizationLevel.None) w.WriteAttributeString(XML_ARMBAND, ItemArmbands.ToString());
+            if (ItemArmor           != RandomizationLevel.None) w.WriteAttributeString(XML_ARMOR, ItemArmor.ToString());
+            if (ItemBelts           != RandomizationLevel.None) w.WriteAttributeString(XML_BELT, ItemBelts.ToString());
+            if (ItemBlasters        != RandomizationLevel.None) w.WriteAttributeString(XML_BLASTER, ItemBlasters.ToString());
+            if (ItemCreatureHides   != RandomizationLevel.None) w.WriteAttributeString(XML_CHIDE, ItemCreatureHides.ToString());
+            if (ItemCreatureWeapons != RandomizationLevel.None) w.WriteAttributeString(XML_CWEAPON, ItemCreatureWeapons.ToString());
+            if (ItemDroidEquipment  != RandomizationLevel.None) w.WriteAttributeString(XML_DROID, ItemDroidEquipment.ToString());
+            if (ItemGloves          != RandomizationLevel.None) w.WriteAttributeString(XML_GLOVE, ItemGloves.ToString());
+            if (ItemGrenades        != RandomizationLevel.None) w.WriteAttributeString(XML_GRENADE, ItemGrenades.ToString());
+            if (ItemImplants        != RandomizationLevel.None) w.WriteAttributeString(XML_IMPLANT, ItemImplants.ToString());
+            if (ItemLightsabers     != RandomizationLevel.None) w.WriteAttributeString(XML_LIGHTSABER, ItemLightsabers.ToString());
+            if (ItemMasks           != RandomizationLevel.None) w.WriteAttributeString(XML_MASK, ItemMasks.ToString());
+            if (ItemMeleeWeapons    != RandomizationLevel.None) w.WriteAttributeString(XML_MELEE, ItemMeleeWeapons.ToString());
+            if (ItemMines           != RandomizationLevel.None) w.WriteAttributeString(XML_MINE, ItemMines.ToString());
+            if (ItemMedical         != RandomizationLevel.None) w.WriteAttributeString(XML_MEDICAL, ItemMedical.ToString());
+            if (ItemPazaakCards     != RandomizationLevel.None) w.WriteAttributeString(XML_PAZAAK, ItemPazaakCards.ToString());
+            if (ItemUpgrades        != RandomizationLevel.None) w.WriteAttributeString(XML_UPGRADE, ItemUpgrades.ToString());
+            if (ItemPCrystal        != RandomizationLevel.None) w.WriteAttributeString(XML_PCRYSTAL, ItemUpgrades.ToString());
+            if (ItemProps           != RandomizationLevel.None) w.WriteAttributeString(XML_PROPS, ItemUpgrades.ToString());
+            if (ItemVarious         != RandomizationLevel.None) w.WriteAttributeString(XML_VARIOUS, ItemVarious.ToString());
+
+            if (!string.IsNullOrWhiteSpace(ItemOmittedPreset))
+            {
+                // Write omit preset string.
+                w.WriteAttributeString(XML_PRESET, ItemOmittedPreset);
+            }
+            else
+            {
+                // Write each omitted item to the file.
+                foreach (var item in ItemOmittedList)
+                {
+                    w.WriteStartElement(XML_OMIT);  // Begin Omit
+                    w.WriteAttributeString(XML_CODE, item.Code);
+                    w.WriteEndElement();            // End Omit
+                }
+            }
+
+            w.WriteEndElement();                // End Item
+        }
 
         private RandomizationLevel GetIRCOLevel(ItemRandoCategory category)
         {
@@ -1505,6 +1536,8 @@ namespace kotor_Randomizer_2.Models
 
         #endregion
 
+        #region Item Properties
+
         public override bool SupportsItems => true;
 
         public bool DoRandomizeItems => ItemCategoryOptions.Any(irco => irco.Level != RandomizationLevel.None);
@@ -1657,19 +1690,125 @@ namespace kotor_Randomizer_2.Models
 
         #endregion
 
+        #endregion
+
         #region IRandomizeAudio Implementation
 
         #region Backing Fields
-        private RandomizationLevel _audioAmbientNoise;
-        private RandomizationLevel _audioAreaMusic;
-        private RandomizationLevel _audioBattleMusic;
-        private RandomizationLevel _audioCutsceneNoise;
-        private RandomizationLevel _audioNpcSounds;
-        private RandomizationLevel _audioPartySounds;
+        private ObservableCollection<AudioRandoCategoryOption> _audioCategoryOptions;
         private bool _audioMixKotorGameMusic;
         private bool _audioMixNpcAndPartySounds;
         private bool _audioRemoveDmcaMusic;
         #endregion
+
+        #region Audio Methods
+
+        /// <summary>
+        /// Construct the list of K2 audio randomization options.
+        /// </summary>
+        public static ObservableCollection<AudioRandoCategoryOption> ConstructAudioOptionsList()
+        {
+            var bothFolders = AudioFolders.Music | AudioFolders.Sounds;
+            return new ObservableCollection<AudioRandoCategoryOption>
+            {
+                new AudioRandoCategoryOption(AudioRandoCategory.AreaMusic,     AudioFolders.Music,  RegexListAreaMusic, subtypeVisible: false, subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.BattleMusic,   bothFolders,         RegexBattleMusic,   subtypeVisible: false, subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.AmbientNoise,  bothFolders,         RegexListNoise,     subtypeVisible: false, subtypeLabel: "Actions") { IsEnabled = false },
+                new AudioRandoCategoryOption(AudioRandoCategory.CutsceneNoise, AudioFolders.Music,  RegexCutscene,      subtypeVisible: false, subtypeLabel: "Actions") { IsEnabled = false },
+                new AudioRandoCategoryOption(AudioRandoCategory.NpcSounds,     AudioFolders.Sounds, RegexNPCSound,      subtypeVisible: false, subtypeLabel: "Actions") { IsEnabled = false },
+                new AudioRandoCategoryOption(AudioRandoCategory.PartySounds,   AudioFolders.Sounds, RegexPartySound,    subtypeVisible: true,  subtypeLabel: "Actions") { IsEnabled = false },
+            };
+        }
+
+        /// <summary>
+        /// Reset Audio settings to default.
+        /// </summary>
+        private void ResetAudio()
+        {
+            // Disable all randomization options.
+            AudioCategoryOptions.AsParallel().ForAll(op => op.Level = RandomizationLevel.None);
+
+            // Disable optional flags.
+            AudioRemoveDmcaMusic      = false;
+            AudioMixNpcAndPartySounds = false;
+            AudioMixKotorGameMusic    = false;
+        }
+
+        /// <summary>
+        /// Read audio settings from an XML file.
+        /// </summary>
+        /// <param name="element">XML element containing the audio settings.</param>
+        private void ReadAudioSettings(XElement element)
+        {
+            // Read audio settings.
+            { if (element.Attribute(XML_AMBIENT     ) is XAttribute attr) AudioAmbientNoise         = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_AREA        ) is XAttribute attr) AudioAreaMusic            = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_BATTLE      ) is XAttribute attr) AudioBattleMusic          = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_CUTSCENE    ) is XAttribute attr) AudioCutsceneNoise        = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_NPC         ) is XAttribute attr) AudioNpcSounds            = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_PARTY       ) is XAttribute attr) AudioPartySounds          = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_MIXGAMEAUDIO) is XAttribute attr) AudioMixKotorGameMusic    = bool.Parse(attr.Value); }
+            { if (element.Attribute(XML_MIXNPCPARTY ) is XAttribute attr) AudioMixNpcAndPartySounds = bool.Parse(attr.Value); }
+            { if (element.Attribute(XML_REMOVE_DMCA ) is XAttribute attr) AudioRemoveDmcaMusic      = bool.Parse(attr.Value); }
+        }
+
+        /// <summary>
+        /// Write Audio settings to an XML file.
+        /// </summary>
+        /// <param name="w"></param>
+        private void WriteAudioSettings(XmlTextWriter w)
+        {
+            w.WriteStartElement(XML_AUDIO);     // Begin Audio
+            if (AudioAmbientNoise  != RandomizationLevel.None) w.WriteAttributeString(XML_AMBIENT,  AudioAmbientNoise.ToString());
+            if (AudioAreaMusic     != RandomizationLevel.None) w.WriteAttributeString(XML_AREA,     AudioAreaMusic.ToString());
+            if (AudioBattleMusic   != RandomizationLevel.None) w.WriteAttributeString(XML_BATTLE,   AudioBattleMusic.ToString());
+            if (AudioCutsceneNoise != RandomizationLevel.None) w.WriteAttributeString(XML_CUTSCENE, AudioCutsceneNoise.ToString());
+            if (AudioNpcSounds     != RandomizationLevel.None) w.WriteAttributeString(XML_NPC,      AudioNpcSounds.ToString());
+            if (AudioPartySounds   != RandomizationLevel.None) w.WriteAttributeString(XML_PARTY,    AudioPartySounds.ToString());
+            if (AudioMixKotorGameMusic   ) w.WriteAttributeString(XML_MIXGAMEAUDIO, AudioMixKotorGameMusic.ToString());
+            if (AudioMixNpcAndPartySounds) w.WriteAttributeString(XML_MIXNPCPARTY,  AudioMixNpcAndPartySounds.ToString());
+            if (AudioRemoveDmcaMusic     ) w.WriteAttributeString(XML_REMOVE_DMCA,  AudioRemoveDmcaMusic.ToString());
+            w.WriteEndElement();                // End Audio
+        }
+
+        private RandomizationLevel GetARCOLevel(AudioRandoCategory category)
+        {
+            return AudioCategoryOptions.First(op => op.Category == category) is AudioRandoCategoryOption arco
+                ? arco.Level
+                : throw new InvalidEnumArgumentException($"AudioRandoCategory.{category} does not exist.");
+        }
+
+        private void SetARCOLevel(AudioRandoCategory category, RandomizationLevel level)
+        {
+            if (AudioCategoryOptions.First(op => op.Category == category) is AudioRandoCategoryOption arco)
+            {
+                arco.Level = level;
+                NotifyPropertyChanged(nameof(AudioCategoryOptions));
+            }
+            else
+            {
+                throw new InvalidEnumArgumentException($"AudioRandoCategory.{category} does not exist.");
+            }
+        }
+
+        #endregion
+
+        #region Audio Regex
+        private static Regex RegexListAreaMusic => new Regex("^mus_a_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexBattleMusic => new Regex("mus_s?bat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexListNoise => new Regex(@"^(al_(an|el|en|me|nt|ot|vx)|as_el|cs|mgs|pl)_|^mus_loadscreen\.", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexCutscene => new Regex(@"^\d{2}[abc]?\.wav$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexNPCSound => new Regex("^n_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexPartySound => new Regex("^p_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        private static Regex K2Music_Bed => new Regex("^bed_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex K2Music_Battle => new Regex("^mus_bat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex K2Music_BattleSting => new Regex("^mus_sbat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex K2Music_SFX => new Regex("^mus_s_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex K2Music_Theme => new Regex("^mus_[ajkmnst][aeirt][adehiort][ehiny]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        #endregion
+
+        #region Audio Properties
 
         public override bool SupportsAudio => true;
 
@@ -1686,38 +1825,44 @@ namespace kotor_Randomizer_2.Models
 
         public RandomizationLevel AudioAmbientNoise
         {
-            get => _audioAmbientNoise;
-            set => SetField(ref _audioAmbientNoise, value);
+            get => GetARCOLevel(AudioRandoCategory.AmbientNoise);
+            set => SetARCOLevel(AudioRandoCategory.AmbientNoise, value);
         }
 
         public RandomizationLevel AudioAreaMusic
         {
-            get => _audioAreaMusic;
-            set => SetField(ref _audioAreaMusic, value);
+            get => GetARCOLevel(AudioRandoCategory.AreaMusic);
+            set => SetARCOLevel(AudioRandoCategory.AreaMusic, value);
         }
 
         public RandomizationLevel AudioBattleMusic
         {
-            get => _audioBattleMusic;
-            set => SetField(ref _audioBattleMusic, value);
+            get => GetARCOLevel(AudioRandoCategory.BattleMusic);
+            set => SetARCOLevel(AudioRandoCategory.BattleMusic, value);
         }
 
         public RandomizationLevel AudioCutsceneNoise
         {
-            get => _audioCutsceneNoise;
-            set => SetField(ref _audioCutsceneNoise, value);
+            get => GetARCOLevel(AudioRandoCategory.CutsceneNoise);
+            set => SetARCOLevel(AudioRandoCategory.CutsceneNoise, value);
         }
 
         public RandomizationLevel AudioNpcSounds
         {
-            get => _audioNpcSounds;
-            set => SetField(ref _audioNpcSounds, value);
+            get => GetARCOLevel(AudioRandoCategory.NpcSounds);
+            set => SetARCOLevel(AudioRandoCategory.NpcSounds, value);
         }
 
         public RandomizationLevel AudioPartySounds
         {
-            get => _audioPartySounds;
-            set => SetField(ref _audioPartySounds, value);
+            get => GetARCOLevel(AudioRandoCategory.PartySounds);
+            set => SetARCOLevel(AudioRandoCategory.PartySounds, value);
+        }
+
+        public ObservableCollection<AudioRandoCategoryOption> AudioCategoryOptions
+        {
+            get => _audioCategoryOptions;
+            set => SetField(ref _audioCategoryOptions, value);
         }
 
         public bool AudioMixKotorGameMusic
@@ -1738,9 +1883,9 @@ namespace kotor_Randomizer_2.Models
             set => SetField(ref _audioRemoveDmcaMusic, value);
         }
 
-        public ObservableCollection<AudioRandoCategoryOption> AudioCategoryOptions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Regex AudioDmcaMusicRegex => null;
 
-        public Regex AudioDmcaMusicRegex => throw new NotImplementedException();
+        #endregion
 
         #endregion
     }

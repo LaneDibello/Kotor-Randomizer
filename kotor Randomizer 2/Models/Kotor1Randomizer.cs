@@ -368,7 +368,6 @@ namespace kotor_Randomizer_2.Models
             }
         }
 
-
         public RandomizationLevel AudioAmbientNoise
         {
             get => GetARCOLevel(AudioRandoCategory.AmbientNoise);
@@ -1278,7 +1277,7 @@ namespace kotor_Randomizer_2.Models
         /// <summary>
         /// Resets all randomization settings to the default value.
         /// </summary>
-        public void ResetSettingsToDefault()
+        public override void ResetAllSettings()
         {
             ResetGeneral();
             ResetAudio();
@@ -1406,7 +1405,7 @@ namespace kotor_Randomizer_2.Models
         /// <param name="s"></param>
         protected override void ReadFromFile(string path)
         {
-            ResetSettingsToDefault();
+            ResetAllSettings();
 
             var doc = XDocument.Load(path);
             var element = doc.Descendants(XML_GENERAL).FirstOrDefault();
@@ -1472,7 +1471,7 @@ namespace kotor_Randomizer_2.Models
         /// <param name="s"></param>
         protected override void ReadKRP(Stream s)
         {
-            ResetSettingsToDefault();
+            ResetAllSettings();
 
             if (KRP.ReadKRP(s)) // If read KRP is successful ...
             {

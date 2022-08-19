@@ -8,6 +8,7 @@ using kotor_Randomizer_2.Extensions;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using kotor_Randomizer_2.DTOs;
+using kotor_Randomizer_2.Interfaces;
 
 namespace kotor_Randomizer_2
 {
@@ -21,6 +22,7 @@ namespace kotor_Randomizer_2
         private static bool MixKotorGameMusic { get; set; }
         private static bool MixNpcAndPartySounds { get; set; }
         private static bool RemoveDmcaMusic { get; set; }
+        private static Regex DmcaMusicRegex { get; set; }
 
         /// <summary>
         /// Creates backups for music files modified during this randomization.
@@ -40,11 +42,11 @@ namespace kotor_Randomizer_2
             paths.BackUpSoundDirectory();
         }
 
-        public static void sound_rando(KPaths paths, Models.Kotor1Randomizer k1rando = null)
+        public static void sound_rando(KPaths paths, IRandomizeAudio rando = null)
         {
             // Prepare for new randomization.
             Reset();
-            AssignSettings(k1rando);
+            AssignSettings(rando);
 
             // Get file collections
             var tasks = new List<Task>();   // List of tasks to run in parallel.
@@ -74,8 +76,8 @@ namespace kotor_Randomizer_2
                 if (op.Folders.HasFlag(AudioFolders.Sounds)) sound[op.Category].AddRange(soundFiles.Where(f => op.Regex.IsMatch(f.Name)));
 
                 // Remove DMCA music.
-                if (RemoveDmcaMusic && op.Category == AudioRandoCategory.AreaMusic)
-                    _ = music[op.Category].RemoveAll(f => DmcaAreaMusic.Contains(f.Name));
+                if (RemoveDmcaMusic && DmcaMusicRegex != null && op.Category == AudioRandoCategory.AreaMusic)
+                    _ = music[op.Category].RemoveAll(f => DmcaMusicRegex.IsMatch(f.Name));
 
                 switch (op.Level)
                 {
@@ -134,13 +136,13 @@ namespace kotor_Randomizer_2
             sw.Restart();
 
             // Overwrite DMCA music with alternatives
-            if (RemoveDmcaMusic)
+            if (RemoveDmcaMusic && DmcaMusicRegex != null)
             {
                 tasks.Add(Task.Run(() =>
                 {
                     var orig = new List<FileInfo>();
                     var rand = new List<FileInfo>();
-                    foreach (var fi in musicFiles.Where(f => DmcaAreaMusic.Contains(f.Name)))
+                    foreach (var fi in musicFiles.Where(f => DmcaMusicRegex.IsMatch(f.Name)))
                     {
                         var areaMusic = music[AudioRandoCategory.AreaMusic];
                         var replacement = areaMusic[Randomize.Rng.Next(areaMusic.Count)];
@@ -163,7 +165,7 @@ namespace kotor_Randomizer_2
             sw.Restart();
         }
 
-        private static void AssignSettings(Models.Kotor1Randomizer rando)
+        private static void AssignSettings(IRandomizeAudio rando)
         {
             // If rando is null, pull from settings.
             if (null == rando)
@@ -176,17 +178,19 @@ namespace kotor_Randomizer_2
                 AudioOptions.First(arco => arco.Category == AudioRandoCategory.NpcSounds).Level = Properties.Settings.Default.RandomizeNpcSounds;
                 AudioOptions.First(arco => arco.Category == AudioRandoCategory.PartySounds).Level = Properties.Settings.Default.RandomizePartySounds;
 
-                MixKotorGameMusic      = false;
-                MixNpcAndPartySounds   = Properties.Settings.Default.MixNpcAndPartySounds;
-                RemoveDmcaMusic        = Properties.Settings.Default.RemoveDmcaMusic;
+                MixKotorGameMusic    = false;
+                MixNpcAndPartySounds = Properties.Settings.Default.MixNpcAndPartySounds;
+                RemoveDmcaMusic      = Properties.Settings.Default.RemoveDmcaMusic;
+                DmcaMusicRegex       = DmcaMusicRegexDefault;
             }
-            // Otherwise, pull from the Kotor1Randomizer object.
+            // Otherwise, pull from the IRandomizeAudio object.
             else
             {
                 AudioOptions         = rando.AudioCategoryOptions.ToList();
                 MixKotorGameMusic    = rando.AudioMixKotorGameMusic;
                 MixNpcAndPartySounds = rando.AudioMixNpcAndPartySounds;
                 RemoveDmcaMusic      = rando.AudioRemoveDmcaMusic;
+                DmcaMusicRegex       = rando.AudioDmcaMusicRegex;
             }
         }
 
@@ -417,82 +421,7 @@ namespace kotor_Randomizer_2
             ws.Column(3).AdjustToContents();
         }
 
-        #region K2 Regexes
-        public static Regex K2Music_Bed => new Regex("^bed_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        public static Regex K2Music_Area => new Regex("^mus_a_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        public static Regex K2Music_Battle => new Regex("^mus_bat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        public static Regex K2Music_BattleEnd => new Regex("^mus_sbat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        public static Regex K2Music_SFX => new Regex("^mus_s_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        public static Regex K2Music_Theme => new Regex("^mus_[ajkmnst][aeirt][adehiort][ehiny]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        #endregion
-
-        //public static Regex PrefixAreaMusic { get { return new Regex("", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-        public static List<string> PrefixListAreaMusic => new List<string>()
-        {
-            "mus_area_",
-            "mus_theme_",
-            "57.",          // LS ending BGM, Star Wars main theme
-            "credits.",     // Star Wars main theme
-            "evil_ending.", // DS ending BGM, Star Wars main theme
-        };
-
-        Regex K1Music_Area => new Regex(@"^mus_(area_|theme_)|^57\.|^credits\.|^evil_ending\.", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-        public static List<string> DmcaAreaMusic => new List<string>()
-        {
-            "57.wav",
-            "credits.wav",
-            "evil_ending.wav",
-        };
-
-        Regex K1Music_DMCA => new Regex(@"^57\.wav$|^credits\.wav$|^evil_ending\.wav$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        Regex K1Music_Battle => new Regex("^mus_bat", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        Regex K1Music_BattleEnd => new Regex("^mus_sbat", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-        public static Regex RegexBattleMusic => new Regex("mus_s?bat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-        public static List<string> PrefixListBattleMusic => new List<string>()
-        {
-            "mus_bat_",
-            "mus_sbat_",
-        };
-
-        //public static Regex PrefixNoise { get { return new Regex("", RegexOptions.Compiled | RegexOptions.IgnoreCase); } }
-
-        Regex K1Sounds_Noise => new Regex(@"^(al|as)_(an|el|en|me|nt|ot|vx|el)_|^cs_|^mgs_|^mus_loadscreen\.|^pl_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-        public static List<string> PrefixListNoise => new List<string>()
-        {
-            "al_an_",
-            "al_el_",
-            "al_en_",
-            "al_me_",
-            "al_nt_",
-            "al_ot_",
-            "al_vx_",
-            "as_el_",
-            "cs_",
-            "mgs_",
-            "mus_loadscreen.",
-            "pl_",
-        };
-
-        /// <summary> Cutscene files begin with 2 digits and optionally a single letter (a, b, or c). </summary>
-        public static Regex RegexCutscene => new Regex(@"^\d{2}[abc]?\.wav$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-        public static Regex RegexNPCSound => new Regex("^n_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-        public List<string> PrefixListNPCSound => new List<string>()
-        {
-            "n_",
-        };
-
-        public static Regex RegexPartySound => new Regex("^p_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-        public List<string> PrefixListPartySound => new List<string>()
-        {
-            "p_",
-        };
+        public static Regex DmcaMusicRegexDefault => new Regex(@"^(57|credits|evil_ending)\.wav$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public static Regex SuffixSoundAttack => new Regex(@"_ATK\d?.wav$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 

@@ -153,7 +153,7 @@
                               ToolTip="{StaticResource ttDMCA}">
                         <TextBlock Text="Overwrite likely DMCA music" />
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding AudioMixKotorGameMusic, Mode=TwoWay}"
+                    <CheckBox IsChecked="{Binding AudioMixKotorGameMusic, Mode=TwoWay}" IsEnabled="False"
                               ToolTip="{StaticResource ttMixK12Music}">
                         <TextBlock Text="Mix Kotor 1 and 2 music" />
                     </CheckBox>

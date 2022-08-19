@@ -262,9 +262,9 @@ namespace Randomizer_WPF
             {
                 WriteLineToLog("Clearing randomization settings.");
                 if (IsKotor2Selected)
-                    K2Randomizer.ResetSettingsToDefault();
+                    K2Randomizer.ResetAllSettings();
                 else
-                    K1Randomizer.ResetSettingsToDefault();
+                    K1Randomizer.ResetAllSettings();
             }
         }
 
