@@ -5,6 +5,9 @@ using System.Collections.ObjectModel;
 
 namespace kotor_Randomizer_2.Interfaces
 {
+    /// <summary>
+    /// Settings related to general quality of life options.
+    /// </summary>
     public interface IGeneralSettings
     {
         Dictionary<string, Tuple<float, float, float>> FixedCoordinates { get; }

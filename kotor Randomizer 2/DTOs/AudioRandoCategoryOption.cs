@@ -24,7 +24,7 @@ namespace kotor_Randomizer_2.DTOs
         #region Constructors
         public AudioRandoCategoryOption() { }
 
-        public AudioRandoCategoryOption(AudioRandoCategory category, AudioFolders folders, Regex regex,
+        public AudioRandoCategoryOption(AudioRandoCategory category, AudioFolders folders, Regex audioRegex, Regex stingRegex = null,
                 bool subtypeVisible = true, string subtypeLabel = "Subtype",
                 bool typeVisible = true, string typeLabel = "Type",
                 bool maxVisible = true, string maxLabel = "Max",
@@ -33,44 +33,55 @@ namespace kotor_Randomizer_2.DTOs
         {
             Category = category;
             Folders = folders;
-            Regex = regex;
+            AudioRegex = audioRegex;
+            StingRegex = stingRegex;
         }
-
-        //public AudioRandoCategoryOption(AudioRandoCategory category, List<string> prefixes)
-        //    : this(category)
-        //{
-        //    Prefixes = prefixes;
-        //}
         #endregion
 
         #region Properties
+
+        #region Backing Fields
         private AudioRandoCategory _category;
+        private AudioFolders _folders;
+        private Regex _audioRegex;
+        private Regex _stingRegex;
+        #endregion
+
+        /// <summary>
+        /// Category of audio file to randomize.
+        /// </summary>
         public AudioRandoCategory Category
         {
             get => _category;
             set => SetField(ref _category, value);
         }
 
-        private AudioFolders _folders;
+        /// <summary>
+        /// Folders in which the files are found.
+        /// </summary>
         public AudioFolders Folders
         {
             get => _folders;
             set => SetField(ref _folders, value);
         }
 
-        private Regex _regex;
-        public Regex Regex
+        /// <summary>
+        /// Regex describing the name of the files to randomize.
+        /// </summary>
+        public Regex AudioRegex
         {
-            get => _regex;
-            set => SetField(ref _regex, value);
+            get => _audioRegex;
+            set => SetField(ref _audioRegex, value);
         }
 
-        //private List<string> _prefixes;
-        //public List<string> Prefixes
-        //{
-        //    get => _prefixes;
-        //    set => SetField(ref _prefixes, value);
-        //}
+        /// <summary>
+        /// Regex describing the name of associated audio stings to randomize.
+        /// </summary>
+        public Regex StingRegex
+        {
+            get => _stingRegex;
+            set => SetField(ref _stingRegex, value);
+        }
         #endregion
     }
 }

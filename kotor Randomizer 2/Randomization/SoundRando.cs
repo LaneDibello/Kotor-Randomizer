@@ -12,7 +12,6 @@ using kotor_Randomizer_2.Interfaces;
 
 namespace kotor_Randomizer_2
 {
-    //This has absically been copied verbatim from what Glasnonck coded in the last rando, could probably be cleaned up, but I cannot be bothered 
     class SoundRando
     {
         private static Dictionary<string, string> MusicLookupTable { get; set; } = new Dictionary<string, string>();
@@ -72,8 +71,20 @@ namespace kotor_Randomizer_2
             // TODO: Test this code ... not sure if it'll work.
             AudioOptions.AsParallel().ForAll((op) =>
             {
-                if (op.Folders.HasFlag(AudioFolders.Music)) music[op.Category].AddRange(musicFiles.Where(f => op.Regex.IsMatch(f.Name)));
-                if (op.Folders.HasFlag(AudioFolders.Sounds)) sound[op.Category].AddRange(soundFiles.Where(f => op.Regex.IsMatch(f.Name)));
+                var musicSting = new List<FileInfo>();
+                var soundSting = new List<FileInfo>();
+                if (op.Folders.HasFlag(AudioFolders.Music))
+                {
+                    music[op.Category].AddRange(musicFiles.Where(f => op.AudioRegex.IsMatch(f.Name)));
+                    if (op.StingRegex != null)
+                        musicSting.AddRange(musicFiles.Where(f => op.StingRegex.IsMatch(f.Name)));
+                }
+                if (op.Folders.HasFlag(AudioFolders.Sounds))
+                {
+                    sound[op.Category].AddRange(soundFiles.Where(f => op.AudioRegex.IsMatch(f.Name)));
+                    if (op.StingRegex != null)
+                        soundSting.AddRange(soundFiles.Where(f => op.StingRegex.IsMatch(f.Name)));
+                }
 
                 // Remove DMCA music.
                 if (RemoveDmcaMusic && DmcaMusicRegex != null && op.Category == AudioRandoCategory.AreaMusic)
@@ -83,8 +94,12 @@ namespace kotor_Randomizer_2
                 {
                     // Move to max lists.
                     case RandomizationLevel.Max:
-                        if (music[op.Category].Any()) maxMusic.AddRange(music[op.Category]);
-                        if (sound[op.Category].Any()) maxSound.AddRange(sound[op.Category]);
+                        //if (music[op.Category].Any()) maxMusic.AddRange(music[op.Category]);
+                        //if (sound[op.Category].Any()) maxSound.AddRange(sound[op.Category]);
+                        maxMusic.AddRange(music[op.Category]);
+                        maxMusic.AddRange(musicSting);
+                        maxSound.AddRange(sound[op.Category]);
+                        maxSound.AddRange(soundSting);
                         break;
 
                     // Randomize category files in a Task.
@@ -94,10 +109,20 @@ namespace kotor_Randomizer_2
                             var randMusic = Randomize.RandomizeFiles(music[op.Category], paths.music);
                             AddToMusicLookup(music[op.Category], randMusic);
                         }
+                        if (musicSting.Any())
+                        {
+                            var randMusicSting = Randomize.RandomizeFiles(musicSting, paths.music);
+                            AddToMusicLookup(musicSting, randMusicSting);
+                        }
                         if (sound[op.Category].Any())
                         {
                             var randSound = Randomize.RandomizeFiles(sound[op.Category], paths.sounds);
                             AddToSoundLookup(sound[op.Category], randSound);
+                        }
+                        if (soundSting.Any())
+                        {
+                            var randSoundSting = Randomize.RandomizeFiles(soundSting, paths.sounds);
+                            AddToMusicLookup(musicSting, randSoundSting);
                         }
                         break;
 
@@ -132,7 +157,7 @@ namespace kotor_Randomizer_2
                 }));
             }
 
-            Console.WriteLine($"max audio randomized in {sw.Elapsed}");
+            Console.WriteLine($"max audio task(s) created in {sw.Elapsed}");
             sw.Restart();
 
             // Overwrite DMCA music with alternatives
@@ -155,7 +180,7 @@ namespace kotor_Randomizer_2
                 }));
             }
 
-            Console.WriteLine($"dmca randomized in {sw.Elapsed}");
+            Console.WriteLine($"dmca task(s) created in {sw.Elapsed}");
             sw.Restart();
 
             // Run all randomization tasks.

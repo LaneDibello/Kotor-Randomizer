@@ -4,6 +4,9 @@ using System.Text.RegularExpressions;
 
 namespace kotor_Randomizer_2.Interfaces
 {
+    /// <summary>
+    /// Settings related to randomizing music and sounds.
+    /// </summary>
     public interface IRandomizeAudio
     {
         bool DoRandomizeAudio { get; }

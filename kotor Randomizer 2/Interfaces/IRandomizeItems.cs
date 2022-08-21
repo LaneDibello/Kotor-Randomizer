@@ -5,6 +5,9 @@ using System.Collections.ObjectModel;
 
 namespace kotor_Randomizer_2.Interfaces
 {
+    /// <summary>
+    /// Settings related to randomizing items.
+    /// </summary>
     public interface IRandomizeItems
     {
         bool DoRandomizeItems { get; }

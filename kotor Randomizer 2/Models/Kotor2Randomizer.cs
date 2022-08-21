@@ -15,6 +15,9 @@ using System.Xml.Linq;
 
 namespace kotor_Randomizer_2.Models
 {
+    /// <summary>
+    /// Contains all settings to randomize KotOR 2.
+    /// </summary>
     public class Kotor2Randomizer : RandomizerBase, IGeneralSettings, IRandomizeModules, IRandomizeItems, IRandomizeAudio
     {
         #region XML Consts
@@ -179,6 +182,8 @@ namespace kotor_Randomizer_2.Models
         public override Game Game => Game.Kotor2;
         public override string Extension => "xk2rp";
         #endregion
+
+        #region Base Methods
 
         /// <summary>
         /// 
@@ -729,6 +734,8 @@ namespace kotor_Randomizer_2.Models
                 w.Flush();
             }
         }
+
+        #endregion
 
         #endregion
 
@@ -1712,7 +1719,7 @@ namespace kotor_Randomizer_2.Models
             return new ObservableCollection<AudioRandoCategoryOption>
             {
                 new AudioRandoCategoryOption(AudioRandoCategory.AreaMusic,     AudioFolders.Music,  RegexListAreaMusic, subtypeVisible: false, subtypeLabel: "Actions"),
-                new AudioRandoCategoryOption(AudioRandoCategory.BattleMusic,   bothFolders,         RegexBattleMusic,   subtypeVisible: false, subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.BattleMusic,   bothFolders,         RegexBattleMusic,   subtypeVisible: false, subtypeLabel: "Actions", stingRegex: RegexBattleSting),
                 new AudioRandoCategoryOption(AudioRandoCategory.AmbientNoise,  bothFolders,         RegexListNoise,     subtypeVisible: false, subtypeLabel: "Actions") { IsEnabled = false },
                 new AudioRandoCategoryOption(AudioRandoCategory.CutsceneNoise, AudioFolders.Music,  RegexCutscene,      subtypeVisible: false, subtypeLabel: "Actions") { IsEnabled = false },
                 new AudioRandoCategoryOption(AudioRandoCategory.NpcSounds,     AudioFolders.Sounds, RegexNPCSound,      subtypeVisible: false, subtypeLabel: "Actions") { IsEnabled = false },
@@ -1795,7 +1802,8 @@ namespace kotor_Randomizer_2.Models
 
         #region Audio Regex
         private static Regex RegexListAreaMusic => new Regex("^mus_a_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static Regex RegexBattleMusic => new Regex("mus_s?bat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexBattleMusic => new Regex("^mus_bat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexBattleSting => new Regex("^mus_sbat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static Regex RegexListNoise => new Regex(@"^(al_(an|el|en|me|nt|ot|vx)|as_el|cs|mgs|pl)_|^mus_loadscreen\.", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static Regex RegexCutscene => new Regex(@"^\d{2}[abc]?\.wav$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static Regex RegexNPCSound => new Regex("^n_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -1803,7 +1811,6 @@ namespace kotor_Randomizer_2.Models
 
         private static Regex K2Music_Bed => new Regex("^bed_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static Regex K2Music_Battle => new Regex("^mus_bat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static Regex K2Music_BattleSting => new Regex("^mus_sbat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static Regex K2Music_SFX => new Regex("^mus_s_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static Regex K2Music_Theme => new Regex("^mus_[ajkmnst][aeirt][adehiort][ehiny]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         #endregion

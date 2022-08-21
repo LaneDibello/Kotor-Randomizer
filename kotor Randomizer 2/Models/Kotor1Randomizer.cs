@@ -264,7 +264,7 @@ namespace kotor_Randomizer_2.Models
             return new ObservableCollection<AudioRandoCategoryOption>
             {
                 new AudioRandoCategoryOption(AudioRandoCategory.AreaMusic,     AudioFolders.Music,  RegexListAreaMusic, subtypeVisible: false, subtypeLabel: "Actions"),
-                new AudioRandoCategoryOption(AudioRandoCategory.BattleMusic,   bothFolders,         RegexBattleMusic,   subtypeVisible: false, subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.BattleMusic,   bothFolders,         RegexBattleMusic,   subtypeVisible: false, subtypeLabel: "Actions", stingRegex: RegexBattleMusicEnd),
                 new AudioRandoCategoryOption(AudioRandoCategory.AmbientNoise,  bothFolders,         RegexListNoise,     subtypeVisible: false, subtypeLabel: "Actions"),
                 new AudioRandoCategoryOption(AudioRandoCategory.CutsceneNoise, AudioFolders.Music,  RegexCutscene,      subtypeVisible: false, subtypeLabel: "Actions"),
                 new AudioRandoCategoryOption(AudioRandoCategory.NpcSounds,     AudioFolders.Sounds, RegexNPCSound,      subtypeVisible: false, subtypeLabel: "Actions") { IsEnabled = false },
@@ -332,7 +332,8 @@ namespace kotor_Randomizer_2.Models
 
         #region Audio Regexes
         private static Regex RegexListAreaMusic => new Regex(@"^mus_(area|theme)_|^(57|credits|evil_ending)\.", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static Regex RegexBattleMusic => new Regex("mus_s?bat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexBattleMusic => new Regex("^mus_bat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexBattleMusicEnd => new Regex("^mus_sbat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static Regex RegexListNoise => new Regex(@"^(al_(an|el|en|me|nt|ot|vx)|as_el|cs|mgs|pl)_|^mus_loadscreen\.", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static Regex RegexCutscene => new Regex(@"^\d{2}[abc]?\.wav$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static Regex RegexNPCSound => new Regex("^n_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
