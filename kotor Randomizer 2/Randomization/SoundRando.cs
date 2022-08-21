@@ -122,7 +122,7 @@ namespace kotor_Randomizer_2
                         if (soundSting.Any())
                         {
                             var randSoundSting = Randomize.RandomizeFiles(soundSting, paths.sounds);
-                            AddToMusicLookup(musicSting, randSoundSting);
+                            AddToSoundLookup(soundSting, randSoundSting);
                         }
                         break;
 
