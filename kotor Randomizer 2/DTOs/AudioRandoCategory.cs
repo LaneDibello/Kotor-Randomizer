@@ -13,12 +13,18 @@ namespace kotor_Randomizer_2.DTOs
         [Info("Battle Music")]
         BattleMusic,
 
+        [Info("Charater Themes")]
+        CharacterTheme,
+
         /**** Noise ****/
         [Info("Ambient Noise")]
         AmbientNoise,
 
         [Info("Cutscene Noise")]
         CutsceneNoise,
+
+        [Info("Feedback SFX")]
+        FeedbackSFX,
 
         /**** Character Sounds ****/
         [Info("NPC Sounds")]

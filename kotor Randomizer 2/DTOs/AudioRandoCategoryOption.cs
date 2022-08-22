@@ -1,6 +1,5 @@
 ﻿using kotor_Randomizer_2.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace kotor_Randomizer_2.DTOs
