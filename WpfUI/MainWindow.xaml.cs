@@ -30,15 +30,27 @@ namespace Randomizer_WPF
 
             CurrentSettings = GetSettingsFile();
             miCreateSpoilers.IsChecked = CurrentSettings.CreateSpoilers;
-            Kotor1Path = CurrentSettings.Kotor1Path;
-            Kotor2Path = CurrentSettings.Kotor2Path;
+
+            IsKotor2Selected = CurrentSettings.IsKotor2Selected;
+
+            // Set paths such that selected game is last. This will ensure RandomizeView has the correct Randomize / Unrandomize button option.
+            if (IsKotor2Selected)
+            {
+                Kotor1Path = CurrentSettings.Kotor1Path;
+                Kotor2Path = CurrentSettings.Kotor2Path;
+            }
+            else
+            {
+                Kotor2Path = CurrentSettings.Kotor2Path;
+                Kotor1Path = CurrentSettings.Kotor1Path;
+            }
+
             PresetPath = CurrentSettings.PresetPath;
             SpoilerPath = CurrentSettings.SpoilerPath;
             SelectedFontIndex = CurrentSettings.FontSizeIndex;
             CurrentHeight = CurrentSettings.Height;
             CurrentWidth = CurrentSettings.Width;
 
-            IsKotor2Selected = CurrentSettings.IsKotor2Selected;
             if (IsKotor2Selected == false)
                 DataContext = K1Randomizer; // Set window data context.
 
