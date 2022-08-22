@@ -267,7 +267,7 @@ namespace kotor_Randomizer_2.Models
                 new AudioRandoCategoryOption(AudioRandoCategory.BattleMusic,   bothFolders,         RegexBattleMusic,   subtypeVisible: false, subtypeLabel: "Actions", stingRegex: RegexBattleMusicEnd),
                 new AudioRandoCategoryOption(AudioRandoCategory.AmbientNoise,  bothFolders,         RegexListNoise,     subtypeVisible: false, subtypeLabel: "Actions"),
                 new AudioRandoCategoryOption(AudioRandoCategory.CutsceneNoise, AudioFolders.Music,  RegexCutscene,      subtypeVisible: false, subtypeLabel: "Actions"),
-                new AudioRandoCategoryOption(AudioRandoCategory.NpcSounds,     AudioFolders.Sounds, RegexNPCSound,      subtypeVisible: false, subtypeLabel: "Actions") { IsEnabled = false },
+                new AudioRandoCategoryOption(AudioRandoCategory.NpcSounds,     AudioFolders.Sounds, RegexNPCSound,      subtypeVisible: true,  subtypeLabel: "Actions") { IsEnabled = false },
                 new AudioRandoCategoryOption(AudioRandoCategory.PartySounds,   AudioFolders.Sounds, RegexPartySound,    subtypeVisible: true,  subtypeLabel: "Actions"),
             };
         }

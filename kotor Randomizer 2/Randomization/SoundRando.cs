@@ -126,8 +126,16 @@ namespace kotor_Randomizer_2
                         }
                         break;
 
-                    // Do nothing.
+                    // Randomize party and npc sounds by action.
                     case RandomizationLevel.Subtype:
+                        if (op.Category == AudioRandoCategory.PartySounds ||
+                            op.Category == AudioRandoCategory.NpcSounds)
+                        {
+                            RandomizeSoundActions(sound[op.Category], paths.sounds);
+                        }
+                        break;
+
+                    // Do nothing.
                     case RandomizationLevel.None:
                     default:
                         break;

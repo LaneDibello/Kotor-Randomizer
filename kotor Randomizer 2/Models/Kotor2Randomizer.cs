@@ -1721,13 +1721,13 @@ namespace kotor_Randomizer_2.Models
             var bothFolders = AudioFolders.Music | AudioFolders.Sounds;
             return new ObservableCollection<AudioRandoCategoryOption>
             {
-                new AudioRandoCategoryOption(AudioRandoCategory.AreaMusic,      AudioFolders.Music,  RegexListAreaMusic,  subtypeVisible: false, subtypeLabel: ""),
-                new AudioRandoCategoryOption(AudioRandoCategory.BattleMusic,    bothFolders,         RegexBattleMusic,    subtypeVisible: false, subtypeLabel: "", stingRegex: RegexBattleSting),
-                new AudioRandoCategoryOption(AudioRandoCategory.CharacterTheme, bothFolders,         RegexCharacterTheme, subtypeVisible: false, subtypeLabel: ""),
-                new AudioRandoCategoryOption(AudioRandoCategory.FeedbackSFX,    bothFolders,         RegexFeedbackSFX,    subtypeVisible: false, subtypeLabel: ""),
-                new AudioRandoCategoryOption(AudioRandoCategory.AmbientNoise,   bothFolders,         RegexListNoise,      subtypeVisible: false, subtypeLabel: ""),
-                new AudioRandoCategoryOption(AudioRandoCategory.NpcSounds,      AudioFolders.Sounds, RegexNPCSound,       subtypeVisible: false, subtypeLabel: ""),
-                new AudioRandoCategoryOption(AudioRandoCategory.PartySounds,    AudioFolders.Sounds, RegexPartySound,     subtypeVisible: false, subtypeLabel: ""),
+                new AudioRandoCategoryOption(AudioRandoCategory.AreaMusic,      AudioFolders.Music,  RegexListAreaMusic,  subtypeVisible: false, subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.BattleMusic,    AudioFolders.Music,  RegexBattleMusic,    subtypeVisible: false, subtypeLabel: "Actions", stingRegex: RegexBattleSting),
+                new AudioRandoCategoryOption(AudioRandoCategory.CharacterTheme, AudioFolders.Music,  RegexCharacterTheme, subtypeVisible: false, subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.FeedbackSFX,    bothFolders,         RegexFeedbackSFX,    subtypeVisible: false, subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.AmbientNoise,   bothFolders,         RegexListNoise,      subtypeVisible: false, subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.NpcSounds,      AudioFolders.Sounds, RegexNPCSound,       subtypeVisible: true,  subtypeLabel: "Actions") { IsEnabled = false },
+                new AudioRandoCategoryOption(AudioRandoCategory.PartySounds,    AudioFolders.Sounds, RegexPartySound,     subtypeVisible: true,  subtypeLabel: "Actions"),
             };
         }
 
@@ -1814,7 +1814,7 @@ namespace kotor_Randomizer_2.Models
         /// <summary> Found in StreamMusic </summary>
         private static Regex RegexBattleMusic => new Regex("^mus_bat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        /// <summary> Found in StreamMusic & StreamSounds </summary>
+        /// <summary> Found in StreamMusic (Copies in StreamSounds appear unused) </summary>
         private static Regex RegexBattleSting => new Regex("^mus_sbat_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>
@@ -1829,10 +1829,11 @@ namespace kotor_Randomizer_2.Models
         /// <summary> Found in StreamMusic & StreamSounds </summary>
         private static Regex RegexPartySound => new Regex("^p_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
+        // TODO: Determine if this feature actually works!
         /// <summary> Found in StreamMusic & StreamSounds </summary>
         private static Regex RegexFeedbackSFX => new Regex("^mus_s_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        /// <summary> Found in StreamMusic & StreamSounds </summary>
+        /// <summary> Found in StreamMusic (Copies in StreamSounds appear unused) </summary>
         private static Regex RegexCharacterTheme => new Regex(@"^mus_(atris|jedi|kreia(dark)?|kriea|main|nihilus|sion|sith|traya)\.wav$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         //private static Regex RegexCharacterTheme => new Regex("^mus_[ajkmnst][aeirt][adehiort][ehiny]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         #endregion
@@ -1849,7 +1850,7 @@ namespace kotor_Randomizer_2.Models
             || AudioRemoveDmcaMusic;
 
         public bool DoRandomizeSound =>
-            (AudioBattleMusic | AudioCharacterTheme | AudioFeedbackSFX | AudioAmbientNoise | AudioNpcSounds | AudioPartySounds)
+            (AudioFeedbackSFX | AudioAmbientNoise | AudioNpcSounds | AudioPartySounds)
             != RandomizationLevel.None;
 
         public RandomizationLevel AudioAmbientNoise
