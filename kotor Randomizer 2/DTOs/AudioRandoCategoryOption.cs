@@ -7,15 +7,17 @@ namespace kotor_Randomizer_2.DTOs
     [Flags]
     public enum AudioFolders
     {
-        Unknown = 0b0000,
+        Unknown = 0b00000,
         /// <summary> StreamMusic (KotOR 1 and KotOR 2) </summary>
-        Music   = 0b0001,
+        Music   = 0b00001,
         /// <summary> StreamSounds (KotOR 1 and KotOR 2) </summary>
-        Sounds  = 0b0010,
+        Sounds  = 0b00010,
         /// <summary> StreamVoice (KotOR 2 Only) </summary>
-        Voice   = 0b0100,
+        Voice   = 0b00100,
         /// <summary> StreamWaves (KotOR 1 Only) </summary>
-        Waves   = 0b1000,
+        Waves   = 0b01000,
+        /// <summary> ResRefs stored in 2DA.bif </summary>
+        Table   = 0b10000,
     }
 
     public class AudioRandoCategoryOption : RandomizationLevelOption

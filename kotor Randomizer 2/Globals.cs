@@ -42,23 +42,25 @@ namespace kotor_Randomizer_2
     public enum RandomizationCategory
     {
         /// <summary> Uninitialized value - nothing will be done. </summary>
-        None    = 0x00, // 0b00000000
+        None      = 0x00, // 0b00000000
         /// <summary> Randomize module (RIM) files so loading zones lead to an unknown destination. </summary>
-        Module  = 0x01, // 0b00000001
+        Module    = 0x01, // 0b00000001
         /// <summary> Randomize items. </summary>
-        Item    = 0x02, // 0b00000010
+        Item      = 0x02, // 0b00000010
         /// <summary> Randomize music and sound files. </summary>
-        Sound   = 0x04, // 0b00000100
+        Sound     = 0x04, // 0b00000100
         /// <summary> Randomize models. </summary>
-        Model   = 0x08, // 0b00001000
+        Model     = 0x08, // 0b00001000
         /// <summary> Randomize texture maps. </summary>
-        Texture = 0x10, // 0b00010000
+        Texture   = 0x10, // 0b00010000
         /// <summary> Randomize 2DA tables. </summary>
-        TwoDA   = 0x20, // 0b00100000
+        TwoDA     = 0x20, // 0b00100000
         /// <summary> Randomize text. -- Not yet implemented -- </summary>
-        Text    = 0x40, // 0b01000000
+        Text      = 0x40, // 0b01000000
         /// <summary> Perform other types of randomization. </summary>
-        Other   = 0x80, // 0b10000000
+        Other     = 0x80, // 0b10000000
+        /// <summary> Perform Model or Texture randomizations. </summary>
+        Cosmetics = 0x18, // 0b00011000
     }
 
     /// <summary>

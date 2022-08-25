@@ -52,12 +52,14 @@ namespace kotor_Randomizer_2.Models
         private const string XML_FIRST_NAME_F   = "FirstF";
         private const string XML_FIRST_NAME_M   = "FirstM";
         private const string XML_FLU            = "FLU";
+        private const string XML_FOOTSTEPS      = "Footsteps";
         private const string XML_GENERAL        = "General";
         private const string XML_GLITCHES       = "Glitches";
         private const string XML_GLOVE          = "Glove";
         private const string XML_GOALS          = "Goals";
         private const string XML_GPW            = "GPW";
         private const string XML_GRENADE        = "Grenade";
+        private const string XML_GUI            = "GUI";
         private const string XML_HEAD           = "PHead";
         private const string XML_IGNORE_ONCE    = "IgnoreOnce";
         private const string XML_IMPLANT        = "Implant";
@@ -318,6 +320,7 @@ namespace kotor_Randomizer_2.Models
                     ReportProgress(bw, progress += stepSize, BusyState.BackingUp, CATEGORY_AUDIO, string.Format(form, CATEGORY_AUDIO));
                     if (DoRandomizeMusic) { SoundRando.CreateMusicBackups(paths); }
                     if (DoRandomizeSound) { SoundRando.CreateSoundBackups(paths); }
+                    if (DoRandomizeAudioTables) { TwodaRandom.CreateTwoDABackups(paths); }
                 }
 
                 //if (DoRandomizeModels)      // Back up Models (Cosmetics)
@@ -1724,10 +1727,13 @@ namespace kotor_Randomizer_2.Models
                 new AudioRandoCategoryOption(AudioRandoCategory.AreaMusic,      AudioFolders.Music,  RegexListAreaMusic,  subtypeVisible: false, subtypeLabel: "Actions"),
                 new AudioRandoCategoryOption(AudioRandoCategory.BattleMusic,    AudioFolders.Music,  RegexBattleMusic,    subtypeVisible: false, subtypeLabel: "Actions", stingRegex: RegexBattleSting),
                 new AudioRandoCategoryOption(AudioRandoCategory.CharacterTheme, AudioFolders.Music,  RegexCharacterTheme, subtypeVisible: false, subtypeLabel: "Actions"),
-                new AudioRandoCategoryOption(AudioRandoCategory.FeedbackSFX,    bothFolders,         RegexFeedbackSFX,    subtypeVisible: false, subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.FeedbackSFX,    AudioFolders.Music,  RegexFeedbackSFX,    subtypeVisible: false, subtypeLabel: "Actions"),
                 new AudioRandoCategoryOption(AudioRandoCategory.AmbientNoise,   bothFolders,         RegexListNoise,      subtypeVisible: false, subtypeLabel: "Actions"),
                 new AudioRandoCategoryOption(AudioRandoCategory.NpcSounds,      AudioFolders.Sounds, RegexNPCSound,       subtypeVisible: true,  subtypeLabel: "Actions") { IsEnabled = false },
                 new AudioRandoCategoryOption(AudioRandoCategory.PartySounds,    AudioFolders.Sounds, RegexPartySound,     subtypeVisible: true,  subtypeLabel: "Actions"),
+                new AudioRandoCategoryOption(AudioRandoCategory.FootstepSFX,    AudioFolders.Table,  RegexFootstepCols,   subtypeVisible: false, typeVisible: false, maxVisible: false, stingRegex: RegexFootstepRows),
+                new AudioRandoCategoryOption(AudioRandoCategory.GuiSFX,         AudioFolders.Table,  RegexGuiCols,        subtypeVisible: false, typeVisible: false, maxVisible: false),
+                new AudioRandoCategoryOption(AudioRandoCategory.WeaponSFX,      AudioFolders.Table,  RegexWeaponCols,     subtypeVisible: false, typeVisible: false, maxVisible: false, stingRegex: RegexWeaponRows),
             };
         }
 
@@ -1759,6 +1765,9 @@ namespace kotor_Randomizer_2.Models
             { if (element.Attribute(XML_FEEDBACK_SFX) is XAttribute attr) AudioFeedbackSFX          = ParseEnum<RandomizationLevel>(attr.Value); }
             { if (element.Attribute(XML_NPC         ) is XAttribute attr) AudioNpcSounds            = ParseEnum<RandomizationLevel>(attr.Value); }
             { if (element.Attribute(XML_PARTY       ) is XAttribute attr) AudioPartySounds          = ParseEnum<RandomizationLevel>(attr.Value); }
+            { if (element.Attribute(XML_FOOTSTEPS   ) is XAttribute attr) AudioFootstepSFX          = bool.Parse(attr.Value); }
+            { if (element.Attribute(XML_GUI         ) is XAttribute attr) AudioGuiSFX               = bool.Parse(attr.Value); }
+            { if (element.Attribute(XML_WEAPON      ) is XAttribute attr) AudioWeaponSFX            = bool.Parse(attr.Value); }
             { if (element.Attribute(XML_MIXGAMEAUDIO) is XAttribute attr) AudioMixKotorGameMusic    = bool.Parse(attr.Value); }
             { if (element.Attribute(XML_MIXNPCPARTY ) is XAttribute attr) AudioMixNpcAndPartySounds = bool.Parse(attr.Value); }
             { if (element.Attribute(XML_REMOVE_DMCA ) is XAttribute attr) AudioRemoveDmcaMusic      = bool.Parse(attr.Value); }
@@ -1778,6 +1787,9 @@ namespace kotor_Randomizer_2.Models
             if (AudioFeedbackSFX    != RandomizationLevel.None) w.WriteAttributeString(XML_FEEDBACK_SFX, AudioFeedbackSFX.ToString());
             if (AudioNpcSounds      != RandomizationLevel.None) w.WriteAttributeString(XML_NPC,          AudioNpcSounds.ToString());
             if (AudioPartySounds    != RandomizationLevel.None) w.WriteAttributeString(XML_PARTY,        AudioPartySounds.ToString());
+            if (AudioFootstepSFX         ) w.WriteAttributeString(XML_FOOTSTEPS,    AudioFootstepSFX.ToString());
+            if (AudioGuiSFX              ) w.WriteAttributeString(XML_GUI,          AudioGuiSFX.ToString());
+            if (AudioWeaponSFX           ) w.WriteAttributeString(XML_WEAPON,       AudioWeaponSFX.ToString());
             if (AudioMixKotorGameMusic   ) w.WriteAttributeString(XML_MIXGAMEAUDIO, AudioMixKotorGameMusic.ToString());
             if (AudioMixNpcAndPartySounds) w.WriteAttributeString(XML_MIXNPCPARTY,  AudioMixNpcAndPartySounds.ToString());
             if (AudioRemoveDmcaMusic     ) w.WriteAttributeString(XML_REMOVE_DMCA,  AudioRemoveDmcaMusic.ToString());
@@ -1796,6 +1808,29 @@ namespace kotor_Randomizer_2.Models
             if (AudioCategoryOptions.First(op => op.Category == category) is AudioRandoCategoryOption arco)
             {
                 arco.Level = level;
+                NotifyPropertyChanged(nameof(AudioCategoryOptions));
+            }
+            else
+            {
+                throw new InvalidEnumArgumentException($"AudioRandoCategory.{category} does not exist.");
+            }
+        }
+
+        private bool GetARCOEnabled(AudioRandoCategory category)
+        {
+            return AudioCategoryOptions.First(op => op.Category == category) is AudioRandoCategoryOption arco
+                ? arco.Flags.HasFlag(RandoLevelFlags.Enabled)
+                : throw new InvalidEnumArgumentException($"AudioRandoCategory.{category} does not exist.");
+        }
+
+        private void SetARCOEnabled(AudioRandoCategory category, bool value)
+        {
+            if (AudioCategoryOptions.First(op => op.Category == category) is AudioRandoCategoryOption arco)
+            {
+                if (value)
+                    arco.Flags |= RandoLevelFlags.Enabled;
+                else
+                    arco.Flags &= RandoLevelFlags.Subtype | RandoLevelFlags.Type | RandoLevelFlags.Max;
                 NotifyPropertyChanged(nameof(AudioCategoryOptions));
             }
             else
@@ -1829,20 +1864,35 @@ namespace kotor_Randomizer_2.Models
         /// <summary> Found in StreamMusic & StreamSounds </summary>
         private static Regex RegexPartySound => new Regex("^p_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        // TODO: Determine if this feature actually works!
-        /// <summary> Found in StreamMusic & StreamSounds </summary>
+        // TODO: Change the name to be more accurate.
+        /// <summary> Found in StreamMusic (Copies in StreamSounds appear unused) </summary>
         private static Regex RegexFeedbackSFX => new Regex("^mus_s_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary> Found in StreamMusic (Copies in StreamSounds appear unused) </summary>
         private static Regex RegexCharacterTheme => new Regex(@"^mus_(atris|jedi|kreia(dark)?|kriea|main|nihilus|sion|sith|traya)\.wav$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         //private static Regex RegexCharacterTheme => new Regex("^mus_[ajkmnst][aeirt][adehiort][ehiny]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+
+        /*** TABLE RELATED SOUND RANDOMIZATION ***/ 
+        private static Regex RegexAmbMusicCols => new Regex(@"^(resource|stinger1)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexAmbSoundCols => new Regex(@"^(resource)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexFootstepCols => new Regex(@"^(dirt|grass|stone|wood|water|carpet|metal|puddles|leaves|force)\d$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexFootstepRows => new Regex(@"^([0-3]|[5-7]|10)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexGuiCols => new Regex(@"^(soundresref|inventorysound)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        //private static Regex RegexInventoryCols => new Regex(@"^inventorysound$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexPlaceableCols => new Regex(@"^(armortype|opened|closed|locked)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexPlaceableRows => new Regex(@"^\d?\d$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexTrapCols => new Regex(@"^explosionsound$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        //private static Regex RegexSwingCols => new Regex(@"^sound\d$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexWeaponRows => new Regex(@"^\d$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex RegexWeaponCols => new Regex(@"^((cloth|leather|armor|forcefield|metal|wood|stone|parry|swingshort|swinglong|swingtwirl|clash)\d|sound\d)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         #endregion
 
         #region Audio Properties
 
         public override bool SupportsAudio => true;
 
-        public bool DoRandomizeAudio => DoRandomizeMusic || DoRandomizeSound;
+        public bool DoRandomizeAudio => DoRandomizeMusic || DoRandomizeSound || DoRandomizeAudioTables;
 
         public bool DoRandomizeMusic =>
             (AudioAreaMusic | AudioBattleMusic | AudioCharacterTheme | AudioFeedbackSFX | AudioAmbientNoise)
@@ -1853,11 +1903,7 @@ namespace kotor_Randomizer_2.Models
             (AudioFeedbackSFX | AudioAmbientNoise | AudioNpcSounds | AudioPartySounds)
             != RandomizationLevel.None;
 
-        public RandomizationLevel AudioAmbientNoise
-        {
-            get => GetARCOLevel(AudioRandoCategory.AmbientNoise);
-            set => SetARCOLevel(AudioRandoCategory.AmbientNoise, value);
-        }
+        public bool DoRandomizeAudioTables => AudioFootstepSFX | AudioGuiSFX | AudioWeaponSFX;
 
         public RandomizationLevel AudioAreaMusic
         {
@@ -1883,6 +1929,12 @@ namespace kotor_Randomizer_2.Models
             set => SetARCOLevel(AudioRandoCategory.FeedbackSFX, value);
         }
 
+        public RandomizationLevel AudioAmbientNoise
+        {
+            get => GetARCOLevel(AudioRandoCategory.AmbientNoise);
+            set => SetARCOLevel(AudioRandoCategory.AmbientNoise, value);
+        }
+
         public RandomizationLevel AudioNpcSounds
         {
             get => GetARCOLevel(AudioRandoCategory.NpcSounds);
@@ -1893,6 +1945,24 @@ namespace kotor_Randomizer_2.Models
         {
             get => GetARCOLevel(AudioRandoCategory.PartySounds);
             set => SetARCOLevel(AudioRandoCategory.PartySounds, value);
+        }
+
+        public bool AudioFootstepSFX
+        {
+            get => GetARCOEnabled(AudioRandoCategory.FootstepSFX);
+            set => SetARCOEnabled(AudioRandoCategory.FootstepSFX, value);
+        }
+
+        public bool AudioGuiSFX
+        {
+            get => GetARCOEnabled(AudioRandoCategory.GuiSFX);
+            set => SetARCOEnabled(AudioRandoCategory.GuiSFX, value);
+        }
+
+        public bool AudioWeaponSFX
+        {
+            get => GetARCOEnabled(AudioRandoCategory.WeaponSFX);
+            set => SetARCOEnabled(AudioRandoCategory.WeaponSFX, value);
         }
 
         public ObservableCollection<AudioRandoCategoryOption> AudioCategoryOptions

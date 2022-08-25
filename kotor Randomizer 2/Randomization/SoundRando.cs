@@ -9,13 +9,35 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using kotor_Randomizer_2.DTOs;
 using kotor_Randomizer_2.Interfaces;
+using KotOR_IO;
 
 namespace kotor_Randomizer_2
 {
     class SoundRando
     {
+        /// <summary>
+        /// Lookup table for how music files randomized.
+        /// Usage: MusicLookupTable[OriginalFile] = RandomizedFile;
+        /// </summary>
         private static Dictionary<string, string> MusicLookupTable { get; set; } = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Lookup table for how sound files are randomized.
+        /// Usage: SoundLookupTable[OriginalFile] = RandomizedFile;
+        /// </summary>
         private static Dictionary<string, string> SoundLookupTable { get; set; } = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Lookup table for how 2DAs are randomized.
+        /// Usage: LookupTable[2DA][col_name] = (OriginalData, RandomizedData);
+        /// </summary>
+        private static Dictionary<string, Dictionary<string, List<Tuple<string, string>>>> TablesLookupTable { get; set; } = new Dictionary<string, Dictionary<string, List<Tuple<string, string>>>>();
+
+        /// <summary>
+        /// Lookup table for affected 2DA rows.
+        /// Usage: TablesLookupRows[2DA][rowidx] = row_index (identifier)
+        /// </summary>
+        private static Dictionary<string, List<string>> TablesLookupRows { get; set; } = new Dictionary<string, List<string>>();
 
         private static List<AudioRandoCategoryOption> AudioOptions { get; set; }
         private static bool MixKotorGameMusic { get; set; }
@@ -71,6 +93,13 @@ namespace kotor_Randomizer_2
             // TODO: Test this code ... not sure if it'll work.
             AudioOptions.AsParallel().ForAll((op) =>
             {
+                if (op.Folders == AudioFolders.Table)
+                {
+                    if (op.Flags.HasFlag(RandoLevelFlags.Enabled))
+                        RandomizeTableSounds(paths, op);
+                    return;
+                }
+
                 var musicSting = new List<FileInfo>();
                 var soundSting = new List<FileInfo>();
                 if (op.Folders.HasFlag(AudioFolders.Music))
@@ -198,6 +227,97 @@ namespace kotor_Randomizer_2
             sw.Restart();
         }
 
+        private static void RandomizeTableSounds(KPaths paths, AudioRandoCategoryOption op)
+        {
+            const string ROWIDX = "row_index";
+            var tables = op.Category.ToArea().Split(";".ToArray(), StringSplitOptions.RemoveEmptyEntries);
+            if (tables.Length == 0) return; // 
+            var b = new BIF(Path.Combine(paths.data, "2da.bif"));
+            var k = new KEY(paths.chitin_backup);
+            b.AttachKey(k, "data\\2da.bif");
+
+            foreach (var tableName in tables)
+            {
+                var split = tableName.Split(":".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                if (split.Length != 2) continue;  // Invalid area format. Maybe throw exception.
+
+                // Find the requested 2da table.
+                var vre = b.VariableResourceTable.FirstOrDefault(x => x.ResRef == split[1]);
+                if (vre == null) continue;    // Invalid table name. Maybe throw exception.
+                var isInOverride = paths.FilesInOverride.Any(fi => fi.Name == split[1]);
+                var t = isInOverride
+                    ? new TwoDA(File.ReadAllBytes(paths.FilesInOverride.First(fi => fi.Name == split[1]).FullName), vre.ResRef)
+                    : new TwoDA(vre.EntryData, vre.ResRef);
+
+                TablesLookupRows.Add(split[1], new List<string>());
+                TablesLookupTable.Add(split[1], new Dictionary<string, List<Tuple<string, string>>>());
+
+                // Shuffle table by column, row, or both.
+                switch (split[0])
+                {
+                    case "col": // Shuffle table within a column.
+                        foreach (var row in t.Data[ROWIDX])     // Create a list of affected rows.
+                            TablesLookupRows[split[1]].Add(row);
+
+                        foreach (var col in t.Columns.Where(c => op.AudioRegex.IsMatch(c))) // for all matching columns
+                        {
+                            TablesLookupTable[split[1]].Add(col, new List<Tuple<string, string>>());    // Create list of changes in this column.
+
+                            var old = t.Data[col].ToList();
+                            Randomize.FisherYatesShuffle(t.Data[col]);
+
+                            // Add column to lookup table.
+                            for (var i = 0; i < old.Count; i++)
+                                TablesLookupTable[split[1]][col].Add(new Tuple<string, string>(old[i], t.Data[col][i]));
+                        }
+                        break;
+                    case "row": // Shuffle table within a row.
+                        // Transpose "by column" data to "by row" data.
+                        var byRows = new List<List<string>>();
+                        var matchingRowHeads = t.Data[ROWIDX].Where(s => op.StingRegex.IsMatch(s)).ToList();
+                        foreach (var row in matchingRowHeads)   // Create a list of affected rows.
+                            TablesLookupRows[split[1]].Add(row);
+
+                        var rowIdxs = new List<int>();
+                        foreach (var row in matchingRowHeads) rowIdxs.Add(t.Data[ROWIDX].IndexOf(row));
+
+                        var matchingColumns = t.Columns.Where(s => op.AudioRegex.IsMatch(s)).ToList();
+                        for (var i = 0; i < rowIdxs.Count; i++) byRows.Add(new List<string>());    // Add number of matching rows.
+
+                        foreach (var col in matchingColumns)
+                        {
+                            for (var r = 0; r < byRows.Count; r++)
+                            {
+                                byRows[r].Add(t[col, rowIdxs[r]]);
+                            }
+                        }
+
+                        // Save original values and shuffle rows.
+                        var byRowsOld = new List<List<string>>(byRows);
+                        foreach (var row in byRows) Randomize.FisherYatesShuffle(row);
+
+                        // Save changes in 2da table.
+                        for (var c = 0; c < matchingColumns.Count; c++)
+                        {
+                            var col = matchingColumns[c];   // Column name
+                            TablesLookupTable[split[1]].Add(col, new List<Tuple<string, string>>());
+
+                            for (var r = 0; r < byRows.Count; r++)
+                            {
+                                t.Data[col][rowIdxs[r]] = byRows[r][c];
+                                TablesLookupTable[split[1]][col].Add(new Tuple<string, string>(byRowsOld[r][c], byRows[r][c]));
+                            }
+                        }
+                        break;
+                    case "colrow":  // Shuffle all data in the table in the matching rows and columns.
+                        // TODO: To be implemented...
+                    default: continue;    // Invalid option. Maybe throw exception. 
+                }
+
+                t.WriteToDirectory(paths.Override); // Write new 2DA data to file.
+            }
+        }
+
         private static void AssignSettings(IRandomizeAudio rando)
         {
             // If rando is null, pull from settings.
@@ -232,11 +352,13 @@ namespace kotor_Randomizer_2
             // Prepare lists for new randomization.
             MusicLookupTable.Clear();
             SoundLookupTable.Clear();
+            TablesLookupTable.Clear();
+            TablesLookupRows.Clear();
         }
 
         private static void AddToMusicLookup(List<FileInfo> original, List<FileInfo> randomized)
         {
-            for (int i = 0; i < original.Count; i++)
+            for (var i = 0; i < original.Count; i++)
             {
                 if (MusicLookupTable.ContainsKey(original[i].Name))
                 {
@@ -251,7 +373,7 @@ namespace kotor_Randomizer_2
 
         private static void AddToSoundLookup(List<FileInfo> original, List<FileInfo> randomized)
         {
-            for (int i = 0; i < original.Count; i++)
+            for (var i = 0; i < original.Count; i++)
             {
                 if (SoundLookupTable.ContainsKey(original[i].Name))
                 {
@@ -346,13 +468,14 @@ namespace kotor_Randomizer_2
         public static void CreateSpoilerLog(XLWorkbook workbook)
         {
             if (MusicLookupTable.Count == 0 &&
-                SoundLookupTable.Count == 0)
+                SoundLookupTable.Count == 0 &&
+                TablesLookupTable.Count == 0)
             { return; }
-            var ws = workbook.Worksheets.Add("MusicSound");
-            int i = 1;
+            var ws = workbook.Worksheets.Add("Audio");
+            var i = 1;
 
             // Music and Sound Randomization Settings
-            ws.Cell(i, 1).Value = "Music/Sound Type";
+            ws.Cell(i, 1).Value = "Audio Type";
             ws.Cell(i, 2).Value = "Rando Level";
             ws.Cell(i, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
             ws.Cell(i, 2).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
@@ -363,7 +486,7 @@ namespace kotor_Randomizer_2
             var settings = new List<Tuple<string, string>>();
             foreach (var arco in AudioOptions)
             {
-                settings.Add(new Tuple<string, string>(arco.Category.ToLabel(), arco.Level.ToString()));
+                settings.Add(new Tuple<string, string>(arco.Category.ToLabel(), arco.ToSettingsString()));
             }
             settings.Add(new Tuple<string, string>("", ""));    // Skip a row.
             settings.Add(new Tuple<string, string>("Mix Kotor Game Music", MixKotorGameMusic.ToEnabledDisabled()));
@@ -448,10 +571,79 @@ namespace kotor_Randomizer_2
                 }
             }
 
+            // Table Shuffles
+            int iDone = i;
+            int j = 1;
+            int jMax = 1;
+            const string ORIGINAL = "Orig";
+            const string RANDOM = "Rand";
+
+            if (TablesLookupTable.Any())
+            {
+                foreach (var twoDA in TablesLookupTable)
+                {
+                    // twoDA = KVP<tableName, Dictionary<column, List<Tuple<old, new>>>
+                    // TwoDA Table Header
+                    ws.Cell(i, 1).Value = twoDA.Key;
+                    ws.Cell(i, 1).Style.Font.Bold = true;
+                    ws.Cell(i, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    ws.Range(i, 1, i, 2).Merge();
+                    i++;
+
+                    var iStart = i;
+
+                    ws.Cell(i, j).Value = $"row_index";
+                    ws.Cell(i, j).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                    ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                    ws.Cell(i, j).Style.Font.Italic = true;
+                    i++;
+
+                    foreach (var row in TablesLookupRows[twoDA.Key])
+                    {
+                        ws.Cell(i, j).Value = row;
+                        i++;
+                    }
+
+                    i = iStart;
+                    j++;
+
+                    foreach (var col in twoDA.Value)
+                    {
+                        if (jMax < j) jMax = j + 1;     // Remember the width of the widest table.
+
+                        // Column Headers
+                        i = iStart;
+                        ws.Cell(i, j).Value = $"{col.Key} {ORIGINAL}";
+                        ws.Cell(i, j).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j).Style.Font.Italic = true;
+                        ws.Cell(i, j + 1).Value = $"{col.Key} {RANDOM}";
+                        ws.Cell(i, j + 1).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j + 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                        ws.Cell(i, j + 1).Style.Font.Italic = true;
+                        i++;
+
+                        foreach (var row in col.Value)  // Write each change 
+                        {
+                            // Row Data
+                            ws.Cell(i, j).Value = row.Item1;
+                            ws.Cell(i, j).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
+                            ws.Cell(i, j + 1).Value = row.Item2;
+                            ws.Cell(i, j + 1).Style.Border.RightBorder = XLBorderStyleValues.Thin;
+                            i++;
+                        }
+
+                        j += 2;     // Move to the next pair of columns.
+                        if (iDone < i) iDone = i;   // Remember the length of this table.
+                    }
+
+                    i = iDone + 1;  // Skip a row.
+                    j = 1;          // Reset to column A.
+                }
+            }
+
             // Resize Columns
-            ws.Column(1).AdjustToContents();
-            ws.Column(2).AdjustToContents();
-            ws.Column(3).AdjustToContents();
+            for (int c = 1; c <= jMax; c++) ws.Column(c).AdjustToContents();
         }
 
         public static Regex DmcaMusicRegexDefault => new Regex(@"^(57|credits|evil_ending)\.wav$", RegexOptions.Compiled | RegexOptions.IgnoreCase);

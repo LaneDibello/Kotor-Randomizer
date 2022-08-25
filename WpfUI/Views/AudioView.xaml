@@ -9,7 +9,7 @@
              xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
-             d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance model:Kotor2Randomizer, IsDesignTimeCreatable=True}"
              FontFamily="Microsoft Sans Serif" FontSize="12"
              Name="thisView">
     <UserControl.Resources>

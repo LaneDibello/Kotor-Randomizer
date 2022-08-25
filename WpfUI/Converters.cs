@@ -347,4 +347,26 @@ namespace Randomizer_WPF
         }
         #endregion
     }
+
+    [ValueConversion(typeof(bool), typeof(Visibility))]
+    public class VisibleIfAllAreFalseMultiConverter : IMultiValueConverter
+    {
+        #region IMultiValueConverter Members
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (targetType != typeof(Visibility)) return (Visibility)parameter;
+            if (!values.Any()) return Visibility.Visible;
+
+            var anyAreTrue = false;
+            foreach (var value in values) anyAreTrue |= (bool)value;
+
+            return anyAreTrue ? Visibility.Visible : (Visibility)parameter;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+    }
 }

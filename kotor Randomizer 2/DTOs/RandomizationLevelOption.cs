@@ -116,6 +116,13 @@ namespace kotor_Randomizer_2.DTOs
         {
             return $"{CheckboxLabel}: {Level}";
         }
+
+        public string ToSettingsString()
+        {
+            return (Flags == RandoLevelFlags.Enabled || Flags == RandoLevelFlags.AllOff)
+                ? Flags.ToString()
+                : Level.ToString();
+        }
         #endregion
 
         #region INotifyPropertyChanged Implementation

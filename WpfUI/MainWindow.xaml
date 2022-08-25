@@ -161,7 +161,7 @@
         
         <!-- Dock.Center, Setting Views -->
         <Grid Margin="5">
-            <TabControl TabStripPlacement="Left">
+            <TabControl x:Name="tcAllTabs" TabStripPlacement="Left">
                 <TabControl.Resources>
                     <Style TargetType="TabItem" BasedOn="{StaticResource K1TabItem}">
                         <Setter Property="FontSize" Value="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
@@ -169,7 +169,7 @@
                 </TabControl.Resources>
                 
                 <!-- General Settings -->
-                <TabItem Header="_General" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                <TabItem Name="GeneralTab" Header="_General" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
                     <!-- DataContext inherited from the window. Locked and Unlocked door lists bound from data context. -->
                     <v:GeneralView
                         x:Name="GeneralView"
@@ -217,7 +217,7 @@
                 
 
                 <!-- Module Rando Settings -->
-                <TabItem Header="_Modules"
+                <TabItem Header="_Modules" Tag="{x:Static rando:RandomizationCategory.Module}"
                          IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
                          Visibility="{Binding Path=SupportsModules, Converter={StaticResource BoolToVisibilityConverter}}"
                          >
@@ -229,7 +229,7 @@
                 </TabItem>
 
                 <!-- Item Rando Settings -->
-                <TabItem Header="_Items"
+                <TabItem Header="_Items" Tag="{x:Static rando:RandomizationCategory.Item}"
                          IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
                          Visibility="{Binding Path=SupportsItems, Converter={StaticResource BoolToVisibilityConverter}}"
                          >
@@ -241,7 +241,7 @@
                 </TabItem>
 
                 <!-- Audio Rando Settings -->
-                <TabItem Header="_Audio"
+                <TabItem Header="_Audio" Tag="{x:Static rando:RandomizationCategory.Sound}"
                          IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
                          Visibility="{Binding Path=SupportsAudio, Converter={StaticResource BoolToVisibilityConverter}}"
                          >
@@ -251,7 +251,7 @@
                 </TabItem>
 
                 <!-- Cosmetic Rando Settings -->
-                <TabItem Header="_Cosmetics"
+                <TabItem Header="_Cosmetics" Tag="{x:Static rando:RandomizationCategory.Cosmetics}"
                          IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
                          Visibility="{Binding Path=SupportsCosmetics, Converter={StaticResource BoolToVisibilityConverter}}"
                          >
@@ -288,7 +288,7 @@
                 <!--<TabItem Header="_Party" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"></TabItem>-->
                 
                 <!-- Table Rando Settings -->
-                <TabItem Header="_Tables"
+                <TabItem Header="_Tables" Tag="{x:Static rando:RandomizationCategory.TwoDA}"
                          IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
                          Visibility="{Binding Path=SupportsTables, Converter={StaticResource BoolToVisibilityConverter}}"
                          >
@@ -298,7 +298,7 @@
                 </TabItem>
 
                 <!-- Text Rando Settings -->
-                <TabItem Header="Te_xt"
+                <TabItem Header="Te_xt" Tag="{x:Static rando:RandomizationCategory.Text}"
                          IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
                          Visibility="{Binding Path=SupportsText, Converter={StaticResource BoolToVisibilityConverter}}"
                          >
@@ -314,7 +314,7 @@
                 </TabItem>
                 
                 <!-- Other Rando Settings -->
-                <TabItem Header="_Other"
+                <TabItem Header="_Other" Tag="{x:Static rando:RandomizationCategory.Other}"
                          IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
                          Visibility="{Binding Path=SupportsOther, Converter={StaticResource BoolToVisibilityConverter}}"
                          >
@@ -328,7 +328,7 @@
                 <TabItem Visibility="Hidden" />
 
                 <!-- Randomize / Unrandomize Launching Point -->
-                <TabItem Header="_Randomize">
+                <TabItem Name="RandomizeTab" Header="_Randomize">
                     <v:RandomizeView x:Name="RandomizeView"
                                      FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
                                      CreateSpoilers ="{Binding ElementName=miCreateSpoilers,  Path=IsChecked,   Mode=TwoWay}"

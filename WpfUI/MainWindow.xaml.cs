@@ -1,9 +1,11 @@
-﻿using kotor_Randomizer_2.Models;
+﻿using kotor_Randomizer_2;
+using kotor_Randomizer_2.Models;
 using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Randomizer_WPF
@@ -100,6 +102,45 @@ namespace Randomizer_WPF
             {
                 // Kotor 1 is now the selected game.
                 win.DataContext = win.K1Randomizer;
+            }
+
+            if (!win.IsCurrentTabSupported()) win.SelectGeneralTab();
+        }
+
+        private void SelectGeneralTab()
+        {
+            tcAllTabs.SelectedItem = GeneralTab;
+        }
+
+        private bool IsCurrentTabSupported()
+        {
+            var selected = tcAllTabs.SelectedItem as TabItem;
+            if (selected == null) return false;
+            if (selected == GeneralTab || selected == RandomizeTab) return true;
+            if (selected.Tag == null) return false;
+
+            var context = DataContext as RandomizerBase;
+            switch ((RandomizationCategory)((TabItem)tcAllTabs.SelectedItem).Tag)
+            {
+                case RandomizationCategory.Module:
+                    return context.SupportsModules;
+                case RandomizationCategory.Item:
+                    return context.SupportsItems;
+                case RandomizationCategory.Sound:
+                    return context.SupportsAudio;
+                case RandomizationCategory.Cosmetics:
+                case RandomizationCategory.Model:
+                case RandomizationCategory.Texture:
+                    return context.SupportsCosmetics;
+                case RandomizationCategory.TwoDA:
+                    return context.SupportsTables;
+                case RandomizationCategory.Text:
+                    return context.SupportsText;
+                case RandomizationCategory.Other:
+                    return context.SupportsOther;
+                case RandomizationCategory.None:
+                default:
+                    return false;
             }
         }
 

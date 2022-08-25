@@ -23,6 +23,7 @@
             
             <base:BoolToHiddenConverter x:Key="BoolToHiddenConverter" />
             <base:RandoLevelFlagsToBoolConverter x:Key="RLFToBoolConverter" RandoLevelFlagsChanged="RandoLevelFlagsChanged" />
+            <base:VisibleIfAllAreFalseMultiConverter x:Key="VisibilityMultiConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -34,6 +35,15 @@
         <Grid.Resources>
             <Style TargetType="Border">
                 <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                <Setter Property="Visibility">
+                    <Setter.Value>
+                        <MultiBinding Converter="{StaticResource VisibilityMultiConverter}" ConverterParameter="{x:Static Visibility.Hidden}">
+                            <Binding Path="SubtypeVisible" />
+                            <Binding Path="TypeVisible" />
+                            <Binding Path="MaxVisible" />
+                        </MultiBinding>
+                    </Setter.Value>
+                </Setter>
                 <Style.Triggers>
                     <Trigger Property="IsEnabled" Value="False">
                         <Setter Property="BorderBrush" Value="{StaticResource MediumGrayBrush}" />
