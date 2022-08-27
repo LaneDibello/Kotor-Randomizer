@@ -185,7 +185,7 @@ namespace kotor_Randomizer_2.Models
 
         #region Base Properties
         public override Game Game => Game.Kotor2;
-        public override string Extension => "xk2rp";
+        public override string Extension => ".xk2rp";
         #endregion
 
         #region Base Methods

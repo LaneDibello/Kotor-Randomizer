@@ -23,7 +23,7 @@ namespace kotor_Randomizer_2.Models
     public class Kotor1Randomizer : RandomizerBase, IGeneralSettings, IRandomizeModules, IRandomizeItems, IRandomizeAudio
     {
         public override Game Game => Game.Kotor1;
-        public override string Extension => "xkrp";
+        public override string Extension => ".xkrp";
 
         #region Constants
         public const ModuleExtras SAVE_MASK = ModuleExtras.NoSaveDelete | ModuleExtras.SaveMiniGames | ModuleExtras.SaveAllModules;

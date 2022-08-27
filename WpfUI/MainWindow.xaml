@@ -104,7 +104,8 @@
                 <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
                     <TextBlock Foreground="{StaticResource MediumBlueBrush}" VerticalAlignment="Center" Margin="0,0,-5,0">Kotor 1</TextBlock>
                     <CheckBox x:Name="IsKotor2Active" Margin="3,0" Style="{DynamicResource SliderCheckBox}"
-                                      IsChecked="{Binding ElementName=window, Mode=TwoWay, Path=IsKotor2Selected}" />
+                              IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
+                              IsChecked="{Binding ElementName=window, Mode=TwoWay, Path=IsKotor2Selected}" />
                     <TextBlock Foreground="{StaticResource MediumGreenBrush}" VerticalAlignment="Center">Kotor 2</TextBlock>
                 </StackPanel>
 

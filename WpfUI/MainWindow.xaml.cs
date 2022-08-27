@@ -53,12 +53,19 @@ namespace Randomizer_WPF
             CurrentHeight = CurrentSettings.Height;
             CurrentWidth = CurrentSettings.Width;
 
+            // Set window data context.
             if (IsKotor2Selected == false)
-                DataContext = K1Randomizer; // Set window data context.
+                DataContext = K1Randomizer;
 
             // If startup file path given, load it -- primarily used for debugging.
             if (!string.IsNullOrEmpty(startupFilePath)) LoadPresetFile(startupFilePath);
             else GetLastUsedPresets();      // Always load the last settings.
+
+            //// Set window data context.
+            //if (IsKotor2Selected == false)
+            //    DataContext = K1Randomizer;
+            //else
+            //    DataContext = K2Randomizer;
 
             WriteLineToLog($"{Environment.NewLine}Once you are satisfied, click the button below to randomize your game.{Environment.NewLine}");
         }
@@ -254,8 +261,8 @@ namespace Randomizer_WPF
             };
             file.WriteFile(Path.Combine(Environment.CurrentDirectory, SETTINGS_FILENAME));
 
-            K1Randomizer.Save(Path.Combine(Environment.CurrentDirectory, $"last.{K1Randomizer.Extension}"));
-            K2Randomizer.Save(Path.Combine(Environment.CurrentDirectory, $"last.{K2Randomizer.Extension}"));
+            K1Randomizer.Save(Path.Combine(Environment.CurrentDirectory, $"last{K1Randomizer.Extension}"));
+            K2Randomizer.Save(Path.Combine(Environment.CurrentDirectory, $"last{K2Randomizer.Extension}"));
             WriteToLog("done.");
         }
 
@@ -338,8 +345,8 @@ namespace Randomizer_WPF
 
             // Filter based on selected game.
             var filter = IsKotor2Selected
-                ? $"XML Kotor 2 Rando Preset (*.{K2Randomizer.Extension})|*.{K2Randomizer.Extension}"
-                : $"XML Kotor Rando Preset (*.{K1Randomizer.Extension})|*.{K1Randomizer.Extension}|Kotor Rando Preset (*.krp)|*.krp";
+                ? $"XML Kotor 2 Rando Preset (*{K2Randomizer.Extension})|*{K2Randomizer.Extension}"
+                : $"XML Kotor Rando Preset (*{K1Randomizer.Extension})|*{K1Randomizer.Extension}|Kotor Rando Preset (*.krp)|*.krp";
 
             // Set dialog options.
             var dialog = new OpenFileDialog
@@ -376,8 +383,8 @@ namespace Randomizer_WPF
 
             // Filter based on selected game.
             var filter = IsKotor2Selected
-                ? $"XML Kotor 2 Rando Preset (*.{K2Randomizer.Extension})|*.{K2Randomizer.Extension}"
-                : $"XML Kotor Rando Preset (*.{K1Randomizer.Extension})|*.{K1Randomizer.Extension}";
+                ? $"XML Kotor 2 Rando Preset (*{K2Randomizer.Extension})|*{K2Randomizer.Extension}"
+                : $"XML Kotor Rando Preset (*{K1Randomizer.Extension})|*{K1Randomizer.Extension}";
 
             // Set dialog options.
             var dialog = new SaveFileDialog
@@ -469,7 +476,7 @@ namespace Randomizer_WPF
 
         private void GetLastUsedPresets()
         {
-            var lastPath = Path.Combine(Environment.CurrentDirectory, $"last.{K1Randomizer.Extension}");
+            var lastPath = Path.Combine(Environment.CurrentDirectory, $"last{K1Randomizer.Extension}");
             if (File.Exists(lastPath))
             {
                 try
@@ -492,7 +499,7 @@ namespace Randomizer_WPF
                 }
             }
 
-            lastPath = Path.Combine(Environment.CurrentDirectory, $"last.{K2Randomizer.Extension}");
+            lastPath = Path.Combine(Environment.CurrentDirectory, $"last{K2Randomizer.Extension}");
             if (File.Exists(lastPath))
             {
                 try

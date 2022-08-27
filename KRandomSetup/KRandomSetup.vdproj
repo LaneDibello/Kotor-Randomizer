@@ -395,11 +395,6 @@
             "AssemblyAsmDisplayName" = "8:KotorRandomizer, Version=2.6.2.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_2CD78A7EAC51BC3987DA22128C2A79BC"
-                    {
-                    "Name" = "8:KotorRandomizer.exe"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:KotorRandomizer.exe"
             "TargetName" = "8:"
@@ -457,11 +452,6 @@
             "AssemblyAsmDisplayName" = "8:ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_4C4F9488A481827ABB01C489462BAE0D"
-                    {
-                    "Name" = "8:ClosedXML.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:ClosedXML.dll"
             "TargetName" = "8:"
@@ -539,11 +529,6 @@
             "AssemblyAsmDisplayName" = "8:KotOR_IO, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_BE42B29A0F47FAF1EADAFBAD5EC14118"
-                    {
-                    "Name" = "8:KotOR_IO.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:KotOR_IO.dll"
             "TargetName" = "8:"
@@ -772,15 +757,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Kotor Randomizer"
-        "ProductCode" = "8:{90B6CB91-8DF1-4C15-9087-9D43C3F7315F}"
-        "PackageCode" = "8:{3B1C5E87-B5C6-43FF-88ED-EB38A03E6DDD}"
+        "ProductCode" = "8:{D312AC57-91FF-412E-A2FA-527F47869F37}"
+        "PackageCode" = "8:{BA68B554-54B6-46BC-B2A1-9ACFE5D37D3B}"
         "UpgradeCode" = "8:{3DA44908-725D-48AE-860D-C34768CFA05C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.6.2"
+        "ProductVersion" = "8:2.6.3"
         "Manufacturer" = "8:Kotor Speedrun Community"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
