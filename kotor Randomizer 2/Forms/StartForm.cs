@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
+using System.Collections.Generic;
 
 namespace kotor_Randomizer_2
 {
@@ -10,7 +11,17 @@ namespace kotor_Randomizer_2
         {
             InitializeComponent();
 
-            Properties.Settings.Default.ModulesInitialized = false; // Might need to change this
+            Version version = typeof(StartForm).Assembly.GetName().Version;
+            this.Text = $"{this.Text} v{version.Major}.{version.Minor}.{version.Build}";
+
+            Properties.Settings settings = Properties.Settings.Default;
+
+            // Initialize the bound modules list.
+            Globals.BoundModules.Clear();
+            foreach (string s in Globals.MODULES)
+            {
+                Globals.BoundModules.Add(new Globals.Mod_Entry(s, settings.OmittedModules.Contains(s)));
+            }
 
             // Checks if a path is saved
             if (Properties.Settings.Default.Kotor1Path == "")
@@ -18,31 +29,48 @@ namespace kotor_Randomizer_2
                 path_button_Click(0, new EventArgs());
             }
 
-            //Active Rando Categories (start false)
-            Properties.Settings.Default.DoRandomization_Module = false;
-            Properties.Settings.Default.DoRandomization_Sound = false;
-            Properties.Settings.Default.DoRandomization_Model = false;
-            Properties.Settings.Default.DoRandomization_Item = false;
-            Properties.Settings.Default.DoRandomization_Texture = false;
-            Properties.Settings.Default.DoRandomization_TwoDA = false;
-            Properties.Settings.Default.DoRandomization_Text = false;
-            Properties.Settings.Default.DoRandomization_Other = false;
+            // Active Rando Categories (start false)
+            settings.DoRandomization_Module = false;
+            settings.DoRandomization_Sound = false;
+            settings.DoRandomization_Model = false;
+            settings.DoRandomization_Item = false;
+            settings.DoRandomization_Texture = false;
+            settings.DoRandomization_TwoDA = false;
+            settings.DoRandomization_Text = false;
+            settings.DoRandomization_Other = false;
 
-            if (File.Exists(Properties.Settings.Default.Kotor1Path + "\\RANDOMIZED.log"))
+            if (File.Exists(settings.Kotor1Path + "\\RANDOMIZED.log"))
             {
-                Properties.Settings.Default.KotorIsRandomized = true;
+                settings.KotorIsRandomized = true;
                 randomize_button.Text = "Unrandomize!";
             }
             else
             {
-                Properties.Settings.Default.KotorIsRandomized = false;
+                settings.KotorIsRandomized = false;
                 randomize_button.Text = "Randomize!";
             }
+
+            autoCreateSpoilersToolStripMenuItem.Checked = settings.AutoGenerateSpoilers;
+            settings.PropertyChanged += Default_PropertyChanged;
 
             if (fn != "")
             {
                 new PresetForm(fn).Show();
             }
+        }
+
+        private void LogCurrentSettings()
+        {
+            string path = Path.Combine(Environment.CurrentDirectory, "current.krp");
+            if (File.Exists(path)) { File.Delete(path); }
+            KRP.WriteKRP(File.OpenWrite(path));
+        }
+
+        internal static void OpenSpoilersFolder()
+        {
+            var dir = Path.Combine(Environment.CurrentDirectory, "Spoilers");
+            Directory.CreateDirectory(dir); // Does nothing if directory exists.
+            System.Diagnostics.Process.Start(dir);
         }
 
         #region  Events
@@ -91,17 +119,22 @@ namespace kotor_Randomizer_2
         /// </summary>
         private void StartForm_Load(object sender, EventArgs e)
         {
-            //Randomize.GenerateSeed();
-            //Properties.Settings.Default.Seed = Randomize.Rng.Next();
-            //Properties.Settings.Default.Seed = Randomize.Seed;
             Properties.Settings.Default.Seed = Randomize.GenerateSeed();
             Randomize.RestartRng();
         }
 
         private void StartForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Properties.Settings.Default.ModulesInitialized = false;
-            Properties.Settings.Default.Save();
+            // Don't allow the form to close if randomization is in progress!
+            if (FindOpenForm<RandoForm>()?.IsInProgress ?? false)
+            {
+                FocusOpenForm<RandoForm>();
+                e.Cancel = true;
+            }
+            else
+            {
+                Properties.Settings.Default.Save();
+            }
         }
 
         private void StartForm_Activated(object sender, EventArgs e)
@@ -218,6 +251,19 @@ namespace kotor_Randomizer_2
         {
             if (false == FocusOpenForm<RandoForm>())
             {
+                if (!Directory.Exists(Properties.Settings.Default.Kotor1Path))
+                {
+                    // Kotor1Path directory doesn't exist.
+                    MessageBox.Show(this, "Kotor 1 path does not exist. Please update your path settings.", "Path Error");
+                    return;
+                }
+                else if (!File.Exists(Path.Combine(Properties.Settings.Default.Kotor1Path, "swkotor.exe")))
+                {
+                    // Kotor1Path directory doesn't contain swkotor.exe.
+                    MessageBox.Show(this, "Kotor 1 path does not contain 'swkotor.exe' and is therefore an invalid directory. Please update your path settings.", "Path Error");
+                    return;
+                }
+
                 if (Properties.Settings.Default.KotorIsRandomized)
                 {
                     randomize_button.Text = "Randomize!";
@@ -225,6 +271,7 @@ namespace kotor_Randomizer_2
                 else
                 {
                     randomize_button.Text = "Unrandomize!";
+                    LogCurrentSettings();
                 }
 
                 new RandoForm().Show();
@@ -246,6 +293,50 @@ namespace kotor_Randomizer_2
                 new HelpForm().Show();
             }
         }
+
+        private void autoGenerateSpoilersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.AutoGenerateSpoilers = autoCreateSpoilersToolStripMenuItem.Checked;
+        }
+
+        private void openSpoilersFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenSpoilersFolder();
+        }
+
+        private void closeAllOtherWindowsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var formsToClose = new List<Form>();
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is StartForm) continue;
+                if (f is RandoForm && (f as RandoForm).IsInProgress) continue;
+                formsToClose.Add(f);
+            }
+
+            for (int i = 0; i < formsToClose.Count; i++)
+            {
+                formsToClose[i].Close();
+            }
+        }
+
+        private void Default_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Kotor1Path")
+            {
+                if (File.Exists(Properties.Settings.Default.Kotor1Path + "\\RANDOMIZED.log"))
+                {
+                    Properties.Settings.Default.KotorIsRandomized = true;
+                    randomize_button.Text = "Unrandomize!";
+                }
+                else
+                {
+                    Properties.Settings.Default.KotorIsRandomized = false;
+                    randomize_button.Text = "Randomize!";
+                }
+            }
+        }
+
         #endregion
     }
 }

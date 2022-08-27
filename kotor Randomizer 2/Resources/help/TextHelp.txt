@@ -1,2 +1,3 @@
-Text Rando is Not Currently Ready. This is primarily due to my own stuborness/laziness, and desire to deliver something more than just a simple shuffling of the Text in this game, though at the rate I've made progress with it, I might just settle and deliver that instead.
-	
+Text randomization can randomize some or most of the text appearing in the game. In its current state it has two main settings: Dialogue randomization and Additional Text Randomization. Dialogue randomization allows you to shuffle the entries (words spoken by NPCs), replies (options given to the MC), and match the entry sounds to the shuffled entries (So the new dialogue matches its text). 
+
+	This process is not yet foolproof. The “TalkTable” file being used for these randomizations doesn't always accurately match up the sound for a voice line and the text. This is BioWare’s fault and not ours, and it will require a bit more work for this matching to be 100% effective. For similar reasons sometimes a sound won’t exist and an NPC will “fast text” a line or two.

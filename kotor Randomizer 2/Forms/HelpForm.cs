@@ -101,7 +101,7 @@ namespace kotor_Randomizer_2
         {
             llTwitch.LinkVisited = true;
 
-            System.Diagnostics.Process.Start("https://www.twitch.tv/lane_dibello");
+            System.Diagnostics.Process.Start("https://www.twitch.tv/lane_m");
 
         }
 
@@ -115,6 +115,13 @@ namespace kotor_Randomizer_2
         private void cbCata_SelectedIndexChanged(object sender, EventArgs e)
         {
             ParseHelpText(cbCata.SelectedValue as string);
+        }
+
+        private void llglasTwitch_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            llglasTwitch.LinkVisited = true;
+
+            System.Diagnostics.Process.Start("https://www.twitch.tv/glasnonck");
         }
     }
 }

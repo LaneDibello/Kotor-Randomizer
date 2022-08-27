@@ -22,6 +22,9 @@ namespace kotor_Randomizer_2
             cbNameGen.Checked = Properties.Settings.Default.RandomizeNameGen;
             cbPolymorph.Checked = Properties.Settings.Default.PolymorphMode;
             cbPazaak.Checked = Properties.Settings.Default.RandomizePazaakDecks;
+            cbPartyRando.Checked = Properties.Settings.Default.RandomizePartyMembers;
+            cbSwoopBoosters.Checked = Properties.Settings.Default.RandomizeSwoopBoosters;
+            cbSwoopObstacles.Checked = Properties.Settings.Default.RandomizeSwoopObstacles;
         }
 
         #region private properties
@@ -125,11 +128,26 @@ namespace kotor_Randomizer_2
             }
         }
 
-        #endregion
-
         private void cbPazaak_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.RandomizePazaakDecks = cbPazaak.Checked;
         }
+
+        private void cbPartyRando_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.RandomizePartyMembers = cbPartyRando.Checked;
+        }
+
+        private void cbSwoopBoosters_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.RandomizeSwoopBoosters = cbSwoopBoosters.Checked;
+        }
+
+        private void cbSwoopObstacles_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.RandomizeSwoopObstacles = cbSwoopObstacles.Checked;
+        }
+
+        #endregion
     }
 }

@@ -41,21 +41,21 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Unispace", 9.749999F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(20, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 15);
+            this.label1.Size = new System.Drawing.Size(68, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "KotOR 1:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Unispace", 9.749999F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline) 
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline) 
                 | System.Drawing.FontStyle.Strikeout))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(20, 53);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 15);
+            this.label2.Size = new System.Drawing.Size(68, 16);
             this.label2.TabIndex = 1;
             this.label2.Text = "KotOR 2:";
             // 
@@ -67,6 +67,7 @@
             this.tbKotor1Path.Name = "tbKotor1Path";
             this.tbKotor1Path.Size = new System.Drawing.Size(470, 20);
             this.tbKotor1Path.TabIndex = 2;
+            this.tbKotor1Path.TextChanged += new System.EventHandler(this.tbKotor1Path_TextChanged);
             // 
             // tbKotor2Path
             // 
@@ -75,6 +76,7 @@
             this.tbKotor2Path.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.tbKotor2Path.Location = new System.Drawing.Point(100, 50);
             this.tbKotor2Path.Name = "tbKotor2Path";
+            this.tbKotor2Path.ReadOnly = true;
             this.tbKotor2Path.Size = new System.Drawing.Size(470, 20);
             this.tbKotor2Path.TabIndex = 3;
             this.tbKotor2Path.Text = "KotOR 2 randomization not currently available.";

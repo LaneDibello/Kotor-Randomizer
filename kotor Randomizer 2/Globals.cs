@@ -1,4 +1,6 @@
-﻿using System;
+﻿using kotor_Randomizer_2.Extensions;
+using kotor_Randomizer_2.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -19,50 +21,396 @@ namespace kotor_Randomizer_2
         Max = 3,
     }
 
+    /// <summary>
+    /// Flag based implementation of randomization level to handle the full set of options available in a RandomizationLevelUserControl.
+    /// This is used to simplify the data binding within the control, and can be converted easily into a discrete
+    /// <see cref="RandomizationLevel"/> value for use elsewhere in the solution.
+    /// </summary>
+    [Flags]
+    [Serializable]
+    public enum RandoLevelFlags : byte
+    {
+        AllOff  = 0b0000,
+        Enabled = 0b0001,
+        Subtype = 0b0010,
+        Type    = 0b0100,
+        Max     = 0b1000,
+    }
+
     [Flags]
     [Serializable]
     public enum RandomizationCategory
     {
         /// <summary> Uninitialized value - nothing will be done. </summary>
-        None    = 0x00, // 0b00000000
+        None      = 0x00, // 0b00000000
         /// <summary> Randomize module (RIM) files so loading zones lead to an unknown destination. </summary>
-        Module  = 0x01, // 0b00000001
+        Module    = 0x01, // 0b00000001
         /// <summary> Randomize items. </summary>
-        Item    = 0x02, // 0b00000010
+        Item      = 0x02, // 0b00000010
         /// <summary> Randomize music and sound files. </summary>
-        Sound   = 0x04, // 0b00000100
+        Sound     = 0x04, // 0b00000100
         /// <summary> Randomize models. </summary>
-        Model   = 0x08, // 0b00001000
+        Model     = 0x08, // 0b00001000
         /// <summary> Randomize texture maps. </summary>
-        Texture = 0x10, // 0b00010000
+        Texture   = 0x10, // 0b00010000
         /// <summary> Randomize 2DA tables. </summary>
-        TwoDA   = 0x20, // 0b00100000
+        TwoDA     = 0x20, // 0b00100000
         /// <summary> Randomize text. -- Not yet implemented -- </summary>
-        Text    = 0x40, // 0b01000000
+        Text      = 0x40, // 0b01000000
         /// <summary> Perform other types of randomization. </summary>
-        Other   = 0x80, // 0b10000000
+        Other     = 0x80, // 0b10000000
+        /// <summary> Perform Model or Texture randomizations. </summary>
+        Cosmetics = 0x18, // 0b00011000
+    }
+
+    /// <summary>
+    /// Flag based enumeration of options for handling saves.
+    /// </summary>
+    [Flags]
+    public enum SavePatchOptions
+    {
+        Default        = 0b0000,    // Default behavior - milestone save deletion.
+        NoSaveDelete   = 0b0001,    // Do not delete milestone save data.
+        SaveMiniGames  = 0b0010,    // Include minigame data in the save file.
+        SaveAllModules = 0b0100,    // Include all module data in the save file.
+        K2NoSaveDelete = 0b1000,    // Include all module data in save file for K2.
+        Invalid        = 0x8000
+    }
+
+    /// <summary>
+    /// Enumeration of the various game changes that can be applied. This includes bug fixes or patches (non-save related),
+    /// new module transitions, door unlocks, etc. Common options (0-10000), K1 options [10000-20000), K2 options [20000-30000).
+    /// </summary>
+    public enum QualityOfLife : int
+    {
+        Unknown = 0,    // Default to an invalid value.
+
+        //  COMMON PATCHES
+        [Info("ALL", "Fix Coordinates", "Fix warp spawn coordinates in certain modules.")]
+        CO_FixCoordinates                           = 00050,
+
+        [Info("EBO", "Galaxy Map", "Unlock all destinations on the Ebon Hawk galaxy map from the start of the game.")]
+        CO_GalaxyMap                                = 00100,
+
+        //  KOTOR 1 FIXES & PATCHES
+        [Info("TAR", "Early T3-M4", "Allows T3M4 to be purchased before winning the Taris Swoop Race and speaking with Canderous.")]
+        K1_EarlyT3                                  = 10000,
+
+        [Info("MAN", "Fast Envirosuit", "Speeds up the envirosuit to match normal run speed.")]
+        K1_FastEnvirosuit                           = 10050,
+
+        [Info("EBO", "Fix Dream Sequence", "Fix dream cutscenes to prevent softlocks.")]
+        K1_FixDream                                 = 10100,
+
+        [Info("EBO", "Fix Mind Prison", "Fix Rakatan mind prison to prevent soft-locks.")]
+        K1_FixMindPrison                            = 10150,
+
+        [Info("EBO", "Fix Fighter Encounter", "Prevents the fighter encounter from getting stuck after fighters are destroyed.")]
+        K1_FixFighterEncounter                      = 10200,
+
+        //  KOTOR 1 DOOR UNLOCKS & TRANSITIONS
+        [Info("DAN", "Courtyard to Ruins", "Unlocks the door into the Dantooine Ruins.")]
+        K1_DanCourtyard_ToRuins                     = 11100,
+
+        [Info("KOR", "Valley After Tomb", "Ensures the Sith Tomb and Sith Academy remain unlocked regardless of the Uthar / Yuthura outcome in Naga Sadow.")]
+        K1_KorValley_UnlockAll                      = 11150,
+
+        [Info("LEV", "Elev to Hangar", "The Leviathan elevator will not restrict you from going to the Hangar early.")]
+        K1_LevElev_ToHangar                         = 11200,
+
+        [Info("LEV", "Enable Hangar Elevator", "The Leviathan Hangar elevator will now be usable.")]
+        K1_LevHangar_EnableElev                     = 11250,
+
+        [Info("MAN", "East Central Embassy Door", "Unlocks the Republic Embassy door and the door to the submersible.")]
+        K1_ManEstCntrl_EmbassyDoor                  = 11300,
+
+        [Info("MAN", "Hangar to Sith Embassy", "Unlocks the Sith Hangar door before visiting Roland.")]
+        K1_ManHangar_ToSith                         = 11350,
+
+        [Info("STA", "Deck 3 Door to Bastila", "Unlocks the door leading to the Bastila fight, allowing it to be opened after fighting her.")]
+        K1_StaDeck3_BastilaDoor                     = 11400,
+
+        [Info("TAR", "Lower City to Undercity", "Unlocks the Undercity door in the Lower City.")]
+        K1_TarLower_ToUnder                         = 11450,
+
+        [Info("TAR", "Lower City to Vulkar Base", "Unlocks the Vulkar Base in the Lower City.")]
+        K1_TarLower_ToVulkar                        = 11500,
+
+        [Info("TAR", "Vulkar to Spice", "Adds a Load Zone leading the the Vulkar Spice in the rear of the Vulkar base main floor, next to the pool.")]
+        K1_TarVulkar_ToSpice                        = 11550,
+
+        [Info("UNK", "Summit to Temple", "Unlocks the exit door from the Temple Summit.")]
+        K1_UnkSummit_ToTemple                       = 11600,
+
+        [Info("UNK", "Temple to Entrance", "Unlocks the exit door from the Temple Main Floor.")]
+        K1_UnkTemple_ToEntrance                     = 11650,
+
+        //  KOTOR 2 PATCHES & FIXES
+        [Info("DAN", "Prevent Disciple Crash", "Prevents a crash with the disciple on Dantooine.")]
+        K2_PreventDiscipleCrash                     = 20000,
+
+        [Info("TEL", "Patch Bao Dur Conversation", "Patches the Bao Dur intro convo when landing on Telos.")]
+        K2_TelBaoDurConvo                           = 20050,
+
+        //  KOTOR 2 DOOR UNLOCKS & TRANSITIONS
+        [Info("CIT", "Residential Apartment Door", "Unlocks the door preventing you from leaving your apartment in the Citadel Station Residential District.")]
+        K2_CitResidential_AptDoor                   = 21100,
+
+        [Info("CIT", "Residential to Exchange Corp", "Unlocks the door leading from the Residential District to the Bumani Exchange Corp.")]
+        K2_CitResidential_ToExchange                = 21150,
+
+        [Info("CIT", "Unlock Info Terminals", "Unlocks access to all destinations of the info terminals.")]
+        K2_CitStation_Terminals                     = 21200,
+
+        [Info("DAN", "Courtyard to Rebuilt Enclave", "Unlocks the door leading from the Courtyard to the Rebuilt Enclave.")]
+        K2_DanCourtyard_ToEnclave                   = 21250,
+
+        [Info("DXN", "Camp to Wartime Onderon", "Unlocks the door leading from the Mandalorian Camp to the Wartime Onderon.")]
+        K2_DxnCamp_Basalisk                         = 21300,
+
+        [Info("DXN", "Camp to Onderon", "Unlocks the door leading from the Mandalorian Camp to the Onderon Docking Bay.")]
+        K2_DxnCamp_ToIziz                           = 21350,
+
+        [Info("DXN", "Tomb to Camp", "Enables the loading zone from Freedon Nadd's Tomb to the Mandalorian Camp.")]
+        K2_DxnTomb_ToCamp                           = 21400,
+
+        [Info("KOR", "Academy to Valley", "Unlocks the door leading from the Sith Academy to the Valley of the Dark Lords.")]
+        K2_KorAcademy_ToValley                      = 21450,
+
+        [Info("KOR", "Cave to Tomb", "Deactivates the trigger preventing entry into the Secret Tomb within the Shyrack Cave.")]
+        K2_KorCave_ToTomb                           = 21500,
+
+        [Info("MAL", "Core to Academy", "Adds a transition from the Trayus Core to the Trayus Academy.")]
+        K2_MalCore_ToAcademy                        = 21550,
+
+        [Info("MAL", "Surface to Ebon Hawk", "Adds an elevator and a loading zone from Malachor V Surface to the Ebon Hawk.")]
+        K2_MalSurface_ToHawk                        = 21600,
+
+        [Info("NAR", "Docks Zez Kai El's Door", "Unlocks the door of Zez Kai El's apartment.")]
+        K2_NarDocks_ZezDoor                         = 21650,
+
+        [Info("NAR", "Jekk'Jekk VIP Room", "Unlocks the door to the VIP room of the Jekk'Jekk Tarr.")]
+        K2_NarJekk_VipRoom                          = 21700,
+
+        [Info("NAR", "Jekk Tunnels to Jekk'Jekk", "Unlocks the door leading from the Jekk'Jekk Tarr Tunnels to the Jekk'Jekk Tarr.")]
+        K2_NarTunnels_ToJekk                        = 21750,
+
+        [Info("NAR", "G0T0's Yacht to Broken Hawk", "Unlocks the door leading from G0T0's Yacht to a broken version of the Ebon Hawk.")]
+        K2_NarYacht_ToHawk                          = 21800,
+
+        [Info("OND", "Spaceport to Camp", "Unlocks the shuttle from the Iziz Spaceport to the Mandalorian Camp.")]
+        K2_OndPort_ToCamp                           = 21850,
+
+        [Info("PER", "Admin to Depot", "Unlocks the door leading from Administration to the Fuel Depot.")]
+        K2_PerAdmin_ToDepot                         = 21900,
+
+        [Info("PER", "Admin to Dorms", "Unlocks the door leading from Administration to the Dormitories.")]
+        K2_PerAdmin_ToDorms                         = 21950,
+
+        [Info("PER", "Admin to Harbinger", "Unlocks the door leading from Administration to the Harbinger Command Deck.")]
+        K2_PerAdmin_ToHarbinger                     = 22000,
+
+        [Info("PER", "Admin to Tunnels", "Unlocks the door leading from Administration to the Mining Tunnels.")]
+        K2_PerAdmin_ToTunnels                       = 22050,
+
+        [Info("PER", "Exterior to Dorms", "Adds a loading zone leading from the Asteroid Exterior to the Dormitories.")]
+        K2_PerExterior_ToDorms                      = 22100,
+
+        [Info("PER", "Depot Force Fields", "Unlocks the force fields inside the fuel depot.")]
+        K2_PerDepot_ForceFields                     = 22150,
+
+        [Info("PER", "Depot to Tunnels", "Unlocks the door leading from the Fuel Depot to the Mining Tunnels.")]
+        K2_PerDepot_ToTunnels                       = 22200,
+
+        [Info("PER", "Dorms to Exterior", "Unlocks the door leading from the Dormitories to the Asteroid Exterior.")]
+        K2_PerDorms_ToExterior                      = 22250,
+
+        [Info("PER", "Hangar to Ebon Hawk", "Unlocks the door leading from the Hangar to the Ebon Hawk.")]
+        K2_PerHangar_ToHawk                         = 22300,
+
+        [Info("TEL", "Academy to Plateau", "Unlocks the door leading from Secret Academy to the Polar Plateau.")]
+        K2_TelAcademy_ToPlateau                     = 22350,
+
+        [Info("TEL", "Academy to Ebon Hawk", "Unlocks the door leading from the Polar Academy to the Ebon Hawk.")]
+        K2_TelAcademy_ToHawk                        = 22400,
+
+        [Info("WAR", "Entertainment to Ravager", "Unlocks the door leading from the Wartime Entertainment Module to the Ravager.")]
+        K2_WarEntertain_ToRavager                   = 22450,
     }
 
     [Flags]
     [Serializable]
-    public enum ModuleExtras
+    public enum ModuleExtras : ulong
     {
         /// <summary> (Default Behavior) Delete milestone save data. </summary>
-        Default         = 0x00, // 0b00000000
+        [SavePatchOption(SavePatchOptions.Default)]
+        Default             = 0x000000, // 0b00000000 00000000 00000000
         /// <summary> Do not delete milestone save data. </summary>
-        NoSaveDelete    = 0x01, // 0b00000001
+        [SavePatchOption(SavePatchOptions.NoSaveDelete)]
+        NoSaveDelete        = 0x000001, // 0b00000000 00000000 00000001
         /// <summary> Include minigame data in the save file. </summary>
-        SaveMiniGames   = 0x02, // 0b00000010
+        [SavePatchOption(SavePatchOptions.SaveMiniGames)]
+        SaveMiniGames       = 0x000002, // 0b00000000 00000000 00000010
         /// <summary> Include all module data in the save file. </summary>
-        SaveAllModules  = 0x04, // 0b00000100
+        [SavePatchOption(SavePatchOptions.SaveAllModules)]
+        SaveAllModules      = 0x000004, // 0b00000000 00000000 00000100
         /// <summary> Fix dream cutscenes. </summary>
-        FixDream        = 0x08, // 0b00001000
+        [QualityOfLife(QualityOfLife.K1_FixDream)]
+        FixDream            = 0x000008, // 0b00000000 00000000 00001000
         /// <summary> Unlock all destinations on the galaxy map. </summary>
-        UnlockGalaxyMap = 0x10, // 0b00010000
+        [QualityOfLife(QualityOfLife.CO_GalaxyMap)]
+        UnlockGalaxyMap     = 0x000010, // 0b00000000 00000000 00010000
         /// <summary> Fix warp spawn coordinates in certain modules. </summary>
-        FixCoordinates  = 0x20, // 0b00100000
+        [QualityOfLife(QualityOfLife.CO_FixCoordinates)]
+        FixCoordinates      = 0x000020, // 0b00000000 00000000 00100000
         /// <summary> Fix Rakatan mind prison to prevent soft-locks. </summary>
-        FixMindPrison   = 0x40, // 0b01000000
+        [QualityOfLife(QualityOfLife.K1_FixMindPrison)]
+        FixMindPrison       = 0x000040, // 0b00000000 00000000 01000000
+        /// <summary> Unlock ancient doors to Dantooine ruins, and on the Lehon Temple roof. </summary>
+        [QualityOfLife(QualityOfLife.K1_DanCourtyard_ToRuins)]
+        UnlockDanRuins      = 0x000080, // 0b00000000 00000000 10000000
+        /// <summary> Allows Leviathan elevators to go to the hangar without prerequisites. </summary>
+        [QualityOfLife(QualityOfLife.K1_LevElev_ToHangar)]
+        UnlockLevElev       = 0x000100, // 0b00000000 00000001 00000000
+        /// <summary> Adds a Load Zone leading the the Vulkar Spice in the rear of the Vulkar base main floor, next to the pool. </summary>
+        [QualityOfLife(QualityOfLife.K1_TarVulkar_ToSpice)]
+        VulkarSpiceLZ       = 0x000200, // 0b00000000 00000010 00000000
+        /// <summary> Unlock the Republic Embassy door and the door to the submersible in Manaan's republic embassy. </summary>
+        [QualityOfLife(QualityOfLife.K1_ManEstCntrl_EmbassyDoor)]
+        UnlockManEmbassy    = 0x000400, // 0b00000000 00000100 00000000
+        /// <summary> Keep the door to Bastila on the Command Center (Deck 3) of the Star Forge unlocked, even after fighting her. </summary>
+        [QualityOfLife(QualityOfLife.K1_StaDeck3_BastilaDoor)]
+        UnlockStaBastila    = 0x000800, // 0b00000000 00001000 00000000
+        /// <summary> Unlock the door that exits from the Temple Summit on the Unknown World. </summary>
+        [QualityOfLife(QualityOfLife.K1_UnkSummit_ToTemple)]
+        UnlockUnkSummit     = 0x001000, // 0b00000000 00010000 00000000
+        /// <summary> Ensure Sith Tomb and Sith Academy stay unlocked regardless of Uthar/Yuthura outcome. </summary>
+        [QualityOfLife(QualityOfLife.K1_KorValley_UnlockAll)]
+        UnlockKorValley     = 0x002000, // 0b00000000 00100000 00000000
+        /// <summary> Unlock the Sith Hangar door on Manaan. </summary>
+        [QualityOfLife(QualityOfLife.K1_ManHangar_ToSith)]
+        UnlockManHangar     = 0x004000, // 0b00000000 01000000 00000000
+        /// <summary> Unlock Undercity door in the Lower City. </summary>
+        [QualityOfLife(QualityOfLife.K1_TarLower_ToUnder)]
+        UnlockTarUndercity  = 0x008000, // 0b00000000 10000000 00000000
+        /// <summary> Unlock Vulkar Base door in the Lower City. </summary>
+        [QualityOfLife(QualityOfLife.K1_TarLower_ToVulkar)]
+        UnlockTarVulkar     = 0x010000, // 0b00000001 00000000 00000000
+        /// <summary> Unlock the Lehon Temple exit on the Main Floor. </summary>
+        [QualityOfLife(QualityOfLife.K1_UnkTemple_ToEntrance)]
+        UnlockUnkTempleExit = 0x020000, // 0b00000010 00000000 00000000
+        /// <summary> Speeds up the envirosuit to match normal run speed. </summary>
+        [QualityOfLife(QualityOfLife.K1_FastEnvirosuit)]
+        FastEnvirosuit      = 0x040000, // 0b00000100 00000000 00000000
+        /// <summary> Allows T3M4 to be purchased before winning the Taris Swoop Race and speaking with Canderous. </summary>
+        [QualityOfLife(QualityOfLife.K1_EarlyT3)]
+        EarlyT3             = 0x080000, // 0b00001000 00000000 00000000
+        /// <summary> Enables the elevator on the Leviathan Hangar to go to other levels. </summary>
+        [QualityOfLife(QualityOfLife.K1_LevHangar_EnableElev)]
+        EnableLevHangarElev = 0x100000, // 0b00010000 00000000 00000000
+        /// <summary> Prevents the fighter encounter from getting stuck after fighters are destroyed. </summary>
+        [QualityOfLife(QualityOfLife.K1_FixFighterEncounter)]
+        FixFighterEncounter = 0x200000, // 0b00100000 00000000 00000000
+
+        /// <summary> Patches the save file deletion in kotor 2. </summary>
+        K2Patch_SaveDeletion             = 0x0000000000400000,
+        /// <summary> Unlocks the galaxy map in kotor 2. </summary>
+        K2Patch_GalaxyMap                = 0x0000000000800000,
+        /// <summary> Patches a crash related to the disciple in kotor 2. </summary>
+        K2Patch_Disciple                 = 0x0000000001000000,
+        /// <summary> Unlocks the door leading from Administration to the Dormitories. </summary>
+        K2Door_PerAdmin_ToDorms          = 0x0000000002000000,
+        /// <summary> Unlocks the door leading from Administration to the Mining Tunnels. </summary>
+        K2Door_PerAdmin_ToTunnels        = 0x0000000004000000,
+        /// <summary> Unlocks the door leading from Administration to the Harbinger Command Deck. </summary>
+        K2Door_PerAdmin_ToHarbinger      = 0x0000000008000000,
+        /// <summary> Unlocks the door leading from Administration to the Fuel Depot. </summary>
+        K2Door_PerAdmin_ToDepot          = 0x0000000010000000,
+        /// <summary> Unlocks the door leading from the Dormitories the the Asteroid Exterior. </summary>
+        K2Door_PerDorms_ToAsteroid       = 0x0000000020000000,
+        /// <summary> Unlocks the door leading from the Fuel Depot to the Mining Tunnels. </summary>
+        K2Door_PerDepot_ToTunnels        = 0x0000000040000000,
+        /// <summary> Unlocks the force fields inside the fuel depot. </summary>
+        K2Door_PerDepot_ForceFields      = 0x0000000080000000,
+        /// <summary> Unlocks the door leading from the Hangar to the Ebon Hawk. </summary>
+        K2Door_PerHangar_ToHawk          = 0x0000000100000000,
+        /// <summary> Unlocks the door preventing you from leaving your apartment in the Citadel Station Residential District. </summary>
+        K2Door_CitResidential_AptDoor    = 0x0000000200000000,
+        /// <summary> Unlocks the door leading from the Residential District to the Bumani Exchange Corp. </summary>
+        K2Door_CitResidential_ToExchange = 0x0000000400000000,
+        /// <summary> Unlocks the door leading from Secret Academy to the Polar Plateau. </summary>
+        K2Door_TelAcademy_ToPlateau      = 0x0000000800000000,
+        /// <summary> Unlocks the door of Zez Kai El's apartment. </summary>
+        K2Door_NarDocks_ZezDoor          = 0x0000001000000000,
+        /// <summary> Unlocks the door to the VIP room of the Jekk'Jekk Tarr. </summary>
+        K2Door_NarJekk_VipRoom           = 0x0000002000000000,
+        /// <summary> Unlocks the door leading from the Jekk'Jekk Tarr Tunnels to the Jekk'Jekk Tarr. </summary>
+        K2Door_NarTunnels_ToJekk         = 0x0000004000000000,
+        /// <summary> Unlocks the door leading from G0T0's Yacht to a broken version of the Ebon Hawk. </summary>
+        K2Door_NarYacht_ToHawk           = 0x0000008000000000,
+        /// <summary> Unlocks the door leading from the Courtyard to the Rebuilt Enclave. </summary>
+        K2Door_DanCourtyard_ToEnclave    = 0x0000010000000000,
+        /// <summary> Unlocks the door leading from the Sith Academy to the Valley of the Dark Lords. </summary>
+        K2Door_KorAcademy_ToValley       = 0x0000020000000000,
+        /// <summary> Deactivates the trigger preventing entry into the Secret Tomb within the Shyrack Cave. </summary>
+        K2Door_KorCave_ToTomb            = 0x0000040000000000,
+        /// <summary> Unlocks the door leading from the Wartime Entertainment Module to the Ravager. </summary>
+        K2Door_WarEntertain_ToRavager    = 0x0000080000000000,
+
+        K2Patch_TelAcademy_ToHawk        = 0x0000100000000000,
+        K2Patch_MalSurface_ToHawk        = 0x0000200000000000,
+        K2Patch_CitTerminals             = 0x0000400000000000,
+        K2Door_DxnMando_Basalisk         = 0x0000800000000000,
+        K2Patch_PerAsteroid_ToTunnels    = 0x0001000000000000,
+        K2Patch_DxnCamp_ToIziz           = 0x0002000000000000,
+        K2Patch_TelBaoDurConvo           = 0x0004000000000000,
+        K2_DxnTomb_ToMando               = 0x0008000000000000,
+        K2_MalCore_ToAcademy             = 0x0010000000000000,
+        K2_OndPort_ToCamp                = 0x0020000000000000,
+
+        // Still need to add to GUI
+        K2Setting10                      = 0x0040000000000000,
+        K2Setting11                      = 0x0080000000000000,
+        K2Setting12                      = 0x0100000000000000,
+        K2Setting13                      = 0x0200000000000000,
+        K2Setting14                      = 0x0400000000000000,
+        K2Setting15                      = 0x0800000000000000,
+        K2Setting16                      = 0x1000000000000000,
+        K2Setting17                      = 0x2000000000000000,
+        K2Setting18                      = 0x4000000000000000,
+        //K2Setting19                      = 0x8000000000000000,    // Too big.
+    }
+
+    [Flags]
+    [Serializable]
+    public enum TextSettings
+    {
+        /// <summary> (Default Behavior) No Randomization</summary>
+        Default               = 0x00, // 0b00000000
+        /// <summary> Randomizes the Text in conversation entries (The words spoken by NPCs) </summary>
+        RandoDialogEntries    = 0x01, // 0b00000001
+        /// <summary> Randomizes the Text in conversation replies (The options the MC may choose from) </summary>
+        RandoDialogReplies    = 0x02, // 0b00000010
+        /// <summary> Uses the TLK file to match Entry text with it's corresponding sound (This is about 90% effective as the included TLK file isn't entirely accurate) </summary>
+        MatchEntrySoundsWText = 0x04, // 0b00000100
+        /// <summary> This randomizes all the strings in the TLK file, which randomizes all the remaining in game text not in conversations. (Note: This TLK can still be used to match sounds) </summary>
+        RandoFullTLK          = 0x08, // 0b00001000
+        /// <summary> Attempts to match strings in TLK rando with ones of similar length (This will make some GUIs more pleasing to the eye)</summary>
+        MatchSimLengthStrings = 0x10, // 0b00010000
+    }
+
+    [Serializable]
+    public enum TexturePack
+    {
+        /// <summary> High Quality </summary>
+        [Description("High Quality")]
+        HighQuality = 0,
+        /// <summary> Medium Quality </summary>
+        [Description("Medium Quality")]
+        MedQuality = 1,
+        /// <summary> Low Quality </summary>
+        [Description("Low Quality")]
+        LowQuality = 2,
     }
 
     public class Globals
@@ -77,41 +425,6 @@ namespace kotor_Randomizer_2
         public const string AREA_TEMPLE_MAIN = "unk_m44aa";
 
         /// <summary>
-        /// New coordinates for bad randomizer spawn locations.
-        /// </summary>
-        public static readonly Dictionary<string, Tuple<int, int, int>> FIXED_COORDINATES = new Dictionary<string, Tuple<int, int, int>>()
-        {
-            { AREA_UNDERCITY, new Tuple<int, int, int>(
-                BitConverter.ToInt32(BitConverter.GetBytes(183.5f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(167.4f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(1.5f), 0)) },
-            { AREA_TOMB_TULAK, new Tuple<int, int, int>(
-                BitConverter.ToInt32(BitConverter.GetBytes(15.8f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(55.6f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(0.75f), 0)) },
-            { AREA_LEVI_HANGAR, new Tuple<int, int, int>(
-                BitConverter.ToInt32(BitConverter.GetBytes(12.5f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(155.2f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(3.0f), 0)) },
-            { AREA_AHTO_WEST, new Tuple<int, int, int>(
-                BitConverter.ToInt32(BitConverter.GetBytes(5.7f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(-10.7f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(59.2f), 0)) },
-            { AREA_MANAAN_SITH, new Tuple<int, int, int>(
-                BitConverter.ToInt32(BitConverter.GetBytes(112.8f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(2.4f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(0f), 0)) },
-            { AREA_RAKA_SETTLE, new Tuple<int, int, int>(
-                BitConverter.ToInt32(BitConverter.GetBytes(202.2f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(31.5f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(40.7f), 0)) },
-            { AREA_TEMPLE_MAIN, new Tuple<int, int, int>(
-                BitConverter.ToInt32(BitConverter.GetBytes(95.3f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(42.0f), 0),
-                BitConverter.ToInt32(BitConverter.GetBytes(0.44f), 0)) },
-        };
-
-        /// <summary>
         /// Large Creature Models
         /// </summary>
         public static readonly List<int> LARGE_CHARS = new List<int>() { 354, 334, 87, 80, 77, 81, 54 };
@@ -124,12 +437,17 @@ namespace kotor_Randomizer_2
         /// <summary>
         /// Large Placeable Models
         /// </summary>
-        public static readonly List<int> LARGE_PLACE = new List<int>() { 1, 2, 55, 56, 57, 58, 65, 66, 110, 111, 142, 172, 176, 217, 218, 226 }; // NEED TO RESEARCH
+        public static readonly List<int> LARGE_PLACE = new List<int>() { 1, 2, 55, 56, 57, 58, 65, 66, 110, 111, 142, 172, 176, 194, 195, 217, 218, 226 }; // NEED TO RESEARCH
 
         /// <summary>
         /// Broken Placeable Models
         /// </summary>
-        public static readonly List<int> BROKEN_PLACE = new List<int>() { 0, 8, 9, 47, 62, 78, 84, 90, 94, 97, 115, 158, 159 };
+        public static readonly List<int> BROKEN_PLACE = new List<int>() { 0, 8, 9, 47, 54, 62, 78, 84, 90, 94, 96, 97, 115, 121, 158, 167, 159, 219 };
+
+        /// <summary>
+        /// Valid Floor Panel Placeables
+        /// </summary>
+        public static readonly List<int> PANEL_PLACE = new List<int>() { 14, 15, 29, 30, 31, 36, 45, 48, 49, 53, 68, 69, 79, 108, 109, 114, 130, 131, 141, 143, 145, 148, 152, 154, 157, 193, 227, 228, 229, 230, 231 };
 
         /// <summary>
         /// Extra Files found in the 'lips' directory
@@ -284,6 +602,24 @@ namespace kotor_Randomizer_2
             "ptar_sbpasscrd", "ptar_sitharmor", "tat17_sandperdis", "tat18_dragonprl",
             "w_blhvy001", "w_bstrcrbn", "w_lghtsbr001", "w_null" };
 
+
+        /// <summary>
+        /// Bound list of items to be omitted from randomization. This is necessary because certain items can result in soft locks if randomized.
+        /// </summary>
+        public static readonly List<string> DEFAULT_OMIT_ITEMS = new List<string>()
+        {
+            "g_i_collarlgt001",     // Collar Light (broken item)
+            //"g_i_drdutldev005",     // Oil Slick (equippable, but unusable and unobtainable)
+            "g_i_glowrod01",        // Glow Rod
+            "g_i_implant104",       // Stamina Boost Implant
+            "g_i_progspike02",      // Single-Use Programming Spikes
+            "g_i_torch01",          // Torch (broken item)
+            //"ptar_rakghoulser",     // Rakghoul Serum (plot)
+            "ptar_sitharmor",       // Sith Armor
+            "tat17_sandperdis",     // Sand People Disguise
+            "w_null",
+        };
+
         /// <summary>
         /// All modules in the game
         /// </summary>
@@ -310,11 +646,488 @@ namespace kotor_Randomizer_2
             "unk_m42aa","unk_m43aa","unk_m44aa","unk_m44ab","unk_m44ac" };              // Elder Settlement, Rakatan Settlement, Temple Main Floor, Temple Catacombs, Temple Summit
 
         /// <summary>
+        /// If a module has one exit, it cannot be in its parent's location.
+        /// Prevents binary infinite loops that you can't escape from.
+        /// <para/>Key cannot replace any listed value.
+        /// </summary>
+        public static readonly Dictionary<string, List<string>> RULE1 = new Dictionary<string, List<string>>()
+        {
+            // Tatooine
+            { "tat_m17ag", new List<string>()    // Czerka Office
+                {
+                    "tat_m17aa", // Anchorhead
+                }
+            },
+            { "tat_m17ac", new List<string>()    // Droid Shop
+                {
+                    "tat_m17aa", // Anchorhead
+                }
+            },
+            { "tat_m17ad", new List<string>()    // Hunting Lodge
+                {
+                    "tat_m17aa", // Anchorhead
+                }
+            },
+            { "tat_m17af", new List<string>()    // Tatooine Cantina
+                {
+                    "tat_m17aa", // Anchorhead
+                }
+            },
+            { "tat_m17mg", new List<string>()    // Tatooine Swoops
+                {
+                    "tat_m17ae", // Swoop Registration
+                }
+            },
+            { "tat_m20aa", new List<string>()    // Sand People Enclave
+                {
+                    "tat_m18ab", // Sand People Territory
+                }
+            },
+            // Unknown World
+            { "unk_m42aa", new List<string>()    // Elder Settlement
+                {
+                    "unk_m41ab", // South Beach
+                }
+            },
+            { "unk_m43aa", new List<string>()    // Rakatan Settlement
+                {
+                    "unk_m41ac", // North Beach
+                }
+            },
+            { "unk_m44ab", new List<string>()    // Temple Catacombs
+                {
+                    "unk_m44aa", // Temple Main Floor
+                }
+            },
+            { "unk_m44ac", new List<string>()    // Temple Summit
+                {
+                    "unk_m44aa", // Temple Main Floor
+                }
+            },
+            // Taris
+            { "tar_m11ab", new List<string>()    // Gadon's Office
+                {
+                    "tar_m11aa", // Bek Base
+                }
+            },
+            { "tar_m08aa", new List<string>()    // Davik's Estate
+                {
+                    "danm13", // Jedi Enclave
+                }
+            },
+            { "tar_m09ab", new List<string>()    // Governor Office
+                {
+                    "tar_m09aa", // Taris Sith Base
+                }
+            },
+            { "tar_m02af", new List<string>()    // Hideout
+                {
+                    "tar_m02aa", // South Apartments
+                }
+            },
+            { "tar_m03ad", new List<string>()    // Lower City Apt East
+                {
+                    "tar_m03aa", // Lower City
+                }
+            },
+            { "tar_m03ab", new List<string>()    // Lower City Apt West
+                {
+                    "tar_m03aa", // Lower City
+                }
+            },
+            { "tar_m02ad", new List<string>()    // North Apartments
+                {
+                    "tar_m02ab", // Upper City North
+                }
+            },
+            { "tar_m03mg", new List<string>()    // Taris Swoops
+                {
+                    "tar_m03af", // Swoop Platform
+                }
+            },
+            { "tar_m10ac", new List<string>()    // Vulkar Garage
+                {
+                    "tar_m10aa", // Vulkar Base
+                }
+            },
+            { "tar_m10ab", new List<string>()    // Vulkar Spice Lab
+                {
+                    "tar_m10aa", // Vulkar Base
+                }
+            },
+            // Star Forge
+            { "sta_m45ad", new List<string>()    // Viewing Platform
+                {
+                    "sta_m45ac", // Command Center
+                }
+            },
+            // Leviathan
+            { "lev_m40ad", new List<string>()    // Leviathan Bridge
+                {
+                    "lev_m40ab", // Command Deck
+                }
+            },
+            { "lev_m40ac", new List<string>()    // Leviathan Hangar
+                {
+                    "ebo_m12aa", // Ebon Hawk
+                }
+            },
+            // Kashyyyk
+            { "kas_m23ad", new List<string>()    // Chieftain's Hall
+                {
+                    "kas_m23aa", // Village of Rwookrrorro
+                }
+            },
+            { "kas_m25aa", new List<string>()    // Lower Shadowlands
+                {
+                    "kas_m24aa", // Upper Shadowlands
+                }
+            },
+            { "kas_m23ab", new List<string>()    // Woorwill's Home
+                {
+                    "kas_m23aa", // Village of Rwookrrorro
+                }
+            },
+            { "kas_m23ac", new List<string>()    // Worrroznor's Home
+                {
+                    "kas_m23aa", // Village of Rwookrrorro
+                }
+            },
+            // Korriban
+            { "korr_m34aa", new List<string>()    // Shyrack Caves
+                {
+                    "korr_m36aa", // Valley of the Dark Lords
+                }
+            },
+            { "korr_m37aa", new List<string>()    // Tomb of Ajunta Pall
+                {
+                    "korr_m36aa", // Valley of the Dark Lords
+                }
+            },
+            { "korr_m38aa", new List<string>()    // Tomb of Marka Ragnos
+                {
+                    "korr_m36aa", // Valley of the Dark Lords
+                }
+            },
+            { "korr_m39aa", new List<string>()    // Tomb of Naga Sadow
+                {
+                    "korr_m36aa", // Valley of the Dark Lords
+                }
+            },
+            { "korr_m38ab", new List<string>()    // Tomb of Tulak Hord
+                {
+                    "korr_m36aa", // Valley of the Dark Lords
+                }
+            },
+            // Endar Spire
+            { "end_m01aa", new List<string>()    // Command Module
+                {
+                    "end_m01ab", // Starboard Section
+                }
+            },
+            { "end_m01ab", new List<string>()    // Starboard Section
+                {
+                    "STUNT_00",  // leads to dream sequence
+                    "tar_m02af", // Hideout
+                }
+            },
+            // Dantooine
+            { "danm14ae", new List<string>()    // Crystal Caves
+                {
+                    "danm14ad", // Sandral Grounds
+                }
+            },
+            { "danm15", new List<string>()    // Dantooine Ruins
+                {
+                    "danm14aa", // Courtyard
+                }
+            },
+            { "danm16", new List<string>()    // Sandral Estate
+                {
+                    "danm14ad", // Sandral Grounds
+                }
+            },
+            // Manaan
+            { "manm26aa", new List<string>()    // Ahto West
+                {
+                    "manm26ac", // West Central
+                }
+            },
+            { "manm27aa", new List<string>()    // Manaan Sith Base
+                {
+                    "manm26ab", // Ahto East
+                }
+            },
+            { "manm26mg", new List<string>()    // Manaan Swoops
+                {
+                    "manm26ab", // Ahto East
+                }
+            },
+            // Ebon Hawk
+            { "ebo_m41aa", new List<string>()    // Lehon Hawk
+                {
+                    "unk_m41aa", // Central Beach
+                }
+            },
+            { "ebo_m46ab", new List<string>()    // Mystery Box
+                {
+                    "ebo_m12aa", // Ebon Hawk
+                }
+            },
+            { "liv_m99aa", new List<string>()    // Yavin Station
+                {
+                    "ebo_m12aa", // Ebon Hawk
+                }
+            },
+            // Fighter Skirmish
+            { "M12ab", new List<string>()
+                {
+                    "ebo_m12aa", // Ebon Hawk
+                }
+            },
+        };
+        /// <summary>
+        /// The parent of a module with only one entrance cannot be inside that child.
+        /// Prevents some modules from becoming completely unreachable.
+        /// <para/>Key cannot replace any listed value.
+        /// </summary>
+        public static readonly Dictionary<string, List<string>> RULE2 = new Dictionary<string, List<string>>()
+        {
+            // Tatooine
+            { "tat_m17aa", new List<string>()    // Anchorhead
+                {
+                    "tat_m17ac", // Droid Shop
+                    "tat_m17ad", // Hunting Lodge
+                    "tat_m17af", // Tatooine Cantina
+                    "tat_m17ag", // Czerka Office
+                }
+            },
+            { "tat_m18ab", new List<string>()    // Sand People Territory
+                {
+                    "tat_m20aa", // Sand People Enclave
+                }
+            },
+            { "tat_m17ae", new List<string>()    // Swoop Registration
+                {
+                    "tat_m17mg", // Tatooine Swoops
+                }
+            },
+            // Unknown World
+            { "unk_m41aa", new List<string>()    // Central Beach
+                {
+                    "ebo_m41aa", // Lehon Hawk
+                }
+            },
+            { "unk_m41ab", new List<string>()    // South Beach
+                {
+                    "unk_m42aa", // Elder Settlement
+                }
+            },
+            { "unk_m41ac", new List<string>()    // North Beach
+                {
+                    "unk_m43aa", // Rakatan Settlement
+                }
+            },
+            { "unk_m44aa", new List<string>()    // Temple Main Floor
+                {
+                    "unk_m44ab", // Temple Catacombs
+                    "unk_m44ac", // Temple Summit
+                }
+            },
+            // Taris
+            { "tar_m11aa", new List<string>()    // Bek Base
+                {
+                    "tar_m11ab", // Gadon's Office
+                }
+            },
+            { "tar_m03ae", new List<string>()    // Javyar's Cantina
+                {
+                    "tar_m08aa", // Davik's Estate
+                }
+            },
+            { "tar_m03aa", new List<string>()    // Lower City
+                {
+                    "tar_m03ae", // Javyar's Cantina
+                    "tar_m03ad", // Lower City Apt East
+                    "tar_m03ab", // Lower City Apt West
+                }
+            },
+            { "tar_m02aa", new List<string>()    // South Apartments
+                {
+                    "tar_m02af", // Hideout
+                }
+            },
+            { "tar_m03af", new List<string>()    // Swoop Platform
+                {
+                    "tar_m03mg", // Taris Swoops
+                }
+            },
+            { "tar_m09aa", new List<string>()    // Taris Sith Base
+                {
+                    "tar_m09ab", // Governor's Office
+                }
+            },
+            { "tar_m02ab", new List<string>()    // Upper City North
+                {
+                    "tar_m02ad", // North Apartments
+                }
+            },
+            { "tar_m02ac", new List<string>()    // Upper City South
+                {
+                    "tar_m02ae", // Upper City Cantina
+                }
+            },
+            { "tar_m10aa", new List<string>()    // Vulkar Base
+                {
+                    "tar_m10ac", // Vulkar Garage
+                    "tar_m10ab", // Vulkar Spice Lab
+                    "tar_m05ab", // Upper Sewers (?? -- the only other entrance is locked)
+                }
+            },
+            // Star Forge
+            { "sta_m45ac", new List<string>()    // Command Center
+                {
+                    "sta_m45ad", // Viewing Platform
+                }
+            },
+            // Leviathan
+            { "lev_m40ab", new List<string>()    // Command Deck
+                {
+                    "lev_m40ad", // Leviathan Bridge
+                    "lev_m40aa", // Prison Block
+                }
+            },
+            // Kashyyyk
+            { "kas_m24aa", new List<string>()    // Upper Shadowlands
+                {
+                    "kas_m25aa", // Lower Shadowlands
+                }
+            },
+            { "kas_m23aa", new List<string>()    // Village of Rwookrrorro
+                {
+                    "kas_m23ab", // Woorwill's Home
+                    "kas_m23ac", // Worrroznor's Home
+                    "kas_m23ad", // Chieftain's Hall
+                }
+            },
+            // Korriban
+            { "korr_m36aa", new List<string>()    // Valley of the Dark Lords
+                {
+                    "korr_m37aa", // Tomb of Ajunta Pall
+                    "korr_m38aa", // Tomb of Marka Ragnos
+                    "korr_m39aa", // Tomb of Naga Sadow
+                    "korr_m38ab", // Tomb of Tulka Hord
+                    "korr_m34aa", // Shyrack Caves
+                    "korr_m35aa", // Sith Academy (?? - the other two entrances are locked and/or once)
+                }
+            },
+            // Endar Spire
+            { "end_m01ab", new List<string>()    // Starboard Section
+                {
+                    "end_m01aa", // Command Module
+                }
+            },
+            // Dantooine
+            { "danm14aa", new List<string>()    // Courtyard
+                {
+                    "danm15", // Dantooine Ruins
+                }
+            },
+            { "danm14ad", new List<string>()    // Sandral Grounds
+                {
+                    "danm16", // Sandral Estate
+                    "danm14ae", // Crystal Caves
+                }
+            },
+            // Manaan
+            { "manm26ab", new List<string>()    // Ahto East
+                {
+                    "manm26mg", // Manaan Swoops
+                }
+            },
+            //{ "manm28ad", new List<string>()    // Hrakert Rift
+            //    {
+            //        "manm28ac", // Kolto Control (?? - not sure why)
+            //    }
+            //},
+            { "manm26ac", new List<string>()    // West Central
+                {
+                    "manm26aa", // Ahto West
+                }
+            },
+            // Ebon Hawk
+            { "ebo_m12aa", new List<string>()    // Ebon Hawk
+                {
+                    "ebo_m46ab", // Mystery Box
+                    "lev_m40ac", // Leviathan Hangar
+                    "liv_m99aa", // Yavin Station
+                    "M12ab",     // Fighter Encounter (other entrances are CS or once)
+                }
+            },
+        };
+        /// <summary>
+        /// If a module has multiple exits but only one is unlocked, it cannot be in the unlocked location.
+        /// Prevents binary infinite loops that you can't escape from, unless the other door is unlocked.
+        /// <para/>Key cannot replace any listed value.
+        /// </summary>
+        public static readonly Dictionary<string, List<string>> RULE3 = new Dictionary<string, List<string>>()
+        {
+            // Taris
+            { "tar_m03ae", new List<string>()    // Javyar's Cantina
+                {
+                    "tar_m03aa", // Lower City
+                }
+            },
+            { "tar_m05aa", new List<string>()    // Lower Sewers
+                {
+                    "tar_m04aa", // Undercity
+                }
+            },
+            { "tar_m02ae", new List<string>()    // Upper City Cantina
+                {
+                    "tar_m02ac", // Upper City South
+                }
+            },
+            // Leviathan
+            { "lev_m40aa", new List<string>()    // Prison Block
+                {
+                    "lev_m40ab", // Command Deck
+                }
+            },
+            // Korriban
+            { "korr_m33ab", new List<string>()    // Sith Academy Entrance
+                {
+                    "korr_m33aa", // Dreshdae
+                }
+            },
+        };
+
+        /// <summary>
         /// Built-in module omission presets. The key being the preset name, and the value being a string list of modules to omit. Not to be confused with user-defined presets.
         /// </summary>
-        public static readonly Dictionary<string, List<string>> OMIT_PRESETS = new Dictionary<string, List<string>>()
+        public static readonly Dictionary<string, List<string>> K1_MODULE_OMIT_PRESETS = new Dictionary<string, List<string>>()
         {
             //{ "<Custom>", null },
+            { "Off", new List<string>()
+                {
+                "danm13","danm14aa","danm14ab","danm14ac","danm14ad","danm14ae","danm15","danm16",
+                "ebo_m12aa","ebo_m40aa","ebo_m40ad","ebo_m41aa","ebo_m46ab",
+                "end_m01aa","end_m01ab",
+                "kas_m22aa","kas_m22ab","kas_m23aa","kas_m23ab","kas_m23ac","kas_m23ad","kas_m24aa","kas_m25aa",
+                "korr_m33aa","korr_m33ab","korr_m34aa","korr_m35aa","korr_m36aa","korr_m37aa","korr_m38aa","korr_m38ab","korr_m39aa",
+                "lev_m40aa","lev_m40ab","lev_m40ac","lev_m40ad",
+                "liv_m99aa",
+                "M12ab",
+                "manm26aa","manm26ab","manm26ac","manm26ad","manm26ae","manm26mg","manm27aa","manm28aa","manm28ab","manm28ac","manm28ad",
+                "sta_m45aa","sta_m45ab","sta_m45ac","sta_m45ad",
+                "STUNT_00","STUNT_03a","STUNT_06","STUNT_07","STUNT_12","STUNT_14","STUNT_16","STUNT_18","STUNT_19","STUNT_31b","STUNT_34","STUNT_35","STUNT_42",
+                "STUNT_44","STUNT_50a","STUNT_51a","STUNT_54a","STUNT_55a","STUNT_56a","STUNT_57",
+                "tar_m02aa","tar_m02ab","tar_m02ac","tar_m02ad","tar_m02ae","tar_m02af","tar_m03aa","tar_m03ab","tar_m03ad","tar_m03ae","tar_m03af","tar_m03mg",
+                "tar_m04aa","tar_m05aa","tar_m05ab","tar_m08aa","tar_m09aa","tar_m09ab","tar_m10aa","tar_m10ab","tar_m10ac","tar_m11aa","tar_m11ab",
+                "tat_m17aa","tat_m17ab","tat_m17ac","tat_m17ad","tat_m17ae","tat_m17af","tat_m17ag","tat_m17mg","tat_m18aa","tat_m18ab","tat_m18ac","tat_m20aa",
+                "unk_m41aa","unk_m41ab","unk_m41ac","unk_m41ad","unk_m42aa","unk_m43aa","unk_m44aa","unk_m44ab","unk_m44ac"
+                }
+            },
             { "Default", new List<string>()
                 {
                 "M12ab", "end_m01aa", "end_m01ab", "ebo_m40aa", "ebo_m12aa",
@@ -337,11 +1150,51 @@ namespace kotor_Randomizer_2
                 "STUNT_56a", "STUNT_57"
                 }
             },
-            { "Max Random", new List<string>()
-                {
-                }
-            }
+            { "All Modules", new List<string>() { } }
+        };
 
+        /// <summary>
+        /// Built-in module omission presets. The key being the preset name, and the value being a string list of modules to omit. Not to be confused with user-defined presets.
+        /// </summary>
+        public static readonly Dictionary<string, List<string>> K2_MODULE_OMIT_PRESETS = new Dictionary<string, List<string>>()
+        {
+            //{ "<Custom>", null },
+            { "Off", new List<string>()
+                {
+                    "001EBO", "002EBO", "003EBO", "004EBO", "005EBO", "006EBO", "007EBO",
+                    "101PER", "102PER", "103PER",
+                    "104PER", "105PER", "106PER", "107PER",
+                    "151HAR", "152HAR", "153HAR", "154HAR",
+                    "201TEL", "202TEL", "203TEL", "204TEL", "205TEL", "207TEL", "208TEL", "209TEL", "211TEL", "220TEL", "221TEL", "222TEL", "231TEL", "232TEL", "233TEL", "261TEL", "262TEL",
+                    "301NAR", "302NAR", "303NAR", "304NAR", "305NAR", "306NAR", "351NAR", "352NAR", "371NAR",
+                    "401DXN", "402DXN", "403DXN", "404DXN", "410DXN", "411DXN", "421DXN",
+                    "501OND", "502OND", "503OND", "504OND", "505OND", "506OND", "510OND", "511OND", "512OND",
+                    "601DAN", "602DAN", "603DAN", "604DAN", "605DAN", "610DAN", "650DAN",
+                    "701KOR", "702KOR", "710KOR", "711KOR",
+                    "851NIH", "852NIH", "853NIH",
+                    "901MAL", "902MAL", "903MAL", "904MAL", "905MAL", "906MAL", "907MAL",
+                    "950COR"
+                }
+            },
+            { "Default", new List<string>()
+                {
+                    "001EBO", "003EBO", "004EBO", "005EBO", "006EBO", "007EBO",
+                    "107PER",
+                    "305NAR", "351NAR", "352NAR",
+                    "421DXN",
+                    "505OND",
+                    "603DAN",
+                    "853NIH",
+                    "907MAL",
+                    "950COR",
+                }
+            },
+            { "No Major Hubs", new List<string>()
+                {
+                    "001EBO",
+                }
+            },
+            { "All Modules", new List<string>() { } }
         };
 
         /// <summary>
@@ -484,10 +1337,7 @@ namespace kotor_Randomizer_2
         /// <summary>
         /// Bound list of items to be omitted from randomization. This is necessary because certain items can result in soft locks if randomized.
         /// </summary>
-        public static BindingList<string> OmitItems = new BindingList<string>()
-        {
-            "g_i_collarlgt001", "g_i_glowrod01", "g_i_torch01", "ptar_sitharmor", "tat17_sandperdis", "g_i_progspike02"
-        };
+        public static BindingList<string> OmitItems = new BindingList<string>(new List<string>(DEFAULT_OMIT_ITEMS));
 
         /// <summary>
         /// Dictionary of selected 2DAs to be randomized.
@@ -501,19 +1351,23 @@ namespace kotor_Randomizer_2
         /// </summary>
         public struct Mod_Entry
         {
-            public string Name { get; }
+            public string Code { get; }
+            public string Common { get; }
             public bool Omitted { get; set; }
 
-            public Mod_Entry(string name, bool omitted)
+            public Mod_Entry(string code, bool omitted)
             {
-                Name = name;
+                Code = code;
+                Common = ModuleRando.GetModuleCommonName(code) ?? code;
                 Omitted = omitted;
             }
 
             public override string ToString()
             {
-                StringBuilder sb = new StringBuilder(Omitted ? "X:" : "I:");
-                sb.Append(Name);
+                StringBuilder sb = new StringBuilder(/*Omitted ? "X:" : "I:"*/);
+                sb.Append(Code);
+                sb.Append(": ".PadRight(12 - Code.Length));
+                sb.Append(Common);
                 return sb.ToString();
             }
         }

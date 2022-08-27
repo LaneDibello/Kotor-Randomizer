@@ -38,6 +38,7 @@
             this.llTwitch = new System.Windows.Forms.LinkLabel();
             this.llStratWiki = new System.Windows.Forms.LinkLabel();
             this.llYoutube = new System.Windows.Forms.LinkLabel();
+            this.llglasTwitch = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // tbInfo1
@@ -49,7 +50,7 @@
             this.tbInfo1.Name = "tbInfo1";
             this.tbInfo1.ReadOnly = true;
             this.tbInfo1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbInfo1.Size = new System.Drawing.Size(260, 400);
+            this.tbInfo1.Size = new System.Drawing.Size(260, 410);
             this.tbInfo1.TabIndex = 0;
             // 
             // cbCata
@@ -72,7 +73,7 @@
             this.tbInfo2.Name = "tbInfo2";
             this.tbInfo2.ReadOnly = true;
             this.tbInfo2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbInfo2.Size = new System.Drawing.Size(260, 400);
+            this.tbInfo2.Size = new System.Drawing.Size(260, 410);
             this.tbInfo2.TabIndex = 2;
             // 
             // tbAbout
@@ -122,10 +123,10 @@
             this.llTwitch.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.llTwitch.Location = new System.Drawing.Point(20, 360);
             this.llTwitch.Name = "llTwitch";
-            this.llTwitch.Size = new System.Drawing.Size(98, 13);
+            this.llTwitch.Size = new System.Drawing.Size(115, 13);
             this.llTwitch.TabIndex = 6;
             this.llTwitch.TabStop = true;
-            this.llTwitch.Text = "My Twitch Channel";
+            this.llTwitch.Text = "Lane\'s Twitch Channel";
             this.llTwitch.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(216)))), ((int)(((byte)(8)))));
             this.llTwitch.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llTwitch_LinkClicked);
             // 
@@ -150,19 +151,34 @@
             this.llYoutube.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
             this.llYoutube.Location = new System.Drawing.Point(20, 390);
             this.llYoutube.Name = "llYoutube";
-            this.llYoutube.Size = new System.Drawing.Size(110, 13);
+            this.llYoutube.Size = new System.Drawing.Size(127, 13);
             this.llYoutube.TabIndex = 8;
             this.llYoutube.TabStop = true;
-            this.llYoutube.Text = "My YouTube Channel";
+            this.llYoutube.Text = "Lane\'s YouTube Channel";
             this.llYoutube.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(216)))), ((int)(((byte)(8)))));
             this.llYoutube.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llYoutube_LinkClicked);
+            // 
+            // llglasTwitch
+            // 
+            this.llglasTwitch.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(216)))), ((int)(((byte)(8)))));
+            this.llglasTwitch.AutoSize = true;
+            this.llglasTwitch.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(255)))));
+            this.llglasTwitch.Location = new System.Drawing.Point(20, 420);
+            this.llglasTwitch.Name = "llglasTwitch";
+            this.llglasTwitch.Size = new System.Drawing.Size(142, 13);
+            this.llglasTwitch.TabIndex = 9;
+            this.llglasTwitch.TabStop = true;
+            this.llglasTwitch.Text = "Glasnonck\'s Twitch Channel";
+            this.llglasTwitch.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(216)))), ((int)(((byte)(8)))));
+            this.llglasTwitch.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llglasTwitch_LinkClicked);
             // 
             // HelpForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(22)))));
-            this.ClientSize = new System.Drawing.Size(784, 441);
+            this.ClientSize = new System.Drawing.Size(784, 451);
+            this.Controls.Add(this.llglasTwitch);
             this.Controls.Add(this.llYoutube);
             this.Controls.Add(this.llStratWiki);
             this.Controls.Add(this.llTwitch);
@@ -194,5 +210,6 @@
         private System.Windows.Forms.LinkLabel llTwitch;
         private System.Windows.Forms.LinkLabel llStratWiki;
         private System.Windows.Forms.LinkLabel llYoutube;
+        private System.Windows.Forms.LinkLabel llglasTwitch;
     }
 }

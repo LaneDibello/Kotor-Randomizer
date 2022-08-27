@@ -130,32 +130,8 @@
   <data name="BoxUnslected" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img\BoxUnslected.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ALLINCLUDED_modulesave" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ALLINCLUDED_modulesave.2da;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MGINCLUDED_modulesave" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MGINCLUDED_modulesave.2da;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="NODELETE_ALLINCLUDED_modulesave" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NODELETE_ALLINCLUDED_modulesave.2da;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="NODELETE_MGINCLUDED_modulesave" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NODELETE_MGINCLUDED_modulesave.2da;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="NODELETE_modulesave" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NODELETE_modulesave.2da;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="Krandom" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img\Krandom.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="k_pebn_galaxy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\k_pebn_galaxy.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="k_ren_visionland" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\k_ren_visionland.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="g_brakatan003" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\g_brakatan003.utc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="GeneralHelp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\help\GeneralHelp.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -318,5 +294,127 @@
   </data>
   <data name="MsgPresetLoaded" xml:space="preserve">
     <value>Preset Loaded</value>
+  </data>
+  <data name="UnrandomizingTLKFile" xml:space="preserve">
+    <value>Unrandomizing Dialog Talk Table</value>
+  </data>
+  <data name="CreateSpoilerLog" xml:space="preserve">
+    <value>Create Spoiler Log</value>
+  </data>
+  <data name="RandomizationError" xml:space="preserve">
+    <value>Randomization Error</value>
+  </data>
+  <data name="AlreadyRandomized" xml:space="preserve">
+    <value>Game is already randomized!</value>
+  </data>
+  <data name="CreateSpoilerLogQuestion" xml:space="preserve">
+    <value>Would you like to create a spoiler log?</value>
+  </data>
+  <data name="Randomized" xml:space="preserve">
+    <value>Randomized!</value>
+  </data>
+  <data name="RandomizedWithSpoilers" xml:space="preserve">
+    <value>Randomized with Spoilers!</value>
+  </data>
+  <data name="Unrandomized" xml:space="preserve">
+    <value>Unrandomized!</value>
+  </data>
+  <data name="a_disc_join" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\a_disc_join.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="a_galaxymap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\a_galaxymap.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ebo_elev" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\ebo_elev.utp;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="modulesave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\modulesave.2da;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ALLINCLUDED_modulesave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\ALLINCLUDED_modulesave.2da;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="appearance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\appearance.2da;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <comment>Kotor 1 appearance table with fixed models/textures for random armor.</comment>
+  </data>
+  <data name="appearance_speedysuit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\appearance_speedysuit.2da;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <comment>Kotor 1 appearance table also with a speed boost to envirosuits.</comment>
+  </data>
+  <data name="g_brakatan003" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\g_brakatan003.utc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="k33b_openacademy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\k33b_openacademy.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="k36_pkor_enter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\k36_pkor_enter.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="k_pdan_13_area" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\k_pdan_13_area.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="k_pebn_galaxy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\k_pebn_galaxy.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="k_pebo_mgheart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\k_pebo_mgheart.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="k_plev_goto40aa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\k_plev_goto40aa.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="k_plev_goto40ab" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\k_plev_goto40ab.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="k_ren_visionland" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\k_ren_visionland.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lev40_accntl_dlg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\lev40_accntl_dlg.dlg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="m10aa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\m10aa.git;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="MGINCLUDED_modulesave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\MGINCLUDED_modulesave.2da;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NODELETE_ALLINCLUDED_modulesave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\NODELETE_ALLINCLUDED_modulesave.2da;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NODELETE_MGINCLUDED_modulesave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\NODELETE_MGINCLUDED_modulesave.2da;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NODELETE_modulesave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\NODELETE_modulesave.2da;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pebn_mystery" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\pebn_mystery.dlg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tar02_janice021" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k1patch\tar02_janice021.dlg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="a_tel_globalset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\a_tel_globalset.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="r_to003EBOelev" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\r_to003EBOelev.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="r_to003EBOentr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\r_to003EBOentr.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="r_to950COR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\r_to950COR.ncs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shuttle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\shuttle.dlg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_200_info_term" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\200_info_term.dlg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_262exit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\262exit.dlg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="_231sntry" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k2patch\231sntry.dlg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

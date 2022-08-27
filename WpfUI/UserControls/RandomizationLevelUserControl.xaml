@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="Randomizer_WPF.UserControls.RandomizationLevelUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Randomizer_WPF.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="26" d:DesignWidth="250"
+             x:Name="thisView">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="ToolTip">
+                <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.FontSize}" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" MinWidth="{Binding ElementName=thisView, Path=LevelsBoxMinWidth}" />
+        </Grid.ColumnDefinitions>
+        
+        <Grid.Resources>
+            <Style TargetType="Border">
+                <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="BorderBrush" Value="{StaticResource MediumGrayBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                <Setter Property="Margin" Value="0,0,5,0" />
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="RadioButton">
+                <Setter Property="Padding" Value="5,0" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+        </Grid.Resources>
+        
+        <CheckBox x:Name="cbIsActive"
+                  Margin="0"
+                  Padding="5,0"
+                  VerticalAlignment="Center"
+                  VerticalContentAlignment="Center"
+                  Checked="CheckBox_Checked"
+                  Unchecked="CheckBox_Unchecked"
+                  ToolTip="{Binding CheckboxToolTip, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                  Tag="{Binding RelativeSource={RelativeSource AncestorType=local:RandomizationLevelUserControl}}">
+            <TextBlock Text="{Binding CheckboxLabel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        </CheckBox>
+        <Border Grid.Column="1" BorderThickness="1" Padding="5">
+            <StackPanel Grid.Column="1" Orientation="Horizontal"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        IsEnabled="{Binding ElementName=cbIsActive, Path=IsChecked}">
+                <RadioButton x:Name="rbSubtype"
+                             Visibility="{Binding SubtypeVisible, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                             Checked="RbSubtype_Checked">
+                    <TextBlock Text="{Binding SubtypeLabel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                </RadioButton>
+                <RadioButton x:Name="rbType" Margin="5,0"
+                             Visibility="{Binding TypeVisible, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                             Checked="RbType_Checked">
+                    <TextBlock Text="{Binding TypeLabel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                </RadioButton>
+                <RadioButton x:Name="rbMax"
+                             Visibility="{Binding MaxVisible, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                             Checked="RbMax_Checked">
+                    <TextBlock Text="{Binding MaxLabel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                </RadioButton>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
