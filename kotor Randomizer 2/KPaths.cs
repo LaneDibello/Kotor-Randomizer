@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kotor_Randomizer_2.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,54 +13,108 @@ namespace kotor_Randomizer_2
     /// </summary>
     public class KPaths
     {
-        /// <summary> Path to the swkotor game directory. </summary>
-        public readonly string swkotor;
-        /// <summary> Path to the chitin.key file within the swkotor directory. </summary>
-        public readonly string chitin;
-        /// <summary> Path to the swkotor\data directory. </summary>
-        public readonly string data;
-        /// <summary> Path to the swkotor\lips directory. </summary>
-        public readonly string lips;
-        /// <summary> Path to the swkotor\modules directory. </summary>
-        public readonly string modules;
-        /// <summary> Path to the swkotor\Override directory. </summary>
-        public readonly string Override;
-        /// <summary> Path to the swkotor\rims directory. </summary>
-        public readonly string rims;
-        /// <summary> Path to the swkotor\streammusic directory. </summary>
-        public readonly string music;
-        /// <summary> Path to the swkotor\streamsounds directory. </summary>
-        public readonly string sounds;
-        /// <summary> Path to the swkotor\TexturePacks directory. </summary>
-        public readonly string TexturePacks;
-        /// <summary> Path to the dialog.tlk file within the swkotor directory </summary>
-        public readonly string dialog;
-
-        /// <summary> Path to the RANDOMIZED.log file within the swkotor directory. </summary>
-        public readonly string RANDOMIZED_LOG;
+        #region Folder and File Names
         /// <summary> Filename of the log file indicating that the game has been randomized. </summary>
         public const string RANDOMIZED_LOG_FILENAME = "RANDOMIZED.log";
 
+        public const string K_CHITIN = "chitin.key";
+        public const string K_DIALOG = "dialog.tlk";
+
+        public const string K1_DATA = "data";
+        public const string K1_LIPS = "lips";
+        public const string K1_MODULES = "modules";
+        public const string K1_OVERRIDE = "Override";
+        public const string K1_RIMS = "rims";
+        public const string K1_MUSIC = "streammusic";
+        public const string K1_SOUNDS = "streamsounds";
+        public const string K1_TEXTURE = "TexturePacks";
+
+        public const string K2_DATA = "data";
+        public const string K2_LIPS = "lips";
+        public const string K2_MODULES = "Modules";
+        public const string K2_OVERRIDE = "override";
+        public const string K2_RIMS = "rims";
+        public const string K2_MUSIC = "StreamMusic";
+        public const string K2_SOUNDS = "StreamSounds";
+        public const string K2_TEXTURE = "TexturePacks";
+        #endregion
+
+        /// <summary> The game this path contains. </summary>
+        public Game game { get; private set; }
+
+        #region Paths
+
+        /// <summary> Path to the swkotor game directory. </summary>
+        public string swkotor { get; private set; }
+
+        /// <summary> Path to the RANDOMIZED.log file within the swkotor directory. </summary>
+        public string RANDOMIZED_LOG => Path.Combine(swkotor, RANDOMIZED_LOG_FILENAME);
+
+        /// <summary> Path to the chitin.key file within the swkotor directory. </summary>
+        public string chitin => Path.Combine(swkotor, K_CHITIN);
+
+        /// <summary> Path to the dialog.tlk file within the swkotor directory </summary>
+        public string dialog => Path.Combine(swkotor, K_DIALOG);
+
+        /// <summary> Path to the swkotor\data directory. </summary>
+        public string data => Path.Combine(swkotor, game == Game.Kotor1 ? K1_DATA : K2_DATA) + "\\";
+
+        /// <summary> Path to the swkotor\lips directory. </summary>
+        public string lips => Path.Combine(swkotor, game == Game.Kotor1 ? K1_LIPS : K2_LIPS) + "\\";
+
+        /// <summary> Path to the swkotor\modules directory. </summary>
+        public string modules => Path.Combine(swkotor, game == Game.Kotor1 ? K1_MODULES : K2_MODULES) + "\\";
+
+        /// <summary> Path to the swkotor\Override directory. </summary>
+        public string Override => Path.Combine(swkotor, game == Game.Kotor1 ? K1_OVERRIDE : K2_OVERRIDE) + "\\";
+
+        /// <summary> Path to the swkotor\rims directory. </summary>
+        public string rims => Path.Combine(swkotor, game == Game.Kotor1 ? K1_RIMS : K2_RIMS) + "\\";
+
+        /// <summary> Path to the swkotor\streammusic directory. </summary>
+        public string music => Path.Combine(swkotor, game == Game.Kotor1 ? K1_MUSIC : K2_MUSIC) + "\\";
+
+        /// <summary> Path to the swkotor\streamsounds directory. </summary>
+        public string sounds => Path.Combine(swkotor, game == Game.Kotor1 ? K1_SOUNDS : K2_SOUNDS) + "\\";
+
+        /// <summary> Path to the swkotor\TexturePacks directory. </summary>
+        public string TexturePacks => Path.Combine(swkotor, game == Game.Kotor1 ? K1_TEXTURE : K2_TEXTURE) + "\\";
+
+        #endregion
+
+        #region Backup Paths
+
         /// <summary> Path to the backup of the chitin.key file within the swkotor directory. </summary>
-        public readonly string chitin_backup;
-        /// <summary> Path to the backup of the swkotor\data directory. </summary>
-        public readonly string data_backup;
-        /// <summary> Path to the backup of the swkotor\lips directory. </summary>
-        public readonly string lips_backup;
-        /// <summary> Path to the backup of the swkotor\modules directory. </summary>
-        public readonly string modules_backup;
-        /// <summary> Path to the backup of the swkotor\Override directory. </summary>
-        public readonly string Override_backup;
-        /// <summary> Path to the backup of the swkotor\rims directory. </summary>
-        public readonly string rims_backup;
-        /// <summary> Path to the backup of the swkotor\streammusic directory. </summary>
-        public readonly string music_backup;
-        /// <summary> Path to the backup of the swkotor\streamsounds directory. </summary>
-        public readonly string sounds_backup;
-        /// <summary> Path to the backup of the swkotor\TexturePacks directory. </summary>
-        public readonly string TexturePacks_backup;
+        public string chitin_backup => GetBackupPath(chitin);
+
         /// <summary> Path to the backup of the dialog.tlk file within the swkotor directory. </summary>
-        public readonly string dialog_backup;
+        public string dialog_backup => GetBackupPath(dialog);
+
+        /// <summary> Path to the backup of the swkotor\data directory. </summary>
+        public string data_backup => GetBackupPath(data);
+
+        /// <summary> Path to the backup of the swkotor\lips directory. </summary>
+        public string lips_backup => GetBackupPath(lips);
+
+        /// <summary> Path to the backup of the swkotor\modules directory. </summary>
+        public string modules_backup => GetBackupPath(modules);
+
+        /// <summary> Path to the backup of the swkotor\Override directory. </summary>
+        public string Override_backup => GetBackupPath(Override);
+
+        /// <summary> Path to the backup of the swkotor\rims directory. </summary>
+        public string rims_backup => GetBackupPath(rims);
+
+        /// <summary> Path to the backup of the swkotor\streammusic directory. </summary>
+        public string music_backup => GetBackupPath(music);
+
+        /// <summary> Path to the backup of the swkotor\streamsounds directory. </summary>
+        public string sounds_backup => GetBackupPath(sounds);
+
+        /// <summary> Path to the backup of the swkotor\TexturePacks directory. </summary>
+        public string TexturePacks_backup => GetBackupPath(TexturePacks);
+
+        #endregion
 
         /// <summary>
         /// Constructs paths to the SW KotOR directory and subdirectories.
@@ -67,31 +122,25 @@ namespace kotor_Randomizer_2
         /// <param name="swkotor_path">Path to the base swkotor game directory.</param>
         public KPaths(string swkotor_path)
         {
-            swkotor = $"{swkotor_path}\\";
-            chitin = $"{swkotor_path}\\chitin.key";
-            data = $"{swkotor_path}\\data\\";
-            lips = $"{swkotor_path}\\lips\\";
-            modules = $"{swkotor_path}\\modules\\";
-            Override = $"{swkotor_path}\\Override\\";
-            rims = $"{swkotor_path}\\rims\\";
-            music = $"{swkotor_path}\\streammusic\\";
-            sounds = $"{swkotor_path}\\streamsounds\\";
-            TexturePacks = $"{swkotor_path}\\TexturePacks\\";
-            dialog = $"{swkotor_path}\\dialog.tlk";
+            var dir = new DirectoryInfo(swkotor_path);
+            swkotor = dir.FullName;
 
-            RANDOMIZED_LOG = $"{swkotor_path}\\{RANDOMIZED_LOG_FILENAME}";
-
-            chitin_backup = $"{swkotor_path}\\chitin.key.bak";
-            data_backup = $"{swkotor_path}\\data_bak\\";
-            lips_backup = $"{swkotor_path}\\lips_bak\\";
-            modules_backup = $"{swkotor_path}\\modules_bak\\";
-            Override_backup = $"{swkotor_path}\\Override_bak\\";
-            rims_backup = $"{swkotor_path}\\rims_bak\\";
-            music_backup = $"{swkotor_path}\\streammusic_bak\\";
-            sounds_backup = $"{swkotor_path}\\streamsounds_bak\\";
-            TexturePacks_backup = $"{swkotor_path}\\TexturePacks_bak\\";
-            dialog_backup = $"{swkotor_path}\\dialog.tlk.bak";
+            var files = dir.EnumerateFiles();
+            if (files.Any(fi => fi.Name == "swkotor.exe"))
+            {
+                game = Game.Kotor1;
+            }
+            else if (files.Any(fi => fi.Name == "swkotor2.exe"))
+            {
+                game = Game.Kotor2;
+            }
+            else
+            {
+                throw new FileNotFoundException($"Supported game file not found in directory \"{swkotor_path}\"");
+            }
         }
+
+        #region Get Files
 
         /// <summary> Returns a list of the current files in the swkotor base directory. </summary>
         public FileInfo[] FilesInBaseDir
@@ -135,6 +184,10 @@ namespace kotor_Randomizer_2
         /// <summary> Returns a list of the current files in the swkotor\TexturePacks directory. </summary>
         public FileInfo[] FilesInTexturePacks
         { get { return new DirectoryInfo(TexturePacks).GetFiles(); } }
+
+        #endregion
+
+        #region Back Up
 
         /// <summary>
         /// Creates a backup of the modules directory if it doesn't exist already.
@@ -248,6 +301,10 @@ namespace kotor_Randomizer_2
             }
         }
 
+        #endregion
+
+        #region Restore
+
         /// <summary>
         /// If the backup Modules directory exists, restore it to the active directory.
         /// </summary>
@@ -352,6 +409,8 @@ namespace kotor_Randomizer_2
             }
         }
 
+        #endregion
+
         /// <summary>
         /// Gets the backup version of the requested path.
         /// </summary>
@@ -392,7 +451,7 @@ namespace kotor_Randomizer_2
         /// <returns></returns>
         public override string ToString()
         {
-            return $"Base directory: {swkotor}";
+            return $"Game: {game}, Base directory: {swkotor}";
         }
     }
 }
