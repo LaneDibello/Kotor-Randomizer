@@ -210,7 +210,7 @@ namespace kotor_Randomizer_2
                     // Creates a basic log file with a date, version, and things done.
                     curr_task = Properties.Resources.TaskFinishing;
                     bwRandomizing.ReportProgress(curr_progress);
-                    sw.WriteLine("\nThe Kotor Randomizer was created by Lane Dibello, with help from Glasnonck, and the greater Kotor Speedrunning community.");
+                    sw.WriteLine("\nThe Kotor Randomizer was created by Lane, with help from Glasnonck, and the greater Kotor Speedrunning community.");
                     sw.WriteLine("If you encounter any issues please try to contact me @Lane#5847 on Discord");
                 }
             }

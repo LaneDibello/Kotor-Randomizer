@@ -1,4 +1,5 @@
 ﻿using kotor_Randomizer_2;
+using kotor_Randomizer_2.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -21,6 +22,28 @@ namespace Randomizer_WPF
 
             if ((bool)value) return Visibility.Visible;
             else             return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (targetType != typeof(bool)) throw new InvalidOperationException("The target must be a boolean.");
+
+            if ((Visibility)value == Visibility.Visible) return true;
+            else                                         return false;
+        }
+        #endregion
+    }
+
+    [ValueConversion(typeof(bool), typeof(Visibility))]
+    public class BoolToHiddenConverter : IValueConverter
+    {
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (targetType != typeof(Visibility)) throw new InvalidOperationException("The target must be of type Visibility.");
+
+            if ((bool)value) return Visibility.Visible;
+            else             return Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -123,6 +146,43 @@ namespace Randomizer_WPF
         #endregion
     }
 
+    [ValueConversion(typeof(RandoLevelFlags), typeof(bool))]
+    public class RandoLevelFlagsToBoolConverter : IValueConverter
+    {
+        private RandoLevelFlags target;
+        public delegate void NotifyOnChange(RandoLevelFlags oldValue, RandoLevelFlags newValue);
+        public event NotifyOnChange RandoLevelFlagsChanged;
+
+        public RandoLevelFlagsToBoolConverter() { }
+
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            target = (RandoLevelFlags)value;
+            return target.HasFlag((RandoLevelFlags)parameter);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var oldValue = target;
+            if (target.HasFlag((RandoLevelFlags)parameter))
+            {
+                // Target has the flag, so only update if the flag should be inactive.
+                if (!(bool)value) target ^= (RandoLevelFlags)parameter;
+            }
+            else
+            {
+                // Target doesn't have the flag, so only update if the flag should be active.
+                if ((bool)value) target |= (RandoLevelFlags)parameter;
+            }
+
+            // Notify if changed.
+            if (oldValue != target) RandoLevelFlagsChanged?.Invoke(oldValue, target);
+            return target;
+        }
+        #endregion
+    }
+
     [ValueConversion(typeof(ModuleExtras), typeof(bool))]
     public class ModuleExtrasToBoolConverter : IValueConverter
     {
@@ -152,6 +212,71 @@ namespace Randomizer_WPF
                 else
                     return target;
             }
+        }
+        #endregion
+    }
+
+    [ValueConversion(typeof(SavePatchOptions), typeof(bool))]
+    public class SavePatchOptionsToBoolConverter : IValueConverter
+    {
+        private SavePatchOptions target;
+        public SavePatchOptionsToBoolConverter() { }
+
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            target = (SavePatchOptions)value;
+            return target.HasFlag((SavePatchOptions)parameter);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (target.HasFlag((SavePatchOptions)parameter))
+            {
+                if ((bool)value)
+                    return target;
+                else
+                    return target ^= (SavePatchOptions)parameter;
+            }
+            else
+            {
+                if ((bool)value)
+                    return target |= (SavePatchOptions)parameter;
+                else
+                    return target;
+            }
+        }
+        #endregion
+    }
+
+    [ValueConversion(typeof(Type), typeof(Visibility))]
+    public class TypeToVisibilityConverter : IValueConverter
+    {
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value.GetType() == parameter.GetType() ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return Visibility.Visible == (Visibility)value ? parameter.GetType() : null;
+        }
+        #endregion
+    }
+
+    [ValueConversion(typeof(Game), typeof(Visibility))]
+    public class GameToVisibilityConverter : IValueConverter
+    {
+        #region IValueConverter Members
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (Game)value == (Game)parameter ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return Visibility.Visible == (Visibility)value ? (Game)parameter : Game.Unsupported;
         }
         #endregion
     }
@@ -192,6 +317,7 @@ namespace Randomizer_WPF
     [ValueConversion(typeof(RandomizationLevel), typeof(Visibility))]
     public class VisibleIfRandoLevelMatchesMultiConverter : IMultiValueConverter
     {
+        #region IMultiValueConverter Members
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             if (targetType != typeof(Visibility)) return Visibility.Collapsed;
@@ -200,7 +326,7 @@ namespace Randomizer_WPF
             foreach (var value in values)
             {
                 try
-                { 
+                {
                     if ((RandomizationLevel)value == (RandomizationLevel)parameter)
                     {
                         return Visibility.Visible;
@@ -219,5 +345,28 @@ namespace Randomizer_WPF
         {
             throw new NotImplementedException();
         }
+        #endregion
+    }
+
+    [ValueConversion(typeof(bool), typeof(Visibility))]
+    public class VisibleIfAllAreFalseMultiConverter : IMultiValueConverter
+    {
+        #region IMultiValueConverter Members
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (targetType != typeof(Visibility)) return (Visibility)parameter;
+            if (!values.Any()) return Visibility.Visible;
+
+            var anyAreTrue = false;
+            foreach (var value in values) anyAreTrue |= (bool)value;
+
+            return anyAreTrue ? Visibility.Visible : (Visibility)parameter;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }

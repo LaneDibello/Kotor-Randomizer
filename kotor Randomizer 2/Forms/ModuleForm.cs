@@ -78,7 +78,7 @@ namespace kotor_Randomizer_2
             cbGlitchFlu.Checked = settings.AllowGlitchFlu;
             cbGlitchGpw.Checked = settings.AllowGlitchGpw;
 
-            PresetComboBox.DataSource = Globals.OMIT_PRESETS.Keys.ToList();
+            PresetComboBox.DataSource = Globals.K1_MODULE_OMIT_PRESETS.Keys.ToList();
             Constructed = true;
 
             if (Properties.Settings.Default.LastPresetComboIndex < 0)
@@ -127,7 +127,7 @@ namespace kotor_Randomizer_2
             {
                 Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, false);
 
-                if (Globals.OMIT_PRESETS[preset].Contains(Globals.BoundModules[i].Code))
+                if (Globals.K1_MODULE_OMIT_PRESETS[preset].Contains(Globals.BoundModules[i].Code))
                 {
                     Globals.BoundModules[i] = new Globals.Mod_Entry(Globals.BoundModules[i].Code, true);
                 }

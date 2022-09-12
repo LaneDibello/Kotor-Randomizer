@@ -71,6 +71,9 @@
       <DependentUpon>TestWindow2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\SettingsFile.cs" />
+    <Compile Include="UserControls\RandomizationLevelUserControl_V2.xaml.cs">
+      <DependentUpon>RandomizationLevelUserControl_V2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\RestrictedTextBox.cs" />
     <Compile Include="UserControls\SortAdorner.cs" />
     <Compile Include="TestWindow.xaml.cs">
@@ -149,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\RandomizationLevelUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\RandomizationLevelUserControl_V2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

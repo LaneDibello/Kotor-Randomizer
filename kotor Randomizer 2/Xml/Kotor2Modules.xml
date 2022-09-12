@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Modules Game="Kotor2">
+    <!--Prologue-->
+    <Module WarpCode="001EBO" Planet="Prologue" CommonName="Ebon Hawk Interior" Tags="Start">
+        <LeadsTo WarpCode="002EBO" Once="False" Locked="False" Unlock="" CommonName="Ebon Hawk Exterior Hull" />
+        <LeadsTo WarpCode="101PER" Once="False" Locked="False" Unlock="" CommonName="Administration Level" />
+    </Module>
+    <Module WarpCode="002EBO" Planet="Prologue" CommonName="Ebon Hawk Exterior Hull" Tags="">
+        <LeadsTo WarpCode="001EBO" Once="False" Locked="False" Unlock="" CommonName="Ebon Hawk Interior" />
+    </Module>
+
+    <!--Ebon Hawk-->
+    <Module WarpCode="003EBO" Planet="Ebon Hawk" CommonName="Interior" Tags="">
+        <LeadsTo WarpCode="262TEL" Once="False" Locked="False" Unlock="" CommonName="Secret Academy" />
+        <LeadsTo WarpCode="301NAR" Once="False" Locked="False" Unlock="" CommonName="Refugee Landing Pad" />
+        <LeadsTo WarpCode="901MAL" Once="False" Locked="False" Unlock="" CommonName="Surface" />
+        <LeadsTo WarpCode="601DAN" Once="False" Locked="False" Unlock="" CommonName="Khoonda Plains" />
+        <LeadsTo WarpCode="701KOR" Once="False" Locked="False" Unlock="" CommonName="Valley of the Dark Lords" />
+        <LeadsTo WarpCode="401DXN" Once="False" Locked="False" Unlock="" CommonName="Jungle Landing" />
+    </Module>
+    <Module WarpCode="004EBO" Planet="Ebon Hawk" CommonName="Interior - Red Eclipse Slayer Invasion [1]" Tags="">
+        <LeadsTo WarpCode="003EBO" Once="True" Locked="False" Unlock="" CommonName="Interior" />
+    </Module>
+    <Module WarpCode="005EBO" Planet="Ebon Hawk" CommonName="Escape from Peragus [2]" Tags="">
+        <LeadsTo WarpCode="003EBO" Once="False" Locked="True" Unlock="" CommonName="Interior" />
+    </Module>
+    <Module WarpCode="006EBO" Planet="Ebon Hawk" CommonName="Interior (Post Enclave)" Tags="">
+        <LeadsTo WarpCode="262TEL" Once="False" Locked="True" Unlock="" CommonName="Secret Academy" />
+    </Module>
+    <Module WarpCode="007EBO" Planet="Ebon Hawk" CommonName="Interior (Post Goto's Yacht)" Tags="">
+        <LeadsTo WarpCode="303NAR" Once="False" Locked="True" Unlock="" CommonName="Docks" />
+    </Module>
+    <Module WarpCode="950COR" Planet="Ebon Hawk" CommonName="Escape From Telos Cutscene [9]" Tags="">
+        <LeadsTo WarpCode="003EBO" Once="True" Locked="False" Unlock="" CommonName="Interior" />
+    </Module>
+
+    <!--Peragus-->
+    <Module WarpCode="101PER" Planet="Peragus" CommonName="Administration Level" Tags="">
+        <LeadsTo WarpCode="102PER" Once="False" Locked="False" Unlock="" CommonName="Mining Tunnels" />
+        <LeadsTo WarpCode="103PER" Once="False" Locked="True"  Unlock="" CommonName="Fuel Depot" />
+        <LeadsTo WarpCode="105PER" Once="False" Locked="True"  Unlock="" CommonName="Dormitories" />
+        <LeadsTo WarpCode="106PER" Once="True"  Locked="False" Unlock="" CommonName="Hangar Bay" />
+        <LeadsTo WarpCode="151HAR" Once="False" Locked="True"  Unlock="" CommonName="Command Deck" />
+    </Module>
+    <Module WarpCode="102PER" Planet="Peragus" CommonName="Mining Tunnels" Tags="">
+        <LeadsTo WarpCode="101PER" Once="False" Locked="False" Unlock="" CommonName="Administration Level" />
+        <LeadsTo WarpCode="103PER" Once="False" Locked="False" Unlock="" CommonName="Fuel Depot" />
+    </Module>
+    <Module WarpCode="103PER" Planet="Peragus" CommonName="Fuel Depot" Tags="">
+        <LeadsTo WarpCode="102PER" Once="False" Locked="False" Unlock="" CommonName="Mining Tunnels" />
+        <LeadsTo WarpCode="101PER" Once="False" Locked="False" Unlock="" CommonName="Administration Level" />
+        <LeadsTo WarpCode="104PER" Once="False" Locked="False" Unlock="" CommonName="Asteroid Exterior" />
+        <LeadsTo WarpCode="153HAR" Once="False" Locked="False" Unlock="" CommonName="Engine Deck" />
+        <LeadsTo WarpCode="106PER" Once="False" Locked="False" Unlock="" CommonName="Hangar Bay" />
+    </Module>
+    <Module WarpCode="104PER" Planet="Peragus" CommonName="Asteroid Exterior" Tags="">
+        <LeadsTo WarpCode="103PER" Once="False" Locked="False" Unlock="" CommonName="Fuel Depot" />
+        <LeadsTo WarpCode="105PER" Once="False" Locked="False" Unlock="" CommonName="Dormitories" />
+    </Module>
+    <Module WarpCode="105PER" Planet="Peragus" CommonName="Dormitories" Tags="">
+        <LeadsTo WarpCode="101PER" Once="False" Locked="False" Unlock="" CommonName="Administration Level" />
+        <LeadsTo WarpCode="104PER" Once="False" Locked="False" Unlock="" CommonName="Asteroid Exterior" />
+    </Module>
+    <Module WarpCode="106PER" Planet="Peragus" CommonName="Hangar Bay" Tags="">
+        <LeadsTo WarpCode="103PER" Once="False" Locked="False" Unlock="" CommonName="Fuel Depot" />
+        <LeadsTo WarpCode="107PER" Once="False" Locked="False" Unlock="" CommonName="Turret Minigame [2]" />
+    </Module>
+    <Module WarpCode="107PER" Planet="Peragus" CommonName="Turret Minigame [2]" Tags="">
+        <LeadsTo WarpCode="003EBO" Once="False" Locked="False" Unlock="" CommonName="Interior" />
+    </Module>
+
+    <!--Harbinger-->
+    <Module WarpCode="151HAR" Planet="Harbinger" CommonName="Command Deck" Tags="">
+        <LeadsTo WarpCode="101PER" Once="False" Locked="False" Unlock="" CommonName="Administration Level" />
+        <LeadsTo WarpCode="152HAR" Once="False" Locked="False" Unlock="" CommonName="Crew Quarters" />
+    </Module>
+    <Module WarpCode="152HAR" Planet="Harbinger" CommonName="Engine Deck" Tags="">
+        <LeadsTo WarpCode="153HAR" Once="False" Locked="False" Unlock="" CommonName="Administration Level" />
+        <LeadsTo WarpCode="151HAR" Once="False" Locked="False" Unlock="" CommonName="Command Deck" />
+    </Module>
+    <Module WarpCode="153HAR" Planet="Harbinger" CommonName="Engine Deck" Tags="">
+        <LeadsTo WarpCode="106PER" Once="False" Locked="False" Unlock="" CommonName="Hangar Bay" />
+        <LeadsTo WarpCode="152HAR" Once="False" Locked="False" Unlock="" CommonName="Crew Quarters" />
+    </Module>
+    <Module WarpCode="154HAR" Planet="Harbinger" CommonName="Command Deck (used for cutscenes)" Tags="">
+        <LeadsTo WarpCode="101PER" Once="False" Locked="False" Unlock="" CommonName="Administration Level" />
+        <LeadsTo WarpCode="152HAR" Once="False" Locked="False" Unlock="" CommonName="Crew Quarters" />
+    </Module>
+
+    <!--Citadel Station-->
+    <Module WarpCode="201TEL" Planet="Citadel Station" CommonName="Dock Module" Tags="">
+        <LeadsTo WarpCode="003EBO" Once="False" Locked="True"  Unlock="" CommonName="Interior" />
+        <LeadsTo WarpCode="202TEL" Once="False" Locked="False" Unlock="" CommonName="Entertainment" />
+        <LeadsTo WarpCode="231TEL" Once="True"  Locked="True"  Unlock="" CommonName="Restoration Zone [5]" />
+    </Module>
+    <Module WarpCode="202TEL" Planet="Citadel Station" CommonName="Entertainment" Tags="">
+        <LeadsTo WarpCode="201TEL" Once="False" Locked="False" Unlock="" CommonName="Dock Module" />
+        <LeadsTo WarpCode="203TEL" Once="False" Locked="False" Unlock="" CommonName="Residental 082 East" />
+        <LeadsTo WarpCode="207TEL" Once="False" Locked="False" Unlock="" CommonName="Cantina" />
+    </Module>
+    <Module WarpCode="203TEL" Planet="Citadel Station" CommonName="Residential 082 East" Tags="">
+        <LeadsTo WarpCode="202TEL" Once="False" Locked="False" Unlock="" CommonName="Entertainment" />
+        <LeadsTo WarpCode="204TEL" Once="False" Locked="False" Unlock="" CommonName="Residental 082 West" />
+        <LeadsTo WarpCode="208TEL" Once="False" Locked="True"  Unlock="" CommonName="Bumani Exchange Corp." />
+        <LeadsTo WarpCode="209TEL" Once="False" Locked="False" Unlock="" CommonName="Czerka Offices" />
+    </Module>
+    <Module WarpCode="204TEL" Planet="Citadel Station" CommonName="Residential 082 West" Tags="">
+        <LeadsTo WarpCode="203TEL" Once="False" Locked="False" Unlock="" CommonName="Residential 082 East" />
+    </Module>
+    <Module WarpCode="205TEL" Planet="Citadel Station" CommonName="Cutscene with Carth Onasi [3]" Tags="">
+        <LeadsTo WarpCode="907MAL" Once="False" Locked="False" Unlock="" CommonName="Kreia/Sion Cutscene" />
+    </Module>
+    <Module WarpCode="207TEL" Planet="Citadel Station" CommonName="Cantina" Tags="Pazaak">
+        <LeadsTo WarpCode="202TEL" Once="False" Locked="False" Unlock="" CommonName="Entertainment" />
+        <LeadsTo WarpCode="211TEL" Once="False" Locked="False" Unlock="" CommonName="Swoop Track [4]" />
+    </Module>
+    <Module WarpCode="208TEL" Planet="Citadel Station" CommonName="Bumani Exchange Corp." Tags="">
+        <LeadsTo WarpCode="203TEL" Once="False" Locked="False" Unlock="" CommonName="Residential 082 East" />
+    </Module>
+    <Module WarpCode="209TEL" Planet="Citadel Station" CommonName="Czerka Offices" Tags="">
+        <LeadsTo WarpCode="203TEL" Once="False" Locked="False" Unlock="" CommonName="Residential 082 East" />
+    </Module>
+    <Module WarpCode="211TEL" Planet="Citadel Station" CommonName="Swoop Track [4]" Tags="">
+        <LeadsTo WarpCode="207TEL" Once="False" Locked="False" Unlock="" CommonName="Cantina" />
+    </Module>
+    <Module WarpCode="220TEL" Planet="Citadel Station" CommonName="Suburban [10]" Tags="">
+        <LeadsTo WarpCode="221TEL" Once="False" Locked="False" Unlock="" CommonName="Suburban [11]" />
+    </Module>
+    <Module WarpCode="221TEL" Planet="Citadel Station" CommonName="Suburban [11]" Tags="">
+        <LeadsTo WarpCode="222TEL" Once="False" Locked="False" Unlock="" CommonName="Entertainment Module 081" />
+        <LeadsTo WarpCode="221TEL" Once="False" Locked="False" Unlock="" CommonName="Suburban [11]" />
+    </Module>
+    <Module WarpCode="222TEL" Planet="Citadel Station" CommonName="Entertainment Module 081 [12]" Tags="">
+        <LeadsTo WarpCode="851NIH" Once="False" Locked="False" Unlock="" CommonName="Command Deck" />
+        <LeadsTo WarpCode="221TEL" Once="False" Locked="False" Unlock="" CommonName="Suburban [11]" />
+    </Module>
+
+    <!--Telos-->
+    <Module WarpCode="231TEL" Planet="Telos" CommonName="Restoration Zone [5]" Tags="">
+        <LeadsTo WarpCode="233TEL" Once="False" Locked="False" Unlock="" CommonName="Czerka Site" />
+    </Module>
+    <Module WarpCode="232TEL" Planet="Telos" CommonName="Underground Base" Tags="">
+        <LeadsTo WarpCode="233TEL" Once="False" Locked="False" Unlock="" CommonName="Czerka Site" />
+        <LeadsTo WarpCode="261TEL" Once="False" Locked="False" Unlock="" CommonName="Polar Plateau" />
+    </Module>
+    <Module WarpCode="233TEL" Planet="Telos" CommonName="Czerka Site" Tags="">
+        <LeadsTo WarpCode="232TEL" Once="False" Locked="False" Unlock="" CommonName="Underground Base" />
+        <LeadsTo WarpCode="231TEL" Once="False" Locked="False" Unlock="" CommonName="Restoration Zone [5]" />
+    </Module>
+    <Module WarpCode="261TEL" Planet="Telos" CommonName="Polar Plateau" Tags="">
+        <LeadsTo WarpCode="262TEL" Once="False" Locked="False" Unlock="" CommonName="Secret Academy" />
+    </Module>
+    <Module WarpCode="262TEL" Planet="Telos" CommonName="Secret Academy" Tags="">
+        <LeadsTo WarpCode="950COR" Once="False" Locked="True"  Unlock="" CommonName="Escape From Telos Cutscene [9]" />
+        <LeadsTo WarpCode="851NIH" Once="True"  Locked="True"  Unlock="" CommonName="Command Deck" />
+    </Module>
+
+    <!--Nar Shadaa-->
+    <Module WarpCode="301NAR" Planet="Nar Shadaa" CommonName="Refugee Landing Pad" Tags="">
+        <LeadsTo WarpCode="003EBO" Once="False" Locked="False" Unlock="" CommonName="Interior" />
+        <LeadsTo WarpCode="302NAR" Once="False" Locked="False" Unlock="" CommonName="Refugee Quad" />
+        <LeadsTo WarpCode="303NAR" Once="False" Locked="False" Unlock="" CommonName="Docks" />
+        <LeadsTo WarpCode="306NAR" Once="False" Locked="False" Unlock="" CommonName="Entertainment Promenade" />
+        <LeadsTo WarpCode="371NAR" Once="False" Locked="False" Unlock="" CommonName="Swoop Track [4]" />
+    </Module>
+    <Module WarpCode="302NAR" Planet="Nar Shadaa" CommonName="Refugee Quad" Tags="">
+        <LeadsTo WarpCode="301NAR" Once="False" Locked="False" Unlock="" CommonName="Refugee Landing Pad" />
+    </Module>
+    <Module WarpCode="303NAR" Planet="Nar Shadaa" CommonName="Docks" Tags="Master">
+        <LeadsTo WarpCode="304NAR" Once="False" Locked="False" Unlock="" CommonName="Jekk'Jekk Tarr" />
+        <LeadsTo WarpCode="301NAR" Once="False" Locked="False" Unlock="" CommonName="Refugee Landing Pad" />
+    </Module>
+    <Module WarpCode="304NAR" Planet="Nar Shadaa" CommonName="Jekk'Jekk Tarr" Tags="">
+        <LeadsTo WarpCode="303NAR" Once="False" Locked="False" Unlock="" CommonName="Docks" />
+        <LeadsTo WarpCode="305NAR" Once="False" Locked="True"  Unlock="" CommonName="Jekk'Jekk Tarr Tunnels" />
+    </Module>
+    <Module WarpCode="305NAR" Planet="Nar Shadaa" CommonName="Jekk'Jekk Tarr Tunnels" Tags="Master">
+        <LeadsTo WarpCode="304NAR" Once="False" Locked="True"  Unlock="" CommonName="Jekk'Jekk Tarr" />
+    </Module>
+    <Module WarpCode="306NAR" Planet="Nar Shadaa" CommonName="Entertainment Promenade" Tags="Pazaak">
+        <LeadsTo WarpCode="301NAR" Once="False" Locked="False" Unlock="" CommonName="Refugee Landing Pad" />
+    </Module>
+    <Module WarpCode="351NAR" Planet="Nar Shadaa" CommonName="Goto's Yacht" Tags="Master">
+        <LeadsTo WarpCode="007EBO" Once="False" Locked="False" Unlock="" CommonName="Interior (Post Goto's Yacht)" />
+    </Module>
+    <Module WarpCode="352NAR" Planet="Nar Shadaa" CommonName="Goto Cutscene [6]" Tags="">
+        <LeadsTo WarpCode="301NAR" Once="False" Locked="False" Unlock="" CommonName="Refugee Landing Pad" />
+    </Module>
+    <Module WarpCode="371NAR" Planet="Nar Shadaa" CommonName="Swoop Track [4]" Tags="">
+        <LeadsTo WarpCode="301NAR" Once="False" Locked="False" Unlock="" CommonName="Refugee Landing Pad" />
+    </Module>
+
+    <!--Dxun-->
+    <Module WarpCode="401DXN" Planet="Dxun" CommonName="Jungle Landing" Tags="">
+        <LeadsTo WarpCode="003EBO" Once="False" Locked="False" Unlock="" CommonName="Interior" />
+        <LeadsTo WarpCode="402DXN" Once="False" Locked="False" Unlock="" CommonName="Jungle" />
+        <LeadsTo WarpCode="403DXN" Once="False" Locked="True"  Unlock="" CommonName="Mandalorian Ruins" />
+    </Module>
+    <Module WarpCode="402DXN" Planet="Dxun" CommonName="Jungle" Tags="">
+        <LeadsTo WarpCode="401DXN" Once="False" Locked="False" Unlock="" CommonName="Jungle Landing" />
+        <LeadsTo WarpCode="403DXN" Once="False" Locked="False" Unlock="" CommonName="Mandalorian Ruins" />
+        <LeadsTo WarpCode="404DXN" Once="False" Locked="False" Unlock="" CommonName="Mandalorian Cache" />
+    </Module>
+    <Module WarpCode="403DXN" Planet="Dxun" CommonName="Mandalorian Ruins" Tags="">
+        <LeadsTo WarpCode="402DXN" Once="False" Locked="False" Unlock="" CommonName="Jungle" />
+        <LeadsTo WarpCode="403DXN" Once="False" Locked="False" Unlock="" CommonName="Jungle Landing" />
+        <LeadsTo WarpCode="410DXN" Once="True"  Locked="True"  Unlock="" CommonName="Jungle Tomb" />
+        <LeadsTo WarpCode="501OND" Once="True"  Locked="True"  Unlock="" CommonName="Iziz Spaceport" />
+        <LeadsTo WarpCode="511OND" Once="True"  Locked="True"  Unlock="" CommonName="Iziz Merchant Quarter Invasion [7]" />
+    </Module>
+    <Module WarpCode="404DXN" Planet="Dxun" CommonName="Mandalorian Cache" Tags="">
+        <LeadsTo WarpCode="402DXN" Once="False" Locked="False" Unlock="" CommonName="Jungle" />
+    </Module>
+    <Module WarpCode="410DXN" Planet="Dxun" CommonName="Jungle Tomb" Tags="">
+        <LeadsTo WarpCode="411DXN" Once="False" Locked="False" Unlock="" CommonName="Sith Tomb" />
+    </Module>
+    <Module WarpCode="411DXN" Planet="Dxun" CommonName="Sith Tomb" Tags="">
+        <LeadsTo WarpCode="410DXN" Once="False" Locked="False" Unlock="" CommonName="Jungle Tomb" />
+        <LeadsTo WarpCode="403DXN" Once="True"  Locked="False" Unlock="" CommonName="Mandalorian Ruins" />
+    </Module>
+    <Module WarpCode="421DXN" Planet="Dxun" CommonName="Turret Minigame [2]" Tags="">
+        <LeadsTo WarpCode="401DXN" Once="False" Locked="False" Unlock="" CommonName="Jungle Landing" />
+    </Module>
+
+    <!--Onderon-->
+    <Module WarpCode="501OND" Planet="Onderon" CommonName="Iziz Spaceport" Tags="">
+        <LeadsTo WarpCode="502OND" Once="False" Locked="False" Unlock="" CommonName="Iziz Merchant Quarter" />
+    </Module>
+    <Module WarpCode="502OND" Planet="Onderon" CommonName="Iziz Merchant Quarter" Tags="">
+        <LeadsTo WarpCode="501OND" Once="False" Locked="False" Unlock="" CommonName="Iziz Spaceport" />
+        <LeadsTo WarpCode="512OND" Once="False" Locked="False" Unlock="" CommonName="Iziz Western Square" />
+    </Module>
+    <Module WarpCode="503OND" Planet="Onderon" CommonName="Iziz Cantina" Tags="Pazaak">
+        <LeadsTo WarpCode="510OND" Once="False" Locked="False" Unlock="" CommonName="Swoop Track [4]" />
+        <LeadsTo WarpCode="512OND" Once="False" Locked="False" Unlock="" CommonName="Iziz Western Square" />
+    </Module>
+    <Module WarpCode="504OND" Planet="Onderon" CommonName="Sky Ramp" Tags="">
+        <LeadsTo WarpCode="505OND" Once="True"  Locked="False" Unlock="" CommonName="Turret Minigame [2]" />
+        <LeadsTo WarpCode="506OND" Once="False" Locked="False" Unlock="" CommonName="Royal Palace" />
+        <LeadsTo WarpCode="511OND" Once="False" Locked="False" Unlock="" CommonName="Iziz Merchant Quarter Invasion [7]" />
+    </Module>
+    <Module WarpCode="505OND" Planet="Onderon" CommonName="Turret Minigame [2]" Tags="">
+        <LeadsTo WarpCode="504OND" Once="False" Locked="False" Unlock="" CommonName="Sky Ramp" />
+    </Module>
+    <Module WarpCode="506OND" Planet="Onderon" CommonName="Royal Palace" Tags="Master">
+        <LeadsTo WarpCode="504OND" Once="False" Locked="False" Unlock="" CommonName="Sky Ramp" />
+        <LeadsTo WarpCode="403DXN" Once="True"  Locked="False" Unlock="" CommonName="Mandalorian Ruins" />
+    </Module>
+    <Module WarpCode="510OND" Planet="Onderon" CommonName="Swoop Track [4]" Tags="">
+        <LeadsTo WarpCode="503OND" Once="False" Locked="False" Unlock="" CommonName="Iziz Cantina" />
+    </Module>
+    <Module WarpCode="511OND" Planet="Onderon" CommonName="Iziz Merchant Quarter Invasion [7]" Tags="">
+        <LeadsTo WarpCode="504OND" Once="False" Locked="False" Unlock="" CommonName="Sky Ramp" />
+    </Module>
+    <Module WarpCode="512OND" Planet="Onderon" CommonName="Iziz Western Square" Tags="">
+        <LeadsTo WarpCode="502OND" Once="False" Locked="False" Unlock="" CommonName="Iziz Merchant Quarter" />
+        <LeadsTo WarpCode="503OND" Once="False" Locked="False" Unlock="" CommonName="Iziz Cantina" />
+    </Module>
+
+    <!--Dantooine-->
+    <Module WarpCode="601DAN" Planet="Dantooine" CommonName="Khoonda Plains" Tags="Pazaak,Master">
+        <LeadsTo WarpCode="003EBO" Once="False" Locked="False" Unlock="" CommonName="Interior" />
+        <LeadsTo WarpCode="602DAN" Once="False" Locked="False" Unlock="" CommonName="Khoonda" />
+        <LeadsTo WarpCode="604DAN" Once="False" Locked="False" Unlock="" CommonName="Crystal Cave" />
+        <LeadsTo WarpCode="605DAN" Once="False" Locked="False" Unlock="" CommonName="Enclave Courtyard" />
+    </Module>
+    <Module WarpCode="602DAN" Planet="Dantooine" CommonName="Khoonda" Tags="Master">
+        <LeadsTo WarpCode="601DAN" Once="False" Locked="False" Unlock="" CommonName="Khoonda Plains" />
+    </Module>
+    <Module WarpCode="603DAN" Planet="Dantooine" CommonName="Khoonda Plains Cutscenes [8]" Tags="">
+    </Module>
+    <Module WarpCode="604DAN" Planet="Dantooine" CommonName="Crystal Cave" Tags="Master">
+        <LeadsTo WarpCode="601DAN" Once="False" Locked="False" Unlock="" CommonName="Khoonda Plains" />
+    </Module>
+    <Module WarpCode="605DAN" Planet="Dantooine" CommonName="Enclave Courtyard" Tags="">
+        <LeadsTo WarpCode="601DAN" Once="False" Locked="False" Unlock="" CommonName="Khoonda Plains" />
+        <LeadsTo WarpCode="610DAN" Once="False" Locked="True"  Unlock="" CommonName="Enclave Sublevel" />
+        <LeadsTo WarpCode="650DAN" Once="False" Locked="True"  Unlock="" CommonName="Rebuilt Jedi Enclave" />
+    </Module>
+    <Module WarpCode="610DAN" Planet="Dantooine" CommonName="Enclave Sublevel" Tags="">
+        <LeadsTo WarpCode="605DAN" Once="False" Locked="False" Unlock="" CommonName="Enclave Courtyard" />
+    </Module>
+    <Module WarpCode="650DAN" Planet="Dantooine" CommonName="Rebuilt Jedi Enclave" Tags="">
+        <LeadsTo WarpCode="605DAN" Once="False" Locked="False" Unlock="" CommonName="Enclave Courtyard [13]" />
+        <LeadsTo WarpCode="006EBO" Once="False" Locked="False" Unlock="" CommonName="Interior (Post Enclave) [13]" />
+    </Module>
+
+    <!--Korriban-->
+    <Module WarpCode="701KOR" Planet="Korriban" CommonName="Valley of the Dark Lords" Tags="">
+        <LeadsTo WarpCode="702KOR" Once="False" Locked="False" Unlock="" CommonName="Sith Academy" />
+        <LeadsTo WarpCode="703KOR" Once="False" Locked="False" Unlock="" CommonName="Shyrack Cave" />
+    </Module>
+    <Module WarpCode="702KOR" Planet="Korriban" CommonName="Sith Academy" Tags="Master">
+        <LeadsTo WarpCode="701KOR" Once="False" Locked="False" Unlock="" CommonName="Valley of the Dark Lords" />
+    </Module>
+    <Module WarpCode="710KOR" Planet="Korriban" CommonName="Shyrack Cave" Tags="">
+        <LeadsTo WarpCode="701KOR" Once="False" Locked="False" Unlock="" CommonName="Valley of the Dark Lords" />
+        <LeadsTo WarpCode="711KOR" Once="False" Locked="True"  Unlock="" CommonName="Secret Tomb" />
+    </Module>
+    <Module WarpCode="711KOR" Planet="Korriban" CommonName="Secret Tomb" Tags="">
+        <LeadsTo WarpCode="710KOR" Once="False" Locked="False" Unlock="" CommonName="Shyrack Cave" />
+    </Module>
+
+    <!--Ravager-->
+    <Module WarpCode="851NIH" Planet="Ravager" CommonName="Command Deck" Tags="">
+        <LeadsTo WarpCode="852NIH" Once="False" Locked="False" Unlock="" CommonName="Bridge" />
+        <LeadsTo WarpCode="907MAL" Once="False" Locked="True"  Unlock="" CommonName="Kreia/Sion Cutscene" />
+        <LeadsTo WarpCode="205TEL" Once="False" Locked="True"  Unlock="" CommonName="Cutscene with Carth Onasi [3]" />
+    </Module>
+    <Module WarpCode="852NIH" Planet="Ravager" CommonName="Bridge" Tags="Sith">
+        <LeadsTo WarpCode="851NIH" Once="False" Locked="False" Unlock="" CommonName="Command Deck" />
+    </Module>
+    <Module WarpCode="853NIH" Planet="Ravager" CommonName="Nihilus/Visas Cutscene" Tags="">
+    </Module>
+
+    <!--Malachor V-->
+    <Module WarpCode="901MAL" Planet="Malachor V" CommonName="Surface" Tags="">
+        <LeadsTo WarpCode="902MAL" Once="False" Locked="False" Unlock="" CommonName="Depths" />
+    </Module>
+    <Module WarpCode="902MAL" Planet="Malachor V" CommonName="Depths" Tags="">
+        <LeadsTo WarpCode="903MAL" Once="False" Locked="False" Unlock="" CommonName="Trayus Academy" />
+        <LeadsTo WarpCode="901MAL" Once="False" Locked="False" Unlock="" CommonName="Surface" />
+    </Module>
+    <Module WarpCode="903MAL" Planet="Malachor V" CommonName="Trayus Academy" Tags="Sith">
+        <LeadsTo WarpCode="904MAL" Once="False" Locked="False" Unlock="" CommonName="Trayus Core" />
+        <LeadsTo WarpCode="905MAL" Once="False" Locked="False" Unlock="" CommonName="Trayus Crescent" />
+        <LeadsTo WarpCode="906MAL" Once="False" Locked="False" Unlock="" CommonName="Trayus Proving Grounds" />
+    </Module>
+    <Module WarpCode="904MAL" Planet="Malachor V" CommonName="Trayus Core" Tags="Traya,Sith">
+    </Module>
+    <Module WarpCode="905MAL" Planet="Malachor V" CommonName="Trayus Crescent" Tags="">
+        <LeadsTo WarpCode="903MAL" Once="False" Locked="False" Unlock="" CommonName="Trayus Academy" />
+    </Module>
+    <Module WarpCode="906MAL" Planet="Malachor V" CommonName="Trayus Proving Grounds" Tags="">
+        <LeadsTo WarpCode="903MAL" Once="False" Locked="False" Unlock="" CommonName="Trayus Academy" />
+    </Module>
+    <Module WarpCode="907MAL" Planet="Malachor V" CommonName="Kreia/Sion Cutscene" Tags="">
+        <LeadsTo WarpCode="901MAL" Once="False" Locked="False" Unlock="" CommonName="Surface" />
+    </Module>
+
+    <!-- Notes
+        [1] Warping into this area will leave you without companions. Not a good 
+        thing unless you just want to test your toughness.
+
+        [2] Warping into a turret minigame may cause the game to hang when the 
+        minigame is complete.
+
+        [3] Warping into this area does nothing except trigger a cutscene on 
+        Citadel Station with Carth Onasi. You then travel to Malachor V.
+
+        [4] You can warp into a swoop track and race. Afterwards, you'll find 
+        yourself in front of the track manager; however, your race time won't be 
+        recorded. Use this for practicing swoop racing without paying any money.
+
+        [5] Warping into the Telos Restoration Zone prior to having entered it 
+        normally will cause the game to hang in the cutscene and your only option 
+        is to ALT-F4 to force the game to close.
+
+        [6] You'll see a plot-exposition cutscene that normally occurs the first 
+        time you travel to Nar Shadaa and then end up on the Refugee Landing Pad.
+
+        [7] This is the Iziz Merchant Quarter after you have landed your 
+        Mandalorian War Basilisk in the middle of the street.
+
+        [8] This is actually an amusing area to visit. This is the are used to show 
+        cutscenes when you are helping/sabotaging the defense against the 
+        mercenaries. There's a computer console that allows you to play all the 
+        mini-movies and you can wander around and see how the developers set up the 
+        movies.
+
+        [9] This is the scene aboard Ebon Hawk after you leave Atris' Secret 
+        Academy the first time.
+
+        [10] This is the wartime Citadel Station, Residental 082 West
+
+        [11] This is the wartime Citadel Station, Residental 082 East
+
+        [12] This is the wartime Citadel Station, Entertainment Module 081
+
+        [13] Which Load is active leaving the rebuilt enclave depends on if you've talked to the jedi masters
+    -->
+</Modules>

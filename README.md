@@ -1,7 +1,9 @@
 <h1> <img src="Screenshots/Icon.png" height="40" width="40" align="top" /> Kotor Randomizer</h1>
 
-[![GitHub release](https://img.shields.io/github/v/release/LaneDibello/Kotor-Randomizer.svg)](https://github.com/LaneDibello/Kotor-Randomizer/releases/latest)
-[![GitHub issues](https://img.shields.io/github/issues/LaneDibello/Kotor-Randomizer.svg)](https://github.com/LaneDibello/Kotor-Randomizer/issues)
+[![GitHub stable](https://img.shields.io/badge/stable-v2.6.1-blue)](https://github.com/LaneDibello/Kotor-Randomizer/releases/tag/v2.6.1)
+[![GitHub latest](https://img.shields.io/github/v/release/LaneDibello/Kotor-Randomizer.svg?label=latest&color=yellow)](https://github.com/LaneDibello/Kotor-Randomizer/releases/latest)
+[![GitHub issues](https://img.shields.io/github/issues/LaneDibello/Kotor-Randomizer.svg?color=red)](https://github.com/LaneDibello/Kotor-Randomizer/issues)
+
 
 A randomizer for Star Wars: Knights of the Old Republic designed for speedrunners and other gamers seeking a challenge.
 

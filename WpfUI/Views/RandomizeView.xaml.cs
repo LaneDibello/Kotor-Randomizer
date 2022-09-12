@@ -52,7 +52,9 @@ namespace Randomizer_WPF.Views
         public static readonly DependencyProperty CurrentProgressProperty = DependencyProperty.Register("CurrentProgress", typeof(double), typeof(RandomizeView));
         public static readonly DependencyProperty CurrentStateProperty    = DependencyProperty.Register("CurrentState",    typeof(string), typeof(RandomizeView));
         public static readonly DependencyProperty IsBusyProperty          = DependencyProperty.Register("IsBusy",          typeof(bool),   typeof(RandomizeView));
-        public static readonly DependencyProperty GamePathProperty        = DependencyProperty.Register("GamePath",        typeof(string), typeof(RandomizeView), new PropertyMetadata("", HandleGamePathChanged));
+        public static readonly DependencyProperty IsKotor2SelectedProperty = DependencyProperty.Register("IsKotor2Selected", typeof(bool), typeof(RandomizeView), new PropertyMetadata(HandleGamePathChanged));
+        public static readonly DependencyProperty K1GamePathProperty      = DependencyProperty.Register(nameof(K1GamePath),typeof(string), typeof(RandomizeView), new PropertyMetadata("", HandleGamePathChanged));
+        public static readonly DependencyProperty K2GamePathProperty      = DependencyProperty.Register(nameof(K2GamePath),typeof(string), typeof(RandomizeView), new PropertyMetadata("", HandleGamePathChanged));
         public static readonly DependencyProperty SpoilerPathProperty     = DependencyProperty.Register("SpoilerPath",     typeof(string), typeof(RandomizeView));
         #endregion
 
@@ -81,10 +83,22 @@ namespace Randomizer_WPF.Views
             set => SetValue(IsBusyProperty, value);
         }
 
-        public string GamePath
+        public bool IsKotor2Selected
         {
-            get => (string)GetValue(GamePathProperty);
-            set => SetValue(GamePathProperty, value);
+            get => (bool)GetValue(IsKotor2SelectedProperty);
+            set => SetValue(IsKotor2SelectedProperty, value);
+        }
+
+        public string K1GamePath
+        {
+            get => (string)GetValue(K1GamePathProperty);
+            set => SetValue(K1GamePathProperty, value);
+        }
+
+        public string K2GamePath
+        {
+            get => (string)GetValue(K2GamePathProperty);
+            set => SetValue(K2GamePathProperty, value);
         }
 
         public string SpoilerPath
@@ -105,6 +119,8 @@ namespace Randomizer_WPF.Views
 
         private void BtnRandomize_Click(object sender, RoutedEventArgs e)
         {
+            var gamePath = IsKotor2Selected ? K2GamePath : K1GamePath;
+
             // Don't perform any actions if something is still busy.
             if (bwUnRando.IsBusy || bwDoRando.IsBusy)
             {
@@ -114,7 +130,7 @@ namespace Randomizer_WPF.Views
             }
 
             // Check for randomization state mismatch.
-            var randomizedFileExists = System.IO.File.Exists(System.IO.Path.Combine(GamePath, kotor_Randomizer_2.KPaths.RANDOMIZED_LOG_FILENAME));
+            var randomizedFileExists = System.IO.File.Exists(System.IO.Path.Combine(gamePath, kotor_Randomizer_2.KPaths.RANDOMIZED_LOG_FILENAME));
             if (isRandomized != randomizedFileExists)
             {
                 WriteLineToLog($"Game path randomization state changed unexpectedly. It is currently {(randomizedFileExists ? "randomized" : "unrandomized")}.");
@@ -136,7 +152,7 @@ namespace Randomizer_WPF.Views
                 bwUnRando.RunWorkerAsync(new kotor_Randomizer_2.Models.RandoArgs()
                 {
                     Seed = -1,
-                    GamePath = GamePath,
+                    GamePath = gamePath,
                     SpoilersPath = null,
                 });
             }
@@ -166,7 +182,7 @@ namespace Randomizer_WPF.Views
                 bwDoRando.RunWorkerAsync(new kotor_Randomizer_2.Models.RandoArgs()
                 {
                     Seed = (int)tbSeed.Tag,
-                    GamePath = GamePath,
+                    GamePath = gamePath,
                     SpoilersPath = CreateSpoilers ? SpoilerPath : null,  // Null if spoilers shouldn't be created.
                 });
             }
@@ -175,33 +191,36 @@ namespace Randomizer_WPF.Views
         private static void HandleGamePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var thisView = d as RandomizeView;
-            var newValue = e.NewValue?.ToString() ?? null;
+            var gameName = thisView.IsKotor2Selected ? "KotOR 2" : "KotOR 1";
+            var newPath = e.Property.Name == nameof(IsKotor2Selected)
+                ? (bool)e.NewValue ? thisView.K2GamePath : thisView.K1GamePath
+                : e.NewValue?.ToString() ?? null;
 
-            if (string.IsNullOrWhiteSpace(newValue))
+            if (string.IsNullOrWhiteSpace(newPath))
             {
                 // Invalid value: game path not provided.
                 thisView.btnRandomize.IsEnabled = false;
-                thisView.btnRandomize.Content = "Game path not set in General";
+                thisView.btnRandomize.Content = $"{gameName} path not set in General";
                 return;
             }
-            else if (!System.IO.Directory.Exists(newValue))
+            else if (!System.IO.Directory.Exists(newPath))
             {
                 // Invalid value: game path does not exist.
                 thisView.btnRandomize.IsEnabled = false;
-                thisView.btnRandomize.Content = "Game path does not exist (See General)";
+                thisView.btnRandomize.Content = $"{gameName} path does not exist (See General)";
                 return;
             }
 
             // Update isRandomized whenever the game path is changed.
-            thisView.isRandomized = System.IO.File.Exists(System.IO.Path.Combine(newValue, kotor_Randomizer_2.KPaths.RANDOMIZED_LOG_FILENAME));
+            thisView.isRandomized = System.IO.File.Exists(System.IO.Path.Combine(newPath, kotor_Randomizer_2.KPaths.RANDOMIZED_LOG_FILENAME));
 
             // If not busy, update the randomization button to reflect the current randomization status.
             if (!thisView.IsBusy)
             {
                 thisView.btnRandomize.IsEnabled = true;
                 thisView.btnRandomize.Content = thisView.isRandomized
-                    ? "Unrandomize Game"    // If randomized, change the button to read "Unrandomize"
-                    : "Randomize Game";     // If not randomized, change the button to read "Randomize"
+                    ? $"Unrandomize {gameName}"    // If randomized, change the button to read "Unrandomize"
+                    : $"Randomize {gameName}";     // If not randomized, change the button to read "Randomize"
             }
         }
 
@@ -276,12 +295,12 @@ namespace Randomizer_WPF.Views
         private void View_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             // Subscribe and unsubscribe from DataContext BackgroundWorker events.
-            if (e.OldValue is kotor_Randomizer_2.Models.Kotor1Randomizer dcOld)
+            if (e.OldValue is kotor_Randomizer_2.Models.RandomizerBase dcOld)
             {
                 bwDoRando.DoWork -= dcOld.Randomizer_DoWork;
                 bwUnRando.DoWork -= dcOld.Unrandomize;
             }
-            if (e.NewValue is kotor_Randomizer_2.Models.Kotor1Randomizer dcNew)
+            if (e.NewValue is kotor_Randomizer_2.Models.RandomizerBase dcNew)
             {
                 bwDoRando.DoWork += dcNew.Randomizer_DoWork;
                 bwUnRando.DoWork += dcNew.Unrandomize;
@@ -356,7 +375,7 @@ namespace Randomizer_WPF.Views
             }
 
             // Standard final steps.
-            isRandomized = System.IO.File.Exists(System.IO.Path.Combine(GamePath, kotor_Randomizer_2.KPaths.RANDOMIZED_LOG_FILENAME));
+            isRandomized = System.IO.File.Exists(System.IO.Path.Combine(IsKotor2Selected ? K2GamePath : K1GamePath, kotor_Randomizer_2.KPaths.RANDOMIZED_LOG_FILENAME));
             SetReady();
             WriteLineToLog();
         }
