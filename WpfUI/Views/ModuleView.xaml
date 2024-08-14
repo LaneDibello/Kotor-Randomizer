@@ -161,11 +161,9 @@
                         </Grid.RowDefinitions>
                         <Grid.Resources>
                             <Style x:Key="RandomizedStyle" TargetType="{x:Type ListViewItem}">
-                                <Setter Property="Foreground" Value="Black" />
                                 <EventSetter Event="MouseDoubleClick" Handler="LvShuffleIncluded_DoubleClick" />
                             </Style>
                             <Style x:Key="OmittedStyle" TargetType="{x:Type ListViewItem}">
-                                <Setter Property="Foreground" Value="Black" />
                                 <EventSetter Event="MouseDoubleClick" Handler="LvShuffleExcluded_DoubleClick" />
                             </Style>
                             <Style TargetType="ScrollBar">

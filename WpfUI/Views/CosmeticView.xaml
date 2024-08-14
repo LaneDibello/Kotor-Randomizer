@@ -229,7 +229,6 @@
                                     <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:CosmeticView}}" />
                                 </Style>
                                 <Style TargetType="TextBlock">
-                                    <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
                                             <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />

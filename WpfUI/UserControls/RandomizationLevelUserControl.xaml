@@ -45,6 +45,30 @@
             <Style TargetType="RadioButton">
                 <Setter Property="Padding" Value="5,0" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource HarshBlueBrush}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource HarshBlueBrush}"/>
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource HarshYellowBrush}"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="BorderBrush" Value="{DynamicResource MediumBlueBrush}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="CheckBox">
+                <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource HarshBlueBrush}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource HarshBlueBrush}"/>
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource HarshYellowBrush}"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="BorderBrush" Value="{DynamicResource MediumBlueBrush}"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
         </Grid.Resources>
         

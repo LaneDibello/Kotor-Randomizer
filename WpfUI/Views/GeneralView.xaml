@@ -166,14 +166,6 @@
                                    Margin="3,2" TextDecorations="Underline">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock" BasedOn="{StaticResource tbHeader3}">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=thisView, Path=Kotor1Path}" Value="">
-                                            <Setter Property="Foreground" Value="{StaticResource HarshRedBrush}" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding ElementName=thisView, Path=Kotor1Path}" Value="{x:Null}">
-                                            <Setter Property="Foreground" Value="{StaticResource HarshRedBrush}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
@@ -330,11 +322,9 @@
                                     <Setter Property="ToolTip" Value="{Binding ToolTipMessage}" />
                                 </Style>
                                 <Style x:Key="UnlockedItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ItemStyle}">
-                                    <Setter Property="Foreground" Value="Black" />
                                     <EventSetter Event="MouseDoubleClick" Handler="LvUnlockedItem_DoubleClick" />
                                 </Style>
                                 <Style x:Key="LockedItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ItemStyle}">
-                                    <Setter Property="Foreground" Value="Black" />
                                     <EventSetter Event="MouseDoubleClick" Handler="LvLockedItem_DoubleClick" />
                                 </Style>
                                 <Style TargetType="ScrollBar">
