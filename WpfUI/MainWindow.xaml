@@ -54,18 +54,22 @@
         </DockPanel.Resources>
         
         <!-- Dock.Top, Menu -->
-        <Grid DockPanel.Dock="Top" Background="{Binding ElementName=Menu, Path=Background}">
+        <Grid DockPanel.Dock="Top" Background="{DynamicResource DarkBlueBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             
-            <Menu x:Name="Menu" Grid.ColumnSpan="2" VerticalAlignment="Center">
+            <Menu x:Name="Menu" Grid.ColumnSpan="2" VerticalAlignment="Center" Background="{DynamicResource ContentAreaDarkBrush}" Foreground="{DynamicResource ControlForegroundBrush}" BorderBrush="{DynamicResource ContentAreaDarkBrush}">
                 <Menu.Resources>
                     <Style TargetType="MenuItem">
                         <Setter Property="FontFamily" Value="Microsoft Sans Serif" />
                         <Setter Property="FontSize" Value="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
+                        <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
+                        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+                        <Setter Property="BorderBrush" Value="{DynamicResource ContentAreaDarkBrush}" />
+                        
                     </Style>
                 </Menu.Resources>
                 <MenuItem Header="_File">
