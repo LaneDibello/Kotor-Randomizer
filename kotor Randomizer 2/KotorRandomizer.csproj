@@ -76,8 +76,9 @@
     <Reference Include="ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelNumberFormat.1.0.10\lib\net20\ExcelNumberFormat.dll</HintPath>
     </Reference>
-    <Reference Include="KotOR_IO">
-      <HintPath>..\..\KotOR_IO\KotOR_IO\bin\Debug\KotOR_IO.dll</HintPath>
+    <Reference Include="KotOR_IO, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\LaneDibello\KotOR_IO\KotOR_IO\bin\Debug\KotOR_IO.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
