@@ -1,19 +1,9 @@
-﻿using kotor_Randomizer_2;
-using Randomizer_WPF.UserControls;
-using System;
+﻿using Randomizer_WPF.UserControls;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Randomizer_WPF.Views
 {
@@ -22,117 +12,95 @@ namespace Randomizer_WPF.Views
     /// </summary>
     public partial class AudioView : UserControl
     {
-        #region Members
-        private List<RandomizationLevelUserControl> MusicSoundControls;
-        #endregion
-
         #region Constructor
         public AudioView()
         {
             InitializeComponent();
-            MusicSoundControls = new List<RandomizationLevelUserControl>()
-            {
-                rlucAmbientNoise,
-                rlucAreaMusic,
-                rlucBattleMusic,
-                rlucCutsceneNoise,
-                //rlucNpcSounds,    // Not yet implemented.
-                rlucPartySounds,
-            };
         }
         #endregion
 
         #region Dependency Properties
-        public static readonly DependencyProperty AreaMusicProperty = DependencyProperty.Register("AreaMusic", typeof(RandomizationLevel), typeof(AudioView));
-        public static readonly DependencyProperty BattleMusicProperty = DependencyProperty.Register("BattleMusic", typeof(RandomizationLevel), typeof(AudioView));
-        public static readonly DependencyProperty AmbientMusicProperty = DependencyProperty.Register("AmbientMusic", typeof(RandomizationLevel), typeof(AudioView));
-        public static readonly DependencyProperty CutsceneNoiseProperty = DependencyProperty.Register("CutsceneNoise", typeof(RandomizationLevel), typeof(AudioView));
-        public static readonly DependencyProperty NpcSoundsProperty = DependencyProperty.Register("NpcSounds", typeof(RandomizationLevel), typeof(AudioView));
-        public static readonly DependencyProperty PartySoundsProperty = DependencyProperty.Register("PartySounds", typeof(RandomizationLevel), typeof(AudioView));
-        public static readonly DependencyProperty OverwriteDmcaMusicProperty = DependencyProperty.Register("OverwriteDmcaMusic", typeof(bool), typeof(AudioView), new PropertyMetadata(false));
-        public static readonly DependencyProperty MixKotorGameMusicProperty = DependencyProperty.Register("MixKotorGameMusic", typeof(bool), typeof(AudioView), new PropertyMetadata(false));
-        public static readonly DependencyProperty MixNpcAndPartySoundsProperty = DependencyProperty.Register("MixNpcAndPartySounds", typeof(bool), typeof(AudioView), new PropertyMetadata(false));
+        //public static readonly DependencyProperty OverwriteDmcaMusicProperty = DependencyProperty.Register("OverwriteDmcaMusic", typeof(bool), typeof(AudioView), new PropertyMetadata(false));
+        //public static readonly DependencyProperty MixKotorGameMusicProperty = DependencyProperty.Register("MixKotorGameMusic", typeof(bool), typeof(AudioView), new PropertyMetadata(false));
+        //public static readonly DependencyProperty MixNpcAndPartySoundsProperty = DependencyProperty.Register("MixNpcAndPartySounds", typeof(bool), typeof(AudioView), new PropertyMetadata(false));
+        #endregion
+
+        #region Methods
+        private static List<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            var children = new List<T>();
+            if (depObj != null)
+            {
+                for (var i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    var child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T t) children.Add(t);
+
+                    var childItems = FindVisualChildren<T>(child);
+                    if (childItems != null && childItems.Any()) children.AddRange(childItems);
+                }
+            }
+            return children;
+        }
+
+        private List<RandomizationLevelUserControl_V2> GetRandomizationLevelUserControls()
+        {
+            var rlucs = new List<RandomizationLevelUserControl_V2>();
+            for (var i = 0; i < lvCategories.Items.Count; i++)
+            {
+                var cp = lvCategories.ItemContainerGenerator.ContainerFromIndex(i) as ContentPresenter;
+                rlucs.AddRange(FindVisualChildren<RandomizationLevelUserControl_V2>(cp));
+            }
+            return rlucs;
+        }
         #endregion
 
         #region Public Properties
-        public RandomizationLevel AreaMusic
-        {
-            get { return (RandomizationLevel)GetValue(AreaMusicProperty); }
-            set { SetValue(AreaMusicProperty, value); }
-        }
+        //public bool OverwriteDmcaMusic
+        //{
+        //    get => (bool)GetValue(OverwriteDmcaMusicProperty);
+        //    set => SetValue(OverwriteDmcaMusicProperty, value);
+        //}
 
-        public RandomizationLevel BattleMusic
-        {
-            get { return (RandomizationLevel)GetValue(BattleMusicProperty); }
-            set { SetValue(BattleMusicProperty, value); }
-        }
+        //public bool MixKotorGameMusic
+        //{
+        //    get => (bool)GetValue(MixKotorGameMusicProperty);
+        //    set => SetValue(MixKotorGameMusicProperty, value);
+        //}
 
-        public RandomizationLevel AmbientMusic
-        {
-            get { return (RandomizationLevel)GetValue(AmbientMusicProperty); }
-            set { SetValue(AmbientMusicProperty, value); }
-        }
-
-        public RandomizationLevel CutsceneNoise
-        {
-            get { return (RandomizationLevel)GetValue(CutsceneNoiseProperty); }
-            set { SetValue(CutsceneNoiseProperty, value); }
-        }
-
-        public RandomizationLevel NpcSounds
-        {
-            get { return (RandomizationLevel)GetValue(NpcSoundsProperty); }
-            set { SetValue(NpcSoundsProperty, value); }
-        }
-
-        public RandomizationLevel PartySounds
-        {
-            get { return (RandomizationLevel)GetValue(PartySoundsProperty); }
-            set { SetValue(PartySoundsProperty, value); }
-        }
-
-        public bool OverwriteDmcaMusic
-        {
-            get { return (bool)GetValue(OverwriteDmcaMusicProperty); }
-            set { SetValue(OverwriteDmcaMusicProperty, value); }
-        }
-
-        public bool MixKotorGameMusic
-        {
-            get { return (bool)GetValue(MixKotorGameMusicProperty); }
-            set { SetValue(MixKotorGameMusicProperty, value); }
-        }
-
-        public bool MixNpcAndPartySounds
-        {
-            get { return (bool)GetValue(MixNpcAndPartySoundsProperty); }
-            set { SetValue(MixNpcAndPartySoundsProperty, value); }
-        }
+        //public bool MixNpcAndPartySounds
+        //{
+        //    get => (bool)GetValue(MixNpcAndPartySoundsProperty);
+        //    set => SetValue(MixNpcAndPartySoundsProperty, value);
+        //}
         #endregion
 
         #region Events
         private void BtnToggleAll_Click(object sender, RoutedEventArgs e)
         {
-            bool CheckAllBoxes = MusicSoundControls.Any(rluc => !rluc.IsChecked);
-            foreach (var item in MusicSoundControls)
+            var rlucs = GetRandomizationLevelUserControls();
+            var CheckAllBoxes = rlucs.Any(rluc => !rluc.IsActive && rluc.IsEnabled);
+            foreach (var item in rlucs)
             {
-                item.IsChecked = CheckAllBoxes;
+                item.IsActive = CheckAllBoxes;
             }
         }
 
         private void BtnType_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in MusicSoundControls)
+            var rlucs = GetRandomizationLevelUserControls();
+            foreach (var item in rlucs)
             {
-                item.SelectedLevel = RandomizationLevel.Type;
+                if (item.TypeVisible) item.IsType = true;
             }
         }
 
         private void BtnMax_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in MusicSoundControls)
+            var rlucs = GetRandomizationLevelUserControls();
+            foreach (var item in rlucs)
             {
-                item.SelectedLevel = RandomizationLevel.Max;
+                if (item.MaxVisible) item.IsMax = true;
             }
         }
         #endregion

@@ -5,164 +5,140 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using kotor_Randomizer_2.Interfaces;
 
-namespace kotor_Randomizer_2
+namespace kotor_Randomizer_2.Digraph
 {
-    /// <summary>
-    /// Collection of constants used for parsing modules and edges from an XML file.
-    /// </summary>
-    public struct XmlConsts
-    {
-        // Games
-        public const string GAME_KOTOR_1 = "Kotor1"; // Modules
-        public const string GAME_KOTOR_2 = "Kotor2"; // Modules
-
-        // Elements
-        public const string ELEM_MODULES  = "Modules"; // Modules
-        public const string ELEM_MODULE   = "Module";  // Vertex
-        public const string ELEM_LEADS_TO = "LeadsTo"; // Edge
-
-        // Attributes
-        public const string ATTR_GAME       = "Game";       // Modules
-        public const string ATTR_PLANET     = "Planet";     // Vertex
-        public const string ATTR_CODE       = "WarpCode";   // Vertex, Edge
-        public const string ATTR_NAME       = "CommonName"; // Vertex, Edge
-        public const string ATTR_TAGS       = "Tags";       // Vertex, Edge
-        public const string ATTR_LOCKED_TAG = "LockedTag";  // Vertex
-        public const string ATTR_UNLOCK     = "Unlock";     // Vertex, Edge
-
-        // General
-        public const char   TAG_SEPARATOR_COMMA = ',';
-        public const char   TAG_SEPARATOR_SEMICOLON = ';';
-
-        // Blocking Tags ... Edge (Tags)
-        public const string TAG_FAKE      = "Fake";
-        public const string TAG_LOCKED    = "Locked";
-        public const string TAG_ONCE      = "Once";
-
-        // Goal Tags ... Vertex (Tags)
-        public const string TAG_MALAK    = "Malak";
-        public const string TAG_PAZAAK   = "Pazaak";
-        public const string TAG_START    = "Start";
-        public const string TAG_STAR_MAP = "StarMap";
-
-        // Party Tags ... Vertex (Tags, LockedTag), Edge (Unlock)
-        public const string TAG_BASTILA   = "Bastila";
-        public const string TAG_CANDEROUS = "Canderous";
-        public const string TAG_CARTH     = "Carth";
-        public const string TAG_HK47      = "HK47";
-        public const string TAG_JOLEE     = "Jolee";
-        public const string TAG_JUHANI    = "Juhani";
-        public const string TAG_MISSION   = "Mission";
-        public const string TAG_T3M4      = "T3M4";
-        public const string TAG_ZAALBAR   = "Zaalbar";
-
-        // Glitch Tags ... Edge (Tags)
-        public const string TAG_CLIP = "Clip";
-        public const string TAG_DLZ = "DLZ";
-        public const string TAG_FLU = "FLU";
-        public const string TAG_GPW = "GPW";
-
-        // Fix Tags ... Edge (Tags)
-        public const string TAG_FIX_BOX   = "FixBox";
-        public const string TAG_FIX_ELEV  = "FixElev";
-        public const string TAG_FIX_MAP   = "FixMap";
-        public const string TAG_FIX_SPICE = "FixSpice";
-        public const string TAG_HANGAR_ACCESS = "HangarAccess";
-
-        // Unlock Tags ... Edge (Tags)
-        public const string TAG_UNLOCK_DAN_RUINS       = "UL_Ruins";
-        public const string TAG_UNLOCK_KOR_ACADEMY     = "UL_Academy";
-        public const string TAG_UNLOCK_MAN_EMBASSY     = "UL_Embassy";
-        public const string TAG_UNLOCK_MAN_HANGAR      = "UL_Hangar";
-        public const string TAG_UNLOCK_STA_BASTILA     = "UL_Deck3";
-        public const string TAG_UNLOCK_TAR_VULKAR      = "UL_Vulkar";
-        public const string TAG_UNLOCK_TAR_UNDERCITY   = "UL_Undercity";
-        public const string TAG_UNLOCK_UNK_SUMMIT      = "UL_Summit";
-        public const string TAG_UNLOCK_UNK_TEMPLE_EXIT = "UL_TempleExit";
-
-        // Early Party Tags ... Vertex (Unlock)
-        public const string TAG_UNLOCK_EARLY_T3M4 = "EarlyT3";
-    }
-
     /// <summary>
     /// Directional graph of the layout of game modules. Implements reachability testing for module randomization.
     /// </summary>
     public class ModuleDigraph
     {
         #region Properties
+
+        /// <summary> The game being graphed. </summary>
+        public Models.Game Game { get; set; }
+
         /// <summary> Collection of parsed modules that are the unrandomized vertices of the digraph. </summary>
-        public List<ModuleVertex> Modules { get; }
+        public List<ModuleVertex> Modules { get; private set; }
+
         /// <summary> Lookup that indicates which modules are reachable. Keys used are the original warp code. Reachable[Original.WarpCode] = isReachable; </summary>
         public Dictionary<string, bool> Reachable { get; private set; }
+
         /// <summary>
         /// Lookup that forms a 2-dimensional table of reachability. The first module is considered the starting point for the DFS.
         /// ReachableTable[Start.WarpCode][Destination.WarpCode] = isReachable;
         /// </summary>
         public Dictionary<string, Dictionary<string, bool>> ReachableTable { get; private set; } = new Dictionary<string, Dictionary<string, bool>>();
+
         /// <summary> Flag indicating that the Reachable lookup table has been updated in the latest cycle of DFS. </summary>
         private bool ReachableUpdated { get; set; } = false;
+
         /// <summary> Queue containing edges labeled with the Once tag. These will be checked after every other option has been taken during a cycle. </summary>
         public Queue<ModuleEdge> OnceQueue { get; } = new Queue<ModuleEdge>();
-        /// <summary> Lookup table for the randomization. Noteably, it is the reverse of ModuleRando.LookupTable. RandomLookup[Randomized.WarpCode] = Original.WarpCode; </summary>
-        public Dictionary<string, string> RandomLookup  { get; set; }
 
+        /// <summary> Lookup table for the randomization. Noteably, it is the reverse of ModuleRando.LookupTable. RandomLookup[Randomized.WarpCode] = Original.WarpCode; </summary>
+        public Dictionary<string, string> RandomLookup { get; set; }
+
+        #region Goals
         /// <summary> Reaching the tag Malak is a goal for this randomization. </summary>
-        public bool GoalIsMalak   { get; set; } = true;
-        /// <summary> Reaching the tags Pazaak is a goal for this randomization. </summary>
-        public bool GoalIsPazaak  { get; set; } = false;
+        public bool GoalIsMalak { get; set; } = true;
+
         /// <summary> Reaching the tags StarMap is a goal for this randomization. </summary>
         public bool GoalIsStarMap { get; set; } = false;
-        /// <summary> Reaching the tags of each party member is a goal for this randomization. </summary>
-        public bool GoalIsFullParty   { get; set; } = false;
 
-        /// <summary> Setting used to verify that all active goals can reach all other active goals. </summary>
-        public bool EnabledStrongGoals { get; set; } = false;
+        /// <summary> Reaching the tag Kreia is the goal for this randomization. </summary>
+        public bool GoalIsKreia { get; set; } = false;
+
+        /// <summary> Reaching the modules tagged with Master is the goal for this randomization. </summary>
+        public bool GoalIsMasters { get; set; } = false;
+
+        /// <summary> Reaching the tags Pazaak is a goal for this randomization. </summary>
+        public bool GoalIsPazaak { get; set; } = false;
+
+        /// <summary> Reaching the tags of each party member is a goal for this randomization. </summary>
+        public bool GoalIsFullParty { get; set; } = false;
 
         /// <summary> List of all party member tags. </summary>
         public readonly List<string> PARTY_MEMBERS = new List<string>() { "Bastila", "Canderous", "Carth", "HK47", "Jolee", "Juhani", "Mission", "T3M4", "Zaalbar" };
 
+        /// <summary> List of all party member tags, separated by game. </summary>
+        public readonly Dictionary<Models.Game, List<string>> GamePartyMembers = new Dictionary<Models.Game, List<string>>()
+        {
+            { Models.Game.Kotor1, new List<string>() { "Bastila", "Canderous", "Carth", "HK47", "Jolee", "Juhani", "Mission", "T3M4", "Zaalbar" } },
+            { Models.Game.Kotor2, new List<string>() { "Atton", "BaoDur", "Disciple", "G0T0", "Handmaiden", "Hanharr", "HK47", "Kreia", "Mandalore", "Mira", "T3M4", "Visas" } },
+        };
+        #endregion
+
+        #region Glitches
         /// <summary> Allow usage of the glitch Clipping to bypass locked edges. </summary>
         public bool AllowGlitchClip { get; set; } = false;
+
         /// <summary> Allow usage of the glitch DLZ to bypass locked edges. </summary>
         public bool AllowGlitchDlz { get; set; } = false;
+
         /// <summary> Allow usage of the glitch FLU to bypass locked edges. </summary>
         public bool AllowGlitchFlu { get; set; } = false;
+
         /// <summary> Allow usage of the glitch GPW to bypass locked edges. </summary>
         public bool AllowGlitchGpw { get; set; } = false;
+        #endregion
+
+        #region Reachability Logic
+        /// <summary> Setting used to verify that all active goals can reach all other active goals. </summary>
+        public bool EnabledStrongGoals { get; set; } = false;
 
         /// <summary> Locked edges will be ignored until they are unlocked. </summary>
         public bool EnforceEdgeTagLocked { get; set; } = true;
-        /// <summary> Allow usage of Once edges. If false, they will be fully blocked as they can be unreliable. </summary>
-        public bool IgnoreOnceEdges      { get; set; } = true;
 
+        /// <summary> Allow usage of Once edges. If false, they will be fully blocked as they can be unreliable. </summary>
+        public bool IgnoreOnceEdges { get; set; } = true;
+        #endregion
+
+        #region Common Fixes & Unlocks
+        /// <summary> FixMap is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
+        public bool EnabledFixMap { get; set; } = false;
+
+        public List<QualityOfLife> EnabledQoL { get; set; } = new List<QualityOfLife>();
+        #endregion
+
+        #region Kotor 1 Fixes & Unlocks
         /// <summary> FixBox is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledFixBox   { get; set; } = false;
+        public bool EnabledFixBox { get; set; } = false;
+
         /// <summary> HangarAccess is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
         public bool EnabledHangarAccess { get; set; } = false;
+
         /// <summary> FixElev is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledFixHangarElev  { get; set; } = false;
-        /// <summary> FixMap is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledFixMap   { get; set; } = false;
+        public bool EnabledFixHangarElev { get; set; } = false;
+
         /// <summary> FixSpice is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
         public bool EnabledFixSpice { get; set; } = false;
 
         /// <summary> UnlockDanRuins is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledUnlockDanRuins      { get; set; } = false;
+        public bool EnabledUnlockDanRuins { get; set; } = false;
+
         /// <summary> UnlockKorValley is enabled for this randomization. </summary>
-        public bool EnabledUnlockKorAcademy    { get; set; } = false;
+        public bool EnabledUnlockKorAcademy { get; set; } = false;
+
         /// <summary> UnlockManEmbassy is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledUnlockManEmbassy    { get; set; } = false;
+        public bool EnabledUnlockManEmbassy { get; set; } = false;
+
         /// <summary> UnlockManHangar is enabled for this randomization. </summary>
-        public bool EnabledUnlockManHangar     { get; set; } = false;
+        public bool EnabledUnlockManHangar { get; set; } = false;
+
         /// <summary> UnlockStaBastila is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledUnlockStaBastila    { get; set; } = false;
+        public bool EnabledUnlockStaBastila { get; set; } = false;
+
         /// <summary> UnlockTarUndercity is enabled for this randomization. </summary>
-        public bool EnabledUnlockTarUndercity  { get; set; } = false;
+        public bool EnabledUnlockTarUndercity { get; set; } = false;
+
         /// <summary> UnlockTarVulkar is enabled for this randomization. </summary>
-        public bool EnabledUnlockTarVulkar     { get; set; } = false;
+        public bool EnabledUnlockTarVulkar { get; set; } = false;
+
         /// <summary> UnlockUnkSummit is enabled for this randomization. Locked and Once tags will be ignored on the same edge. </summary>
-        public bool EnabledUnlockUnkSummit     { get; set; } = false;
+        public bool EnabledUnlockUnkSummit { get; set; } = false;
+
         /// <summary> UnlockeUnkTempleExit is enabled for this randomization. </summary>
         public bool EnabledUnlockUnkTempleExit { get; set; } = false;
 
@@ -170,17 +146,25 @@ namespace kotor_Randomizer_2
         public bool EnabledEarlyT3M4 { get; set; } = false;
         #endregion
 
+        #region Kotor 2 Fixes & Unlocks
+
+        #endregion
+
+        #endregion
+
         /// <summary>
         /// Creates a digraph of the modules in the given XML file and checks reachability.
         /// </summary>
         /// <param name="path">Full path to the XML file to parse.</param>
         /// <param name="lookup">Lookup dictionary from original code to a randomized code.</param>
-        public ModuleDigraph(string path)
+        public ModuleDigraph(string path, Models.Game game = Models.Game.Kotor1)
         {
+            Game = game;
+
             // Parse XML document containing game modules.
-            XDocument doc = XDocument.Load(path);
-            var game = doc.Descendants(XmlConsts.ELEM_MODULES).FirstOrDefault(x => x.Attributes().Where(a => a.Name == XmlConsts.ATTR_GAME && a.Value == XmlConsts.GAME_KOTOR_1).Any());
-            Modules = game.Descendants(XmlConsts.ELEM_MODULE).Select(x => new ModuleVertex(x)).ToList();
+            var doc = XDocument.Load(path);
+            var xmlModules = doc.Descendants(XmlConsts.ELEM_MODULES).FirstOrDefault(x => x.Attributes().Any(a => a.Name == XmlConsts.ATTR_GAME && a.Value == game.ToString()));
+            Modules = xmlModules.Descendants(XmlConsts.ELEM_MODULE).Select(x => new ModuleVertex(x)).ToList();
 
             // Create a fake lookup (original -> original).
             RandomLookup = Modules.ToDictionary(m => m.WarpCode, m => m.WarpCode);
@@ -189,9 +173,23 @@ namespace kotor_Randomizer_2
             ResetSettings();
         }
 
-        public void ResetSettings(Models.Kotor1Randomizer k1rando = null)
+        public void ResetSettings(Models.RandomizerBase rando = null, string moduleFile = null)
         {
-            if (k1rando == null)
+            // Refresh the list of modules.
+            if (!string.IsNullOrEmpty(moduleFile) && rando != null)
+            {
+                // Parse XML document containing game modules.
+                var doc = XDocument.Load(moduleFile);
+                var xmlModules = doc.Descendants(XmlConsts.ELEM_MODULES).FirstOrDefault(x => x.Attributes().Any(a => a.Name == XmlConsts.ATTR_GAME && a.Value == rando.Game.ToString()));
+                Modules = xmlModules.Descendants(XmlConsts.ELEM_MODULE).Select(x => new ModuleVertex(x)).ToList();
+
+                // Create a fake lookup (original -> original).
+                RandomLookup = Modules.ToDictionary(m => m.WarpCode, m => m.WarpCode);
+            }
+
+            EnabledQoL.Clear();
+
+            if (rando == null)
             {
                 // Get currently enabled settings.
                 AllowGlitchClip            = Properties.Settings.Default.AllowGlitchClip;
@@ -216,39 +214,49 @@ namespace kotor_Randomizer_2
                 EnforceEdgeTagLocked       = true;
                 IgnoreOnceEdges            = Properties.Settings.Default.IgnoreOnceEdges;
                 GoalIsMalak                = Properties.Settings.Default.GoalIsMalak;
-                GoalIsPazaak               = Properties.Settings.Default.GoalIsPazaak;
                 GoalIsStarMap              = Properties.Settings.Default.GoalIsStarMaps;
                 GoalIsFullParty            = Properties.Settings.Default.GoalIsParty;
+                GoalIsPazaak               = Properties.Settings.Default.GoalIsPazaak;
                 EnabledStrongGoals         = Properties.Settings.Default.StrongGoals;
             }
             else
             {
-                AllowGlitchClip            = k1rando.ModuleAllowGlitchClip;
-                AllowGlitchDlz             = k1rando.ModuleAllowGlitchDlz;
-                AllowGlitchFlu             = k1rando.ModuleAllowGlitchFlu;
-                AllowGlitchGpw             = k1rando.ModuleAllowGlitchGpw;
-                EnabledFixBox              = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.FixMindPrison);
-                EnabledHangarAccess        = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockLevElev);
-                EnabledFixHangarElev       = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.EnableLevHangarElev);
-                EnabledFixMap              = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockGalaxyMap);
-                EnabledFixSpice            = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.VulkarSpiceLZ);
-                EnabledUnlockDanRuins      = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockDanRuins);
-                EnabledUnlockKorAcademy    = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockKorValley);
-                EnabledUnlockManEmbassy    = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockManEmbassy);
-                EnabledUnlockManHangar     = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockManHangar);
-                EnabledUnlockStaBastila    = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockStaBastila);
-                EnabledUnlockTarUndercity  = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarUndercity);
-                EnabledUnlockTarVulkar     = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockTarVulkar);
-                EnabledUnlockUnkSummit     = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkSummit);
-                EnabledUnlockUnkTempleExit = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.UnlockUnkTempleExit);
-                EnabledEarlyT3M4           = k1rando.GeneralModuleExtrasValue.HasFlag(ModuleExtras.EarlyT3);
+                var moduleRando = rando as IRandomizeModules;
+                var genSettings = rando as IGeneralSettings;
+                var k1rando = rando as Models.Kotor1Randomizer;
+                var k2rando = rando as Models.Kotor2Randomizer;
+
+                AllowGlitchClip            = moduleRando.ModuleAllowGlitchClip;
+                AllowGlitchDlz             = moduleRando.ModuleAllowGlitchDlz;
+                AllowGlitchFlu             = moduleRando.ModuleAllowGlitchFlu;
+                AllowGlitchGpw             = moduleRando.ModuleAllowGlitchGpw;
+                //EnabledQoL                 = genSettings.GeneralUnlockedDoors.Select(d => d.QoL).ToList();
+                EnabledFixBox              = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_FixMindPrison);
+                EnabledHangarAccess        = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_LevElev_ToHangar);
+                EnabledFixHangarElev       = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_LevHangar_EnableElev);
+                EnabledFixMap              = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.CO_GalaxyMap);
+                EnabledFixSpice            = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_TarVulkar_ToSpice);
+                EnabledUnlockDanRuins      = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_DanCourtyard_ToRuins);
+                EnabledUnlockKorAcademy    = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_KorValley_UnlockAll);
+                EnabledUnlockManEmbassy    = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_ManEstCntrl_EmbassyDoor);
+                EnabledUnlockManHangar     = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_ManHangar_ToSith);
+                EnabledUnlockStaBastila    = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_StaDeck3_BastilaDoor);
+                EnabledUnlockTarUndercity  = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_TarLower_ToUnder);
+                EnabledUnlockTarVulkar     = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_TarLower_ToVulkar);
+                EnabledUnlockUnkSummit     = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_UnkSummit_ToTemple);
+                EnabledUnlockUnkTempleExit = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_UnkTemple_ToEntrance);
+                EnabledEarlyT3M4           = genSettings.GeneralUnlockedDoors.Any(d => d.QoL == QualityOfLife.K1_EarlyT3);
                 EnforceEdgeTagLocked       = true;
-                IgnoreOnceEdges            = k1rando.ModuleLogicIgnoreOnceEdges;
-                GoalIsMalak                = k1rando.ModuleGoalIsMalak;
-                GoalIsPazaak               = k1rando.ModuleGoalIsPazaak;
-                GoalIsStarMap              = k1rando.ModuleGoalIsStarMap;
-                GoalIsFullParty            = k1rando.ModuleGoalIsFullParty;
-                EnabledStrongGoals         = k1rando.ModuleLogicStrongGoals;
+                IgnoreOnceEdges            = moduleRando.ModuleLogicIgnoreOnceEdges;
+                GoalIsMalak                = k1rando?.ModuleGoalIsMalak ?? false;
+                GoalIsStarMap              = k1rando?.ModuleGoalIsStarMap ?? false;
+                GoalIsFullParty            = k1rando?.ModuleGoalIsFullParty ?? false;
+                GoalIsPazaak               = k1rando?.ModuleGoalIsPazaak ?? false;
+                GoalIsKreia                = k2rando?.ModuleGoalIsKreia ?? false;
+                GoalIsMasters              = k2rando?.ModuleGoalIsMasters ?? false;
+                GoalIsFullParty            = k2rando?.ModuleGoalIsFullParty ?? false;
+                GoalIsPazaak               = k2rando?.ModuleGoalIsPazaak ?? false;
+                EnabledStrongGoals         = moduleRando.ModuleLogicStrongGoals;
             }
         }
 
@@ -262,41 +270,41 @@ namespace kotor_Randomizer_2
                 if (!Modules.Any(v => v.WarpCode == vertex.Key)) continue;
                 var module = Modules.Find(v => v.WarpCode == vertex.Key);
 
-                StringBuilder sb = new StringBuilder();
-                sb.Append($"{module.WarpCode}");
+                var sb = new StringBuilder();
+                _ = sb.Append($"{module.WarpCode}");
 
                 if (module.Tags.Count > 0)
-                    sb.Append($" [{module.Tags.Aggregate((i, j) => $"{i},{j}")}]");
+                    _ = sb.Append($" [{module.Tags.Aggregate((i, j) => $"{i},{j}")}]");
 
                 if (!string.IsNullOrWhiteSpace(module.LockedTag))
-                    sb.Append($" -[{module.LockedTag}]-");
+                    _ = sb.Append($" -[{module.LockedTag}]-");
 
                 if (module.UnlockSets.Count > 0)
                 {
-                    sb.Append($" =[");
+                    _ = sb.Append($" =[");
                     foreach (var set in module.UnlockSets)
-                        sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
-                    sb.Append($"]=");
+                        _ = sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
+                    _ = sb.Append($"]=");
                 }
 
-                sb.AppendLine();
+                _ = sb.AppendLine();
 
                 foreach (var edge in module.LeadsTo)
                 {
-                    sb.Append($"-> {edge.WarpCode} ({RandomLookup[edge.WarpCode]})");
+                    _ = sb.Append($"-> {edge.WarpCode} ({RandomLookup[edge.WarpCode]})");
 
                     if (edge.Tags.Count > 0)
-                        sb.Append($" [{edge.Tags.Aggregate((i, j) => $"{i},{j}")}]");
+                        _ = sb.Append($" [{edge.Tags.Aggregate((i, j) => $"{i},{j}")}]");
 
                     if (edge.UnlockSets.Count > 0)
                     {
-                        sb.Append(" =[");
+                        _ = sb.Append(" =[");
                         foreach (var set in edge.UnlockSets)
-                            sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
-                        sb.Append("]=");
+                            _ = sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
+                        _ = sb.Append("]=");
                     }
 
-                    sb.AppendLine();
+                    _ = sb.AppendLine();
                 }
 
                 Console.Write(sb.ToString());
@@ -310,10 +318,9 @@ namespace kotor_Randomizer_2
         /// <param name="lookup">New lookup table.</param>
         public void SetRandomizationLookup(Dictionary<string, string> lookup)
         {
-            if (lookup.Values.Distinct().Count() == lookup.Values.Count)
-                RandomLookup = lookup.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
-            else
-                throw new ArgumentException("Lookup table does not have both a distinct set of keys and values.");
+            RandomLookup = lookup.Values.Distinct().Count() == lookup.Values.Count
+                ? lookup.ToDictionary(kvp => kvp.Value, kvp => kvp.Key)
+                : throw new ArgumentException("Lookup table does not have both a distinct set of keys and values.");
         }
 
         /// <summary>
@@ -334,7 +341,7 @@ namespace kotor_Randomizer_2
             ReachableTable = new Dictionary<string, Dictionary<string, bool>>();
 
             Console.WriteLine($" > Checking reachability for {modulesToCheck.Count} module(s).");
-            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            var sw = new System.Diagnostics.Stopwatch();
             sw.Start();
 
             // Perform reachability testing for each module.
@@ -355,7 +362,7 @@ namespace kotor_Randomizer_2
                     var touched = Reachable.ToDictionary(kvp => kvp.Key, kvp => false);
                     CheckReachabilityDFS(touched, startModule);
                 } while (ReachableUpdated);
-                
+
                 // Store the reachability array for the starting module.
                 ReachableTable[startModule.WarpCode] = Reachable.ToDictionary(r => r.Key, r => r.Value);
             }
@@ -381,6 +388,10 @@ namespace kotor_Randomizer_2
 
             if (GoalIsMalak    ) modList.AddRange(Modules.Where(v => v.IsMalak  ));
             if (GoalIsStarMap  ) modList.AddRange(Modules.Where(v => v.IsStarMap));
+
+            if (GoalIsKreia    ) modList.AddRange(Modules.Where(v => v.IsTraya  ));
+            if (GoalIsMasters  ) modList.AddRange(Modules.Where(v => v.IsMaster ));
+
             if (GoalIsPazaak   ) modList.AddRange(Modules.Where(v => v.IsPazaak ));
             if (GoalIsFullParty) modList.AddRange(Modules.Where(v => v.IsParty  ));
 
@@ -422,10 +433,10 @@ namespace kotor_Randomizer_2
             }
 
             // Check edges marked as Once for reachability.
-            for (int i = 0; i < OnceQueue.Count; i++)
+            for (var i = 0; i < OnceQueue.Count; i++)
             {
                 var once = OnceQueue.Dequeue();
-                
+
                 // Remove if already reachable.
                 if (Reachable[RandomLookup[once.WarpCode]]) continue;
 
@@ -547,7 +558,7 @@ namespace kotor_Randomizer_2
         /// <returns>True if the edge can be skipped.</returns>
         private bool IsOnceEdge(ModuleEdge edge)
         {
-            bool isOnce = false;
+            bool isOnce;
             if (edge.IsOnce)
             {
                 if ((EnabledFixBox              && edge.IsFixBox             ) ||
@@ -587,7 +598,7 @@ namespace kotor_Randomizer_2
         /// <returns>True if the edge can be skipped.</returns>
         private bool IsLockedEdge(ModuleEdge edge)
         {
-            bool isLocked = false;
+            bool isLocked;
             if (edge.IsLocked)
             {
                 // Check to see if we can bypass this lock with an allowed glitch or enabled fix.
@@ -761,306 +772,5 @@ namespace kotor_Randomizer_2
             return goal;
         }
         #endregion
-    }
-
-    /// <summary>
-    /// Parsed module information for the ModuleDigraph.
-    /// </summary>
-    public class ModuleVertex
-    {
-        #region Properties
-        public string WarpCode          { get; }
-        public string CommonName        { get; }
-        public string Planet            { get; }
-        public List<ModuleEdge> LeadsTo { get; } = new List<ModuleEdge>();
-
-        public bool IsMalak   { get; } = false;
-        public bool IsPazaak  { get; } = false;
-        public bool IsStart   { get; } = false;
-        public bool IsStarMap { get; } = false;
-        public bool IsParty
-        {
-            get
-            {
-                return IsBastila || IsCanderous || IsCarth  ||
-                       IsHK47    || IsJolee     || IsJuhani ||
-                       IsMission || IsT3M4      || IsZaalbar;
-            }
-        }
-
-        public bool IsBastila   { get; } = false;
-        public bool IsCanderous { get; } = false;
-        public bool IsCarth     { get; } = false;
-        public bool IsHK47      { get; } = false;
-        public bool IsJolee     { get; } = false;
-        public bool IsJuhani    { get; } = false;
-        public bool IsMission   { get; } = false;
-        public bool IsT3M4      { get; } = false;
-        public bool IsZaalbar   { get; } = false;
-
-        public List<string> Tags { get; } = new List<string>();
-        public string LockedTag { get; }
-
-        // List of sets: Unlock="A,B,C; C,D,E; E,F,G".
-        //  , is AND within the set
-        //  ; is OR between sets
-        public List<List<string>> UnlockSets { get; } = new List<List<string>>();
-        #endregion
-
-        public ModuleVertex(XElement element)
-        {
-            // Check for null parameter.
-            if (element == null)
-                throw new ArgumentException("Parameter \'element\' can't be null.", "element");
-
-            // Get Planet
-            Planet = element.Attribute(XmlConsts.ATTR_PLANET)?.Value ?? string.Empty;
-
-            // Get WarpCode
-            var code = element.Attribute(XmlConsts.ATTR_CODE);
-            if (code == null || string.IsNullOrEmpty(code.Value))
-                throw new ArgumentException("No \'WarpCode\' attribute found in the XML element.");
-            else
-                WarpCode = code.Value;
-
-            // Get CommonName
-            var name = element.Attribute(XmlConsts.ATTR_NAME);
-            if (name == null || string.IsNullOrEmpty(name.Value))
-                throw new ArgumentException("No \'CommonName\' attribute found in the XML element.");
-            else
-                CommonName = name.Value;
-
-            // Get list of Tags
-            var tags = element.Attribute(XmlConsts.ATTR_TAGS);
-            if (tags != null && !string.IsNullOrWhiteSpace(tags.Value))
-            {
-                foreach (var tag in tags.Value.Split(XmlConsts.TAG_SEPARATOR_COMMA))
-                    Tags.Add(tag);
-            }
-
-            // Get LockedTag
-            LockedTag = element.Attribute(XmlConsts.ATTR_LOCKED_TAG)?.Value; // Null if it doesn't exist.
-
-            // Parse Tags
-            IsMalak   = Tags.Contains(XmlConsts.TAG_MALAK);
-            IsPazaak  = Tags.Contains(XmlConsts.TAG_PAZAAK);
-            IsStart   = Tags.Contains(XmlConsts.TAG_START);
-            IsStarMap = Tags.Contains(XmlConsts.TAG_STAR_MAP);
-
-            IsBastila   = Tags.Contains(XmlConsts.TAG_BASTILA  ) || LockedTag == XmlConsts.TAG_BASTILA;
-            IsCanderous = Tags.Contains(XmlConsts.TAG_CANDEROUS) || LockedTag == XmlConsts.TAG_CANDEROUS;
-            IsCarth     = Tags.Contains(XmlConsts.TAG_CARTH    ) || LockedTag == XmlConsts.TAG_CARTH;
-            IsHK47      = Tags.Contains(XmlConsts.TAG_HK47     ) || LockedTag == XmlConsts.TAG_HK47;
-            IsJolee     = Tags.Contains(XmlConsts.TAG_JOLEE    ) || LockedTag == XmlConsts.TAG_JOLEE;
-            IsJuhani    = Tags.Contains(XmlConsts.TAG_JUHANI   ) || LockedTag == XmlConsts.TAG_JUHANI;
-            IsMission   = Tags.Contains(XmlConsts.TAG_MISSION  ) || LockedTag == XmlConsts.TAG_MISSION;
-            IsT3M4      = Tags.Contains(XmlConsts.TAG_T3M4     ) || LockedTag == XmlConsts.TAG_T3M4;
-            IsZaalbar   = Tags.Contains(XmlConsts.TAG_ZAALBAR  ) || LockedTag == XmlConsts.TAG_ZAALBAR;
-
-            // Get list of Unlocks
-            var unlocks = element.Attribute(XmlConsts.ATTR_UNLOCK);
-            if (unlocks != null && !string.IsNullOrWhiteSpace(unlocks.Value))
-            {
-                var unlockSplit = unlocks.Value.Split(XmlConsts.TAG_SEPARATOR_SEMICOLON);
-                foreach (var set in unlockSplit)
-                {
-                    var unlockSet = new List<string>();
-                    var setSplit = set.Split(XmlConsts.TAG_SEPARATOR_COMMA);
-                    foreach (var unlock in setSplit)
-                        unlockSet.Add(unlock);
-                    UnlockSets.Add(unlockSet);
-                }
-            }
-
-            // Get adjacent vertices
-            var descendants = element.Descendants(XmlConsts.ELEM_LEADS_TO);
-            foreach (var desc in descendants)
-            {
-                LeadsTo.Add(new ModuleEdge(desc));
-            }
-        }
-
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append($"Code: {WarpCode}, Name: {CommonName}");
-            if (Tags.Count > 0)
-            {
-                sb.Append($", Tags: [{Tags.Aggregate((i, j) => $"{i},{j}")}]");
-            }
-            else
-            {
-                sb.Append(", Tags: []");
-            }
-
-            if (!string.IsNullOrWhiteSpace(LockedTag))
-            {
-                sb.Append($", LockedTag: {LockedTag}");
-            }
-
-            if (UnlockSets.Count > 0)
-            {
-                sb.Append($", Unlock: [");
-                foreach (var set in UnlockSets)
-                {
-                    sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
-                }
-                sb.Remove(sb.Length - 1, 1);    // Remove trailing ';'
-                sb.Append("]");
-            }
-
-            if (LeadsTo.Count > 0)
-            {
-                sb.Append(" -> [");
-                sb.Append(LeadsTo[0].WarpCode);
-                for (int i = 1; i < LeadsTo.Count; i++)
-                {
-                    sb.Append(", ");
-                    sb.Append(LeadsTo[i].WarpCode);
-                }
-                sb.Append("]");
-            }
-
-            return sb.ToString();
-        }
-    }
-
-    /// <summary>
-    /// Parsed information describing the transition from one module to another.
-    /// </summary>
-    public class ModuleEdge
-    {
-        #region Properties
-        public string WarpCode   { get; }
-        public string CommonName { get; }
-
-        public bool IsFake   { get; } = false;
-        public bool IsLocked { get; } = false;
-        public bool IsOnce   { get; } = false;
-
-        public bool IsClip { get; } = false;
-        public bool IsDlz { get; } = false;
-        public bool IsFlu { get; } = false;
-        public bool IsGpw { get; } = false;
-
-        public bool IsAccessHangar { get; } = false;
-        public bool IsFixBox    { get; } = false;
-        public bool IsFixHangar { get; } = false;
-        public bool IsFixMap    { get; } = false;
-        public bool IsFixSpice  { get; } = false;
-
-        public bool IsUnlockDanRuins      { get; } = false;
-        public bool IsUnlockKorAcademy    { get; } = false;
-        public bool IsUnlockManEmbassy    { get; } = false;
-        public bool IsUnlockManHangar     { get; } = false;
-        public bool IsUnlockStaBastila    { get; } = false;
-        public bool IsUnlockTarVulkar     { get; } = false;
-        public bool IsUnlockTarUndercity  { get; } = false;
-        public bool IsUnlockUnkSummit     { get; } = false;
-        public bool IsUnlockUnkTempleExit { get; } = false;
-
-        public List<string> Tags { get; } = new List<string>();
-
-        // List of sets: Unlock="A,B,C; C,D,E; E,F,G".
-        //  , is AND within the set
-        //  ; is OR between sets
-        public List<List<string>> UnlockSets { get; } = new List<List<string>>();
-        #endregion
-
-        public ModuleEdge(XElement element)
-        {
-            // Check for null parameter.
-            if (element == null)
-                throw new ArgumentException("Parameter \'element\' can't be null.", "element");
-
-            // Get WarpCode
-            var code = element.Attribute(XmlConsts.ATTR_CODE);
-            if (code == null || string.IsNullOrEmpty(code.Value))
-                throw new ArgumentException("No \'WarpCode\' attribute found in the XML element.");
-            else
-                WarpCode = code.Value;
-
-            // Get CommonName
-            var name = element.Attribute(XmlConsts.ATTR_NAME);
-            if (name == null || string.IsNullOrEmpty(name.Value))
-                throw new ArgumentException("No \'CommonName\' attribute found in the XML element.");
-            else
-                CommonName = name.Value;
-
-            // Get list of Tags
-            var tags = element.Attribute(XmlConsts.ATTR_TAGS);
-            if (tags != null && !string.IsNullOrWhiteSpace(tags.Value))
-            {
-                foreach (var tag in tags.Value.Split(XmlConsts.TAG_SEPARATOR_COMMA))
-                    Tags.Add(tag);
-            }
-
-            // Get list of Unlocks
-            var unlocks = element.Attribute(XmlConsts.ATTR_UNLOCK);
-            if (unlocks != null && !string.IsNullOrWhiteSpace(unlocks.Value))
-            {
-                foreach (var set in unlocks.Value.Split(XmlConsts.TAG_SEPARATOR_SEMICOLON))
-                {
-                    var unlockSet = new List<string>();
-                    foreach (var unlock in set.Split(XmlConsts.TAG_SEPARATOR_COMMA))
-                    {
-                        unlockSet.Add(unlock);
-                    }
-                    UnlockSets.Add(unlockSet);
-                }
-            }
-
-            // Parse list of Tags
-            IsFake = Tags.Contains(XmlConsts.TAG_FAKE);
-            IsLocked = Tags.Contains(XmlConsts.TAG_LOCKED);
-            IsOnce   = Tags.Contains(XmlConsts.TAG_ONCE);
-
-            IsClip = Tags.Contains(XmlConsts.TAG_CLIP);
-            IsDlz = Tags.Contains(XmlConsts.TAG_DLZ);
-            IsFlu = Tags.Contains(XmlConsts.TAG_FLU);
-            IsGpw = Tags.Contains(XmlConsts.TAG_GPW);
-
-            IsAccessHangar = Tags.Contains(XmlConsts.TAG_HANGAR_ACCESS);
-            IsFixHangar = Tags.Contains(XmlConsts.TAG_FIX_ELEV);
-            IsFixBox    = Tags.Contains(XmlConsts.TAG_FIX_BOX);
-            IsFixMap    = Tags.Contains(XmlConsts.TAG_FIX_MAP);
-            IsFixSpice  = Tags.Contains(XmlConsts.TAG_FIX_SPICE);
-
-            IsUnlockDanRuins      = Tags.Contains(XmlConsts.TAG_UNLOCK_DAN_RUINS);
-            IsUnlockKorAcademy    = Tags.Contains(XmlConsts.TAG_UNLOCK_KOR_ACADEMY);
-            IsUnlockManEmbassy    = Tags.Contains(XmlConsts.TAG_UNLOCK_MAN_EMBASSY);
-            IsUnlockManHangar     = Tags.Contains(XmlConsts.TAG_UNLOCK_MAN_HANGAR);
-            IsUnlockStaBastila    = Tags.Contains(XmlConsts.TAG_UNLOCK_STA_BASTILA);
-            IsUnlockTarVulkar     = Tags.Contains(XmlConsts.TAG_UNLOCK_TAR_VULKAR);
-            IsUnlockTarUndercity  = Tags.Contains(XmlConsts.TAG_UNLOCK_TAR_UNDERCITY);
-            IsUnlockUnkSummit     = Tags.Contains(XmlConsts.TAG_UNLOCK_UNK_SUMMIT);
-            IsUnlockUnkTempleExit = Tags.Contains(XmlConsts.TAG_UNLOCK_UNK_TEMPLE_EXIT);
-        }
-
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append($"Code: {WarpCode}, Name: {CommonName}");
-            if (Tags.Count > 0)
-            {
-                sb.Append($", Tags: [{Tags.Aggregate((i, j) => $"{i},{j}")}]");
-            }
-            else
-            {
-                sb.Append(", Tags: []");
-            }
-
-            if (UnlockSets.Count > 0)
-            {
-                sb.Append($", Unlock: [");
-                foreach (var set in UnlockSets)
-                {
-                    sb.Append($"{set.Aggregate((i, j) => $"{i},{j}")};");
-                }
-                sb.Append("]");
-            }
-
-            return sb.ToString();
-        }
     }
 }

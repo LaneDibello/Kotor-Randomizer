@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Xml;
-using ClosedXML.Excel;
 
 namespace kotor_Randomizer_2.Models
 {
+    /// <summary>
+    /// Games which have supported randomization.
+    /// </summary>
+    public enum Game
+    {
+        Unsupported,
+        Kotor1,
+        Kotor2,
+    }
+
     /// <summary>
     /// Enumeration of the possible busy states.
     /// </summary>
@@ -63,12 +66,42 @@ namespace kotor_Randomizer_2.Models
     /// </summary>
     public abstract class RandomizerBase : INotifyPropertyChanged
     {
-        /// <summary> Name of the settings file. </summary>
-        public string SettingsFileName { get; protected set; }
+        #region Backing Fields
+        private string _settingsFilePath = string.Empty;
+        #endregion
+
+        #region Properties
+
+        /// <summary> The game this class stores randomization settings for. </summary>
+        public virtual Game Game { get; }
+
+        /// <summary> File extention of settings save files for this game. </summary>
+        public virtual string Extension { get; }
+
+        /// <summary> Path to the loaded settings file. </summary>
+        public string SettingsFilePath
+        {
+            get => _settingsFilePath;
+            protected set => SetField(ref _settingsFilePath, value);
+        }
+
+        public virtual bool SupportsAnimation => false;
+        public virtual bool SupportsAudio => false;
+        public virtual bool SupportsCosmetics => SupportsAnimation || SupportsModels || SupportsTextures;
+        public virtual bool SupportsItems => false;
+        public virtual bool SupportsModels => false;
+        public virtual bool SupportsModules => false;
+        public virtual bool SupportsOther => false;
+        public virtual bool SupportsText => false;
+        public virtual bool SupportsTextures => false;
+        public virtual bool SupportsTables => false;
+
+        #endregion
 
         #region Events
+
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void NotifyPropertyChanged(string propertyName) { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
         protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, value)) return false;
@@ -78,22 +111,25 @@ namespace kotor_Randomizer_2.Models
         }
         public abstract void Randomizer_DoWork(object sender, DoWorkEventArgs e);
         public abstract void Unrandomize(object sender, DoWorkEventArgs e);
+
         #endregion Events
 
         #region Public Methods
+
         /// <summary>
         /// Loads the requested settings file.
         /// </summary>
         public virtual void Load(string path)
         {
             var fi = new FileInfo(path);
-            SettingsFileName = fi.Name;
 
             // Is the file in KRP format?
             if (fi.Extension.ToLower() == ".krp")
                 ReadKRP(File.OpenRead(path));
             else
                 ReadFromFile(path);
+
+            SettingsFilePath = fi.FullName;
         }
 
         /// <summary>
@@ -103,14 +139,12 @@ namespace kotor_Randomizer_2.Models
         {
             if (File.Exists(path)) File.Delete(path);
             var fi = new FileInfo(path);
-            SettingsFileName = fi.Name;
-
-            //// Will the file be in KRP format?
-            //if (path.ToLower().EndsWith(".krp"))
-            //    WriteKRP(File.OpenWrite(path));
-            //else
+            SettingsFilePath = fi.FullName;
             WriteToFile(path);
         }
+
+        /// <summary> Resets all randomization settings to the default value. </summary>
+        public abstract void ResetAllSettings();
 
         /// <summary> Reads an xml preset file. This provides backwards compatibility. </summary>
         protected abstract void ReadFromFile(string path);
@@ -123,6 +157,38 @@ namespace kotor_Randomizer_2.Models
 
         /// <summary> Writes a KRP file using the old, compact format. </summary>
         //protected abstract void WriteKRP(Stream s);
+
         #endregion Public Methods
+
+        #region Protected Methods
+
+        /// <summary>
+        /// Reset static randomization classes for a new randomization.
+        /// </summary>
+        protected virtual void ResetStaticRandomizationClasses()
+        {
+            ModuleRando.Reset(this);
+            ItemRando.Reset();
+            SoundRando.Reset();
+            ModelRando.Reset();
+            TextureRando.Reset();
+            TwodaRandom.Reset();
+            TextRando.Reset();
+            OtherRando.Reset();
+        }
+
+        /// <summary>
+        /// Converts the string representation of the name or numeric value of enumerated constants
+        /// to an equivalent enumerated object of the provided enumeration type.
+        /// </summary>
+        /// <typeparam name="T">An enumeration type.</typeparam>
+        /// <param name="value">A string containing the name or value to convert.</param>
+        /// <returns>An object of type T whose value is represented by value.</returns>
+        protected static T ParseEnum<T>(string value)
+        {
+            return (T)Enum.Parse(typeof(T), value);
+        }
+
+        #endregion
     }
 }

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="tbAbout.Text" xml:space="preserve">
-    <value>The KotOR Randomizer 2 was created by Lane Dibello, with help from Glasnonck, and the greater KotOR speedrunning community. 
+    <value>The KotOR Randomizer 2 was created by Lane, with help from Glasnonck, and the greater KotOR speedrunning community. 
 
 This was designed to be a full overhaul to the original KotOR randomizer, which had many short comings. This project has been a long time coming and I am happy to see these results.
 
