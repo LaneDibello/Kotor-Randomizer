@@ -105,25 +105,25 @@ namespace Randomizer_WPF
             {
                 // Kotor 2 is now the selected game.
                 win.DataContext = win.K2Randomizer;
-                win.ApplyTheme("Resources/Kotor2Theme.xaml");
+                win.ApplyTheme("Kotor2Theme.xaml");
             }
             else
             {
                 // Kotor 1 is now the selected game.
                 win.DataContext = win.K1Randomizer;
-                win.ApplyTheme("Resources/Kotor1Theme.xaml");
+                win.ApplyTheme("Kotor1Theme.xaml");
             }
 
             if (!win.IsCurrentTabSupported()) win.SelectGeneralTab();
         }
 
-        private void ApplyTheme(string themePath)
+        private void ApplyTheme(string themeFilename)
         {
             Resources.MergedDictionaries.Clear();
 
             var theme = new ResourceDictionary();
 
-            theme.Source = new Uri(themePath, UriKind.Relative);
+            theme.Source = new Uri($"/RandomizerWPF;component/Resources/{themeFilename}", UriKind.RelativeOrAbsolute);
 
             Resources.MergedDictionaries.Add(theme);
 

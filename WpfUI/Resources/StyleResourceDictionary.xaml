@@ -72,6 +72,26 @@
     </Style>
     <!--#endregion Text Styles-->
 
+    <Style x:Key="lvStandard" TargetType="ListView">
+        <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
+    </Style>
+
+    <Style x:Key="lviStandard" TargetType="ListViewItem">
+        <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource SelectedTextBrush}"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource SelectedTextBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <!--#region Button Styles-->
     <Style x:Key="RandoButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Background"       Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
@@ -117,11 +137,11 @@
                             <Setter Property="BorderBrush" TargetName="ContentContainer" Value="{DynamicResource SelectedBorderBrush}" />
                         </MultiTrigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" TargetName="ContentContainer" Value="{StaticResource SelectedTextBrush}" />
+                            <Setter Property="Background" TargetName="ContentContainer" Value="{DynamicResource SelectedTextBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="BorderBrush" TargetName="ContentContainer" Value="{StaticResource DisabledBorderDarkBrush}" />
-                            <Setter Property="Foreground" TargetName="ContentPresenter" Value="{StaticResource DisabledForegroundBrush}" />
+                            <Setter Property="BorderBrush" TargetName="ContentContainer" Value="{DynamicResource DisabledBorderDarkBrush}" />
+                            <Setter Property="Foreground" TargetName="ContentPresenter" Value="{DynamicResource DisabledForegroundBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -228,6 +248,13 @@
                    Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}"
                    />
     </DataTemplate>
+
+    <Style x:Key="eStandard" TargetType="Expander">
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Margin" Value="0,0,0,5" />
+        <Setter Property="Padding" Value="5,2" />
+    </Style>
     <!--#endregion Expander Template-->
     
     <!-- Tab Control Style -->
@@ -273,7 +300,7 @@
                         <!--Tab Content Area-->
                         <Border x:Name="Border" Grid.Row="1"
                                 BorderThickness="2" CornerRadius="0"
-                                BorderBrush="{StaticResource BorderBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}"
                                 KeyboardNavigation.TabNavigation="Local"
                                 KeyboardNavigation.DirectionalNavigation="Contained"
                                 KeyboardNavigation.TabIndex="2">
@@ -508,6 +535,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="FocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -517,8 +545,10 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <SolidColorBrush x:Key="OptionMark.Static.Background" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="OptionMark.Static.Border" Color="#FF707070"/>
+    
     <Style x:Key="OptionMarkFocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -528,6 +558,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <SolidColorBrush x:Key="OptionMark.MouseOver.Background" Color="#FFF3F9FF"/>
     <SolidColorBrush x:Key="OptionMark.MouseOver.Border" Color="#FF5593FF"/>
     <SolidColorBrush x:Key="OptionMark.MouseOver.Glyph" Color="#FF212121"/>
@@ -539,12 +570,7 @@
     <SolidColorBrush x:Key="OptionMark.Pressed.Glyph" Color="#FF212121"/>
     <SolidColorBrush x:Key="OptionMark.Static.Glyph" Color="#FF212121"/>
 
-    <Style x:Key="eStandard" TargetType="Expander">
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Margin" Value="0,0,0,5" />
-        <Setter Property="Padding" Value="5,2" />
-    </Style>
+ 
 
     <Style x:Key="SliderCheckBox" TargetType="{x:Type CheckBox}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>

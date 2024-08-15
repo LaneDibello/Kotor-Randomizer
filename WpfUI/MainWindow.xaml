@@ -28,41 +28,21 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
             <local:StringDoubleConverter x:Key="StringDoubleConverter" />
             <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <local:SavePatchOptionsToBoolConverter x:Key="SaveOptionsToBool" />
             <local:ModuleExtrasToBoolConverter x:Key="ExtrasToBool" />
             <local:TextSettingsToBoolConverter x:Key="TextSettingsToBool" />
             <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-            <Style TargetType="TextBox">
-                <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
-            </Style>
-            <Style TargetType="ListView">
-                <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
-            </Style>
-            <Style TargetType="ListViewItem">
-                <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Foreground" Value="{DynamicResource SelectedTextBrush}"/>
-                    </Trigger>
-                    <Trigger Property="IsSelected" Value="True">
-                        <Setter Property="Foreground" Value="{DynamicResource SelectedTextBrush}"/>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
+            <Style TargetType="TextBox" BasedOn="{StaticResource tbStandard}"/>
+            <Style TargetType="ListView" BasedOn="{StaticResource lvStandard}"/>
+            <Style TargetType="ListViewItem" BasedOn="{StaticResource lviStandard}"/>
             <Style TargetType="GridViewColumnHeader">
                 <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
                 <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
             </Style>
+
         </ResourceDictionary>
         
     </Window.Resources>

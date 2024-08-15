@@ -104,5 +104,6 @@ namespace Randomizer_WPF.Views
             }
         }
         #endregion
+
     }
 }
