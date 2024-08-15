@@ -64,15 +64,6 @@
         <!--Settings-->
         <ScrollViewer Style="{StaticResource svPadded}">
             <StackPanel>
-                <StackPanel.Resources>
-                    <Style TargetType="Expander">
-                        <Setter Property="Margin" Value="0,0,0,5" />
-                        <Setter Property="Padding" Value="2" />
-                        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
-                        <Setter Property="BorderThickness" Value="1" />
-                    </Style>
-                </StackPanel.Resources>
-
                 <!--Various Other-->
                 <Border BorderBrush="{DynamicResource ControlForegroundBrush}"
                         BorderThickness="1" Margin="0,0,0,5">
@@ -94,17 +85,7 @@
                                 <Setter Property="VerticalContentAlignment" Value="Center" />
                                 <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:OtherView}}" />
                             </Style>
-                            <Style TargetType="StackPanel">
-
-                            </Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-                                <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource tblStandard}"/>
                         </Grid.Resources>
 
                         <!--Title-->
