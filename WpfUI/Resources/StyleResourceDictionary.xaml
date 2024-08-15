@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic"
                     xmlns:local="clr-namespace:Randomizer_WPF"
+                    xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
                     >
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Kotor1Theme.xaml" />
@@ -50,6 +51,19 @@
         <Setter Property="Margin" Value="5" />
         <Setter Property="TextAlignment" Value="Justify" />
         <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <Style x:Key="rtbStandard" TargetType="uc:RestrictedTextBox">
+        <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource SelectedTextBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Grid.Row" Value="4" />
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
     </Style>
 
     <Style x:Key="svPadded" TargetType="ScrollViewer">
@@ -427,9 +441,9 @@
         <Setter Property="Padding" Value="5,2" />
     </Style>
     <!--#endregion Expander Template-->
-    
+
     <!-- Tab Control Style -->
-    <Style TargetType="{x:Type TabControl}">
+    <Style x:Key="tcTest" TargetType="{x:Type TabControl}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels"   Value="True" />
 
@@ -470,7 +484,7 @@
 
                         <!--Tab Content Area-->
                         <Border x:Name="Border" Grid.Row="1"
-                                BorderThickness="2" CornerRadius="0"
+                                BorderThickness="1" CornerRadius="3"
                                 BorderBrush="{DynamicResource BorderBrush}"
                                 KeyboardNavigation.TabNavigation="Local"
                                 KeyboardNavigation.DirectionalNavigation="Contained"

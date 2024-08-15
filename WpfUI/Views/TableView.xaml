@@ -21,7 +21,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     
-    <DockPanel Background="{DynamicResource DarkBlueBrush}">
+    <DockPanel Background="{DynamicResource ContentAreaDarkBrush}">
         <!--Header and Description-->
         <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2"
                 BorderBrush="{DynamicResource ControlForegroundBrush}">

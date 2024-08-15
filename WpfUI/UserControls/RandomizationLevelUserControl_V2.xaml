@@ -50,15 +50,7 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-            <Style TargetType="TextBlock">
-                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-                <Setter Property="Margin" Value="0,0,5,0" />
-                <Style.Triggers>
-                    <Trigger Property="IsEnabled" Value="False">
-                        <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource tbDescription}"/>
             <Style TargetType="RadioButton">
                 <Setter Property="Padding" Value="5,0" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />

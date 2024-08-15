@@ -168,13 +168,6 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid.Resources>
-                            <Style TargetType="uc:RestrictedTextBox">
-                                <Setter Property="Margin" Value="0" />
-                                <Setter Property="Grid.Row" Value="4" />
-                                <Setter Property="AcceptsReturn" Value="True" />
-                                <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
-                                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
-                            </Style>
                             <Style TargetType="ScrollBar">
                                 <Style.Triggers>
                                     <Trigger Property="Orientation" Value="Horizontal">
