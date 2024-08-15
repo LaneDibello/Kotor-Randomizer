@@ -96,7 +96,7 @@
                              Value="{Binding ElementName=thisView, Path=CurrentProgress, Mode=TwoWay}"
                              Height="20"
                              Background="Transparent"
-                             Foreground="{StaticResource SelectedTextBrush}"
+                             Foreground="{DynamicResource SelectedTextBrush}"
                              BorderBrush="{DynamicResource ControlForegroundBrush}"
                              BorderThickness="2"
                              Margin="0,0,0,5"
@@ -124,7 +124,7 @@
                      TextWrapping="Wrap"
                      TextAlignment="Justify"
                      VerticalScrollBarVisibility="Auto"
-                     SelectionBrush="{StaticResource LightBlueBrush}"
+                     SelectionBrush="{DynamicResource ControlForegroundBrush}"
                      />
         </Grid>
     </DockPanel>

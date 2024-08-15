@@ -212,7 +212,7 @@
                                    Margin="0,0,0,4" Grid.Row="1" Grid.ColumnSpan="5"
                                    Visibility="{Binding ElementName=cbDescriptionToggle, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
                             Name Generation replaces the letter-combo-probability files used when generating random names in-game.
-                            <Run Foreground="{StaticResource SelectedTextBrush}" TextDecorations="Underline">Write each name on a separate line.</Run>
+                            <Run Foreground="{DynamicResource SelectedTextBrush}" TextDecorations="Underline">Write each name on a separate line.</Run>
                             Valid characters are limited to alphabetical, hyphen, and apostrophe. The names provide the basis for the random names
                             and may not appear in-game.
                         </TextBlock>

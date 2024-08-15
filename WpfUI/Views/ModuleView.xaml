@@ -89,7 +89,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <DockPanel Background="{StaticResource WindowBrush}">
+    <DockPanel Background="{DynamicResource WindowBrush}">
         <DockPanel.Resources>
             <Style TargetType="CheckBox">
                 <Setter Property="Margin" Value="3,0" />
@@ -111,7 +111,7 @@
                     Logic settings improve the likelihood that a seed can be completed given the selected goal(s).
                 </TextBlock>
                 <TextBlock Text="* = Recommended Setting"
-                           Foreground="{StaticResource SelectedTextBrush}"
+                           Foreground="{DynamicResource SelectedTextBrush}"
                            Margin="5,0,0,5"
                            VerticalAlignment="Center"
                            />
@@ -290,7 +290,7 @@
                             <TextBlock Text="Use Randomization Exclusion Rules" />
                         </CheckBox>
                         <TextBlock Text="*"
-                                   Foreground="{StaticResource SelectedTextBrush}"
+                                   Foreground="{DynamicResource SelectedTextBrush}"
                                    VerticalAlignment="Center" />
                         <TextBlock Margin="10,0" VerticalAlignment="Center">
                             <Run Text="(Rule 1," ToolTip="{StaticResource ttLogicRule1}" />
@@ -305,7 +305,7 @@
                             <TextBlock Text="Verify Module Reachability" />
                         </CheckBox>
                         <TextBlock Text="*"
-                                   Foreground="{StaticResource SelectedTextBrush}"
+                                   Foreground="{DynamicResource SelectedTextBrush}"
                                    VerticalAlignment="Center" />
                     </StackPanel>
 
@@ -317,7 +317,7 @@
                                 <TextBlock Text="Ignore Single-Use Transitions" />
                             </CheckBox>
                             <TextBlock Text="*"
-                                       Foreground="{StaticResource SelectedTextBrush}"
+                                       Foreground="{DynamicResource SelectedTextBrush}"
                                        VerticalAlignment="Center" />
                         </StackPanel>
                         <CheckBox IsChecked="{Binding ModuleLogicStrongGoals, Mode=TwoWay}"

@@ -37,7 +37,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <DockPanel Background="{StaticResource WindowBrush}">
+    <DockPanel Background="{DynamicResource WindowBrush}">
         <DockPanel.Resources>
             <Style TargetType="Border">
                 <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
