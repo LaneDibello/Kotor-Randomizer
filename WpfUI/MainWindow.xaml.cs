@@ -100,18 +100,51 @@ namespace Randomizer_WPF
         private static void OnGameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var win = d as MainWindow;
+
             if ((bool)e.NewValue)
             {
                 // Kotor 2 is now the selected game.
                 win.DataContext = win.K2Randomizer;
+                win.ApplyTheme("Kotor2Theme.xaml");
             }
             else
             {
                 // Kotor 1 is now the selected game.
                 win.DataContext = win.K1Randomizer;
+                win.ApplyTheme("Kotor1Theme.xaml");
             }
 
             if (!win.IsCurrentTabSupported()) win.SelectGeneralTab();
+        }
+
+        private void ApplyTheme(string themeFilename)
+        {
+            Resources.MergedDictionaries.Clear();
+
+            var theme = new ResourceDictionary();
+
+            theme.Source = new Uri($"/RandomizerWPF;component/Resources/{themeFilename}", UriKind.RelativeOrAbsolute);
+
+            Resources.MergedDictionaries.Add(theme);
+
+            ApplyThemeToChildren(this, theme);
+        }
+
+        private void ApplyThemeToChildren(DependencyObject parent, ResourceDictionary theme)
+        {
+            foreach (var child in LogicalTreeHelper.GetChildren(parent))
+            {
+                if (child is FrameworkElement element)
+                {
+                    element.Resources.MergedDictionaries.Clear();
+                    element.Resources.MergedDictionaries.Add(theme);
+                }
+
+                if (child is DependencyObject depObj)
+                {
+                    ApplyThemeToChildren(depObj, theme);
+                }
+            }
         }
 
         private void SelectGeneralTab()

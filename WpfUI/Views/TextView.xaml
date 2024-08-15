@@ -43,7 +43,7 @@
 
         <!-- Title and Description -->
         <Border Grid.ColumnSpan="2" Grid.Row="0"
-                BorderBrush="{StaticResource HarshBlueBrush}"
+                BorderBrush="{DynamicResource ControlForegroundBrush}"
                 BorderThickness="0,0,0,2"
                 Margin="0,0,0,5">
             <StackPanel>
@@ -63,7 +63,7 @@
         <StackPanel Grid.Row="1" Margin="5,0">
             <StackPanel.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
                     <Setter Property="BorderThickness" Value="1" />
                     <Setter Property="Margin" Value="0,0,0,5" />
                     <Setter Property="Padding" Value="2" />
@@ -75,7 +75,7 @@
                     <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:TextView}}" />
                 </Style>
                 <Style TargetType="TextBlock">
-                    <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                     <Style.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />

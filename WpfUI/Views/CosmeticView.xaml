@@ -14,7 +14,7 @@
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
              DataContextChanged="View_DataContextChanged"
              Loaded="View_Loaded"
-             Background="{StaticResource DarkBlueBrush}"
+             Background="{DynamicResource ContentAreaDarkBrush}"
              >
     <UserControl.Resources>
         <ResourceDictionary>
@@ -71,7 +71,7 @@
     <DockPanel>
         <!-- Dock.Top, Description -->
         <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2"
-                BorderBrush="{StaticResource HarshBlueBrush}">
+                BorderBrush="{DynamicResource ControlForegroundBrush}">
             <StackPanel>
                 <TextBlock Style="{StaticResource tbTitle}" Text="Cosmetic Randomization"
                            FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=10}"
@@ -87,7 +87,7 @@
             <StackPanel>
                 <StackPanel.Resources>
                     <Style TargetType="Border">
-                        <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
                         <Setter Property="BorderThickness" Value="1" />
                         <Setter Property="Margin" Value="0,0,0,5" />
                         <Setter Property="Padding" Value="2" />
@@ -193,7 +193,7 @@
                             <!--Warning-->
                             <Grid Grid.Row="3" Grid.ColumnSpan="3"
                                   Style="{StaticResource SpecialHidden}">
-                                <Border BorderBrush="{StaticResource HarshYellowBrush}"
+                                <Border BorderBrush="{DynamicResource SelectedBorderBrush}"
                                         Margin="2,0" Padding="0">
                                     <TextBlock Style="{StaticResource tbDescription}">
                                         Warning: Randomizing pause, looping, and various at max may result in an unplayable seed.
@@ -217,7 +217,7 @@
                             </Grid.RowDefinitions>
                             <Grid.Resources>
                                 <Style TargetType="Border">
-                                    <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                                    <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
                                     <Setter Property="BorderThickness" Value="1" />
                                     <Setter Property="Margin" Value="10,5,10,10" />
                                     <Setter Property="Padding" Value="2" />
@@ -340,7 +340,7 @@
                                 <Setter Property="SubtypeVisible" Value="Collapsed" />
                             </Style>
                             <Style TargetType="Border">
-                                <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
                                 <Setter Property="BorderThickness" Value="1" />
                                 <Setter Property="Margin" Value="0,2" />
                             </Style>
@@ -350,7 +350,7 @@
                                 <Setter Property="VerticalContentAlignment" Value="Center" />
                             </Style>
                             <Style TargetType="TextBlock">
-                                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </Grid.Resources>
@@ -358,7 +358,7 @@
                         <!-- Title, Pack, and Warning -->
                         <DockPanel Grid.ColumnSpan="2" Grid.RowSpan="2">
                             <!--Warning-->
-                            <Border BorderBrush="{StaticResource HarshYellowBrush}"
+                            <Border BorderBrush="{DynamicResource SelectedBorderBrush}"
                                     Margin="3,0,5,5" Padding="0"
                                     DockPanel.Dock="Bottom">
                                 <TextBlock Style="{StaticResource tbDescription}">

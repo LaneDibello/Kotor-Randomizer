@@ -28,41 +28,21 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
             <local:StringDoubleConverter x:Key="StringDoubleConverter" />
             <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <local:SavePatchOptionsToBoolConverter x:Key="SaveOptionsToBool" />
             <local:ModuleExtrasToBoolConverter x:Key="ExtrasToBool" />
             <local:TextSettingsToBoolConverter x:Key="TextSettingsToBool" />
             <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-            <Style TargetType="TextBox">
-                <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
-            </Style>
-            <Style TargetType="ListView">
-                <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
-            </Style>
-            <Style TargetType="ListViewItem">
-                <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Foreground" Value="{DynamicResource HarshYellowBrush}"/>
-                    </Trigger>
-                    <Trigger Property="IsSelected" Value="True">
-                        <Setter Property="Foreground" Value="{DynamicResource HarshYellowBrush}"/>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
+            <Style TargetType="TextBox" BasedOn="{StaticResource tbStandard}"/>
+            <Style TargetType="ListView" BasedOn="{StaticResource lvStandard}"/>
+            <Style TargetType="ListViewItem" BasedOn="{StaticResource lviStandard}"/>
             <Style TargetType="GridViewColumnHeader">
                 <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
                 <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
             </Style>
+
         </ResourceDictionary>
         
     </Window.Resources>
@@ -86,7 +66,7 @@
         </DockPanel.Resources>
         
         <!-- Dock.Top, Menu -->
-        <Grid DockPanel.Dock="Top" Background="{DynamicResource DarkBlueBrush}">
+        <Grid DockPanel.Dock="Top" Background="{DynamicResource ContentAreaDarkBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -215,14 +195,15 @@
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
                     <TextBlock Foreground="{StaticResource MediumBlueBrush}" VerticalAlignment="Center" Margin="0,0,-5,0">Kotor 1</TextBlock>
-                    <CheckBox x:Name="IsKotor2Active" Margin="3,0" Style="{DynamicResource SliderCheckBox}"
+                    <CheckBox x:Name="IsKotor2Active" Margin="3,0" Style="{StaticResource SliderCheckBox}"
                               IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
                               IsChecked="{Binding ElementName=window, Mode=TwoWay, Path=IsKotor2Selected}" />
                     <TextBlock Foreground="{StaticResource MediumGreenBrush}" VerticalAlignment="Center">Kotor 2</TextBlock>
                 </StackPanel>
 
                 <Label Content="Font Size:"
-                       FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
+                       FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" 
+                       Style ="{StaticResource lStandard}"/>
                 <ComboBox x:Name="cbFontSize" Width="60"
                           Margin="2"
                           HorizontalContentAlignment="Center"
@@ -239,8 +220,8 @@
         
         <!-- Dock.Bottom, StatusBar -->
         <StatusBar DockPanel.Dock="Bottom"
-                   Background="Transparent" Foreground="{DynamicResource HarshBlueBrush}"
-                   BorderBrush="{DynamicResource HarshBlueBrush}" BorderThickness="0,1,0,0">
+                   Background="Transparent" Foreground="{DynamicResource ControlForegroundBrush}"
+                   BorderBrush="{DynamicResource ControlForegroundBrush}" BorderThickness="0,1,0,0">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
@@ -263,12 +244,12 @@
                 <TextBlock Name="lblCurrentStatus" Text="{Binding ElementName=RandomizeView, Path=CurrentState}" />
             </StatusBarItem>
             
-            <Separator Grid.Column="1" Background="{DynamicResource HarshBlueBrush}" />
+            <Separator Grid.Column="1" Background="{DynamicResource ControlForegroundBrush}" />
             
             <StatusBarItem Grid.Column="2" HorizontalAlignment="Center">
                 <ProgressBar Name="pbCurrentProgress" Width="90" Height="16"
-                             Background="Transparent" Foreground="{DynamicResource HarshYellowBrush}"
-                             BorderBrush="{DynamicResource HarshBlueBrush}" />
+                             Background="Transparent" Foreground="{DynamicResource SelectedTextBrush}"
+                             BorderBrush="{DynamicResource ControlForegroundBrush}" />
             </StatusBarItem>
         </StatusBar>
         
@@ -276,7 +257,7 @@
         <Grid Margin="5">
             <TabControl x:Name="tcAllTabs" TabStripPlacement="Left">
                 <TabControl.Resources>
-                    <Style TargetType="TabItem" BasedOn="{StaticResource K1TabItem}">
+                    <Style TargetType="TabItem" BasedOn="{StaticResource tiStandard}">
                         <Setter Property="FontSize" Value="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
                     </Style>
                 </TabControl.Resources>

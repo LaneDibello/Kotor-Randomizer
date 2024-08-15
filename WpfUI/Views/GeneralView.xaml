@@ -88,10 +88,10 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <DockPanel Background="{StaticResource WindowBrush}">
+    <DockPanel Background="{DynamicResource ContentAreaDarkBrush}">
         <DockPanel.Resources>
             <Style TargetType="Expander">
-                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="Margin" Value="0,0,0,5" />
                 <Setter Property="Padding" Value="2" />
@@ -103,7 +103,7 @@
 
         <!-- Dock.Top, Title and Description -->
         <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2"
-                BorderBrush="{StaticResource HarshBlueBrush}">
+                BorderBrush="{DynamicResource ControlForegroundBrush}">
             <StackPanel Margin="5,0,5,5">
                 <TextBlock Style="{StaticResource tbTitle}"
                            Text="General Settings"
@@ -120,7 +120,7 @@
         <ScrollViewer Style="{StaticResource svPadded}">
             <StackPanel>
                 <!-- Game Selection -->
-                <Border BorderBrush="{StaticResource HarshBlueBrush}"
+                <Border BorderBrush="{DynamicResource ControlForegroundBrush}"
                         BorderThickness="1" Padding="3,5" Margin="0,0,0,5"
                         CornerRadius="3">
                     <Grid Margin="3,0">
@@ -134,8 +134,8 @@
                             <TextBlock Style="{StaticResource tbDescription}">Select the game you'd like to randomize.</TextBlock>
                         </StackPanel>
                         <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <TextBlock Style="{StaticResource tbDescription}" VerticalAlignment="Center" Margin="0,0,-5,0">Kotor 1</TextBlock>
-                            <CheckBox x:Name="IsKotor2Active" Margin="3,0" Style="{DynamicResource SliderCheckBox}"
+                            <TextBlock Style="{StaticResource tbDescription}" Foreground="{StaticResource HarshBlueBrush}" VerticalAlignment="Center" Margin="0,0,-5,0">Kotor 1</TextBlock>
+                            <CheckBox x:Name="IsKotor2Active" Margin="3,0" Style="{StaticResource SliderCheckBox}"
                                       IsChecked="{Binding ElementName=thisView, Mode=TwoWay, Path=IsKotor2Selected}" />
                             <TextBlock Style="{StaticResource tbDescription}" Foreground="{StaticResource HarshGreenBrush}" VerticalAlignment="Center">Kotor 2</TextBlock>
                         </StackPanel>
@@ -145,11 +145,7 @@
                 <!-- Game Paths -->
                 <Expander>
                     <Expander.Style>
-                        <Style TargetType="Expander">
-                            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
-                            <Setter Property="BorderThickness" Value="1" />
-                            <Setter Property="Margin" Value="0,0,0,5" />
-                            <Setter Property="Padding" Value="5,2" />
+                        <Style TargetType="Expander" BasedOn="{StaticResource eStandard}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ElementName=thisView, Path=Kotor1Path}" Value="">
                                     <Setter Property="IsExpanded" Value="True" />
@@ -200,12 +196,12 @@
                                 ToolTip="{StaticResource ttPathAuto}"
                                 Click="BtnAutoFindPaths_Click" />
 
-                        <Label Visibility="Collapsed" Grid.Row="3" Foreground="{StaticResource HarshBlueBrush}" HorizontalAlignment="Center">
+                        <Label Visibility="Collapsed" Grid.Row="3" Foreground="{DynamicResource ControlForegroundBrush}" HorizontalAlignment="Center">
                             Kotor 2 randomization has not yet been implemented.
                         </Label>
 
                         <Border Grid.Row="4" Grid.ColumnSpan="2" Padding="0,5,0,0" Margin="0,5,0,0"
-                                BorderBrush="{StaticResource HarshBlueBrush}" BorderThickness="0,1,0,0">
+                                BorderBrush="{DynamicResource ControlForegroundBrush}" BorderThickness="0,1,0,0">
                             <StackPanel>
                                 <uc:PathUserControl TextLabel="Presets Folder"  PathText="{Binding ElementName=thisView, Path=PresetPath,  Mode=TwoWay}" />
                                 <uc:PathUserControl TextLabel="Spoilers Folder" PathText="{Binding ElementName=thisView, Path=SpoilerPath, Mode=TwoWay}" />
@@ -215,7 +211,7 @@
                 </Expander>
 
                 <!-- Quality of Life -->
-                <Border BorderBrush="{StaticResource HarshBlueBrush}"
+                <Border BorderBrush="{DynamicResource ControlForegroundBrush}"
                         BorderThickness="1" Padding="3,5" Margin="0,0,0,5"
                         CornerRadius="3">
                     <StackPanel>
@@ -260,7 +256,7 @@
                                     <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:GeneralView}}" />
                                 </Style>
                                 <Style TargetType="TextBlock">
-                                    <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                                     <Setter Property="Margin" Value="1,0,4,0" />
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
@@ -270,7 +266,7 @@
                                 </Style>
                             </Grid.Resources>
 
-                            <Border BorderBrush="{StaticResource HarshBlueBrush}"
+                            <Border BorderBrush="{DynamicResource ControlForegroundBrush}"
                                     BorderThickness="0,1,0,0"
                                     Grid.ColumnSpan="3"
                                     Margin="0,0,0,5"/>
@@ -352,7 +348,7 @@
                                 <RowDefinition Height="Auto" /> <!--Filter-->
                             </Grid.RowDefinitions>
 
-                            <Border BorderBrush="{StaticResource HarshBlueBrush}"
+                            <Border BorderBrush="{DynamicResource ControlForegroundBrush}"
                                     BorderThickness="0,1,0,0"
                                     Grid.ColumnSpan="3"
                                     Margin="0,0,0,5"/>

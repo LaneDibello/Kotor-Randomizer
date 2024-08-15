@@ -8,7 +8,6 @@
              xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
     <Application.Resources>
         <!--#region Kotor Colors-->
-        <Color x:Key="DarkBlue">#000016</Color>
         <Color x:Key="MediumBlue">#005377</Color>
         <Color x:Key="LightBlue">#618CF4</Color>
         <Color x:Key="HarshBlue">#00AFFF</Color>
@@ -26,7 +25,6 @@
         <Color x:Key="HarshYellow">#D3D808</Color>
         <!--#endregion-->
         <!--#region Kotor Brushes-->
-        <SolidColorBrush x:Key="DarkBlueBrush" Color="{StaticResource DarkBlue}" />
         <SolidColorBrush x:Key="MediumBlueBrush" Color="{StaticResource MediumBlue}" />
         <SolidColorBrush x:Key="LightBlueBrush" Color="{StaticResource LightBlue}" />
         <SolidColorBrush x:Key="HarshBlueBrush" Color="{StaticResource HarshBlue}" />
@@ -40,7 +38,6 @@
         <SolidColorBrush x:Key="HarshRedBrush" Color="{StaticResource HarshRed}" />
         <SolidColorBrush x:Key="PaleYellowBrush" Color="{StaticResource PaleYellow}" />
         <SolidColorBrush x:Key="MediumYellowBrush" Color="{StaticResource MediumYellow}" />
-        <SolidColorBrush x:Key="HarshYellowBrush" Color="{StaticResource HarshYellow}" />
         <!--#endregion-->
         <!--#region Control Colors-->
         <Color x:Key="WindowColor">#FFE8EDF9</Color>

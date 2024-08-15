@@ -9,7 +9,7 @@
 
     <!--#region Text Styles-->
     <Style x:Key="tbHeader1" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="24" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -17,26 +17,26 @@
     </Style>
 
     <Style x:Key="tbHeader2" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="FontWeight" Value="Bold" />
     </Style>
 
     <Style x:Key="tbHeader3" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Margin" Value="5,0" />
     </Style>
 
     <Style x:Key="tbHeader4" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="TextDecorations" Value="Underline" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
     <Style x:Key="tbTitle" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="24" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -44,7 +44,7 @@
     </Style>
 
     <Style x:Key="tbDescription" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="Margin" Value="5" />
         <Setter Property="TextAlignment" Value="Justify" />
         <Setter Property="TextWrapping" Value="Wrap" />
@@ -55,7 +55,42 @@
         <Setter Property="Padding" Value="5,0" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
     </Style>
+
+    <Style x:Key="tbStandard" TargetType="TextBox">
+        <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
+    </Style>
+    <Style x:Key="tbWarn" TargetType="TextBox">
+        <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SelectedBorderBrush}" />
+    </Style>
+
+    <Style x:Key="lStandard" TargetType="Label">
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+    </Style>
     <!--#endregion Text Styles-->
+
+    <Style x:Key="lvStandard" TargetType="ListView">
+        <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
+    </Style>
+
+    <Style x:Key="lviStandard" TargetType="ListViewItem">
+        <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource SelectedTextBrush}"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource SelectedTextBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <!--#region Button Styles-->
     <Style x:Key="RandoButtonStyle" TargetType="{x:Type Button}">
@@ -99,14 +134,14 @@
                                 <Condition Property="IsEnabled" Value="True"/>
                                 <Condition Property="IsMouseOver" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="BorderBrush" TargetName="ContentContainer" Value="{StaticResource HarshYellowBrush}" />
+                            <Setter Property="BorderBrush" TargetName="ContentContainer" Value="{DynamicResource SelectedBorderBrush}" />
                         </MultiTrigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" TargetName="ContentContainer" Value="{StaticResource HarshYellowBrush}" />
+                            <Setter Property="Background" TargetName="ContentContainer" Value="{DynamicResource SelectedTextBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="BorderBrush" TargetName="ContentContainer" Value="{StaticResource DisabledBorderDarkBrush}" />
-                            <Setter Property="Foreground" TargetName="ContentPresenter" Value="{StaticResource DisabledForegroundBrush}" />
+                            <Setter Property="BorderBrush" TargetName="ContentContainer" Value="{DynamicResource DisabledBorderDarkBrush}" />
+                            <Setter Property="Foreground" TargetName="ContentPresenter" Value="{DynamicResource DisabledForegroundBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -115,9 +150,9 @@
     </Style>
     <Style x:Key="K1RandoButtonStyle" BasedOn="{StaticResource RandoButtonStyle}" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="Padding" Value="4,2" />
     </Style>
     
@@ -213,6 +248,13 @@
                    Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}"
                    />
     </DataTemplate>
+
+    <Style x:Key="eStandard" TargetType="Expander">
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Margin" Value="0,0,0,5" />
+        <Setter Property="Padding" Value="5,2" />
+    </Style>
     <!--#endregion Expander Template-->
     
     <!-- Tab Control Style -->
@@ -258,7 +300,7 @@
                         <!--Tab Content Area-->
                         <Border x:Name="Border" Grid.Row="1"
                                 BorderThickness="2" CornerRadius="0"
-                                BorderBrush="{StaticResource BorderBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}"
                                 KeyboardNavigation.TabNavigation="Local"
                                 KeyboardNavigation.DirectionalNavigation="Contained"
                                 KeyboardNavigation.TabIndex="2">
@@ -310,7 +352,7 @@
     </Style>
 
     <!-- Tab Item Style -->
-    <Style x:Key="K1TabItem" TargetType="{x:Type TabItem}">
+    <Style x:Key="tiStandard" TargetType="{x:Type TabItem}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
@@ -323,12 +365,12 @@
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
                                                                           Storyboard.TargetProperty="(Panel.Background).
                                                                           (GradientBrush.GradientStops)[0].(GradientStop.Color)">
-                                            <EasingColorKeyFrame KeyTime="0" Value="{StaticResource SelectedControlColor}" />
+                                            <EasingColorKeyFrame KeyTime="0" Value="{DynamicResource SelectedControlColor}" />
                                         </ColorAnimationUsingKeyFrames>
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
                                                                           Storyboard.TargetProperty="(Panel.Background).
                                                                           (GradientBrush.GradientStops)[2].(GradientStop.Color)">
-                                            <EasingColorKeyFrame KeyTime="0" Value="{StaticResource SelectedControlColor}" />
+                                            <EasingColorKeyFrame KeyTime="0" Value="{DynamicResource SelectedControlColor}" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -356,20 +398,17 @@
 
                         <!--Tab Item-->
                         <Border x:Name="Border" Margin="0,0,0,4"
-                                BorderThickness="2" CornerRadius="0">
-                            <!--Border-->
-                            <Border.BorderBrush>
-                                <SolidColorBrush Color="{StaticResource BorderColor}" />
-                            </Border.BorderBrush>
+                                BorderThickness="2" CornerRadius="0"
+                                BorderBrush="{DynamicResource BorderBrush}">
 
                             <!--Background-->
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                     <LinearGradientBrush.GradientStops>
                                         <GradientStopCollection>
-                                            <GradientStop Color="{StaticResource WindowColor}" Offset="0.0" />
-                                            <GradientStop Color="{StaticResource WindowColor}" Offset="0.5" />
-                                            <GradientStop Color="{StaticResource WindowColor}" Offset="1.0" />
+                                            <GradientStop Color="{DynamicResource ContentAreaDarkColor}" Offset="0.0" />
+                                            <GradientStop Color="{DynamicResource ContentAreaDarkColor}" Offset="0.5" />
+                                            <GradientStop Color="{DynamicResource ContentAreaDarkColor}" Offset="1.0" />
                                         </GradientStopCollection>
                                     </LinearGradientBrush.GradientStops>
                                 </LinearGradientBrush>
@@ -387,7 +426,7 @@
                                 <ContentPresenter x:Name="ContentSite" ContentSource="Header" Margin="12,2,12,2"
                                               HorizontalAlignment="Center" VerticalAlignment="Center"
                                               RecognizesAccessKey="True" TextBlock.FontWeight="SemiBold"
-                                              TextBlock.Foreground="{StaticResource ControlForegroundBrush}"
+                                              TextBlock.Foreground="{DynamicResource ControlForegroundBrush}"
                                               TextBlock.FontSize="{TemplateBinding FontSize}" Grid.Column="1" />
                             </Grid>
                         </Border>
@@ -397,11 +436,11 @@
                             <Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="{StaticResource DisabledForegroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource SelectedBorderBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource SelectedBorderBrush}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Panel.ZIndex" Value="100" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource SelectedBorderBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource SelectedBorderBrush}" />
                             <Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="{StaticResource SelectedTextBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -496,6 +535,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="FocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -505,8 +545,10 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <SolidColorBrush x:Key="OptionMark.Static.Background" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="OptionMark.Static.Border" Color="#FF707070"/>
+    
     <Style x:Key="OptionMarkFocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -516,6 +558,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <SolidColorBrush x:Key="OptionMark.MouseOver.Background" Color="#FFF3F9FF"/>
     <SolidColorBrush x:Key="OptionMark.MouseOver.Border" Color="#FF5593FF"/>
     <SolidColorBrush x:Key="OptionMark.MouseOver.Glyph" Color="#FF212121"/>
@@ -526,7 +569,9 @@
     <SolidColorBrush x:Key="OptionMark.Pressed.Border" Color="#FF3C77DD"/>
     <SolidColorBrush x:Key="OptionMark.Pressed.Glyph" Color="#FF212121"/>
     <SolidColorBrush x:Key="OptionMark.Static.Glyph" Color="#FF212121"/>
-    
+
+ 
+
     <Style x:Key="SliderCheckBox" TargetType="{x:Type CheckBox}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
         <Setter Property="Background" Value="{StaticResource OptionMark.Static.Background}"/>
