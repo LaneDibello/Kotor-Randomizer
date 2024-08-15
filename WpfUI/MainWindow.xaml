@@ -215,14 +215,15 @@
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
                     <TextBlock Foreground="{StaticResource MediumBlueBrush}" VerticalAlignment="Center" Margin="0,0,-5,0">Kotor 1</TextBlock>
-                    <CheckBox x:Name="IsKotor2Active" Margin="3,0" Style="{DynamicResource SliderCheckBox}"
+                    <CheckBox x:Name="IsKotor2Active" Margin="3,0" Style="{StaticResource SliderCheckBox}"
                               IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
                               IsChecked="{Binding ElementName=window, Mode=TwoWay, Path=IsKotor2Selected}" />
                     <TextBlock Foreground="{StaticResource MediumGreenBrush}" VerticalAlignment="Center">Kotor 2</TextBlock>
                 </StackPanel>
 
                 <Label Content="Font Size:"
-                       FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
+                       FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" 
+                       Style ="{StaticResource lStandard}"/>
                 <ComboBox x:Name="cbFontSize" Width="60"
                           Margin="2"
                           HorizontalContentAlignment="Center"
@@ -276,7 +277,7 @@
         <Grid Margin="5">
             <TabControl x:Name="tcAllTabs" TabStripPlacement="Left">
                 <TabControl.Resources>
-                    <Style TargetType="TabItem" BasedOn="{StaticResource K1TabItem}">
+                    <Style TargetType="TabItem" BasedOn="{StaticResource tiStandard}">
                         <Setter Property="FontSize" Value="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
                     </Style>
                 </TabControl.Resources>

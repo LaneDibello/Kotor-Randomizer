@@ -88,10 +88,10 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <DockPanel Background="{StaticResource WindowBrush}">
+    <DockPanel Background="{DynamicResource ContentAreaDarkBrush}">
         <DockPanel.Resources>
             <Style TargetType="Expander">
-                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="Margin" Value="0,0,0,5" />
                 <Setter Property="Padding" Value="2" />
@@ -134,8 +134,8 @@
                             <TextBlock Style="{StaticResource tbDescription}">Select the game you'd like to randomize.</TextBlock>
                         </StackPanel>
                         <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <TextBlock Style="{StaticResource tbDescription}" VerticalAlignment="Center" Margin="0,0,-5,0">Kotor 1</TextBlock>
-                            <CheckBox x:Name="IsKotor2Active" Margin="3,0" Style="{DynamicResource SliderCheckBox}"
+                            <TextBlock Style="{StaticResource tbDescription}" Foreground="{StaticResource HarshBlueBrush}" VerticalAlignment="Center" Margin="0,0,-5,0">Kotor 1</TextBlock>
+                            <CheckBox x:Name="IsKotor2Active" Margin="3,0" Style="{StaticResource SliderCheckBox}"
                                       IsChecked="{Binding ElementName=thisView, Mode=TwoWay, Path=IsKotor2Selected}" />
                             <TextBlock Style="{StaticResource tbDescription}" Foreground="{StaticResource HarshGreenBrush}" VerticalAlignment="Center">Kotor 2</TextBlock>
                         </StackPanel>
@@ -145,11 +145,7 @@
                 <!-- Game Paths -->
                 <Expander>
                     <Expander.Style>
-                        <Style TargetType="Expander">
-                            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
-                            <Setter Property="BorderThickness" Value="1" />
-                            <Setter Property="Margin" Value="0,0,0,5" />
-                            <Setter Property="Padding" Value="5,2" />
+                        <Style TargetType="Expander" BasedOn="{StaticResource eStandard}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ElementName=thisView, Path=Kotor1Path}" Value="">
                                     <Setter Property="IsExpanded" Value="True" />

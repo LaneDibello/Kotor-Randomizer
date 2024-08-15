@@ -12,7 +12,7 @@
     <Color x:Key="DisabledForegroundColor"  >#202020</Color>
 
     <Color x:Key="SelectedTextColor"    >#D3D808</Color>
-    <Color x:Key="SelectedControlColor" >#211AA9</Color>
+    <Color x:Key="SelectedControlColor" >#D3D808</Color>
     
     <!-- Border Colors -->
     <Color x:Key="BorderColor">#00AFFF</Color>
