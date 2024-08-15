@@ -32,7 +32,7 @@
                 </Style.Triggers>
             </Style>
         </Grid.Resources>
-        <Label Foreground="{StaticResource HarshBlueBrush}">
+        <Label Foreground="{DynamicResource ControlForegroundBrush}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding TextLabel}" />
                 <TextBlock Text=":" />

@@ -40,16 +40,16 @@
     <DockPanel Background="{StaticResource WindowBrush}">
         <DockPanel.Resources>
             <Style TargetType="Border">
-                <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
             </Style>
             <Style TargetType="Expander">
-                <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="Margin" Value="0,0,0,5" />
                 <Setter Property="Padding" Value="2" />
             </Style>
             <Style TargetType="TextBlock">
-                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                 <Style.Triggers>
                     <Trigger Property="IsEnabled" Value="False">
                         <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />

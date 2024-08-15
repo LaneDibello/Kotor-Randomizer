@@ -99,7 +99,7 @@
         </DockPanel.Resources>
         
         <!-- Dock.Top, Title and Description -->
-        <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2" BorderBrush="{StaticResource HarshBlueBrush}">
+        <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource ControlForegroundBrush}">
             <StackPanel>
                 <TextBlock Style="{StaticResource tbTitle}"
                            Text="Module Settings"
@@ -111,7 +111,7 @@
                     Logic settings improve the likelihood that a seed can be completed given the selected goal(s).
                 </TextBlock>
                 <TextBlock Text="* = Recommended Setting"
-                           Foreground="{StaticResource HarshYellowBrush}"
+                           Foreground="{StaticResource SelectedTextBrush}"
                            Margin="5,0,0,5"
                            VerticalAlignment="Center"
                            />
@@ -145,7 +145,7 @@
                 <TextBlock Grid.Row="0" Text="Custom Shuffle Settings:"
                             Style="{StaticResource tbHeader4}" />
 
-                <Border BorderBrush="{StaticResource HarshBlueBrush}"
+                <Border BorderBrush="{DynamicResource ControlForegroundBrush}"
                         BorderThickness="1" Margin="0,5" CornerRadius="3">
                     <!-- Custom Module Shuffle -->
                     <Grid Margin="5,0,5,5">
@@ -180,7 +180,7 @@
                             </Style>
                             <Style TargetType="Label">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                             </Style>
                         </Grid.Resources>
 
@@ -275,7 +275,7 @@
                     <StackPanel.Resources>
                         <Style TargetType="TextBlock">
                             <Setter Property="Margin" Value="3" />
-                            <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                             <Style.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
@@ -290,7 +290,7 @@
                             <TextBlock Text="Use Randomization Exclusion Rules" />
                         </CheckBox>
                         <TextBlock Text="*"
-                                   Foreground="{StaticResource HarshYellowBrush}"
+                                   Foreground="{StaticResource SelectedTextBrush}"
                                    VerticalAlignment="Center" />
                         <TextBlock Margin="10,0" VerticalAlignment="Center">
                             <Run Text="(Rule 1," ToolTip="{StaticResource ttLogicRule1}" />
@@ -305,7 +305,7 @@
                             <TextBlock Text="Verify Module Reachability" />
                         </CheckBox>
                         <TextBlock Text="*"
-                                   Foreground="{StaticResource HarshYellowBrush}"
+                                   Foreground="{StaticResource SelectedTextBrush}"
                                    VerticalAlignment="Center" />
                     </StackPanel>
 
@@ -317,7 +317,7 @@
                                 <TextBlock Text="Ignore Single-Use Transitions" />
                             </CheckBox>
                             <TextBlock Text="*"
-                                       Foreground="{StaticResource HarshYellowBrush}"
+                                       Foreground="{StaticResource SelectedTextBrush}"
                                        VerticalAlignment="Center" />
                         </StackPanel>
                         <CheckBox IsChecked="{Binding ModuleLogicStrongGoals, Mode=TwoWay}"
@@ -335,7 +335,7 @@
                     <WrapPanel.Resources>
                         <Style TargetType="TextBlock">
                             <Setter Property="Margin" Value="3" />
-                            <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                             <Style.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
@@ -366,7 +366,7 @@
                     <WrapPanel.Resources>
                         <Style TargetType="TextBlock">
                             <Setter Property="Margin" Value="3" />
-                            <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                             <Style.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
@@ -400,7 +400,7 @@
                     <WrapPanel.Resources>
                         <Style TargetType="TextBlock">
                             <Setter Property="Margin" Value="3" />
-                            <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                             <Style.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />

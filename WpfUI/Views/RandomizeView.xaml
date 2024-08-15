@@ -22,10 +22,10 @@
         </ResourceDictionary>
     </UserControl.Resources>
     
-    <DockPanel Background="{StaticResource DarkBlueBrush}">
+    <DockPanel Background="{DynamicResource ContentAreaDarkBrush}">
         <DockPanel.Resources>
             <Style TargetType="TextBlock">
-                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                 <Setter Property="Margin" Value="5,0,0,0" />
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Style.Triggers>
@@ -42,7 +42,7 @@
         </DockPanel.Resources>
 
         <!-- Dock.Top, Header -->
-        <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2" BorderBrush="{StaticResource HarshBlueBrush}">
+        <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource ControlForegroundBrush}">
             <StackPanel>
                 <TextBlock Style="{StaticResource tbTitle}"
                            Text="Randomize the Game"
@@ -57,7 +57,7 @@
         
         <!-- Dock.Bottom, Button and Progress -->
         <Border DockPanel.Dock="Bottom" BorderThickness="0,2,0,0"
-                BorderBrush="{StaticResource HarshBlueBrush}">
+                BorderBrush="{DynamicResource ControlForegroundBrush}">
             <StackPanel Margin="5,0">
                 <!-- Seed and Spoilers -->
                 <WrapPanel Name="wpSettings" Margin="0,5,0,0" Orientation="Horizontal">
@@ -78,7 +78,7 @@
                             BorderThickness="1"
                             Margin="5,0,0,0" Click="BtnNewSeed_Click" />
                     <Border Margin="5,0,0,0" BorderThickness="1,0,0,0"
-                            BorderBrush="{StaticResource HarshBlueBrush}" />
+                            BorderBrush="{DynamicResource ControlForegroundBrush}" />
                     <CheckBox Name="cbCreateSpoilers" VerticalContentAlignment="Center" Margin="5,0,0,0"
                               IsChecked="{Binding ElementName=thisView, Path=CreateSpoilers, Mode=TwoWay}">
                         <TextBlock Margin="0" Text="Create Spoilers" />
@@ -96,8 +96,8 @@
                              Value="{Binding ElementName=thisView, Path=CurrentProgress, Mode=TwoWay}"
                              Height="20"
                              Background="Transparent"
-                             Foreground="{StaticResource HarshYellowBrush}"
-                             BorderBrush="{StaticResource HarshBlueBrush}"
+                             Foreground="{StaticResource SelectedTextBrush}"
+                             BorderBrush="{DynamicResource ControlForegroundBrush}"
                              BorderThickness="2"
                              Margin="0,0,0,5"
                              />
@@ -117,7 +117,7 @@
             <!-- Row 1 -->
             <TextBox x:Name="tbLog" Grid.Row="1"
                      Background="Transparent"
-                     Foreground="{StaticResource HarshBlueBrush}"
+                     Foreground="{DynamicResource ControlForegroundBrush}"
                      Margin="0,5,0,0"
                      IsReadOnly="True"
                      Text="Randomization log"

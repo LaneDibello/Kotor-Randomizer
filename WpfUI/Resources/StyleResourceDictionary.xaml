@@ -9,7 +9,7 @@
 
     <!--#region Text Styles-->
     <Style x:Key="tbHeader1" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="24" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -17,26 +17,26 @@
     </Style>
 
     <Style x:Key="tbHeader2" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="FontWeight" Value="Bold" />
     </Style>
 
     <Style x:Key="tbHeader3" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Margin" Value="5,0" />
     </Style>
 
     <Style x:Key="tbHeader4" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="TextDecorations" Value="Underline" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
     <Style x:Key="tbTitle" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="FontSize" Value="24" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -44,7 +44,7 @@
     </Style>
 
     <Style x:Key="tbDescription" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="Margin" Value="5" />
         <Setter Property="TextAlignment" Value="Justify" />
         <Setter Property="TextWrapping" Value="Wrap" />
@@ -54,6 +54,17 @@
         <Setter Property="Margin" Value="0,5,0,0" />
         <Setter Property="Padding" Value="5,0" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+    </Style>
+
+    <Style x:Key="tbStandard" TargetType="TextBox">
+        <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
+    </Style>
+    <Style x:Key="tbWarn" TargetType="TextBox">
+        <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SelectedBorderBrush}" />
     </Style>
     <!--#endregion Text Styles-->
 
@@ -99,10 +110,10 @@
                                 <Condition Property="IsEnabled" Value="True"/>
                                 <Condition Property="IsMouseOver" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="BorderBrush" TargetName="ContentContainer" Value="{StaticResource HarshYellowBrush}" />
+                            <Setter Property="BorderBrush" TargetName="ContentContainer" Value="{DynamicResource SelectedBorderBrush}" />
                         </MultiTrigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" TargetName="ContentContainer" Value="{StaticResource HarshYellowBrush}" />
+                            <Setter Property="Background" TargetName="ContentContainer" Value="{StaticResource SelectedTextBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="BorderBrush" TargetName="ContentContainer" Value="{StaticResource DisabledBorderDarkBrush}" />
@@ -115,9 +126,9 @@
     </Style>
     <Style x:Key="K1RandoButtonStyle" BasedOn="{StaticResource RandoButtonStyle}" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="Padding" Value="4,2" />
     </Style>
     
@@ -387,7 +398,7 @@
                                 <ContentPresenter x:Name="ContentSite" ContentSource="Header" Margin="12,2,12,2"
                                               HorizontalAlignment="Center" VerticalAlignment="Center"
                                               RecognizesAccessKey="True" TextBlock.FontWeight="SemiBold"
-                                              TextBlock.Foreground="{StaticResource ControlForegroundBrush}"
+                                              TextBlock.Foreground="{DynamicResource ControlForegroundBrush}"
                                               TextBlock.FontSize="{TemplateBinding FontSize}" Grid.Column="1" />
                             </Grid>
                         </Border>
@@ -397,11 +408,11 @@
                             <Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="{StaticResource DisabledForegroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource SelectedBorderBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource SelectedBorderBrush}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Panel.ZIndex" Value="100" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource SelectedBorderBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource SelectedBorderBrush}" />
                             <Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="{StaticResource SelectedTextBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
