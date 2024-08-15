@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="Randomizer_WPF.UserControls.RandomizationLevelUserControl_V2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:base="clr-namespace:Randomizer_WPF"
+             xmlns:dtos="clr-namespace:kotor_Randomizer_2.DTOs;assembly=KotorRandomizer"
+             xmlns:local="clr-namespace:Randomizer_WPF.UserControls"
+             xmlns:rando="clr-namespace:kotor_Randomizer_2;assembly=KotorRandomizer"
+             mc:Ignorable="d" 
+             d:DesignHeight="26" d:DesignWidth="350"
+             d:DataContext="{d:DesignInstance dtos:RandomizationLevelOption, IsDesignTimeCreatable=True}"
+             x:Name="thisView">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/RandomizerWPF;component/Resources/StyleResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="ToolTip">
+                <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.FontSize}" />
+            </Style>
+            
+            <base:BoolToHiddenConverter x:Key="BoolToHiddenConverter" />
+            <base:RandoLevelFlagsToBoolConverter x:Key="RLFToBoolConverter" RandoLevelFlagsChanged="RandoLevelFlagsChanged" />
+            <base:VisibleIfAllAreFalseMultiConverter x:Key="VisibilityMultiConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" MinWidth="{Binding ElementName=thisView, Path=LevelsBoxMinWidth}" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.Resources>
+            <Style TargetType="Border">
+                <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                <Setter Property="Visibility">
+                    <Setter.Value>
+                        <MultiBinding Converter="{StaticResource VisibilityMultiConverter}" ConverterParameter="{x:Static Visibility.Hidden}">
+                            <Binding Path="SubtypeVisible" />
+                            <Binding Path="TypeVisible" />
+                            <Binding Path="MaxVisible" />
+                        </MultiBinding>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="BorderBrush" Value="{StaticResource MediumGrayBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                <Setter Property="Margin" Value="0,0,5,0" />
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="RadioButton">
+                <Setter Property="Padding" Value="5,0" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+        </Grid.Resources>
+
+        <CheckBox x:Name="cbIsActive" Margin="0" Padding="5,0"
+                  VerticalAlignment="Center" VerticalContentAlignment="Center"
+                  ToolTip="{Binding CheckboxToolTip}"
+                  IsChecked="{Binding Flags, Mode=TwoWay, Converter={StaticResource RLFToBoolConverter}, ConverterParameter={x:Static rando:RandoLevelFlags.Enabled}}"
+                  >
+            <TextBlock Text="{Binding CheckboxLabel}" />
+        </CheckBox>
+        <Border Grid.Column="1" BorderThickness="1" Padding="5">
+            <StackPanel Grid.Column="1" Orientation="Horizontal"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        IsEnabled="{Binding ElementName=cbIsActive, Path=IsChecked}">
+                <RadioButton x:Name="rbSubtype"
+                             Visibility="{Binding SubtypeVisible, Converter={StaticResource BoolToHiddenConverter}}"
+                             IsChecked="{Binding Flags, Mode=TwoWay, Converter={StaticResource RLFToBoolConverter}, ConverterParameter={x:Static rando:RandoLevelFlags.Subtype}}"
+                             >
+                    <TextBlock Text="{Binding SubtypeLabel}" />
+                </RadioButton>
+                <RadioButton x:Name="rbType" Margin="5,0"
+                             Visibility="{Binding TypeVisible, Converter={StaticResource BoolToHiddenConverter}}"
+                             IsChecked="{Binding Flags, Mode=TwoWay, Converter={StaticResource RLFToBoolConverter}, ConverterParameter={x:Static rando:RandoLevelFlags.Type}}"
+                             >
+                    <TextBlock Text="{Binding TypeLabel}" />
+                </RadioButton>
+                <RadioButton x:Name="rbMax"
+                             Visibility="{Binding MaxVisible, Converter={StaticResource BoolToHiddenConverter}}"
+                             IsChecked="{Binding Flags, Mode=TwoWay, Converter={StaticResource RLFToBoolConverter}, ConverterParameter={x:Static rando:RandoLevelFlags.Max}}"
+                             >
+                    <TextBlock Text="{Binding MaxLabel}" />
+                </RadioButton>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

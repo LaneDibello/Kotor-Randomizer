@@ -71,6 +71,9 @@
       <DependentUpon>TestWindow2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\SettingsFile.cs" />
+    <Compile Include="UserControls\RandomizationLevelUserControl_V2.xaml.cs">
+      <DependentUpon>RandomizationLevelUserControl_V2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\RestrictedTextBox.cs" />
     <Compile Include="UserControls\SortAdorner.cs" />
     <Compile Include="TestWindow.xaml.cs">
@@ -152,6 +155,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\RandomizationLevelUserControl_V2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AudioView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -226,12 +233,6 @@
     <Resource Include="Resources\BoxUnselected_AlphaBig.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Documents\GitHub\Kotor-Randomizer-2\kotor Randomizer 2\KotorRandomizer.csproj">
-      <Project>{36fbe2a5-15e6-4cc3-9174-377807476732}</Project>
-      <Name>KotorRandomizer</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Open-Disabled.png" />
     <Resource Include="Resources\Open-Enabled.png" />
     <Resource Include="Resources\Trash-Disabled.png" />
@@ -239,6 +240,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Krandom.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\kotor Randomizer 2\KotorRandomizer.csproj">
+      <Project>{36fbe2a5-15e6-4cc3-9174-377807476732}</Project>
+      <Name>KotorRandomizer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

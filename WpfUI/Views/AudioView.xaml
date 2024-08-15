@@ -5,9 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:base="clr-namespace:Randomizer_WPF"
              xmlns:local="clr-namespace:Randomizer_WPF.Views"
+             xmlns:model="clr-namespace:kotor_Randomizer_2.Models;assembly=KotorRandomizer"
              xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance model:Kotor2Randomizer, IsDesignTimeCreatable=True}"
              FontFamily="Microsoft Sans Serif" FontSize="12"
              Name="thisView">
     <UserControl.Resources>
@@ -104,52 +106,58 @@
                                FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=4}"
                                />-->
 
-                    <Grid Margin="5,0,5,5">
+                    <Grid Margin="5,0,5,0">
                         <Grid.Resources>
                             <Style TargetType="Button" BasedOn="{StaticResource K1RandoButtonStyle}">
                                 <Setter Property="Margin" Value="5,0,0,0" />
-                                <Setter Property="Padding" Value="8,1" />
+                                <Setter Property="Padding" Value="12,1" />
                             </Style>
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="160" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Row 0: Toggle Buttons -->
                         <Button Margin="10,0" Content="Toggle All" Click="BtnToggleAll_Click" />
                         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                             <Button Content="Type"    Click="BtnType_Click" />
                             <Button Content="Max"     Click="BtnMax_Click" />
                         </StackPanel>
+                        
+                        <!-- Row 1: Category Options -->
+                        <ScrollViewer Name="svCategories" Margin="0,3,0,0" VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.ColumnSpan="2">
+                            <ItemsControl Name="lvCategories" ItemsSource="{Binding AudioCategoryOptions}" Background="Transparent">
+                                <ItemsControl.Resources>
+                                    <Style TargetType="uc:RandomizationLevelUserControl_V2">
+                                        <Setter Property="Margin" Value="0,1" />
+                                    </Style>
+                                </ItemsControl.Resources>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <uc:RandomizationLevelUserControl_V2
+                                            IsEnabled="{Binding IsEnabled}"
+                                            Tag="{Binding Category}"
+                                            />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
                     </Grid>
                     
-                    <uc:RandomizationLevelUserControl x:Name="rlucAreaMusic"
-                                                      CheckboxLabel="Area Music"
-                                                      SelectedLevel="{Binding ElementName=thisView, Path=AreaMusic, Mode=TwoWay}" />
-                    <uc:RandomizationLevelUserControl x:Name="rlucBattleMusic"
-                                                      CheckboxLabel="Battle Music"
-                                                      SelectedLevel="{Binding ElementName=thisView, Path=BattleMusic, Mode=TwoWay}" />
-                    <uc:RandomizationLevelUserControl x:Name="rlucAmbientNoise"
-                                                      CheckboxLabel="Ambient Noise"
-                                                      SelectedLevel="{Binding ElementName=thisView, Path=AmbientMusic, Mode=TwoWay}" />
-                    <uc:RandomizationLevelUserControl x:Name="rlucCutsceneNoise"
-                                                      CheckboxLabel="Cutscene Noise"
-                                                      SelectedLevel="{Binding ElementName=thisView, Path=CutsceneNoise, Mode=TwoWay}" />
-                    <uc:RandomizationLevelUserControl x:Name="rlucNpcSounds"
-                                                      CheckboxLabel="NPC Sounds" IsEnabled="False"
-                                                      SelectedLevel="{Binding ElementName=thisView, Path=NpcSounds, Mode=TwoWay}" />
-                    <uc:RandomizationLevelUserControl x:Name="rlucPartySounds"
-                                                      CheckboxLabel="Party Sounds" SubtypeVisible="Visible"
-                                                      SelectedLevel="{Binding ElementName=thisView, Path=PartySounds, Mode=TwoWay}" />
-
-                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=OverwriteDmcaMusic, Mode=TwoWay}"
+                    <CheckBox IsChecked="{Binding AudioRemoveDmcaMusic, Mode=TwoWay}"
                               ToolTip="{StaticResource ttDMCA}">
                         <TextBlock Text="Overwrite likely DMCA music" />
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=MixKotorGameMusic, Mode=TwoWay}" IsEnabled="False"
+                    <CheckBox IsChecked="{Binding AudioMixKotorGameMusic, Mode=TwoWay}" IsEnabled="False"
                               ToolTip="{StaticResource ttMixK12Music}">
                         <TextBlock Text="Mix Kotor 1 and 2 music" />
                     </CheckBox>
-                    <CheckBox IsChecked="{Binding ElementName=thisView, Path=MixNpcAndPartySounds, Mode=TwoWay}" IsEnabled="False"
+                    <CheckBox IsChecked="{Binding AudioMixNpcAndPartySounds, Mode=TwoWay}" IsEnabled="False"
                               ToolTip="{StaticResource ttMixSounds}">
                         <TextBlock Text="Mix NPC and Party Sounds Together" />
                     </CheckBox>

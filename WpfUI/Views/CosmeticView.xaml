@@ -30,7 +30,7 @@
                 <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.FontSize}" />
             </Style>
 
-            <ToolTip x:Key="ttAnimationAttack">
+            <!--<ToolTip x:Key="ttAnimationAttack">
                 Weapon attack animations.
             </ToolTip>
             <ToolTip x:Key="ttAnimationDamage">
@@ -50,7 +50,7 @@
             </ToolTip>
             <ToolTip x:Key="ttAnimationVarious">
                 Animations not in other categories.
-            </ToolTip>
+            </ToolTip>-->
             
             <ToolTip x:Key="ttLargeModels">
                 "Large Models" are those that don't fit in most circumstances and thus cause
@@ -162,32 +162,32 @@
                                 </StackPanel.Resources>
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationAttack" CheckboxLabel="Attack"
-                                    CheckboxToolTip="{StaticResource ttAnimationAttack}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationAttack}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationAttack}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationDamage" CheckboxLabel="Damage"
-                                    CheckboxToolTip="{StaticResource ttAnimationDamage}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationDamage}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationDamage}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationParry"  CheckboxLabel="Parry"
-                                    CheckboxToolTip="{StaticResource ttAnimationParry}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationParry}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationParry}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationMove"   CheckboxLabel="Movement"
-                                    CheckboxToolTip="{StaticResource ttAnimationMovement}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationMove}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationMovement}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationPause"  CheckboxLabel="Pause"
-                                    CheckboxToolTip="{StaticResource ttAnimationPause}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationPause}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationPause}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationLoop"   CheckboxLabel="Looping"
-                                    CheckboxToolTip="{StaticResource ttAnimationLoop}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationLoop}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationLoop}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationForget" CheckboxLabel="Various"
-                                    CheckboxToolTip="{StaticResource ttAnimationVarious}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationFire}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationVarious}"-->
                             </StackPanel>
 
                             <!--Warning-->
@@ -229,7 +229,6 @@
                                     <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:CosmeticView}}" />
                                 </Style>
                                 <Style TargetType="TextBlock">
-                                    <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
                                             <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
@@ -429,8 +428,8 @@
                             <TextBlock Style="{StaticResource tbDescription}" TextWrapping="Wrap"
                                        Margin="0,0,0,0" Padding="0,0,0,0">
                                 Notice: The stability of this feature is still questionable. If you receive
-                                any pop-ups or warnings about "invalid bumpmaps" please contact Lane Dibello
-                                with the texture name so he can omit it from the randomization. If you encounter
+                                any pop-ups or warnings about "invalid bumpmaps" please contact Lane with
+                                the texture name so he can omit it from the randomization. If you encounter
                                 issues mid-run, change your quality settings to revert to normal.
                             </TextBlock>
                         </Border>
