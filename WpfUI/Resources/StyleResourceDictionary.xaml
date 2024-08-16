@@ -108,7 +108,6 @@
     </Style>
     <!--#endregion Border Styles-->
     
-    
     <!--#region List View Styles-->
     <Style x:Key="GridViewColumnHeaderGripper"
        TargetType="Thumb">
@@ -734,7 +733,7 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Panel.ZIndex" Value="100" />
                             <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource SelectedBorderBrush}" />
-                            <Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="{StaticResource SelectedTextBrush}" />
+                            <Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="{DynamicResource SelectedTextBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
