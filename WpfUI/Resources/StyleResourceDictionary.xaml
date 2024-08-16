@@ -74,12 +74,6 @@
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
     </Style>
 
-    <Style x:Key="svPadded" TargetType="ScrollViewer">
-        <Setter Property="Margin" Value="0,5,0,0" />
-        <Setter Property="Padding" Value="5,0" />
-        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
-    </Style>
-
     <Style x:Key="tbStandard" TargetType="TextBox">
         <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
@@ -96,17 +90,123 @@
     </Style>
     <!--#endregion Text Styles-->
 
+    <Style x:Key="svPadded" TargetType="ScrollViewer">
+        <Setter Property="Margin" Value="0,5,0,0" />
+        <Setter Property="Padding" Value="5,0" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+    </Style>
+    
+    <!--#region Border Styles-->
+    <Style x:Key="borderSelector" TargetType="Border">
+        <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource SelectedTextBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--#endregion Border Styles-->
+    
+    
     <!--#region List View Styles-->
+    <Style x:Key="GridViewColumnHeaderGripper"
+       TargetType="Thumb">
+        <Setter Property="Width"
+          Value="18" />
+        <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Padding="{TemplateBinding Padding}"
+                        Background="Transparent"
+                        BorderBrush="{DynamicResource ControlForegroundBrush}">
+                        <Rectangle HorizontalAlignment="Center"
+                     Width="1"
+                     Fill="{TemplateBinding Background}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+    </Style>
+
+    <Style x:Key="gvchStandard" TargetType="GridViewColumnHeader">
+        <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GridViewColumnHeader">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver"/>
+                                <VisualState x:Name="Pressed" />
+                                <VisualState x:Name="Disabled" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border x:Name="HeaderBorder"
+                            BorderThickness="1,1,1,1"
+                            Style="{StaticResource borderSelector}">
+                            <ContentPresenter x:Name="HeaderContent"
+                                Margin="0,0,0,1"
+                                RecognizesAccessKey="True"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                        <Thumb x:Name="PART_HeaderGripper"
+                             HorizontalAlignment="Right"
+                             Margin="0,0,-9,0"
+                             Style="{StaticResource GridViewColumnHeaderGripper}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource SelectedTextBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
     <Style x:Key="lvStandard" TargetType="ListView">
         <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="BorderThickness" Value="1, 0, 1, 1" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
     </Style>
 
     <Style x:Key="lviStandard" TargetType="ListViewItem">
         <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border x:Name="Border"
+                        Padding="2"
+                        SnapsToDevicePixels="true"
+                        Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver" />
+                                <VisualState x:Name="Disabled" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Unselected" />
+                                <VisualState x:Name="Selected"/>
+                                <VisualState x:Name="SelectedUnfocused"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Foreground" Value="{DynamicResource SelectedTextBrush}"/>

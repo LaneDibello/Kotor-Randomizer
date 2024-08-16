@@ -161,10 +161,10 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.Resources>
-                            <Style x:Key="RandomizedStyle" TargetType="{x:Type ListViewItem}">
+                            <Style x:Key="RandomizedStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lviStandard}">
                                 <EventSetter Event="MouseDoubleClick" Handler="LvShuffleIncluded_DoubleClick" />
                             </Style>
-                            <Style x:Key="OmittedStyle" TargetType="{x:Type ListViewItem}">
+                            <Style x:Key="OmittedStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lviStandard}">
                                 <EventSetter Event="MouseDoubleClick" Handler="LvShuffleExcluded_DoubleClick" />
                             </Style>
                             <Style TargetType="ScrollBar">

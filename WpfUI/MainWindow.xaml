@@ -37,11 +37,7 @@
             <Style TargetType="TextBox" BasedOn="{StaticResource tbStandard}"/>
             <Style TargetType="ListView" BasedOn="{StaticResource lvStandard}"/>
             <Style TargetType="ListViewItem" BasedOn="{StaticResource lviStandard}"/>
-            <Style TargetType="GridViewColumnHeader">
-                <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
-            </Style>
+            <Style TargetType="GridViewColumnHeader" BasedOn="{StaticResource gvchStandard}"/>
             <Style TargetType="ComboBox" BasedOn="{StaticResource cbStandard}"/>
             <Style TargetType="ComboBoxItem" BasedOn="{StaticResource cbiStandard}"/>
             <Style TargetType="MenuItem" BasedOn="{StaticResource miStandard}"/>
