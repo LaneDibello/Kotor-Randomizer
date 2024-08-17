@@ -1,4 +1,5 @@
 ﻿using Randomizer_WPF.UserControls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -53,6 +54,17 @@ namespace Randomizer_WPF.Views
             }
             return rlucs;
         }
+
+        public void updateItemsTheme()
+        {
+            var rlucs = GetRandomizationLevelUserControls();
+
+            foreach (var item in rlucs)
+            {
+                item.Resources.MergedDictionaries.Clear();
+                item.Resources.MergedDictionaries.Add(Resources.MergedDictionaries[0]);
+            }
+        }
         #endregion
 
         #region Public Properties
@@ -103,7 +115,17 @@ namespace Randomizer_WPF.Views
                 if (item.MaxVisible) item.IsMax = true;
             }
         }
-        #endregion
 
+        private void thisView_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            updateItemsTheme();
+        }
+
+        private void thisView_Loaded(object sender, RoutedEventArgs e)
+        {
+            updateItemsTheme();
+        }
+
+        #endregion
     }
 }

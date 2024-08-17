@@ -13,7 +13,7 @@
              d:DesignHeight="540" d:DesignWidth="600"
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
              DataContextChanged="View_DataContextChanged"
-             Loaded="View_Loaded"
+             Loaded="View_Loaded" MouseMove="thisView_MouseMove"
              >
     <UserControl.Resources>
         <ResourceDictionary>
@@ -78,12 +78,14 @@
                     <ItemsControl.Resources>
                         <Style TargetType="uc:RandomizationLevelUserControl_V2">
                             <Setter Property="Margin" Value="0,1" />
+                            <!--<Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}"/>-->
                         </Style>
                     </ItemsControl.Resources>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <uc:RandomizationLevelUserControl_V2
                                 Tag="{Binding Category}"
+                                Foreground="{DynamicResource ControlForegroundBrush}"
                                 />
                                 <!--RandomizationLevelChanged="RandomizationLevelChanged"-->
                         </DataTemplate>
@@ -99,10 +101,10 @@
             <!-- Omitted Items -->
             <Grid Grid.Row="2" Margin="3">
                 <Grid.Resources>
-                    <Style x:Key="RandomizedItemStyle" TargetType="{x:Type ListViewItem}">
+                    <Style x:Key="RandomizedItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lviStandard}">
                         <EventSetter Event="MouseDoubleClick" Handler="LvRandomized_DoubleClick" />
                     </Style>
-                    <Style x:Key="OmittedItemStyle" TargetType="{x:Type ListViewItem}">
+                    <Style x:Key="OmittedItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lviStandard}">
                         <EventSetter Event="MouseDoubleClick" Handler="LvOmitted_DoubleClick" />
                     </Style>
                     <Style TargetType="ScrollBar">

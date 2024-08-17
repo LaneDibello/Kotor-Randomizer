@@ -314,7 +314,7 @@
                         <!-- Quality of Life Options -->
                         <Grid Margin="5,5,5,0">
                             <Grid.Resources>
-                                <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
+                                <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lviStandard}">
                                     <Setter Property="ToolTip" Value="{Binding ToolTipMessage}" />
                                 </Style>
                                 <Style x:Key="UnlockedItemStyle" TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ItemStyle}">

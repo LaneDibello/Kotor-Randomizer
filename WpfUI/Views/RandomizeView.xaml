@@ -65,10 +65,16 @@
                     <TextBox Name="tbSeed" Text="2147483647" MaxLength="11"
                              PreviewTextInput="TbSeed_PreviewTextInput"
                              TextChanged="TbSeed_TextChanged"
+                             Background="{DynamicResource ContentAreaDarkBrush}"
+                             Foreground="{DynamicResource ControlForegroundBrush}"
+                             BorderBrush="{DynamicResource BorderBrush}"
                              Visibility="{Binding ElementName=cbDisplayAsHex, Path=IsChecked, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                     <TextBox Name="tbSeedHex" Text="7FFFFFFF" MaxLength="9"
                              PreviewTextInput="TbSeedHex_PreviewTextInput"
                              TextChanged="TbSeedHex_TextChanged"
+                             Background="{DynamicResource ContentAreaDarkBrush}"
+                             Foreground="{DynamicResource ControlForegroundBrush}"
+                             BorderBrush="{DynamicResource BorderBrush}"
                              Visibility="{Binding ElementName=cbDisplayAsHex, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}" />
                     <CheckBox Name="cbDisplayAsHex" VerticalContentAlignment="Center" Margin="5,0,0,0" Visibility="Collapsed">
                         <TextBlock Text="Display Hex" />
