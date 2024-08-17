@@ -12,6 +12,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Controls.Primitives;
+using System.Xml.Linq;
 
 namespace Randomizer_WPF.Views
 {
@@ -84,6 +86,17 @@ namespace Randomizer_WPF.Views
                 rlucs.AddRange(FindVisualChildren<RandomizationLevelUserControl_V2>(cp));
             }
             return rlucs;
+        }
+
+        public void updateItemsTheme()
+        {
+            var rlucs = GetRandomizationLevelUserControls();
+
+            foreach (var item in rlucs)
+            {
+                item.Resources.MergedDictionaries.Clear();
+                item.Resources.MergedDictionaries.Add(Resources.MergedDictionaries[0]);
+            }
         }
 
         private void BtnToggleAll_Click(object sender, RoutedEventArgs e)
@@ -279,6 +292,7 @@ namespace Randomizer_WPF.Views
 
         private void View_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+
             if (DataContext is IRandomizeItems itemRando)
             {
                 lvRandomizedItemSource = itemRando.ItemRandomizedList;
@@ -319,6 +333,8 @@ namespace Randomizer_WPF.Views
 
         private void View_Loaded(object sender, RoutedEventArgs e)
         {
+            updateItemsTheme();
+
             var view = (CollectionView)CollectionViewSource.GetDefaultView(lvRandomized.ItemsSource);
             if (view != null) view.Filter = HandleListFilter;
 
@@ -354,6 +370,11 @@ namespace Randomizer_WPF.Views
             }
 
             //PopulateOmitList();
+        }
+
+        private void thisView_MouseMove(object sender, MouseEventArgs e)
+        {
+            updateItemsTheme();
         }
 
         //private void PopulateOmitList()
@@ -455,5 +476,7 @@ namespace Randomizer_WPF.Views
                         (item as RandomizableItem).Label.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0;
         }
         #endregion
+
+        
     }
 }

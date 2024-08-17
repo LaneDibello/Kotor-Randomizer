@@ -4,10 +4,12 @@
                     xmlns:local="clr-namespace:Randomizer_WPF"
                     xmlns:uc="clr-namespace:Randomizer_WPF.UserControls"
                     >
+    
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Kotor2Theme.xaml" />
         <ResourceDictionary Source="Kotor1Theme.xaml" />
-        <!--<ResourceDictionary Source="Kotor2Theme.xaml" />-->
     </ResourceDictionary.MergedDictionaries>
+    
     <local:StringDoubleConverter x:Key="StringDoubleConverter" />
 
     <!--#region Text Styles-->

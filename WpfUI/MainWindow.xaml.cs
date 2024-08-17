@@ -1,6 +1,7 @@
 ﻿using kotor_Randomizer_2;
 using kotor_Randomizer_2.Models;
 using Microsoft.Win32;
+using Randomizer_WPF.Views;
 using System;
 using System.IO;
 using System.Linq;
@@ -145,6 +146,7 @@ namespace Randomizer_WPF
                 {
                     ApplyThemeToChildren(depObj, theme);
                 }
+
             }
         }
 

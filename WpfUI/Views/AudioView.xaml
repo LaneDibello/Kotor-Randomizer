@@ -11,7 +11,7 @@
              d:DesignHeight="450" d:DesignWidth="400"
              d:DataContext="{d:DesignInstance model:Kotor2Randomizer, IsDesignTimeCreatable=True}"
              FontFamily="Microsoft Sans Serif" FontSize="12"
-             Name="thisView">
+             Name="thisView" MouseMove="thisView_MouseMove" Loaded="thisView_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -135,6 +135,7 @@
                                 <ItemsControl.Resources>
                                     <Style TargetType="uc:RandomizationLevelUserControl_V2">
                                         <Setter Property="Margin" Value="0,1" />
+                                        <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}"/>
                                     </Style>
                                 </ItemsControl.Resources>
                                 <ItemsControl.ItemTemplate>

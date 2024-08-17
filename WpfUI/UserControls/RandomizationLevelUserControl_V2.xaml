@@ -34,7 +34,7 @@
 
         <Grid.Resources>
             <Style TargetType="Border">
-                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
+                <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Foreground}" />
                 <Setter Property="Visibility">
                     <Setter.Value>
                         <MultiBinding Converter="{StaticResource VisibilityMultiConverter}" ConverterParameter="{x:Static Visibility.Hidden}">
@@ -62,7 +62,7 @@
                   ToolTip="{Binding CheckboxToolTip}"
                   IsChecked="{Binding Flags, Mode=TwoWay, Converter={StaticResource RLFToBoolConverter}, ConverterParameter={x:Static rando:RandoLevelFlags.Enabled}}"
                   >
-            <TextBlock Text="{Binding CheckboxLabel}" />
+            <TextBlock Text="{Binding CheckboxLabel}"/>
         </CheckBox>
         <Border Grid.Column="1" BorderThickness="1" Padding="5">
             <StackPanel Grid.Column="1" Orientation="Horizontal"

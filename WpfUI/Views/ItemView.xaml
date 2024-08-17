@@ -13,7 +13,7 @@
              d:DesignHeight="540" d:DesignWidth="600"
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
              DataContextChanged="View_DataContextChanged"
-             Loaded="View_Loaded"
+             Loaded="View_Loaded" MouseMove="thisView_MouseMove"
              >
     <UserControl.Resources>
         <ResourceDictionary>
@@ -78,12 +78,14 @@
                     <ItemsControl.Resources>
                         <Style TargetType="uc:RandomizationLevelUserControl_V2">
                             <Setter Property="Margin" Value="0,1" />
+                            <!--<Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}"/>-->
                         </Style>
                     </ItemsControl.Resources>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <uc:RandomizationLevelUserControl_V2
                                 Tag="{Binding Category}"
+                                Foreground="{DynamicResource ControlForegroundBrush}"
                                 />
                                 <!--RandomizationLevelChanged="RandomizationLevelChanged"-->
                         </DataTemplate>
