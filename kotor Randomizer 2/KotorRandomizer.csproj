@@ -19,7 +19,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
@@ -43,6 +43,9 @@
     <FileVersion>2.7.0.0</FileVersion>
     <AssemblyVersion>2.7.0.0</AssemblyVersion>
     <Version>2.7.0</Version>
+    <Authors>Lane Dibello, Caleb Hilley</Authors>
+    <Company>KotOR Speedrunning Community</Company>
+    <RepositoryUrl>https://github.com/LaneDibello/Kotor-Randomizer</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Resources\img\KrandomBeta.ico" />

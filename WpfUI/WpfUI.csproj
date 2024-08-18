@@ -21,7 +21,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
@@ -47,6 +47,8 @@
     <Company>KotOR Speedrunning Community</Company>
     <Version>2.7.0</Version>
     <RepositoryUrl>https://github.com/LaneDibello/Kotor-Randomizer</RepositoryUrl>
+    <AssemblyVersion>2.7.0.0</AssemblyVersion>
+    <FileVersion>2.7.0.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Resource Include="Resources\BoxActiveSelected_AlphaBig.png" />
