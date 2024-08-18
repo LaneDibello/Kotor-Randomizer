@@ -35,9 +35,6 @@
     <ManifestCertificateThumbprint>107E94451D42A20C7B8EC3E7F949DEB958B045C1</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>WpfUI_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
@@ -45,6 +42,11 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
+    <Title>Kotor Randomizer WPF</Title>
+    <Authors>Lane Dibello, Caleb Hilley</Authors>
+    <Company>KotOR Speedrunning Community</Company>
+    <Version>2.7.0</Version>
+    <RepositoryUrl>https://github.com/LaneDibello/Kotor-Randomizer</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <Resource Include="Resources\BoxActiveSelected_AlphaBig.png" />
