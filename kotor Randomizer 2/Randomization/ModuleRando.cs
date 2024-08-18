@@ -172,7 +172,7 @@ namespace kotor_Randomizer_2
             i++;
 
             // Write assembly version.
-            var version = typeof(StartForm).Assembly.GetName().Version;
+            var version = typeof(ModuleRando).Assembly.GetName().Version;
             ws.Cell(i, 1).Value = "Version";
             ws.Cell(i, 1).Style.Font.Bold = true;
             ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";
@@ -294,7 +294,7 @@ namespace kotor_Randomizer_2
                 ws.Cell(i, 2).Value = Properties.Settings.Default.Seed;
                 i++;
 
-                var version = typeof(StartForm).Assembly.GetName().Version;
+                var version = typeof(ModuleRando).Assembly.GetName().Version;
                 ws.Cell(i, 1).Value = "Version";
                 ws.Cell(i, 1).Style.Font.Bold = true;
                 ws.Cell(i, 2).Value = $"v{version.Major}.{version.Minor}.{version.Build}";

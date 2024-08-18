@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{36FBE2A5-15E6-4CC3-9174-377807476732}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>kotor_Randomizer_2</RootNamespace>
     <AssemblyName>KotorRandomizer</AssemblyName>
@@ -63,8 +63,9 @@
   <PropertyGroup>
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL">
@@ -117,12 +118,6 @@
     <Compile Include="Models\Kotor2Randomizer.cs" />
     <Compile Include="DTOs\ReachabilityGoal.cs" />
     <Compile Include="DTOs\QualityOfLifeOption.cs" />
-    <Compile Include="Forms\TwodaForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TwodaForm.Designer.cs">
-      <DependentUpon>TwodaForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="KPaths.cs" />
     <Compile Include="Models\RandomizableItem.cs" />
     <Compile Include="Models\RandomizableTable.cs" />
@@ -136,146 +131,20 @@
     <Compile Include="Randomization\TextRando.cs" />
     <Compile Include="Randomization\TwodaRandom.cs" />
     <Compile Include="Globals.cs" />
-    <Compile Include="Forms\HelpForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\HelpForm.Designer.cs">
-      <DependentUpon>HelpForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\ItemForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ItemForm.Designer.cs">
-      <DependentUpon>ItemForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Randomization\ItemRando.cs" />
-    <Compile Include="Forms\ModelForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ModelForm.Designer.cs">
-      <DependentUpon>ModelForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Randomization\ModelRando.cs" />
-    <Compile Include="Forms\ModuleForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Randomization\ModuleRando.cs" />
-    <Compile Include="Forms\ModuleForm.Designer.cs">
-      <DependentUpon>ModuleForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\OtherForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\OtherForm.Designer.cs">
-      <DependentUpon>OtherForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Randomization\OtherRando.cs" />
-    <Compile Include="Forms\PathForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\PathForm.Designer.cs">
-      <DependentUpon>PathForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Randomization\RandoForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Randomization\RandoForm.Designer.cs">
-      <DependentUpon>RandoForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Randomization\Randomize.cs" />
-    <Compile Include="Forms\SeedForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SeedForm.Designer.cs">
-      <DependentUpon>SeedForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="Forms\SoundForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SoundForm.Designer.cs">
-      <DependentUpon>SoundForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Randomization\SoundRando.cs" />
-    <Compile Include="Forms\StartForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\StartForm.Designer.cs">
-      <DependentUpon>StartForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Forms\StartFormAesteticHandlers.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TextForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TextForm.Designer.cs">
-      <DependentUpon>TextForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\TextureForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TextureForm.Designer.cs">
-      <DependentUpon>TextureForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Randomization\TextureRando.cs" />
     <Compile Include="KRP.cs" />
-    <Compile Include="Forms\PresetForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\PresetForm.Designer.cs">
-      <DependentUpon>PresetForm.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Forms\TwodaForm.resx">
-      <DependentUpon>TwodaForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\HelpForm.resx">
-      <DependentUpon>HelpForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ItemForm.resx">
-      <DependentUpon>ItemForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ModelForm.resx">
-      <DependentUpon>ModelForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ModuleForm.resx">
-      <DependentUpon>ModuleForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForm.resx">
-      <DependentUpon>OtherForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PathForm.resx">
-      <DependentUpon>PathForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Randomization\RandoForm.resx">
-      <DependentUpon>RandoForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SeedForm.resx">
-      <DependentUpon>SeedForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SoundForm.resx">
-      <DependentUpon>SoundForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\StartForm.resx">
-      <DependentUpon>StartForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TextForm.resx">
-      <DependentUpon>TextForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TextureForm.resx">
-      <DependentUpon>TextureForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PresetForm.resx">
-      <DependentUpon>PresetForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
