@@ -1,16 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{36FBE2A5-15E6-4CC3-9174-377807476732}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <OutputType>Library</OutputType>
     <RootNamespace>kotor_Randomizer_2</RootNamespace>
-    <AssemblyName>KotorRandomizer</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -27,26 +19,12 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\img\Krandom.ico</ApplicationIcon>
@@ -55,280 +33,20 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <StartupObject />
+    <FileVersion>2.7.0.0</FileVersion>
+    <AssemblyVersion>2.7.0.0</AssemblyVersion>
+    <Version>2.7.0</Version>
+    <Authors>Lane Dibello, Caleb Hilley</Authors>
+    <Company>KotOR Speedrunning Community</Company>
+    <RepositoryUrl>https://github.com/LaneDibello/Kotor-Randomizer</RepositoryUrl>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ClosedXML.0.95.4\lib\net40\ClosedXML.dll</HintPath>
-    </Reference>
-    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
-      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
-    </Reference>
-    <Reference Include="ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExcelNumberFormat.1.0.10\lib\net20\ExcelNumberFormat.dll</HintPath>
-    </Reference>
-    <Reference Include="KotOR_IO, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\LaneDibello\KotOR_IO\KotOR_IO\bin\Debug\KotOR_IO.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Windows.Forms.DataVisualization" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="DTOs\AudioRandoCategory.cs" />
-    <Compile Include="DTOs\AudioRandoCategoryOption.cs" />
-    <Compile Include="DTOs\ItemRandoCategoryOption.cs" />
-    <Compile Include="DTOs\RandomizationLevelOption.cs" />
-    <Compile Include="Digraph\ModuleDigraph.cs" />
-    <Compile Include="Digraph\ModuleEdge.cs" />
-    <Compile Include="Digraph\ModuleVertex.cs" />
-    <Compile Include="Digraph\XmlConsts.cs" />
-    <Compile Include="Extensions\BooleanExtensions.cs" />
-    <Compile Include="Extensions\EnumExtensions.cs" />
-    <Compile Include="DTOs\ItemRandoCategory.cs" />
-    <Compile Include="Models\RandomizableItemsK2.cs" />
-    <Compile Include="Models\RandomizableItemsK1.cs" />
-    <Compile Include="Interfaces\IGeneralSettings.cs" />
-    <Compile Include="Interfaces\IRandomizeAudio.cs" />
-    <Compile Include="Interfaces\IRandomizeItems.cs" />
-    <Compile Include="Interfaces\IRandomizeModules.cs" />
-    <Compile Include="Models\Kotor1Randomizer.cs" />
-    <Compile Include="Models\Kotor2Randomizer.cs" />
-    <Compile Include="DTOs\ReachabilityGoal.cs" />
-    <Compile Include="DTOs\QualityOfLifeOption.cs" />
-    <Compile Include="Forms\TwodaForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TwodaForm.Designer.cs">
-      <DependentUpon>TwodaForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="KPaths.cs" />
-    <Compile Include="Models\RandomizableItem.cs" />
-    <Compile Include="Models\RandomizableTable.cs" />
-    <Compile Include="Models\RandomizerBase.cs" />
-    <Compile Include="Models\XKRP.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Randomization\TextRando.cs" />
-    <Compile Include="Randomization\TwodaRandom.cs" />
-    <Compile Include="Globals.cs" />
-    <Compile Include="Forms\HelpForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\HelpForm.Designer.cs">
-      <DependentUpon>HelpForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\ItemForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ItemForm.Designer.cs">
-      <DependentUpon>ItemForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Randomization\ItemRando.cs" />
-    <Compile Include="Forms\ModelForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ModelForm.Designer.cs">
-      <DependentUpon>ModelForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Randomization\ModelRando.cs" />
-    <Compile Include="Forms\ModuleForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Randomization\ModuleRando.cs" />
-    <Compile Include="Forms\ModuleForm.Designer.cs">
-      <DependentUpon>ModuleForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\OtherForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\OtherForm.Designer.cs">
-      <DependentUpon>OtherForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Randomization\OtherRando.cs" />
-    <Compile Include="Forms\PathForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\PathForm.Designer.cs">
-      <DependentUpon>PathForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Randomization\RandoForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Randomization\RandoForm.Designer.cs">
-      <DependentUpon>RandoForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Randomization\Randomize.cs" />
-    <Compile Include="Forms\SeedForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SeedForm.Designer.cs">
-      <DependentUpon>SeedForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Settings.cs" />
-    <Compile Include="Forms\SoundForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SoundForm.Designer.cs">
-      <DependentUpon>SoundForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Randomization\SoundRando.cs" />
-    <Compile Include="Forms\StartForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\StartForm.Designer.cs">
-      <DependentUpon>StartForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Forms\StartFormAesteticHandlers.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TextForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TextForm.Designer.cs">
-      <DependentUpon>TextForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\TextureForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TextureForm.Designer.cs">
-      <DependentUpon>TextureForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Randomization\TextureRando.cs" />
-    <Compile Include="KRP.cs" />
-    <Compile Include="Forms\PresetForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\PresetForm.Designer.cs">
-      <DependentUpon>PresetForm.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Forms\TwodaForm.resx">
-      <DependentUpon>TwodaForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\HelpForm.resx">
-      <DependentUpon>HelpForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ItemForm.resx">
-      <DependentUpon>ItemForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ModelForm.resx">
-      <DependentUpon>ModelForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ModuleForm.resx">
-      <DependentUpon>ModuleForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OtherForm.resx">
-      <DependentUpon>OtherForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PathForm.resx">
-      <DependentUpon>PathForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Randomization\RandoForm.resx">
-      <DependentUpon>RandoForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SeedForm.resx">
-      <DependentUpon>SeedForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SoundForm.resx">
-      <DependentUpon>SoundForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\StartForm.resx">
-      <DependentUpon>StartForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TextForm.resx">
-      <DependentUpon>TextForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TextureForm.resx">
-      <DependentUpon>TextureForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PresetForm.resx">
-      <DependentUpon>PresetForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="packages.config" />
-    <None Include="Properties\app.manifest" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <None Include="Resources\k1patch\ALLINCLUDED_modulesave.2da" />
-    <None Include="Resources\k1patch\appearance.2da" />
-    <None Include="Resources\k1patch\appearance_speedysuit.2da" />
-    <None Include="Resources\k1patch\g_brakatan003.utc" />
-    <None Include="Resources\k2patch\200_info_term.dlg" />
-    <None Include="Resources\k2patch\231sntry.dlg" />
-    <None Include="Resources\k2patch\262exit.dlg" />
-    <None Include="Resources\k2patch\a_disc_join.ncs" />
-    <None Include="Resources\k2patch\a_disc_join.nss" />
-    <None Include="Resources\k2patch\a_galaxymap.ncs" />
-    <None Include="Resources\k2patch\a_galaxymap.nss" />
-    <None Include="Resources\k2patch\a_tel_globalset.ncs" />
-    <None Include="Resources\k2patch\ebo_elev.utp" />
-    <None Include="Resources\k2patch\modulesave.2da" />
-    <None Include="Resources\k2patch\r_to003EBOelev.ncs" />
-    <None Include="Resources\k2patch\r_to003EBOelev.nss" />
-    <None Include="Resources\k1patch\k33b_openacademy.ncs" />
-    <None Include="Resources\k1patch\k36_pkor_enter.ncs" />
-    <None Include="Resources\k1patch\k_pdan_13_area.ncs" />
-    <None Include="Resources\k1patch\k_pebn_galaxy.ncs" />
-    <None Include="Resources\k1patch\k_pebo_mgheart.ncs" />
-    <None Include="Resources\k1patch\k_plev_goto40aa.ncs" />
-    <None Include="Resources\k1patch\k_plev_goto40ab.ncs" />
-    <None Include="Resources\k1patch\k_ren_visionland.ncs" />
-    <None Include="Resources\k1patch\lev40_accntl_dlg.dlg" />
-    <None Include="Resources\k1patch\m10aa.git" />
-    <None Include="Resources\k1patch\MGINCLUDED_modulesave.2da" />
-    <None Include="Resources\k1patch\NODELETE_ALLINCLUDED_modulesave.2da" />
-    <None Include="Resources\k1patch\NODELETE_MGINCLUDED_modulesave.2da" />
-    <None Include="Resources\k1patch\NODELETE_modulesave.2da" />
-    <None Include="Resources\k1patch\pebn_mystery.dlg" />
-    <None Include="Resources\k1patch\tar02_janice021.dlg" />
-    <None Include="Resources\k2patch\r_to003EBOentr.ncs" />
-    <None Include="Resources\k2patch\r_to003EBOentr.nss" />
-    <None Include="Resources\k2patch\r_to950COR.ncs" />
-    <None Include="Resources\k2patch\r_to950COR.nss" />
-    <None Include="Resources\k2patch\shuttle.dlg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\img\KrandomBeta.ico" />
     <Content Include="Xml\Kotor2Modules.xml">
@@ -339,25 +57,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Notes\KRPformat.txt" />
-    <None Include="Resources\help\GeneralHelp.txt" />
-    <None Include="Resources\help\ModuleHelp.txt" />
-    <None Include="Resources\help\ItemHelp.txt" />
-    <None Include="Resources\help\SoundHelp.txt" />
-    <None Include="Resources\help\ModelHelp.txt" />
-    <None Include="Resources\help\TextureHelp.txt" />
-    <None Include="Resources\help\TwoDAHelp.txt" />
-    <None Include="Resources\help\TextHelp.txt" />
-    <None Include="Resources\help\OtherHelp.txt" />
-    <None Include="Resources\help\PresetHelp.txt" />
-    <None Include="Resources\help\SeedHelp.txt" />
-    <None Include="Resources\help\PathHelp.txt" />
-    <None Include="Resources\help\RandoHelp.txt" />
     <Content Include="Notes\Texture Name Scheme.txt" />
-    <None Include="Resources\img\Krandom.ico" />
-    <None Include="Resources\img\BoxActive.png" />
-    <None Include="Resources\img\BoxActUnselected.png" />
-    <None Include="Resources\img\BoxSlected.png" />
-    <None Include="Resources\img\BoxUnslected.png" />
     <Content Include="Notes\randonotes.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -375,12 +75,16 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.95.4" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.7.2" />
+    <PackageReference Include="ExcelNumberFormat" Version="1.0.10" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="KotOR_IO">
+      <HintPath>..\..\LaneDibello\KotOR_IO\KotOR_IO\bin\Release\net7.0-windows\KotOR_IO.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

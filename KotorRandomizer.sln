@@ -1,15 +1,13 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32602.291
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "KRandomSetup", "KRandomSetup\KRandomSetup.vdproj", "{8B040375-A776-43BB-954E-578C9046E42F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Patch Sources", "Patch Sources\Patch Sources.csproj", "{A0BF410A-69C7-4ED2-BBCE-395047D3A8DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KotorRandomizer", "kotor Randomizer 2\KotorRandomizer.csproj", "{36FBE2A5-15E6-4CC3-9174-377807476732}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KotorRandomizer", "kotor Randomizer 2\KotorRandomizer.csproj", "{36FBE2A5-15E6-4CC3-9174-377807476732}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfUI", "WpfUI\WpfUI.csproj", "{12BF9F84-4CB3-4401-AB16-35A77C0FDC41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfUI", "WpfUI\WpfUI.csproj", "{12BF9F84-4CB3-4401-AB16-35A77C0FDC41}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F8B3E4AE-EA90-4FBA-87B6-FE5D70DFFAE1}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,8 +20,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8B040375-A776-43BB-954E-578C9046E42F}.Debug|Any CPU.ActiveCfg = Debug
-		{8B040375-A776-43BB-954E-578C9046E42F}.Release|Any CPU.ActiveCfg = Release
 		{A0BF410A-69C7-4ED2-BBCE-395047D3A8DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A0BF410A-69C7-4ED2-BBCE-395047D3A8DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0BF410A-69C7-4ED2-BBCE-395047D3A8DD}.Release|Any CPU.ActiveCfg = Release|Any CPU

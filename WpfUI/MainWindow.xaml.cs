@@ -235,7 +235,8 @@ namespace Randomizer_WPF
         {
             get
             {
-                var v = System.Reflection.Assembly.GetAssembly(typeof(Kotor1Randomizer)).GetName().Version;
+                var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                var v = assembly.GetName().Version;
                 return $"Kotor Randomizer (v{v.Major}.{v.Minor}.{v.Build})";
             }
         }

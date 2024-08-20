@@ -227,6 +227,8 @@ namespace Randomizer_WPF.Views
                 // Else, move all to randomized and then move those with matching codes to omitted.
                 foreach (var item in lvOmittedItemSource)
                 {
+                    // Addresses an issue where null items sometimes end up on the omitted list
+                    if (item is null) continue; 
                     lvRandomizedItemSource.Add(item);
                 }
                 lvOmittedItemSource.Clear();
