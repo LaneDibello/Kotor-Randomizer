@@ -250,18 +250,18 @@
                             <!--Character Rando-->
                             <StackPanel Grid.Row="1">
                                 <CheckBox Grid.Row="1" Name="cbCharacterRando" IsChecked="{Binding ModelCharacterRando, Mode=TwoWay}">
-                                    <TextBlock Text="Characters" />
+                                    <TextBlock Text="Characters" Style="{StaticResource tblStandard}"/>
                                 </CheckBox>
                                 <Border Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"
                                         IsEnabled="{Binding ElementName=cbCharacterRando, Path=IsChecked}">
                                     <StackPanel>
                                         <CheckBox IsChecked="{Binding ModelCharacterOmitLarge, Mode=TwoWay}"
                                                   ToolTip="{StaticResource ttLargeModels}">
-                                            <TextBlock Text="Omit Large Models" />
+                                            <TextBlock Text="Omit Large Models" Style="{StaticResource tblStandard}"/>
                                         </CheckBox>
                                         <CheckBox IsChecked="{Binding ModelCharacterOmitBroken, Mode=TwoWay}"
                                                   ToolTip="{StaticResource ttBrokenModels}">
-                                            <TextBlock Text="Omit Broken Models" />
+                                            <TextBlock Text="Omit Broken Models" Style="{StaticResource tblStandard}"/>
                                         </CheckBox>
                                     </StackPanel>
                                 </Border>
@@ -270,22 +270,22 @@
                             <!--Placeable Rando-->
                             <StackPanel Grid.Row="2">
                                 <CheckBox Grid.Row="2" Margin="3,0,0,0" Name="cbPlaceableRando" IsChecked="{Binding ModelPlaceableRando, Mode=TwoWay}">
-                                    <TextBlock Text="Placeables" />
+                                    <TextBlock Text="Placeables" Style="{StaticResource tblStandard}"/>
                                 </CheckBox>
                                 <Border Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center"
                                         IsEnabled="{Binding ElementName=cbPlaceableRando, Path=IsChecked}">
                                     <StackPanel>
                                         <CheckBox IsChecked="{Binding ModelPlaceableOmitLarge, Mode=TwoWay}"
                                                   ToolTip="{StaticResource ttLargeModels}">
-                                            <TextBlock Text="Omit Large Models" />
+                                            <TextBlock Text="Omit Large Models" Style="{StaticResource tblStandard}"/>
                                         </CheckBox>
                                         <CheckBox IsChecked="{Binding ModelPlaceableOmitBroken, Mode=TwoWay}"
                                                   ToolTip="{StaticResource ttBrokenModels}">
-                                            <TextBlock Text="Omit Broken Models" />
+                                            <TextBlock Text="Omit Broken Models" Style="{StaticResource tblStandard}"/>
                                         </CheckBox>
                                         <CheckBox IsChecked="{Binding ModelPlaceableEasyPanels, Mode=TwoWay}"
                                                   ToolTip="{StaticResource ttFloorPanels}">
-                                            <TextBlock Text="Easy Floor Panels" />
+                                            <TextBlock Text="Easy Floor Panels" Style="{StaticResource tblStandard}"/>
                                         </CheckBox>
                                     </StackPanel>
                                 </Border>
@@ -294,18 +294,18 @@
                             <!--Door Rando-->
                             <StackPanel Grid.Row="3">
                                 <CheckBox Grid.Row="3" Margin="3,0,0,0" Name="cbDoorRando" IsChecked="{Binding ModelDoorRando, Mode=TwoWay}">
-                                    <TextBlock Text="Doors" />
+                                    <TextBlock Text="Doors" Style="{StaticResource tblStandard}"/>
                                 </CheckBox>
                                 <Border Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="10,5,10,0"
                                         IsEnabled="{Binding ElementName=cbDoorRando, Path=IsChecked}">
                                     <StackPanel>
                                         <CheckBox IsChecked="{Binding ModelDoorOmitAirlock, Mode=TwoWay}"
                                                   ToolTip="{StaticResource ttAirlocks}">
-                                            <TextBlock Text="Omit Airlocks" />
+                                            <TextBlock Text="Omit Airlocks" Style="{StaticResource tblStandard}"/>
                                         </CheckBox>
                                         <CheckBox IsChecked="{Binding ModelDoorOmitBroken, Mode=TwoWay}"
                                                   ToolTip="{StaticResource ttBrokenModels}">
-                                            <TextBlock Text="Omit Broken Models" />
+                                            <TextBlock Text="Omit Broken Models" Style="{StaticResource tblStandard}"/>
                                         </CheckBox>
                                     </StackPanel>
                                 </Border>
