@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -19,7 +20,7 @@ namespace Randomizer_WPF.UserControls
     /// <summary>
     /// Interaction logic for PathUserControl.xaml
     /// </summary>
-    public partial class PathUserControl : UserControl
+    public partial class PathUserControl : System.Windows.Controls.UserControl
     {
         public PathUserControl()
         {
@@ -41,7 +42,18 @@ namespace Randomizer_WPF.UserControls
 
         private void BtnBrowse_Click(object sender, RoutedEventArgs e)
         {
-
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (PathText != "")
+            {
+                // This solution only works if it's a directory the dialog is allowed to access
+                // Otherwise it will just spit you out in a recent directory
+                dialog.InitialDirectory = PathText + @"\";
+            }
+            var result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                PathText = dialog.SelectedPath;
+            }
         }
     }
 }
