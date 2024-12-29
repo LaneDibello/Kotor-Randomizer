@@ -64,8 +64,8 @@
 
         <!-- Dock.Bottom, StatusBar -->
         <StatusBar DockPanel.Dock="Bottom"
-                   Background="Transparent" Foreground="{DynamicResource HarshBlueBrush}"
-                   BorderBrush="{DynamicResource HarshBlueBrush}" BorderThickness="0,1,0,0">
+                   Background="Transparent" Foreground="{DynamicResource ControlForegroundBrush}"
+                   BorderBrush="{DynamicResource ControlForegroundBrush}" BorderThickness="0,1,0,0">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
@@ -90,13 +90,13 @@
             </StatusBarItem>
 
             <!-- Column 1 -->
-            <Separator Grid.Column="1" Background="{DynamicResource HarshBlueBrush}" />
+            <Separator Grid.Column="1" Background="{DynamicResource ControlForegroundBrush}" />
 
             <!-- Column 4 -->
             <StatusBarItem Grid.Column="2" HorizontalAlignment="Center">
                 <ProgressBar Name="pbCurrentProgress" Value="50" Width="90" Height="16"
-                             Background="Transparent" Foreground="{DynamicResource HarshYellowBrush}"
-                             BorderBrush="{DynamicResource HarshBlueBrush}"/>
+                             Background="Transparent" Foreground="{DynamicResource SelectedTextBrush}"
+                             BorderBrush="{DynamicResource ControlForegroundBrush}"/>
             </StatusBarItem>
         </StatusBar>
 

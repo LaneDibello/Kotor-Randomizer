@@ -45,11 +45,11 @@
             </ToolTip>
         </ResourceDictionary>
     </UserControl.Resources>
-    
-    <DockPanel Background="{StaticResource DarkBlueBrush}">
+
+    <DockPanel Background="{DynamicResource ContentAreaDarkBrush}">
         <!--Header and Description-->
         <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2"
-                BorderBrush="{StaticResource HarshBlueBrush}">
+                BorderBrush="{DynamicResource ControlForegroundBrush}">
             <StackPanel>
                 <TextBlock Style="{StaticResource tbTitle}"
                            Text="Other Randomization"
@@ -64,17 +64,8 @@
         <!--Settings-->
         <ScrollViewer Style="{StaticResource svPadded}">
             <StackPanel>
-                <StackPanel.Resources>
-                    <Style TargetType="Expander">
-                        <Setter Property="Margin" Value="0,0,0,5" />
-                        <Setter Property="Padding" Value="2" />
-                        <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
-                        <Setter Property="BorderThickness" Value="1" />
-                    </Style>
-                </StackPanel.Resources>
-
                 <!--Various Other-->
-                <Border BorderBrush="{StaticResource HarshBlueBrush}"
+                <Border BorderBrush="{DynamicResource ControlForegroundBrush}"
                         BorderThickness="1" Margin="0,0,0,5">
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
@@ -94,17 +85,7 @@
                                 <Setter Property="VerticalContentAlignment" Value="Center" />
                                 <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:OtherView}}" />
                             </Style>
-                            <Style TargetType="StackPanel">
-
-                            </Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
-                                <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource tblStandard}"/>
                         </Grid.Resources>
 
                         <!--Title-->
@@ -150,7 +131,7 @@
                 </Border>
 
                 <!--Name Generation-->
-                <Border BorderBrush="{StaticResource HarshBlueBrush}"
+                <Border BorderBrush="{DynamicResource ControlForegroundBrush}"
                         BorderThickness="1" Margin="0,0,0,5">
                     <Grid Margin="5" Height="250">
                         <Grid.ColumnDefinitions>
@@ -168,13 +149,6 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid.Resources>
-                            <Style TargetType="uc:RestrictedTextBox">
-                                <Setter Property="Margin" Value="0" />
-                                <Setter Property="Grid.Row" Value="4" />
-                                <Setter Property="AcceptsReturn" Value="True" />
-                                <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
-                                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
-                            </Style>
                             <Style TargetType="ScrollBar">
                                 <Style.Triggers>
                                     <Trigger Property="Orientation" Value="Horizontal">
@@ -188,7 +162,7 @@
                                 </Style.Triggers>
                             </Style>
                             <Style TargetType="TextBlock">
-                                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                                 <Setter Property="TextAlignment" Value="Center" />
                                 <Setter Property="Margin" Value="0,0,0,2" />
                             </Style>
@@ -212,7 +186,7 @@
                                    Margin="0,0,0,4" Grid.Row="1" Grid.ColumnSpan="5"
                                    Visibility="{Binding ElementName=cbDescriptionToggle, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
                             Name Generation replaces the letter-combo-probability files used when generating random names in-game.
-                            <Run Foreground="{StaticResource HarshYellowBrush}" TextDecorations="Underline">Write each name on a separate line.</Run>
+                            <Run Foreground="{DynamicResource SelectedTextBrush}" TextDecorations="Underline">Write each name on a separate line.</Run>
                             Valid characters are limited to alphabetical, hyphen, and apostrophe. The names provide the basis for the random names
                             and may not appear in-game.
                         </TextBlock>

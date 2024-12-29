@@ -26,7 +26,7 @@
         
         <Grid.Resources>
             <Style TargetType="Border">
-                <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
                 <Style.Triggers>
                     <Trigger Property="IsEnabled" Value="False">
                         <Setter Property="BorderBrush" Value="{StaticResource MediumGrayBrush}" />
@@ -34,7 +34,7 @@
                 </Style.Triggers>
             </Style>
             <Style TargetType="TextBlock">
-                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                 <Setter Property="Margin" Value="0,0,5,0" />
                 <Style.Triggers>
                     <Trigger Property="IsEnabled" Value="False">
@@ -45,6 +45,30 @@
             <Style TargetType="RadioButton">
                 <Setter Property="Padding" Value="5,0" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}"/>
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource SelectedTextBrush}"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="BorderBrush" Value="{DynamicResource MediumBlueBrush}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="CheckBox">
+                <Setter Property="Background" Value="{DynamicResource ContentAreaDarkBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}"/>
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource SelectedTextBrush}"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="BorderBrush" Value="{DynamicResource MediumBlueBrush}"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
         </Grid.Resources>
         
@@ -55,28 +79,28 @@
                   VerticalContentAlignment="Center"
                   Checked="CheckBox_Checked"
                   Unchecked="CheckBox_Unchecked"
-                  ToolTip="{Binding CheckboxToolTip}"
+                  ToolTip="{Binding CheckboxToolTip, RelativeSource={RelativeSource AncestorType=UserControl}}"
                   Tag="{Binding RelativeSource={RelativeSource AncestorType=local:RandomizationLevelUserControl}}">
-            <TextBlock Text="{Binding CheckboxLabel}" />
+            <TextBlock Text="{Binding CheckboxLabel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         </CheckBox>
         <Border Grid.Column="1" BorderThickness="1" Padding="5">
             <StackPanel Grid.Column="1" Orientation="Horizontal"
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                         IsEnabled="{Binding ElementName=cbIsActive, Path=IsChecked}">
                 <RadioButton x:Name="rbSubtype"
-                             Visibility="{Binding SubtypeVisible}"
+                             Visibility="{Binding SubtypeVisible, RelativeSource={RelativeSource AncestorType=UserControl}}"
                              Checked="RbSubtype_Checked">
-                    <TextBlock Text="{Binding SubtypeLabel}" />
+                    <TextBlock Text="{Binding SubtypeLabel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                 </RadioButton>
                 <RadioButton x:Name="rbType" Margin="5,0"
-                             Visibility="{Binding TypeVisible}"
+                             Visibility="{Binding TypeVisible, RelativeSource={RelativeSource AncestorType=UserControl}}"
                              Checked="RbType_Checked">
-                    <TextBlock Text="{Binding TypeLabel}" />
+                    <TextBlock Text="{Binding TypeLabel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                 </RadioButton>
                 <RadioButton x:Name="rbMax"
-                             Visibility="{Binding MaxVisible}"
+                             Visibility="{Binding MaxVisible, RelativeSource={RelativeSource AncestorType=UserControl}}"
                              Checked="RbMax_Checked">
-                    <TextBlock Text="{Binding MaxLabel}" />
+                    <TextBlock Text="{Binding MaxLabel, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                 </RadioButton>
             </StackPanel>
         </Border>

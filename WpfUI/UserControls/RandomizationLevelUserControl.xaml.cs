@@ -1,7 +1,9 @@
 ﻿using kotor_Randomizer_2;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,7 +26,6 @@ namespace Randomizer_WPF.UserControls
         public RandomizationLevelUserControl()
         {
             InitializeComponent();
-            this.DataContext = this;
 
             var active = cbIsActive.IsChecked;
 
@@ -49,7 +50,7 @@ namespace Randomizer_WPF.UserControls
             typeof(RandomizationLevelUserControl), new PropertyMetadata(RandomizationLevel.None, new PropertyChangedCallback(OnSelectedLevelChanged)));
 
         public static readonly DependencyProperty CheckboxLabelProperty = DependencyProperty.Register("CheckboxLabel", typeof(string), typeof(RandomizationLevelUserControl), new PropertyMetadata("Hello World"));
-        public static readonly DependencyProperty CheckboxToolTipProperty = DependencyProperty.Register("CheckboxToolTip", typeof(ToolTip), typeof(RandomizationLevelUserControl));
+        public static readonly DependencyProperty CheckboxToolTipProperty = DependencyProperty.Register("CheckboxToolTip", typeof(string), typeof(RandomizationLevelUserControl));
 
         public static readonly DependencyProperty SubtypeLabelProperty = DependencyProperty.Register("SubtypeLabel", typeof(string), typeof(RandomizationLevelUserControl), new PropertyMetadata("Subtype"));
         public static readonly DependencyProperty TypeLabelProperty = DependencyProperty.Register("TypeLabel", typeof(string), typeof(RandomizationLevelUserControl), new PropertyMetadata("Type"));
@@ -71,7 +72,7 @@ namespace Randomizer_WPF.UserControls
 
         public RandomizationLevel SelectedLevel
         {
-            get { return (RandomizationLevel)GetValue(SelectedLevelProperty); }
+            get => (RandomizationLevel)GetValue(SelectedLevelProperty);
             set
             {
                 // If the requested level is not visible, ignore the request.
@@ -85,81 +86,81 @@ namespace Randomizer_WPF.UserControls
 
         public string CheckboxLabel
         {
-            get { return (string)GetValue(CheckboxLabelProperty); }
-            set { SetValue(CheckboxLabelProperty, value); }
+            get => (string)GetValue(CheckboxLabelProperty);
+            set => SetValue(CheckboxLabelProperty, value);
         }
 
-
-
-        public ToolTip CheckboxToolTip
+        public string CheckboxToolTip
         {
-            get { return (ToolTip)GetValue(CheckboxToolTipProperty); }
-            set { SetValue(CheckboxToolTipProperty, value); }
+            get => (string)GetValue(CheckboxToolTipProperty);
+            set => SetValue(CheckboxToolTipProperty, value);
         }
-
-
 
         public string SubtypeLabel
         {
-            get { return (string)GetValue(SubtypeLabelProperty); }
-            set { SetValue(SubtypeLabelProperty, value); }
+            get => (string)GetValue(SubtypeLabelProperty);
+            set => SetValue(SubtypeLabelProperty, value);
         }
 
         public string TypeLabel
         {
-            get { return (string)GetValue(TypeLabelProperty); }
-            set { SetValue(TypeLabelProperty, value); }
+            get => (string)GetValue(TypeLabelProperty);
+            set => SetValue(TypeLabelProperty, value);
         }
 
         public string MaxLabel
         {
-            get { return (string)GetValue(MaxLabelProperty); }
-            set { SetValue(MaxLabelProperty, value); }
+            get => (string)GetValue(MaxLabelProperty);
+            set => SetValue(MaxLabelProperty, value);
         }
 
         public Visibility SubtypeVisible
         {
-            get { return (Visibility)GetValue(SubtypeVisibleProperty); }
-            set { SetValue(SubtypeVisibleProperty, value); }
+            get => (Visibility)GetValue(SubtypeVisibleProperty);
+            set => SetValue(SubtypeVisibleProperty, value);
         }
 
         public Visibility TypeVisible
         {
-            get { return (Visibility)GetValue(TypeVisibleProperty); }
-            set { SetValue(TypeVisibleProperty, value); }
+            get => (Visibility)GetValue(TypeVisibleProperty);
+            set => SetValue(TypeVisibleProperty, value);
         }
 
         public Visibility MaxVisible
         {
-            get { return (Visibility)GetValue(MaxVisibleProperty); }
-            set { SetValue(MaxVisibleProperty, value); }
+            get => (Visibility)GetValue(MaxVisibleProperty);
+            set => SetValue(MaxVisibleProperty, value);
         }
 
         public double LevelsBoxMinWidth
         {
-            get { return (double)GetValue(LevelsBoxMinWidthProperty); }
-            set { SetValue(LevelsBoxMinWidthProperty, value); }
+            get => (double)GetValue(LevelsBoxMinWidthProperty);
+            set => SetValue(LevelsBoxMinWidthProperty, value);
         }
 
         public bool IsChecked
         {
-            get { return cbIsActive.IsChecked ?? false; }
-            set { cbIsActive.IsChecked = value; }
+            get => cbIsActive.IsChecked ?? false;
+            set => cbIsActive.IsChecked = value;
         }
 
         #endregion Public Properties
 
         #region Events
 
-        public delegate void Control_RandomizationLevelChanged(string tag, RandomizationLevel oldValue, RandomizationLevel newValue);
+        public delegate void Control_RandomizationLevelChanged(object tag, RandomizationLevel oldValue, RandomizationLevel newValue);
         public event Control_RandomizationLevelChanged RandomizationLevelChanged;
 
         private static void OnSelectedLevelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RandomizationLevelUserControl control = d as RandomizationLevelUserControl;
+            var control = d as RandomizationLevelUserControl;
             control.OnSelectedLevelChanged(e);
         }
 
+        /// <summary>
+        /// Whever the selection level is changed, ensure the checkbox and radio buttons reflect the change. The discrepancy would appear
+        /// when a rando preset is loaded, chainging the settings without going through the buttons themselves.
+        /// </summary>
         private void OnSelectedLevelChanged(DependencyPropertyChangedEventArgs e)
         {
             if ((RandomizationLevel)e.NewValue == RandomizationLevel.None)
@@ -173,7 +174,7 @@ namespace Randomizer_WPF.UserControls
                 rbMax.IsChecked = (RandomizationLevel)e.NewValue == RandomizationLevel.Max;
                 cbIsActive.IsChecked = true;
             }
-            RandomizationLevelChanged?.Invoke(Tag.ToString(), (RandomizationLevel)e.OldValue, (RandomizationLevel)e.NewValue);
+            RandomizationLevelChanged?.Invoke(Tag, (RandomizationLevel)e.OldValue, (RandomizationLevel)e.NewValue);
         }
 
         private static void OnSubtypeVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -233,12 +234,17 @@ namespace Randomizer_WPF.UserControls
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (rbSubtype.IsChecked ?? false) SelectedLevel = RandomizationLevel.Subtype;
-            else if (rbType.IsChecked ?? false) SelectedLevel = RandomizationLevel.Type;
-            else if (rbMax.IsChecked ?? false) SelectedLevel = RandomizationLevel.Max;
-            else SelectedLevel = RandomizationLevel.None;
+            if (rbSubtype.IsChecked ?? false) { SelectedLevel = RandomizationLevel.Subtype; return; }
+            if (rbType.IsChecked    ?? false) { SelectedLevel = RandomizationLevel.Type; return; }
+            if (rbMax.IsChecked     ?? false) { SelectedLevel = RandomizationLevel.Max; return; }
+            SelectedLevel = RandomizationLevel.None;
         }
 
         #endregion Events
+
+        public override string ToString()
+        {
+            return $"{CheckboxLabel}: {SelectedLevel}";
+        }
     }
 }

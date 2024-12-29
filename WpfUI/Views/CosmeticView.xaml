@@ -14,7 +14,7 @@
              d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
              DataContextChanged="View_DataContextChanged"
              Loaded="View_Loaded"
-             Background="{StaticResource DarkBlueBrush}"
+             Background="{DynamicResource ContentAreaDarkBrush}"
              >
     <UserControl.Resources>
         <ResourceDictionary>
@@ -30,7 +30,7 @@
                 <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Tag.FontSize}" />
             </Style>
 
-            <ToolTip x:Key="ttAnimationAttack">
+            <!--<ToolTip x:Key="ttAnimationAttack">
                 Weapon attack animations.
             </ToolTip>
             <ToolTip x:Key="ttAnimationDamage">
@@ -50,7 +50,7 @@
             </ToolTip>
             <ToolTip x:Key="ttAnimationVarious">
                 Animations not in other categories.
-            </ToolTip>
+            </ToolTip>-->
             
             <ToolTip x:Key="ttLargeModels">
                 "Large Models" are those that don't fit in most circumstances and thus cause
@@ -71,7 +71,7 @@
     <DockPanel>
         <!-- Dock.Top, Description -->
         <Border DockPanel.Dock="Top" BorderThickness="0,0,0,2"
-                BorderBrush="{StaticResource HarshBlueBrush}">
+                BorderBrush="{DynamicResource ControlForegroundBrush}">
             <StackPanel>
                 <TextBlock Style="{StaticResource tbTitle}" Text="Cosmetic Randomization"
                            FontSize="{Binding ElementName=thisView, Path=FontSize, Converter={StaticResource AddToDoubleConverter}, ConverterParameter=10}"
@@ -87,7 +87,7 @@
             <StackPanel>
                 <StackPanel.Resources>
                     <Style TargetType="Border">
-                        <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                        <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
                         <Setter Property="BorderThickness" Value="1" />
                         <Setter Property="Margin" Value="0,0,0,5" />
                         <Setter Property="Padding" Value="2" />
@@ -162,38 +162,38 @@
                                 </StackPanel.Resources>
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationAttack" CheckboxLabel="Attack"
-                                    CheckboxToolTip="{StaticResource ttAnimationAttack}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationAttack}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationAttack}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationDamage" CheckboxLabel="Damage"
-                                    CheckboxToolTip="{StaticResource ttAnimationDamage}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationDamage}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationDamage}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationParry"  CheckboxLabel="Parry"
-                                    CheckboxToolTip="{StaticResource ttAnimationParry}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationParry}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationParry}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationMove"   CheckboxLabel="Movement"
-                                    CheckboxToolTip="{StaticResource ttAnimationMovement}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationMove}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationMovement}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationPause"  CheckboxLabel="Pause"
-                                    CheckboxToolTip="{StaticResource ttAnimationPause}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationPause}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationPause}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationLoop"   CheckboxLabel="Looping"
-                                    CheckboxToolTip="{StaticResource ttAnimationLoop}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationLoop}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationLoop}"-->
                                 <uc:RandomizationLevelUserControl
                                     x:Name="rlucAnimationForget" CheckboxLabel="Various"
-                                    CheckboxToolTip="{StaticResource ttAnimationVarious}"
                                     SelectedLevel="{Binding ElementName=thisView, Mode=TwoWay, Path=AnimationFire}" />
+                                    <!--CheckboxToolTip="{StaticResource ttAnimationVarious}"-->
                             </StackPanel>
 
                             <!--Warning-->
                             <Grid Grid.Row="3" Grid.ColumnSpan="3"
                                   Style="{StaticResource SpecialHidden}">
-                                <Border BorderBrush="{StaticResource HarshYellowBrush}"
+                                <Border BorderBrush="{DynamicResource SelectedBorderBrush}"
                                         Margin="2,0" Padding="0">
                                     <TextBlock Style="{StaticResource tbDescription}">
                                         Warning: Randomizing pause, looping, and various at max may result in an unplayable seed.
@@ -217,7 +217,7 @@
                             </Grid.RowDefinitions>
                             <Grid.Resources>
                                 <Style TargetType="Border">
-                                    <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                                    <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
                                     <Setter Property="BorderThickness" Value="1" />
                                     <Setter Property="Margin" Value="10,5,10,10" />
                                     <Setter Property="Padding" Value="2" />
@@ -229,7 +229,6 @@
                                     <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=local:CosmeticView}}" />
                                 </Style>
                                 <Style TargetType="TextBlock">
-                                    <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
                                             <Setter Property="Foreground" Value="{StaticResource MediumGrayBrush}" />
@@ -251,18 +250,18 @@
                             <!--Character Rando-->
                             <StackPanel Grid.Row="1">
                                 <CheckBox Grid.Row="1" Name="cbCharacterRando" IsChecked="{Binding ModelCharacterRando, Mode=TwoWay}">
-                                    <TextBlock Text="Characters" />
+                                    <TextBlock Text="Characters" Style="{StaticResource tblStandard}"/>
                                 </CheckBox>
                                 <Border Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center"
                                         IsEnabled="{Binding ElementName=cbCharacterRando, Path=IsChecked}">
                                     <StackPanel>
                                         <CheckBox IsChecked="{Binding ModelCharacterOmitLarge, Mode=TwoWay}"
                                                   ToolTip="{StaticResource ttLargeModels}">
-                                            <TextBlock Text="Omit Large Models" />
+                                            <TextBlock Text="Omit Large Models" Style="{StaticResource tblStandard}"/>
                                         </CheckBox>
                                         <CheckBox IsChecked="{Binding ModelCharacterOmitBroken, Mode=TwoWay}"
                                                   ToolTip="{StaticResource ttBrokenModels}">
-                                            <TextBlock Text="Omit Broken Models" />
+                                            <TextBlock Text="Omit Broken Models" Style="{StaticResource tblStandard}"/>
                                         </CheckBox>
                                     </StackPanel>
                                 </Border>
@@ -271,22 +270,22 @@
                             <!--Placeable Rando-->
                             <StackPanel Grid.Row="2">
                                 <CheckBox Grid.Row="2" Margin="3,0,0,0" Name="cbPlaceableRando" IsChecked="{Binding ModelPlaceableRando, Mode=TwoWay}">
-                                    <TextBlock Text="Placeables" />
+                                    <TextBlock Text="Placeables" Style="{StaticResource tblStandard}"/>
                                 </CheckBox>
                                 <Border Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center"
                                         IsEnabled="{Binding ElementName=cbPlaceableRando, Path=IsChecked}">
                                     <StackPanel>
                                         <CheckBox IsChecked="{Binding ModelPlaceableOmitLarge, Mode=TwoWay}"
                                                   ToolTip="{StaticResource ttLargeModels}">
-                                            <TextBlock Text="Omit Large Models" />
+                                            <TextBlock Text="Omit Large Models" Style="{StaticResource tblStandard}"/>
                                         </CheckBox>
                                         <CheckBox IsChecked="{Binding ModelPlaceableOmitBroken, Mode=TwoWay}"
                                                   ToolTip="{StaticResource ttBrokenModels}">
-                                            <TextBlock Text="Omit Broken Models" />
+                                            <TextBlock Text="Omit Broken Models" Style="{StaticResource tblStandard}"/>
                                         </CheckBox>
                                         <CheckBox IsChecked="{Binding ModelPlaceableEasyPanels, Mode=TwoWay}"
                                                   ToolTip="{StaticResource ttFloorPanels}">
-                                            <TextBlock Text="Easy Floor Panels" />
+                                            <TextBlock Text="Easy Floor Panels" Style="{StaticResource tblStandard}"/>
                                         </CheckBox>
                                     </StackPanel>
                                 </Border>
@@ -295,18 +294,18 @@
                             <!--Door Rando-->
                             <StackPanel Grid.Row="3">
                                 <CheckBox Grid.Row="3" Margin="3,0,0,0" Name="cbDoorRando" IsChecked="{Binding ModelDoorRando, Mode=TwoWay}">
-                                    <TextBlock Text="Doors" />
+                                    <TextBlock Text="Doors" Style="{StaticResource tblStandard}"/>
                                 </CheckBox>
                                 <Border Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="10,5,10,0"
                                         IsEnabled="{Binding ElementName=cbDoorRando, Path=IsChecked}">
                                     <StackPanel>
                                         <CheckBox IsChecked="{Binding ModelDoorOmitAirlock, Mode=TwoWay}"
                                                   ToolTip="{StaticResource ttAirlocks}">
-                                            <TextBlock Text="Omit Airlocks" />
+                                            <TextBlock Text="Omit Airlocks" Style="{StaticResource tblStandard}"/>
                                         </CheckBox>
                                         <CheckBox IsChecked="{Binding ModelDoorOmitBroken, Mode=TwoWay}"
                                                   ToolTip="{StaticResource ttBrokenModels}">
-                                            <TextBlock Text="Omit Broken Models" />
+                                            <TextBlock Text="Omit Broken Models" Style="{StaticResource tblStandard}"/>
                                         </CheckBox>
                                     </StackPanel>
                                 </Border>
@@ -341,7 +340,7 @@
                                 <Setter Property="SubtypeVisible" Value="Collapsed" />
                             </Style>
                             <Style TargetType="Border">
-                                <Setter Property="BorderBrush" Value="{StaticResource HarshBlueBrush}" />
+                                <Setter Property="BorderBrush" Value="{DynamicResource ControlForegroundBrush}" />
                                 <Setter Property="BorderThickness" Value="1" />
                                 <Setter Property="Margin" Value="0,2" />
                             </Style>
@@ -351,7 +350,7 @@
                                 <Setter Property="VerticalContentAlignment" Value="Center" />
                             </Style>
                             <Style TargetType="TextBlock">
-                                <Setter Property="Foreground" Value="{StaticResource HarshBlueBrush}" />
+                                <Setter Property="Foreground" Value="{DynamicResource ControlForegroundBrush}" />
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </Grid.Resources>
@@ -359,7 +358,7 @@
                         <!-- Title, Pack, and Warning -->
                         <DockPanel Grid.ColumnSpan="2" Grid.RowSpan="2">
                             <!--Warning-->
-                            <Border BorderBrush="{StaticResource HarshYellowBrush}"
+                            <Border BorderBrush="{DynamicResource SelectedBorderBrush}"
                                     Margin="3,0,5,5" Padding="0"
                                     DockPanel.Dock="Bottom">
                                 <TextBlock Style="{StaticResource tbDescription}">
@@ -429,8 +428,8 @@
                             <TextBlock Style="{StaticResource tbDescription}" TextWrapping="Wrap"
                                        Margin="0,0,0,0" Padding="0,0,0,0">
                                 Notice: The stability of this feature is still questionable. If you receive
-                                any pop-ups or warnings about "invalid bumpmaps" please contact Lane Dibello
-                                with the texture name so he can omit it from the randomization. If you encounter
+                                any pop-ups or warnings about "invalid bumpmaps" please contact Lane with
+                                the texture name so he can omit it from the randomization. If you encounter
                                 issues mid-run, change your quality settings to revert to normal.
                             </TextBlock>
                         </Border>

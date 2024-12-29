@@ -62,7 +62,9 @@ namespace Randomizer_WPF.UserControls
 
             column = newColumn;
             adorner = new SortAdorner(column, newDir);
-            AdornerLayer.GetAdornerLayer(column).Add(adorner);
+            var layer = AdornerLayer.GetAdornerLayer(column);
+            if (layer == null) return; //The exception kept hopping the catch, so this is a temp fix
+            layer.Add(adorner);
             lv.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
         }
     }

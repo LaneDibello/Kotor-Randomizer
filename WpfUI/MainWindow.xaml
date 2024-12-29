@@ -12,7 +12,7 @@
         Title="{Binding WindowTitle, RelativeSource={RelativeSource Self}}"
         Height="{Binding ElementName=window, Path=CurrentHeight, Mode=TwoWay}"
         Width="{Binding ElementName=window, Path=CurrentWidth, Mode=TwoWay}"
-        MinHeight="475" MinWidth="575"
+        MinHeight="475" MinWidth="700"
         FontFamily="Microsoft Sans Serif" FontSize="12"
         Name="window"
         d:DataContext="{d:DesignInstance model:Kotor1Randomizer, IsDesignTimeCreatable=True}"
@@ -21,19 +21,38 @@
         Icon="/Resources/Krandom.ico"
         AllowDrop="True" DragOver="Window_DragOver" Drop="Window_Drop"
         Loaded="Window_Loaded"
+        WindowStyle="None"
+        ResizeMode="CanResize"
         >
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/StyleResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
             <local:StringDoubleConverter x:Key="StringDoubleConverter" />
             <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <local:SavePatchOptionsToBoolConverter x:Key="SaveOptionsToBool" />
             <local:ModuleExtrasToBoolConverter x:Key="ExtrasToBool" />
             <local:TextSettingsToBoolConverter x:Key="TextSettingsToBool" />
+            <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <Style TargetType="TextBox" BasedOn="{StaticResource tbStandard}"/>
+            <Style TargetType="ListView" BasedOn="{StaticResource lvStandard}"/>
+            <Style TargetType="ListViewItem" BasedOn="{StaticResource lviStandard}"/>
+            <Style TargetType="GridViewColumnHeader" BasedOn="{StaticResource gvchStandard}"/>
+            <Style TargetType="ComboBox" BasedOn="{StaticResource cbStandard}"/>
+            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource cbiStandard}"/>
+            <Style TargetType="MenuItem" BasedOn="{StaticResource miStandard}"/>
+            <Style TargetType="uc:RestrictedTextBox" BasedOn="{StaticResource rtbStandard}"/>
+
         </ResourceDictionary>
     </Window.Resources>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" 
+                      CornerRadius="0" 
+                      GlassFrameThickness="0"/>
+    </WindowChrome.WindowChrome>
 
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.New"   Executed="NewCommand_Executed"  CanExecute="NewCommand_CanExecute"  />
@@ -45,204 +64,244 @@
     <Window.Background>
         <SolidColorBrush Color="{DynamicResource WindowColor}" />
     </Window.Background>
-
     <DockPanel>
-        <DockPanel.Resources>
-            <Style TargetType="ToolTip" BasedOn="{StaticResource {x:Type ToolTip}}">
-                <Setter Property="FontSize" Value="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
-            </Style>
-        </DockPanel.Resources>
-        
-        <!-- Dock.Top, Menu -->
-        <Grid DockPanel.Dock="Top" Background="{Binding ElementName=Menu, Path=Background}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            
-            <Menu x:Name="Menu" Grid.ColumnSpan="2" VerticalAlignment="Center">
-                <Menu.Resources>
-                    <Style TargetType="MenuItem">
-                        <Setter Property="FontFamily" Value="Microsoft Sans Serif" />
-                        <Setter Property="FontSize" Value="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
-                    </Style>
-                </Menu.Resources>
-                <MenuItem Header="_File">
-                    <MenuItem Header="_New (Default Settings)"   Command="ApplicationCommands.New"   MinWidth="150" />
-                    <MenuItem Header="_Open Settings File..."    Command="ApplicationCommands.Open"  />
-                    <MenuItem Header="_Save Current Settings..." Command="ApplicationCommands.Save"  />
-                    <Separator />
-                    <MenuItem Header="E_xit" Command="local:CustomCommands.Exit" />
-                </MenuItem>
-                <MenuItem Header="_Spoilers">
-                    <MenuItem Header="_Auto-Create Spoilers" Name="miCreateSpoilers" IsCheckable="True" MinWidth="150"
-                              IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}" />
-                    <MenuItem Header="_Open Spoilers Folder" Click="MiOpenSpoilerFolder_Click" />
-                </MenuItem>
-                <MenuItem Header="_Links">
-                    <MenuItem Header="_Discord Invite" Click="MiHyperlink_Click" Tag="http://discord.gg/Q2uPRVu" MinWidth="150" />
-                    <MenuItem Header="_Leaderboards">
-                        <MenuItem Header="KotOR _1" Click="MiHyperlink_Click" Tag="https://www.speedrun.com/kotor1" />
-                        <MenuItem Header="KotOR _2" Click="MiHyperlink_Click" Tag="https://www.speedrun.com/kotor2" />
-                    </MenuItem>
-                    <MenuItem Header="_StrategyWiki">
-                        <MenuItem Header="KotOR _1" Click="MiHyperlink_Click" Tag="https://strategywiki.org/wiki/Star_Wars:_Knights_of_the_Old_Republic" />
-                        <MenuItem Header="_Cheats"  Click="MiHyperlink_Click" Tag="https://strategywiki.org/wiki/Star_Wars:_Knights_of_the_Old_Republic/Cheats#Windows" />
-                    </MenuItem>
-                </MenuItem>
-            </Menu>
+        <Border DockPanel.Dock="Top" 
+                BorderThickness="1,1,1,1" 
+                BorderBrush="{DynamicResource ControlForegroundBrush}" 
+                MouseDown="TitleBar_MouseDown"
+                x:Name="titleBar">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Image Source="/Resources/Krandom.ico" 
+                   Height="20" 
+                   HorizontalAlignment="Left" 
+                   Margin="5,5,5,5"
+                   VerticalAlignment="Center"
+                   Grid.Column="0"/>
+                <TextBlock 
+                Text="{Binding WindowTitle, RelativeSource={RelativeSource AncestorType=Window}}" 
+                Style="{StaticResource tbDescription}"
+                VerticalAlignment="Center"
+                Grid.Column="1">
+                </TextBlock>
+                <StackPanel 
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Grid.Column="2">
+                    <Button Content="-" Width="24" Click="MinimizeWindow_Click" Style="{StaticResource K1RandoButtonStyle}" Margin="2,2,2,2"/>
+                    <Button Content="X" Width="24" Click="CloseWindow_Click" Style="{StaticResource K1RandoButtonStyle}" Margin="2,2,2,2"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <DockPanel DockPanel.Dock="Bottom">
+            <DockPanel.Resources>
+                <Style TargetType="ToolTip" BasedOn="{StaticResource {x:Type ToolTip}}">
+                    <Setter Property="FontSize" Value="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
+                </Style>
+            </DockPanel.Resources>
 
-            <StackPanel
+            <!-- Dock.Top, Menu -->
+            <Grid DockPanel.Dock="Top" Background="{DynamicResource ContentAreaDarkBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Menu x:Name="Menu" Grid.ColumnSpan="2" VerticalAlignment="Center" Style="{StaticResource mStandard}">
+                    <MenuItem Header="_File">
+                        <MenuItem Header="_New (Default Settings)"   Command="ApplicationCommands.New"   MinWidth="150" />
+                        <MenuItem Header="_Open Settings File..."    Command="ApplicationCommands.Open"  />
+                        <MenuItem Header="_Save Current Settings..." Command="ApplicationCommands.Save"  />
+                        <Separator />
+                        <MenuItem Header="E_xit" Command="local:CustomCommands.Exit" />
+                    </MenuItem>
+                    <MenuItem Header="_Spoilers">
+                        <MenuItem Header="_Auto-Create Spoilers" Name="miCreateSpoilers" IsCheckable="True" MinWidth="150"
+                              IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}" />
+                        <MenuItem Header="_Open Spoilers Folder" Click="MiOpenSpoilerFolder_Click" />
+                    </MenuItem>
+                    <MenuItem Header="_Links">
+                        <MenuItem Header="_Discord Invite" Click="MiHyperlink_Click" Tag="http://discord.gg/Q2uPRVu" MinWidth="150" />
+                        <MenuItem Header="_Leaderboards">
+                            <MenuItem Header="KotOR _1" Click="MiHyperlink_Click" Tag="https://www.speedrun.com/kotor1" />
+                            <MenuItem Header="KotOR _2" Click="MiHyperlink_Click" Tag="https://www.speedrun.com/kotor2" />
+                        </MenuItem>
+                        <MenuItem Header="_StrategyWiki">
+                            <MenuItem Header="KotOR _1" Click="MiHyperlink_Click" Tag="https://strategywiki.org/wiki/Star_Wars:_Knights_of_the_Old_Republic" />
+                            <MenuItem Header="_Cheats"  Click="MiHyperlink_Click" Tag="https://strategywiki.org/wiki/Star_Wars:_Knights_of_the_Old_Republic/Cheats#Windows" />
+                        </MenuItem>
+                    </MenuItem>
+                </Menu>
+
+                <StackPanel
                 Orientation="Horizontal"
                 Grid.Column="2"
                 VerticalAlignment="Center"
                 >
-                <Label Content="Font Size:"
-                       FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
-                <ComboBox x:Name="cbFontSize" Width="60"
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
+                        <TextBlock Foreground="{StaticResource MediumBlueBrush}" VerticalAlignment="Center" Margin="0,0,-5,0">Kotor 1</TextBlock>
+                        <CheckBox x:Name="IsKotor2Active" Margin="3,0" Style="{StaticResource SliderCheckBox}"
+                              IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
+                              IsChecked="{Binding ElementName=window, Mode=TwoWay, Path=IsKotor2Selected}" />
+                        <TextBlock Foreground="{StaticResource MediumGreenBrush}" VerticalAlignment="Center">Kotor 2</TextBlock>
+                    </StackPanel>
+
+                    <Label Content="Font Size:"
+                       FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" 
+                       Style ="{StaticResource lStandard}"/>
+                    <ComboBox x:Name="cbFontSize" Width="60"
                           Margin="2"
                           HorizontalContentAlignment="Center"
                           FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
                           SelectedIndex="{Binding ElementName=window, Path=SelectedFontIndex, Mode=TwoWay}">
-                    <ComboBoxItem>12</ComboBoxItem>
-                    <ComboBoxItem IsSelected="True">14</ComboBoxItem>
-                    <ComboBoxItem>16</ComboBoxItem>
-                    <ComboBoxItem>18</ComboBoxItem>
-                    <ComboBoxItem>20</ComboBoxItem>
-                </ComboBox>
-            </StackPanel>
-        </Grid>
-        
-        <!-- Dock.Bottom, StatusBar -->
-        <StatusBar DockPanel.Dock="Bottom"
-                   Background="Transparent" Foreground="{DynamicResource HarshBlueBrush}"
-                   BorderBrush="{DynamicResource HarshBlueBrush}" BorderThickness="0,1,0,0">
-            <StatusBar.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="100" />
-                        </Grid.ColumnDefinitions>
-                    </Grid>
-                </ItemsPanelTemplate>
-            </StatusBar.ItemsPanel>
-            <StatusBar.Resources>
-                <Style TargetType="StatusBarItem">
-                    <Setter Property="FontFamily" Value="Microsoft Sans Serif" />
-                    <Setter Property="FontSize" Value="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
-                </Style>
-            </StatusBar.Resources>
-            
-            <StatusBarItem>
-                <TextBlock Name="lblCurrentStatus" Text="{Binding ElementName=RandomizeView, Path=CurrentState}" />
-            </StatusBarItem>
-            
-            <Separator Grid.Column="1" Background="{DynamicResource HarshBlueBrush}" />
-            
-            <StatusBarItem Grid.Column="2" HorizontalAlignment="Center">
-                <ProgressBar Name="pbCurrentProgress" Width="90" Height="16"
-                             Background="Transparent" Foreground="{DynamicResource HarshYellowBrush}"
-                             BorderBrush="{DynamicResource HarshBlueBrush}" />
-            </StatusBarItem>
-        </StatusBar>
-        
-        <!-- Dock.Center, Setting Views -->
-        <Grid Margin="5">
-            <TabControl TabStripPlacement="Left">
-                <TabControl.Resources>
-                    <Style TargetType="TabItem" BasedOn="{StaticResource K1TabItem}">
+                        <ComboBoxItem>12</ComboBoxItem>
+                        <ComboBoxItem IsSelected="True">14</ComboBoxItem>
+                        <ComboBoxItem>16</ComboBoxItem>
+                        <ComboBoxItem>18</ComboBoxItem>
+                        <ComboBoxItem>20</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+
+            <!-- Dock.Bottom, StatusBar -->
+            <StatusBar DockPanel.Dock="Bottom"
+                   Background="Transparent" Foreground="{DynamicResource ControlForegroundBrush}"
+                   BorderBrush="{DynamicResource ControlForegroundBrush}" BorderThickness="0,1,0,0">
+                <StatusBar.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="100" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </StatusBar.ItemsPanel>
+                <StatusBar.Resources>
+                    <Style TargetType="StatusBarItem">
+                        <Setter Property="FontFamily" Value="Microsoft Sans Serif" />
                         <Setter Property="FontSize" Value="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
                     </Style>
-                </TabControl.Resources>
-                
-                <!-- General Settings -->
-                <TabItem Header="_General" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-                    <!-- DataContext inherited from the window. Locked and Unlocked door lists bound from data context. -->
-                    <v:GeneralView x:Name="GeneralView"
-                                   FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+                </StatusBar.Resources>
 
-                                   Kotor1Path ="{Binding ElementName=window, Mode=TwoWay, Path=Kotor1Path}"
-                                   Kotor2Path ="{Binding ElementName=window, Mode=TwoWay, Path=Kotor2Path}"
-                                   PresetPath ="{Binding ElementName=window, Mode=TwoWay, Path=PresetPath}"
-                                   SpoilerPath="{Binding ElementName=window, Mode=TwoWay, Path=SpoilerPath}"
+                <StatusBarItem>
+                    <TextBlock Name="lblCurrentStatus" Text="{Binding ElementName=RandomizeView, Path=CurrentState}" />
+                </StatusBarItem>
+
+                <Separator Grid.Column="1" Background="{DynamicResource ControlForegroundBrush}" />
+
+                <StatusBarItem Grid.Column="2" HorizontalAlignment="Center">
+                    <ProgressBar Name="pbCurrentProgress" Width="90" Height="16"
+                             Background="Transparent" Foreground="{DynamicResource SelectedTextBrush}"
+                             BorderBrush="{DynamicResource ControlForegroundBrush}" />
+                </StatusBarItem>
+            </StatusBar>
+
+            <!-- Dock.Center, Setting Views -->
+            <Grid Margin="5">
+                <TabControl x:Name="tcAllTabs" TabStripPlacement="Left" BorderBrush="{DynamicResource ControlForegroundBrush}" Style="{StaticResource tcTest}">
+                    <TabControl.Resources>
+                        <Style TargetType="TabItem" BasedOn="{StaticResource tiStandard}">
+                            <Setter Property="FontSize" Value="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}" />
+                        </Style>
+                    </TabControl.Resources>
+
+                    <!-- General Settings -->
+                    <TabItem Name="GeneralTab" Header="_General" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
+                        <!-- DataContext inherited from the window. Locked and Unlocked door lists bound from data context. -->
+                        <v:GeneralView
+                        x:Name="GeneralView"
+                        FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
+
+                        IsKotor2Selected="{Binding ElementName=window, Mode=TwoWay, Path=IsKotor2Selected}"
                                    
-                                   SaveDataDeleteMilestone ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.NoSaveDelete}}"
-                                   SaveDataIncludeMinigames="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.SaveMiniGames}}"
-                                   SaveDataIncludeAll      ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.SaveAllModules}}"
-                                   QolAddSpiceLab          ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.VulkarSpiceLZ}}"
-                                   QolFastEnvirosuit       ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FastEnvirosuit}}"
-                                   QolEarlyT3              ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.EarlyT3}}"
-                                   QolFixDreamSequence     ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FixDream}}"
-                                   QolFixFighterEncounter  ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FixFighterEncounter}}"
-                                   QolFixMindPrison        ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FixMindPrison}}"
-                                   QolFixModuleCoordinates ="{Binding GeneralModuleExtrasValue, Mode=TwoWay, Converter={StaticResource ExtrasToBool}, ConverterParameter={x:Static rando:ModuleExtras.FixCoordinates}}"
-                                   />
-                </TabItem>
+                        Kotor1Path ="{Binding ElementName=window, Mode=TwoWay, Path=Kotor1Path}"
+                        Kotor2Path ="{Binding ElementName=window, Mode=TwoWay, Path=Kotor2Path}"
+                        PresetPath ="{Binding ElementName=window, Mode=TwoWay, Path=PresetPath}"
+                        SpoilerPath="{Binding ElementName=window, Mode=TwoWay, Path=SpoilerPath}"
+                                   
+                        SaveDataDeleteMilestone ="{Binding GeneralSaveOptions, Mode=TwoWay, Converter={StaticResource SaveOptionsToBool}, ConverterParameter={x:Static rando:SavePatchOptions.NoSaveDelete}}"
+                        SaveDataIncludeMinigames="{Binding GeneralSaveOptions, Mode=TwoWay, Converter={StaticResource SaveOptionsToBool}, ConverterParameter={x:Static rando:SavePatchOptions.SaveMiniGames}}"
+                        SaveDataIncludeAll      ="{Binding GeneralSaveOptions, Mode=TwoWay, Converter={StaticResource SaveOptionsToBool}, ConverterParameter={x:Static rando:SavePatchOptions.SaveAllModules}}"
+                                   
+                        K2SavePatch    ="{Binding GeneralSaveOptions, Mode=TwoWay, Converter={StaticResource SaveOptionsToBool}, ConverterParameter={x:Static rando:SavePatchOptions.K2NoSaveDelete}}"
+                        />
+                    </TabItem>
 
-                <!-- Hidden tab items for space -->
-                <TabItem Visibility="Hidden" />
-                <TabItem Visibility="Hidden" />
+                    <!-- Hidden tab items for space -->
+                    <TabItem Visibility="Hidden" />
 
-                <!-- Module Rando Settings -->
-                <TabItem Header="_Modules" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-                    <!-- DataContext inherited from the window. Everything is bound using this DataContext:
+                    <TabItem Header="Testing" Visibility="Collapsed">
+                        <Grid>
+                            <StackPanel>
+                                <ItemsControl BorderBrush="Aqua" BorderThickness="1" x:Name="testGoalsControl"
+                                          ItemsSource="{Binding ModuleGoalList}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Columns="2" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Foreground="Aqua" Content="{Binding Caption}" IsChecked="{Binding IsChecked}" Margin="2" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+
+                    <TabItem Visibility="Hidden" />
+
+
+                    <!-- Module Rando Settings -->
+                    <TabItem Header="_Modules" Tag="{x:Static rando:RandomizationCategory.Module}"
+                         IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
+                         Visibility="{Binding Path=SupportsModules, Converter={StaticResource BoolToVisibilityConverter}}"
+                         >
+                        <!-- DataContext inherited from the window. Everything is bound using this DataContext:
                          Shuffle Preset, Omitted Modules, Shuffle Logic, Goals, and Glitches. -->
-                    <v:ModuleView x:Name="ModuleView"
+                        <v:ModuleView x:Name="ModuleView"
                                   FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
                                   />
-                </TabItem>
+                    </TabItem>
 
-                <!-- Item Rando Settings -->
-                <TabItem Header="_Items" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-                    <!-- DataContext inherited from the window.
+                    <!-- Item Rando Settings -->
+                    <TabItem Header="_Items" Tag="{x:Static rando:RandomizationCategory.Item}"
+                         IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
+                         Visibility="{Binding Path=SupportsItems, Converter={StaticResource BoolToVisibilityConverter}}"
+                         >
+                        <!-- DataContext inherited from the window.
                          Randomized and Omitted item lists bound from data context. -->
-                    <v:ItemView x:Name="ItemView"
+                        <v:ItemView x:Name="ItemView"
                                 FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
-                                
-                                ItemLevelArmbands       ="{Binding ItemArmbands       , Mode=TwoWay}"
-                                ItemLevelArmor          ="{Binding ItemArmor          , Mode=TwoWay}"
-                                ItemLevelBelts          ="{Binding ItemBelts          , Mode=TwoWay}"
-                                ItemLevelBlasters       ="{Binding ItemBlasters       , Mode=TwoWay}"
-                                ItemLevelCreatureHides  ="{Binding ItemCreatureHides  , Mode=TwoWay}"
-                                ItemLevelCreatureWeapons="{Binding ItemCreatureWeapons, Mode=TwoWay}"
-                                ItemLevelDroidEquipment ="{Binding ItemDroidEquipment , Mode=TwoWay}"
-                                ItemLevelGauntlets      ="{Binding ItemGloves         , Mode=TwoWay}"
-                                ItemLevelGrenades       ="{Binding ItemGrenades       , Mode=TwoWay}"
-                                ItemLevelImplants       ="{Binding ItemImplants       , Mode=TwoWay}"
-                                ItemLevelLightsabers    ="{Binding ItemLightsabers    , Mode=TwoWay}"
-                                ItemLevelMasks          ="{Binding ItemMasks          , Mode=TwoWay}"
-                                ItemLevelMedical        ="{Binding ItemMedical        , Mode=TwoWay}"
-                                ItemLevelMelee          ="{Binding ItemMeleeWeapons   , Mode=TwoWay}"
-                                ItemLevelMines          ="{Binding ItemMines          , Mode=TwoWay}"
-                                ItemLevelPazaak         ="{Binding ItemPazaakCards    , Mode=TwoWay}"
-                                ItemLevelUpgrades       ="{Binding ItemUpgrades       , Mode=TwoWay}"
-                                ItemLevelVarious        ="{Binding ItemVarious        , Mode=TwoWay}"
                                 />
-                </TabItem>
+                    </TabItem>
 
-                <!-- Audio Rando Settings -->
-                <TabItem Header="_Audio" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-                    <v:AudioView x:Name="AudioView"
+                    <!-- Audio Rando Settings -->
+                    <TabItem Header="_Audio" Tag="{x:Static rando:RandomizationCategory.Sound}"
+                         IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
+                         Visibility="{Binding Path=SupportsAudio, Converter={StaticResource BoolToVisibilityConverter}}"
+                         >
+                        <v:AudioView x:Name="AudioView"
                                  FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
-                                 
-                                 AreaMusic           ="{Binding AudioAreaMusic           , Mode=TwoWay}"
-                                 BattleMusic         ="{Binding AudioBattleMusic         , Mode=TwoWay}"
-                                 AmbientMusic        ="{Binding AudioAmbientNoise        , Mode=TwoWay}"
-                                 CutsceneNoise       ="{Binding AudioCutsceneNoise       , Mode=TwoWay}"
-                                 NpcSounds           ="{Binding AudioNpcSounds           , Mode=TwoWay}"
-                                 PartySounds         ="{Binding AudioPartySounds         , Mode=TwoWay}"
-                                 OverwriteDmcaMusic  ="{Binding AudioRemoveDmcaMusic     , Mode=TwoWay}"
-                                 MixKotorGameMusic   ="{Binding AudioMixKotorGameMusic   , Mode=TwoWay}"
-                                 MixNpcAndPartySounds="{Binding AudioMixNpcAndPartySounds, Mode=TwoWay}"
                                  />
-                </TabItem>
+                    </TabItem>
 
-                <!-- Cosmetic Rando Settings -->
-                <TabItem Header="_Cosmetics" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-                    <v:CosmeticView x:Name="CosmeticView"
+                    <!-- Cosmetic Rando Settings -->
+                    <TabItem Header="_Cosmetics" Tag="{x:Static rando:RandomizationCategory.Cosmetics}"
+                         IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
+                         Visibility="{Binding Path=SupportsCosmetics, Converter={StaticResource BoolToVisibilityConverter}}"
+                         >
+                        <v:CosmeticView x:Name="CosmeticView"
                                     FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
                                     
                                     AnimationAttack    ="{Binding AnimationAttack,     Mode=TwoWay}"
@@ -269,21 +328,27 @@
                                     TextureWeapons     ="{Binding TextureWeapons     , Mode=TwoWay}"
                                     TextureOther       ="{Binding TextureOther       , Mode=TwoWay}"
                                     />
-                </TabItem>
+                    </TabItem>
 
-                <!-- Party Rando Settings -->
-                <!--<TabItem Header="_Party" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"></TabItem>-->
-                
-                <!-- Table Rando Settings -->
-                <TabItem Header="_Tables" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-                    <v:TableView x:Name="TableView"
+                    <!-- Party Rando Settings -->
+                    <!--<TabItem Header="_Party" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"></TabItem>-->
+
+                    <!-- Table Rando Settings -->
+                    <TabItem Header="_Tables" Tag="{x:Static rando:RandomizationCategory.TwoDA}"
+                         IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
+                         Visibility="{Binding Path=SupportsTables, Converter={StaticResource BoolToVisibilityConverter}}"
+                         >
+                        <v:TableView x:Name="TableView"
                                  FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
                                  />
-                </TabItem>
+                    </TabItem>
 
-                <!-- Text Rando Settings -->
-                <TabItem Header="Te_xt" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-                    <v:TextView x:Name="TextView"
+                    <!-- Text Rando Settings -->
+                    <TabItem Header="Te_xt" Tag="{x:Static rando:RandomizationCategory.Text}"
+                         IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
+                         Visibility="{Binding Path=SupportsText, Converter={StaticResource BoolToVisibilityConverter}}"
+                         >
+                        <v:TextView x:Name="TextView"
                                 FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
                                 
                                 RandomizeDialogueEntries="{Binding TextSettingsValue, Mode=TwoWay, Converter={StaticResource TextSettingsToBool}, ConverterParameter={x:Static rando:TextSettings.RandoDialogEntries}}"
@@ -292,31 +357,37 @@
                                 RandomizeAdditionalText ="{Binding TextSettingsValue, Mode=TwoWay, Converter={StaticResource TextSettingsToBool}, ConverterParameter={x:Static rando:TextSettings.RandoFullTLK}}"
                                 MatchSimilarStringLength="{Binding TextSettingsValue, Mode=TwoWay, Converter={StaticResource TextSettingsToBool}, ConverterParameter={x:Static rando:TextSettings.MatchSimLengthStrings}}"
                                 />
-                </TabItem>
-                
-                <!-- Other Rando Settings -->
-                <TabItem Header="_Other" IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}">
-                    <v:OtherView x:Name="OtherView"
+                    </TabItem>
+
+                    <!-- Other Rando Settings -->
+                    <TabItem Header="_Other" Tag="{x:Static rando:RandomizationCategory.Other}"
+                         IsEnabled="{Binding ElementName=RandomizeView, Path=IsBusy, Converter={StaticResource InverseBooleanConverter}}"
+                         Visibility="{Binding Path=SupportsOther, Converter={StaticResource BoolToVisibilityConverter}}"
+                         >
+                        <v:OtherView x:Name="OtherView"
                                  FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
                                  />
-                </TabItem>
+                    </TabItem>
 
-                <!-- Hidden tab items for space -->
-                <TabItem Visibility="Hidden" />
-                <TabItem Visibility="Hidden" />
+                    <!-- Hidden tab items for space -->
+                    <TabItem Visibility="Hidden" />
+                    <TabItem Visibility="Hidden" />
 
-                <!-- Randomize / Unrandomize Launching Point -->
-                <TabItem Header="_Randomize">
-                    <v:RandomizeView x:Name="RandomizeView"
+                    <!-- Randomize / Unrandomize Launching Point -->
+                    <TabItem Name="RandomizeTab" Header="_Randomize">
+                        <v:RandomizeView x:Name="RandomizeView"
                                      FontSize="{Binding ElementName=cbFontSize, Path=SelectedValue, Converter={StaticResource StringDoubleConverter}}"
-                                     
                                      CreateSpoilers ="{Binding ElementName=miCreateSpoilers,  Path=IsChecked,   Mode=TwoWay}"
                                      CurrentProgress="{Binding ElementName=pbCurrentProgress, Path=Value,       Mode=TwoWay}"
-                                     GamePath       ="{Binding ElementName=window,            Path=Kotor1Path,  Mode=OneWay}"
+                                     IsKotor2Selected="{Binding ElementName=window,      Path=IsKotor2Selected, Mode=OneWay}"
+                                     K1GamePath     ="{Binding ElementName=window,            Path=Kotor1Path,  Mode=OneWay}"
+                                     K2GamePath     ="{Binding ElementName=window,            Path=Kotor2Path,  Mode=OneWay}"
                                      SpoilerPath    ="{Binding ElementName=window,            Path=SpoilerPath, Mode=TwoWay}"
                                      />
-                </TabItem>
-            </TabControl>
-        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </DockPanel>
     </DockPanel>
+    
 </Window>

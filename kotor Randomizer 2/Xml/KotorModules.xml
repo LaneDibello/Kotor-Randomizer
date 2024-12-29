@@ -178,6 +178,7 @@
   <!--Manaan-->
   <Module Planet="Manaan" WarpCode="manm26aa"  CommonName="Ahto West" Tags="Pazaak">
     <LeadsTo WarpCode="manm26ac"  CommonName="West Central" />
+    <LeadsTo WarpCode="ebo_m12aa"  CommonName="Ebon Hawk" Tags="Once,Locked" Unlock="manm28ad,manm26ae" />
   </Module>
   <Module Planet="Manaan" WarpCode="manm26ab" CommonName="Ahto East">
     <LeadsTo WarpCode="manm26ae" CommonName="East Central" />
