@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <OutputType>Library</OutputType>
     <RootNamespace>kotor_Randomizer_2</RootNamespace>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -40,9 +40,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
-    <FileVersion>2.7.0.0</FileVersion>
-    <AssemblyVersion>2.7.0.0</AssemblyVersion>
-    <Version>2.7.0</Version>
+    <VersionPrefix>2.7.0</VersionPrefix>
     <Authors>Lane Dibello, Caleb Hilley</Authors>
     <Company>KotOR Speedrunning Community</Company>
     <RepositoryUrl>https://github.com/LaneDibello/Kotor-Randomizer</RepositoryUrl>
@@ -84,7 +82,20 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="KotOR_IO">
-      <HintPath>..\..\LaneDibello\KotOR_IO\KotOR_IO\bin\Release\net7.0-windows\KotOR_IO.dll</HintPath>
+      <HintPath>..\..\KotOR_IO\KotOR_IO\bin\Debug\net8.0\KotOR_IO.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 </Project>

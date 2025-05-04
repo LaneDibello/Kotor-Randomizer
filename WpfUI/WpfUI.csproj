@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Randomizer_WPF</RootNamespace>
     <AssemblyName>RandomizerWPF</AssemblyName>
@@ -45,10 +45,8 @@
     <Title>Kotor Randomizer WPF</Title>
     <Authors>Lane Dibello, Caleb Hilley</Authors>
     <Company>KotOR Speedrunning Community</Company>
-    <Version>2.7.0</Version>
+    <VersionPrefix>2.7.0</VersionPrefix>
     <RepositoryUrl>https://github.com/LaneDibello/Kotor-Randomizer</RepositoryUrl>
-    <AssemblyVersion>2.7.0.0</AssemblyVersion>
-    <FileVersion>2.7.0.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Resource Include="Resources\BoxActiveSelected_AlphaBig.png" />
